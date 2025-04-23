@@ -1,6 +1,6 @@
 package models.userInfo;
 
-import models.manuFactor.Ingredients;
+import models.manuFactor.Ingredient;
 import models.tools.Tool;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class Backpack {
     private Type type;
     private int capacity = 12;
     private ArrayList<Tool> tools;
-    private ArrayList<Ingredients> ingredients;
+    private ArrayList<Ingredient> ingredients;
 
 
     public void changeType() {
@@ -40,15 +40,15 @@ public class Backpack {
 
     }
 
-    public ArrayList<Ingredients> getIngredients() {
+    public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void addIngredients(Ingredients ingredients) {
+    public void addIngredients(Ingredient ingredient) {
 
     }
 
-    public void removeIngredients(Ingredients ingredients) {
+    public void removeIngredients(Ingredient ingredient) {
 
     }
 }

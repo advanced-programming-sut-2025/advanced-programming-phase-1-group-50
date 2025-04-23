@@ -1,6 +1,8 @@
 package models.foraging;
 
-public enum ForagingMineral {
+import models.manuFactor.Ingredient;
+
+public enum ForagingMineral implements Ingredient {
     Quartz(25),
     EarthCrystal(50),
     FrozenTear(75),

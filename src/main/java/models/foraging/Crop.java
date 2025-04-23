@@ -1,6 +1,8 @@
 package models.foraging;
 
-public class Crop {
+import models.manuFactor.Ingredient;
+
+public class Crop implements Ingredient {
     private ForagingQuality quality;
     private CropType type;
 

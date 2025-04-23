@@ -1,10 +1,11 @@
 package models.foraging;
 
 import models.date.Season;
+import models.manuFactor.Ingredient;
 
 import java.util.ArrayList;
 
-public enum ForagingCrop {
+public enum ForagingCrop implements Ingredient {
     CommonMushroom(Season.Special, 40, 38),
     Daffodil(Season.Spring, 30, 0),
     Dandelion(Season.Spring, 40, 25),

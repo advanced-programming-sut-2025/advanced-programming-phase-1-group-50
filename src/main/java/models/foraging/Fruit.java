@@ -1,6 +1,8 @@
 package models.foraging;
 
-public enum Fruit {
+import models.manuFactor.Ingredient;
+
+public enum Fruit implements Ingredient {
     Apricot,
     Cherry,
     Banana,

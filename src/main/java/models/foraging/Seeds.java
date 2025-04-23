@@ -1,8 +1,9 @@
 package models.foraging;
 
 import models.date.Season;
+import models.manuFactor.Ingredient;
 
-public enum Seeds {
+public enum Seeds implements Ingredient {
     JazzSeeds(Season.Spring),
     CarrotSeeds(Season.Spring),
     CauliflowerSeeds(Season.Spring),
