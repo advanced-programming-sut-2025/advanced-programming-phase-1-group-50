@@ -39,4 +39,8 @@ public class Player {
     public void setCurrentTool(Tool currentTool) {
         this.currentTool = currentTool;
     }
+
+    public Backpack getBackpack() {
+        return backpack;
+    }
 }

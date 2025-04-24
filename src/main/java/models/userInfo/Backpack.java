@@ -4,6 +4,7 @@ import models.manuFactor.Ingredient;
 import models.tools.Tool;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Backpack {
     enum Type {
@@ -18,6 +19,7 @@ public class Backpack {
     private int capacity = 12;
     private ArrayList<Tool> tools;
     private ArrayList<Ingredient> ingredients;
+    private HashMap<Ingredient, Integer> ingredientQuantity = new HashMap<>();
 
 
     public void changeType() {
@@ -44,11 +46,15 @@ public class Backpack {
         return ingredients;
     }
 
-    public void addIngredients(Ingredient ingredient) {
+    public void addIngredients(Ingredient ingredient, int quantity) {
 
     }
 
-    public void removeIngredients(Ingredient ingredient) {
+    public void removeIngredients(Ingredient ingredient, int quantity) {
+//        remove_when_is_zero
+    }
 
+    public HashMap<Ingredient, Integer> getIngredientQuantity() {
+        return ingredientQuantity;
     }
 }
