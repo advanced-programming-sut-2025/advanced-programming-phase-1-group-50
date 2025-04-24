@@ -1,12 +1,13 @@
 package models.foraging;
 
 import models.date.Season;
+import models.manuFactor.Ingredient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public enum CropType {
+public enum CropType implements Ingredient {
     BlueJazz(Seeds.JazzSeeds,
             new ArrayList<>(Arrays.asList(1, 2, 2, 2)),
             7, true, 0, 50, true, 45,

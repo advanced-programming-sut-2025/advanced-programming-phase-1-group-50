@@ -1,8 +1,9 @@
 package models.animals;
 
 import models.date.Season;
+import models.manuFactor.Ingredient;
 
-public enum LegendaryFish {
+public enum LegendaryFish implements Ingredient {
     Legend(5000, Season.Spring),
     Glacierfish(1000, Season.Winter),
     Angler(900, Season.Fall),

@@ -1,8 +1,9 @@
 package models.animals;
 
 import models.date.Season;
+import models.manuFactor.Ingredient;
 
-public enum Fish {
+public enum Fish implements Ingredient {
     Salmon(75, Season.Fall),
     Sardine(40, Season.Fall),
     Shad(60, Season.Fall),
