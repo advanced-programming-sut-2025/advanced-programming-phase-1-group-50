@@ -7,7 +7,7 @@ public enum CraftingRecipes {
     Sprinkler(),
     QualitySprinkler(),
     IridiumSprinkler(),
-    CharcoalKlin(),
+    CharcoalKiln(),
     Furnace(),
     Scarecrow(),
     DeluxeScarecrow(),
