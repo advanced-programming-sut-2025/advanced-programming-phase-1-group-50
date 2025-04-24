@@ -10,4 +10,8 @@ public class Crop implements Ingredient {
     public int calculatePrice() {
         return 0;
     }
+
+    public CropType getType() {
+        return type;
+    }
 }
