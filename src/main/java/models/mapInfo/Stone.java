@@ -1,4 +1,6 @@
 package models.mapInfo;
 
-public class Stone {
+import models.manuFactor.Ingredient;
+
+public class Stone implements Ingredient {
 }

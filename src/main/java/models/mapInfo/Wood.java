@@ -1,4 +1,6 @@
 package models.mapInfo;
 
-public class Wood {
+import models.manuFactor.Ingredient;
+
+public class Wood implements Ingredient {
 }

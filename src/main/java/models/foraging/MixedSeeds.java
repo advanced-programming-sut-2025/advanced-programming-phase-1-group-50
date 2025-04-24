@@ -11,13 +11,13 @@ public class MixedSeeds {
     private static final HashMap<Season, ArrayList<CropType>> seasonSeeds = new HashMap<>();
 
     static {
-        seasonSeeds.put(Season.Spring, new ArrayList<CropType>(Arrays.asList(CropType.Cauliflower, CropType.Parsnip,
+        seasonSeeds.put(Season.Spring, new ArrayList<>(Arrays.asList(CropType.Cauliflower, CropType.Parsnip,
                 CropType.Potato, CropType.BlueJazz, CropType.Tulip)));
-        seasonSeeds.put(Season.Summer, new ArrayList<CropType>(Arrays.asList(CropType.Corn, CropType.HotPepper,
+        seasonSeeds.put(Season.Summer, new ArrayList<>(Arrays.asList(CropType.Corn, CropType.HotPepper,
                 CropType.Radish, CropType.Wheat, CropType.Poppy, CropType.Sunflower, CropType.SummerSpangle)));
-        seasonSeeds.put(Season.Fall, new ArrayList<CropType>(Arrays.asList(CropType.Artichoke, CropType.Corn,
+        seasonSeeds.put(Season.Fall, new ArrayList<>(Arrays.asList(CropType.Artichoke, CropType.Corn,
                 CropType.Eggplant, CropType.Pumpkin, CropType.Sunflower, CropType.FairyRose)));
-        seasonSeeds.put(Season.Winter, new ArrayList<CropType>(List.of(CropType.Powdermelon)));
+        seasonSeeds.put(Season.Winter, new ArrayList<>(List.of(CropType.PowderMelon)));
     }
 
 
