@@ -18,7 +18,7 @@ public class Backpack {
     private Type type;
     private int capacity = 12;
     private ArrayList<Tool> tools;
-    private ArrayList<Ingredient> ingredients;
+    private ArrayList<Ingredient> ingredients; //should delete!!
     private HashMap<Ingredient, Integer> ingredientQuantity = new HashMap<>();
 
 

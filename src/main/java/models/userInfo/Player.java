@@ -1,20 +1,26 @@
 package models.userInfo;
 
 import models.NPCs.NPC;
+import models.mapInfo.Map;
 import models.mapInfo.Position;
 import models.tools.Tool;
 
 public class Player {
-    private final int maxEnergy;
+    private final int maxEnergy = 100;    //final
     private int energy;
-    private final String username;
-    private final String nickname;
-    private final Position position;
+    private  String username;  //final
+    private  String nickname;  //final
+    private final Position position = new Position(0, 0); // final
     private Ability ability;
     private Tool currentTool;
-    private final Backpack backpack;
-    private final TrashCan trashCan;
+    private  final Backpack backpack = new Backpack();    //final
+    private  final TrashCan trashCan = new TrashCan();
+    private Map map;   //final
+    public Player(String username , String nickname ){
+        this.username = username;
+        this.nickname = nickname;
 
+    }
 
     public void faint() {
 
@@ -38,6 +44,14 @@ public class Player {
 
     public void setCurrentTool(Tool currentTool) {
         this.currentTool = currentTool;
+    }
+
+    public Map getMap(){
+        return map;
+    }
+
+    public void setMap(Map map){
+        this.map = map;
     }
 
     public Backpack getBackpack() {

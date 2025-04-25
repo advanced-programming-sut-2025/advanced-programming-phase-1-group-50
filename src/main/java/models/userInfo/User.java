@@ -1,5 +1,7 @@
 package models.userInfo;
 
+import models.app.SecurityQuestion;
+
 public class User {
     private String username;
     private String password;
@@ -7,14 +9,16 @@ public class User {
     private String email;
     private Gender gender;
     private int numberOfGames = 0;
+    private SecurityQuestion securityQuestion;
     private int highestScore;
 
-    public User(String username, String password, String nickname, String email, Gender gender) {
+    public User(String username, String password, String nickname, String email, Gender gender , SecurityQuestion securityQuestion) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.email = email;
         this.gender = gender;
+        this.securityQuestion = securityQuestion;
     }
 
     public String getUsername() {
@@ -52,4 +56,23 @@ public class User {
     public void setNumberOfGames(int numberOfGames) {
         this.numberOfGames = numberOfGames;
     }
+    public SecurityQuestion getSecurityQuestion() {
+        return securityQuestion;
+    }
+    public void setSecurityQuestion(SecurityQuestion securityQuestion) {
+        this.securityQuestion = securityQuestion;
+    }
+    public void setPassword(String password){
+        this.password = password;
+    }
+    public void setUsername(String username){
+        this.username = username;
+    }
+    public void setNickname(String nickname){
+        this.nickname = nickname;
+    }
+    public void setEmail(String email){
+        this.email = email;
+    }
+
 }
