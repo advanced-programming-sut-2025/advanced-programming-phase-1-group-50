@@ -1,11 +1,19 @@
 package models.mapInfo;
 
-public class Cottage {
-    private final int width;
-    private final int length;
+import models.Placeable;
 
-    public Cottage(int width, int length) {
-        this.width = width;
-        this.length = length;
+import java.awt.*;
+
+public class Cottage implements Placeable {
+    private final Rectangle bounds;
+    public Cottage(int x, int y, int width, int height) {
+        bounds = new Rectangle(x, y, width, height);
     }
+    public Rectangle getBounds() {
+        return bounds;
+    }
+    public char getSymbol() {
+        return 'C';
+    }
+
 }

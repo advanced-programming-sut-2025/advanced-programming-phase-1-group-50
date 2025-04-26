@@ -4,6 +4,8 @@ import java.util.Scanner;
 import java.util.regex.*;
 
 import controller.ProfileMenuController;
+import models.enums.ProfileMenuCommands;
+
 public class ProfileMenu implements AppMenu {
     private final  ProfileMenuController controller = new ProfileMenuController();
     public void check(Scanner scanner) {
@@ -15,8 +17,8 @@ public class ProfileMenu implements AppMenu {
         if(models.enums.ProfileMenuCommands.ShowCurrentMenu.getMatcher(input)!=null){
             System.out.println("profile menu");
         }
-        else if(models.enums.ProfileMenuCommands.ChangePassowrd.getMatcher(input)!=null){
-            matcher =models.enums.ProfileMenuCommands.ChangePassowrd.getMatcher(input);
+        else if(ProfileMenuCommands.ChangePassword.getMatcher(input)!=null){
+            matcher =models.enums.ProfileMenuCommands.ChangePassword.getMatcher(input);
             String newPassword = matcher.group(1).trim();
             String oldPassword = matcher.group(2).trim();
             System.out.println(controller.changePassword(oldPassword, newPassword));

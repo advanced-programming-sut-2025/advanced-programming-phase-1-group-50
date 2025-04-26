@@ -12,7 +12,7 @@ public class FishSmoker extends ArtisanMachine {
     public boolean isReady() {
         if (timeOfRequest == null)
             return false;
-        return timeOfRequest.getHour() + 1 <= App.getToday().getHour();
+        return timeOfRequest.getHour() + 1 <= App.getGame().getTime().getHour();
     }
 
     @Override

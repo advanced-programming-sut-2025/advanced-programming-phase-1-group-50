@@ -1,23 +1,64 @@
 package models.date;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class Time {
     private Season season;
-    private DaysOfTheWeek dayOfWeek;
+    private DaysOfTheWeek dayOfWeek ;
     private int date;
     private int hour;
     private Weather weather;
     private Weather nextDayWeather;
+    public Time(){
+        this.hour = 9;
+        this.dayOfWeek = DaysOfTheWeek.Saturday;
+        this.season = Season.Spring;
+        this.date = 1;
+        this.weather = Weather.Sunny;
+        this.nextDayWeather = Weather.Sunny;
 
-    public void increaseHour(int x) {
-//        this.hour += x;
-//        while (this.hour >= 24) {
-//            this.hour -= 24;
-//
-//
-//        }
     }
-    public void increaseDate(int x) {
 
+    public void advancedHour(int h){
+        this.hour += h;
+        while (this.hour >= 24){
+            this.hour -= 24;
+            advancedDay(1);
+
+        }
+
+    }
+
+    public void advancedDay(int d){
+        for(int i = 0 ; i < d; i++){
+            this.date ++;
+            if(this.date > 28){
+                this.date = 1;
+                advancedSeason();
+            }
+            DaysOfTheWeek[] days = DaysOfTheWeek.values();
+            int currentIndex = this.dayOfWeek.ordinal();
+            this.dayOfWeek = days[(currentIndex + 1) % days.length];
+        }
+        if(d == 1){
+            this.weather =this.nextDayWeather;
+            this.nextDayWeather = createNextDayWeather();
+        }
+        else {
+            this.weather = createNextDayWeather();
+            this.nextDayWeather = createNextDayWeather();
+
+        }
+    }
+    public void advancedSeason(){
+        Season[] seasons = Season.values();
+        int currentIndex = this.season.ordinal();
+        if (currentIndex < 3) {
+            this.season = seasons[currentIndex + 1];
+        } else {
+            this.season = Season.Spring;
+        }
     }
 
     public Season getSeason() {
@@ -55,6 +96,18 @@ public class Time {
 
     public void setNextDayWeather(Weather nextDayWeather) {
         this.nextDayWeather = nextDayWeather;
+    }
+    public Weather createNextDayWeather(){
+        Weather[] weather = Weather.values();
+        ArrayList<Weather> weatherList = new ArrayList<>();
+        for(Weather w : weather){
+            if(w.getSeasons().contains(this.season)){
+                weatherList.add(w);
+            }
+        }
+        Random random = new Random();
+        int index = random.nextInt(weatherList.size());
+        return weatherList.get(index);
     }
 
     public Time clone() {

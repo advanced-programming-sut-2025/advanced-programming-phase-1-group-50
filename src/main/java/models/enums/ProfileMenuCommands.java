@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public enum ProfileMenuCommands implements Command {
 
-    ChangePassowrd("\\s*change\\s+password\\s+-p\\s+(?<newPassword>\\S+)\\s+-o\\s+(?<oldPassword>\\S+)\\s*"),
+    ChangePassword("\\s*change\\s+password\\s+-p\\s+(?<newPassword>\\S+)\\s+-o\\s+(?<oldPassword>\\S+)\\s*"),
     ChangeUsername("\\s*change\\s+username\\s+-u\\s+(?<username>\\S+)\\s*"),
     ChangeEmail("\\s*change\\s+email\\s+(?<email>\\S+)\\s*"),
     UserInfo("\\s*user\\s+info\\s*"),

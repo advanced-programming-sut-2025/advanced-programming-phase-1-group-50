@@ -1,11 +1,12 @@
 package controller;
 
+import models.Result;
 import models.app.App;
 import java.util.regex.*;
 
 public class ProfileMenuController {
     private final LoginAndRegisterController controller = new LoginAndRegisterController();
-    public Result  changePassword(String oldPas , String newPas){
+    public Result changePassword(String oldPas , String newPas){
         Matcher matcher;
         if(!App.getLoggedInUser().getPassword().equals(oldPas)){
             return new Result(false, "password is incorrect");

@@ -1,11 +1,13 @@
 package controller;
 import java.util.ArrayList;
 
+import controller.GameDateAndWeatherController.DateController;
 import models.Result;
 import models.app.*;
 import models.userInfo.*;
 import models.mapInfo.*;
 public class GameMenuController {
+    private final DateController dateController = new DateController();
     public User findUser(String username){
         for(User u : App.users){
             if(username.equals(u.getUsername())){
@@ -40,43 +42,74 @@ public class GameMenuController {
                 }
             }
         }
-        
+
         for(int i= 3; i<tokens.length ; i++){
-            Player p = new Player(findUser(tokens[i]).getUsername(), findUser(tokens[i]).getNickname());
+            Player p = new Player(findUser(tokens[i]).getUsername(), findUser(tokens[i]).getNickname() , findUser(tokens[i]));
             players.add(p);
         }
 
 
 
-        return new Result(true, "players added succsessfuly , now we wnt to choose maps");
+        return new Result(true, "players added successfully , now we wnt to choose maps");
 
     }
-    public Result selectMapForCreateNewGame(String mapInput, Player player) {
-        Map selectedMap = null;
-        for (Map map : Map.values()) {
-            if (map.name().equalsIgnoreCase(mapInput.trim())) {
-                selectedMap = map;
-                break;
-            }
-        }
-    
-        if (selectedMap == null) {
+    public Result selectMapForCreateNewGame(int  mapInput, Player player) {
+        if(mapInput > 4 || mapInput < 1){
             return new Result(false, "please select between available maps");
         }
-    
-        player.setMap(selectedMap);
+        Farm selectedFarm = null;
+        for(Farm farm : App.farms){
+            if(farm.getType() == mapInput){
+                selectedFarm = farm;
+            }
+        }
+
+        player.setFarm(selectedFarm);
         return new Result(true, "map selected successfully");
     }
-    
+
     public Result createNewGame(ArrayList<Player> players){
-        ArrayList<Map> maps = new ArrayList<>();
+        ArrayList<Farm> maps = new ArrayList<>();
         for(Player p : players){
-            maps.add(p.getMap());
+            maps.add(p.getFarm());
 
         }
-        Game x = new Game(players, maps , App.getLoggedInUser());
+        Map m = new Map();
+        m.buildMap(players);
+        Game x = new Game(players, maps , App.getLoggedInUser() , m);
+        Player currentUserPlayer = new Player(App.getLoggedInUser().getUsername() , App.getLoggedInUser().getNickname() , App.getLoggedInUser());
+        players.add(currentUserPlayer);
         App.games.add(x);
         App.setGame(x);
+        App.getGame().setCurrentPlayingPlayer(currentUserPlayer);
         return new Result(true, "new game created succsessfuly");
+    }
+    public Result loadGame(){
+        return new Result(true, "load game successful");
+    }
+    public Result exitGame(){
+        return new Result(true, "exit game successful");
+    }
+    public Result deleteGame(){
+        return new Result(true, "delete game successful");
+    }
+    public Result nextTurn(){
+        App.getGame().nextPlayerTurn();
+        //App.getGame().getTime().advancedHour(1);
+        return new Result(true, "next turn successful");
+    }
+    public Result buildGreenhouse(){
+        if(App.getGame().getCurrentPlayingPlayer().getCoins() < 1000){
+            return new Result(false , "you don't have enough money");
+        }
+        if (App.getGame().getCurrentPlayingPlayer()
+                .getWoods() < 500) {
+
+            return new Result(false , "you don't have enough woods");
+        }
+        App.getGame().getCurrentPlayingPlayer().minusCoins(1000);
+        App.getGame().getCurrentPlayingPlayer().minusWoods(500);
+        App.getGame().getCurrentPlayingPlayer().getFarm().getGreenHouse().setBroken(false);
+        return new Result(true, "greenhouse build successfully");
     }
 }

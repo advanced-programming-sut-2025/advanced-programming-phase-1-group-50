@@ -19,8 +19,8 @@ public class Dehydrator extends ArtisanMachine {
     public boolean isReady() {
         if (timeOfRequest == null)
             return false;
-        int todayDate = App.getToday().getDate();
-        if (App.getToday().getSeason() != timeOfRequest.getSeason())
+        int todayDate = App.getGame().getTime().getDate();
+        if (App.getGame().getTime().getSeason() != timeOfRequest.getSeason())
             todayDate += 28;
 
         //Next morning

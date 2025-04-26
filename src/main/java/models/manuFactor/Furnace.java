@@ -12,7 +12,7 @@ public class Furnace extends ArtisanMachine {
     public boolean isReady() {
         if (timeOfRequest == null)
             return false;
-        return timeOfRequest.getHour() + 4 <= App.getToday().getHour();
+        return timeOfRequest.getHour() + 4 <= App.getGame().getTime().getHour();
     }
 
     @Override

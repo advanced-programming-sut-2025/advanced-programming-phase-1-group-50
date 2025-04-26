@@ -1,7 +1,25 @@
 package models.mapInfo;
 
-public class GreenHouse {
-    private boolean isBrocken;
-    private final int rows = 5;
-    private final int cols = 6;
+import models.Placeable;
+
+import java.awt.*;
+
+public class GreenHouse implements Placeable {
+    private boolean isBroken;
+    private Rectangle bounds;
+    public GreenHouse(int x, int y, int width, int height) {
+        bounds = new Rectangle(x, y, width, height);
+    }
+    public boolean isBroken() {
+        return isBroken;
+    }
+    public Rectangle getBounds() {
+        return bounds;
+    }
+    public void setBroken(boolean broken) {
+        isBroken = broken;
+    }
+    public char getSymbol() {
+        return 'G';
+    }
 }

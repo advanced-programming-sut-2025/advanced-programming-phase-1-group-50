@@ -20,7 +20,7 @@ public abstract class ArtisanMachine {
     }
 
     public void use() {
-        timeOfRequest = App.getToday().clone();
+        timeOfRequest = App.getGame().getTime().clone();
     }
 
     public ArtisanGood get() {
@@ -39,9 +39,9 @@ public abstract class ArtisanMachine {
     public boolean isReady() {
         if (timeOfRequest == null)
             return false;
-        int todayDate = App.getToday().getDate();
-        int todayHour = App.getToday().getHour();
-        if (App.getToday().getSeason() != timeOfRequest.getSeason()) {
+        int todayDate = App.getGame().getTime().getDate();
+        int todayHour = App.getGame().getTime().getHour();
+        if (App.getGame().getTime().getSeason() != timeOfRequest.getSeason()) {
             todayDate += 28;
             if (timeOfRequest.getDate() + processingTimes.get(producingGood).getDays() <= todayDate &&
                     timeOfRequest.getHour() + processingTimes.get(producingGood).getHours() <= todayHour) {
