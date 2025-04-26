@@ -10,21 +10,31 @@ public abstract class Market {
     protected int startHour;
     protected int endHour;
 
+    public String getShopAssistantName() {
+        return shopAssistantName;
+    }
 
+    public int getEndHour() {
+        return endHour;
+    }
+
+    public int getStartHour() {
+        return startHour;
+    }
 
     public ArrayList<Tool> getGoods() {
-        return null;
+        return this.goods;
     }
 
-    public void removeGood(Tool tool) {
+    public abstract void removeGood();
 
-    }
+    public abstract void addGood();
 
-    public void addGood(Tool tool) {
+    public abstract void sellProduct();
 
-    }
+    public abstract String showAllProducts();
 
-    public void sellProduct() {
+    public abstract String showAllAvailableProducts();
 
-    }
+    public abstract void purchase();
 }

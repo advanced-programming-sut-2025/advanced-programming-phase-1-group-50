@@ -5,44 +5,60 @@ import models.mapInfo.Position;
 
 import java.util.ArrayList;
 
-public class NPC {
+public abstract class NPC {
 
-    private String name;
-    private String job;
-    private FriendshipLevel friendshipLevel = FriendshipLevel.firstLevel;
-    private Position position;
-    private final ArrayList<String> Dialogue = new ArrayList<>();
-    private final ArrayList<Gift> favoriteGifts = new ArrayList<>();
-    private int friendShipLevel = 0;
-    private ArrayList<Quest> quests = new ArrayList<>();
-    private final int maxFriendshipLevel = 799;
+    protected String name;
+    protected String job;
+    protected FriendshipLevel friendshipLevel = FriendshipLevel.firstLevel;
+    protected Position position;
+    protected final ArrayList<String> dialogue = new ArrayList<>();
+    protected final ArrayList<Gift> favoriteGifts = new ArrayList<>();
+    protected int friendShipLevel = 0;
+    protected ArrayList<Quest> quests = new ArrayList<>();
+    protected final int maxFriendshipLevel = 799;
 
-    public String getCurrentDialogue() {
-        return Dialogue.get(0);
-    }
-
-    public void increaseFriendShipLevel(int level) {
-        //change friendshiplevel
-    }
-
-    public boolean isFavoriteGift(Gift gift) {
-        return false;
+    public String getName() {
+        return name;
     }
 
     public FriendshipLevel getFriendshipLevel() {
         return friendshipLevel;
     }
 
-    public void givingGiftToPlayer(Player player) {
-
+    public String getJob() {
+        return job;
     }
 
-    public void talkToPlayer(Player player) {
-
+    public Position getPosition() {
+        return position;
     }
 
-    public void doQuest() {
-
+    public ArrayList<String> getDialogue() {
+        return dialogue;
     }
+
+    public ArrayList<Gift> getFavoriteGifts() {
+        return favoriteGifts;
+    }
+
+    public int getFriendShipLevel() {
+        return friendShipLevel;
+    }
+
+    public ArrayList<Quest> getQuests() {
+        return quests;
+    }
+
+    public abstract String getCurrentDialogue();
+
+    public abstract void increaseFriendShipLevel();
+
+    public abstract boolean isFavoriteGift();
+
+    public abstract void givingGiftToPlayer();
+
+    public abstract void talkToPlayer();
+
+    public abstract void doQuest();
 
 }
