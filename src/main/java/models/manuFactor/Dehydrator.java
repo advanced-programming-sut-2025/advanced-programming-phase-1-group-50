@@ -1,5 +1,6 @@
 package models.manuFactor;
 
+import models.app.App;
 import models.foraging.Crop;
 import models.foraging.CropType;
 import models.foraging.ForagingCrop;

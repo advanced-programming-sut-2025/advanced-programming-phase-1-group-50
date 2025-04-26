@@ -1,5 +1,6 @@
 package models.app;
 
+import models.date.Time;
 import models.userInfo.User;
 
 import java.util.ArrayList;
@@ -37,5 +38,9 @@ public class App {
     }
     public static Game getGame(){
         return currentGame;
+    }
+    public static Time getToday(){
+        //TODO
+        return null;
     }
 }

@@ -1,8 +1,8 @@
 package models.manuFactor;
 
+import models.app.App;
 import models.foraging.ForagingMineral;
 import models.manuFactor.artisanGoods.ArtisanGood;
-import models.manuFactor.artisanGoods.ArtisanGoodItem;
 import models.manuFactor.artisanGoods.ArtisanGoodType;
 import models.userInfo.Player;
 

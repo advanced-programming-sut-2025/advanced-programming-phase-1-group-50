@@ -1,6 +1,7 @@
 package models.manuFactor;
 
 import models.animals.Fish;
+import models.app.App;
 import models.manuFactor.artisanGoods.ArtisanGood;
 import models.manuFactor.artisanGoods.ArtisanGoodType;
 import models.userInfo.Player;

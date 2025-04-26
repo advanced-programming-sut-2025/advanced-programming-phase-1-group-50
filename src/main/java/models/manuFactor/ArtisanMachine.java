@@ -1,5 +1,6 @@
 package models.manuFactor;
 
+import models.app.App;
 import models.date.Time;
 import models.date.TimeInterval;
 import models.manuFactor.artisanGoods.ArtisanGood;

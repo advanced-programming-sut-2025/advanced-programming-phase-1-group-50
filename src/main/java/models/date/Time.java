@@ -56,4 +56,15 @@ public class Time {
     public void setNextDayWeather(Weather nextDayWeather) {
         this.nextDayWeather = nextDayWeather;
     }
+
+    public Time clone() {
+        Time cloned = new Time();
+        cloned.season = season;
+        cloned.dayOfWeek = dayOfWeek;
+        cloned.date = date;
+        cloned.hour = hour;
+        cloned.weather = weather;
+        cloned.nextDayWeather = nextDayWeather;
+        return cloned;
+    }
 }
