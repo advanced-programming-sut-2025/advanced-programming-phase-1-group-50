@@ -63,7 +63,7 @@ public class Keg extends ArtisanMachine {
                         player.getBackpack().removeIngredients(ingredient, 1);
                         producingGood = new ArtisanGood(ArtisanGoodType.Juice,
                                 2 * ((Crop) ingredient).getType().getEnergy(),
-                                (int) (2.25 * ((Crop) ingredient).getType().getBaseSalePrice()));
+                                (int) (2.25 * ((Crop) ingredient).getType().getBaseSellPrice()));
                         return true;
                     }
                     return false;

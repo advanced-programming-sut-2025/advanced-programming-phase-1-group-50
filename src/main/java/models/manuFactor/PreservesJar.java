@@ -24,7 +24,7 @@ public class PreservesJar extends ArtisanMachine {
                         player.getBackpack().removeIngredients(ingredient, 1);
                         producingGood = new ArtisanGood(ArtisanGoodType.Pickles,
                                 (int) (1.75 * ((Crop) ingredient).getType().getEnergy()),
-                                2 * ((Crop) ingredient).getType().getBaseSalePrice() + 50);
+                                2 * ((Crop) ingredient).getType().getBaseSellPrice() + 50);
                         return true;
                     }
                     return false;
@@ -36,7 +36,7 @@ public class PreservesJar extends ArtisanMachine {
                     player.getBackpack().removeIngredients(ingredient, 1);
                     producingGood = new ArtisanGood(ArtisanGoodType.Jelly,
                             2 * ((Crop) ingredient).getType().getEnergy(),
-                            2 * ((Crop) ingredient).getType().getBaseSalePrice() + 50);
+                            2 * ((Crop) ingredient).getType().getBaseSellPrice() + 50);
                     return true;
                 }
                 if (ingredient instanceof Fruit) {

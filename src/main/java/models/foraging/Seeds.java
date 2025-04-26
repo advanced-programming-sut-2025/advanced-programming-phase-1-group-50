@@ -3,58 +3,83 @@ package models.foraging;
 import models.date.Season;
 import models.manuFactor.Ingredient;
 
+import java.util.HashMap;
+
 public enum Seeds implements Ingredient {
-    JazzSeeds(Season.Spring),
-    CarrotSeeds(Season.Spring),
-    CauliflowerSeeds(Season.Spring),
-    CoffeeBean(Season.Spring),
-    GarlicSeeds(Season.Spring),
-    BeanStarter(Season.Spring),
-    KaleSeeds(Season.Spring),
-    ParsnipSeeds(Season.Spring),
-    PotatoSeeds(Season.Spring),
-    RhubarbSeeds(Season.Spring),
-    StrawberrySeeds(Season.Spring),
-    TulipBulb(Season.Spring),
-    RiceShoot(Season.Spring),
-    BlueberrySeeds(Season.Summer),
-    CornSeeds(Season.Summer),
-    HopsStarter(Season.Summer),
-    PepperSeeds(Season.Summer),
-    MelonSeeds(Season.Summer),
-    PoppySeeds(Season.Summer),
-    RadishSeeds(Season.Summer),
-    RedCabbageSeeds(Season.Summer),
-    StarfruitSeeds(Season.Summer),
-    SpangleSeeds(Season.Summer),
-    SummerSquashSeeds(Season.Summer),
-    SunflowerSeeds(Season.Summer),
-    TomatoSeeds(Season.Summer),
-    WheatSeeds(Season.Summer),
-    AmaranthSeeds(Season.Fall),
-    ArtichokeSeeds(Season.Fall),
-    BeetSeeds(Season.Fall),
-    BokChoySeeds(Season.Fall),
-    BroccoliSeeds(Season.Fall),
-    CranberrySeeds(Season.Fall),
-    EggplantSeeds(Season.Fall),
-    FairySeeds(Season.Fall),
-    GrapeStarter(Season.Fall),
-    PumpkinSeeds(Season.Fall),
-    YamSeeds(Season.Fall),
-    RareSeed(Season.Fall),
-    PowdermelonSeeds(Season.Winter),
-    AncientSeeds(Season.Special),
-    MixedSeeds(Season.Special);
+    JazzSeeds(Season.Spring, CropType.BlueJazz),
+    CarrotSeeds(Season.Spring, CropType.Carrot),
+    CauliflowerSeeds(Season.Spring, CropType.Cauliflower),
+    CoffeeBean(Season.Spring, CropType.CoffeeBean),
+    GarlicSeeds(Season.Spring, CropType.Garlic),
+    BeanStarter(Season.Spring, CropType.GreenBean),
+    KaleSeeds(Season.Spring, CropType.Kale),
+    ParsnipSeeds(Season.Spring, CropType.Parsnip),
+    PotatoSeeds(Season.Spring, CropType.Potato),
+    RhubarbSeeds(Season.Spring, CropType.Rhubarb),
+    StrawberrySeeds(Season.Spring, CropType.Strawberry),
+    TulipBulb(Season.Spring, CropType.Tulip),
+    RiceShoot(Season.Spring, CropType.UnMilledRice),
+    BlueberrySeeds(Season.Summer, CropType.Blueberry),
+    CornSeeds(Season.Summer, CropType.Corn),
+    HopsStarter(Season.Summer, CropType.Hops),
+    PepperSeeds(Season.Summer, CropType.HotPepper),
+    MelonSeeds(Season.Summer, CropType.Melon),
+    PoppySeeds(Season.Summer, CropType.Poppy),
+    RadishSeeds(Season.Summer, CropType.Radish),
+    RedCabbageSeeds(Season.Summer, CropType.RedCabbage),
+    StarfruitSeeds(Season.Summer, CropType.Starfruit),
+    SpangleSeeds(Season.Summer, CropType.SummerSpangle),
+    SummerSquashSeeds(Season.Summer, CropType.SummerSquash),
+    SunflowerSeeds(Season.Summer, CropType.Sunflower),
+    TomatoSeeds(Season.Summer, CropType.Tomato),
+    WheatSeeds(Season.Summer, CropType.Wheat),
+    AmaranthSeeds(Season.Fall,CropType.Amaranth ),
+    ArtichokeSeeds(Season.Fall, CropType.Artichoke),
+    BeetSeeds(Season.Fall, CropType.Beet),
+    BokChoySeeds(Season.Fall, CropType.BokChoy),
+    BroccoliSeeds(Season.Fall, CropType.Broccoli),
+    CranberrySeeds(Season.Fall, CropType.Cranberries),
+    EggplantSeeds(Season.Fall, CropType.Eggplant),
+    FairySeeds(Season.Fall, CropType.FairyRose),
+    GrapeStarter(Season.Fall, CropType.Grape),
+    PumpkinSeeds(Season.Fall, CropType.Pumpkin),
+    YamSeeds(Season.Fall, CropType.Yam),
+    RareSeed(Season.Fall, CropType.SweetGemBerry),
+    PowdermelonSeeds(Season.Winter, CropType.PowderMelon),
+    AncientSeeds(Season.Special, CropType.AncientFruit);
 
     private final Season season;
+    private final CropType crop;
+    private final static HashMap<String, Seeds> stringToSeeds = new HashMap<>();
 
-    Seeds(Season season) {
-        this.season = season;
+    static {
+        for (Seeds value : Seeds.values()) {
+            stringToSeeds.put(value.name().toLowerCase(), value);
+        }
     }
 
-    public String getname(){
+    Seeds(Season season, CropType crop) {
+        this.season = season;
+        this.crop = crop;
+    }
+
+    public String getName(){
         return name();
     }
+
+    public Season getSeason() {
+        return season;
+    }
+
+    public CropType getCrop() {
+        return crop;
+    }
+
+    public static Seeds getSeedByName(String name) {
+        if (name == null || name.isEmpty())
+            return null;
+        return stringToSeeds.getOrDefault(name.toLowerCase(), null);
+    }
+
 }
 
