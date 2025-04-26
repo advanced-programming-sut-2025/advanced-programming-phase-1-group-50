@@ -5,6 +5,7 @@ import models.manuFactor.Ingredient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public enum CropType implements Ingredient {
@@ -178,20 +179,27 @@ public enum CropType implements Ingredient {
     private final int totalHarvestTime;
     private final boolean oneTime;
     private final int regrowthTime;
-    private final int baseSalePrice;
+    private final int baseSellPrice;
     private final boolean isEdible;
     private final int energy;
     private final ArrayList<Season> Seasons;
     private final boolean canBecomeGiant;
+    private final static HashMap<String, CropType> stringToCropType = new HashMap<>();
+
+    static {
+        for (CropType value : CropType.values()) {
+            stringToCropType.put(value.name().toLowerCase(), value);
+        }
+    }
 
     CropType(Seeds source, ArrayList<Integer> stages, int totalHarvestTime, boolean oneTime, int regrowthTime,
-             int baseSalePrice, boolean isEdible, int energy, ArrayList<Season> seasons, boolean canBecomeGiant) {
+             int baseSellPrice, boolean isEdible, int energy, ArrayList<Season> seasons, boolean canBecomeGiant) {
         this.source = source;
         this.stages = stages;
         this.totalHarvestTime = totalHarvestTime;
         this.oneTime = oneTime;
         this.regrowthTime = regrowthTime;
-        this.baseSalePrice = baseSalePrice;
+        this.baseSellPrice = baseSellPrice;
         this.isEdible = isEdible;
         this.energy = energy;
         Seasons = seasons;
@@ -206,8 +214,16 @@ public enum CropType implements Ingredient {
         return source;
     }
 
+    public int getTimeForGrow(int level) {
+        return stages.get(level);
+    }
+
     public ArrayList<Integer> getStages() {
         return stages;
+    }
+
+    public int getNumberOfStages() {
+        return stages.size();
     }
 
     public int getTotalHarvestTime() {
@@ -222,8 +238,8 @@ public enum CropType implements Ingredient {
         return regrowthTime;
     }
 
-    public int getBaseSalePrice() {
-        return baseSalePrice;
+    public int getBaseSellPrice() {
+        return baseSellPrice;
     }
 
     public boolean isEdible() {
@@ -240,5 +256,11 @@ public enum CropType implements Ingredient {
 
     public boolean CanBecomeGiant() {
         return canBecomeGiant;
+    }
+
+    public static CropType getCropTypeByName(String name) {
+        if (name == null || name.isEmpty())
+            return null;
+        return stringToCropType.getOrDefault(name.toLowerCase(), null);
     }
 }

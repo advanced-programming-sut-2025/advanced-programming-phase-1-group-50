@@ -6,7 +6,8 @@ import models.foraging.CropType;
 import models.foraging.ForagingCrop;
 import models.foraging.Fruit;
 import models.manuFactor.Ingredient;
-import models.manuFactor.artisanGoods.ArtisanGoodItem;
+import models.manuFactor.artisanGoods.ArtisanGood;
+import models.manuFactor.artisanGoods.ArtisanGoodType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,17 +25,17 @@ public enum CookingRecipe implements Ingredient {
             225, 385),
     Spaghetti(new HashMap<>(Map.of(CropType.Wheat, 1, CropType.Tomato, 1)),
             75, 120),
-    Pizza(new HashMap<>(Map.of(CropType.Wheat, 1, CropType.Tomato, 1, ArtisanGoodItem.CheeseByMilk, 1)),
+    Pizza(new HashMap<>(Map.of(CropType.Wheat, 1, CropType.Tomato, 1, new ArtisanGood(ArtisanGoodType.CheeseByMilk), 1)),
             150, 300),
     Tortilla(new HashMap<>(Map.of(CropType.Corn, 1)),
             50, 50),
     MakiRoll(new HashMap<>(Map.of(Fish.Salmon, 1, CropType.UnMilledRice, 1)) ,
             100, 220),
-    TripleShotEspresso(new HashMap<>(Map.of(ArtisanGoodItem.Coffee, 3)),
+    TripleShotEspresso(new HashMap<>(Map.of(new ArtisanGood(ArtisanGoodType.Coffee), 3)),
             200, 450),
     Cookie(new HashMap<>(Map.of(CropType.Wheat, 1, AnimalGood.Egg, 1)),
             90, 140),
-    HashBrowns(new HashMap<>(Map.of(CropType.Potato, 1, ArtisanGoodItem.Oil, 1)),
+    HashBrowns(new HashMap<>(Map.of(CropType.Potato, 1, new ArtisanGood(ArtisanGoodType.Oil), 1)),
             90, 120),
     Pancakes(new HashMap<>(Map.of(CropType.Wheat, 1, AnimalGood.Egg, 1)),
             90, 80),
