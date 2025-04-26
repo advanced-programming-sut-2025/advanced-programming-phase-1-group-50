@@ -1,8 +1,6 @@
 package models.manuFactor.artisanGoods;
 
-import models.manuFactor.Ingredient;
-
-public enum ArtisanGoodItem implements Ingredient, ArtisanGood {
+public enum ArtisanGoodType {
     Honey(75, 350),
     CheeseByMilk(100, 230),
     CheeseByLargeMilk(100, 345),
@@ -20,12 +18,26 @@ public enum ArtisanGoodItem implements Ingredient, ArtisanGood {
     DuckMayonnaise(75, 37),
     DinosaurMayonnaise(125, 800),
     TruffleOil(38, 1065),
-    Oil(13, 100);
+    Oil(13, 100),
+    DriedMushroom(),
+    DriedFruit(),
+    Jelly(),
+    Juice(),
+    Pickles(),
+    SmokedFish(),
+    Wine(),
+    IronBar(),
+    IridiumBar(),
+    CopperBar(),
+    GoldBar();
 
-    private final int energy;
-    private final int sellPrice;
+    private int energy;
+    private int sellPrice;
 
-    ArtisanGoodItem(int energy, int sellPrice) {
+    ArtisanGoodType() {
+    }
+
+    ArtisanGoodType(int energy, int sellPrice) {
         this.energy = energy;
         this.sellPrice = sellPrice;
     }
@@ -36,5 +48,13 @@ public enum ArtisanGoodItem implements Ingredient, ArtisanGood {
 
     public int getSellPrice() {
         return sellPrice;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
+
+    public void setSellPrice(int sellPrice) {
+        this.sellPrice = sellPrice;
     }
 }

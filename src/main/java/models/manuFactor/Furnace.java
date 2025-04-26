@@ -1,9 +1,9 @@
 package models.manuFactor;
 
 import models.foraging.ForagingMineral;
+import models.manuFactor.artisanGoods.ArtisanGood;
 import models.manuFactor.artisanGoods.ArtisanGoodItem;
-import models.manuFactor.artisanGoods.BarType;
-import models.manuFactor.artisanGoods.MetalBar;
+import models.manuFactor.artisanGoods.ArtisanGoodType;
 import models.userInfo.Player;
 
 public class Furnace extends ArtisanMachine {
@@ -22,11 +22,11 @@ public class Furnace extends ArtisanMachine {
                 if (ingredient.equals(ForagingMineral.Iron) &&
                         player.getBackpack().getIngredientQuantity().get(ingredient) >= 5) {
                     for (Ingredient ingredient1 : player.getBackpack().getIngredientQuantity().keySet()) {
-                        if (ingredient1.equals(ArtisanGoodItem.Coal)) {
+                        if (ingredient1.equals(new ArtisanGood(ArtisanGoodType.Coal))) {
                             player.getBackpack().removeIngredients(ingredient, 5);
                             player.getBackpack().removeIngredients(ingredient1, 1);
-                            producingGood = new MetalBar(
-                                    BarType.Iron,
+                            producingGood = new ArtisanGood(ArtisanGoodType.IronBar,
+                                    0,
                                     10 * ForagingMineral.Iron.getSellPrice());
                             return true;
                         }
@@ -40,11 +40,11 @@ public class Furnace extends ArtisanMachine {
                 if (ingredient.equals(ForagingMineral.Iridium) &&
                         player.getBackpack().getIngredientQuantity().get(ingredient) >= 5) {
                     for (Ingredient ingredient1 : player.getBackpack().getIngredientQuantity().keySet()) {
-                        if (ingredient1.equals(ArtisanGoodItem.Coal)) {
+                        if (ingredient1.equals(new ArtisanGood(ArtisanGoodType.Coal))) {
                             player.getBackpack().removeIngredients(ingredient, 5);
                             player.getBackpack().removeIngredients(ingredient1, 1);
-                            producingGood = new MetalBar(
-                                    BarType.Iridium,
+                            producingGood = new ArtisanGood(ArtisanGoodType.IridiumBar,
+                                    0,
                                     10 * ForagingMineral.Iridium.getSellPrice());
                             return true;
                         }
@@ -58,11 +58,11 @@ public class Furnace extends ArtisanMachine {
                 if (ingredient.equals(ForagingMineral.Copper) &&
                         player.getBackpack().getIngredientQuantity().get(ingredient) >= 5) {
                     for (Ingredient ingredient1 : player.getBackpack().getIngredientQuantity().keySet()) {
-                        if (ingredient1.equals(ArtisanGoodItem.Coal)) {
+                        if (ingredient1.equals(new ArtisanGood(ArtisanGoodType.Coal))) {
                             player.getBackpack().removeIngredients(ingredient, 5);
                             player.getBackpack().removeIngredients(ingredient1, 1);
-                            producingGood = new MetalBar(
-                                    BarType.Copper,
+                            producingGood = new ArtisanGood(ArtisanGoodType.CopperBar,
+                                    0,
                                     10 * ForagingMineral.Copper.getSellPrice());
                             return true;
                         }
@@ -76,11 +76,11 @@ public class Furnace extends ArtisanMachine {
                 if (ingredient.equals(ForagingMineral.Gold) &&
                         player.getBackpack().getIngredientQuantity().get(ingredient) >= 5) {
                     for (Ingredient ingredient1 : player.getBackpack().getIngredientQuantity().keySet()) {
-                        if (ingredient1.equals(ArtisanGoodItem.Coal)) {
+                        if (ingredient1.equals(new ArtisanGood(ArtisanGoodType.Coal))) {
                             player.getBackpack().removeIngredients(ingredient, 5);
                             player.getBackpack().removeIngredients(ingredient1, 1);
-                            producingGood = new MetalBar(
-                                    BarType.Gold,
+                            producingGood = new ArtisanGood(ArtisanGoodType.GoldBar,
+                                    0,
                                     10 * ForagingMineral.Gold.getSellPrice());
                             return true;
                         }

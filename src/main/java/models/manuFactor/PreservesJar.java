@@ -3,16 +3,16 @@ package models.manuFactor;
 import models.date.TimeInterval;
 import models.foraging.Crop;
 import models.foraging.Fruit;
-import models.manuFactor.artisanGoods.Jelly;
-import models.manuFactor.artisanGoods.Pickles;
+import models.manuFactor.artisanGoods.ArtisanGood;
+import models.manuFactor.artisanGoods.ArtisanGoodType;
 import models.userInfo.Player;
 
 public class PreservesJar extends ArtisanMachine {
 
     public PreservesJar() {
         super();
-        processingTimes.put(new Pickles(0, 0), new TimeInterval(0, 6));
-        processingTimes.put(new Jelly(0, 0), new TimeInterval(3, 0));
+        processingTimes.put(new ArtisanGood(ArtisanGoodType.Pickles), new TimeInterval(0, 6));
+        processingTimes.put(new ArtisanGood(ArtisanGoodType.Jelly), new TimeInterval(3, 0));
     }
 
     @Override
@@ -22,7 +22,7 @@ public class PreservesJar extends ArtisanMachine {
                 if (ingredient instanceof Crop) {
                     if (player.getBackpack().getIngredientQuantity().get(ingredient) >= 1) {
                         player.getBackpack().removeIngredients(ingredient, 1);
-                        producingGood = new Pickles(
+                        producingGood = new ArtisanGood(ArtisanGoodType.Pickles,
                                 (int) (1.75 * ((Crop) ingredient).getType().getEnergy()),
                                 2 * ((Crop) ingredient).getType().getBaseSalePrice() + 50);
                         return true;
@@ -34,14 +34,14 @@ public class PreservesJar extends ArtisanMachine {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                 if (ingredient instanceof Crop) {
                     player.getBackpack().removeIngredients(ingredient, 1);
-                    producingGood = new Jelly(
+                    producingGood = new ArtisanGood(ArtisanGoodType.Jelly,
                             2 * ((Crop) ingredient).getType().getEnergy(),
                             2 * ((Crop) ingredient).getType().getBaseSalePrice() + 50);
                     return true;
                 }
                 if (ingredient instanceof Fruit) {
                     player.getBackpack().removeIngredients(ingredient, 1);
-                    producingGood = new Jelly(
+                    producingGood = new ArtisanGood(ArtisanGoodType.Jelly,
                             2 * ((Fruit) ingredient).getEnergy(),
                             2 * ((Fruit) ingredient).getBaseSellPrice());
                     return true;

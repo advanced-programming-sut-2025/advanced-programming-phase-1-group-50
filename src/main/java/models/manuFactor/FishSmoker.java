@@ -1,9 +1,8 @@
 package models.manuFactor;
 
 import models.animals.Fish;
-import models.date.TimeInterval;
-import models.manuFactor.artisanGoods.ArtisanGoodItem;
-import models.manuFactor.artisanGoods.SmokedFish;
+import models.manuFactor.artisanGoods.ArtisanGood;
+import models.manuFactor.artisanGoods.ArtisanGoodType;
 import models.userInfo.Player;
 
 public class FishSmoker extends ArtisanMachine {
@@ -21,10 +20,10 @@ public class FishSmoker extends ArtisanMachine {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                 if (ingredient instanceof Fish) {
                     for (Ingredient ingredient1 : player.getBackpack().getIngredientQuantity().keySet()) {
-                        if (ingredient1.equals(ArtisanGoodItem.Coal)) {
+                        if (ingredient1.equals(new ArtisanGood(ArtisanGoodType.Coal))) {
                             player.getBackpack().removeIngredients(ingredient, 1);
                             player.getBackpack().removeIngredients(ingredient1, 1);
-                            producingGood = new SmokedFish(
+                            producingGood = new ArtisanGood(ArtisanGoodType.SmokedFish,
                                     (int) (1.5 * ((Fish) ingredient).getPrice()),
                                     2 * ((Fish) ingredient).getPrice());
                             return true;

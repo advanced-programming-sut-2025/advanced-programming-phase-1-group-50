@@ -1,8 +1,8 @@
 package models.manuFactor;
 
-import models.animals.AnimalGood;
 import models.date.TimeInterval;
-import models.manuFactor.artisanGoods.ArtisanGoodItem;
+import models.manuFactor.artisanGoods.ArtisanGood;
+import models.manuFactor.artisanGoods.ArtisanGoodType;
 import models.mapInfo.Wood;
 import models.userInfo.Player;
 
@@ -10,7 +10,7 @@ public class CharcoalKiln extends ArtisanMachine {
 
     public CharcoalKiln() {
         super();
-        processingTimes.put(ArtisanGoodItem.Coal, new TimeInterval(0, 1));
+        processingTimes.put(new ArtisanGood(ArtisanGoodType.Coal), new TimeInterval(0, 1));
     }
 
     @Override
@@ -20,7 +20,7 @@ public class CharcoalKiln extends ArtisanMachine {
                 if (ingredient instanceof Wood) {
                     if (player.getBackpack().getIngredientQuantity().get(ingredient) >= 10) {
                         player.getBackpack().removeIngredients(ingredient, 10);
-                        producingGood = ArtisanGoodItem.Coal;
+                        producingGood = new ArtisanGood(ArtisanGoodType.Coal);
                         return true;
                     }
                     return false;

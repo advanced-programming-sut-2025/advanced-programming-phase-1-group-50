@@ -2,14 +2,15 @@ package models.manuFactor;
 
 import models.animals.AnimalGood;
 import models.date.TimeInterval;
-import models.manuFactor.artisanGoods.ArtisanGoodItem;
+import models.manuFactor.artisanGoods.ArtisanGood;
+import models.manuFactor.artisanGoods.ArtisanGoodType;
 import models.userInfo.Player;
 
 public class Loom extends ArtisanMachine {
 
     public Loom() {
         super();
-        processingTimes.put(ArtisanGoodItem.Cloth, new TimeInterval(0, 4));
+        processingTimes.put(new ArtisanGood(ArtisanGoodType.Cloth), new TimeInterval(0, 4));
     }
 
     @Override
@@ -19,7 +20,7 @@ public class Loom extends ArtisanMachine {
                 if (ingredient.equals(AnimalGood.Wool)) {
                     if (player.getBackpack().getIngredientQuantity().get(ingredient) >= 1) {
                         player.getBackpack().removeIngredients(ingredient, 1);
-                        producingGood = ArtisanGoodItem.Cloth;
+                        producingGood = new ArtisanGood(ArtisanGoodType.Cloth);
                         return true;
                     }
                     return false;

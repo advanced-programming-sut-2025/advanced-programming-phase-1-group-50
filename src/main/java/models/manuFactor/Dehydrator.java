@@ -4,9 +4,8 @@ import models.foraging.Crop;
 import models.foraging.CropType;
 import models.foraging.ForagingCrop;
 import models.foraging.Fruit;
-import models.manuFactor.artisanGoods.ArtisanGoodItem;
-import models.manuFactor.artisanGoods.DriedFruit;
-import models.manuFactor.artisanGoods.DriedMushroom;
+import models.manuFactor.artisanGoods.ArtisanGood;
+import models.manuFactor.artisanGoods.ArtisanGoodType;
 import models.userInfo.Player;
 
 public class Dehydrator extends ArtisanMachine {
@@ -36,7 +35,7 @@ public class Dehydrator extends ArtisanMachine {
                         ingredient.equals(ForagingCrop.PurpleMushroom)) {
                     if (player.getBackpack().getIngredientQuantity().get(ingredient) >= 5) {
                         player.getBackpack().removeIngredients(ingredient, 5);
-                        producingGood = new DriedMushroom(
+                        producingGood = new ArtisanGood(ArtisanGoodType.DriedMushroom,
                                 50,
                                 (int) (7.5 * ((ForagingCrop)ingredient).getBaseSellPrice() + 25));
                         return true;
@@ -50,11 +49,11 @@ public class Dehydrator extends ArtisanMachine {
                     if (player.getBackpack().getIngredientQuantity().get(ingredient) >= 5) {
                         player.getBackpack().removeIngredients(ingredient, 5);
                         if (ingredient instanceof Fruit)
-                            producingGood = new DriedFruit(
+                            producingGood = new ArtisanGood(ArtisanGoodType.DriedFruit,
                                 75,
                                 (int) (7.5 * ((Fruit)ingredient).getBaseSellPrice() + 25));
                         else
-                            producingGood = new DriedFruit(
+                            producingGood = new ArtisanGood(ArtisanGoodType.DriedFruit,
                                     75,
                                     (int) (7.5 * ((Crop)ingredient).getType().getBaseSalePrice() + 25));
                         return true;
@@ -67,7 +66,7 @@ public class Dehydrator extends ArtisanMachine {
                 if (ingredient instanceof Crop && ((Crop) ingredient).getType().equals(CropType.Grape)) {
                     if (player.getBackpack().getIngredientQuantity().get(ingredient) >= 5) {
                         player.getBackpack().removeIngredients(ingredient, 5);
-                        producingGood = ArtisanGoodItem.Raisins;
+                        producingGood = new ArtisanGood(ArtisanGoodType.Raisins);
                         return true;
                     }
                     return false;
