@@ -21,7 +21,8 @@ public class MixedSeeds {
     }
 
 
-    public ArrayList<CropType> getSeasonCrops(Season season) {
-        return new ArrayList<>();
+    public static ArrayList<CropType> getSeasonCrops(Season season) {
+        return seasonSeeds.get(season);
     }
+
 }

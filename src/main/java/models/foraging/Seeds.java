@@ -46,7 +46,8 @@ public enum Seeds implements Ingredient {
     YamSeeds(Season.Fall, CropType.Yam),
     RareSeed(Season.Fall, CropType.SweetGemBerry),
     PowdermelonSeeds(Season.Winter, CropType.PowderMelon),
-    AncientSeeds(Season.Special, CropType.AncientFruit);
+    AncientSeeds(Season.Special, CropType.AncientFruit),
+    MixedSeeds(Season.Special, null);
 
     private final Season season;
     private final CropType crop;
