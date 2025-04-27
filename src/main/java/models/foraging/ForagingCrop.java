@@ -4,6 +4,7 @@ import models.date.Season;
 import models.manuFactor.Ingredient;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public enum ForagingCrop implements Ingredient {
     CommonMushroom(Season.Special, 40, 38),
@@ -33,6 +34,13 @@ public enum ForagingCrop implements Ingredient {
     private final Season season;
     private final int baseSellPrice;
     private final int energy;
+    private final static HashMap<String, ForagingCrop> stringToForagingCrop = new HashMap<>();
+
+    static {
+        for (ForagingCrop value : ForagingCrop.values()) {
+            stringToForagingCrop.put(value.name().toLowerCase(), value);
+        }
+    }
 
     ForagingCrop(Season season, int baseSellPrice, int energy) {
         this.season = season;
@@ -67,5 +75,11 @@ public enum ForagingCrop implements Ingredient {
             crops.add(ForagingCrop.CommonMushroom);
         }
         return crops;
+    }
+
+    public static ForagingCrop getForagingCropByName(String name) {
+        if (name == null || name.isEmpty())
+            return null;
+        return stringToForagingCrop.getOrDefault(name.toLowerCase(), null);
     }
 }

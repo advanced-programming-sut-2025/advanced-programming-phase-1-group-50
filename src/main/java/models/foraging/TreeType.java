@@ -4,6 +4,7 @@ import models.date.Season;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public enum TreeType {
     ApricotTree(TreeSource.ApricotSapling, new ArrayList<>(Arrays.asList(7, 7, 7, 7)), 28,
@@ -40,19 +41,26 @@ public enum TreeType {
     private final int totalHarvestTime;
     private final Fruit fruit;
     private final int harvestCycle;
-    private final int fruitBaseSaleRate;
+    private final int fruitBaseSellPrice;
     private final boolean isFruitEdible;
     private final int fruitEnergy;
     private final Season season;
+    private final static HashMap<String, TreeType> stringToTreeType = new HashMap<>();
+
+    static {
+        for (TreeType value : TreeType.values()) {
+            stringToTreeType.put(value.name().toLowerCase(), value);
+        }
+    }
 
     TreeType(TreeSource source, ArrayList<Integer> stages, int totalHarvestTime, Fruit fruit,
-             final int harvestCycle, int fruitBaseSaleRate, boolean isFruitEdible, int fruitEnergy, Season season) {
+             final int harvestCycle, int fruitBaseSellPrice, boolean isFruitEdible, int fruitEnergy, Season season) {
         this.source = source;
         this.stages = stages;
         this.totalHarvestTime = totalHarvestTime;
         this.fruit = fruit;
         this.harvestCycle = harvestCycle;
-        this.fruitBaseSaleRate = fruitBaseSaleRate;
+        this.fruitBaseSellPrice = fruitBaseSellPrice;
         this.isFruitEdible = isFruitEdible;
         this.fruitEnergy = fruitEnergy;
         this.season = season;
@@ -78,8 +86,8 @@ public enum TreeType {
         return harvestCycle;
     }
 
-    public int getFruitBaseSaleRate() {
-        return fruitBaseSaleRate;
+    public int getFruitBaseSellPrice() {
+        return fruitBaseSellPrice;
     }
 
     public boolean isFruitEdible() {
@@ -96,6 +104,12 @@ public enum TreeType {
 
     public String getName(){
         return name();
+    }
+
+    public static TreeType getTreeTypeByName(String name){
+        if (name == null || name.isEmpty())
+            return null;
+        return stringToTreeType.getOrDefault(name.toLowerCase(), null);
     }
 
 }
