@@ -74,6 +74,10 @@ public enum TreeType {
         return stages;
     }
 
+    public int getTimeForGrow(int level) {
+        return stages.get(level);
+    }
+
     public int getTotalHarvestTime() {
         return totalHarvestTime;
     }

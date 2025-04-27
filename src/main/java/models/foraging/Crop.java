@@ -47,6 +47,9 @@ public class Crop implements Ingredient {
         if (type.isOneTime())
             return false;
 
+        if (lastHarvestTime == null)
+            return true;
+
         Time today = App.getGame().getTime().clone();
         int timeForGrow = type.getRegrowthTime();
 
@@ -54,16 +57,13 @@ public class Crop implements Ingredient {
     }
 
     public void harvest() {
-        if (!isComplete())
-            return;
-
-        if (type.isOneTime())
+        if (!isComplete() || type.isOneTime())
             return;
 
         Time today = App.getGame().getTime().clone();
         int timeForGrow = type.getRegrowthTime();
 
-        if (lastHarvestTime.getDate() + timeForGrow == today.getDate()) {
+        if (lastHarvestTime == null || lastHarvestTime.getDate() + timeForGrow <= today.getDate()) {
             lastHarvestTime = today;
         }
     }
