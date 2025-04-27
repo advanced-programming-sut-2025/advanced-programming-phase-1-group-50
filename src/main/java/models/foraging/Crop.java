@@ -4,16 +4,19 @@ import models.app.App;
 import models.date.Time;
 import models.manuFactor.Ingredient;
 
-public class Crop implements Ingredient {
+public class Crop implements Ingredient, Growable {
     private ForagingQuality quality;
     private final CropType type;
     private int levelOfGrowth;
     private Time lastGrowthTime;
     private Time lastHarvestTime;
+    private Time lastWaterTime;
+    private static final int numberOfDaysCanBeAliveWithoutWater = 2;
 
     public Crop(CropType type, Time timeOfPlanting) {
         this.type = type;
         this.lastGrowthTime = timeOfPlanting.clone();
+        this.lastWaterTime = timeOfPlanting.clone();
         levelOfGrowth = 0;
     }
 
@@ -25,11 +28,10 @@ public class Crop implements Ingredient {
         return type;
     }
 
-    public void grow() {
+    public void grow(Time today) {
         if (isComplete())
             return;
 
-        Time today = App.getGame().getTime().clone();
         int timeForGrow = type.getTimeForGrow(levelOfGrowth);
 
         if (lastGrowthTime.getDate() + timeForGrow == today.getDate()) {
@@ -56,19 +58,29 @@ public class Crop implements Ingredient {
         return lastHarvestTime.getDate() + timeForGrow == today.getDate();
     }
 
-    public void harvest() {
+    public boolean harvest() {
         if (!isComplete() || type.isOneTime())
-            return;
+            return false;
 
         Time today = App.getGame().getTime().clone();
         int timeForGrow = type.getRegrowthTime();
 
         if (lastHarvestTime == null || lastHarvestTime.getDate() + timeForGrow <= today.getDate()) {
             lastHarvestTime = today;
+            return true;
         }
+        return false;
     }
 
     public boolean isComplete() {
         return levelOfGrowth >= type.getNumberOfStages();
+    }
+
+    public void watering() {
+        lastWaterTime = App.getGame().getTime().clone();
+    }
+
+    public boolean canBeAlive(Time today) {
+        return today.getDate() <= lastWaterTime.getDate() + numberOfDaysCanBeAliveWithoutWater;
     }
 }
