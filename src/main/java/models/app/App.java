@@ -1,6 +1,7 @@
 package models.app;
 
 import models.date.Time;
+import models.foraging.Tree;
 import models.mapInfo.*;
 import models.userInfo.User;
 import models.waterBodies.Lake;

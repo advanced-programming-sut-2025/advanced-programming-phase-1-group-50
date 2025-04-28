@@ -26,6 +26,9 @@ public class MainMenu implements AppMenu {
         App.setMenu(Menus.GameMenu);
         System.out.println("you are now in game menu");
     }
+    else if(models.enums.MainMenuCommands.ExitMenu.getMatcher(input)!=null){
+        App.setMenu(Menus.LoginAndRegister);
+    }
     else{
         System.out.println("invalid command");
     }

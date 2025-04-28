@@ -5,8 +5,9 @@ import java.util.regex.Pattern;
 
 public enum MainMenuCommands implements Command {
     UserLogout("\\s*user\\s+logout\\s*"),
-    EnterGameMenu("\\s*enter\\s+menu\\s+game\\s+menu\\s*"),
-    EnterProfileMenu("\\s*enter\\s+menu\\s+profile\\s+menu\\s*"),
+    EnterGameMenu("\\s*enter\\s+game\\s+menu\\s*"),
+    EnterProfileMenu("\\s*enter\\s+profile\\s+menu\\s*"),
+    ExitMenu("\\s*exit\\s+menu\\s*"),
     ShowCurrentMenu("\\s*show\\s+current\\s+menu\\s*");
 
 

@@ -4,6 +4,8 @@ import java.util.Scanner;
 import java.util.regex.*;
 
 import controller.ProfileMenuController;
+import models.app.App;
+import models.app.Menus;
 import models.enums.ProfileMenuCommands;
 
 public class ProfileMenu implements AppMenu {
@@ -41,7 +43,10 @@ public class ProfileMenu implements AppMenu {
 
         }
         else if(models.enums.ProfileMenuCommands.UserInfo.getMatcher(input)!=null){
-          System.out.println(controller.showUserInfo());  
+          System.out.println(controller.showUserInfo());
+        }
+        else if(models.enums.ProfileMenuCommands.ExitMenu.getMatcher(input)!=null){
+            App.setMenu(Menus.MainMenu);
         }
         else {
             System.out.println("invalid command");

@@ -155,33 +155,52 @@ public class LoginAndRegisterController {
         } catch (IllegalArgumentException e) {
             return new Result(false, "Invalid gender");
         }
-        System.out.println("now we want to select a security question");
-        int counter = 1;
-        for(SecurityQuestion sq : App.securityQuestions) {
-            System.out.println(counter+ ". " + sq.getQuestion());
-            counter++;
-        }
-        String input = scanner.nextLine();
-        input = input.trim();
-        SecurityQuestion s = new SecurityQuestion(null , null);
-        if(LoginMenuCommands.ShowSecurityQuestions.getMatcher(input)!=null){
-            matcher = LoginMenuCommands.ShowSecurityQuestions.getMatcher(input);
-            int number = Integer.parseInt(matcher.group(1).trim());
-            String answer = matcher.group(2).trim();
-            String answerConfirm = matcher.group(3).trim();
-            if(!answer.trim().equalsIgnoreCase(answerConfirm.trim())){
-                return new Result(false , "answer doesn't match");
-            }
-            SecurityQuestion sq = findSecurityQuestion(number);
-            if(sq == null){
-                return new Result(false , "No security question found");
-            }
-            s = new SecurityQuestion(sq.getQuestion() , answer);
-        }
-        App.users.add(new User(username, password, nickname, email, g , s));
+        return new Result(true , "now we want to select security question");
+//        int counter = 1;
+//        for(SecurityQuestion sq : App.securityQuestions) {
+//            System.out.println(counter+ ". " + sq.getQuestion());
+//            counter++;
+//        }
+//        String input = scanner.nextLine();
+//        input = input.trim();
+//
+//        if(LoginMenuCommands.ShowSecurityQuestions.getMatcher(input)!=null){
+//            matcher = LoginMenuCommands.ShowSecurityQuestions.getMatcher(input);
+//            int number = Integer.parseInt(matcher.group(1).trim());
+//            String answer = matcher.group(2).trim();
+//            String answerConfirm = matcher.group(3).trim();
+//            if(!answer.trim().equalsIgnoreCase(answerConfirm.trim())){
+//                return new Result(false , "answer doesn't match");
+//            }
+//            SecurityQuestion sq = findSecurityQuestion(number);
+//            if(sq == null){
+//                return new Result(false , "No security question found");
+//            }
+//            SecurityQuestion s = new SecurityQuestion(sq.getQuestion() , answer);
+//            App.users.add(new User(username, password, nickname, email, g , s));
+//        }
 
 
-        return new Result(true, "user registered successfully");
+
+//        return new Result(true, "user registered successfully");
+
+
+    }
+    public Result selectSecurityQuestion(String username, String password, String passwordConfirm, String nickname,
+                                         String email,
+                                         String gender,String number ,  String answer) {
+        int counter = 0;
+        try {
+            counter = Integer.parseInt(number);
+        }catch(NumberFormatException e) {
+            return new Result(false, "invalid number");
+        }
+
+        if(counter > App.securityQuestions.size()) return new Result(false, "please select a valid security question");
+        SecurityQuestion question = App.securityQuestions.get(counter);
+        SecurityQuestion s= new SecurityQuestion(question.getQuestion() , answer);
+        App.users.add(new User(username , password , nickname ,email , Gender.valueOf(gender)  , s));
+        return new Result(true , "user registered successfully");
 
 
     }

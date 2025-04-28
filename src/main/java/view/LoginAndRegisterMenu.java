@@ -24,6 +24,22 @@ public class LoginAndRegisterMenu implements AppMenu {
             String gender = matcher.group(6).trim();
             System.out.println(controller.register(username , password , passwordConfirm , nickname , email , gender ,
                     scanner));
+            if(controller.register(username , password , passwordConfirm , nickname , email , gender ,
+                    scanner).getSuccessful()){
+                int counter =0 ;
+                for(SecurityQuestion sq : App.securityQuestions){
+                    System.out.println(counter + ". " + sq.getQuestion());
+                    counter++;
+                }
+                String numberOfSecurityQuestions = scanner.nextLine();
+
+                String[] parts = numberOfSecurityQuestions.split("\\s+");
+                parts[0] = parts[0].trim();
+                parts[1] = parts[1].trim();
+
+                System.out.println(controller.selectSecurityQuestion(username , password , passwordConfirm , nickname , email , gender , parts[0] , parts[1]));
+
+            }
 
 
 
@@ -39,7 +55,7 @@ public class LoginAndRegisterMenu implements AppMenu {
         else if(LoginMenuCommands.ForgetPassword.getMatcher(input) != null) {
             matcher = LoginMenuCommands.ForgetPassword.getMatcher(input);
             String username = matcher.group(1).trim();
-            System.out.println(controller.askSecurityQuestion(username));
+
             if(controller.askSecurityQuestion(username).getSuccessful()) {
                 System.out.println("answer the question");
                 System.out.println(controller.findUser(username).getSecurityQuestion().getQuestion());

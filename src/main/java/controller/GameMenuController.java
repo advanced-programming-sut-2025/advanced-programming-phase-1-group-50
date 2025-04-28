@@ -74,11 +74,14 @@ public class GameMenuController {
             maps.add(p.getFarm());
 
         }
+        Player currentUserPlayer = new Player(App.getLoggedInUser().getUsername() , App.getLoggedInUser().getNickname() , App.getLoggedInUser());
+        players.add(currentUserPlayer);
+        currentUserPlayer.setFarm(App.farms.get(2));
         Map m = new Map();
         m.buildMap(players);
         Game x = new Game(players, maps , App.getLoggedInUser() , m);
-        Player currentUserPlayer = new Player(App.getLoggedInUser().getUsername() , App.getLoggedInUser().getNickname() , App.getLoggedInUser());
-        players.add(currentUserPlayer);
+
+
         App.games.add(x);
         App.setGame(x);
         App.getGame().setCurrentPlayingPlayer(currentUserPlayer);

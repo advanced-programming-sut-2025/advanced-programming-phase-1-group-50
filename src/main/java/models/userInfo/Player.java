@@ -10,7 +10,7 @@ public class Player {
     private int energy;
     private  final String username;  //final
     private  final String nickname;  //final
-    private final Position position = new Position(0, 0); // final
+    // final
     private Ability ability;
     private Tool currentTool;
     private  final Backpack backpack = new Backpack();    //final
@@ -19,6 +19,7 @@ public class Player {
     private int coins;
     private int woods;//final
     private Position currentPosition;
+    private boolean isInfinite = false;
 
     private final User currentUser;
     public Player(String username , String nickname , User currentUser) {
@@ -59,7 +60,7 @@ public class Player {
         this.farm = map;
     }
     public Position getPosition(){
-        return position;
+        return currentPosition;
     }
     public void setPosition(Position position){
         this.currentPosition = position;
@@ -91,6 +92,43 @@ public class Player {
         return backpack;
     }
 
+    public int getEnergy() {
+        return energy;
+    }
 
-//  TODO : method faint(ghash kardan)
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+        if(this.energy > maxEnergy){
+            this.energy = maxEnergy;
+        }
+    }
+    public void consumeEnergy(int energy) {
+        this.energy -= energy;
+        if(this.energy < 0){
+            faint();
+        }
+    }
+    public void addEnergy(int energy) {
+        if(this.isInfinite){
+            if(energy + this.energy > Integer.MAX_VALUE){
+                this.energy = Integer.MAX_VALUE;
+            }
+            else {
+                this.energy += energy;
+            }
+
+        }
+        else {
+            this.energy += energy;
+            this.energy = Math.min(maxEnergy, this.energy);
+        }
+    }
+    public void setEnergyInfinite(){
+        this.energy = Integer.MAX_VALUE;
+        this.isInfinite = true;
+
+    }
+
+    //  TODO : method faint(ghash kardan)
 }
