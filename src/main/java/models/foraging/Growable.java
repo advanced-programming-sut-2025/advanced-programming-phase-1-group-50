@@ -8,4 +8,5 @@ public interface Growable {
     boolean harvest();
     void watering();
     boolean canBeAlive(Time today);
+    int getNumberOfDaysToComplete();
 }

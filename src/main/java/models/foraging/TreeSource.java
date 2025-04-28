@@ -1,6 +1,8 @@
 package models.foraging;
 
-public enum TreeSource {
+import models.manuFactor.Ingredient;
+
+public enum TreeSource implements Ingredient {
     ApricotSapling,
     CherrySapling,
     BananaSapling,

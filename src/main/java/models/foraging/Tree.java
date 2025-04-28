@@ -12,14 +12,28 @@ public class Tree implements Growable, Placeable {
     private Time lastGrowthTime;
     private Time lastHarvestTime;
     private Time lastWaterTime;
+    private final Fertilizer fertilizer;
+    private final int numberOfDaysCanBeAliveWithoutWater;
     private Rectangle bounds;
-    private static final int numberOfDaysCanBeAliveWithoutWater = 2;
 
-    public Tree(TreeType type, Time timeOfPlanting, int x, int y, int width, int height){
+    public Tree(TreeType type, Time timeOfPlanting, Fertilizer fertilizer, int x, int y, int width, int height){
         this.type = type;
         this.lastGrowthTime = timeOfPlanting.clone();
         this.lastWaterTime = timeOfPlanting.clone();
-        this.levelOfGrowth = 0;
+        this.fertilizer = fertilizer;
+        if (fertilizer == null) {
+            this.levelOfGrowth = 0;
+            numberOfDaysCanBeAliveWithoutWater = 2;
+        }
+        else {
+            if (fertilizer.equals(Fertilizer.WaterFertilizer)) {
+                levelOfGrowth = 0;
+                numberOfDaysCanBeAliveWithoutWater = 3;
+            } else {
+                levelOfGrowth = 1;
+                numberOfDaysCanBeAliveWithoutWater = 2;
+            }
+        }
         this.bounds = new Rectangle(x, y, width, height);
     }
 
@@ -72,5 +86,14 @@ public class Tree implements Growable, Placeable {
 
     public boolean canBeAlive(Time today) {
         return today.getDate() <= lastWaterTime.getDate() + numberOfDaysCanBeAliveWithoutWater;
+    }
+
+    public int getNumberOfDaysToComplete() {
+        int passedDays = 0;
+        for (int i = 0; i < levelOfGrowth; i++) {
+            passedDays += type.getTimeForGrow(i);
+        }
+        passedDays += App.getGame().getTime().getDate() - lastGrowthTime.getDate();
+        return type.getTotalHarvestTime() - passedDays;
     }
 }

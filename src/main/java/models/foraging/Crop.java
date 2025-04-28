@@ -11,13 +11,27 @@ public class Crop implements Ingredient, Growable {
     private Time lastGrowthTime;
     private Time lastHarvestTime;
     private Time lastWaterTime;
-    private static final int numberOfDaysCanBeAliveWithoutWater = 2;
+    private final Fertilizer fertilizer;
+    private final int numberOfDaysCanBeAliveWithoutWater;
 
-    public Crop(CropType type, Time timeOfPlanting) {
+    public Crop(CropType type, Time timeOfPlanting, Fertilizer fertilizer) {
         this.type = type;
         this.lastGrowthTime = timeOfPlanting.clone();
         this.lastWaterTime = timeOfPlanting.clone();
-        levelOfGrowth = 0;
+        this.fertilizer = fertilizer;
+        if (fertilizer == null) {
+            levelOfGrowth = 0;
+            numberOfDaysCanBeAliveWithoutWater = 2;
+        }
+        else {
+            if (fertilizer.equals(Fertilizer.WaterFertilizer)) {
+                levelOfGrowth = 0;
+                numberOfDaysCanBeAliveWithoutWater = 3;
+            } else {
+                levelOfGrowth = 1;
+                numberOfDaysCanBeAliveWithoutWater = 2;
+            }
+        }
     }
 
     public int calculatePrice() {
@@ -82,5 +96,14 @@ public class Crop implements Ingredient, Growable {
 
     public boolean canBeAlive(Time today) {
         return today.getDate() <= lastWaterTime.getDate() + numberOfDaysCanBeAliveWithoutWater;
+    }
+
+    public int getNumberOfDaysToComplete() {
+        int passedDays = 0;
+        for (int i = 0; i < levelOfGrowth; i++) {
+            passedDays += type.getTimeForGrow(i);
+        }
+        passedDays += App.getGame().getTime().getDate() - lastGrowthTime.getDate();
+        return type.getTotalHarvestTime() - passedDays;
     }
 }
