@@ -16,12 +16,8 @@ public class Game {
     private Player currentPlayingPlayer;
 
     public Game(ArrayList<Player> players , ArrayList<Farm> farms , User u , Map x) {
-        for(Farm m : farms){
-            this.farms.add(m);
-        }
-        for(Player p : players){
-            this.players.add(p);
-        }
+        this.farms.addAll(farms);
+        this.players.addAll(players);
         this.gameCreator = u;
         this.time = new Time();
         this.map = x;

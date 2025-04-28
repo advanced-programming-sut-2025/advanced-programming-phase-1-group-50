@@ -18,12 +18,16 @@ public enum GameMenuCommands implements Command {
     GetTodayWeather("\\s*get\\s+weather\\s*"),
     WeatherForecast("\\s*weather\\s*forecast\\s*"),
     GreenhouseBuild("\\s*greenhouse\\s+build\\s*"),
+    EnergyShow("\\s*energy\\s+show\\s*"),
+    ExitMenu("\\s*exit\\s+menu\\s*"),
+
     // cheat codes :
     AdvancedTimeCheatCode("\\s*advanced\\s+time\\s+(?<advancedTime>-?\\d+)\\s*"),
     AdvancedDateCheatCode("\\s*advanced\\s+date\\s+(?<advancedDate>-?\\d+)\\s*"),
     CheatWeatherSetCode("\\s*cheat\\s+weather\\s+set\\s+(?<weather>\\S+)\\s*"),
     CheatThunder("\\s*cheat\\s+thor\\s+-l\\s+<(?<thunderX>-?\\d+)\\s+,(?<thunderY>-?\\d+)\\s*"),
-
+    CheatSetEnergy("\\s*energy\\s+set\\s+-v\\s+(?<energy>-?\\d+)\\s*"),
+    CheatUnlimitedEnergy("\\s*energy\\s+unlimited\\s*"),
     NewGame(".+");
 
     private final String pattern;
