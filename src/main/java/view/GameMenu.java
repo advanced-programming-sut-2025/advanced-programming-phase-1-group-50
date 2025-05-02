@@ -94,8 +94,14 @@ public class GameMenu implements AppMenu {
         else if(GameMenuCommands.ExitMenu.getMatcher(input)!=null){
             App.setMenu(Menus.MainMenu);
         }
+        else if(GameMenuCommands.PrintMap.getMatcher(input)!=null){
+            App.getGame().getMap().printMap();
+        }
         else if(models.enums.GameMenuCommands.NewGame.getMatcher(input)!=null){
             ArrayList<Player> players = new ArrayList<>();
+            Player currentPlayer = new Player(App.getLoggedInUser().getUsername() , App.getLoggedInUser().getNickname() , App.getLoggedInUser());
+            players.add(currentPlayer);
+
             Result result1 = controller.createNewGamePlayers(input, players);
             System.out.println(result1);
             if(result1.getSuccessful()){
@@ -105,6 +111,8 @@ public class GameMenu implements AppMenu {
                 for(Player p : players){
                     System.out.println(p.getUsername());
                 }
+                int[] startXForMap = {0 ,150 ,0 ,150 };
+                int[] startYForMap = {0 , 0 , 125 ,125};
                 for(int i=0 ; i<x  ; i++){
                     String command ;
                     while((command = scanner.nextLine()) != null ){
@@ -112,7 +120,8 @@ public class GameMenu implements AppMenu {
                             matcher = models.enums.GameMenuCommands.GameMap.getMatcher(command);
                             String Map = matcher.group(1);
                             int mapNumber = Integer.parseInt(matcher.group(1));
-                            Result result  = controller.selectMapForCreateNewGame(mapNumber, players.get(i));
+                            Result result  = controller.selectMapForCreateNewGame(mapNumber, players.get(i) ,
+                                    startXForMap[i] , startYForMap[i]);
                             System.out.println(result);
                             if(result.getSuccessful()){
 

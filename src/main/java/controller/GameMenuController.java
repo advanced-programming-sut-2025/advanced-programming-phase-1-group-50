@@ -53,18 +53,28 @@ public class GameMenuController {
         return new Result(true, "players added successfully , now we wnt to choose maps");
 
     }
-    public Result selectMapForCreateNewGame(int  mapInput, Player player) {
+    public Result selectMapForCreateNewGame(int  mapInput, Player player , int sx , int sy) {
         if(mapInput > 4 || mapInput < 1){
             return new Result(false, "please select between available maps");
         }
-        Farm selectedFarm = null;
-        for(Farm farm : App.farms){
-            if(farm.getType() == mapInput){
-                selectedFarm = farm;
-            }
+
+        switch (mapInput){
+            case 1:
+                player.setFarm(FarmFactory.makeFarm1(sx  ,sy));
+                break;
+            case 2:
+                player.setFarm(FarmFactory.makeFarm2(sx , sy));
+                break;
+            case 3:
+                player.setFarm(FarmFactory.makeFarm3(sx ,sy));
+                break;
+            case 4:
+                player.setFarm(FarmFactory.makeFarm4(sx  ,sy));
+                break;
+
         }
 
-        player.setFarm(selectedFarm);
+
         return new Result(true, "map selected successfully");
     }
 
@@ -74,18 +84,16 @@ public class GameMenuController {
             maps.add(p.getFarm());
 
         }
-        Player currentUserPlayer = new Player(App.getLoggedInUser().getUsername() , App.getLoggedInUser().getNickname() , App.getLoggedInUser());
-        players.add(currentUserPlayer);
-        currentUserPlayer.setFarm(App.farms.get(2));
-        Map m = new Map();
+
+        Map m = new Map(maps);
         m.buildMap(players);
         Game x = new Game(players, maps , App.getLoggedInUser() , m);
 
 
         App.games.add(x);
         App.setGame(x);
-        App.getGame().setCurrentPlayingPlayer(currentUserPlayer);
-        return new Result(true, "new game created succsessfuly");
+        App.getGame().setCurrentPlayingPlayer(players.getFirst());
+        return new Result(true, "new game created successfully");
     }
     public Result loadGame(){
         return new Result(true, "load game successful");

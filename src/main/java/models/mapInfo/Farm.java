@@ -1,11 +1,13 @@
 package models.mapInfo;
 
 import models.Placeable;
+import models.foraging.Crop;
 import models.waterBodies.Lake;
 import models.foraging.Tree;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 public class Farm {
 
@@ -14,13 +16,14 @@ public class Farm {
     private final GreenHouse greenHouse;
     private final ArrayList<Lake> lakes;
     private final ArrayList<Quarry> quarries;
-    private final ArrayList<Tree> trees;
-    private final Rectangle rectangle =  new Rectangle();
+    private  ArrayList<Tree> trees;
+    private final Rectangle rectangle;
     private final ArrayList<Stone> stones;
     private ArrayList<Placeable> placeables = new ArrayList<>();
+    private ArrayList<Crop> crops = new ArrayList<>();
 
     public Farm( Cottage cottage, GreenHouse greenHouse, ArrayList<Lake> lakes, ArrayList<Quarry> quarries,
-                 ArrayList<Tree> trees, ArrayList<Stone> stones , Rectangle rectangle , int type ) {
+                 ArrayList<Tree> trees, ArrayList<Stone> stones , ArrayList<Crop> crops , Rectangle rectangle , int type ) {
 
         this.cottage = cottage;
         placeables.add(cottage);
@@ -31,10 +34,13 @@ public class Farm {
         this.quarries = quarries;
         placeables.addAll(quarries);
         this.trees = trees;
-        placeables.addAll((Collection<? extends Placeable>) trees);
+        placeables.addAll(trees);
         this.stones = stones;
         placeables.addAll(stones);
         this.type = type;
+        this.rectangle = rectangle;
+        this.crops = crops;
+        placeables.addAll(crops);
 
 
     }
@@ -59,6 +65,10 @@ public class Farm {
         return lakes;
     }
 
+    public ArrayList<Crop> getCrops() {
+        return crops;
+    }
+
     public GreenHouse getGreenHouse() {
         return greenHouse;
     }
@@ -69,11 +79,20 @@ public class Farm {
             }
         }
     }
-
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
     public ArrayList<Placeable> getPlaceables() {
         return placeables;
     }
+    public void addRandomTree(){
+        Random rand = new Random();
 
+    }
+
+    public void setTrees(ArrayList<Tree> trees) {
+        this.trees = trees;
+    }
     public int getType() {
         return type;
     }

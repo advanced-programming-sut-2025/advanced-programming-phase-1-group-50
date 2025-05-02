@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
+    <output_file path="C:\Users\morez\Desktop\outputMap.txt" is_save="true" />
+    <option name="MAIN_CLASS_NAME" value="Main" />
+    <module name="StardewValley" />
+    <option name="INPUT_FILE" value="$PROJECT_DIR$/../../inputMap.txt" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

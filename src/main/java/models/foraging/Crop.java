@@ -1,10 +1,14 @@
 package models.foraging;
 
+import models.Placeable;
 import models.app.App;
 import models.date.Time;
 import models.manuFactor.Ingredient;
+import models.mapInfo.Position;
 
-public class Crop implements Ingredient, Growable {
+import java.awt.*;
+
+public class Crop implements Ingredient, Growable , Placeable {
     private ForagingQuality quality;
     private final CropType type;
     private int levelOfGrowth;
@@ -13,8 +17,11 @@ public class Crop implements Ingredient, Growable {
     private Time lastWaterTime;
     private final Fertilizer fertilizer;
     private final int numberOfDaysCanBeAliveWithoutWater;
+    private final Rectangle bounds;
 
-    public Crop(CropType type, Time timeOfPlanting, Fertilizer fertilizer) {
+
+
+    public Crop(CropType type, Time timeOfPlanting, Fertilizer fertilizer , int x ,  int y) {
         this.type = type;
         this.lastGrowthTime = timeOfPlanting.clone();
         this.lastWaterTime = timeOfPlanting.clone();
@@ -32,6 +39,7 @@ public class Crop implements Ingredient, Growable {
                 numberOfDaysCanBeAliveWithoutWater = 2;
             }
         }
+        this.bounds = new Rectangle(x, y,1, 1);
     }
 
     public int calculatePrice() {
@@ -105,5 +113,11 @@ public class Crop implements Ingredient, Growable {
         }
         passedDays += App.getGame().getTime().getDate() - lastGrowthTime.getDate();
         return type.getTotalHarvestTime() - passedDays;
+    }
+    public Rectangle getBounds() {
+        return bounds;
+    }
+    public char getSymbol() {
+        return '*';
     }
 }
