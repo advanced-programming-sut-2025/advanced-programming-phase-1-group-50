@@ -21,6 +21,7 @@ public enum GameMenuCommands implements Command {
     EnergyShow("\\s*energy\\s+show\\s*"),
     ExitMenu("\\s*exit\\s+menu\\s*"),
     PrintMap("\\s*print\\s+map\\s*"),
+    Walk("\\s*walk\\s+-l\\s+<(?<x>\\d+)\\s+,\\s+(?<y>\\d+)>\\s*"),
 
     // cheat codes :
     AdvancedTimeCheatCode("\\s*advanced\\s+time\\s+(?<advancedTime>-?\\d+)\\s*"),

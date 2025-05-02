@@ -1,6 +1,8 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.*;
 
@@ -10,6 +12,7 @@ import controller.GameDateAndWeatherController.WeatherController;
 import models.app.App;
 import models.app.Menus;
 import models.enums.GameMenuCommands;
+import models.mapInfo.Position;
 import models.userInfo.*;
 import models.Result;
 import controller.GameMenuController;
@@ -96,6 +99,23 @@ public class GameMenu implements AppMenu {
         }
         else if(GameMenuCommands.PrintMap.getMatcher(input)!=null){
             App.getGame().getMap().printMap();
+        }
+        else if(GameMenuCommands.Walk.getMatcher(input)!=null){
+            matcher = models.enums.GameMenuCommands.Walk.getMatcher(input);
+            int x = Integer.parseInt(matcher.group(1));
+            int y = Integer.parseInt(matcher.group(2));
+            List<Position> positions = new LinkedList<Position>();
+            Result result = controller.findPath(x  ,y , positions);
+            System.out.println(result.getMessage());
+            if(result.getSuccessful()){
+                System.out.println("do you want to continue?");
+                String message = scanner.nextLine();
+                if(message.equals("yes")){
+                    System.out.println(controller.walk(x , y , positions));
+                }
+
+
+            }
         }
         else if(models.enums.GameMenuCommands.NewGame.getMatcher(input)!=null){
             ArrayList<Player> players = new ArrayList<>();
