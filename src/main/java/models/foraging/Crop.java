@@ -5,7 +5,6 @@ import models.date.Time;
 import models.manuFactor.Ingredient;
 
 public class Crop implements Ingredient, Growable {
-    private ForagingQuality quality;
     private final CropType type;
     private int levelOfGrowth;
     private Time lastGrowthTime;

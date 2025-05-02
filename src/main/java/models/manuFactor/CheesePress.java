@@ -1,6 +1,6 @@
 package models.manuFactor;
 
-import models.animals.AnimalGood;
+import models.animals.AnimalGoodType;
 import models.date.TimeInterval;
 import models.manuFactor.artisanGoods.ArtisanGood;
 import models.manuFactor.artisanGoods.ArtisanGoodType;
@@ -21,10 +21,10 @@ public class CheesePress extends ArtisanMachine {
     public boolean canUse(Player player, String product) {
         if (product.equals("Cheese") || product.equals("cheese")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
-                if (ingredient.equals(AnimalGood.Milk) || ingredient.equals(AnimalGood.LargeMilk)) {
+                if (ingredient.equals(AnimalGoodType.Milk) || ingredient.equals(AnimalGoodType.LargeMilk)) {
                     if (player.getBackpack().getIngredientQuantity().get(ingredient) >= 1) {
                         player.getBackpack().removeIngredients(ingredient, 1);
-                        producingGood = ingredient.equals(AnimalGood.Milk) ?
+                        producingGood = ingredient.equals(AnimalGoodType.Milk) ?
                                 new ArtisanGood(ArtisanGoodType.CheeseByMilk) : new ArtisanGood(ArtisanGoodType.CheeseByLargeMilk);
                         return true;
                     }
@@ -34,10 +34,10 @@ public class CheesePress extends ArtisanMachine {
         }
         if (product.equals("Goat_Cheese") || product.equals("goat_cheese")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
-                if (ingredient.equals(AnimalGood.GoatMilk) || ingredient.equals(AnimalGood.LargeGoatMilk)) {
+                if (ingredient.equals(AnimalGoodType.GoatMilk) || ingredient.equals(AnimalGoodType.LargeGoatMilk)) {
                     if (player.getBackpack().getIngredientQuantity().get(ingredient) >= 1) {
                         player.getBackpack().removeIngredients(ingredient, 1);
-                        producingGood = ingredient.equals(AnimalGood.GoatMilk) ?
+                        producingGood = ingredient.equals(AnimalGoodType.GoatMilk) ?
                                 new ArtisanGood(ArtisanGoodType.GoatCheeseByMilk) :
                                 new ArtisanGood(ArtisanGoodType.GoatCheeseByLargeMilk);
                         return true;
