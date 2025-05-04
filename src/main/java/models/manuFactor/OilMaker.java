@@ -1,6 +1,6 @@
 package models.manuFactor;
 
-import models.animals.AnimalGood;
+import models.animals.AnimalGoodType;
 import models.date.TimeInterval;
 import models.foraging.Crop;
 import models.foraging.CropType;
@@ -21,7 +21,7 @@ public class OilMaker extends ArtisanMachine {
     public boolean canUse(Player player, String product) {
         if (product.equals("Truffle_Oil") || product.equals("truffle_oil")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
-                if (ingredient.equals(AnimalGood.Truffle)) {
+                if (ingredient.equals(AnimalGoodType.Truffle)) {
                     if (player.getBackpack().getIngredientQuantity().get(ingredient) >= 1) {
                         player.getBackpack().removeIngredients(ingredient, 1);
                         producingGood = new ArtisanGood(ArtisanGoodType.TruffleOil);

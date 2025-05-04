@@ -9,7 +9,6 @@ import models.mapInfo.Position;
 import java.awt.*;
 
 public class Crop implements Ingredient, Growable , Placeable {
-    private ForagingQuality quality;
     private final CropType type;
     private int levelOfGrowth;
     private Time lastGrowthTime;

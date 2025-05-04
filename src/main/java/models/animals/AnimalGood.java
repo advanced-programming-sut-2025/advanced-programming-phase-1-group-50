@@ -2,27 +2,26 @@ package models.animals;
 
 import models.manuFactor.Ingredient;
 
-public enum AnimalGood implements Ingredient {
-    Egg(50),
-    LargeEgg(95),
-    DuckEgg(95),
-    DuckFeather(250),
-    Wool(340),
-    RabbitFoot(565),
-    DinosaurEgg(350),
-    Milk(125),
-    LargeMilk(190),
-    GoatMilk(225),
-    LargeGoatMilk(345),
-    Truffle(625);
+public class AnimalGood implements Ingredient {
+    private final AnimalGoodType type;
+    private final Quality quality;
+    private final int sellPrice;
 
-    private final int price;
-
-    AnimalGood(int price) {
-        this.price = price;
+    public AnimalGood(AnimalGoodType type, Quality quality) {
+        this.type = type;
+        this.quality = quality;
+        this.sellPrice = (int) (type.getPrice() * quality.getRatio());
     }
 
-    public int getPrice() {
-        return price;
+    public AnimalGoodType getType() {
+        return type;
+    }
+
+    public Quality getQuality() {
+        return quality;
+    }
+
+    public int getSellPrice() {
+        return sellPrice;
     }
 }
