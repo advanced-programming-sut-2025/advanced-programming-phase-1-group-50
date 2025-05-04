@@ -6,23 +6,25 @@ import java.util.List;
 
 public enum Weather {
     Sunny(
-            "sunny",
+            "sunny", 1.5,
             new ArrayList<Season>(Arrays.asList(Season.Spring, Season.Summer, Season.Fall, Season.Winter))),
     Rainy(
-            "rainy",
+            "rainy", 1.2,
             new ArrayList<Season>(Arrays.asList(Season.Spring, Season.Summer, Season.Fall))),
     Stormy(
-            "stormy",
+            "stormy", 0.5,
             new ArrayList<Season>(Arrays.asList(Season.Spring, Season.Summer, Season.Fall))),
     Snowy(
-            "snowy",
+            "snowy", 1,
             new ArrayList<Season>(List.of(Season.Winter)));
 
     private final String name;
+    private final double effectivenessOnFishing;
     private final ArrayList<Season> seasons = new ArrayList<>();
 
-    Weather(String name, ArrayList<Season> seasons) {
+    Weather(String name, double effectivenessOnFishing, ArrayList<Season> seasons) {
         this.name = name;
+        this.effectivenessOnFishing = effectivenessOnFishing;
         this.seasons.addAll(seasons);
     }
 
@@ -32,5 +34,9 @@ public enum Weather {
 
     public String getName() {
         return name;
+    }
+
+    public double getEffectivenessOnFishing() {
+        return effectivenessOnFishing;
     }
 }

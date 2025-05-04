@@ -88,15 +88,7 @@ public class Animal {
         lastProductTime = App.getGame().getTime().clone();
 
         double qualityValue = ((double) friendShip / 1000) * (0.5 + 0.5 * Math.random());
-        Quality quality;
-        if (qualityValue >= 0 && qualityValue <= 0.5)
-            quality = Quality.Regular;
-        else if (qualityValue > 0.5 && qualityValue <= 0.7)
-            quality = Quality.Silver;
-        else if (qualityValue > 0.7 && qualityValue <= 0.9)
-            quality = Quality.Gold;
-        else
-            quality = Quality.Iridium;
+        Quality quality = Quality.getQualityByValue(qualityValue);
 
         return new AnimalGood(type.getAnimalGoods().get(whichProduct), quality);
     }

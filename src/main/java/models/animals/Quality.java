@@ -15,4 +15,15 @@ public enum Quality {
     public double getRatio() {
         return ratio;
     }
+
+    public static Quality getQualityByValue(double qualityValue) {
+        if (qualityValue >= 0 && qualityValue <= 0.5)
+            return Quality.Regular;
+        else if (qualityValue > 0.5 && qualityValue <= 0.7)
+            return Quality.Silver;
+        else if (qualityValue > 0.7 && qualityValue <= 0.9)
+            return Quality.Gold;
+        else
+            return Quality.Iridium;
+    }
 }

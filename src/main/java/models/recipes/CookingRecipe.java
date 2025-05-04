@@ -1,7 +1,7 @@
 package models.recipes;
 
 import models.animals.AnimalGoodType;
-import models.animals.Fish;
+import models.animals.FishType;
 import models.foraging.CropType;
 import models.foraging.ForagingCrop;
 import models.foraging.Fruit;
@@ -15,7 +15,7 @@ import java.util.Map;
 public enum CookingRecipe implements Ingredient {
     FriedEgg(new HashMap<>(Map.of(AnimalGoodType.Egg, 1)),
             50, 35),
-    BakedFish(new HashMap<>(Map.of(Fish.Sardine, 1, Fish.Salmon, 1, CropType.Wheat, 1)) ,
+    BakedFish(new HashMap<>(Map.of(FishType.Sardine, 1, FishType.Salmon, 1, CropType.Wheat, 1)) ,
             75, 100),
     Salad(new HashMap<>(Map.of(ForagingCrop.Leek, 1, ForagingCrop.Dandelion, 1)),
             113, 110),
@@ -29,7 +29,7 @@ public enum CookingRecipe implements Ingredient {
             150, 300),
     Tortilla(new HashMap<>(Map.of(CropType.Corn, 1)),
             50, 50),
-    MakiRoll(new HashMap<>(Map.of(Fish.Salmon, 1, CropType.UnMilledRice, 1)) ,
+    MakiRoll(new HashMap<>(Map.of(FishType.Salmon, 1, CropType.UnMilledRice, 1)) ,
             100, 220),
     TripleShotEspresso(new HashMap<>(Map.of(new ArtisanGood(ArtisanGoodType.Coffee), 3)),
             200, 450),
@@ -45,7 +45,7 @@ public enum CookingRecipe implements Ingredient {
             240, 400),
     Bread(new HashMap<>(Map.of(CropType.Wheat, 1)),
             50, 60),
-    SalmonDinner(new HashMap<>(Map.of(Fish.Salmon, 1, CropType.Amaranth, 1, CropType.Kale, 1)),
+    SalmonDinner(new HashMap<>(Map.of(FishType.Salmon, 1, CropType.Amaranth, 1, CropType.Kale, 1)),
             125, 300),
     VegetableMedley(new HashMap<>(Map.of(CropType.Tomato, 1, CropType.Beet, 1)),
             165, 120),
@@ -53,9 +53,9 @@ public enum CookingRecipe implements Ingredient {
             200, 150),
     SurvivalBurger(new HashMap<>(Map.of(Bread, 1, CropType.Carrot, 1, CropType.Eggplant, 1)),
             125, 180),
-    DishOTheSea(new HashMap<>(Map.of(Fish.Sardine, 2,HashBrowns, 1)),
+    DishOTheSea(new HashMap<>(Map.of(FishType.Sardine, 2,HashBrowns, 1)),
             150, 220),
-    SeaFormPudding(new HashMap<>(Map.of(Fish.Flounder, 1, Fish.MidnightCarp, 1)),
+    SeaFormPudding(new HashMap<>(Map.of(FishType.Flounder, 1, FishType.MidnightCarp, 1)),
             175, 300),
     MinersTreat(new HashMap<>(Map.of(CropType.Carrot, 1, AnimalGoodType.Milk, 1)),
             125, 200);

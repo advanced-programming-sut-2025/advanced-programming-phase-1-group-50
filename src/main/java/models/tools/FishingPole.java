@@ -1,7 +1,7 @@
 package models.tools;
 
 public class FishingPole extends Tool {
-    private ToolType type = ToolType.Primary;
+    private PoleType type = PoleType.Training;
 
     private void upgradeTool() {
 
@@ -17,5 +17,11 @@ public class FishingPole extends Tool {
 
     }
 
+    public PoleType getType() {
+        return type;
+    }
 
+    public void setType(PoleType type) {
+        this.type = type;
+    }
 }
