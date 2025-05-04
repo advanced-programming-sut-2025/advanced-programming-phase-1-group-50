@@ -9,7 +9,11 @@ public class Ability {
     private int foragingRate = 0;
     private int fishingLevel = 0;
     private int fishingRate = 0;
-    private static int maxLevel = 4;
+    private final static int maxLevel = 4;
+
+    public static int getMaxLevel() {
+        return maxLevel;
+    }
 
     public static int getRequiredPointsForLevel(int level) {
         return 100 * level + 50;
