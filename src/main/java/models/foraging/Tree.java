@@ -96,4 +96,6 @@ public class Tree implements Growable, Placeable {
         passedDays += App.getGame().getTime().getDate() - lastGrowthTime.getDate();
         return type.getTotalHarvestTime() - passedDays;
     }
+
+
 }

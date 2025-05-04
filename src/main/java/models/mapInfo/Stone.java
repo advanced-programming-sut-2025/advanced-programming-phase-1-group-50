@@ -9,14 +9,17 @@ public class Stone implements Ingredient , Placeable {
     private Rectangle bounds;
 
     public Stone() {
+
     }
 
-    public Stone(int x, int y, int width, int height) {
+    public Stone(int x, int y) {
         this.bounds = new Rectangle(x, y, 1, 1);
     }
+
     public Rectangle getBounds() {
         return bounds;
     }
+
     public char getSymbol() {
         return 'S';
     }

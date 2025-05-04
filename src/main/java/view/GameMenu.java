@@ -1,6 +1,8 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.*;
 
@@ -10,6 +12,7 @@ import controller.GameDateAndWeatherController.WeatherController;
 import models.app.App;
 import models.app.Menus;
 import models.enums.GameMenuCommands;
+import models.mapInfo.Position;
 import models.userInfo.*;
 import models.Result;
 import controller.GameMenuController;
@@ -94,8 +97,31 @@ public class GameMenu implements AppMenu {
         else if(GameMenuCommands.ExitMenu.getMatcher(input)!=null){
             App.setMenu(Menus.MainMenu);
         }
+        else if(GameMenuCommands.PrintMap.getMatcher(input)!=null){
+            App.getGame().getMap().printMap();
+        }
+        else if(GameMenuCommands.Walk.getMatcher(input)!=null){
+            matcher = models.enums.GameMenuCommands.Walk.getMatcher(input);
+            int x = Integer.parseInt(matcher.group(1));
+            int y = Integer.parseInt(matcher.group(2));
+            List<Position> positions = new LinkedList<Position>();
+            Result result = controller.findPath(x  ,y , positions);
+            System.out.println(result.getMessage());
+            if(result.getSuccessful()){
+                System.out.println("do you want to continue?");
+                String message = scanner.nextLine();
+                if(message.equals("yes")){
+                    System.out.println(controller.walk(x , y , positions));
+                }
+
+
+            }
+        }
         else if(models.enums.GameMenuCommands.NewGame.getMatcher(input)!=null){
             ArrayList<Player> players = new ArrayList<>();
+            Player currentPlayer = new Player(App.getLoggedInUser().getUsername() , App.getLoggedInUser().getNickname() , App.getLoggedInUser());
+            players.add(currentPlayer);
+
             Result result1 = controller.createNewGamePlayers(input, players);
             System.out.println(result1);
             if(result1.getSuccessful()){
@@ -105,6 +131,8 @@ public class GameMenu implements AppMenu {
                 for(Player p : players){
                     System.out.println(p.getUsername());
                 }
+                int[] startXForMap = {0 ,150 ,0 ,150 };
+                int[] startYForMap = {0 , 0 , 125 ,125};
                 for(int i=0 ; i<x  ; i++){
                     String command ;
                     while((command = scanner.nextLine()) != null ){
@@ -112,7 +140,8 @@ public class GameMenu implements AppMenu {
                             matcher = models.enums.GameMenuCommands.GameMap.getMatcher(command);
                             String Map = matcher.group(1);
                             int mapNumber = Integer.parseInt(matcher.group(1));
-                            Result result  = controller.selectMapForCreateNewGame(mapNumber, players.get(i));
+                            Result result  = controller.selectMapForCreateNewGame(mapNumber, players.get(i) ,
+                                    startXForMap[i] , startYForMap[i]);
                             System.out.println(result);
                             if(result.getSuccessful()){
 

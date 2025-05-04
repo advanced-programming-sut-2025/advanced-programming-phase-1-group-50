@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Time {
+    public Time clone;
     private Season season;
     private DaysOfTheWeek dayOfWeek ;
     private int date;
