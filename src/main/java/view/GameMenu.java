@@ -9,6 +9,7 @@ import java.util.regex.*;
 import controller.AbilityAndEnergyController.EnergyController;
 import controller.GameDateAndWeatherController.DateController;
 import controller.GameDateAndWeatherController.WeatherController;
+import controller.ToolsControllers.ToolController;
 import models.app.App;
 import models.app.Menus;
 import models.enums.GameMenuCommands;
@@ -21,6 +22,7 @@ public class GameMenu implements AppMenu {
     private final DateController dateController = new DateController();
     private final WeatherController weatherController = new WeatherController();
     private final EnergyController energyController = new EnergyController();
+    private final ToolController toolController = new ToolController();
     public void check(Scanner scanner) {
         String input = scanner.nextLine();
         input = input.trim();
@@ -116,6 +118,34 @@ public class GameMenu implements AppMenu {
 
 
             }
+        }
+        else if(GameMenuCommands.HelpReadingMap.getMatcher(input)!=null){
+            System.out.println(controller.helpReadingMap());
+        }
+        else if(GameMenuCommands.InventoryShow.getMatcher(input)!=null){
+            System.out.println(controller.inventoryShow());
+        }
+        else if(GameMenuCommands.InventoryTrash.getMatcher(input)!=null){
+            matcher = models.enums.GameMenuCommands.InventoryTrash.getMatcher(input);
+            boolean hasNumber = false;
+
+            String name = matcher.group(1);
+            if(matcher.group(3)!=null){
+                hasNumber = true;
+            }
+            int number = Integer.parseInt(matcher.group(3));
+            System.out.println(controller.inventoryTrash(name , number , hasNumber));
+        }
+        else if(GameMenuCommands.ToolsEquip.getMatcher(input)!=null){
+            matcher = models.enums.GameMenuCommands.ToolsEquip.getMatcher(input);
+            String toolName = matcher.group(1);
+            System.out.println(toolController.ToolsEquip(toolName));
+        }
+        else if(GameMenuCommands.ShowCurrentTool.getMatcher(input)!=null){
+            System.out.println(toolController.showCurrentTool());
+        }
+        else if(GameMenuCommands.ToolsShowAvailable.getMatcher(input)!=null){
+            System.out.println(toolController.showAvailableTool());
         }
         else if(models.enums.GameMenuCommands.NewGame.getMatcher(input)!=null){
             ArrayList<Player> players = new ArrayList<>();

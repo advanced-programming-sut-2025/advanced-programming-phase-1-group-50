@@ -4,11 +4,15 @@ import java.util.*;
 import controller.GameDateAndWeatherController.DateController;
 import models.Result;
 import models.app.*;
+import models.manuFactor.Ingredient;
 import models.mapInfo.Map;
 import models.userInfo.*;
 import models.mapInfo.*;
+
+
 public class GameMenuController {
     private final DateController dateController = new DateController();
+
     public User findUser(String username){
         for(User u : App.users){
             if(username.equals(u.getUsername())){
@@ -171,6 +175,14 @@ public class GameMenuController {
         if(!App.getGame().getMap().getTiles()[endX][endY].isWalkable()){
             return new Result(false ,"Wrong place , Wrong Time");
         }
+        for(Player p : App.getGame().getPlayers()){
+            if(App.getGame().getCurrentPlayingPlayer().equals(p)){
+                continue;
+            }
+            if(p.getFarm().getRectangle().contains(endX, endY)){
+                return new Result(false ,"this position is not in your farm");
+            }
+        }
 
         List<Position> path = findShortestPath(
                 App.getGame().getMap(),
@@ -192,9 +204,59 @@ public class GameMenuController {
 
     public Result walk(int endX , int endY , List<Position> positions){
         int energy = calculateEnergyBasedOnShortestDistance(positions);
+        if(energy > App.getGame().getCurrentPlayingPlayer().getEnergy()){
+            App.getGame().getCurrentPlayingPlayer().faint();
+            // midoonam grammeresh dorost nist vali khob :)
+            return new Result(false ,"you are fainted");
+        }
         App.getGame().getCurrentPlayingPlayer().getPosition().setX(endX);
         App.getGame().getCurrentPlayingPlayer().getPosition().setY(endY);
         App.getGame().getCurrentPlayingPlayer().consumeEnergy(energy);
         return new Result(true , String.format("you have teleported successfully to " + endX + " " + endY ));
+    }
+    public Result helpReadingMap(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("T : tree" + "\n");
+        sb.append("S : stone" + "\n");
+        sb.append("W : wood" + "\n");
+        sb.append("C : cottage" + "\n");
+        sb.append("G : greenhouse" + "\n");
+        sb.append("* : crop" + "\n");
+        sb.append("Q : quarry" + "\n");
+        sb.append("L : lake"  + "\n");
+        sb.append("+ : wall" + "\n");
+        return new Result(true , sb.toString());
+
+    }
+    public Result inventoryShow(){
+        StringBuilder sb = new StringBuilder();
+        for(java.util.Map.Entry<Ingredient , Integer> entry : App.getGame().getCurrentPlayingPlayer().getBackpack()
+                .getIngredientQuantity().entrySet()){
+            sb.append(String.format("%s -> quantity : %d" , entry.getKey().getClass().getSimpleName(), entry.getValue()));
+            sb.append("\n");
+
+        }
+        return new Result(true , sb.toString());
+
+    }
+    public Result inventoryTrash(String name , int number , boolean hasNumber){
+        for(java.util.Map.Entry<Ingredient , Integer> entry : App.getGame().getCurrentPlayingPlayer().getBackpack()
+                .getIngredientQuantity().entrySet()){
+            if(entry.getKey().getClass().getSimpleName().equals(name)){
+                if(hasNumber){
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(entry.getKey() , number);
+                    return new Result(true , String.format("%s removed from backpack", entry.getKey()
+                            .getClass().getSimpleName()));
+                }
+                else {
+                    int quantity = entry.getValue();
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(entry.getKey() , quantity);
+                    return new Result(true , String.format("%s removed from backpack", entry.getKey()
+                            .getClass().getSimpleName()));
+                }
+
+            }
+        }
+        return new Result(true , String.format("%s not found", name));
     }
 }

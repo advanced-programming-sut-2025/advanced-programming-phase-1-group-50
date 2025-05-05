@@ -3,6 +3,7 @@ package models.userInfo;
 import models.NPCs.NPC;
 import models.mapInfo.Farm;
 import models.mapInfo.Position;
+import models.tools.Hoe;
 import models.tools.Tool;
 
 public class Player {
@@ -13,7 +14,7 @@ public class Player {
     // final
     private Ability ability;
     private Tool currentTool;
-    private  final Backpack backpack = new Backpack();    //final
+    private  final Backpack backpack = new Backpack(Backpack.Type.Primary);    //final
     private  final TrashCan trashCan = new TrashCan();
     private Farm farm;
     private int coins;
@@ -27,6 +28,7 @@ public class Player {
         this.nickname = nickname;
         this.currentUser = currentUser;
         this.currentPosition = new Position(0 , 0);
+        this.backpack.getTools().add(new Hoe());
 
     }
 
@@ -73,6 +75,9 @@ public class Player {
     }
     public String getNickname(){
         return nickname;
+    }
+    public Ability getAbility(){
+        return ability;
     }
 
     public int getCoins() {
@@ -129,6 +134,8 @@ public class Player {
         this.isInfinite = true;
 
     }
+
+
 
     //  TODO : method faint(ghash kardan)
 }

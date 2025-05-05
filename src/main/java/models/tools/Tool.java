@@ -1,5 +1,7 @@
 package models.tools;
 
+import models.manuFactor.Ingredient;
+
 public abstract class Tool {
     protected String name;
 

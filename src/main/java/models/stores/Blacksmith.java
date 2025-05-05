@@ -1,11 +1,14 @@
 package models.stores;
 
+import java.awt.*;
+
 public class Blacksmith extends Market {
 
-    public Blacksmith() {
+    public Blacksmith(int x , int y , int width, int height) {
         shopAssistantName = "Clint";
         startHour = 9;
         endHour = 16;
+        this.bounds = new Rectangle(x, y, width, height);
         //goods
     }
 
@@ -38,5 +41,8 @@ public class Blacksmith extends Market {
     @Override
     public void purchase() {
 
+    }
+    public char getSymbol() {
+        return '⚒';
     }
 }

@@ -22,6 +22,12 @@ public enum GameMenuCommands implements Command {
     ExitMenu("\\s*exit\\s+menu\\s*"),
     PrintMap("\\s*print\\s+map\\s*"),
     Walk("\\s*walk\\s+-l\\s+<(?<x>\\d+)\\s+,\\s+(?<y>\\d+)>\\s*"),
+    HelpReadingMap("\\s*help\\s+map\\s+read\\s*"),
+    InventoryShow("\\s*inventory\\s+show\\s*"),
+    InventoryTrash("\\s*inventory\\s+trash\\s+-i\\s+(?<itemName>\\S+)\\s+(-n\\s+(?<number>\\d+))?\\s*"),
+    ToolsEquip("\\s*tools\\s+equip\\s+-n\\s+(?<name>\\S+)\\s*"),
+    ShowCurrentTool("\\s*show\\s+current\\s+tool\\s*"),
+    ToolsShowAvailable("\\s*tools\\s+show\\s+available\\s*"),
 
     // cheat codes :
     AdvancedTimeCheatCode("\\s*advanced\\s+time\\s+(?<advancedTime>-?\\d+)\\s*"),
