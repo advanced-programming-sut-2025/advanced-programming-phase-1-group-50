@@ -1,5 +1,6 @@
 package models.manuFactor;
 
+import models.Result;
 import models.animals.AnimalGoodType;
 import models.date.TimeInterval;
 import models.manuFactor.artisanGoods.ArtisanGood;
@@ -14,19 +15,20 @@ public class Loom extends ArtisanMachine {
     }
 
     @Override
-    public boolean canUse(Player player, String product) {
+    public Result canUse(Player player, String product) {
         if (product.equals("Cloth") || product.equals("cloth")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                 if (ingredient.equals(AnimalGoodType.Wool)) {
                     if (player.getBackpack().getIngredientQuantity().get(ingredient) >= 1) {
                         player.getBackpack().removeIngredients(ingredient, 1);
                         producingGood = new ArtisanGood(ArtisanGoodType.Cloth);
-                        return true;
+                        return new Result(true, "Your product is being made.Please wait.");
                     }
-                    return false;
+                    return new Result(false, "You don't have enough Ingredients!");
                 }
             }
+            return new Result(false, "You don't have enough Ingredients!");
         }
-        return false;
+        return new Result(false, "This Machine can't make this Item!!");
     }
 }

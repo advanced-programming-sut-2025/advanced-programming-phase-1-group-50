@@ -1,5 +1,6 @@
 package models.manuFactor;
 
+import models.Result;
 import models.app.App;
 import models.foraging.Crop;
 import models.foraging.CropType;
@@ -16,19 +17,22 @@ public class Dehydrator extends ArtisanMachine {
     }
 
     @Override
-    public boolean isReady() {
+    public Result isReady() {
         if (timeOfRequest == null)
-            return false;
+            return new Result(false, "You don't have any artisan goods in machine yet!!");
         int todayDate = App.getGame().getTime().getDate();
         if (App.getGame().getTime().getSeason() != timeOfRequest.getSeason())
             todayDate += 28;
 
         //Next morning
-        return todayDate > timeOfRequest.getDate();
+        if (todayDate > timeOfRequest.getDate())
+            return new Result(true, "Your product is Ready.");
+        else
+            return new Result(false, "Your product is Not Ready.");
     }
 
     @Override
-    public boolean canUse(Player player, String product) {
+    public Result canUse(Player player, String product) {
         if (product.equals("Dried_Mushroom") || product.equals("dried_mushroom")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                 if (ingredient.equals(ForagingCrop.CommonMushroom) ||
@@ -39,12 +43,14 @@ public class Dehydrator extends ArtisanMachine {
                         producingGood = new ArtisanGood(ArtisanGoodType.DriedMushroom,
                                 50,
                                 (int) (7.5 * ((ForagingCrop)ingredient).getBaseSellPrice() + 25));
-                        return true;
+                        return new Result(true, "Your product is being made.Please wait.");
                     }
-                    return false;
+                    return new Result(false, "You don't have enough Ingredients!");
                 }
             }
-        } if (product.equals("Dried_Fruit") || product.equals("dried_fruit")) {
+            return new Result(false, "You don't have enough Ingredients!");
+        }
+        else if (product.equals("Dried_Fruit") || product.equals("dried_fruit")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                 if (ingredient instanceof Fruit || ingredient instanceof Crop && !(((Crop) ingredient).getType().equals(CropType.Grape))) {
                     if (player.getBackpack().getIngredientQuantity().get(ingredient) >= 5) {
@@ -57,23 +63,26 @@ public class Dehydrator extends ArtisanMachine {
                             producingGood = new ArtisanGood(ArtisanGoodType.DriedFruit,
                                     75,
                                     (int) (7.5 * ((Crop)ingredient).getType().getBaseSellPrice() + 25));
-                        return true;
+                        return new Result(true, "Your product is being made.Please wait.");
                     }
-                    return false;
+                    return new Result(false, "You don't have enough Ingredients!");
                 }
             }
-        } if (product.equals("Raisins") || product.equals("raisins")) {
+            return new Result(false, "You don't have enough Ingredients!");
+        }
+        else if (product.equals("Raisins") || product.equals("raisins")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                 if (ingredient instanceof Crop && ((Crop) ingredient).getType().equals(CropType.Grape)) {
                     if (player.getBackpack().getIngredientQuantity().get(ingredient) >= 5) {
                         player.getBackpack().removeIngredients(ingredient, 5);
                         producingGood = new ArtisanGood(ArtisanGoodType.Raisins);
-                        return true;
+                        return new Result(true, "Your product is being made.Please wait.");
                     }
-                    return false;
+                    return new Result(false, "You don't have enough Ingredients!");
                 }
             }
+            return new Result(false, "You don't have enough Ingredients!");
         }
-        return false;
+        return new Result(false, "This Machine can't make this Item!!");
     }
 }

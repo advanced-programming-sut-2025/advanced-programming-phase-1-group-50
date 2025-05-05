@@ -1,5 +1,6 @@
 package models.manuFactor;
 
+import models.Result;
 import models.animals.AnimalGoodType;
 import models.date.TimeInterval;
 import models.foraging.Crop;
@@ -18,40 +19,43 @@ public class OilMaker extends ArtisanMachine {
     }
 
     @Override
-    public boolean canUse(Player player, String product) {
+    public Result canUse(Player player, String product) {
         if (product.equals("Truffle_Oil") || product.equals("truffle_oil")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                 if (ingredient.equals(AnimalGoodType.Truffle)) {
                     if (player.getBackpack().getIngredientQuantity().get(ingredient) >= 1) {
                         player.getBackpack().removeIngredients(ingredient, 1);
                         producingGood = new ArtisanGood(ArtisanGoodType.TruffleOil);
-                        return true;
+                        return new Result(true, "Your product is being made.Please wait.");
                     }
-                    return false;
+                    return new Result(false, "You don't have enough Ingredients!");
                 }
             }
-        } if (product.equals("Oil") || product.equals("oil")) {
+            return new Result(false, "You don't have enough Ingredients!");
+        }
+        else if (product.equals("Oil") || product.equals("oil")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                 if (ingredient instanceof Crop && ((Crop) ingredient).getType().equals(CropType.Corn)) {
                     player.getBackpack().removeIngredients(ingredient, 1);
                     producingGood = new ArtisanGood(ArtisanGoodType.Oil);
                     processingTimes.put(new ArtisanGood(ArtisanGoodType.Oil), new TimeInterval(0, 6));
-                    return true;
+                    return new Result(true, "Your product is being made.Please wait.");
                 }
                 if (ingredient.equals(Seeds.SunflowerSeeds)) {
                     player.getBackpack().removeIngredients(ingredient, 1);
                     producingGood = new ArtisanGood(ArtisanGoodType.Oil);
                     processingTimes.put(new ArtisanGood(ArtisanGoodType.Oil), new TimeInterval(2, 0));
-                    return true;
+                    return new Result(true, "Your product is being made.Please wait.");
                 }
                 if (ingredient instanceof Crop && ((Crop) ingredient).getType().equals(CropType.Sunflower)) {
                     player.getBackpack().removeIngredients(ingredient, 1);
                     producingGood = new ArtisanGood(ArtisanGoodType.Oil);
                     processingTimes.put(new ArtisanGood(ArtisanGoodType.Oil), new TimeInterval(0, 1));
-                    return true;
+                    return new Result(true, "Your product is being made.Please wait.");
                 }
             }
+            return new Result(false, "You don't have enough Ingredients!");
         }
-        return false;
+        return new Result(false, "This Machine can't make this Item!!");
     }
 }

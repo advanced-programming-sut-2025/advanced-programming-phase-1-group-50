@@ -1,5 +1,6 @@
 package models.manuFactor;
 
+import models.Result;
 import models.app.App;
 import models.date.Time;
 import models.date.TimeInterval;
@@ -24,28 +25,29 @@ public abstract class ArtisanMachine {
     }
 
     public ArtisanGood get() {
-        if (isReady())
+        if (isReady().getSuccessful())
             return producingGood;
         return null;
     }
 
-    public abstract boolean canUse(Player player, String product);
+    public abstract Result canUse(Player player, String product);
 
     public void reset() {
         timeOfRequest = null;
         producingGood = null;
     }
 
-    public boolean isReady() {
+    public Result isReady() {
         if (timeOfRequest == null)
-            return false;
+            return new Result(false, "You don't have any artisan goods in machine yet!!");
         int todayDate = App.getGame().getTime().getDate();
         int todayHour = App.getGame().getTime().getHour();
         if (App.getGame().getTime().getSeason() != timeOfRequest.getSeason()) {
             todayDate += 28;
-            return timeOfRequest.getDate() + processingTimes.get(producingGood).getDays() <= todayDate &&
-                    timeOfRequest.getHour() + processingTimes.get(producingGood).getHours() <= todayHour;
+            if(timeOfRequest.getDate() + processingTimes.get(producingGood).getDays() <= todayDate &&
+                    timeOfRequest.getHour() + processingTimes.get(producingGood).getHours() <= todayHour)
+                return new Result(true, "Your product is Ready.");
         }
-        return false;
+        return new Result(false, "Your product is Not Ready.");
     }
 }

@@ -1,5 +1,6 @@
 package models.manuFactor;
 
+import models.Result;
 import models.date.TimeInterval;
 import models.foraging.Crop;
 import models.foraging.Fruit;
@@ -16,7 +17,7 @@ public class PreservesJar extends ArtisanMachine {
     }
 
     @Override
-    public boolean canUse(Player player, String product) {
+    public Result canUse(Player player, String product) {
         if (product.equals("Pickles") || product.equals("pickles")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                 if (ingredient instanceof Crop) {
@@ -25,29 +26,32 @@ public class PreservesJar extends ArtisanMachine {
                         producingGood = new ArtisanGood(ArtisanGoodType.Pickles,
                                 (int) (1.75 * ((Crop) ingredient).getType().getEnergy()),
                                 2 * ((Crop) ingredient).getType().getBaseSellPrice() + 50);
-                        return true;
+                        return new Result(true, "Your product is being made.Please wait.");
                     }
-                    return false;
+                    return new Result(false, "You don't have enough Ingredients!");
                 }
             }
-        } if (product.equals("Jelly") || product.equals("jelly")) {
+            return new Result(false, "You don't have enough Ingredients!");
+        } 
+        else if (product.equals("Jelly") || product.equals("jelly")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                 if (ingredient instanceof Crop) {
                     player.getBackpack().removeIngredients(ingredient, 1);
                     producingGood = new ArtisanGood(ArtisanGoodType.Jelly,
                             2 * ((Crop) ingredient).getType().getEnergy(),
                             2 * ((Crop) ingredient).getType().getBaseSellPrice() + 50);
-                    return true;
+                    return new Result(true, "Your product is being made.Please wait.");
                 }
                 if (ingredient instanceof Fruit) {
                     player.getBackpack().removeIngredients(ingredient, 1);
                     producingGood = new ArtisanGood(ArtisanGoodType.Jelly,
                             2 * ((Fruit) ingredient).getEnergy(),
                             2 * ((Fruit) ingredient).getBaseSellPrice());
-                    return true;
+                    return new Result(true, "Your product is being made.Please wait.");
                 }
             }
+            return new Result(false, "You don't have enough Ingredients!");
         }
-        return false;
+        return new Result(false, "This Machine can't make this Item!!");
     }
 }

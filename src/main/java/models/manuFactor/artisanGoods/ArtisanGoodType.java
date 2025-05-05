@@ -49,12 +49,4 @@ public enum ArtisanGoodType {
     public int getSellPrice() {
         return sellPrice;
     }
-
-    public void setEnergy(int energy) {
-        this.energy = energy;
-    }
-
-    public void setSellPrice(int sellPrice) {
-        this.sellPrice = sellPrice;
-    }
 }

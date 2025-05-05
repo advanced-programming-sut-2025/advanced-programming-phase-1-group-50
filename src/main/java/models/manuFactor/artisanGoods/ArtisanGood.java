@@ -6,15 +6,19 @@ import java.util.Objects;
 
 public class ArtisanGood implements Ingredient {
     private final ArtisanGoodType type;
+    private final int energy;
+    private final int sellPrice;
 
     public ArtisanGood(ArtisanGoodType type) {
         this.type = type;
+        this.energy = type.getEnergy();
+        this.sellPrice = type.getSellPrice();
     }
 
     public ArtisanGood(ArtisanGoodType type, int energy, int sellPrice) {
         this.type = type;
-        type.setSellPrice(sellPrice);
-        type.setEnergy(energy);
+        this.energy = energy;
+        this.sellPrice = sellPrice;
     }
 
     public ArtisanGoodType getType() {
@@ -22,11 +26,11 @@ public class ArtisanGood implements Ingredient {
     }
 
     public int getSellPrice() {
-        return type.getSellPrice();
+        return sellPrice;
     }
 
     public int getEnergy() {
-        return type.getEnergy();
+        return energy;
     }
 
     @Override
