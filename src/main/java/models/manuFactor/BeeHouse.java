@@ -1,5 +1,6 @@
 package models.manuFactor;
 
+import models.Result;
 import models.date.TimeInterval;
 import models.manuFactor.artisanGoods.ArtisanGood;
 import models.manuFactor.artisanGoods.ArtisanGoodType;
@@ -13,8 +14,8 @@ public class BeeHouse extends ArtisanMachine {
     }
 
     @Override
-    public boolean canUse(Player player, String product) {
+    public Result canUse(Player player, String product) {
         producingGood = new ArtisanGood(ArtisanGoodType.Honey);
-        return true;
+        return new Result(true, "Your product is being made.Please wait.");
     }
 }
