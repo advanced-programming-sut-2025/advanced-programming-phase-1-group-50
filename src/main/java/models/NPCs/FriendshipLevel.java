@@ -1,7 +1,5 @@
 package models.NPCs;
 
 public enum FriendshipLevel {
-        firstLevel,
-        secondLevel,
-        thirdLevel;
+    LevelZero, LevelOne, LevelTwo, LevelThree;
 }
