@@ -62,6 +62,10 @@ public class Tree implements Growable, Placeable {
 
     }
 
+    public boolean canGrowAgain() {
+        return true;
+    }
+
     public boolean isComplete() {
         return levelOfGrowth >= type.getStages().size();
     }
@@ -97,5 +101,28 @@ public class Tree implements Growable, Placeable {
         return type.getTotalHarvestTime() - passedDays;
     }
 
+    public int getCurrentStage() {
+        return levelOfGrowth;
+    }
+
+    public boolean hasWateredToday() {
+        return App.getGame().getTime().getDate() == lastWaterTime.getDate();
+    }
+
+    public boolean hasFertilized() {
+        return fertilizer != null;
+    }
+
+    public Fertilizer getFertilizer() {
+        return fertilizer;
+    }
+
+    public String getNameOfProduct() {
+        return type.getFruit().name();
+    }
+
+    public String getName() {
+        return type.name();
+    }
 
 }

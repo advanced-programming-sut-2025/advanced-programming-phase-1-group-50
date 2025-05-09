@@ -64,7 +64,7 @@ public enum ForagingCrop implements Ingredient {
         return energy;
     }
 
-    public ArrayList<ForagingCrop> getCropsBySeason(Season season) {
+    public static ArrayList<ForagingCrop> getCropsBySeason(Season season) {
         ArrayList<ForagingCrop> crops = new ArrayList<>();
         for (ForagingCrop crop : values()) {
             if (crop.season == season) {
