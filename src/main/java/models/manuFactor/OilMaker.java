@@ -13,7 +13,7 @@ import models.userInfo.Player;
 
 public class OilMaker extends ArtisanMachine {
 
-    public OilMaker(Player player) {
+    public OilMaker() {
         super();
         processingTimes.put(new ArtisanGood(ArtisanGoodType.TruffleOil), new TimeInterval(0, 6));
         //for oil, it will calculate dynamically
