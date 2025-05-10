@@ -29,7 +29,7 @@ public class RelationWithNPC {
         return isThirdQuestLocked;
     }
 
-    public void increaseFriendShipLevel(int level) {
+    public void increaseNumericalFriendShipLevel(int level) {
         this.numericalFriendShipLevel += level;
         this.numericalFriendShipLevel = Math.min(this.numericalFriendShipLevel, this.type.getMaxFriendShipLevel());
 
@@ -39,8 +39,7 @@ public class RelationWithNPC {
             case 0:
                 this.npcFriendshipLevel = NPCFriendshipLevel.LevelZero;
                 break;
-            case 1:
-            {
+            case 1: {
                 this.npcFriendshipLevel = NPCFriendshipLevel.LevelOne;
                 this.isSecondQuestLocked = false;
             }
@@ -54,6 +53,30 @@ public class RelationWithNPC {
         }
     }
 
+    public void increaseFriendshipLevel() {
+
+        if (this.npcFriendshipLevel == NPCFriendshipLevel.LevelZero) {
+
+            this.npcFriendshipLevel = NPCFriendshipLevel.LevelOne;
+            this.isSecondQuestLocked = false;
+            this.numericalFriendShipLevel += 200;
+            this.numericalFriendShipLevel = Math.min(this.numericalFriendShipLevel, this.type.getMaxFriendShipLevel());
+
+        } else if (this.npcFriendshipLevel == NPCFriendshipLevel.LevelOne) {
+
+            this.npcFriendshipLevel = NPCFriendshipLevel.LevelTwo;
+            this.numericalFriendShipLevel += 200;
+            this.numericalFriendShipLevel = Math.min(this.numericalFriendShipLevel, this.type.getMaxFriendShipLevel());
+
+        } else if (this.npcFriendshipLevel == NPCFriendshipLevel.LevelTwo) {
+
+            this.npcFriendshipLevel = NPCFriendshipLevel.LevelThree;
+            this.numericalFriendShipLevel += 200;
+            this.numericalFriendShipLevel = Math.min(this.numericalFriendShipLevel, this.type.getMaxFriendShipLevel());
+
+        }
+    }
+
     public void increaseNumOfDaysAfterUnlockingSecondQuest() {
         if (!this.isSecondQuestLocked) {
             this.numOfDaysAfterUnlockingSecondQuest++;
@@ -63,21 +86,13 @@ public class RelationWithNPC {
     public void checkUnlockingThirdQuest() {
         if (this.type.equals(NPCType.Abigail)) {
             if (this.numOfDaysAfterUnlockingSecondQuest >= 100) {this.isThirdQuestLocked = false;}
-        }
-
-        else if (this.type.equals(NPCType.Sebastian)) {
+        } else if (this.type.equals(NPCType.Sebastian)) {
             if (this.numOfDaysAfterUnlockingSecondQuest >= 110) {this.isThirdQuestLocked = false;}
-        }
-
-        else if (this.type.equals(NPCType.Harvey)) {
+        } else if (this.type.equals(NPCType.Harvey)) {
             if (this.numOfDaysAfterUnlockingSecondQuest >= 120) {this.isThirdQuestLocked = false;}
-        }
-
-        else if (this.type.equals(NPCType.Leah)) {
+        } else if (this.type.equals(NPCType.Leah)) {
             if (this.numOfDaysAfterUnlockingSecondQuest >= 130) {this.isThirdQuestLocked = false;}
-        }
-
-        else if (this.type.equals(NPCType.Robin)) {
+        } else if (this.type.equals(NPCType.Robin)) {
             if (this.numOfDaysAfterUnlockingSecondQuest >= 140) {this.isThirdQuestLocked = false;}
         }
 

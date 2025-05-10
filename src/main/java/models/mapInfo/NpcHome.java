@@ -20,9 +20,7 @@ public class NpcHome implements Placeable {
     public NPC getNpc() {
         return npc;
     }
-//    public void setNpc(NPC npc) {
-//        this.npc = npc;
-//    }
+
     public char getSymbol() {
         return npc.getSymbol();
     }

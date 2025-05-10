@@ -130,6 +130,11 @@ public class Map {
 
 
     }
+
+    public ArrayList<NpcHome> getNpcHomes() {
+        return npcHomes;
+    }
+
     // this method is only for debug!!!
     public void printMap() {
 

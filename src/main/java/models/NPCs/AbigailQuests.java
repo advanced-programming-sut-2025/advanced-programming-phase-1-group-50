@@ -1,5 +1,14 @@
 package models.NPCs;
 
+import models.app.App;
+import models.foraging.Crop;
+import models.foraging.CropType;
+import models.manuFactor.Ingredient;
+import models.manuFactor.artisanGoods.ArtisanGood;
+import models.manuFactor.artisanGoods.ArtisanGoodType;
+import models.mapInfo.NpcHome;
+import models.userInfo.Coin;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -12,16 +21,118 @@ public class AbigailQuests {
     }
 
 
-    public static void doFirstQuest(boolean isRewardTwice) {
-        //TODO
+    public static boolean doFirstQuest(boolean isRewardTwice) {
+
+        boolean isGoldBarAvailable = false;
+
+        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
+            if (ingredient instanceof ArtisanGood) {
+                if (((ArtisanGood) ingredient).getType().equals(ArtisanGoodType.GoldBar)) {
+                    int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                    if ( value > 0) {
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value-1);
+                        isGoldBarAvailable = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!isGoldBarAvailable) {
+            return false;
+        }
+
+        App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().increaseFriendshipLevel();
+        if (isRewardTwice) {
+            App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().increaseFriendshipLevel();
+        }
+
+        for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
+            if (home.getNpc().getType().equals(NPCType.Abigail)) {
+                home.getNpc().setFirstQuestDone(true);
+                break;
+            }
+        }
+
+        return true;
     }
 
-    public static void doSecondQuest(boolean isRewardTwice) {
-        //TODO
+    public static boolean doSecondQuest(boolean isRewardTwice) {
+
+        boolean isPumpkinAvailable = false;
+
+        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
+            if (ingredient instanceof Crop) {
+                if (((Crop) ingredient).getType().equals(CropType.Pumpkin)) {
+                    int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                    if ( value > 0) {
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value-1);
+                        isPumpkinAvailable= true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!isPumpkinAvailable) {
+            return false;
+        }
+
+        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
+            if (ingredient instanceof Coin) {
+                int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                if (isRewardTwice) {
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value + 1000);
+                } else {
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value + 500);
+                }
+            }
+        }
+
+        for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
+            if (home.getNpc().getType().equals(NPCType.Abigail)) {
+                home.getNpc().setSecondQuestDone(true);
+                break;
+            }
+        }
+
+        return true;
     }
 
-    public static void doThirdQuest(boolean isRewardTwice) {
-        //TODO
+    public static boolean doThirdQuest(boolean isRewardTwice) {
+
+        boolean isWheatAvailable = false;
+
+        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
+            if (ingredient instanceof Crop) {
+                if (((Crop) ingredient).getType().equals(CropType.Wheat)) {
+                    int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                    if ( value >= 50) {
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value-50);
+                        isWheatAvailable = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!isWheatAvailable) {
+            return false;
+        }
+
+        //TODO : Add reward to player
+
+
+        for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
+            if (home.getNpc().getType().equals(NPCType.Abigail)) {
+                home.getNpc().setThirdQuestDone(true);
+                break;
+            }
+        }
+
+        return true;
+
+
     }
 
 }

@@ -17,6 +17,9 @@ import models.recipes.CookingRecipe;
 public class NPC {
 
     private final NPCType type;
+    private boolean isFirstQuestDone = false;
+    private boolean isSecondQuestDone = false;
+    private boolean isThirdQuestDone = false;
 
     public NPC(NPCType type) {
         this.type = type;
@@ -25,76 +28,101 @@ public class NPC {
     public NPCType getType() {
         return type;
     }
-    public void doFirstQuest(boolean isRewardTwice) {
+
+    public boolean isFirstQuestDone() {
+        return isFirstQuestDone;
+    }
+
+    public void setFirstQuestDone(boolean firstQuestDone) {
+        isFirstQuestDone = firstQuestDone;
+    }
+
+    public boolean isSecondQuestDone() {
+        return isSecondQuestDone;
+    }
+
+    public void setSecondQuestDone(boolean secondQuestDone) {
+        isSecondQuestDone = secondQuestDone;
+    }
+
+    public boolean isThirdQuestDone() {
+        return isThirdQuestDone;
+    }
+
+    public void setThirdQuestDone(boolean thirdQuestDone) {
+        isThirdQuestDone = thirdQuestDone;
+    }
+
+    public boolean doFirstQuest(boolean isRewardTwice) {
 
         if (this.type.equals(NPCType.Abigail)) {
 
-            AbigailQuests.doFirstQuest(isRewardTwice);
+            return AbigailQuests.doFirstQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Sebastian)) {
 
-            SebastianQuests.doFirstQuest(isRewardTwice);
+            return SebastianQuests.doFirstQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Harvey)) {
 
-            HarveyQuests.doFirstQuest(isRewardTwice);
+             return HarveyQuests.doFirstQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Leah)) {
 
-            LeahQuests.doFirstQuest(isRewardTwice);
+            return LeahQuests.doFirstQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Robin)) {
 
-            RobinQuests.doFirstQuest(isRewardTwice);
+            return RobinQuests.doFirstQuest(isRewardTwice);
 
         }
     }
-    public void doSecondQuest(boolean isRewardTwice) {
+    public boolean doSecondQuest(boolean isRewardTwice) {
 
         if (this.type.equals(NPCType.Abigail)) {
 
-            AbigailQuests.doSecondQuest(isRewardTwice);
+             return AbigailQuests.doSecondQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Sebastian)) {
 
-            SebastianQuests.doSecondQuest(isRewardTwice);
+            return SebastianQuests.doSecondQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Harvey)) {
 
-            HarveyQuests.doSecondQuest(isRewardTwice);
+            return HarveyQuests.doSecondQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Leah)) {
 
-            LeahQuests.doSecondQuest(isRewardTwice);
+            return LeahQuests.doSecondQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Robin)) {
 
-            RobinQuests.doSecondQuest(isRewardTwice);
+            return RobinQuests.doSecondQuest(isRewardTwice);
 
         }
 
     }
-    public void doThirdQuest(boolean isRewardTwice) {
+    public boolean doThirdQuest(boolean isRewardTwice) {
 
         if (this.type.equals(NPCType.Abigail)) {
 
-            AbigailQuests.doThirdQuest(isRewardTwice);
+            return AbigailQuests.doThirdQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Sebastian)) {
 
-            SebastianQuests.doThirdQuest(isRewardTwice);
+            return SebastianQuests.doThirdQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Harvey)) {
 
-            HarveyQuests.doThirdQuest(isRewardTwice);
+           return HarveyQuests.doThirdQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Leah)) {
 
-            LeahQuests.doThirdQuest(isRewardTwice);
+            return LeahQuests.doThirdQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Robin)) {
 
-            RobinQuests.doThirdQuest(isRewardTwice);
+            return RobinQuests.doThirdQuest(isRewardTwice);
 
         }
 
