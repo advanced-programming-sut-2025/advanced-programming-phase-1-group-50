@@ -3,25 +3,26 @@ package models.userInfo;
 import models.NPCs.NPC;
 import models.mapInfo.Farm;
 import models.mapInfo.Position;
+import models.mapInfo.Wood;
 import models.tools.Hoe;
 import models.tools.Tool;
+import models.app.*;
 
 public class Player {
-    private final int maxEnergy = 200;    //final
+    private final int maxEnergy = 200;
+    //final
     private int energy;
     private  final String username;  //final
     private  final String nickname;  //final
     // final
-    private Ability ability;
+    private final Ability ability = new Ability();
     private Tool currentTool;
     private  final Backpack backpack = new Backpack(BackpackType.Primary);    //final
     private  final TrashCan trashCan = new TrashCan();
     private Farm farm;
     private boolean isFaintedToday = false;
 
-    // wood and coin in hash map in backpack
-    private int coins;
-    private int woods;//final
+
     private Position currentPosition;
     private boolean isInfinite = false;
 
@@ -32,10 +33,14 @@ public class Player {
         this.currentUser = currentUser;
         this.currentPosition = new Position(0 , 0);
         this.backpack.getTools().add(new Hoe());
+        this.backpack.getIngredientQuantity().put(new Coin() , 20);
+        this.backpack.getIngredientQuantity().put(new Wood() , 100);
 
     }
 
     public void faint() {
+        isFaintedToday = true;
+        App.getGame().nextPlayerTurn();
 
     }
 
@@ -83,25 +88,18 @@ public class Player {
         return ability;
     }
 
-    public int getCoins() {
-        return coins;
-    }
 
-    public void minusCoins(int coins) {
-        this.coins -= coins;
-    }
-    public int getWoods() {
-        return woods;
-    }
-    public void minusWoods(int woods) {
-        this.woods -= woods;
-    }
     public Backpack getBackpack() {
         return backpack;
     }
 
     public int getEnergy() {
-        return energy;
+        if(isInfinite){
+            return Integer.MAX_VALUE;
+        }
+        else {
+            return energy;
+        }
     }
 
 
@@ -112,6 +110,9 @@ public class Player {
         }
     }
     public void consumeEnergy(int energy) {
+        if(isInfinite){
+            return;
+        }
         this.energy -= energy;
         if(this.energy < 0){
             this.energy = 0;
@@ -120,19 +121,13 @@ public class Player {
     }
     //
     public void addEnergy(int energy) {
-        if(this.isInfinite){
-            if(energy + this.energy > Integer.MAX_VALUE){ // delete
-                this.energy = Integer.MAX_VALUE;
-            }
-            else {
-                this.energy += energy;
-            }
-
-        }
-        else {
+        if(!isInfinite){
             this.energy += energy;
-            this.energy = Math.min(maxEnergy, this.energy);
+            this.energy = Math.min(this.energy, maxEnergy);
         }
+
+
+
     }
     public void setEnergyInfinite(){
         this.energy = Integer.MAX_VALUE;
@@ -147,5 +142,6 @@ public class Player {
     public void setFaintedToday(boolean faintedToday) {
         isFaintedToday = faintedToday;
     }
-//  TODO : method faint(ghash kardan)
+//  TODO : dar method set kardan hame chi baraye farda , bayad yademoon bashe ke isFaintToday hame false beshe , ooni ke true boode hatman bayad energy roozanash beshe 150 az 200;
+
 }
