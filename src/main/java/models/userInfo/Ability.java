@@ -1,5 +1,6 @@
 package models.userInfo;
 
+import models.recipes.CookingRecipe;
 import models.recipes.CraftingRecipes;
 
 public class Ability {
@@ -95,6 +96,7 @@ public class Ability {
         if (farmingLevel == 1) {
             player.getBackpack().addRecipe(CraftingRecipes.Sprinkler);
             player.getBackpack().addRecipe(CraftingRecipes.BeeHouse);
+            player.getBackpack().addRecipe(CookingRecipe.FarmersLunch);
         }
         else if (farmingLevel == 2) {
             player.getBackpack().addRecipe(CraftingRecipes.QualitySprinkler);
@@ -112,8 +114,10 @@ public class Ability {
 
     public void increaseMiningLevel(int amount) {
         miningLevel += amount;
-        if (miningLevel == 1)
+        if (miningLevel == 1) {
             player.getBackpack().addRecipe(CraftingRecipes.CherryBomb);
+            player.getBackpack().addRecipe(CookingRecipe.MinersTreat);
+        }
         if (miningLevel == 2)
             player.getBackpack().addRecipe(CraftingRecipes.Bomb);
         if (miningLevel == 3)
@@ -124,11 +128,19 @@ public class Ability {
         foragingLevel += amount;
         if (foragingLevel == 1)
             player.getBackpack().addRecipe(CraftingRecipes.CharcoalKiln);
+        if (foragingLevel == 2)
+            player.getBackpack().addRecipe(CookingRecipe.VegetableMedley);
+        if (foragingLevel == 3)
+            player.getBackpack().addRecipe(CookingRecipe.SurvivalBurger);
         if (foragingLevel == 4)
             player.getBackpack().addRecipe(CraftingRecipes.MysticTreeSeed);
     }
 
     public void increaseFishingLevel(int amount) {
         fishingLevel += amount;
+        if (fishingLevel == 2)
+            player.getBackpack().addRecipe(CookingRecipe.DishOTheSea);
+        if (fishingLevel == 3)
+            player.getBackpack().addRecipe(CookingRecipe.SeaFormPudding);
     }
 }
