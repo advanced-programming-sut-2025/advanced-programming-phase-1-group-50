@@ -2,6 +2,8 @@
 package models.userInfo;
 
 import models.NPCs.NPC;
+import models.NPCs.NPCType;
+import models.NPCs.RelationWithNPC;
 import models.mapInfo.Farm;
 import models.mapInfo.Position;
 import models.tools.Hoe;
@@ -25,6 +27,11 @@ public class Player {
     private int woods;//final
     private Position currentPosition;
     private boolean isInfinite = false;
+    private RelationWithNPC relationWithAbigail;
+    private RelationWithNPC relationWithSebastian;
+    private RelationWithNPC relationWithHarvey;
+    private RelationWithNPC relationWithLeah;
+    private RelationWithNPC relationWithRobin;
 
     private final User currentUser;
     public Player(String username , String nickname , User currentUser) {
@@ -33,7 +40,52 @@ public class Player {
         this.currentUser = currentUser;
         this.currentPosition = new Position(0 , 0);
         this.backpack.getTools().add(new Hoe());
+        this.relationWithAbigail = new RelationWithNPC(NPCType.Abigail);
+        this.relationWithSebastian = new RelationWithNPC(NPCType.Sebastian);
+        this.relationWithHarvey = new RelationWithNPC(NPCType.Harvey);
+        this.relationWithLeah = new RelationWithNPC(NPCType.Leah);
+        this.relationWithRobin = new RelationWithNPC(NPCType.Robin);
 
+    }
+
+    public RelationWithNPC getRelationWithAbigail() {
+        return relationWithAbigail;
+    }
+
+    public void setRelationWithAbigail(RelationWithNPC relationWithAbigail) {
+        this.relationWithAbigail = relationWithAbigail;
+    }
+
+    public RelationWithNPC getRelationWithSebastian() {
+        return relationWithSebastian;
+    }
+
+    public void setRelationWithSebastian(RelationWithNPC relationWithSebastian) {
+        this.relationWithSebastian = relationWithSebastian;
+    }
+
+    public RelationWithNPC getRelationWithHarvey() {
+        return relationWithHarvey;
+    }
+
+    public void setRelationWithHarvey(RelationWithNPC relationWithHarvey) {
+        this.relationWithHarvey = relationWithHarvey;
+    }
+
+    public RelationWithNPC getRelationWithLeah() {
+        return relationWithLeah;
+    }
+
+    public void setRelationWithLeah(RelationWithNPC relationWithLeah) {
+        this.relationWithLeah = relationWithLeah;
+    }
+
+    public RelationWithNPC getRelationWithRobin() {
+        return relationWithRobin;
+    }
+
+    public void setRelationWithRobin(RelationWithNPC relationWithRobin) {
+        this.relationWithRobin = relationWithRobin;
     }
 
     public void faint() {
