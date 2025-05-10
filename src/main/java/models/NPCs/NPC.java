@@ -10,35 +10,21 @@ import models.foraging.ForagingMineral;
 import models.manuFactor.Ingredient;
 import models.manuFactor.artisanGoods.ArtisanGood;
 import models.manuFactor.artisanGoods.ArtisanGoodType;
-import models.mapInfo.NpcHome;
 import models.mapInfo.Stone;
 import models.mapInfo.Wood;
 import models.recipes.CookingRecipe;
-import models.mapInfo.Position;
-import models.NPCs.NPCFriendshipLevel;
 
 public class NPC {
 
     private final NPCType type;
-    private final Position position;
-
-    //TODO
-    //placing NPCs on map
 
     public NPC(NPCType type) {
         this.type = type;
-        this.position = type.getInitialPosition();
-
     }
 
     public NPCType getType() {
         return type;
     }
-
-    public Position getPosition() {
-        return position;
-    }
-
     public void doFirstQuest(boolean isRewardTwice) {
 
         if (this.type.equals(NPCType.Abigail)) {
