@@ -1,6 +1,7 @@
 package models.manuFactor;
 
 import models.Result;
+import models.animals.AnimalGood;
 import models.animals.AnimalGoodType;
 import models.date.TimeInterval;
 import models.foraging.Crop;
@@ -22,9 +23,12 @@ public class OilMaker extends ArtisanMachine {
     public Result canUse(Player player, String product) {
         if (product.equals("Truffle_Oil") || product.equals("truffle_oil")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
-                if (ingredient.equals(AnimalGoodType.Truffle)) {
+                if (ingredient instanceof AnimalGood animalGood && animalGood.getType().equals(AnimalGoodType.Truffle)) {
+
                     if (player.getBackpack().getIngredientQuantity().get(ingredient) >= 1) {
+
                         player.getBackpack().removeIngredients(ingredient, 1);
+
                         producingGood = new ArtisanGood(ArtisanGoodType.TruffleOil);
                         return new Result(true, "Your product is being made.Please wait.");
                     }
@@ -35,7 +39,7 @@ public class OilMaker extends ArtisanMachine {
         }
         else if (product.equals("Oil") || product.equals("oil")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
-                if (ingredient instanceof Crop && ((Crop) ingredient).getType().equals(CropType.Corn)) {
+                if (ingredient instanceof Crop crop && crop.getType().equals(CropType.Corn)) {
                     player.getBackpack().removeIngredients(ingredient, 1);
                     producingGood = new ArtisanGood(ArtisanGoodType.Oil);
                     processingTimes.put(new ArtisanGood(ArtisanGoodType.Oil), new TimeInterval(0, 6));
@@ -47,7 +51,7 @@ public class OilMaker extends ArtisanMachine {
                     processingTimes.put(new ArtisanGood(ArtisanGoodType.Oil), new TimeInterval(2, 0));
                     return new Result(true, "Your product is being made.Please wait.");
                 }
-                if (ingredient instanceof Crop && ((Crop) ingredient).getType().equals(CropType.Sunflower)) {
+                if (ingredient instanceof Crop crop && crop.getType().equals(CropType.Sunflower)) {
                     player.getBackpack().removeIngredients(ingredient, 1);
                     producingGood = new ArtisanGood(ArtisanGoodType.Oil);
                     processingTimes.put(new ArtisanGood(ArtisanGoodType.Oil), new TimeInterval(0, 1));

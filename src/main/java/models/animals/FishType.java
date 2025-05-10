@@ -5,6 +5,7 @@ import models.manuFactor.Ingredient;
 import models.userInfo.Ability;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public enum FishType implements Ingredient {
     Salmon(75, Season.Fall),
@@ -33,6 +34,13 @@ public enum FishType implements Ingredient {
 
     private final int price;
     private final Season season;
+    private final static HashMap<String, FishType> stringToFishType = new HashMap<>();
+
+    static {
+        for (FishType value : FishType.values()) {
+            stringToFishType.put(value.name().toLowerCase(), value);
+        }
+    }
 
 
     FishType(int price, Season season) {
@@ -47,6 +55,10 @@ public enum FishType implements Ingredient {
 
     public Season getSeason() {
         return season;
+    }
+
+    public static FishType getFishTypeByName(String name) {
+        return stringToFishType.getOrDefault(name.toLowerCase(), null);
     }
 
     public static ArrayList<FishType> getFishesBySeason(Season season) {
