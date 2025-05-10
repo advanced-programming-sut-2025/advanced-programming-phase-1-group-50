@@ -1,6 +1,7 @@
 package models.manuFactor;
 
 import models.Result;
+import models.animals.Fish;
 import models.animals.FishType;
 import models.app.App;
 import models.manuFactor.artisanGoods.ArtisanGood;
@@ -20,16 +21,20 @@ public class FishSmoker extends ArtisanMachine {
 
     @Override
     public Result canUse(Player player, String product) {
-        if (product.equals("Smoked_Fish") || product.equals("smoked_fish")) {
+        FishType fishType = FishType.getFishTypeByName(product);
+        if (fishType != null) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
-                if (ingredient instanceof FishType) {
+
+                if (ingredient instanceof Fish fish && fish.getType().equals(fishType)) {
                     for (Ingredient ingredient1 : player.getBackpack().getIngredientQuantity().keySet()) {
                         if (ingredient1.equals(new ArtisanGood(ArtisanGoodType.Coal))) {
+
                             player.getBackpack().removeIngredients(ingredient, 1);
                             player.getBackpack().removeIngredients(ingredient1, 1);
+
                             producingGood = new ArtisanGood(ArtisanGoodType.SmokedFish,
-                                    (int) (1.5 * ((FishType) ingredient).getPrice()),
-                                    2 * ((FishType) ingredient).getPrice());
+                                    (int) (1.5 * fish.getType().getPrice()),
+                                    2 * fish.getType().getPrice());
                             return new Result(true, "Your product is being made.Please wait.");
                         }
                     }

@@ -20,12 +20,15 @@ public class PreservesJar extends ArtisanMachine {
     public Result canUse(Player player, String product) {
         if (product.equals("Pickles") || product.equals("pickles")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
-                if (ingredient instanceof Crop) {
+                if (ingredient instanceof Crop crop) {
+
                     if (player.getBackpack().getIngredientQuantity().get(ingredient) >= 1) {
+
                         player.getBackpack().removeIngredients(ingredient, 1);
+
                         producingGood = new ArtisanGood(ArtisanGoodType.Pickles,
-                                (int) (1.75 * ((Crop) ingredient).getType().getEnergy()),
-                                2 * ((Crop) ingredient).getType().getBaseSellPrice() + 50);
+                                (int) (1.75 * crop.getType().getEnergy()),
+                                2 * crop.getType().getBaseSellPrice() + 50);
                         return new Result(true, "Your product is being made.Please wait.");
                     }
                     return new Result(false, "You don't have enough Ingredients!");
@@ -35,18 +38,18 @@ public class PreservesJar extends ArtisanMachine {
         } 
         else if (product.equals("Jelly") || product.equals("jelly")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
-                if (ingredient instanceof Crop) {
+                if (ingredient instanceof Crop crop) {
                     player.getBackpack().removeIngredients(ingredient, 1);
                     producingGood = new ArtisanGood(ArtisanGoodType.Jelly,
-                            2 * ((Crop) ingredient).getType().getEnergy(),
-                            2 * ((Crop) ingredient).getType().getBaseSellPrice() + 50);
+                            2 * crop.getType().getEnergy(),
+                            2 * crop.getType().getBaseSellPrice() + 50);
                     return new Result(true, "Your product is being made.Please wait.");
                 }
-                if (ingredient instanceof Fruit) {
+                if (ingredient instanceof Fruit fruit) {
                     player.getBackpack().removeIngredients(ingredient, 1);
                     producingGood = new ArtisanGood(ArtisanGoodType.Jelly,
-                            2 * ((Fruit) ingredient).getEnergy(),
-                            2 * ((Fruit) ingredient).getBaseSellPrice());
+                            2 * fruit.getEnergy(),
+                            2 * fruit.getBaseSellPrice());
                     return new Result(true, "Your product is being made.Please wait.");
                 }
             }
