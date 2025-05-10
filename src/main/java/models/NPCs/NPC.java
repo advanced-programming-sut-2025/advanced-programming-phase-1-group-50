@@ -1,12 +1,14 @@
 package models.NPCs;
 
 import models.animals.AnimalGood;
+import models.animals.AnimalGoodType;
 import models.app.App;
 import models.date.Season;
 import models.date.Weather;
 import models.foraging.ForagingCrop;
 import models.foraging.ForagingMineral;
 import models.manuFactor.Ingredient;
+import models.manuFactor.artisanGoods.ArtisanGood;
 import models.manuFactor.artisanGoods.ArtisanGoodType;
 import models.mapInfo.Stone;
 import models.mapInfo.Wood;
@@ -17,7 +19,7 @@ public class NPC {
 
     private FriendshipLevel friendshipLevel;
     private int numericalFriendShipLevel;
-    private Position position;
+    private  final Position position;
     private final NPCType type;
     private boolean isSecondQuestLocked = true;
     private boolean isThirdQuestLocked = true;
@@ -29,10 +31,6 @@ public class NPC {
         this.position = type.getInitialPosition();
         this.friendshipLevel = FriendshipLevel.LevelZero;
         this.numericalFriendShipLevel = 0;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
     }
 
     public void increaseFriendShipLevel(int level) {
@@ -198,32 +196,35 @@ public class NPC {
             if (gift.equals(ForagingMineral.Iron)) {
                 return true;
             }
-            if (gift.equals(ArtisanGoodType.Coffee)) {
-                return true;
+            if (gift instanceof ArtisanGood) {
+                return ((ArtisanGood) gift).getType().equals(ArtisanGoodType.Coffee);
             }
 
         } else if (this.type.equals(NPCType.Sebastian)) {
-
-            if (gift.equals(AnimalGood.Wool)) {
-                return true;
+            if (gift instanceof AnimalGood) {
+                if (((AnimalGood) gift).getType().equals(AnimalGoodType.Wool)) {
+                    return true;
+                }
             }
             if (gift.equals(CookingRecipe.PumpkinPie)) {
                 return true;
             }
-            if (gift.equals(CookingRecipe.Pizza)) {
-                return true;
-            }
+            return gift.equals(CookingRecipe.Pizza);
 
         } else if (this.type.equals(NPCType.Harvey)) {
 
-            if (gift.equals(ArtisanGoodType.Coffee)) {
-                return true;
+            if (gift instanceof ArtisanGood) {
+                if (((ArtisanGood) gift).getType().equals(ArtisanGoodType.Coffee)) {
+                    return true;
+                }
             }
-            if (gift.equals(ArtisanGoodType.Pickles)) {
-                return true;
+            if (gift instanceof ArtisanGood) {
+                if (((ArtisanGood) gift).getType().equals(ArtisanGoodType.Pickles)) {
+                    return true;
+                }
             }
-            if (gift.equals(ArtisanGoodType.Wine)) {
-                return true;
+            if (gift instanceof ArtisanGood) {
+                return ((ArtisanGood) gift).getType().equals(ArtisanGoodType.Wine);
             }
 
         } else if (this.type.equals(NPCType.Leah)) {
@@ -234,8 +235,8 @@ public class NPC {
             if (gift.equals(ForagingCrop.Grape)) {
                 return true;
             }
-            if (gift.equals(ArtisanGoodType.Wine)) {
-                return true;
+            if (gift instanceof ArtisanGood) {
+                return ((ArtisanGood) gift).getType().equals(ArtisanGoodType.Wine);
             }
 
         } else if (this.type.equals(NPCType.Robin)) {
@@ -246,8 +247,8 @@ public class NPC {
             if (gift instanceof Wood) {
                 return true;
             }
-            if (gift.equals(ArtisanGoodType.IronBar)) {
-                return true;
+            if (gift instanceof ArtisanGood) {
+                return ((ArtisanGood) gift).getType().equals(ArtisanGoodType.IronBar);
             }
 
         }
@@ -265,7 +266,7 @@ public class NPC {
             index = 1;
         } else if (App.getGame().getTime().getWeather().equals(Weather.Sunny) && App.getGame().getTime().getSeason().equals(Season.Spring)) {
             index = 2;
-        } else if (App.getGame().getTime().getWeather().getSeasons().equals(Season.Fall) && App.getGame().getTime().getHour() > 18) {
+        } else if (App.getGame().getTime().getSeason().equals(Season.Fall) && App.getGame().getTime().getHour() > 18) {
             index = 3;
         } else if (App.getGame().getTime().getWeather().equals(Weather.Snowy)) {
             index = 4;
