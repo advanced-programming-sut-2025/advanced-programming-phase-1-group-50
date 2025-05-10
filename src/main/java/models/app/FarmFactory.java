@@ -144,7 +144,7 @@ public class FarmFactory {
             if (usedPositions.contains(p)) continue;
 
             usedPositions.add(p);
-            Tree t = new Tree(getRandomTreeType(), App.getGame().getTime(), null, randomX, randomY, 1, 1);
+            Tree t = new Tree(getRandomTreeType(), new Time(), null, randomX, randomY, 1, 1);
             trees.add(t);
         }
         return trees;
@@ -179,7 +179,7 @@ public class FarmFactory {
             if (usedPositions.contains(p)) continue;
 
             usedPositions.add(p);
-            Crop c = new Crop(getRandomCropType(), App.getGame().getTime(), null, randomX, randomY);
+            Crop c = new Crop(getRandomCropType(), new Time(), null, randomX, randomY);
             crops.add(c);
         }
         return crops;

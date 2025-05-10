@@ -10,6 +10,7 @@ import models.foraging.ForagingMineral;
 import models.manuFactor.Ingredient;
 import models.manuFactor.artisanGoods.ArtisanGood;
 import models.manuFactor.artisanGoods.ArtisanGoodType;
+import models.mapInfo.NpcHome;
 import models.mapInfo.Stone;
 import models.mapInfo.Wood;
 import models.recipes.CookingRecipe;
@@ -21,18 +22,23 @@ public class NPC {
     private int numericalFriendShipLevel;
     private  final Position position;
     private final NPCType type;
+    private  NpcHome home;
     private boolean isSecondQuestLocked = true;
     private boolean isThirdQuestLocked = true;
     private int numOfDaysAfterUnlockingSecondQuest = 0;
     //TODO
     //placing NPCs on map
-    public NPC(NPCType type) {
+    public NPC(NPCType type , NpcHome home) {
         this.type = type;
         this.position = type.getInitialPosition();
         this.friendshipLevel = FriendshipLevel.LevelZero;
         this.numericalFriendShipLevel = 0;
-    }
+        this.home = home;
 
+    }
+    public NpcHome getHome() {
+        return home;
+    }
     public void increaseFriendShipLevel(int level) {
         this.numericalFriendShipLevel += level;
         this.numericalFriendShipLevel = Math.min(this.numericalFriendShipLevel, this.type.getMaxFriendShipLevel());
@@ -279,5 +285,11 @@ public class NPC {
 
     public void NPCInitialization() {
         //TODO
+    }
+    public char getSymbol() {
+        return this.type.getSymbol();
+    }
+    public void setHome(NpcHome home) {
+        this.home = home;
     }
 }

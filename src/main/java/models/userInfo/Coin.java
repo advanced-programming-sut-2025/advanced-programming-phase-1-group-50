@@ -1,4 +1,6 @@
 package models.userInfo;
 
-public class Coin {
+import models.manuFactor.Ingredient;
+
+public class Coin implements Ingredient {
 }

@@ -23,4 +23,5 @@ public class HarveyQuests {
     public static void doThirdQuest() {
         //TODO
     }
+
 }

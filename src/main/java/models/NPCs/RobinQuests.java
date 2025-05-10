@@ -22,4 +22,5 @@ public class RobinQuests{
     public static void doThirdQuest() {
         //TODO
     }
+
 }

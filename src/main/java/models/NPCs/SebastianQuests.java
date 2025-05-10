@@ -21,4 +21,5 @@ public class SebastianQuests{
     public static void doThirdQuest() {
         //TODO
     }
+
 }

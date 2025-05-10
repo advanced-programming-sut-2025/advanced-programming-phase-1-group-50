@@ -1,16 +1,15 @@
 package models.mapInfo;
 
+import models.NPCs.NPC;
+import models.NPCs.NPCType;
 import models.Placeable;
-import models.app.App;
-import models.date.Time;
-import models.foraging.Tree;
-import models.foraging.TreeType;
+
 import models.stores.*;
 import models.userInfo.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Random;
+
 
 
 
@@ -24,6 +23,7 @@ public class Map {
     private Tile[][] tiles = new Tile[250][200];
     private ArrayList<Farm> farms = new ArrayList<>();
     private NpcVillage npcVillage;
+    private final ArrayList<NpcHome> npcHomes = new ArrayList<>();
 
     public Map(ArrayList<Farm> farms) {
         this.farms= farms;
@@ -59,7 +59,27 @@ public class Map {
                 new PierreGeneralStore(122 , 97  ,3 , 3),
                 new StardropSaloon(126 , 101 ,  3 ,3 ));
 
-        
+        NPC abigailNpc = new NPC(NPCType.Abigail , null);
+        NPC sebastianNpc = new NPC(NPCType.Sebastian , null);
+        NPC leahNpc = new NPC(NPCType.Leah , null);
+        NPC robinNpc = new NPC(NPCType.Robin , null);
+        NPC harveyNpc = new NPC(NPCType.Harvey , null);
+
+        NpcHome abigailHome = new NpcHome(130 , 104 , 3 ,3 , abigailNpc);
+        npcHomes.add(abigailHome);
+        NpcHome harveyHome = new NpcHome(130 ,109 , 3,  3, harveyNpc);
+        npcHomes.add(harveyHome);
+        NpcHome robinHome = new NpcHome(130 ,114 , 3 ,3 , robinNpc);
+        npcHomes.add(robinHome);
+        NpcHome leahHome = new NpcHome(130 ,119 , 3 ,3 , leahNpc);
+        npcHomes.add(leahHome);
+        NpcHome sebastianHome = new NpcHome(130 ,99 , 3 ,3 , sebastianNpc);
+        npcHomes.add(sebastianHome);
+        abigailNpc.setHome(abigailHome);
+        sebastianNpc.setHome(sebastianHome);
+        leahNpc.setHome(leahHome);
+        robinNpc.setHome(robinHome);
+        harveyNpc.setHome(harveyHome);
         // halgheye 4 tayii baraye set kardan false walkable ok hast ya na?
 
         for(Farm farm : farms) {
@@ -88,6 +108,15 @@ public class Map {
                     tiles[i][j].setWalkable(false);
                     tiles[i][j].setSymbol(p.getSymbol());
                     tiles[i][j].setPlaceable(p);
+                }
+            }
+        }
+        for(NpcHome h : npcHomes) {
+            for(int i=h.getBounds().x; i<h.getBounds().x+h.getBounds().width; i++) {
+                for(int j = h.getBounds().y; j<h.getBounds().y+h.getBounds().height; j++) {
+                    tiles[i][j].setSymbol(h.getSymbol());
+                    tiles[i][j].setPlaceable(h);
+                    tiles[i][j].setWalkable(false);
                 }
             }
         }

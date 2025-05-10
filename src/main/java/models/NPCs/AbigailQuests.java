@@ -23,4 +23,5 @@ public class AbigailQuests {
     public static void doThirdQuest() {
         //TODO
     }
+
 }

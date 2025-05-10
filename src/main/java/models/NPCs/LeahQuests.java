@@ -22,4 +22,5 @@ public class LeahQuests{
     public static void doThirdQuest() {
         //TODO
     }
+
 }
