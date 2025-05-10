@@ -14,9 +14,12 @@ public class Player {
     // final
     private Ability ability;
     private Tool currentTool;
-    private  final Backpack backpack = new Backpack(Backpack.Type.Primary);    //final
+    private  final Backpack backpack = new Backpack(BackpackType.Primary);    //final
     private  final TrashCan trashCan = new TrashCan();
     private Farm farm;
+    private boolean isFaintedToday = false;
+
+    // wood and coin in hash map in backpack
     private int coins;
     private int woods;//final
     private Position currentPosition;
@@ -111,12 +114,14 @@ public class Player {
     public void consumeEnergy(int energy) {
         this.energy -= energy;
         if(this.energy < 0){
+            this.energy = 0;
             faint();
         }
     }
+    //
     public void addEnergy(int energy) {
         if(this.isInfinite){
-            if(energy + this.energy > Integer.MAX_VALUE){
+            if(energy + this.energy > Integer.MAX_VALUE){ // delete
                 this.energy = Integer.MAX_VALUE;
             }
             else {
@@ -135,7 +140,12 @@ public class Player {
 
     }
 
+    public boolean isFaintedToday() {
+        return isFaintedToday;
+    }
 
-
-    //  TODO : method faint(ghash kardan)
+    public void setFaintedToday(boolean faintedToday) {
+        isFaintedToday = faintedToday;
+    }
+//  TODO : method faint(ghash kardan)
 }

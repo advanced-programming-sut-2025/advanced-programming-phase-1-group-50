@@ -21,9 +21,10 @@ public class Farm {
     private final ArrayList<Stone> stones;
     private ArrayList<Placeable> placeables = new ArrayList<>();
     private ArrayList<Crop> crops = new ArrayList<>();
+    private Door door;
 
     public Farm( Cottage cottage, GreenHouse greenHouse, ArrayList<Lake> lakes, ArrayList<Quarry> quarries,
-                 ArrayList<Tree> trees, ArrayList<Stone> stones , ArrayList<Crop> crops , Rectangle rectangle , int type ) {
+                 ArrayList<Tree> trees, ArrayList<Stone> stones , ArrayList<Crop> crops , Rectangle rectangle , int type) {
 
         this.cottage = cottage;
         placeables.add(cottage);
@@ -40,7 +41,9 @@ public class Farm {
         this.type = type;
         this.rectangle = rectangle;
         this.crops = crops;
+
         placeables.addAll(crops);
+
 
 
     }
@@ -96,4 +99,13 @@ public class Farm {
     public int getType() {
         return type;
     }
+    public void setDoor(Door door) {
+        this.door = door;
+        placeables.add(door);
+    }
+    public Door getDoor() {
+        return door;
+    }
+
+
 }

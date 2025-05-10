@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class GreenHouse implements Placeable {
     private boolean isBroken;
-    private Rectangle bounds;
+    private final Rectangle bounds;
     public GreenHouse(int x, int y, int width, int height) {
         bounds = new Rectangle(x, y, width, height);
     }

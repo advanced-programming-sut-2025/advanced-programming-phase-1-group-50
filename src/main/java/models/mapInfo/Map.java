@@ -5,14 +5,26 @@ import models.app.App;
 import models.date.Time;
 import models.foraging.Tree;
 import models.foraging.TreeType;
+import models.stores.*;
 import models.userInfo.Player;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
+
+
+
+
+// need a way from farms to npc village  .....
+// doors are completed , but we need ways from each farm to npc village.
+
+
 
 public class Map {
     private Tile[][] tiles = new Tile[250][200];
     private ArrayList<Farm> farms = new ArrayList<>();
+    private NpcVillage npcVillage;
+
     public Map(ArrayList<Farm> farms) {
         this.farms= farms;
     }
@@ -38,23 +50,18 @@ public class Map {
             player.getFarm().setTilesSymbol(tiles);
             farms.add(player.getFarm());
         }
-        for(int i = 0; i < farms.size(); i++){
-            for(int j = i +1; j < farms.size(); j++){
-                if(farms.get(i).equals(farms.get(j))){
-                    System.out.println("are the same farm" + j + " " + i);
-                }
-            }
-        }
-//        for(Farm farm : farms) {
-//            farm.setTilesSymbol(tiles);
-//        }
-//        for(int i=0 ; i<tiles.length ; i++){
-//            for(int j=0 ; j<tiles[i].length ; j++){
-//                tiles[i][j].setSymbol('.');
-//            }
-//        }
+        this.npcVillage = new NpcVillage(new Rectangle(100, 75 , 49 , 49 ) ,
+                new Blacksmith(102 , 77 , 3 , 3) ,
+                new CarpenterShop(106 , 81 , 3 , 3),
+                new FishShop(110 , 85 , 3 ,3 ),
+                new JojaMart(114 , 89 , 3, 3) ,
+                new MarnieRanch(118 , 93 ,3 , 3 ) ,
+                new PierreGeneralStore(122 , 97  ,3 , 3),
+                new StardropSaloon(126 , 101 ,  3 ,3 ));
+
         
         // halgheye 4 tayii baraye set kardan false walkable ok hast ya na?
+
         for(Farm farm : farms) {
 
             for(Placeable placeable : farm.getPlaceables()) {
@@ -70,8 +77,32 @@ public class Map {
                 }
             }
         }
+        for(int i=this.npcVillage.getRectangle().x ; i<this.npcVillage.getRectangle().x + this.npcVillage.getRectangle().width; i++) {
+            for(int j = this.npcVillage.getRectangle().y ; j < this.npcVillage.getRectangle().y + this.npcVillage.getRectangle().height; j++) {
+                tiles[i][j].setSymbol('.');
+            }
+        }
+        for(Placeable p : this.npcVillage.getPlaceables()){
+            for(int i=p.getBounds().x; i<p.getBounds().x+p.getBounds().width; i++) {
+                for(int j=p.getBounds().y; j<p.getBounds().y+p.getBounds().height; j++) {
+                    tiles[i][j].setWalkable(false);
+                    tiles[i][j].setSymbol(p.getSymbol());
+                    tiles[i][j].setPlaceable(p);
+                }
+            }
+        }
 
-        setBorderFarms();
+        setBorderFarmsAndNpcVillage();
+        setDoorFarmsAndNpcVillage();
+        for(Farm farm : farms) {
+            setWalkableDoorTrue(farm.getDoor().getBounds().x , farm.getDoor().getBounds().y ,
+                    farm.getDoor().getBounds().width , farm.getDoor().getBounds().height);
+        }
+        for(Door  d : npcVillage.getDoors()) {
+            setWalkableDoorTrue(d.getBounds().x , d.getBounds().y , d.getBounds().width , d.getBounds().height);
+        }
+
+
 
     }
     // this method is only for debug!!!
@@ -88,65 +119,31 @@ public class Map {
     }
 
 
-    public void setBorderFarms() {
-        for(int i=0 ; i<100 ; i++){
-            tiles[i][74].setSymbol('+');
-            tiles[i][74].setWalkable(false);
+    public void setBorderFarmsAndNpcVillage() {
 
+        for(int i = 0 ; i < 200 ; i++){
+            tiles[99][i].setSymbol('+');
+            tiles[149][i].setSymbol('+');
         }
-        for(int i=150 ; i<250 ; i++){
+        for(int i =0 ; i<250 ; i++){
             tiles[i][74].setSymbol('+');
-            tiles[i][74].setWalkable(false);
-        }
-        for(int i=0 ;i<100 ; i++){
             tiles[i][124].setSymbol('+');
-            tiles[i][124].setWalkable(false);
         }
-        for(int i=150 ;i<250 ; i++){
-            tiles[i][124].setSymbol('+');
-            tiles[i][124].setWalkable(false);
-        }
-        for(int j=0 ; j<75 ; j++){
-            tiles[99][j].setSymbol('+');
-            tiles[99][j].setWalkable(false);
-        }
-        for(int j=0 ; j<75 ; j++){
-            tiles[149][j].setSymbol('+');
-            tiles[149][j].setWalkable(false);
-        }
-        for(int j=125 ; j<200 ; j++){
-            tiles[149][j].setSymbol('+');
-            tiles[149][j].setWalkable(false);
-        }
-        for(int j=125 ; j<200 ; j++){
-            tiles[99][j].setSymbol('+');
-            tiles[99][j].setWalkable(false);
-        }
-    }
-    public TreeType getRandomTreeType() {
-        Random rand = new Random();
-        TreeType[] types = TreeType.values();
-        return types[rand.nextInt(types.length)];
-    }
-    public void generateRandomTree(Farm farm){
-        Random rand = new Random();
-        ArrayList<Tree> trees = new ArrayList<>();
-        int numberOfTrees = rand.nextInt(30) + 5;
-        while(trees.size() < numberOfTrees) {
-            int x = rand.nextInt(100) + farm.getRectangle().x;
-            int y = rand.nextInt(75) + farm.getRectangle().y;
-            if(findTile(x, y) != null && findTile(x, y).getPlaceable() == null){
 
-                Tree t= new Tree(getRandomTreeType() , new Time(), null ,  x , y ,1
-                        ,1 );
-                findTile(x, y).setPlaceable(t);
-                findTile(x, y).setWalkable(false);
-                findTile(x, y).setSymbol(t.getSymbol());
-                trees.add(t);
-            }
-        }
-        farm.setTrees(trees);
     }
+    public void setDoorFarmsAndNpcVillage() {
+        farms.get(0).setDoor(new Door(99 , 37 , 1 , 3));
+
+        farms.get(1).setDoor(new Door(149 , 37 , 1 , 3));
+        farms.get(2).setDoor(new Door(99 , 155 , 1 , 3));
+        farms.get(3).setDoor(new Door(149 , 155 , 1 , 3));
+        npcVillage.addDoors(new Door(99 , 105 , 1 , 3));
+        npcVillage.addDoors(new Door(149 , 105 , 1 , 3));
+        npcVillage.addDoors(new Door(125 , 74 , 3 , 1));
+        npcVillage.addDoors(new Door(125 , 124 , 3, 1));
+    }
+
+
 
 
     public Tile[][] getTiles() {
@@ -156,5 +153,17 @@ public class Map {
     public ArrayList<Farm> getFarms() {
         return farms;
 
+    }
+
+    public NpcVillage getNpcVillage() {
+        return npcVillage;
+    }
+    public void setWalkableDoorTrue(int x, int y , int width, int height) {
+        for(int i=x ;i<x+ width ; i++){
+            for(int j=y ;j<y+ height ;j++){
+                tiles[i][j].setWalkable(true);
+                tiles[i][j].setSymbol('d');
+            }
+        }
     }
 }

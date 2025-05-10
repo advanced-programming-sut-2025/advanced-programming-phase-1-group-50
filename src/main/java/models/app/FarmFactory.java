@@ -119,6 +119,7 @@ public class FarmFactory {
         markUsedArea(10 + x, 15 + y, 5, 7);
         GreenHouse greenHouse = new GreenHouse(50 + x, 5 + y, 6, 6);
         markUsedArea(50 + x, 5 + y, 6, 6);
+
         return new Farm(
                 cottage,
                 greenHouse,
@@ -143,7 +144,7 @@ public class FarmFactory {
             if (usedPositions.contains(p)) continue;
 
             usedPositions.add(p);
-            Tree t = new Tree(getRandomTreeType(), new Time(), null, randomX, randomY, 1, 1);
+            Tree t = new Tree(getRandomTreeType(), App.getGame().getTime(), null, randomX, randomY, 1, 1);
             trees.add(t);
         }
         return trees;
@@ -178,7 +179,7 @@ public class FarmFactory {
             if (usedPositions.contains(p)) continue;
 
             usedPositions.add(p);
-            Crop c = new Crop(getRandomCropType(), new Time(), null, randomX, randomY);
+            Crop c = new Crop(getRandomCropType(), App.getGame().getTime(), null, randomX, randomY);
             crops.add(c);
         }
         return crops;

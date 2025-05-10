@@ -49,21 +49,33 @@ public class Game {
     public void setCurrentPlayingPlayer(Player currentPlayingPlayer) {
         this.currentPlayingPlayer = currentPlayingPlayer;
     }
-    public void nextPlayerTurn(){
+    public void nextPlayerTurn() {
         int size = players.size();
-        if(this.currentPlayingPlayer == players.get(size - 1)){
-            currentPlayingPlayer = players.get(0);
+        int currentIndex = players.indexOf(currentPlayingPlayer);
+        int checkedPlayers = 0;
 
-        }
-        else {
-            for(int i = 0; i < size; i++){
-                if(currentPlayingPlayer == players.get(i)){
-                    currentPlayingPlayer = players.get(i + 1);
-                    break;
-                }
+        while (checkedPlayers < size) {
+            currentIndex = (currentIndex + 1) % size;
+            Player nextPlayer = players.get(currentIndex);
+
+            if (!nextPlayer.isFaintedToday()) {
+                currentPlayingPlayer = nextPlayer;
+                break;
             }
+            checkedPlayers++;
+        }
+
+        if (checkedPlayers == size) {
+
+            // method marboot be farda ro call mikonim.
+            //TODO
+        }
+
+        if (currentPlayingPlayer == players.get(0)) {
+            App.getGame().getTime().advancedHour(1);
         }
     }
+
     public Map getMap() {
         return map;
     }

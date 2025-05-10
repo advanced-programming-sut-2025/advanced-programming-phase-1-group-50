@@ -28,6 +28,7 @@ public enum GameMenuCommands implements Command {
     ToolsEquip("\\s*tools\\s+equip\\s+-n\\s+(?<name>\\S+)\\s*"),
     ShowCurrentTool("\\s*show\\s+current\\s+tool\\s*"),
     ToolsShowAvailable("\\s*tools\\s+show\\s+available\\s*"),
+    ToolUpgrade("\\s*tools\\s+upgrade\\s+-n\\s+(?<name>\\S+)\\s*"),
 
     // cheat codes :
     AdvancedTimeCheatCode("\\s*advanced\\s+time\\s+(?<advancedTime>-?\\d+)\\s*"),

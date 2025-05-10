@@ -1,11 +1,14 @@
 package models.stores;
 
+import java.awt.*;
+
 public class MarnieRanch extends Market {
 
-    public MarnieRanch() {
+    public MarnieRanch(int x, int y, int width, int height) {
         shopAssistantName = "Marnie";
         startHour = 9;
         endHour = 16;
+        this.bounds = new Rectangle(x, y, width, height);
         //goods
     }
 
@@ -37,5 +40,8 @@ public class MarnieRanch extends Market {
     @Override
     public void purchase() {
 
+    }
+    public char getSymbol() {
+        return '♞';
     }
 }

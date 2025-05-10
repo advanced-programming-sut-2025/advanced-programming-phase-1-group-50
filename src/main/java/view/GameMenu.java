@@ -147,6 +147,10 @@ public class GameMenu implements AppMenu {
         else if(GameMenuCommands.ToolsShowAvailable.getMatcher(input)!=null){
             System.out.println(toolController.showAvailableTool());
         }
+        else if(GameMenuCommands.ToolUpgrade.getMatcher(input)!=null){
+            matcher = models.enums.GameMenuCommands.ToolUpgrade.getMatcher(input);
+            String toolName = matcher.group(1);
+        }
         else if(models.enums.GameMenuCommands.NewGame.getMatcher(input)!=null){
             ArrayList<Player> players = new ArrayList<>();
             Player currentPlayer = new Player(App.getLoggedInUser().getUsername() , App.getLoggedInUser().getNickname() , App.getLoggedInUser());
