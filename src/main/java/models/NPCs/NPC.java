@@ -21,14 +21,14 @@ public class NPC {
 
     private final NPCType type;
     private final Position position;
-    private NpcHome home;
+
     //TODO
     //placing NPCs on map
 
-    public NPC(NPCType type , NpcHome home) {
+    public NPC(NPCType type) {
         this.type = type;
         this.position = type.getInitialPosition();
-        this.home = home;
+
     }
 
     public NPCType getType() {
@@ -204,12 +204,7 @@ public class NPC {
 
         return this.type.getDialogues().get(index);
     }
-    public void setHome(NpcHome home) {
-        this.home = home;
-    }
-    public NpcHome getHome() {
-        return home;
-    }
+
     public char getSymbol() {
         return this.type.getSymbol();
     }

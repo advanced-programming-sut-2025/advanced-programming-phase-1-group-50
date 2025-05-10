@@ -59,11 +59,11 @@ public class Map {
                 new PierreGeneralStore(122 , 97  ,3 , 3),
                 new StardropSaloon(126 , 101 ,  3 ,3 ));
 
-        NPC abigailNpc = new NPC(NPCType.Abigail , null);
-        NPC sebastianNpc = new NPC(NPCType.Sebastian , null);
-        NPC leahNpc = new NPC(NPCType.Leah , null);
-        NPC robinNpc = new NPC(NPCType.Robin , null);
-        NPC harveyNpc = new NPC(NPCType.Harvey , null);
+        NPC abigailNpc = new NPC(NPCType.Abigail);
+        NPC sebastianNpc = new NPC(NPCType.Sebastian );
+        NPC leahNpc = new NPC(NPCType.Leah );
+        NPC robinNpc = new NPC(NPCType.Robin );
+        NPC harveyNpc = new NPC(NPCType.Harvey );
 
         NpcHome abigailHome = new NpcHome(130 , 104 , 3 ,3 , abigailNpc);
         npcHomes.add(abigailHome);
@@ -75,12 +75,8 @@ public class Map {
         npcHomes.add(leahHome);
         NpcHome sebastianHome = new NpcHome(130 ,99 , 3 ,3 , sebastianNpc);
         npcHomes.add(sebastianHome);
-        abigailNpc.setHome(abigailHome);
-        sebastianNpc.setHome(sebastianHome);
-        leahNpc.setHome(leahHome);
-        robinNpc.setHome(robinHome);
-        harveyNpc.setHome(harveyHome);
-        // halgheye 4 tayii baraye set kardan false walkable ok hast ya na?
+
+
 
         for(Farm farm : farms) {
 
