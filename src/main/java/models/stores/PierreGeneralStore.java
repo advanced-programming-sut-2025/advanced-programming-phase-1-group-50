@@ -1,12 +1,15 @@
 package models.stores;
 
+import java.awt.*;
+
 public class PierreGeneralStore extends Market {
 
 
-    public PierreGeneralStore() {
+    public PierreGeneralStore(int x, int y, int width, int height) {
         shopAssistantName = "Pierre";
         startHour = 9;
         endHour = 23;
+        this.bounds = new Rectangle(x, y, width, height);
         //goods
     }
 
@@ -38,5 +41,8 @@ public class PierreGeneralStore extends Market {
     @Override
     public void purchase() {
 
+    }
+    public char getSymbol() {
+        return '⚙';
     }
 }

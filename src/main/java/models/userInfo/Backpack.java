@@ -7,49 +7,39 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Backpack {
-    enum Type {
-        Primary,
-        //capacity = 12
-        Big,
-        // capacity = 24
-        Deluxe;
-        // capacity = infinite
-    }
-    private Type type;
+
+
+    private BackpackType type;
     private int capacity = 12;
-    private ArrayList<Tool> tools;
-    private ArrayList<Ingredient> ingredients; //should delete!!
-    private HashMap<Ingredient, Integer> ingredientQuantity = new HashMap<>();
-    public Backpack(Type type){
+    private final ArrayList<Tool> tools=  new ArrayList<>();
+
+    private final HashMap<Ingredient, Integer> ingredientQuantity = new HashMap<>();
+    public Backpack(BackpackType type){
         this.type = type;
         switch(type){
             case Primary:
-                this.type = Type.Primary;
-                this.capacity = 12;
                 break;
             case Big:
-                this.type = Type.Big;
                 this.capacity = 24;
                 break;
             case Deluxe:
-                this.type = Type.Deluxe;
                 this.capacity = Integer.MAX_VALUE;
         }
     }
 
-    public void changeType(Type type) {
+    public void changeType(BackpackType type) {
         switch(type){
             case Big:
-                this.type = Type.Big;
+                this.type = BackpackType.Big;
                 this.capacity = 24;
                  break;
             case Primary:
-                this.type = Type.Primary;
+                this.type = BackpackType.Primary;
                 this.capacity = 12;
                 break;
             case Deluxe:
                 this.capacity = Integer.MAX_VALUE;
-                this.type = Type.Deluxe;
+                this.type = BackpackType.Deluxe;
         }
 
     }
@@ -72,9 +62,7 @@ public class Backpack {
 
     }
 
-    public ArrayList<Ingredient> getIngredients() {
-        return ingredients;
-    }
+
 
     public void addIngredients(Ingredient ingredient, int quantity) {
         ingredientQuantity.put(ingredient, quantity);
@@ -94,5 +82,8 @@ public class Backpack {
 
     public HashMap<Ingredient, Integer> getIngredientQuantity() {
         return ingredientQuantity;
+    }
+    public BackpackType getType() {
+        return type;
     }
 }

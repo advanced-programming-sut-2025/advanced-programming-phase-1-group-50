@@ -2,6 +2,7 @@ package controller.ToolsControllers;
 
 import models.Result;
 import models.app.App;
+import models.stores.Blacksmith;
 import models.tools.Tool;
 
 public class ToolController {
@@ -26,5 +27,11 @@ public class ToolController {
 
         }
         return new Result(true,"Available Tools : " + sb);
+    }
+    public Result upgradeTool(String input){
+        if(!App.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer() , App.getGame().getMap().getNpcVillage().getBlacksmith())){
+            return new Result(false,"You are not allowed to upgrade this tool");
+        }
+        return new Result(true , "...");
     }
 }

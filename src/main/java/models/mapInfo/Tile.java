@@ -11,6 +11,7 @@ public class Tile {
     private char symbol = '#';
     private boolean walkable;
     private Placeable placeable;
+    private boolean isPlowed = false;
     public Tile(Position position) {
         this.position = position;
         this.gotThunder = false;
@@ -53,4 +54,11 @@ public class Tile {
         this.placeable = placeable;
     }
 
+    public boolean isPlowed() {
+        return isPlowed;
+    }
+
+    public void setPlowed(boolean plowed) {
+        isPlowed = plowed;
+    }
 }

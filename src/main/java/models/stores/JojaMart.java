@@ -1,12 +1,15 @@
 package models.stores;
 
+import java.awt.*;
+
 public class JojaMart extends Market {
 
 
-    public JojaMart() {
+    public JojaMart(int x, int y, int width, int height) {
         shopAssistantName = "Morris";
         startHour = 9;
         endHour = 23;
+        this.bounds = new Rectangle(x, y, width, height);
         //goods
     }
 
@@ -39,5 +42,8 @@ public class JojaMart extends Market {
     @Override
     public void purchase() {
 
+    }
+    public char getSymbol() {
+        return 'J';
     }
 }
