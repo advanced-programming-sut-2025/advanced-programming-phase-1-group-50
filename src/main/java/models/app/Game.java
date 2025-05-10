@@ -1,5 +1,7 @@
 package models.app;
 
+import models.NPCs.NPC;
+import models.NPCs.NPCType;
 import models.date.Time;
 import models.mapInfo.Map;
 import models.mapInfo.Farm;
@@ -14,6 +16,7 @@ public class Game {
     private Map map;
     private final User gameCreator ;
     private Player currentPlayingPlayer;
+    public final ArrayList<NPC> npcs = new ArrayList<>();
 
     public Game(ArrayList<Player> players , ArrayList<Farm> farms , User u , Map x) {
         this.farms.addAll(farms);
@@ -21,7 +24,11 @@ public class Game {
         this.gameCreator = u;
         this.time = new Time();
         this.map = x;
-
+        npcs.add(new NPC(NPCType.Abigail));
+        npcs.add(new NPC(NPCType.Sebastian));
+        npcs.add(new NPC(NPCType.Harvey));
+        npcs.add(new NPC(NPCType.Leah));
+        npcs.add(new NPC(NPCType.Robin));
     }
 
     public ArrayList<Player> getPlayers() {

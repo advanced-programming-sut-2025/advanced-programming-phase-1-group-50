@@ -17,49 +17,14 @@ import models.mapInfo.Position;
 
 public class NPC {
 
-    private FriendshipLevel friendshipLevel;
-    private int numericalFriendShipLevel;
-    private  final Position position;
     private final NPCType type;
-    private boolean isSecondQuestLocked = true;
-    private boolean isThirdQuestLocked = true;
-    private int numOfDaysAfterUnlockingSecondQuest = 0;
+    private final Position position;
     //TODO
     //placing NPCs on map
+
     public NPC(NPCType type) {
         this.type = type;
         this.position = type.getInitialPosition();
-        this.friendshipLevel = FriendshipLevel.LevelZero;
-        this.numericalFriendShipLevel = 0;
-    }
-
-    public void increaseFriendShipLevel(int level) {
-        this.numericalFriendShipLevel += level;
-        this.numericalFriendShipLevel = Math.min(this.numericalFriendShipLevel, this.type.getMaxFriendShipLevel());
-
-        int tempLevel = this.numericalFriendShipLevel / 200;
-
-        switch (tempLevel) {
-            case 0:
-                this.friendshipLevel = FriendshipLevel.LevelZero;
-                break;
-            case 1:
-            {
-                this.friendshipLevel = FriendshipLevel.LevelOne;
-                this.isSecondQuestLocked = false;
-            }
-            break;
-            case 2:
-                this.friendshipLevel = FriendshipLevel.LevelTwo;
-                break;
-            case 3:
-                this.friendshipLevel = FriendshipLevel.LevelThree;
-                break;
-        }
-    }
-
-    public FriendshipLevel getFriendshipLevel() {
-        return friendshipLevel;
     }
 
     public NPCType getType() {
@@ -70,117 +35,76 @@ public class NPC {
         return position;
     }
 
-    public boolean isSecondQuestLocked() {
-        return isSecondQuestLocked;
-    }
-
-    public boolean isThirdQuestLocked() {
-        return isThirdQuestLocked;
-    }
-
-    public void increaseNumOfDaysAfterUnlockingSecondQuest() {
-        if (!this.isSecondQuestLocked) {
-            this.numOfDaysAfterUnlockingSecondQuest++;
-        }
-    }
-
-    public void checkUnlockingThirdQuest() {
-        if (this.type.equals(NPCType.Abigail)) {
-            if (this.numOfDaysAfterUnlockingSecondQuest >= 100) {this.isThirdQuestLocked = false;}
-        }
-
-        else if (this.type.equals(NPCType.Sebastian)) {
-            if (this.numOfDaysAfterUnlockingSecondQuest >= 110) {this.isThirdQuestLocked = false;}
-        }
-
-        else if (this.type.equals(NPCType.Harvey)) {
-            if (this.numOfDaysAfterUnlockingSecondQuest >= 120) {this.isThirdQuestLocked = false;}
-        }
-
-        else if (this.type.equals(NPCType.Leah)) {
-            if (this.numOfDaysAfterUnlockingSecondQuest >= 130) {this.isThirdQuestLocked = false;}
-        }
-
-        else if (this.type.equals(NPCType.Robin)) {
-            if (this.numOfDaysAfterUnlockingSecondQuest >= 140) {this.isThirdQuestLocked = false;}
-        }
-
-    }
-
-    public int getNumericalFriendShipLevel() {
-        return numericalFriendShipLevel;
-    }
-
-    public void doFirstQuest() {
+    public void doFirstQuest(boolean isRewardTwice) {
 
         if (this.type.equals(NPCType.Abigail)) {
 
-            AbigailQuests.doFirstQuest();
+            AbigailQuests.doFirstQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Sebastian)) {
 
-            SebastianQuests.doFirstQuest();
+            SebastianQuests.doFirstQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Harvey)) {
 
-            HarveyQuests.doFirstQuest();
+            HarveyQuests.doFirstQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Leah)) {
 
-            LeahQuests.doFirstQuest();
+            LeahQuests.doFirstQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Robin)) {
 
-            RobinQuests.doFirstQuest();
+            RobinQuests.doFirstQuest(isRewardTwice);
 
         }
     }
-    public void doSecondQuest() {
+    public void doSecondQuest(boolean isRewardTwice) {
 
         if (this.type.equals(NPCType.Abigail)) {
 
-            AbigailQuests.doSecondQuest();
+            AbigailQuests.doSecondQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Sebastian)) {
 
-            SebastianQuests.doSecondQuest();
+            SebastianQuests.doSecondQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Harvey)) {
 
-            HarveyQuests.doSecondQuest();
+            HarveyQuests.doSecondQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Leah)) {
 
-            LeahQuests.doSecondQuest();
+            LeahQuests.doSecondQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Robin)) {
 
-            RobinQuests.doSecondQuest();
+            RobinQuests.doSecondQuest(isRewardTwice);
 
         }
 
     }
-    public void doThirdQuest() {
+    public void doThirdQuest(boolean isRewardTwice) {
 
         if (this.type.equals(NPCType.Abigail)) {
 
-            AbigailQuests.doThirdQuest();
+            AbigailQuests.doThirdQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Sebastian)) {
 
-            SebastianQuests.doThirdQuest();
+            SebastianQuests.doThirdQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Harvey)) {
 
-            HarveyQuests.doThirdQuest();
+            HarveyQuests.doThirdQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Leah)) {
 
-            LeahQuests.doThirdQuest();
+            LeahQuests.doThirdQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Robin)) {
 
-            RobinQuests.doThirdQuest();
+            RobinQuests.doThirdQuest(isRewardTwice);
 
         }
 
@@ -256,7 +180,7 @@ public class NPC {
         return false;
     }
 
-    public String getDialogue(FriendshipLevel level) {
+    public String getDialogue(NPCFriendshipLevel level) {
 
         int index = 6;
 
@@ -270,14 +194,11 @@ public class NPC {
             index = 3;
         } else if (App.getGame().getTime().getWeather().equals(Weather.Snowy)) {
             index = 4;
-        } else if (App.getGame().getTime().getHour() > 18 && level.equals(FriendshipLevel.LevelThree)) {
+        } else if (App.getGame().getTime().getHour() > 18 && level.equals(NPCFriendshipLevel.LevelThree)) {
             index = 5;
         }
 
         return this.type.getDialogues().get(index);
     }
 
-    public void NPCInitialization() {
-        //TODO
-    }
 }
