@@ -10,15 +10,15 @@ public class SebastianQuests{
         return questsNames;
     }
 
-    public static void doFirstQuest() {
+    public static void doFirstQuest(boolean isRewardTwice) {
         //TODO
     }
 
-    public static void doSecondQuest() {
+    public static void doSecondQuest(boolean isRewardTwice) {
         //TODO
     }
 
-    public static void doThirdQuest() {
+    public static void doThirdQuest(boolean isRewardTwice) {
         //TODO
     }
 
