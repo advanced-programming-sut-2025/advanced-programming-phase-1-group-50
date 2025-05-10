@@ -93,39 +93,39 @@ public class Ability {
     public void increaseFarmingLevel(int amount) {
         farmingLevel += amount;
         if (farmingLevel == 1) {
-            player.addRecipe(CraftingRecipes.Sprinkler);
-            player.addRecipe(CraftingRecipes.BeeHouse);
+            player.getBackpack().addRecipe(CraftingRecipes.Sprinkler);
+            player.getBackpack().addRecipe(CraftingRecipes.BeeHouse);
         }
         else if (farmingLevel == 2) {
-            player.addRecipe(CraftingRecipes.QualitySprinkler);
-            player.addRecipe(CraftingRecipes.DeluxeScarecrow);
-            player.addRecipe(CraftingRecipes.CheesePress);
-            player.addRecipe(CraftingRecipes.PreservesJar);
+            player.getBackpack().addRecipe(CraftingRecipes.QualitySprinkler);
+            player.getBackpack().addRecipe(CraftingRecipes.DeluxeScarecrow);
+            player.getBackpack().addRecipe(CraftingRecipes.CheesePress);
+            player.getBackpack().addRecipe(CraftingRecipes.PreservesJar);
         }
         else if (farmingLevel == 3) {
-            player.addRecipe(CraftingRecipes.IridiumSprinkler);
-            player.addRecipe(CraftingRecipes.OilMaker);
-            player.addRecipe(CraftingRecipes.Keg);
-            player.addRecipe(CraftingRecipes.Loom);
+            player.getBackpack().addRecipe(CraftingRecipes.IridiumSprinkler);
+            player.getBackpack().addRecipe(CraftingRecipes.OilMaker);
+            player.getBackpack().addRecipe(CraftingRecipes.Keg);
+            player.getBackpack().addRecipe(CraftingRecipes.Loom);
         }
     }
 
     public void increaseMiningLevel(int amount) {
         miningLevel += amount;
         if (miningLevel == 1)
-            player.addRecipe(CraftingRecipes.CherryBomb);
+            player.getBackpack().addRecipe(CraftingRecipes.CherryBomb);
         if (miningLevel == 2)
-            player.addRecipe(CraftingRecipes.Bomb);
+            player.getBackpack().addRecipe(CraftingRecipes.Bomb);
         if (miningLevel == 3)
-            player.addRecipe(CraftingRecipes.MegaBomb);
+            player.getBackpack().addRecipe(CraftingRecipes.MegaBomb);
     }
 
     public void increaseForagingLevel(int amount) {
         foragingLevel += amount;
         if (foragingLevel == 1)
-            player.addRecipe(CraftingRecipes.CharcoalKiln);
+            player.getBackpack().addRecipe(CraftingRecipes.CharcoalKiln);
         if (foragingLevel == 4)
-            player.addRecipe(CraftingRecipes.MysticTreeSeed);
+            player.getBackpack().addRecipe(CraftingRecipes.MysticTreeSeed);
     }
 
     public void increaseFishingLevel(int amount) {
