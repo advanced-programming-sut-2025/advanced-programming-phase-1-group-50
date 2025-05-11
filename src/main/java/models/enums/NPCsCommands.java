@@ -9,12 +9,14 @@ public enum NPCsCommands  implements Command {
     GiftToNPC("^\\s*gift\\s+NPC\\s+(?<npc_name>.+?)\\s+-i\\s+(?<item>.+?)\\s*$"),
     FriendShipNPCList("^\\s*friendship\\s+NPC\\s+list\\s*$"),
     QuestsList("^\\s*quests\\s+list\\s*$"),
-    FinishingQuest("^\\s*quests\\s+finish\\s+-i\\s+(?<index>.+?)\\s*$");
+    FinishingQuest("^\\s*quests\\s+finish\\s+-i\\s+(?<index>.+?)\\s*$"),
+    Exit("^\\s*exit\\s+$");
 
     private final String pattern;
     NPCsCommands(String pattern) {
         this.pattern = pattern;
     }
+
     public Matcher getMatcher(String regex){
         Matcher matcher = Pattern.compile(this.pattern).matcher(regex);
         if(matcher.matches()){
