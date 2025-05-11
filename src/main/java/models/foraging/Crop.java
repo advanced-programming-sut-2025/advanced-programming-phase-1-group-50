@@ -66,19 +66,6 @@ public class Crop implements Ingredient, Growable , Placeable {
         return !type.isOneTime();
     }
 
-    public boolean canHarvestAgain() {
-        if (type.isOneTime())
-            return false;
-
-        if (lastHarvestTime == null)
-            return true;
-
-        Time today = App.getGame().getTime().clone();
-        int timeForGrow = type.getRegrowthTime();
-
-        return lastHarvestTime.getDate() + timeForGrow == today.getDate();
-    }
-
     public boolean harvest() {
         if (!isComplete() || type.isOneTime())
             return false;
@@ -113,9 +100,35 @@ public class Crop implements Ingredient, Growable , Placeable {
         passedDays += App.getGame().getTime().getDate() - lastGrowthTime.getDate();
         return type.getTotalHarvestTime() - passedDays;
     }
+
+    public int getCurrentStage() {
+        return levelOfGrowth;
+    }
+
+    public boolean hasWateredToday() {
+        return App.getGame().getTime().getDate() == lastWaterTime.getDate();
+    }
+
+    public boolean hasFertilized() {
+        return fertilizer != null;
+    }
+
+    public Fertilizer getFertilizer() {
+        return fertilizer;
+    }
+
+    public String getNameOfProduct() {
+        return type.getName();
+    }
+
+    public String getName() {
+        return type.name();
+    }
+
     public Rectangle getBounds() {
         return bounds;
     }
+
     public char getSymbol() {
         return '*';
     }

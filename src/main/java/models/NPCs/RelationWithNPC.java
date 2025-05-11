@@ -7,6 +7,8 @@ public class RelationWithNPC {
     private boolean isSecondQuestLocked = true;
     private boolean isThirdQuestLocked = true;
     private int numOfDaysAfterUnlockingSecondQuest = 0;
+    private boolean isFirstTimeToSpeakWithNPC = true;
+    private boolean isFirstTimeGiftToNPC = true;
 
     public RelationWithNPC(NPCType type) {
         this.type = type;
@@ -27,6 +29,22 @@ public class RelationWithNPC {
 
     public boolean isThirdQuestLocked() {
         return isThirdQuestLocked;
+    }
+
+    public boolean isFirstTimeToSpeakWithNPC() {
+        return isFirstTimeToSpeakWithNPC;
+    }
+
+    public boolean isFirstTimeGiftToNPC() {
+        return isFirstTimeGiftToNPC;
+    }
+
+    public void setFirstTimeGiftToNPC(boolean firstTimeGiftToNPC) {
+        isFirstTimeGiftToNPC = firstTimeGiftToNPC;
+    }
+
+    public void setFirstTimeToSpeakWithNPC(boolean firstTimeToSpeakWithNPC) {
+        isFirstTimeToSpeakWithNPC = firstTimeToSpeakWithNPC;
     }
 
     public void increaseNumericalFriendShipLevel(int level) {

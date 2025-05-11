@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AbigailQuests {
-    private final ArrayList<String> questsNames = new ArrayList<>(Arrays.asList("Delivery of a gold bar", "Delivery " +
+    private static final ArrayList<String> questsNames = new ArrayList<>(Arrays.asList("Delivery of a gold bar", "Delivery " +
             "of a pumpkin", "Delivery of 50 pieces of wheat"));
 
-    public ArrayList<String> getQuestsNames() {
+    public static ArrayList<String> getQuestsNames() {
         return questsNames;
     }
 
@@ -101,7 +101,7 @@ public class AbigailQuests {
 
     public static boolean doThirdQuest(boolean isRewardTwice) {
 
-        boolean isWheatAvailable = false;
+        boolean are50WheatAvailable = false;
 
         for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient instanceof Crop) {
@@ -109,14 +109,14 @@ public class AbigailQuests {
                     int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
                     if ( value >= 50) {
                         App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value-50);
-                        isWheatAvailable = true;
+                        are50WheatAvailable = true;
                         break;
                     }
                 }
             }
         }
 
-        if (!isWheatAvailable) {
+        if (!are50WheatAvailable) {
             return false;
         }
 

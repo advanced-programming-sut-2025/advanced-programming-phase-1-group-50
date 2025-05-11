@@ -5,6 +5,7 @@ import models.app.App;
 import models.date.Time;
 import models.date.TimeInterval;
 import models.manuFactor.artisanGoods.ArtisanGood;
+import models.recipes.CraftingRecipes;
 import models.userInfo.Player;
 
 import java.util.HashMap;
@@ -49,5 +50,24 @@ public abstract class ArtisanMachine {
                 return new Result(true, "Your product is Ready.");
         }
         return new Result(false, "Your product is Not Ready.");
+    }
+
+    public static ArtisanMachine getArtisanMachineByRecipe(CraftingRecipes recipe) {
+        if (recipe == null)
+            return null;
+        return switch (recipe) {
+            case CharcoalKiln -> new CharcoalKiln();
+            case Furnace -> new Furnace();
+            case BeeHouse -> new BeeHouse();
+            case CheesePress -> new CheesePress();
+            case Keg -> new Keg();
+            case Loom -> new Loom();
+            case MayonnaiseMachine -> new MayonnaiseMachine();
+            case OilMaker -> new OilMaker();
+            case PreservesJar -> new PreservesJar();
+            case Dehydrator -> new Dehydrator();
+            case FishSmoker -> new FishSmoker();
+            default -> null;
+        };
     }
 }
