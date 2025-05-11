@@ -7,12 +7,17 @@ import models.date.Season;
 import models.date.Weather;
 import models.foraging.ForagingCrop;
 import models.foraging.ForagingMineral;
+import models.foraging.Fruit;
 import models.manuFactor.Ingredient;
 import models.manuFactor.artisanGoods.ArtisanGood;
 import models.manuFactor.artisanGoods.ArtisanGoodType;
 import models.mapInfo.Stone;
 import models.mapInfo.Wood;
 import models.recipes.CookingRecipe;
+import models.userInfo.Coin;
+import models.userInfo.Player;
+
+import java.util.Random;
 
 public class NPC {
 
@@ -65,7 +70,7 @@ public class NPC {
 
         } else if (this.type.equals(NPCType.Harvey)) {
 
-             return HarveyQuests.doFirstQuest(isRewardTwice);
+            return HarveyQuests.doFirstQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Leah)) {
 
@@ -76,12 +81,15 @@ public class NPC {
             return RobinQuests.doFirstQuest(isRewardTwice);
 
         }
+
+        return false;
     }
+
     public boolean doSecondQuest(boolean isRewardTwice) {
 
         if (this.type.equals(NPCType.Abigail)) {
 
-             return AbigailQuests.doSecondQuest(isRewardTwice);
+            return AbigailQuests.doSecondQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Sebastian)) {
 
@@ -101,7 +109,10 @@ public class NPC {
 
         }
 
+        return false;
+
     }
+
     public boolean doThirdQuest(boolean isRewardTwice) {
 
         if (this.type.equals(NPCType.Abigail)) {
@@ -114,7 +125,7 @@ public class NPC {
 
         } else if (this.type.equals(NPCType.Harvey)) {
 
-           return HarveyQuests.doThirdQuest(isRewardTwice);
+            return HarveyQuests.doThirdQuest(isRewardTwice);
 
         } else if (this.type.equals(NPCType.Leah)) {
 
@@ -125,6 +136,7 @@ public class NPC {
             return RobinQuests.doThirdQuest(isRewardTwice);
 
         }
+        return false;
 
     }
 
@@ -221,6 +233,94 @@ public class NPC {
 
     public char getSymbol() {
         return this.type.getSymbol();
+    }
+
+    public boolean giveRandomGiftToPlayer(Player player) {
+
+        Random rand = new Random();
+        int randomNumber = rand.nextInt(2);
+
+        if (randomNumber == 0) {
+            return false;
+        }
+
+        int playerIndex = App.getGame().getPlayers().indexOf(player);
+        int secondRandomNumber = rand.nextInt(2);
+
+        if (this.type.equals(NPCType.Abigail)) {
+
+            if (secondRandomNumber == 0) {
+
+                App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(ForagingMineral.Diamond,
+                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(ForagingMineral.Diamond, 0) + 1);
+
+            } else {
+
+                App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(ForagingMineral.Quartz,
+                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(ForagingMineral.Quartz, 0) + 5);
+
+            }
+
+        } else if (this.type.equals(NPCType.Leah)) {
+
+            if (secondRandomNumber == 0) {
+
+                App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(ForagingMineral.Emerald,
+                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(ForagingMineral.Emerald, 0) + 2);
+
+            } else {
+
+                for (Ingredient ingredient :
+                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().keySet()) {
+                    if (ingredient instanceof Coin) {
+                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(ingredient, App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(ingredient, 0) + 200);
+                    }
+                }
+
+            }
+
+        } else if (this.type.equals(NPCType.Robin)) {
+
+            if (secondRandomNumber == 0) {
+                App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(ForagingMineral.Iron,
+                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(ForagingMineral.Iron, 0) + 50);
+            } else {
+
+                for (Ingredient ingredient :
+                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().keySet()) {
+                    if (ingredient instanceof Wood) {
+                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(ingredient, App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(ingredient, 0) + 100);
+                    }
+                }
+
+            }
+
+        } else if (this.type.equals(NPCType.Harvey)) {
+
+            if (secondRandomNumber == 0) {
+
+                App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(Fruit.Orange,
+                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(Fruit.Orange, 0) + 10);
+
+            } else {
+                App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(Fruit.Banana,
+                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(Fruit.Banana, 0) + 10);
+            }
+
+        } else if (this.type.equals(NPCType.Sebastian)) {
+
+            if (secondRandomNumber == 0) {
+                App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(ForagingMineral.Gold,
+                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(ForagingMineral.Gold, 0) + 10);
+            } else {
+                App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(ForagingMineral.Ruby,
+                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(ForagingMineral.Ruby, 0) + 2);
+            }
+
+        }
+
+
+        return true;
     }
 
 }
