@@ -99,7 +99,7 @@ public class LeahQuests {
 
     public static boolean doThirdQuest(boolean isRewardTwice) {
 
-        boolean is200WoodAvailable = false;
+        boolean are200WoodAvailable = false;
 
         for (Ingredient ingredient :
                 App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
@@ -109,13 +109,13 @@ public class LeahQuests {
                 if (value >= 200) {
                     App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,
                             value - 200);
-                    is200WoodAvailable = true;
+                    are200WoodAvailable = true;
                     break;
                 }
             }
         }
 
-        if (!is200WoodAvailable) {
+        if (!are200WoodAvailable) {
             return false;
         }
 

@@ -21,7 +21,7 @@ public class RobinQuests{
 
     public static boolean doFirstQuest(boolean isRewardTwice) {
 
-        boolean is80WoodAvailable = false;
+        boolean are80WoodAvailable = false;
 
         for (Ingredient ingredient :
                 App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
@@ -31,13 +31,13 @@ public class RobinQuests{
                 if (value >= 80) {
                     App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,
                             value - 80);
-                    is80WoodAvailable = true;
+                    are80WoodAvailable = true;
                     break;
                 }
             }
         }
 
-        if (!is80WoodAvailable) {
+        if (!are80WoodAvailable) {
             return false;
         }
 
@@ -64,7 +64,7 @@ public class RobinQuests{
 
     public static boolean doSecondQuest(boolean isRewardTwice) {
 
-        boolean is10IronBarAvailable = false;
+        boolean are10IronBarAvailable = false;
 
         for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient instanceof ArtisanGood) {
@@ -72,14 +72,14 @@ public class RobinQuests{
                     int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
                     if ( value >= 10) {
                         App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value-10);
-                        is10IronBarAvailable= true;
+                        are10IronBarAvailable= true;
                         break;
                     }
                 }
             }
         }
 
-        if (!is10IronBarAvailable) {
+        if (!are10IronBarAvailable) {
             return false;
         }
 
@@ -97,7 +97,7 @@ public class RobinQuests{
 
     public static boolean doThirdQuest(boolean isRewardTwice) {
 
-        boolean is1000WoodAvailable = false;
+        boolean are1000WoodAvailable = false;
 
         for (Ingredient ingredient :
                 App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
@@ -107,13 +107,13 @@ public class RobinQuests{
                 if (value >= 1000) {
                     App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,
                             value - 1000);
-                    is1000WoodAvailable = true;
+                    are1000WoodAvailable = true;
                     break;
                 }
             }
         }
 
-        if (!is1000WoodAvailable) {
+        if (!are1000WoodAvailable) {
             return false;
         }
 

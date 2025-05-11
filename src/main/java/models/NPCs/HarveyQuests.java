@@ -22,10 +22,10 @@ public class HarveyQuests {
 
     public static boolean doFirstQuest(boolean isRewardTwice) {
 
-        boolean areTwelveAvailable = false;
+        boolean are12PlantAvailable = false;
         //TODO : search for plant
 
-        if (!areTwelveAvailable) {
+        if (!are12PlantAvailable) {
             return false;
         }
 
