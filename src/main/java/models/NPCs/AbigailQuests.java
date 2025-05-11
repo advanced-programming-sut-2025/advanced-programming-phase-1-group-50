@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AbigailQuests {
-    private final ArrayList<String> questsNames = new ArrayList<>(Arrays.asList("Delivery of a gold bar", "Delivery " +
+    private static final ArrayList<String> questsNames = new ArrayList<>(Arrays.asList("Delivery of a gold bar", "Delivery " +
             "of a pumpkin", "Delivery of 50 pieces of wheat"));
 
-    public ArrayList<String> getQuestsNames() {
+    public static ArrayList<String> getQuestsNames() {
         return questsNames;
     }
 

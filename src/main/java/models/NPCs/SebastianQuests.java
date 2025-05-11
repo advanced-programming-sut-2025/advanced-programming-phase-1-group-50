@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SebastianQuests {
-    private final ArrayList<String> questsNames = new ArrayList<>(Arrays.asList("Delivery of 50 irons", "Delivery of " +
+    private static final ArrayList<String> questsNames = new ArrayList<>(Arrays.asList("Delivery of 50 irons", "Delivery of " +
             "a pumpkin", "Delivery of 150 stones"));
 
-    public ArrayList<String> getQuestsNames() {
+    public static ArrayList<String> getQuestsNames() {
         return questsNames;
     }
 

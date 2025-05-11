@@ -17,6 +17,7 @@ import models.recipes.CookingRecipe;
 import models.userInfo.Coin;
 import models.userInfo.Player;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class NPC {
@@ -321,6 +322,71 @@ public class NPC {
 
 
         return true;
+    }
+
+    public String showQuestLists () {
+
+        String message = "Quests List:\n";
+        RelationWithNPC relation = null;
+        ArrayList<String> quests = new ArrayList<>();
+
+        if (this.type.equals(NPCType.Abigail)) {
+
+            relation = App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail();
+            quests = AbigailQuests.getQuestsNames();
+
+        } else if (this.type.equals(NPCType.Leah)) {
+
+            relation = App.getGame().getCurrentPlayingPlayer().getRelationWithLeah();
+            quests = LeahQuests.getQuestsNames();
+
+        } else if (this.type.equals(NPCType.Robin)) {
+
+            relation = App.getGame().getCurrentPlayingPlayer().getRelationWithRobin();
+            quests = RobinQuests.getQuestsNames();
+
+        } else if (this.type.equals(NPCType.Harvey)) {
+
+            relation = App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey();
+            quests = HarveyQuests.getQuestsNames();
+
+        } else if (this.type.equals(NPCType.Sebastian)) {
+
+            relation = App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian();
+            quests = SebastianQuests.getQuestsNames();
+
+        }
+
+        if (relation == null) {
+            return message;
+        }
+
+        message += quests.get(0);
+
+        if (this.isFirstQuestDone) {
+            message += "    (already completed)";
+        }
+
+
+        if (!relation.isSecondQuestLocked()) {
+            message += "\n";
+            message += quests.get(1);
+        }
+
+        if (this.isSecondQuestDone) {
+            message += "    (already completed)";
+        }
+
+        if (!relation.isThirdQuestLocked()) {
+            message += "\n";
+            message += quests.get(2);
+        }
+
+        if (this.isThirdQuestDone) {
+            message += "    (already completed)";
+        }
+
+        return message;
     }
 
 }
