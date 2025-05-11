@@ -28,6 +28,7 @@ public class Map {
     public Map(ArrayList<Farm> farms) {
         this.farms= farms;
     }
+
     public Tile findTile(int x, int y) {
         for(int i=0; i<tiles.length; i++) {
             for(int j=0; j<tiles.length; j++) {
@@ -37,6 +38,10 @@ public class Map {
             }
         }
         return null;
+    }
+
+    public Tile findTile(Position position) {
+        findTile(position.getX(), position.getY());
     }
 
     public void buildMap(ArrayList<Player> players) {
