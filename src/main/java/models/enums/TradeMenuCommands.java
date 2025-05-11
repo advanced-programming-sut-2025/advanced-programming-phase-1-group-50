@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum TradeMenuCommands implements Command {
-    
+
     trade("^\\s*trade\\s+-u\\s+(?<username>.+?)\\s+-t\\s+(?<type>offer|request)\\s+-i\\s+(?<item>.+?)\\s+-a\\s+" +
             "(?<amount>\\d+)(\\s+-p\\s+(?<price>\\d+))?(\\s+-ti\\s+(?<targetItem>.+?)\\s+-ta\\s+(?<targetAmount>\\d+)" +
             ")?\\s*$"),
