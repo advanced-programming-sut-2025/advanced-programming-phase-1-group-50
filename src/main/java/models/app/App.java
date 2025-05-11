@@ -22,42 +22,49 @@ public class App {
     public static Game currentGame = null;
 
 
-    static{
-        securityQuestions.add(new SecurityQuestion("what is your favorite color?" , "default"));
-        securityQuestions.add(new SecurityQuestion("what is your favorite animal?" , "default"));
-        securityQuestions.add(new SecurityQuestion("what  is your favorite football club?" , "Inter Milan" +
+    static {
+        securityQuestions.add(new SecurityQuestion("what is your favorite color?", "default"));
+        securityQuestions.add(new SecurityQuestion("what is your favorite animal?", "default"));
+        securityQuestions.add(new SecurityQuestion("what  is your favorite football club?", "Inter Milan" +
                 " , Forza Inter!"));
 
-        securityQuestions.add(new SecurityQuestion("what is your favorite food?" , "default"));
+        securityQuestions.add(new SecurityQuestion("what is your favorite food?", "default"));
     }
-
 
 
     public static void setMenu(Menus menu) {
         App.menu = menu;
     }
+
     public static Menus getMenu() {
         return menu;
     }
+
     public static void setLoggedInUser(User loggedinUser) {
         App.loggedInUser = loggedinUser;
     }
+
     public static User getLoggedInUser() {
         return loggedInUser;
     }
-    public static void setGame(Game game){
+
+    public static void setGame(Game game) {
         App.currentGame = game;
     }
-    public static Game getGame(){
+
+    public static Game getGame() {
         return currentGame;
     }
-    public static boolean isAroundPlaceable(Player p , Placeable placeable) {
-        if (p.getPosition().getX() - 1 >= 0 && p.getPosition().getX() + 1 <= 250 && p.getPosition().getY() - 1 >= 0 && p.getPosition().getY() + 1 <= 200) {
+
+    public static boolean isAroundPlaceable(Player p, Placeable placeable) {
+        if (p.getPosition().getX() - 1 >= 0 && p.getPosition().getX() + 1 <= 250 && p.getPosition().getY() - 1 >= 0
+                && p.getPosition().getY() + 1 <= 200) {
 
 
             for (int i = p.getPosition().getX() - 1; i <= p.getPosition().getX() + 1; i++) {
                 for (int j = p.getPosition().getY() - 1; j <= p.getPosition().getY() + 1; j++) {
-                    if (App.getGame().getMap().getTiles()[i][j].getPlaceable().equals(placeable)) {
+                    if (App.getGame().getMap().getTiles()[i][j].getPlaceable() != null &&
+                            App.getGame().getMap().getTiles()[i][j].getPlaceable().equals(placeable)) {
                         return true;
                     }
                 }

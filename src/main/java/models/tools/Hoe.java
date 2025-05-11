@@ -5,12 +5,12 @@ import models.app.App;
 public class Hoe extends Tool {
     private ToolType type = ToolType.Primary;
     @Override
-    protected int getConsumptionEnergy() {
+    public int getConsumptionEnergy() {
         return 0;
     }
 
     @Override
-    protected void useTool() {
+    public void useTool() {
         int consumedEnergy = switch (type) {
             case Primary -> 5;
             case Coppery -> 4;

@@ -143,4 +143,5 @@ public class Ability {
         if (fishingLevel == 3)
             player.getBackpack().addRecipe(CookingRecipe.SeaFormPudding);
     }
+
 }

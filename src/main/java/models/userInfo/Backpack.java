@@ -85,7 +85,10 @@ public class Backpack {
 
 
     public void addIngredients(Ingredient ingredient, int quantity) {
-        ingredientQuantity.put(ingredient, quantity);
+        if(capacity > ingredientQuantity.size()){
+            ingredientQuantity.put(ingredient, quantity);
+        }
+
 
     }
 
@@ -116,7 +119,7 @@ public class Backpack {
         return artisanMachines;
     }
 
-    public void addCraftingRecipes(CraftingRecipes craftingRecipe) {
+    public void addRecipe(CraftingRecipes craftingRecipe) {
         craftingRecipes.add(craftingRecipe);
     }
 
@@ -124,7 +127,7 @@ public class Backpack {
         return craftingRecipes;
     }
 
-    public void addCookingRecipe(CookingRecipe cookingRecipe) {
+    public void addRecipe(CookingRecipe cookingRecipe) {
         cookingRecipes.add(cookingRecipe);
     }
 

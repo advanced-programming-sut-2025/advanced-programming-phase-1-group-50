@@ -41,7 +41,7 @@ public class Map {
     }
 
     public Tile findTile(Position position) {
-        findTile(position.getX(), position.getY());
+        return findTile(position.getX(), position.getY());
     }
 
     public void buildMap(ArrayList<Player> players) {
@@ -223,5 +223,18 @@ public class Map {
                 }
             }
         }
+    }
+
+    public Tile getTileByDirection(Tile currentTile, Direction direction) {
+        return switch (direction) {
+            case UP -> findTile(currentTile.getPosition().getX() - 1, currentTile.getPosition().getY());
+            case DOWN -> findTile(currentTile.getPosition().getX() + 1, currentTile.getPosition().getY());
+            case LEFT -> findTile(currentTile.getPosition().getX(), currentTile.getPosition().getY() - 1);
+            case RIGHT -> findTile(currentTile.getPosition().getX(), currentTile.getPosition().getY() + 1);
+            case UP_LEFT -> findTile(currentTile.getPosition().getX() - 1, currentTile.getPosition().getY() - 1);
+            case UP_RIGHT -> findTile(currentTile.getPosition().getX() - 1, currentTile.getPosition().getY() + 1);
+            case DOWN_LEFT -> findTile(currentTile.getPosition().getX() + 1, currentTile.getPosition().getY() - 1);
+            case DOWN_RIGHT -> findTile(currentTile.getPosition().getX() + 1, currentTile.getPosition().getY() + 1);
+        };
     }
 }

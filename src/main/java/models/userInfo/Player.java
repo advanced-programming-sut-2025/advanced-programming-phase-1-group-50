@@ -7,6 +7,7 @@ import models.mapInfo.Farm;
 import models.mapInfo.Position;
 import models.mapInfo.Wood;
 import models.tools.Hoe;
+import models.tools.Pickaxe;
 import models.tools.Tool;
 import models.app.*;
 
@@ -41,6 +42,7 @@ public class Player {
         this.currentUser = currentUser;
         this.currentPosition = new Position(0 , 0);
         this.backpack.getTools().add(new Hoe());
+        this.backpack.getTools().add(new Pickaxe());
         this.backpack.getIngredientQuantity().put(new Coin() , 20);
         this.backpack.getIngredientQuantity().put(new Wood() , 100);
         this.relationWithAbigail = new RelationWithNPC(NPCType.Abigail);

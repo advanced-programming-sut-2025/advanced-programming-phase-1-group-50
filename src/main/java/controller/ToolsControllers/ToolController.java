@@ -1,14 +1,24 @@
 package controller.ToolsControllers;
 
+import models.Placeable;
 import models.Result;
 import models.app.App;
+import models.foraging.ForagingMineral;
 import models.manuFactor.Ingredient;
+import models.mapInfo.Direction;
+import models.mapInfo.Quarry;
+import models.mapInfo.Stone;
+import models.mapInfo.Tile;
 import models.stores.Blacksmith;
 import models.tools.FishingPole;
+import models.tools.Hoe;
+import models.tools.Pickaxe;
 import models.tools.Tool;
 import models.userInfo.Coin;
+import models.userInfo.Player;
 
 import java.util.Map;
+import java.util.Random;
 
 public class ToolController {
     public Result ToolsEquip(String input) {
@@ -72,6 +82,79 @@ public class ToolController {
         }
 
         return new Result(false, "This tool is not available");
+    }
+    public Result useTool(String direction){
+        Direction d = Direction.getDirectionByInput(direction);
+        Player p = App.getGame().getCurrentPlayingPlayer();
+        Tile tile = App.getGame().getMap().findTile(p.getPosition());
+
+        if(d == null){
+            return new Result(false, "Invalid direction");
+        }
+        Tile targetTile = App.getGame().getMap().getTileByDirection(tile, d);
+
+        if (App.getGame().getCurrentPlayingPlayer().getCurrentTool() instanceof Hoe hoe) {
+            if (App.getGame().getMap().getTileByDirection(tile, d) != null &&
+                    App.getGame().getMap().getTileByDirection(tile, d).getPlaceable() == null) {
+                App.getGame().getMap().getTileByDirection(tile, d).setPlowed(true);
+                hoe.useTool();
+                return new Result(true, "tile plowed successfully!");
+            }
+        }
+        if(App.getGame().getCurrentPlayingPlayer().getCurrentTool() instanceof Pickaxe pickaxe) {
+            if(targetTile.getPlaceable() != null){
+                if(targetTile.getPlaceable() instanceof Stone stone){
+                    targetTile.setPlaceable(null);
+                    pickaxe.useTool();
+                    p.getFarm().getStones().remove(stone);
+//                    for(Map.Entry<Ingredient , Integer> entry :
+//                            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().entrySet()){
+//                        if(entry.getKey() instanceof Stone){
+//                            int quantity = entry.getValue();
+//                            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity()
+//                                    .put(entry.getKey(), quantity + 1);
+//                            return new Result(true, "tile picked successfully!");
+//                        }
+//                    }
+                    if(p.getBackpack().getIngredientQuantity().containsKey(stone)){
+                        p.getBackpack().getIngredientQuantity()
+                                .compute(stone, (k, stoneValue) -> stoneValue + 1);
+                    }
+                    else {
+                        p.getBackpack().addIngredients(stone, 1);
+                    }
+
+                }
+                else if(targetTile.getPlaceable() instanceof Quarry quarry){
+                    Random rand = new Random();
+                    if(!quarry.getForagingMinerals().isEmpty()){
+
+                        ForagingMineral fg = quarry.getForagingMinerals()
+                                .get(rand.nextInt(quarry.getForagingMinerals().size()));
+                        quarry.getForagingMinerals().remove(fg);
+                        if (p.getBackpack().getIngredientQuantity().containsKey(fg)) {
+                            p.getBackpack().getIngredientQuantity()
+                                    .compute(fg, (k, v) -> v + 1);
+                        } else {
+                            p.getBackpack().addIngredients(fg , 1);
+                        }
+                        pickaxe.useTool();
+                        return new Result(true, "you add a foraging mineral to the backpack");
+
+
+                    }
+                    return new Result(false, "this quarry is empty");
+                }
+
+            }
+            else {
+                targetTile.setPlowed(false);
+                pickaxe.useTool();
+            }
+        }
+
+        return new Result(false, "you don't have a tool , please set your current tool");
+
     }
 
 

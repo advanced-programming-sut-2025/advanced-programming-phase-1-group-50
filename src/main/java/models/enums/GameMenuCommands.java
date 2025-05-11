@@ -29,6 +29,7 @@ public enum GameMenuCommands implements Command {
     ShowCurrentTool("\\s*show\\s+current\\s+tool\\s*"),
     ToolsShowAvailable("\\s*tools\\s+show\\s+available\\s*"),
     ToolUpgrade("\\s*tools\\s+upgrade\\s+-n\\s+(?<name>\\S+)\\s*"),
+    ToolUse("\\s*tools\\s+use\\s+-d\\s+(?<direction>\\S+)\\s*"),
 
     // cheat codes :
     AdvancedTimeCheatCode("\\s*advanced\\s+time\\s+(?<advancedTime>-?\\d+)\\s*"),
@@ -37,6 +38,7 @@ public enum GameMenuCommands implements Command {
     CheatThunder("\\s*cheat\\s+thor\\s+-l\\s+<(?<thunderX>-?\\d+)\\s+,(?<thunderY>-?\\d+)\\s*"),
     CheatSetEnergy("\\s*energy\\s+set\\s+-v\\s+(?<energy>-?\\d+)\\s*"),
     CheatUnlimitedEnergy("\\s*energy\\s+unlimited\\s*"),
+
     NewGame(".+");
 
     private final String pattern;
