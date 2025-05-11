@@ -108,6 +108,8 @@ public class HarveyQuests {
                     App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(CookingRecipe.Salad, 0) + 5);
         }
 
+        //TODO : check for salad
+
 
         for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
             if (home.getNpc().getType().equals(NPCType.Harvey)) {
