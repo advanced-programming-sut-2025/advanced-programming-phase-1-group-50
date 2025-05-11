@@ -150,6 +150,7 @@ public class GameMenu implements AppMenu {
         else if(GameMenuCommands.ToolUpgrade.getMatcher(input)!=null){
             matcher = models.enums.GameMenuCommands.ToolUpgrade.getMatcher(input);
             String toolName = matcher.group(1);
+            System.out.println(toolController.upgradeTool(toolName));
         }
         else if(models.enums.GameMenuCommands.NewGame.getMatcher(input)!=null){
             ArrayList<Player> players = new ArrayList<>();

@@ -126,6 +126,7 @@ public class Map {
         for(Door  d : npcVillage.getDoors()) {
             setWalkableDoorTrue(d.getBounds().x , d.getBounds().y , d.getBounds().width , d.getBounds().height);
         }
+        createWayFromFarmToNpcVillage();
 
 
 
@@ -137,16 +138,14 @@ public class Map {
 
     // this method is only for debug!!!
     public void printMap() {
-
-        // نمایش هر فارم با توجه به موقعیت دقیق آن در نقشه
-        for(int i =0 ; i<tiles.length; i++) {
-            for(int j =0 ; j<tiles[i].length; j++) {
-                System.out.print(tiles[i][j].getSymbol());
+        for (int y = 0; y < 200; y++) {
+            for (int x = 0; x < 250; x++) {
+                System.out.print(tiles[x][y].getSymbol());
             }
-            System.out.print("\n");
+            System.out.println();
         }
-
     }
+
 
 
     public void setBorderFarmsAndNpcVillage() {
@@ -172,6 +171,45 @@ public class Map {
         npcVillage.addDoors(new Door(125 , 74 , 3 , 1));
         npcVillage.addDoors(new Door(125 , 124 , 3, 1));
     }
+    public void createWayFromFarmToNpcVillage() {
+        ArrayList<Door> villageDoors = npcVillage.getDoors();
+        //System.out.println(farms.size());
+        for (int i = 0; i < farms.size(); i++) {
+            Door farmDoor = farms.get(i).getDoor();
+            int fx = farmDoor.getBounds().x;
+            int fy = farmDoor.getBounds().y;
+
+            Door villageDoor = villageDoors.get(i % villageDoors.size());
+            int tx = villageDoor.getBounds().x;
+            int ty = villageDoor.getBounds().y;
+
+            int x = fx;
+            int y = fy;
+
+            while (x != tx) {
+                if (tx > x) x++;
+                else x--;
+
+                if (tiles[x][y].getSymbol() != '+') {
+                    tiles[x][y].setWalkable(true);
+                    if (tiles[x][y].getSymbol() == '#') tiles[x][y].setSymbol('=');
+                }
+            }
+
+            while (y != ty) {
+                if (ty > y) y++;
+                else y--;
+
+                if (tiles[x][y].getSymbol() != '+') {
+                    tiles[x][y].setWalkable(true);
+                    if (tiles[x][y].getSymbol() == '#') tiles[x][y].setSymbol('=');
+                }
+            }
+        }
+    }
+
+
+
 
 
 

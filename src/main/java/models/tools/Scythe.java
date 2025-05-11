@@ -10,6 +10,15 @@ public class Scythe extends Tool {
     protected void useTool() {
 
     }
+    public ToolType getToolType() {
+        return null;
+    }
+    public void upgradeTool(){
+
+    }
+    public PoleType getPoleType() {
+        return null;
+    }
 
 
 }

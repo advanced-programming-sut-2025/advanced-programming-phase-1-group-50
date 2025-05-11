@@ -13,7 +13,7 @@ import models.app.*;
 public class Player {
     private final int maxEnergy = 200;
     //final
-    private int energy;
+    private int energy = maxEnergy;
     private  final String username;  //final
     private  final String nickname;  //final
     // final

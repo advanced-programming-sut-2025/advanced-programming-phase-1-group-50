@@ -11,31 +11,39 @@ public class Hoe extends Tool {
 
     @Override
     protected void useTool() {
-        int consumedEnergy = 0 ;
-        switch (type) {
-            case Primary:
-                consumedEnergy = 5;
-                break;
-            case Coppery:
-                consumedEnergy = 4;
-                break;
-            case Metal:
-                consumedEnergy = 3;
-                break;
-            case Golden:
-                consumedEnergy = 2;
-                break;
-            case Iridium:
-                consumedEnergy = 1;
-                break;
-        }
+        int consumedEnergy = switch (type) {
+            case Primary -> 5;
+            case Coppery -> 4;
+            case Metal -> 3;
+            case Golden -> 2;
+            case Iridium -> 1;
+            default -> 0;
+        };
         App.getGame().getCurrentPlayingPlayer().consumeEnergy(consumedEnergy);
 
     }
 
-    public void upgradeTool(ToolType type) {
-        this.type = type;
+    public void upgradeTool() {
+        if(this.type == ToolType.Primary) {
+            this.type = ToolType.Coppery;
+        }
+        else if(this.type == ToolType.Coppery) {
+            this.type = ToolType.Metal;
+        }
+        else if(this.type == ToolType.Metal ){
+            this.type = ToolType.Golden;
+        }
+        else if(this.type == ToolType.Golden){
+            this.type = ToolType.Iridium;
+        }
 
 
+
+    }
+    public ToolType getToolType() {
+        return type;
+    }
+    public PoleType getPoleType() {
+        return null;
     }
 }

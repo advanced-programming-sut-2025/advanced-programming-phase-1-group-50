@@ -52,7 +52,7 @@ public class NPC {
     public void setThirdQuestDone(boolean thirdQuestDone) {
         isThirdQuestDone = thirdQuestDone;
     }
-
+    // barayee run shodan code baraye method ahye zir haminjoori  ye return alaki  gozashtam.
     public boolean doFirstQuest(boolean isRewardTwice) {
 
         if (this.type.equals(NPCType.Abigail)) {
@@ -76,6 +76,7 @@ public class NPC {
             return RobinQuests.doFirstQuest(isRewardTwice);
 
         }
+        return true; // just for debug
     }
     public boolean doSecondQuest(boolean isRewardTwice) {
 
@@ -100,6 +101,7 @@ public class NPC {
             return RobinQuests.doSecondQuest(isRewardTwice);
 
         }
+        return true; // just for debug
 
     }
     public boolean doThirdQuest(boolean isRewardTwice) {
@@ -125,6 +127,7 @@ public class NPC {
             return RobinQuests.doThirdQuest(isRewardTwice);
 
         }
+        return true; //  just for debug
 
     }
 
