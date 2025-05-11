@@ -1,5 +1,6 @@
 package models.app;
 
+import models.BetweenPlayersGift;
 import models.date.Time;
 import models.mapInfo.Map;
 import models.mapInfo.Farm;
@@ -20,6 +21,8 @@ public class Game {
     private final User gameCreator;
     private Player currentPlayingPlayer;
     private RelationNetwork relationsBetweenPlayers;
+    private final ArrayList<BetweenPlayersGift> gifts = new ArrayList<>();
+    private int giftIndex = 0;
 
     public Game(ArrayList<Player> players, ArrayList<Farm> farms, User u, Map x) {
         this.farms.addAll(farms);
@@ -28,6 +31,10 @@ public class Game {
         this.time = new Time();
         this.map = x;
         relationInitializer(players);
+    }
+
+    public ArrayList<BetweenPlayersGift> getGifts() {
+        return gifts;
     }
 
     public RelationNetwork getRelationsBetweenPlayers() {
@@ -110,6 +117,18 @@ public class Game {
                 relationsBetweenPlayers.relationNetwork.put(key, new RelationWithPlayers());
             }
         }
+    }
+
+    public void addGiftsIndex() {
+        giftIndex++;
+    }
+
+    public int getGiftIndex() {
+        return giftIndex;
+    }
+
+    public void addToGifts(BetweenPlayersGift gift) {
+        gifts.add(gift);
     }
 
 
