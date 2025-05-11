@@ -1,6 +1,11 @@
 package models.userInfo;
 
+import models.animals.Animal;
+import models.cooking.Refrigerator;
+import models.manuFactor.ArtisanMachine;
 import models.manuFactor.Ingredient;
+import models.recipes.CookingRecipe;
+import models.recipes.CraftingRecipes;
 import models.tools.Tool;
 
 import java.util.ArrayList;
@@ -12,8 +17,15 @@ public class Backpack {
     private BackpackType type;
     private int capacity = 12;
     private final ArrayList<Tool> tools=  new ArrayList<>();
+    private final ArrayList<CookingRecipe> cookingRecipes = new ArrayList<>();
+    private final ArrayList<CraftingRecipes> craftingRecipes = new ArrayList<>();
+    private final ArrayList<ArtisanMachine> artisanMachines = new ArrayList<>();
+    private final ArrayList<Animal> animals = new ArrayList<>();
+    private final Refrigerator refrigerator = new Refrigerator();
+
 
     private final HashMap<Ingredient, Integer> ingredientQuantity = new HashMap<>();
+
     public Backpack(BackpackType type){
         this.type = type;
         switch(type){
@@ -46,6 +58,14 @@ public class Backpack {
 
     public int getCapacity() {
         return capacity;
+    }
+
+    public boolean hasCapacity() {
+        return capacity > ingredientQuantity.size();
+    }
+
+    public boolean hasCapacity(int quantity) {
+        return capacity > ingredientQuantity.size() + quantity;
     }
 
     public void addTool(Tool tool) {
@@ -83,7 +103,61 @@ public class Backpack {
     public HashMap<Ingredient, Integer> getIngredientQuantity() {
         return ingredientQuantity;
     }
+
     public BackpackType getType() {
         return type;
+    }
+
+    public void addArtisanMachine(ArtisanMachine artisanMachine) {
+        artisanMachines.add(artisanMachine);
+    }
+
+    public ArrayList<ArtisanMachine> getArtisanMachines() {
+        return artisanMachines;
+    }
+
+    public void addCraftingRecipes(CraftingRecipes craftingRecipe) {
+        craftingRecipes.add(craftingRecipe);
+    }
+
+    public ArrayList<CraftingRecipes> getCraftingRecipes() {
+        return craftingRecipes;
+    }
+
+    public void addCookingRecipe(CookingRecipe cookingRecipe) {
+        cookingRecipes.add(cookingRecipe);
+    }
+
+    public ArrayList<CookingRecipe> getCookingRecipes() {
+        return cookingRecipes;
+    }
+
+    public boolean containRecipe(CookingRecipe recipe) {
+        return cookingRecipes.contains(recipe);
+    }
+
+    public boolean containRecipe(CraftingRecipes recipe) {
+        return craftingRecipes.contains(recipe);
+    }
+
+    public void addAnimal(Animal animal) {
+        animals.add(animal);
+    }
+
+    public ArrayList<Animal> getAllAnimals() {
+        return animals;
+    }
+
+    public Animal getAnimalByName(String name) {
+        for (Animal animal : animals) {
+            if (animal.getName().equals(name)) {
+                return animal;
+            }
+        }
+        return null;
+    }
+
+    public Refrigerator getRefrigerator() {
+        return refrigerator;
     }
 }
