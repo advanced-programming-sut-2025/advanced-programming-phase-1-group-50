@@ -6,22 +6,36 @@ import models.mapInfo.Farm;
 import models.userInfo.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import models.userInfo.*;
+
 public class Game {
     private final ArrayList<Player> players = new ArrayList<>();
     private final ArrayList<Farm> farms = new ArrayList<>();
-    private Time time ;
+    private Time time;
     private Map map;
-    private final User gameCreator ;
+    private final User gameCreator;
     private Player currentPlayingPlayer;
+    private RelationNetwork relationsBetweenPlayers;
 
-    public Game(ArrayList<Player> players , ArrayList<Farm> farms , User u , Map x) {
+    public Game(ArrayList<Player> players, ArrayList<Farm> farms, User u, Map x) {
         this.farms.addAll(farms);
         this.players.addAll(players);
         this.gameCreator = u;
         this.time = new Time();
         this.map = x;
+        relationInitializer(players);
+    }
 
+    public RelationNetwork getRelationsBetweenPlayers() {
+        return relationsBetweenPlayers;
+    }
+
+    public void setRelationsBetweenPlayers(RelationNetwork relationsBetweenPlayers) {
+        this.relationsBetweenPlayers = relationsBetweenPlayers;
     }
 
     public ArrayList<Player> getPlayers() {
@@ -43,12 +57,15 @@ public class Game {
     public User getGameCreator() {
         return gameCreator;
     }
+
     public Player getCurrentPlayingPlayer() {
         return currentPlayingPlayer;
     }
+
     public void setCurrentPlayingPlayer(Player currentPlayingPlayer) {
         this.currentPlayingPlayer = currentPlayingPlayer;
     }
+
     public void nextPlayerTurn() {
         int size = players.size();
         int currentIndex = players.indexOf(currentPlayingPlayer);
@@ -79,10 +96,21 @@ public class Game {
     public Map getMap() {
         return map;
     }
+
     public void setMap(Map map) {
         this.map = map;
     }
 
+    private void relationInitializer(ArrayList<Player> players) {
+        relationsBetweenPlayers = new RelationNetwork();
+
+        for (int i = 0; i < players.size(); i++) {
+            for (int j = i + 1; j < players.size(); j++) {
+                Set<Player> key = new HashSet<>(Arrays.asList(players.get(i), players.get(j)));
+                relationsBetweenPlayers.relationNetwork.put(key, new RelationWithPlayers());
+            }
+        }
+    }
 
 
 }
