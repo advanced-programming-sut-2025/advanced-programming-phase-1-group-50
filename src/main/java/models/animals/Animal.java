@@ -11,15 +11,17 @@ public class Animal {
     private Time lastPetTime;
     private Time lastFeedTime;
     private Time lastProductTime;
+    private Habitat habitat;
     private final static int maxFriendShip = 1000;
 
-    public Animal(AnimalType type, String name) {
+    public Animal(AnimalType type, String name, Habitat habitat) {
         this.type = type;
         this.name = name;
         this.friendShip = 0;
         this.lastPetTime = null;
         this.lastFeedTime = null;
         this.lastProductTime = App.getGame().getTime().clone();
+        this.habitat = habitat;
     }
 
     public AnimalType getType() {
@@ -91,5 +93,13 @@ public class Animal {
         Quality quality = Quality.getQualityByValue(qualityValue);
 
         return new AnimalGood(type.getAnimalGoods().get(whichProduct), quality);
+    }
+
+    public Habitat getHabitat() {
+        return habitat;
+    }
+
+    public void setHabitat(Habitat habitat) {
+        this.habitat = habitat;
     }
 }

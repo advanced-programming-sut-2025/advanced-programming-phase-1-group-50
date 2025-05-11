@@ -30,12 +30,16 @@ public class Habitat {
         return size.getCapacity() - animals.size();
     }
 
+    public boolean hasEmptyCapacity() {
+        return getEmptyCapacity() > 0;
+    }
+
     public ArrayList<Animal> getAnimals() {
         return animals;
     }
 
     public boolean addAnimal(Animal animal) {
-        if (getEmptyCapacity() > 0) {
+        if (hasEmptyCapacity()) {
             animals.add(animal);
             return true;
         }
