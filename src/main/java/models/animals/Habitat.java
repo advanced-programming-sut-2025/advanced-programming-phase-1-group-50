@@ -1,17 +1,22 @@
 package models.animals;
 
+import models.Placeable;
+
+import java.awt.*;
 import java.util.ArrayList;
 
-public class Habitat {
+public class Habitat implements Placeable {
     private final HabitatType type;
     private final HabitatSize size;
     private final ArrayList<Animal> animals;
+    private final Rectangle bounds;
 
 
-    public Habitat(HabitatType type, HabitatSize size) {
+    public Habitat(HabitatType type, HabitatSize size , int x , int y , int width, int height) {
         this.type = type;
         this.size = size;
         animals = new ArrayList<>();
+        this.bounds = new Rectangle(x, y, width, height);
     }
 
     public HabitatType getType() {
@@ -50,4 +55,14 @@ public class Habitat {
         animals.remove(animal);
     }
 
+    @Override
+    public Rectangle getBounds() {
+        return bounds;
+    }
+    public char getSymbol() {
+        if(type == HabitatType.Barn) {
+            return 'b';
+        }
+        return 'c';
+    }
 }

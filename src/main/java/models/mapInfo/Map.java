@@ -4,14 +4,13 @@ import models.NPCs.NPC;
 import models.NPCs.NPCType;
 import models.Placeable;
 
+import models.foraging.ForagingMineral;
 import models.stores.*;
 import models.userInfo.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
-
-
-
+import java.util.Random;
 
 
 // need a way from farms to npc village  .....
@@ -20,6 +19,7 @@ import java.util.ArrayList;
 
 
 public class Map {
+    private final static Random rand = new Random();
     private Tile[][] tiles = new Tile[250][200];
     private ArrayList<Farm> farms = new ArrayList<>();
     private NpcVillage npcVillage;
@@ -126,7 +126,7 @@ public class Map {
         for(Door  d : npcVillage.getDoors()) {
             setWalkableDoorTrue(d.getBounds().x , d.getBounds().y , d.getBounds().width , d.getBounds().height);
         }
-        createWayFromFarmToNpcVillage();
+
 
 
 
@@ -171,42 +171,12 @@ public class Map {
         npcVillage.addDoors(new Door(125 , 74 , 3 , 1));
         npcVillage.addDoors(new Door(125 , 124 , 3, 1));
     }
-    public void createWayFromFarmToNpcVillage() {
-        ArrayList<Door> villageDoors = npcVillage.getDoors();
-        //System.out.println(farms.size());
-        for (int i = 0; i < farms.size(); i++) {
-            Door farmDoor = farms.get(i).getDoor();
-            int fx = farmDoor.getBounds().x;
-            int fy = farmDoor.getBounds().y;
 
-            Door villageDoor = villageDoors.get(i % villageDoors.size());
-            int tx = villageDoor.getBounds().x;
-            int ty = villageDoor.getBounds().y;
 
-            int x = fx;
-            int y = fy;
 
-            while (x != tx) {
-                if (tx > x) x++;
-                else x--;
 
-                if (tiles[x][y].getSymbol() != '+') {
-                    tiles[x][y].setWalkable(true);
-                    if (tiles[x][y].getSymbol() == '#') tiles[x][y].setSymbol('=');
-                }
-            }
 
-            while (y != ty) {
-                if (ty > y) y++;
-                else y--;
 
-                if (tiles[x][y].getSymbol() != '+') {
-                    tiles[x][y].setWalkable(true);
-                    if (tiles[x][y].getSymbol() == '#') tiles[x][y].setSymbol('=');
-                }
-            }
-        }
-    }
 
 
 
@@ -231,6 +201,21 @@ public class Map {
             for(int j=y ;j<y+ height ;j++){
                 tiles[i][j].setWalkable(true);
                 tiles[i][j].setSymbol('d');
+            }
+        }
+    }
+
+    public void randomForagingMineralGenerator(){
+        for(Farm farm : farms) {
+            for(Quarry quarry : farm.getQuarries()) {
+                int numberOfForagingMinerals = 2 ;
+                int counter = 0;
+                while(counter < numberOfForagingMinerals) {
+                    ForagingMineral foragingMineral = ForagingMineral.values()[rand.nextInt(ForagingMineral.values().length)];
+                    quarry.addForagingMineral(foragingMineral);
+                    counter++;
+
+                }
             }
         }
     }

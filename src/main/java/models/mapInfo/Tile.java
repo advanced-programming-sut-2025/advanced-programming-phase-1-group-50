@@ -9,7 +9,7 @@ public class Tile {
     private boolean gotThunder;
     //private TileType tileType; TODO : nemidoonam  chie in asan!!!
     private char symbol = '#';
-    private boolean walkable;
+    private boolean walkable ;
     private Placeable placeable;
     private boolean isPlowed = false;
     public Tile(Position position) {

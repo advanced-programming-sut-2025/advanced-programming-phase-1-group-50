@@ -1,6 +1,7 @@
 package models.mapInfo;
 
 import models.Placeable;
+import models.animals.Habitat;
 import models.foraging.Crop;
 import models.waterBodies.Lake;
 import models.foraging.Tree;
@@ -21,6 +22,7 @@ public class Farm {
     private final ArrayList<Stone> stones;
     private ArrayList<Placeable> placeables = new ArrayList<>();
     private ArrayList<Crop> crops = new ArrayList<>();
+    private final ArrayList<Habitat> habitats = new ArrayList<>();
     private Door door;
 
     public Farm( Cottage cottage, GreenHouse greenHouse, ArrayList<Lake> lakes, ArrayList<Quarry> quarries,
@@ -107,5 +109,11 @@ public class Farm {
         return door;
     }
 
+    public void addHabitat(Habitat habitat) {
+        habitats.add(habitat);
+    }
 
+    public ArrayList<Habitat> getHabitats() {
+        return habitats;
+    }
 }

@@ -17,7 +17,7 @@ public class Player {
     private  final String username;  //final
     private  final String nickname;  //final
     // final
-    private final Ability ability = new Ability();
+    private final Ability ability = new Ability(this);
     private Tool currentTool;
     private  final Backpack backpack = new Backpack(BackpackType.Primary);    //final
     private  final TrashCan trashCan = new TrashCan();

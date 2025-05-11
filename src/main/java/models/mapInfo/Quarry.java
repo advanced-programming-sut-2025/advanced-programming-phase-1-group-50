@@ -1,11 +1,14 @@
 package models.mapInfo;
 
 import models.Placeable;
+import models.foraging.ForagingMineral;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Quarry implements Placeable {
     private final Rectangle bounds;
+    private final ArrayList<ForagingMineral> foragingMinerals = new ArrayList<>();
     public Quarry(int x, int y, int width, int height) {
         bounds = new Rectangle(x, y, width, height);
 
@@ -15,5 +18,11 @@ public class Quarry implements Placeable {
     }
     public char getSymbol() {
         return 'Q';
+    }
+    public ArrayList<ForagingMineral> getForagingMinerals() {
+        return foragingMinerals;
+    }
+    public void addForagingMineral(ForagingMineral foragingMineral) {
+        foragingMinerals.add(foragingMineral);
     }
 }
