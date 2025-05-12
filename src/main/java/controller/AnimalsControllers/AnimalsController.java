@@ -5,6 +5,7 @@ import models.animals.*;
 import models.app.App;
 import models.date.Season;
 import models.date.Weather;
+import models.mapInfo.Tile;
 import models.tools.FishingPole;
 import models.userInfo.Player;
 
@@ -68,16 +69,47 @@ public class AnimalsController {
         return new Result(true, animalsInfo.toString());
     }
 
-    public Result shepherdAnimal(String animalName) {
-        //weather
-        //call feed method
-        //increment friendship
-        return null;
+    public Result shepherdAnimal(String animalName, int x, int y) {
+        Player player = App.getGame().getCurrentPlayingPlayer();
+        Animal animal = player.getBackpack().getAnimalByName(animalName);
+        Tile tile = App.getGame().getMap().findTile(x, y);
+
+        if (animal == null)
+            return new Result(false, "Animal <" + animalName + "> not found!");
+        if (tile == null)
+            return new Result(false, "This position not found!");
+        if (tile.getPlaceable() != null)
+            return new Result(false, "This position is not free!");
+
+        if (animal.isOutOfHabitat()) {
+            animal.goToHabitat();
+            return new Result(false, "You put <" + animalName + "> in the habitat!");
+        }
+
+        if (!App.getGame().getTime().getWeather().equals(Weather.Sunny))
+            return new Result(false, "Weather is not Sunny! you can't shepherd your animal!");
+
+        animal.shepherdAnimal();
+        animal.feed();
+        animal.incrementFriendShip(8);
+
+        return new Result(true, "You shepherd your animal!");
     }
 
     public Result feedHay(String animalName) {
-        //call feed method
-        return null;
+        Player player = App.getGame().getCurrentPlayingPlayer();
+        Animal animal = player.getBackpack().getAnimalByName(animalName);
+
+        if (animal == null)
+            return new Result(false, "Animal <" + animalName + "> not found!");
+
+        if (!player.getBackpack().hasEnoughHay(1))
+            return new Result(false, "You don't have enough hay to feed animal!");
+
+        animal.feed();
+        animal.incrementFriendShip(4);
+
+        return new Result(true, "You feed animal <" + animalName + "> successfully!");
     }
 
     public Result animalProduces() {
@@ -92,7 +124,7 @@ public class AnimalsController {
 
         for (Animal animal : animals) {
             if (animal.isReadyProduct())
-                output.append(animal.getType()).append(" -> ").append(animal.getName()).append("\n");
+                output.append(animal.getName()).append(" -> ").append(animal.getType()).append("\n");
         }
 
         return new Result(true, output.toString());
@@ -112,6 +144,7 @@ public class AnimalsController {
         AnimalGood animalGood = animal.getProduct();
         player.getBackpack().addIngredients(animalGood, 1);
         player.getAbility().increaseFarmingRate(5);
+        animal.incrementFriendShip(5);
 
         return new Result(true,
                 String.format("You collect %s with quality %s. Previous price: %s -> New Price: %s",
@@ -119,12 +152,21 @@ public class AnimalsController {
     }
 
     public Result sellAnimal(String animalName) {
-        return null;
+        Player player = App.getGame().getCurrentPlayingPlayer();
+        Animal animal = player.getBackpack().getAnimalByName(animalName);
+
+        if (animal == null)
+            return new Result(false, "Animal <" + animalName + "> not found!");
+
+        double price = animal.getType().getPrice() * (((double)(animal.getFriendShip()) / 1000) + 0.3);
+
+        //TODO should I increase any money
+
+        return new Result(true, "You sell Animal <" + animalName + "> $" + price + "!");
     }
 
-    public Result fishing() {
+    public Result fishing(FishingPole fishingPole) {
         Player player = App.getGame().getCurrentPlayingPlayer();
-        FishingPole fishingPole = new FishingPole();//delete
         int fishingLevel = player.getAbility().getFishingLevel();
         Weather weather = App.getGame().getTime().getWeather();
         Season season = App.getGame().getTime().getSeason();
