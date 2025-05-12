@@ -92,13 +92,7 @@ public class LeahQuests {
             return false;
         }
 
-        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(CookingRecipe.SalmonDinner,
-                App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(CookingRecipe.SalmonDinner, 0) + 1);
-
-        if (isRewardTwice) {
-            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(CookingRecipe.SalmonDinner,
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(CookingRecipe.SalmonDinner, 0) + 1);
-        }
+        App.getGame().getCurrentPlayingPlayer().getBackpack().getCookingRecipes().add(CookingRecipe.SalmonDinner);
 
         for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
             if (home.getNpc().getType().equals(NPCType.Leah)) {

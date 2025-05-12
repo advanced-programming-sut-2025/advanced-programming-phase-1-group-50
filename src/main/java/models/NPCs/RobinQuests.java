@@ -1,6 +1,7 @@
 package models.NPCs;
 
 import models.app.App;
+import models.manuFactor.BeeHouse;
 import models.manuFactor.Ingredient;
 import models.manuFactor.artisanGoods.ArtisanGood;
 import models.manuFactor.artisanGoods.ArtisanGoodType;
@@ -83,7 +84,12 @@ public class RobinQuests{
             return false;
         }
 
-        //TODO : Add reward to player
+        int numberOfRepetitions = (isRewardTwice ? 3 : 6);
+
+        for (int i=0; i<numberOfRepetitions; i++) {
+            App.getGame().getCurrentPlayingPlayer().getBackpack().getArtisanMachines().add(new BeeHouse());
+        }
+
 
         for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
             if (home.getNpc().getType().equals(NPCType.Robin)) {
