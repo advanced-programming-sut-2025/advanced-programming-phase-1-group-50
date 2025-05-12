@@ -1,5 +1,7 @@
 package models.NPCs;
 
+import models.animals.Fish;
+import models.animals.FishType;
 import models.app.App;
 import models.manuFactor.Ingredient;
 import models.manuFactor.artisanGoods.ArtisanGood;
@@ -72,7 +74,19 @@ public class LeahQuests {
     public static boolean doSecondQuest(boolean isRewardTwice) {
 
         boolean isSalmonAvailable = false;
-        //TODO : search for salmon
+
+        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
+            if (ingredient instanceof Fish) {
+                if (((Fish) ingredient).getType().equals(FishType.Salmon)) {
+                    int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                    if (value > 0) {
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value-1);
+                        isSalmonAvailable = true;
+                        break;
+                    }
+                }
+            }
+        }
 
         if (!isSalmonAvailable) {
             return false;
