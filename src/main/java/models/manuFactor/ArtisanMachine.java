@@ -45,7 +45,8 @@ public abstract class ArtisanMachine {
         int todayHour = App.getGame().getTime().getHour();
         if (App.getGame().getTime().getSeason() != timeOfRequest.getSeason()) {
             todayDate += 28;
-            if(timeOfRequest.getDate() + processingTimes.get(producingGood).getDays() <= todayDate &&
+            if(timeOfRequest.getDate() + processingTimes.get(producingGood).getDays() < todayDate ||
+                    timeOfRequest.getDate() + processingTimes.get(producingGood).getDays() == todayDate &&
                     timeOfRequest.getHour() + processingTimes.get(producingGood).getHours() <= todayHour)
                 return new Result(true, "Your product is Ready.");
         }
