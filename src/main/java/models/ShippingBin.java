@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class ShippingBin implements Placeable{
 
     private HashMap<Player,Integer> dailyRevenue;
-    private final char symbol = '▣';
+    private final char symbol = 'ø';
     private final Rectangle bounds;
 
     public ShippingBin(int x, int y) {
