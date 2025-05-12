@@ -1,6 +1,7 @@
 package models.tools;
 
 import models.app.App;
+import models.date.Weather;
 import models.userInfo.Ability;
 
 public class Pickaxe extends Tool {
@@ -13,22 +14,28 @@ public class Pickaxe extends Tool {
 
     @Override
     public  void useTool() {
+        Weather weather = App.getGame().getTime().getWeather();
+        int multiple = switch (weather) {
+            case Rainy -> 2;
+            case Snowy -> 3;
+            default -> 1;
+        };
         int consumedEnergy;
         if(App.getGame().getCurrentPlayingPlayer().getAbility().getMiningLevel() == Ability.getMaxLevel()){
             consumedEnergy = switch (type) {
-                case Primary -> 4;
-                case Coppery -> 3;
-                case Metal -> 2;
+                case Primary -> 4 * multiple;
+                case Coppery -> 3 * multiple;
+                case Metal -> 2 * multiple;
                 case Golden -> 1;
                 default -> 0;
             };
         }
         else {
             consumedEnergy = switch (type) {
-                case Primary -> 5;
-                case Coppery -> 4;
-                case Metal -> 3;
-                case Golden -> 2;
+                case Primary -> 5 * multiple;
+                case Coppery -> 4 * multiple;
+                case Metal -> 3  * multiple;
+                case Golden -> 2 * multiple;
                 case Iridium -> 1;
                 default -> 0;
             };
