@@ -17,6 +17,7 @@ public abstract class Store implements Placeable {
         this.shopAssistantName = shopAssistantName;
         this.startHour = startHour;
         this.endHour = endHour;
+        loadInventory();
     }
 
     public String getShopAssistantName() {
@@ -41,7 +42,9 @@ public abstract class Store implements Placeable {
     }
 
     public abstract char getSymbol();
-    public abstract void loadInventory();
+    public void loadInventory() {
+
+    }
 
 
 //    public abstract String showAllProducts();

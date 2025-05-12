@@ -12,7 +12,6 @@ public class Blacksmith extends Store {
 
     public Blacksmith(int x, int y, int width, int height) {
         super(new Rectangle(x, y, width, height), "Clint", 9, 16);
-        loadInventory();
     }
 
 
@@ -39,7 +38,7 @@ public class Blacksmith extends Store {
         inventory.add(new BlackSmithToolUpgradeItem("Iridium Trash Can", ArtisanGoodType.IridiumBar,5,12500,1));
 
     }
-    
+
 //    @Override
 //    public String showAllProducts() {
 //        return "";
