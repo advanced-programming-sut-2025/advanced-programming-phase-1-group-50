@@ -1,6 +1,8 @@
 package models.animals;
 
-public class Fish {
+import models.manuFactor.Ingredient;
+
+public class Fish implements Ingredient {
     private final FishType type;
     private final int sellPrice;
     private final Quality quality;
