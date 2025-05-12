@@ -13,7 +13,8 @@ public class Furnace extends ArtisanMachine {
     public Result isReady() {
         if (timeOfRequest == null)
             return new Result(false, "You don't have any artisan goods in machine yet!!");
-        if (timeOfRequest.getHour() + 4 <= App.getGame().getTime().getHour())
+        if (timeOfRequest.getDate() + processingTimes.get(producingGood).getDays() < App.getGame().getTime().getDate() ||
+                timeOfRequest.getHour() + 4 <= App.getGame().getTime().getHour())
             return new Result(true, "Your product is Ready.");
         return new Result(false, "Your product is Not Ready.");
     }
