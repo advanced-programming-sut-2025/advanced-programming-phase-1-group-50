@@ -3,6 +3,7 @@ package models.userInfo;
 import models.NPCs.NPC;
 import models.NPCs.NPCType;
 import models.NPCs.RelationWithNPC;
+import models.animals.Animal;
 import models.mapInfo.Farm;
 import models.mapInfo.Position;
 import models.mapInfo.Wood;
@@ -17,7 +18,7 @@ public class Player {
     private int energy = maxEnergy;
     private  final String username;  //final
     private  final String nickname;  //final
-    // final
+    private Animal currentAnimal = null;
     private final Ability ability = new Ability(this);
     private Tool currentTool;
     private  final Backpack backpack = new Backpack(BackpackType.Primary);    //final
@@ -197,6 +198,14 @@ public class Player {
     public void setFaintedToday(boolean faintedToday) {
         isFaintedToday = faintedToday;
     }
-//  TODO : dar method set kardan hame chi baraye farda , bayad yademoon bashe ke isFaintToday hame false beshe , ooni ke true boode hatman bayad energy roozanash beshe 150 az 200;
+
+    public Animal getCurrentAnimal() {
+        return currentAnimal;
+    }
+
+    public void setCurrentAnimal(Animal currentAnimal) {
+        this.currentAnimal = currentAnimal;
+    }
+    //  TODO : dar method set kardan hame chi baraye farda , bayad yademoon bashe ke isFaintToday hame false beshe , ooni ke true boode hatman bayad energy roozanash beshe 150 az 200;
 
 }
