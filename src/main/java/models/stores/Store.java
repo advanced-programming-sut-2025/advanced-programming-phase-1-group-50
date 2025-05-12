@@ -5,14 +5,14 @@ import models.app.App;
 
 import java.awt.*;
 
-public abstract class Market implements Placeable {
+public abstract class Store implements Placeable {
 
     protected final Rectangle bounds;
     protected final String shopAssistantName;
     protected final int startHour;
     protected final int endHour;
 
-    public Market(Rectangle bounds, String shopAssistantName, int startHour, int endHour) {
+    public Store(Rectangle bounds, String shopAssistantName, int startHour, int endHour) {
         this.bounds = bounds;
         this.shopAssistantName = shopAssistantName;
         this.startHour = startHour;

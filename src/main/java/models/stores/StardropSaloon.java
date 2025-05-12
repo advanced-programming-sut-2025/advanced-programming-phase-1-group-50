@@ -2,7 +2,7 @@ package models.stores;
 
 import java.awt.*;
 
-public class StardropSaloon extends Market {
+public class StardropSaloon extends Store {
 
 
     public StardropSaloon(int x, int y, int width, int height) {

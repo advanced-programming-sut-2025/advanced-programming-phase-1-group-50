@@ -2,7 +2,7 @@ package models.stores;
 
 import java.awt.*;
 
-public class CarpenterShop extends Market {
+public class CarpenterShop extends Store {
 
     public CarpenterShop(int x , int y, int width, int height) {
         super(new Rectangle(x,y,width,height),"Robin",9,20);

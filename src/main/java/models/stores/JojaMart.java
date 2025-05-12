@@ -2,7 +2,7 @@ package models.stores;
 
 import java.awt.*;
 
-public class JojaMart extends Market {
+public class JojaMart extends Store {
 
 
     public JojaMart(int x, int y, int width, int height) {

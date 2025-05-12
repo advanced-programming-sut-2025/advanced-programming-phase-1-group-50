@@ -1,13 +1,13 @@
 package models.stores;
 
-public class StoreItem {
+public class ShopItem {
 
     protected final String name;
     protected final int price;
     protected final Integer dailyLimit;
     protected Integer remainingQuantity;
 
-    public StoreItem(String name, int price, int dailyLimit) {
+    public ShopItem(String name, int price, int dailyLimit) {
         this.name = name;
         this.price = price;
         this.dailyLimit = dailyLimit;
@@ -33,8 +33,5 @@ public class StoreItem {
     public Integer getRemainingQuantity() {
         return remainingQuantity;
     }
-
-
-
 
 }
