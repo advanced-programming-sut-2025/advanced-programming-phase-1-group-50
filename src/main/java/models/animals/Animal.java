@@ -11,6 +11,7 @@ public class Animal {
     private Time lastPetTime;
     private Time lastFeedTime;
     private Time lastProductTime;
+    private boolean isOutOfHabitat;
     private Habitat habitat;
     private final static int maxFriendShip = 1000;
 
@@ -21,6 +22,7 @@ public class Animal {
         this.lastPetTime = null;
         this.lastFeedTime = null;
         this.lastProductTime = App.getGame().getTime().clone();
+        isOutOfHabitat = false;
         this.habitat = habitat;
     }
 
@@ -101,5 +103,17 @@ public class Animal {
 
     public void setHabitat(Habitat habitat) {
         this.habitat = habitat;
+    }
+
+    public boolean isOutOfHabitat() {
+        return isOutOfHabitat;
+    }
+
+    public void goToHabitat() {
+        isOutOfHabitat = false;
+    }
+
+    public void shepherdAnimal() {
+        isOutOfHabitat = true;
     }
 }
