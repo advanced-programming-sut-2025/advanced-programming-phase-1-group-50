@@ -5,7 +5,9 @@ import models.NPCs.NPCType;
 import models.Placeable;
 
 import models.app.App;
+import models.date.Weather;
 import models.foraging.ForagingMineral;
+import models.foraging.Tree;
 import models.stores.*;
 import models.userInfo.Player;
 
@@ -242,5 +244,21 @@ public class Map {
             case DOWN_LEFT -> findTile(currentTile.getPosition().getX() - 1, currentTile.getPosition().getY() + 1);
             case DOWN_RIGHT -> findTile(currentTile.getPosition().getX() + 1, currentTile.getPosition().getY() + 1);
         };
+    }
+    // this method should call every day.
+    public void GotThunderByStormyWeather(){
+        if(App.getGame().getTime().getWeather().equals(Weather.Stormy)){
+            int x = rand.nextInt(250);
+            int y = rand.nextInt(200);
+            Tile tile = findTile(x, y);
+            if(tile != null){
+                if(tile.getPlaceable() instanceof Tree tree){
+                    tile.setWalkable(true );
+                    tile.setGotThunder(true);
+                    tile.setPlaceable(null);
+                    tile.setSymbol('.');
+                }
+            }
+        }
     }
 }

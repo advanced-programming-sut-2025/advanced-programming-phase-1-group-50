@@ -4,16 +4,11 @@ import models.Placeable;
 import models.Result;
 import models.app.App;
 import models.foraging.ForagingMineral;
+import models.foraging.Tree;
 import models.manuFactor.Ingredient;
-import models.mapInfo.Direction;
-import models.mapInfo.Quarry;
-import models.mapInfo.Stone;
-import models.mapInfo.Tile;
+import models.mapInfo.*;
 import models.stores.Blacksmith;
-import models.tools.FishingPole;
-import models.tools.Hoe;
-import models.tools.Pickaxe;
-import models.tools.Tool;
+import models.tools.*;
 import models.userInfo.Coin;
 import models.userInfo.Player;
 
@@ -113,6 +108,7 @@ public class ToolController {
                     targetTile.setPlaceable(null);
                     pickaxe.useTool();
                     p.getFarm().getStones().remove(stone);
+                    p.getFarm().getPlaceables().remove(stone);
                     targetTile.setSymbol('.');
                     p.getBackpack().addIngredients(stone , 1);
                     return  new Result(true, "stone broken");
@@ -142,6 +138,24 @@ public class ToolController {
                 pickaxe.useTool();
                 return new Result(true , "target tile unPlowed successfully!");
             }
+        }
+        if(App.getGame().getCurrentPlayingPlayer().getCurrentTool() instanceof Axe axe){
+            if(targetTile.getPlaceable() != null){
+                if(targetTile.getPlaceable() instanceof Tree tree){
+                    targetTile.setPlaceable(null);
+                    axe.useTool();
+                    p.getFarm().getTrees().remove(tree);
+                    p.getFarm().getPlaceables().remove(tree);
+                    targetTile.setSymbol('.');
+                    int numberOfWoods = tree.getCurrentStage();
+                    if(numberOfWoods > 0){
+                        Wood wood  = new Wood();
+                        p.getBackpack().addIngredients(wood,numberOfWoods);
+                    }
+                    p.getBackpack().addIngredients(tree.getType().getSource() , 2);
+                }
+            }
+            return new Result(false, "there is no tree for cut!");
         }
 
         return new Result(false, "you don't have a tool , please set your current tool");

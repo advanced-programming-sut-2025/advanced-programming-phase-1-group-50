@@ -186,10 +186,7 @@ public class GameMenuController {
 
     public Result findPath(int endX, int endY, List<Position> positions){
         Tile destination = App.getGame().getMap().findTile(endX, endY);
-        System.out.println("DEST TILE: (" + endX + ", " + endY + ")");
-        System.out.println("Placeable: " + destination.getPlaceable());
-        System.out.println("Symbol: " + destination.getSymbol());
-        System.out.println("Walkable: " + destination.isWalkable());
+
 
         if(App.getGame().getMap().findTile(endX , endY).getPlaceable() != null){
             return new Result(false ,"Wrong place , Wrong Time");
@@ -225,7 +222,6 @@ public class GameMenuController {
         int energy = calculateEnergyBasedOnShortestDistance(positions);
         if(energy > App.getGame().getCurrentPlayingPlayer().getEnergy()){
             App.getGame().getCurrentPlayingPlayer().faint();
-            // midoonam grammeresh dorost nist vali khob :)
             return new Result(false ,"you are fainted");
         }
         App.getGame().getCurrentPlayingPlayer().getPosition().setX(endX);
