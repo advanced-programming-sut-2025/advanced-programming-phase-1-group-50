@@ -23,7 +23,7 @@ import java.util.Random;
 public class ToolController {
     public Result ToolsEquip(String input) {
         for(Tool t : App.getGame().getCurrentPlayingPlayer().getBackpack().getTools()){
-            if(t.getClass().getName().equals(input)){
+            if(t.getClass().getSimpleName().equals(input)){
                 App.getGame().getCurrentPlayingPlayer().setCurrentTool(t);
                 return new Result(true,"Tool equipped");
             }
@@ -37,7 +37,7 @@ public class ToolController {
     public Result showAvailableTool(){
         StringBuilder sb = new StringBuilder();
         for(Tool t : App.getGame().getCurrentPlayingPlayer().getBackpack().getTools()){
-            sb.append(t.getClass().getName());
+            sb.append(t.getClass().getSimpleName());
             sb.append("\n");
 
         }
@@ -93,6 +93,10 @@ public class ToolController {
         }
         Tile targetTile = App.getGame().getMap().getTileByDirection(tile, d);
 
+
+
+
+
         if (App.getGame().getCurrentPlayingPlayer().getCurrentTool() instanceof Hoe hoe) {
             if (App.getGame().getMap().getTileByDirection(tile, d) != null &&
                     App.getGame().getMap().getTileByDirection(tile, d).getPlaceable() == null) {
@@ -107,22 +111,10 @@ public class ToolController {
                     targetTile.setPlaceable(null);
                     pickaxe.useTool();
                     p.getFarm().getStones().remove(stone);
-//                    for(Map.Entry<Ingredient , Integer> entry :
-//                            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().entrySet()){
-//                        if(entry.getKey() instanceof Stone){
-//                            int quantity = entry.getValue();
-//                            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity()
-//                                    .put(entry.getKey(), quantity + 1);
-//                            return new Result(true, "tile picked successfully!");
-//                        }
-//                    }
-                    if(p.getBackpack().getIngredientQuantity().containsKey(stone)){
-                        p.getBackpack().getIngredientQuantity()
-                                .compute(stone, (k, stoneValue) -> stoneValue + 1);
-                    }
-                    else {
-                        p.getBackpack().addIngredients(stone, 1);
-                    }
+                    targetTile.setSymbol('.');
+                    p.getBackpack().addIngredients(stone , 1);
+                    return  new Result(true, "stone broken");
+
 
                 }
                 else if(targetTile.getPlaceable() instanceof Quarry quarry){
@@ -132,12 +124,7 @@ public class ToolController {
                         ForagingMineral fg = quarry.getForagingMinerals()
                                 .get(rand.nextInt(quarry.getForagingMinerals().size()));
                         quarry.getForagingMinerals().remove(fg);
-                        if (p.getBackpack().getIngredientQuantity().containsKey(fg)) {
-                            p.getBackpack().getIngredientQuantity()
-                                    .compute(fg, (k, v) -> v + 1);
-                        } else {
-                            p.getBackpack().addIngredients(fg , 1);
-                        }
+                        p.getBackpack().addIngredients(fg, 1);
                         pickaxe.useTool();
                         return new Result(true, "you add a foraging mineral to the backpack");
 
@@ -149,7 +136,9 @@ public class ToolController {
             }
             else {
                 targetTile.setPlowed(false);
+
                 pickaxe.useTool();
+                return new Result(true , "target tile unPlowed successfully!");
             }
         }
 

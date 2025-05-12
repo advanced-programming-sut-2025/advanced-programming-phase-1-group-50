@@ -155,7 +155,7 @@ public class GameMenu implements AppMenu {
         else if(GameMenuCommands.ToolUse.getMatcher(input)!=null){
             matcher = models.enums.GameMenuCommands.ToolUse.getMatcher(input);
             String direction = matcher.group(1);
-
+            System.out.println(toolController.useTool(direction));
         }
         else if(models.enums.GameMenuCommands.NewGame.getMatcher(input)!=null){
             ArrayList<Player> players = new ArrayList<>();

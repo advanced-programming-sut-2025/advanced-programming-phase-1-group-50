@@ -4,6 +4,7 @@ import models.NPCs.NPC;
 import models.NPCs.NPCType;
 import models.Placeable;
 
+import models.app.App;
 import models.foraging.ForagingMineral;
 import models.stores.*;
 import models.userInfo.Player;
@@ -145,7 +146,12 @@ public class Map {
     public void printMap() {
         for (int y = 0; y < 200; y++) {
             for (int x = 0; x < 250; x++) {
-                System.out.print(tiles[x][y].getSymbol());
+                if(findTile(x, y).equals(findTile(App.getGame().getCurrentPlayingPlayer().getPosition()))){
+                    System.out.print('p');
+                }
+                else{
+                    System.out.print(tiles[x][y].getSymbol());
+                }
             }
             System.out.println();
         }
@@ -227,13 +233,13 @@ public class Map {
 
     public Tile getTileByDirection(Tile currentTile, Direction direction) {
         return switch (direction) {
-            case UP -> findTile(currentTile.getPosition().getX() - 1, currentTile.getPosition().getY());
-            case DOWN -> findTile(currentTile.getPosition().getX() + 1, currentTile.getPosition().getY());
-            case LEFT -> findTile(currentTile.getPosition().getX(), currentTile.getPosition().getY() - 1);
-            case RIGHT -> findTile(currentTile.getPosition().getX(), currentTile.getPosition().getY() + 1);
+            case UP -> findTile(currentTile.getPosition().getX() , currentTile.getPosition().getY() -1);
+            case DOWN -> findTile(currentTile.getPosition().getX(), currentTile.getPosition().getY() + 1);
+            case LEFT -> findTile(currentTile.getPosition().getX() - 1, currentTile.getPosition().getY());
+            case RIGHT -> findTile(currentTile.getPosition().getX() + 1, currentTile.getPosition().getY());
             case UP_LEFT -> findTile(currentTile.getPosition().getX() - 1, currentTile.getPosition().getY() - 1);
-            case UP_RIGHT -> findTile(currentTile.getPosition().getX() - 1, currentTile.getPosition().getY() + 1);
-            case DOWN_LEFT -> findTile(currentTile.getPosition().getX() + 1, currentTile.getPosition().getY() - 1);
+            case UP_RIGHT -> findTile(currentTile.getPosition().getX() + 1, currentTile.getPosition().getY() - 1);
+            case DOWN_LEFT -> findTile(currentTile.getPosition().getX() - 1, currentTile.getPosition().getY() + 1);
             case DOWN_RIGHT -> findTile(currentTile.getPosition().getX() + 1, currentTile.getPosition().getY() + 1);
         };
     }

@@ -185,7 +185,13 @@ public class GameMenuController {
 
 
     public Result findPath(int endX, int endY, List<Position> positions){
-        if(!App.getGame().getMap().getTiles()[endX][endY].isWalkable()){
+        Tile destination = App.getGame().getMap().findTile(endX, endY);
+        System.out.println("DEST TILE: (" + endX + ", " + endY + ")");
+        System.out.println("Placeable: " + destination.getPlaceable());
+        System.out.println("Symbol: " + destination.getSymbol());
+        System.out.println("Walkable: " + destination.isWalkable());
+
+        if(App.getGame().getMap().findTile(endX , endY).getPlaceable() != null){
             return new Result(false ,"Wrong place , Wrong Time");
         }
         for(Player p : App.getGame().getPlayers()){

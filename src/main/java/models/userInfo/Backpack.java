@@ -86,7 +86,8 @@ public class Backpack {
 
     public void addIngredients(Ingredient ingredient, int quantity) {
         if(capacity > ingredientQuantity.size()){
-            ingredientQuantity.put(ingredient, quantity);
+            int value = ingredientQuantity.getOrDefault(ingredient , 0);
+            ingredientQuantity.put(ingredient, value + quantity);
         }
 
 
