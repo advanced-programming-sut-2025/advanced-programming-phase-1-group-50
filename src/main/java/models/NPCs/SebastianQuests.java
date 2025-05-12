@@ -1,6 +1,7 @@
 package models.NPCs;
 
 import models.app.App;
+import models.cooking.Food;
 import models.foraging.ForagingMineral;
 import models.manuFactor.Ingredient;
 import models.mapInfo.NpcHome;
@@ -63,7 +64,16 @@ public class SebastianQuests {
 
         boolean isPumpkinPieAvailable = false;
 
-        //TODO : check for pumpkin pie
+        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
+            if (ingredient.equals(Food.PumpkinPie)) {
+                int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                if (value > 0) {
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,value-1);
+                    isPumpkinPieAvailable = true;
+                    break;
+                }
+            }
+        }
 
         if (!isPumpkinPieAvailable) {
             return false;
