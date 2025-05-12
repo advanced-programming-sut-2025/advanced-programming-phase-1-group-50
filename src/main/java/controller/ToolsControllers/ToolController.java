@@ -1,8 +1,11 @@
 package controller.ToolsControllers;
 
+import controller.AnimalsControllers.AnimalsController;
+import controller.ForagingControllers.ForagingController;
 import models.Placeable;
 import models.Result;
 import models.app.App;
+import models.foraging.Crop;
 import models.foraging.ForagingMineral;
 import models.foraging.Tree;
 import models.manuFactor.Ingredient;
@@ -11,11 +14,14 @@ import models.stores.Blacksmith;
 import models.tools.*;
 import models.userInfo.Coin;
 import models.userInfo.Player;
+import models.waterBodies.Lake;
 
 import java.util.Map;
 import java.util.Random;
 
 public class ToolController {
+    private final AnimalsController animalsController = new AnimalsController();
+    private final ForagingController foragingController = new ForagingController();
     public Result ToolsEquip(String input) {
         for(Tool t : App.getGame().getCurrentPlayingPlayer().getBackpack().getTools()){
             if(t.getClass().getSimpleName().equals(input)){
@@ -156,6 +162,28 @@ public class ToolController {
                 }
             }
             return new Result(false, "there is no tree for cut!");
+        }
+        if(App.getGame().getCurrentPlayingPlayer().getCurrentTool() instanceof FishingPole fishingPole){
+            if(targetTile.getPlaceable() != null){
+                if(targetTile.getPlaceable() instanceof Lake lake){
+                    fishingPole.useTool();
+                    return animalsController.fishing(fishingPole);
+                }
+            }
+            return new Result(false, "there is no lake for fishing!");
+        }
+        if(App.getGame().getCurrentPlayingPlayer().getCurrentTool() instanceof Scythe scythe){
+            if(targetTile.getPlaceable() != null){
+                if(targetTile.getPlaceable() instanceof Crop crop){
+                    scythe.useTool();
+                    return foragingController.harvestWithScythe(crop , targetTile);
+                }
+                else if(targetTile.getPlaceable() instanceof Tree tree){
+                    scythe.useTool();
+                    return foragingController.harvestWithScythe(tree , targetTile);
+                }
+            }
+            return new Result(false, "there is no tree or crop fo harvest!");
         }
 
         return new Result(false, "you don't have a tool , please set your current tool");

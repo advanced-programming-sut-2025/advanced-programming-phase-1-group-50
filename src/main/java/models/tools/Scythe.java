@@ -1,14 +1,16 @@
 package models.tools;
 
+import models.app.App;
+
 public class Scythe extends Tool {
     @Override
-    protected int getConsumptionEnergy() {
+    public int getConsumptionEnergy() {
         return 0;
     }
 
     @Override
-    protected void useTool() {
-
+    public void useTool() {
+        App.getGame().getCurrentPlayingPlayer().consumeEnergy(2);
     }
     public ToolType getToolType() {
         return null;
