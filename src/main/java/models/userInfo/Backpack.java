@@ -221,4 +221,7 @@ public class Backpack {
     public int getNumberOfHay() {
         return hay.getNumber();
     }
+    public TrashCan getTrashCan() {
+        return trashCan;
+    }
 }

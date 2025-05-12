@@ -14,6 +14,7 @@ import models.stores.Blacksmith;
 import models.tools.*;
 import models.userInfo.Coin;
 import models.userInfo.Player;
+import models.userInfo.TrashCan;
 import models.waterBodies.Lake;
 
 import java.util.Map;
@@ -22,6 +23,15 @@ import java.util.Random;
 public class ToolController {
     private final AnimalsController animalsController = new AnimalsController();
     private final ForagingController foragingController = new ForagingController();
+    public boolean haveEnoughCoins(int price , Player player) {
+        int coinValue = player.getBackpack().getIngredientQuantity().getOrDefault(new Coin() , 0);
+        return coinValue >= price;
+    }
+    public void minusCoinForUpgradeTool(int price , Player player) {
+        Coin coin = new Coin();
+        int value = player.getBackpack().getIngredientQuantity().getOrDefault(coin , 0);
+        player.getBackpack().getIngredientQuantity().put(coin, value - price);
+    }
     public Result ToolsEquip(String input) {
         for(Tool t : App.getGame().getCurrentPlayingPlayer().getBackpack().getTools()){
             if(t.getClass().getSimpleName().equals(input)){
@@ -48,41 +58,67 @@ public class ToolController {
         var player = App.getGame().getCurrentPlayingPlayer();
         var tools = player.getBackpack().getTools();
         var ingredients = player.getBackpack().getIngredientQuantity();
-
-        if (!App.isAroundPlaceable(player, App.getGame().getMap().getNpcVillage().getBlacksmith())) {
-            return new Result(false, "You are not allowed to upgrade this tool");
+        int price;
+        if(input.equals("TrashCan")){
+            TrashCan trashCan = player.getBackpack().getTrashCan();
+            price = trashCan.getPriceForUpgrade();
+            if(haveEnoughCoins(price, player)){
+                trashCan.upgradeTool();
+                minusCoinForUpgradeTool(price, player);
+                return new Result(true,"Tool upgraded");
+            }
+            else {
+                return new Result(false,"you don't have enough coins");
+            }
         }
+        for(Tool t : tools){
+            if(t.getClass().getSimpleName().equals(input)){
 
-        for (Tool t : tools) {
-            if (t.getClass().getSimpleName().equals(input)) {
-                int price = 0;
-                if (!(t instanceof FishingPole)) {
-                    if (t.getToolType() == null) return new Result(false, "Tool type is null");
-                    price = t.getToolType().getPriceForUpgrade();
-                } else {
-
-                    price = t.getPoleType().getPriceForUpgrade();
-                }
-
-                for (Map.Entry<Ingredient, Integer> entry : ingredients.entrySet()) {
-                    if (entry.getKey() instanceof Coin) {
-                        if (entry.getValue() >= price) {
+                if(t instanceof FishingPole){
+                    if(App.isAroundPlaceable(player , App.getGame().getMap().getNpcVillage().getFishShop())){
+                        price = t.getPoleType().getPriceForUpgrade();
+                        if(haveEnoughCoins(price, player)){
                             t.upgradeTool();
-                            player.getBackpack().getIngredientQuantity().put(entry.getKey(), entry.getValue() - price);
-                            return new Result(true, t instanceof FishingPole ? "Fishing pole upgraded" : "Tool upgraded");
-                        } else {
-                            return new Result(false, t instanceof FishingPole ?
-                                    "Fishing pole upgrade failed, not enough coins" :
-                                    "Tool upgrade failed, not enough coins");
+                            minusCoinForUpgradeTool(price, player);
+                            return new Result(true,"Tool upgraded");
                         }
+                        else {
+                            return new Result(false,"you don't have enough coins");
+                        }
+                    }
+                    else {
+                        return new Result(false,"you should be near fish shop");
                     }
                 }
 
-                return new Result(false, "You don't have any coins");
+                else {
+                    if(App.isAroundPlaceable(player , App.getGame().getMap().getNpcVillage().getBlacksmith())){
+                        price = t.getToolType().getPriceForUpgrade();
+                        if(t.getToolType() != null){
+                            if(haveEnoughCoins(price, player)){
+                                t.upgradeTool();
+                                minusCoinForUpgradeTool(price, player);
+                                return new Result(true,"Tool upgraded");
+                            }
+                            else {
+                                return new Result(false,"you don't have enough coins");
+                            }
+                        }
+                        else{
+                            return new Result(false,"you can't upgrade this tool");
+                        }
+                    }
+                    else{
+                        return new Result(false,"you should be near blacksmith");
+                    }
+                }
             }
-        }
 
-        return new Result(false, "This tool is not available");
+
+        }
+        return new Result(false,"Tool not found");
+
+
     }
     public Result useTool(String direction){
         Direction d = Direction.getDirectionByInput(direction);
