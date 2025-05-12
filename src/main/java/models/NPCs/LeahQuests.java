@@ -127,7 +127,7 @@ public class LeahQuests {
             return false;
         }
 
-        //TODO : add reward to player
+        // we don't need the reward in our app, so we don't add it to player inventory
 
         for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
             if (home.getNpc().getType().equals(NPCType.Leah)) {
