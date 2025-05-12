@@ -41,12 +41,7 @@ public abstract class Market implements Placeable {
         return App.getGame().getTime().getHour() >= startHour && App.getGame().getTime().getHour() <= endHour;
     }
 
-//    public abstract void removeGood();
-//
-//    public abstract void addGood();
-//
-//    public abstract void sellProduct();
-//
+
 //    public abstract String showAllProducts();
 //
 //    public abstract String showAllAvailableProducts();

@@ -14,21 +14,9 @@ public class Blacksmith extends Market {
     }
 
 
-//    @Override
-//    public void removeGood() {
-//
-//    }
-//
-//    @Override
-//    public void addGood() {
-//
-//    }
-//
-//    @Override
-//    public void sellProduct() {
-//
-//    }
-//
+
+
+
 //    @Override
 //    public String showAllProducts() {
 //        return "";
@@ -43,4 +31,5 @@ public class Blacksmith extends Market {
 //    public void purchase() {
 //
 //    }
+
 }
