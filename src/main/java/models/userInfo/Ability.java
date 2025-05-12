@@ -63,7 +63,7 @@ public class Ability {
         farmingRate += amount;
         while (farmingLevel < maxLevel && farmingRate >= getRequiredPointsForLevel(farmingLevel + 1)) {
             farmingRate -= getRequiredPointsForLevel(farmingLevel + 1);
-            increaseFarmingLevel(1);
+            increaseFarmingLevel();
         }
     }
 
@@ -71,7 +71,7 @@ public class Ability {
         miningRate += amount;
         while (miningLevel < maxLevel && miningRate >= getRequiredPointsForLevel(miningLevel + 1)) {
             miningRate -= getRequiredPointsForLevel(miningLevel + 1);
-            increaseMiningLevel(1);
+            increaseMiningLevel();
         }
     }
 
@@ -79,7 +79,7 @@ public class Ability {
         foragingRate += amount;
         while (foragingLevel < maxLevel && foragingRate >= getRequiredPointsForLevel(foragingLevel + 1)) {
             foragingRate -= getRequiredPointsForLevel(foragingLevel + 1);
-            increaseForagingLevel(1);
+            increaseForagingLevel();
         }
     }
 
@@ -87,12 +87,12 @@ public class Ability {
         fishingRate += amount;
         while (fishingLevel < maxLevel && fishingRate >= getRequiredPointsForLevel(fishingLevel + 1)) {
             fishingRate -= getRequiredPointsForLevel(fishingLevel + 1);
-            increaseFishingLevel(1);
+            increaseFishingLevel();
         }
     }
 
-    public void increaseFarmingLevel(int amount) {
-        farmingLevel += amount;
+    private void increaseFarmingLevel() {
+        farmingLevel += 1;
         if (farmingLevel == 1) {
             player.getBackpack().addRecipe(CraftingRecipes.Sprinkler);
             player.getBackpack().addRecipe(CraftingRecipes.BeeHouse);
@@ -112,8 +112,8 @@ public class Ability {
         }
     }
 
-    public void increaseMiningLevel(int amount) {
-        miningLevel += amount;
+    private void increaseMiningLevel() {
+        miningLevel += 1;
         if (miningLevel == 1) {
             player.getBackpack().addRecipe(CraftingRecipes.CherryBomb);
             player.getBackpack().addRecipe(CookingRecipe.MinersTreat);
@@ -124,8 +124,8 @@ public class Ability {
             player.getBackpack().addRecipe(CraftingRecipes.MegaBomb);
     }
 
-    public void increaseForagingLevel(int amount) {
-        foragingLevel += amount;
+    private void increaseForagingLevel() {
+        foragingLevel += 1;
         if (foragingLevel == 1)
             player.getBackpack().addRecipe(CraftingRecipes.CharcoalKiln);
         if (foragingLevel == 2)
@@ -136,8 +136,8 @@ public class Ability {
             player.getBackpack().addRecipe(CraftingRecipes.MysticTreeSeed);
     }
 
-    public void increaseFishingLevel(int amount) {
-        fishingLevel += amount;
+    private void increaseFishingLevel() {
+        fishingLevel += 1;
         if (fishingLevel == 2)
             player.getBackpack().addRecipe(CookingRecipe.DishOTheSea);
         if (fishingLevel == 3)

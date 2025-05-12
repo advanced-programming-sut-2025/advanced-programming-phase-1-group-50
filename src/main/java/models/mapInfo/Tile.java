@@ -1,17 +1,18 @@
 package models.mapInfo;
 
 import models.Placeable;
+import models.foraging.Fertilizer;
 
 import java.util.ArrayList;
 
 public class Tile {
     private Position position;
     private boolean gotThunder;
-    //private TileType tileType; TODO : nemidoonam  chie in asan!!!
     private char symbol = '#';
     private boolean walkable ;
     private Placeable placeable;
     private boolean isPlowed = false;
+    private Fertilizer fertilizer = null;
     public Tile(Position position) {
         this.position = position;
         this.gotThunder = false;
@@ -60,5 +61,13 @@ public class Tile {
 
     public void setPlowed(boolean plowed) {
         isPlowed = plowed;
+    }
+
+    public Fertilizer getFertilizer() {
+        return fertilizer;
+    }
+
+    public void setFertilizer(Fertilizer fertilizer) {
+        this.fertilizer = fertilizer;
     }
 }

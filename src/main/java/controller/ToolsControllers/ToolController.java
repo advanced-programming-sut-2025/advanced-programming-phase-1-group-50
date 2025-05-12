@@ -104,6 +104,8 @@ public class ToolController {
                 hoe.useTool();
                 return new Result(true, "tile plowed successfully!");
             }
+            else
+                return new Result(false, "You can't plow this tile with Hoe!");
         }
         if(App.getGame().getCurrentPlayingPlayer().getCurrentTool() instanceof Pickaxe pickaxe) {
             if(targetTile.getPlaceable() != null){
