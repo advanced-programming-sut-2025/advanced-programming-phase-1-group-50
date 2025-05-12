@@ -1,17 +1,23 @@
 package models.stores;
 
 import models.Placeable;
-import models.tools.Tool;
+import models.app.App;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public abstract class Market implements Placeable {
-    protected Rectangle bounds;
-    protected String shopAssistantName;
-    protected ArrayList<Tool> goods;
-    protected int startHour;
-    protected int endHour;
+
+    protected final Rectangle bounds;
+    protected final String shopAssistantName;
+    protected final int startHour;
+    protected final int endHour;
+
+    public Market(Rectangle bounds, String shopAssistantName, int startHour, int endHour) {
+        this.bounds = bounds;
+        this.shopAssistantName = shopAssistantName;
+        this.startHour = startHour;
+        this.endHour = endHour;
+    }
 
     public String getShopAssistantName() {
         return shopAssistantName;
@@ -25,27 +31,26 @@ public abstract class Market implements Placeable {
         return startHour;
     }
 
-    public ArrayList<Tool> getGoods() {
-        return this.goods;
-    }
-
-    public abstract void removeGood();
-
-    public abstract void addGood();
-
-    public abstract void sellProduct();
-
-    public abstract String showAllProducts();
-
-    public abstract String showAllAvailableProducts();
-
-    public abstract void purchase();
-
     public Rectangle getBounds() {
         return bounds;
     }
 
-    public char getSymbol() {
-        return ' ';
+    public abstract char getSymbol();
+
+    public boolean isOpen() {
+        return App.getGame().getTime().getHour() >= startHour && App.getGame().getTime().getHour() <= endHour;
     }
+
+//    public abstract void removeGood();
+//
+//    public abstract void addGood();
+//
+//    public abstract void sellProduct();
+//
+//    public abstract String showAllProducts();
+//
+//    public abstract String showAllAvailableProducts();
+//
+//    public abstract void purchase();
+
 }
