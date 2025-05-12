@@ -13,21 +13,7 @@ public class CarpenterShop extends Store {
         return 'w';
     }
 
-//    @Override
-//    public void removeGood() {
-//
-//    }
-//
-//    @Override
-//    public void addGood() {
-//
-//    }
-//
-//    @Override
-//    public void sellProduct() {
-//
-//    }
-//
+
 //    @Override
 //    public String showAllProducts() {
 //        return "";
