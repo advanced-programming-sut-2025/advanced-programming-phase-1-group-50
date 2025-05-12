@@ -1,6 +1,7 @@
 package models.userInfo;
 
 import models.animals.Animal;
+import models.animals.Hay;
 import models.cooking.Refrigerator;
 import models.manuFactor.ArtisanMachine;
 import models.manuFactor.Ingredient;
@@ -17,6 +18,7 @@ public class Backpack {
     private BackpackType type;
     private int capacity = 12;
     private final ArrayList<Tool> tools=  new ArrayList<>();
+    private final Hay hay = new Hay();
     private final ArrayList<CookingRecipe> cookingRecipes = new ArrayList<>();
     private final ArrayList<CraftingRecipes> craftingRecipes = new ArrayList<>();
     private final ArrayList<ArtisanMachine> artisanMachines = new ArrayList<>();
@@ -163,5 +165,22 @@ public class Backpack {
 
     public Refrigerator getRefrigerator() {
         return refrigerator;
+    }
+
+    public void increaseHay(int number) {
+        hay.increaseNumber(number);
+    }
+
+    public void decreaseHay(int number) {
+        hay.decreaseNumber(number);
+        hay.setNumber(Math.max(hay.getNumber(), 0));
+    }
+
+    public boolean hasEnoughHay(int number) {
+        return hay.getNumber() >= number;
+    }
+
+    public int getNumberOfHay() {
+        return hay.getNumber();
     }
 }
