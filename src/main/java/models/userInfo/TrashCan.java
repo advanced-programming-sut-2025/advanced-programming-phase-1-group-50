@@ -9,7 +9,7 @@ public class TrashCan {
         Iridium(60 , 0);
 
         private final int returnValuePercentage;
-        private int priceForUpgrade;
+        private final int priceForUpgrade;
         Type(int returnValuePercentage , int priceForUpgrade) {
             this.returnValuePercentage = returnValuePercentage;
             this.priceForUpgrade = priceForUpgrade;
@@ -38,6 +38,9 @@ public class TrashCan {
     }
     public void useTool() {
 
+    }
+    public int getPriceForUpgrade() {
+        return this.type.priceForUpgrade;
     }
 
 }

@@ -132,4 +132,8 @@ public class Crop implements Ingredient, Growable , Placeable {
     public char getSymbol() {
         return '*';
     }
+
+    public int getSellPrice() {
+        return type.getBaseSellPrice();
+    }
 }
