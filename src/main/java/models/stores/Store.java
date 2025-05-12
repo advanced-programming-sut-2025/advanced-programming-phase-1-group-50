@@ -35,11 +35,13 @@ public abstract class Store implements Placeable {
         return bounds;
     }
 
-    public abstract char getSymbol();
 
     public boolean isOpen() {
         return App.getGame().getTime().getHour() >= startHour && App.getGame().getTime().getHour() <= endHour;
     }
+
+    public abstract char getSymbol();
+    public abstract void loadInventory();
 
 
 //    public abstract String showAllProducts();
