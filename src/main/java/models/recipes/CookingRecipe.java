@@ -2,6 +2,7 @@ package models.recipes;
 
 import models.animals.AnimalGoodType;
 import models.animals.FishType;
+import models.cooking.Food;
 import models.foraging.CropType;
 import models.foraging.ForagingCrop;
 import models.foraging.Fruit;
@@ -31,9 +32,9 @@ public enum CookingRecipe implements Ingredient {
     Bread(new HashMap<>(Map.of(CropType.Wheat, 1))),
     SalmonDinner(new HashMap<>(Map.of(FishType.Salmon, 1, CropType.Amaranth, 1, CropType.Kale, 1))),
     VegetableMedley(new HashMap<>(Map.of(CropType.Tomato, 1, CropType.Beet, 1))),
-    FarmersLunch(new HashMap<>(Map.of(Omelet, 1, CropType.Parsnip, 1))),
-    SurvivalBurger(new HashMap<>(Map.of(Bread, 1, CropType.Carrot, 1, CropType.Eggplant, 1))),
-    DishOTheSea(new HashMap<>(Map.of(FishType.Sardine, 2,HashBrowns, 1))),
+    FarmersLunch(new HashMap<>(Map.of(Food.Omelet, 1, CropType.Parsnip, 1))),
+    SurvivalBurger(new HashMap<>(Map.of(Food.Bread, 1, CropType.Carrot, 1, CropType.Eggplant, 1))),
+    DishOTheSea(new HashMap<>(Map.of(FishType.Sardine, 2,Food.HashBrowns, 1))),
     SeaFormPudding(new HashMap<>(Map.of(FishType.Flounder, 1, FishType.MidnightCarp, 1))),
     MinersTreat(new HashMap<>(Map.of(CropType.Carrot, 1, AnimalGoodType.Milk, 1)));
 
