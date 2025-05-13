@@ -132,6 +132,7 @@ public class Backpack {
             ingredientQuantity.put(ingredient, value - quantity);
         }
     }
+    // TODO : extract inventory trash from remove ingredient
 
 
     public HashMap<Ingredient, Integer> getIngredientQuantity() {
