@@ -7,6 +7,9 @@ import models.date.Season;
 import models.date.Weather;
 import models.mapInfo.Tile;
 import models.tools.FishingPole;
+import models.tools.MilkPail;
+import models.tools.Shear;
+import models.tools.Tool;
 import models.userInfo.Player;
 
 import java.util.ArrayList;
@@ -83,7 +86,7 @@ public class AnimalsController {
 
         if (animal.isOutOfHabitat()) {
             animal.goToHabitat();
-            return new Result(false, "You put <" + animalName + "> in the habitat!");
+            return new Result(true, "You put <" + animalName + "> in the habitat!");
         }
 
         if (!App.getGame().getTime().getWeather().equals(Weather.Sunny))
@@ -106,6 +109,7 @@ public class AnimalsController {
         if (!player.getBackpack().hasEnoughHay(1))
             return new Result(false, "You don't have enough hay to feed animal!");
 
+        player.getBackpack().decreaseHay(1);
         animal.feed();
         animal.incrementFriendShip(4);
 
@@ -124,7 +128,8 @@ public class AnimalsController {
 
         for (Animal animal : animals) {
             if (animal.isReadyProduct())
-                output.append(animal.getName()).append(" -> ").append(animal.getType()).append("\n");
+                output.append(String.format("%-20s (%-9s ->   %-25s\n",
+                        animal.getName(), animal.getType() + ")", animal.getType().getAnimalGoods()));
         }
 
         return new Result(true, output.toString());
@@ -139,7 +144,20 @@ public class AnimalsController {
         if (!animal.isReadyProduct())
             return new Result(false, "Product is not ready!");
 
-        //TODO for tools
+        Tool tool = player.getCurrentTool();
+        if (tool == null)
+            return new Result(false, "you don't have a tool, please set your current tool!");
+
+        if (animal.getType().equals(AnimalType.Sheep)) {
+            if (!(tool instanceof Shear shear))
+                return new Result(false, "Your current tool is not Shear!");
+            shear.useTool();
+        }
+        else if (animal.getType().equals(AnimalType.Cow) || animal.getType().equals(AnimalType.Goat)) {
+            if (!(tool instanceof MilkPail milkPail))
+                return new Result(false, "Your current tool is not MilkPail!");
+            milkPail.useTool();
+        }
 
         AnimalGood animalGood = animal.getProduct();
         player.getBackpack().addIngredients(animalGood, 1);
