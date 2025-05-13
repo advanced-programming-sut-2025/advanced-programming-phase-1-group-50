@@ -24,6 +24,7 @@ public class MarnieRanch extends Store {
     @Override
     public void loadInventory() {
         
+        inventory = new ArrayList<>();
         inventory.add(new MarnieRanchLiveStockItem("Chicken", AnimalType.Chicken, HabitatType.Coop , HabitatSize.Regular, 800 ,2));
         inventory.add(new MarnieRanchLiveStockItem("Cow", AnimalType.Cow, HabitatType.Barn , HabitatSize.Regular, 1500 ,2));
         inventory.add(new MarnieRanchLiveStockItem("Goat", AnimalType.Goat, HabitatType.Barn , HabitatSize.Big, 4000 ,2));
