@@ -34,7 +34,7 @@ public class StardropSaloon extends Store {
         inventory.add(new StardopSaloonRecipeItem("Maki Roll", CookingRecipe.MakiRoll,300,1));
         inventory.add(new StardopSaloonRecipeItem("Triple Shot  Espresso", CookingRecipe.TripleShotEspresso,5000,1));
         inventory.add(new StardopSaloonRecipeItem("Cookie", CookingRecipe.Cookie,300,1));
-        
+
     }
 
     @Override

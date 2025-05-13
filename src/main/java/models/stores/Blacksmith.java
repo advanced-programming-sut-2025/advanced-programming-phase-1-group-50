@@ -23,7 +23,7 @@ public class Blacksmith extends Store {
     @Override
     public void loadInventory() {
 
-        this.inventory = new ArrayList<>();
+        inventory = new ArrayList<>();
         inventory.add(new BlackSmithStocksItem("Cooper Ore", ForagingMineral.Copper, 75 , Integer.MAX_VALUE));
         inventory.add(new BlackSmithStocksItem("Iron Ore", ForagingMineral.Iron, 150 , Integer.MAX_VALUE));
         inventory.add(new BlackSmithStocksItem("Coal", ForagingMineral.Coal, 150 , Integer.MAX_VALUE));
