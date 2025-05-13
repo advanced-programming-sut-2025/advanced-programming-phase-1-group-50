@@ -119,6 +119,7 @@ public class ToolController {
         Direction d = Direction.getDirectionByInput(direction);
         Player p = App.getGame().getCurrentPlayingPlayer();
         Tile tile = App.getGame().getMap().findTile(p.getPosition());
+        Tool tool = p.getCurrentTool();
 
         if (d == null) {
             return new Result(false, "Invalid direction");
@@ -126,7 +127,7 @@ public class ToolController {
         Tile targetTile = App.getGame().getMap().getTileByDirection(tile, d);
 
 
-        if (App.getGame().getCurrentPlayingPlayer().getCurrentTool() instanceof Hoe hoe) {
+        if (tool instanceof Hoe hoe) {
             if (App.getGame().getMap().getTileByDirection(tile, d) != null &&
                     App.getGame().getMap().getTileByDirection(tile, d).getPlaceable() == null) {
                 App.getGame().getMap().getTileByDirection(tile, d).setPlowed(true);
@@ -135,7 +136,7 @@ public class ToolController {
             } else
                 return new Result(false, "You can't plow this tile with Hoe!");
         }
-        if (App.getGame().getCurrentPlayingPlayer().getCurrentTool() instanceof Pickaxe pickaxe) {
+        if (tool instanceof Pickaxe pickaxe) {
             if (targetTile.getPlaceable() != null) {
                 if (targetTile.getPlaceable() instanceof Stone stone) {
                     targetTile.setPlaceable(null);
@@ -170,7 +171,7 @@ public class ToolController {
                 return new Result(true, "target tile unPlowed successfully!");
             }
         }
-        if (App.getGame().getCurrentPlayingPlayer().getCurrentTool() instanceof Axe axe) {
+        if (tool instanceof Axe axe) {
 
             if (targetTile.getPlaceable() instanceof Tree tree) {
                 targetTile.setPlaceable(null);
@@ -188,7 +189,7 @@ public class ToolController {
 
             return new Result(false, "there is no tree for cut!");
         }
-        if (App.getGame().getCurrentPlayingPlayer().getCurrentTool() instanceof FishingPole fishingPole) {
+        if (tool instanceof FishingPole fishingPole) {
 
             if (targetTile.getPlaceable() instanceof Lake lake) {
                 fishingPole.useTool();
@@ -197,7 +198,7 @@ public class ToolController {
 
             return new Result(false, "there is no lake for fishing!");
         }
-        if (App.getGame().getCurrentPlayingPlayer().getCurrentTool() instanceof Scythe scythe) {
+        if (tool instanceof Scythe scythe) {
 
             if (targetTile.getPlaceable() instanceof Growable plant) {
                 scythe.useTool();
@@ -206,7 +207,7 @@ public class ToolController {
 
             return new Result(false, "there is no tree or crop fo harvest!");
         }
-        if (App.getGame().getCurrentPlayingPlayer().getCurrentTool() instanceof WateringCan wateringCan) {
+        if (tool instanceof WateringCan wateringCan) {
 
             if (targetTile.getPlaceable() instanceof Growable plant) {
                 if (wateringCan.getWaterCapacity() <= 0) {
@@ -220,6 +221,10 @@ public class ToolController {
             }
             return new Result(false, "there is no plant or lake!");
 
+        }
+        if(tool instanceof MilkPail ||
+                tool instanceof Shear) {
+            return new Result(false,"please use command : collect produce -n <nameOfAnimal>");
         }
 
         return new Result(false, "you don't have a tool , please set your current tool");
