@@ -120,9 +120,6 @@ public class AbigailQuests {
             return false;
         }
 
-        //TODO : Add reward to player
-
-
         for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
             if (home.getNpc().getType().equals(NPCType.Abigail)) {
                 home.getNpc().setThirdQuestDone(true);
