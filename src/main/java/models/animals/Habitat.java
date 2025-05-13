@@ -12,11 +12,15 @@ public class Habitat implements Placeable {
     private final Rectangle bounds;
 
 
-    public Habitat(HabitatType type, HabitatSize size , int x , int y , int width, int height) {
+    public Habitat(HabitatType type, HabitatSize size , int x , int y) {
         this.type = type;
         this.size = size;
         animals = new ArrayList<>();
-        this.bounds = new Rectangle(x, y, width, height);
+        if (HabitatType.Barn.equals(type)) {
+            this.bounds = new Rectangle(x, y, 7,4);
+        } else {
+            this.bounds = new Rectangle(x, y, 6,3);
+        }
     }
 
     public HabitatType getType() {
