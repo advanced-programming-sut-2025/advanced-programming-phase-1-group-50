@@ -1,5 +1,7 @@
 package models.date;
 
+import models.app.App;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -23,8 +25,9 @@ public class Time {
 
     public void advancedHour(int h){
         this.hour += h;
-        while (this.hour >= 24){
-            this.hour -= 24;
+        while (this.hour >= 22){
+            this.hour -= 22 ;
+            this.hour += 9;
             advancedDay(1);
 
         }
@@ -34,6 +37,7 @@ public class Time {
     public void advancedDay(int d){
         for(int i = 0 ; i < d; i++){
             this.date ++;
+            App.getGame().callMethodsForTomorrow();
             if(this.date > 28){
                 this.date = 1;
                 advancedSeason();

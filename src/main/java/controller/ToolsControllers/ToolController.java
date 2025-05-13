@@ -179,6 +179,9 @@ public class ToolController {
                 p.getFarm().getTrees().remove(tree);
                 p.getFarm().getPlaceables().remove(tree);
                 targetTile.setSymbol('.');
+                targetTile.setPlowed(false);
+                targetTile.setFertilizer(null);
+                targetTile.setWalkable(true);
                 int numberOfWoods = tree.getCurrentStage();
                 if (numberOfWoods > 0) {
                     Wood wood = new Wood();

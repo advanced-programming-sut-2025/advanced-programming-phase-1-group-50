@@ -17,6 +17,7 @@ public class Player {
     private final int maxEnergy = 200;
     //final
     private int energy = maxEnergy;
+    private int consumedEnergyInTurn = 0;
     private  final String username;  //final
     private  final String nickname;  //final
     private Animal currentAnimal = null;
@@ -172,6 +173,10 @@ public class Player {
             return;
         }
         this.energy -= energy;
+        consumedEnergyInTurn += energy;
+        if(consumedEnergyInTurn >= 50){
+            App.getGame().nextPlayerTurn();
+        }
         if(this.energy < 0){
             this.energy = 0;
             faint();
@@ -207,6 +212,17 @@ public class Player {
 
     public void setCurrentAnimal(Animal currentAnimal) {
         this.currentAnimal = currentAnimal;
+    }
+
+    public int getConsumedEnergyInTurn() {
+        return consumedEnergyInTurn;
+    }
+
+    public void setConsumedEnergyInTurn(int consumedEnergyInTurn) {
+        this.consumedEnergyInTurn = consumedEnergyInTurn;
+    }
+    public void setPlayerPositionInCottage(){
+        //TODO : walk for going home
     }
     //  TODO : dar method set kardan hame chi baraye farda , bayad yademoon bashe ke isFaintToday hame false beshe , ooni ke true boode hatman bayad energy roozanash beshe 150 az 200;
 

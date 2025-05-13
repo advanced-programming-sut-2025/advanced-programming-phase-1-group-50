@@ -37,9 +37,8 @@ public class ShippingBin implements Placeable{
 
         for (Player player : this.dailyRevenue.keySet()) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
-                if (ingredient instanceof Coin) {
-                    int value = player.getBackpack().getIngredientQuantity().get(ingredient);
-                    player.getBackpack().getIngredientQuantity().put(ingredient,player.getBackpack().getIngredientQuantity().get(ingredient) + dailyRevenue.get(player));
+                if (ingredient instanceof Coin coin) {
+                    player.getBackpack().addIngredients(coin, dailyRevenue.get(player));
                 }
             }
             dailyRevenue.put(player,0);

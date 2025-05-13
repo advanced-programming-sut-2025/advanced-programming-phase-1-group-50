@@ -1,9 +1,13 @@
 package models.app;
 
 import models.BetweenPlayersGift;
+import models.animals.Animal;
 import models.date.Time;
+import models.foraging.Crop;
+import models.foraging.Tree;
 import models.mapInfo.Map;
 import models.mapInfo.Farm;
+import models.mapInfo.Tile;
 import models.userInfo.Player;
 
 import java.util.ArrayList;
@@ -71,6 +75,7 @@ public class Game {
 
     public void setCurrentPlayingPlayer(Player currentPlayingPlayer) {
         this.currentPlayingPlayer = currentPlayingPlayer;
+        this.currentPlayingPlayer.setConsumedEnergyInTurn(0);
     }
 
     public void nextPlayerTurn() {
@@ -83,19 +88,19 @@ public class Game {
             Player nextPlayer = players.get(currentIndex);
 
             if (!nextPlayer.isFaintedToday()) {
-                currentPlayingPlayer = nextPlayer;
+                setCurrentPlayingPlayer(nextPlayer);
+
                 break;
             }
             checkedPlayers++;
         }
 
         if (checkedPlayers == size) {
-
-            // method marboot be farda ro call mikonim.
             //TODO
+            // at this time all of players are fainted , so we go to next day.
         }
 
-        if (currentPlayingPlayer == players.get(0)) {
+        if (currentPlayingPlayer.equals(players.get(0))) {
             App.getGame().getTime().advancedHour(1);
         }
     }
@@ -155,6 +160,50 @@ public class Game {
             }
         }
         return message.toString();
+
+    }
+    public void callMethodsForTomorrow() {
+        for (Player player : players) {
+            for (Tree tree : player.getFarm().getTrees()) {
+               tree.grow(time);
+               if(!tree.canBeAlive(time)){
+                   player.getFarm().getTrees().remove(tree);
+                   player.getFarm().getPlaceables().remove(tree);
+                   Tile tile = map.findTile(tree.getBounds().x, tree.getBounds().y);
+                   tile.setWalkable(true);
+                   tile.setPlaceable(null);
+                   tile.setSymbol('.');
+                   tile.setFertilizer(null);
+                   tile.setPlowed(false);
+               }
+            }
+            for (Crop crop : player.getFarm().getCrops()) {
+                crop.grow(time);
+                if(!crop.canBeAlive(time)){
+                    player.getFarm().getCrops().removeIf(c -> c == crop);
+                    player.getFarm().getPlaceables().removeIf(c -> c == crop);
+                    Tile tile = map.findTile(crop.getBounds().x, crop.getBounds().y);
+                    tile.setWalkable(true);
+                    tile.setPlaceable(null);
+                    tile.setSymbol('.');
+                    tile.setFertilizer(null);
+                    tile.setPlowed(false);
+                }
+            }
+            for (Animal animal : player.getBackpack().getAllAnimals()) {
+                if(animal.isOutOfHabitat()){
+                    animal.decrementFriendShip(20);
+                }
+                if(!animal.hasFedToday()){
+                    animal.decrementFriendShip(20);
+                }
+                if(!animal.hasPettedToday()){
+                    animal.decrementFriendShip((animal.getFriendShip() / 200) + 10);
+                }
+            }
+        }
+        map.GotThunderByStormyWeather();
+        map.randomForagingMineralGenerator();
 
     }
 }
