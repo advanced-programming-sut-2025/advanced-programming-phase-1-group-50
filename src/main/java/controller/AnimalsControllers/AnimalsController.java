@@ -83,7 +83,7 @@ public class AnimalsController {
 
         if (animal.isOutOfHabitat()) {
             animal.goToHabitat();
-            return new Result(false, "You put <" + animalName + "> in the habitat!");
+            return new Result(true, "You put <" + animalName + "> in the habitat!");
         }
 
         if (!App.getGame().getTime().getWeather().equals(Weather.Sunny))
@@ -106,6 +106,7 @@ public class AnimalsController {
         if (!player.getBackpack().hasEnoughHay(1))
             return new Result(false, "You don't have enough hay to feed animal!");
 
+        player.getBackpack().decreaseHay(1);
         animal.feed();
         animal.incrementFriendShip(4);
 
@@ -124,7 +125,8 @@ public class AnimalsController {
 
         for (Animal animal : animals) {
             if (animal.isReadyProduct())
-                output.append(animal.getName()).append(" -> ").append(animal.getType()).append("\n");
+                output.append(String.format("%-20s (%-9s ->   %-25s\n",
+                        animal.getName(), animal.getType() + ")", animal.getType().getAnimalGoods()));
         }
 
         return new Result(true, output.toString());

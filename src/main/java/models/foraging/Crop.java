@@ -7,6 +7,7 @@ import models.manuFactor.Ingredient;
 import models.mapInfo.Position;
 
 import java.awt.*;
+import java.util.Objects;
 
 public class Crop implements Ingredient, Growable , Placeable {
     private final CropType type;
@@ -135,5 +136,17 @@ public class Crop implements Ingredient, Growable , Placeable {
 
     public int getSellPrice() {
         return type.getBaseSellPrice();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Crop crop = (Crop) o;
+        return type.equals(crop.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(type);
     }
 }

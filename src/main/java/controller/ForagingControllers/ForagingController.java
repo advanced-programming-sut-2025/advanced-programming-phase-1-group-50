@@ -106,8 +106,8 @@ public class ForagingController {
         }
         else {
             player.getBackpack().addIngredients(((Crop) plant), 1);
-            player.getFarm().getCrops().remove(plant);
-            player.getFarm().getPlaceables().remove(plant);
+            player.getFarm().getCrops().removeIf(a -> a == plant);
+            player.getFarm().getPlaceables().removeIf(a -> a == plant);
             targetTile.setPlaceable(null);
             targetTile.setWalkable(true);
             targetTile.setSymbol('.');
@@ -150,9 +150,13 @@ public class ForagingController {
 
         if (seed != null) {
 
+            if (!player.getBackpack().getIngredientQuantity().containsKey(seed))
+                return new Result(false, "You don't have this seed!");
+
             if (!seed.getSeason().equals(App.getGame().getTime().getSeason()))
                 return new Result(false, "You can't plant this seed in this season!");
 
+            player.getBackpack().removeIngredients(seed, 1);
             CropType cropType = plantCrop(seed);
             Crop crop = new Crop(cropType, App.getGame().getTime(), targetTile.getFertilizer(),
                     targetTile.getPosition().getX(), targetTile.getPosition().getY());
@@ -167,9 +171,13 @@ public class ForagingController {
         }
         else if (treeSource != null) {
 
+            if (!player.getBackpack().getIngredientQuantity().containsKey(treeSource))
+                return new Result(false, "You don't have this seed!");
+
             if (!treeSource.getTreeType().getSeason().equals(App.getGame().getTime().getSeason()))
                 return new Result(false, "You can't plant this tree in this season!");
 
+            player.getBackpack().removeIngredients(treeSource, 1);
             Tree tree = new Tree(treeSource.getTreeType(), App.getGame().getTime(), targetTile.getFertilizer(),
                     targetTile.getPosition().getX(), targetTile.getPosition().getY(), 1, 1);
             player.getFarm().getTrees().add(tree);
