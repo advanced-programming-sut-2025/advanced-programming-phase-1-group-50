@@ -56,12 +56,20 @@ public class Animal {
         incrementFriendShip(15);
     }
 
-    public boolean hasPettedToday() {
+    public boolean hasPettedYesterday() {
         return lastPetTime.getDate() == App.getGame().getTime().getDate() - 1;
+    }
+
+    public boolean hasPettedToday() {
+        return lastPetTime.getDate() == App.getGame().getTime().getDate();
     }
 
     public void feed() {
         lastFeedTime = App.getGame().getTime().clone();
+    }
+
+    public boolean hasFedYesterday() {
+        return lastFeedTime.getDate() == App.getGame().getTime().getDate() - 1;
     }
 
     public boolean hasFedToday() {

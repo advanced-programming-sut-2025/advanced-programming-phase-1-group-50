@@ -194,10 +194,10 @@ public class Game {
                 if(animal.isOutOfHabitat()){
                     animal.decrementFriendShip(20);
                 }
-                if(!animal.hasFedToday()){
+                if(!animal.hasFedYesterday()){
                     animal.decrementFriendShip(20);
                 }
-                if(!animal.hasPettedToday()){
+                if(!animal.hasPettedYesterday()){
                     animal.decrementFriendShip((animal.getFriendShip() / 200) + 10);
                 }
             }
