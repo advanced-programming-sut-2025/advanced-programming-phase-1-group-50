@@ -3,6 +3,7 @@ package models.foraging;
 import models.Placeable;
 import models.app.App;
 import models.date.Time;
+import models.date.Weather;
 import models.manuFactor.Ingredient;
 import models.mapInfo.Position;
 
@@ -90,6 +91,10 @@ public class Crop implements Ingredient, Growable , Placeable {
     }
 
     public boolean canBeAlive(Time today) {
+        if (today.getWeather().equals(Weather.Rainy)) {
+            watering();
+            return true;
+        }
         return today.getDate() <= lastWaterTime.getDate() + numberOfDaysCanBeAliveWithoutWater;
     }
 

@@ -112,6 +112,7 @@ public class ForagingController {
             targetTile.setWalkable(true);
             targetTile.setSymbol('.');
             targetTile.setPlowed(false);
+            targetTile.setFertilizer(null);
             player.getAbility().increaseFarmingRate(5);
             return new Result(true,
                     String.format("You picked up %s\nThis plant cannot grow again!", plant.getNameOfProduct()));
