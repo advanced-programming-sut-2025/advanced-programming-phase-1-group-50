@@ -7,6 +7,9 @@ import models.date.Season;
 import models.date.Weather;
 import models.mapInfo.Tile;
 import models.tools.FishingPole;
+import models.tools.MilkPail;
+import models.tools.Shear;
+import models.tools.Tool;
 import models.userInfo.Player;
 
 import java.util.ArrayList;
@@ -141,7 +144,20 @@ public class AnimalsController {
         if (!animal.isReadyProduct())
             return new Result(false, "Product is not ready!");
 
-        //TODO for tools
+        Tool tool = player.getCurrentTool();
+        if (tool == null)
+            return new Result(false, "you don't have a tool, please set your current tool!");
+
+        if (animal.getType().equals(AnimalType.Sheep)) {
+            if (!(tool instanceof Shear shear))
+                return new Result(false, "Your current tool is not Shear!");
+            shear.useTool();
+        }
+        else if (animal.getType().equals(AnimalType.Cow) || animal.getType().equals(AnimalType.Goat)) {
+            if (!(tool instanceof MilkPail milkPail))
+                return new Result(false, "Your current tool is not MilkPail!");
+            milkPail.useTool();
+        }
 
         AnimalGood animalGood = animal.getProduct();
         player.getBackpack().addIngredients(animalGood, 1);

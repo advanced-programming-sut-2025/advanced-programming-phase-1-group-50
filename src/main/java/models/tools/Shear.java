@@ -1,21 +1,26 @@
 package models.tools;
 
+import models.app.App;
+
 public class Shear extends Tool {
     @Override
-    protected int getConsumptionEnergy() {
+    public int getConsumptionEnergy() {
         return 0;
     }
 
     @Override
-    protected void useTool() {
-
+    public void useTool() {
+        App.getGame().getCurrentPlayingPlayer().consumeEnergy(4);
     }
+
     public ToolType getToolType() {
         return null;
     }
-    public void upgradeTool(){
+
+    public void upgradeTool() {
 
     }
+
     public PoleType getPoleType() {
         return null;
     }
