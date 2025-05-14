@@ -50,7 +50,7 @@ public class FishShop extends Store {
     }
 
     @Override
-    public Result purchaseProduct() {
+    public Result purchaseProduct(int value, String productName) {
         return null;
     }
 

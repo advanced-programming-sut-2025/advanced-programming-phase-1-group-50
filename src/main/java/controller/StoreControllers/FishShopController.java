@@ -3,7 +3,6 @@ package controller.StoreControllers;
 import models.Result;
 import models.app.App;
 
-import java.util.regex.Matcher;
 
 public class FishShopController extends StoreController{
     @Override
@@ -19,8 +18,9 @@ public class FishShopController extends StoreController{
     }
 
     @Override
-    public Result purchaseProduct(Matcher matcher) {
-        return null;
+    public Result PurchaseProduct(int value, String productName) {
+        return App.getGame().getMap().getNpcVillage().getFishShop().purchaseProduct(value, productName);
     }
+
 
 }

@@ -1,7 +1,6 @@
 package models.mapInfo;
 
 import models.Placeable;
-import models.animals.Fish;
 import models.stores.*;
 
 import java.awt.*;
@@ -15,12 +14,12 @@ public class NpcVillage {
     private final  JojaMart jojaMart;
     private final MarnieRanch marnieRanch;
     private final PierreGeneralStore pierreGeneralStore;
-    private final StardropSaloon saloon;
+    private final StardropSaloon StardopSaloon;
     private final ArrayList<Placeable> placeables = new ArrayList<>();
     private final ArrayList<Door> doors = new ArrayList<>();
     public NpcVillage(Rectangle rectangle , Blacksmith blacksmith , CarpenterShop carpenterShop , FishShop fishShop ,
                       JojaMart jojaMart , MarnieRanch marnieRanch , PierreGeneralStore pierreGeneralStore
-            , StardropSaloon saloon) {
+            , StardropSaloon StardopSaloon) {
         this.rectangle = rectangle;
 
         this.blacksmith = blacksmith;
@@ -35,8 +34,8 @@ public class NpcVillage {
         placeables.add(this.marnieRanch);
         this.pierreGeneralStore = pierreGeneralStore;
         placeables.add(this.pierreGeneralStore);
-        this.saloon = saloon;
-        placeables.add(this.saloon);
+        this.StardopSaloon = StardopSaloon;
+        placeables.add(this.StardopSaloon);
 
     }
 
@@ -44,8 +43,8 @@ public class NpcVillage {
         return rectangle;
     }
 
-    public StardropSaloon getSaloon() {
-        return saloon;
+    public StardropSaloon getStardopSaloon() {
+        return StardopSaloon;
     }
 
     public PierreGeneralStore getPierreGeneralStore() {
