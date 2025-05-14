@@ -3,7 +3,6 @@ package models.stores;
 import models.Result;
 import models.app.App;
 import models.foraging.ForagingMineral;
-import models.manuFactor.artisanGoods.ArtisanGoodType;
 import models.userInfo.Coin;
 
 import java.awt.*;
@@ -84,15 +83,16 @@ public class Blacksmith extends Store {
             return new Result(false, "You must use Tools upgrade command in game menu");
         }
 
-        if (item.getRemainingQuantity() < value) {
-            return new Result(false, "Not enough stocks");
-        }
-
         int totalPrice = item.getPrice() * value;
 
         if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Coin(), 0) < totalPrice) {
             return new Result(false, "Not enough money");
         }
+
+        if (item.getRemainingQuantity() < value) {
+            return new Result(false, "Not enough stocks");
+        }
+
 
         if (!App.getGame().getCurrentPlayingPlayer().getBackpack().hasCapacity()) {
             return new Result(false, "Not enough capacity in your inventory");

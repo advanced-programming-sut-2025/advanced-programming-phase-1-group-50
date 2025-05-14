@@ -5,18 +5,11 @@ import models.date.Weather;
 import models.userInfo.Ability;
 
 public class FishingPole extends Tool {
-    private PoleType type = PoleType.Training;
 
-    public void upgradeTool() {
-        if(type == PoleType.Training) {
-            type = PoleType.Bamboo;
-        }
-        else if(type == PoleType.Bamboo) {
-            type = PoleType.Fiberglass;
-        }
-        else if(type == PoleType.Fiberglass) {
-            type = PoleType.Iridium;
-        }
+    private final PoleType type;
+
+    public FishingPole(PoleType poleType) {
+        this.type = poleType;
     }
 
     @Override
@@ -52,14 +45,13 @@ public class FishingPole extends Tool {
         App.getGame().getCurrentPlayingPlayer().consumeEnergy(consumedEnergy);
     }
 
+    @Override
+    public void upgradeTool() {}
 
     public PoleType getType() {
         return type;
     }
 
-    public void setType(PoleType type) {
-        this.type = type;
-    }
     public PoleType getPoleType() {
         return type;
     }
