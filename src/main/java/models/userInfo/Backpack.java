@@ -107,32 +107,43 @@ public class Backpack {
         int value = ingredientQuantity.getOrDefault(ingredient , 0);
         if(value == quantity){
             ingredientQuantity.remove(ingredient);
-
-            int returnPercentage = trashCan.getReturnValuePercentage();
-
-            int refund = 0;
-            if(ingredient instanceof AnimalGood ag)
-                refund = ag.getSellPrice() * returnPercentage / 100;
-            else if(ingredient instanceof Fish f)
-                refund = f.getSellPrice() * returnPercentage / 100;
-            else if(ingredient instanceof Crop c)
-                refund = c.getSellPrice() * returnPercentage / 100;
-            else if(ingredient instanceof Fruit fr)
-                refund = fr.getBaseSellPrice() * returnPercentage / 100;
-            else if(ingredient instanceof Food fd)
-                refund = fd.getSellPrice() * returnPercentage / 100;
-            else if(ingredient instanceof ForagingMineral fm)
-                refund = fm.getSellPrice() * returnPercentage / 100;
-
-            if (refund > 0) {
-                Coin coin = new Coin();
-                ingredientQuantity.put(coin, ingredientQuantity.getOrDefault(coin, 0) + refund);
-            }
         } else {
             ingredientQuantity.put(ingredient, value - quantity);
         }
     }
-    // TODO : extract inventory trash from remove ingredient
+    public void inventoryTrash(Ingredient ingredient , int quantity)
+    {
+        int value = ingredientQuantity.getOrDefault(ingredient , 0);
+        if(value == quantity){
+            ingredientQuantity.remove(ingredient);
+
+
+        } else {
+
+            ingredientQuantity.put(ingredient, value - quantity);
+        }
+        int returnPercentage = trashCan.getReturnValuePercentage();
+
+        int refund = 0;
+        if(ingredient instanceof AnimalGood ag)
+            refund = ag.getSellPrice() * quantity * returnPercentage / 100;
+        else if(ingredient instanceof Fish f)
+            refund = f.getSellPrice() * quantity * returnPercentage / 100;
+        else if(ingredient instanceof Crop c)
+            refund = c.getSellPrice() * quantity * returnPercentage / 100;
+        else if(ingredient instanceof Fruit fr)
+            refund = fr.getBaseSellPrice() * quantity * returnPercentage / 100;
+        else if(ingredient instanceof Food fd)
+            refund = fd.getSellPrice() * quantity * returnPercentage / 100;
+        else if(ingredient instanceof ForagingMineral fm)
+            refund = fm.getSellPrice() * quantity * returnPercentage / 100;
+
+        if (refund > 0) {
+            Coin coin = new Coin();
+            ingredientQuantity.put(coin, ingredientQuantity.getOrDefault(coin, 0) + refund);
+        }
+    }
+
 
 
     public HashMap<Ingredient, Integer> getIngredientQuantity() {

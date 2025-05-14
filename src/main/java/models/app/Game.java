@@ -204,6 +204,7 @@ public class Game {
         }
         map.GotThunderByStormyWeather();
         map.randomForagingMineralGenerator();
+        map.generateRandomCropType();
 
     }
 }
