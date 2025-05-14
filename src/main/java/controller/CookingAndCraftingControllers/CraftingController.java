@@ -3,6 +3,7 @@ package controller.CookingAndCraftingControllers;
 import models.Result;
 import models.app.App;
 import models.cooking.Food;
+import models.foraging.Seeds;
 import models.foraging.TreeSource;
 import models.manuFactor.ArtisanMachine;
 import models.manuFactor.Ingredient;
@@ -51,7 +52,6 @@ public class CraftingController {
             player.getBackpack().addArtisanMachine(artisanMachine);
         if (recipe.equals(CraftingRecipes.MysticTreeSeed))
             player.getBackpack().addIngredients(TreeSource.MysticTreeSeeds, 1);
-        //TODO else
 
         player.consumeEnergy(2);
 
@@ -65,6 +65,7 @@ public class CraftingController {
             return new Result(false, "The quantity must be greater than zero!");
         if (!player.getBackpack().hasCapacity(quantity))
             return new Result(false, "You don't have enough space in backpack!");
+
         CraftingRecipes craftingRecipe = CraftingRecipes.getRecipeByName(ItemName);
         ArtisanMachine machine;
         if (craftingRecipe != null) {
@@ -74,16 +75,28 @@ public class CraftingController {
             else if (craftingRecipe.equals(CraftingRecipes.MysticTreeSeed)) {
                 player.getBackpack().addIngredients(TreeSource.MysticTreeSeeds, quantity);
             }
-            //TODO else
             return new Result(true, "You add <" + ItemName + "> successfully!");
         }
+
         CookingRecipe cookingRecipe = CookingRecipe.getRecipeByName(ItemName);
         if (cookingRecipe != null) {
             Food food = Food.getFoodByName(ItemName);
             player.getBackpack().addIngredients(food, quantity);
             return new Result(true, "You add <" + ItemName + "> successfully!");
         }
-        //TODO else item
+
+        Seeds seeds = Seeds.getSeedByName(ItemName);
+        if (seeds != null) {
+            player.getBackpack().addIngredients(seeds, quantity);
+            return new Result(true, "You add <" + ItemName + "> successfully!");
+        }
+
+        TreeSource treeSource = TreeSource.getTreeSourceByName(ItemName);
+        if (treeSource != null) {
+            player.getBackpack().addIngredients(treeSource, quantity);
+            return new Result(true, "You add <" + ItemName + "> successfully!");
+        }
+
         return new Result(false, "There is no such Item!");
     }
 
