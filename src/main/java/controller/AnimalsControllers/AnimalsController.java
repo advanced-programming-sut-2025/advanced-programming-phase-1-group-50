@@ -18,11 +18,68 @@ import java.util.Random;
 public class AnimalsController {
 
     public Result build(String buildingName, int x, int y) {
-        return null;
+        Player player = App.getGame().getCurrentPlayingPlayer();
+        HabitatType habitatType = Habitat.getHabitatTypeByInput(buildingName);
+        HabitatSize habitatSize = Habitat.getHabitatSizeByInput(buildingName);
+
+        if (habitatType == null || habitatSize == null)
+            return new Result(false, "Invalid building name or type");
+
+        for (int i = x; i < x + habitatType.getLengthX(); i++) {
+            for (int j = y; j < y + habitatType.getLengthY(); j++) {
+                Tile tile = App.getGame().getMap().findTile(i, j);
+                if (tile == null)
+                    return new Result(false, "Invalid tile");
+                if (tile.getPlaceable() != null)
+                    return new Result(false, "You cannot build in this area! The area is not empty!");
+            }
+        }
+
+        //TODO
+
+        Habitat habitat = new Habitat(habitatType, habitatSize, x, y);
+
+        for (int i = x; i < x + habitatType.getLengthX(); i++) {
+            for (int j = y; j < y + habitatType.getLengthY(); j++) {
+                Tile tile = App.getGame().getMap().findTile(i, j);
+                tile.setPlaceable(habitat);
+                tile.setWalkable(false);
+                tile.setSymbol(habitat.getSymbol());
+            }
+        }
+
+        player.getFarm().addHabitat(habitat);
+
+        return new Result(true, "A <" + buildingName + "> was created successfully!");
     }
 
-    public Result buyAnimal(String animal, String name) {
-        return null;
+    public Result buyAnimal(String animalT, String name) {
+        Player player = App.getGame().getCurrentPlayingPlayer();
+        Animal checkAnimal = player.getBackpack().getAnimalByName(name);
+        AnimalType animalType = AnimalType.getAnimalTypeByInput(animalT);
+
+        if (checkAnimal != null)
+            return new Result(false, "Animal with this name already exists! Please choose another name");
+        if (animalType == null)
+            return new Result(false, "Invalid animalT type!");
+
+        Habitat habitat = null;
+        for (Habitat habitat1 : player.getFarm().getHabitats()) {
+            if (habitat1.getType().equals(animalType.getAnimalHabitat()) && habitat1.hasEmptyCapacity()) {
+                habitat = habitat1;
+                break;
+            }
+        }
+        if (habitat == null)
+            return new Result(false, "You don't have any enough capacity to buy this animalT!");
+
+        //TODO
+
+        Animal animal = new Animal(animalType, name, habitat);
+        player.getBackpack().addAnimal(animal);
+        habitat.addAnimal(animal);
+
+        return new Result(true, "You buy this animal successfully!");
     }
 
     public Result pet(String animalName) {
