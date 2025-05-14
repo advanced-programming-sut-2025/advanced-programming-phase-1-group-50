@@ -3,6 +3,7 @@ package models.NPCs;
 import models.app.App;
 import models.foraging.Crop;
 import models.foraging.CropType;
+import models.foraging.ForagingMineral;
 import models.manuFactor.Ingredient;
 import models.manuFactor.artisanGoods.ArtisanGood;
 import models.manuFactor.artisanGoods.ArtisanGoodType;
@@ -30,7 +31,7 @@ public class AbigailQuests {
                 if (((ArtisanGood) ingredient).getType().equals(ArtisanGoodType.GoldBar)) {
                     int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
                     if ( value > 0) {
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value-1);
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 1);
                         isGoldBarAvailable = true;
                         break;
                     }
@@ -66,7 +67,7 @@ public class AbigailQuests {
                 if (((Crop) ingredient).getType().equals(CropType.Pumpkin)) {
                     int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
                     if ( value > 0) {
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value-1);
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient,1);
                         isPumpkinAvailable= true;
                         break;
                     }
@@ -78,16 +79,10 @@ public class AbigailQuests {
             return false;
         }
 
-        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
-            if (ingredient instanceof Coin) {
-                int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
-                if (isRewardTwice) {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value + 1000);
-                } else {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value + 500);
-                }
-            }
+        if (isRewardTwice) {
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(),500);
         }
+        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(),500);
 
         for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
             if (home.getNpc().getType().equals(NPCType.Abigail)) {
@@ -108,7 +103,7 @@ public class AbigailQuests {
                 if (((Crop) ingredient).getType().equals(CropType.Wheat)) {
                     int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
                     if ( value >= 50) {
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value-50);
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 50);
                         are50WheatAvailable = true;
                         break;
                     }

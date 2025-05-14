@@ -33,8 +33,7 @@ public class LeahQuests {
                     int value =
                             App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
                     if (value > 0) {
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,
-                                value - 1);
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 1);
                         isGoldBarAvailable = true;
                         break;
                     }
@@ -46,20 +45,10 @@ public class LeahQuests {
             return false;
         }
 
-        for (Ingredient ingredient :
-                App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
-            if (ingredient instanceof Coin) {
-                int value =
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
-                if (isRewardTwice) {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,
-                            value + 1000);
-                } else {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,
-                            value + 500);
-                }
-            }
+        if (isRewardTwice) {
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(),500);
         }
+        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(),500);
 
         for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
             if (home.getNpc().getType().equals(NPCType.Leah)) {
@@ -80,7 +69,7 @@ public class LeahQuests {
                 if (((Fish) ingredient).getType().equals(FishType.Salmon)) {
                     int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
                     if (value > 0) {
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value-1);
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 1);
                         isSalmonAvailable = true;
                         break;
                     }
@@ -115,8 +104,7 @@ public class LeahQuests {
                 int value =
                         App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
                 if (value >= 200) {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,
-                            value - 200);
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient,200);
                     are200WoodAvailable = true;
                     break;
                 }

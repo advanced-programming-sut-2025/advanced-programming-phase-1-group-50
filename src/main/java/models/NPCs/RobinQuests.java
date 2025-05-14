@@ -30,8 +30,7 @@ public class RobinQuests{
                 int value =
                         App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
                 if (value >= 80) {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,
-                            value - 80);
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 80);
                     are80WoodAvailable = true;
                     break;
                 }
@@ -42,16 +41,10 @@ public class RobinQuests{
             return false;
         }
 
-        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
-            if (ingredient instanceof Coin) {
-                int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
-                if (isRewardTwice) {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value + 2000);
-                } else {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value + 1000);
-                }
-            }
+        if (isRewardTwice) {
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(),1000);
         }
+        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(),1000);
 
         for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
             if (home.getNpc().getType().equals(NPCType.Robin)) {
@@ -72,7 +65,7 @@ public class RobinQuests{
                 if (((ArtisanGood) ingredient).getType().equals(ArtisanGoodType.IronBar)) {
                     int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
                     if ( value >= 10) {
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value-10);
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 10);
                         are10IronBarAvailable= true;
                         break;
                     }
@@ -87,7 +80,7 @@ public class RobinQuests{
         int numberOfRepetitions = (isRewardTwice ? 3 : 6);
 
         for (int i=0; i<numberOfRepetitions; i++) {
-            App.getGame().getCurrentPlayingPlayer().getBackpack().getArtisanMachines().add(new BeeHouse());
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addArtisanMachine(new BeeHouse());
         }
 
 
@@ -111,8 +104,7 @@ public class RobinQuests{
                 int value =
                         App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
                 if (value >= 1000) {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,
-                            value - 1000);
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 1000);
                     are1000WoodAvailable = true;
                     break;
                 }
@@ -123,16 +115,10 @@ public class RobinQuests{
             return false;
         }
 
-        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
-            if (ingredient instanceof Coin) {
-                int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
-                if (isRewardTwice) {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value + 50000);
-                } else {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value + 25000);
-                }
-            }
+        if (isRewardTwice) {
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(),25000);
         }
+        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(),25000);
 
         for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
             if (home.getNpc().getType().equals(NPCType.Robin)) {

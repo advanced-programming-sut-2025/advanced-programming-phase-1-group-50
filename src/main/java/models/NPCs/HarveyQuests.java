@@ -32,7 +32,7 @@ public class HarveyQuests {
             if (ingredient instanceof Crop || ingredient instanceof CropType || ingredient instanceof Fruit) {
                 int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
                 if (value >= 12) {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value-12);
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 12);
                     are12PlantAvailable = true;
                     break;
                 }
@@ -43,20 +43,10 @@ public class HarveyQuests {
             return false;
         }
 
-        for (Ingredient ingredient :
-                App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
-            if (ingredient instanceof Coin) {
-                int value =
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
-                if (isRewardTwice) {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,
-                            value + 1500);
-                } else {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,
-                            value + 750);
-                }
-            }
+        if (isRewardTwice) {
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(),750);
         }
+        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(),750);
 
         for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
             if (home.getNpc().getType().equals(NPCType.Harvey)) {
@@ -77,7 +67,7 @@ public class HarveyQuests {
                 if (((Fish) ingredient).getType().equals(FishType.Salmon)) {
                     int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
                     if (value > 0) {
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient, value-1);
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 1);
                         isSalmonAvailable = true;
                         break;
                     }
@@ -114,8 +104,7 @@ public class HarveyQuests {
                     int value =
                             App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
                     if (value > 0) {
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,
-                                value - 1);
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 1);
                         isWineAvailable = true;
                         break;
                     }
@@ -127,12 +116,10 @@ public class HarveyQuests {
             return false;
         }
 
-        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(Food.Salad,
-                App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(Food.Salad, 0) + 5);
         if (isRewardTwice) {
-            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(Food.Salad,
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(Food.Salad, 0) + 5);
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(Food.Salad,5);
         }
+        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(Food.Salad,5);
 
         for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
             if (home.getNpc().getType().equals(NPCType.Harvey)) {

@@ -6,7 +6,6 @@ import models.foraging.ForagingMineral;
 import models.manuFactor.Ingredient;
 import models.mapInfo.NpcHome;
 import models.mapInfo.Stone;
-import models.mapInfo.Wood;
 import models.userInfo.Coin;
 
 import java.util.ArrayList;
@@ -30,8 +29,7 @@ public class SebastianQuests {
                 int value =
                         App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
                 if (value >= 50) {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,
-                            value - 50);
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 50);
                     are50IronsAvailable = true;
                     break;
                 }
@@ -42,13 +40,10 @@ public class SebastianQuests {
             return false;
         }
 
-        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ForagingMineral.Diamond,
-                App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ForagingMineral.Diamond, 0) + 2);
-
         if (isRewardTwice) {
-            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ForagingMineral.Diamond,
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ForagingMineral.Diamond, 0) + 2);
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(ForagingMineral.Diamond,2);
         }
+        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(ForagingMineral.Diamond,2);
 
         for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
             if (home.getNpc().getType().equals(NPCType.Sebastian)) {
@@ -68,7 +63,7 @@ public class SebastianQuests {
             if (ingredient.equals(Food.PumpkinPie)) {
                 int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
                 if (value > 0) {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,value-1);
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient,1);
                     isPumpkinPieAvailable = true;
                     break;
                 }
@@ -79,20 +74,10 @@ public class SebastianQuests {
             return false;
         }
 
-        for (Ingredient ingredient :
-                App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
-            if (ingredient instanceof Coin) {
-                int value =
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
-                if (isRewardTwice) {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,
-                            value + 10000);
-                } else {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,
-                            value + 5000);
-                }
-            }
+        if (isRewardTwice) {
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(),5000);
         }
+        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(),5000);
 
         for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
             if (home.getNpc().getType().equals(NPCType.Sebastian)) {
@@ -112,8 +97,7 @@ public class SebastianQuests {
             if (ingredient instanceof Stone) {
                 int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
                 if (value >= 150) {
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ingredient,
-                            value - 150);
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 150);
                     are150StonesAvailable = true;
                     break;
                 }
@@ -124,13 +108,10 @@ public class SebastianQuests {
             return false;
         }
 
-        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ForagingMineral.Quartz,
-                App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ForagingMineral.Quartz, 0) + 50);
-
         if (isRewardTwice) {
-            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().put(ForagingMineral.Quartz,
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ForagingMineral.Quartz, 0) + 50);
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(ForagingMineral.Quartz,50);
         }
+        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(ForagingMineral.Quartz,50);
 
         for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
             if (home.getNpc().getType().equals(NPCType.Sebastian)) {

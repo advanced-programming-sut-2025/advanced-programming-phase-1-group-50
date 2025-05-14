@@ -252,47 +252,32 @@ public class NPC {
 
             if (secondRandomNumber == 0) {
 
-                App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(ForagingMineral.Diamond,
-                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(ForagingMineral.Diamond, 0) + 1);
+                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(ForagingMineral.Diamond,1);
 
             } else {
 
-                App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(ForagingMineral.Quartz,
-                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(ForagingMineral.Quartz, 0) + 5);
-
+                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(ForagingMineral.Quartz,5);
             }
 
         } else if (this.type.equals(NPCType.Leah)) {
 
             if (secondRandomNumber == 0) {
 
-                App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(ForagingMineral.Emerald,
-                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(ForagingMineral.Emerald, 0) + 2);
+                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(ForagingMineral.Emerald,2);
 
             } else {
 
-                for (Ingredient ingredient :
-                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().keySet()) {
-                    if (ingredient instanceof Coin) {
-                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(ingredient, App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(ingredient, 0) + 200);
-                    }
-                }
+                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(new Coin(),200);
 
             }
 
         } else if (this.type.equals(NPCType.Robin)) {
 
             if (secondRandomNumber == 0) {
-                App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(ForagingMineral.Iron,
-                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(ForagingMineral.Iron, 0) + 50);
+                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(ForagingMineral.Iron,50);
             } else {
 
-                for (Ingredient ingredient :
-                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().keySet()) {
-                    if (ingredient instanceof Wood) {
-                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(ingredient, App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(ingredient, 0) + 100);
-                    }
-                }
+                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(new Wood(),100);
 
             }
 
@@ -300,22 +285,18 @@ public class NPC {
 
             if (secondRandomNumber == 0) {
 
-                App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(Fruit.Orange,
-                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(Fruit.Orange, 0) + 10);
+                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(Fruit.Orange,10);
 
             } else {
-                App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(Fruit.Banana,
-                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(Fruit.Banana, 0) + 10);
+                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(Fruit.Banana,10);
             }
 
         } else if (this.type.equals(NPCType.Sebastian)) {
 
             if (secondRandomNumber == 0) {
-                App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(ForagingMineral.Gold,
-                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(ForagingMineral.Gold, 0) + 10);
+                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(ForagingMineral.Gold,10);
             } else {
-                App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().put(ForagingMineral.Ruby,
-                        App.getGame().getPlayers().get(playerIndex).getBackpack().getIngredientQuantity().getOrDefault(ForagingMineral.Ruby, 0) + 2);
+                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(ForagingMineral.Ruby,2);
             }
 
         }
