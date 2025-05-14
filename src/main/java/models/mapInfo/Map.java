@@ -220,30 +220,53 @@ public class Map {
             }
         }
     }
+
     public CropType generateRandomCropType() {
         CropType[] cropTypes = CropType.values();
         return cropTypes[rand.nextInt(cropTypes.length)];
     }
-    public void generateRandomForagingCrop(Farm farm){
 
-            int numberOfRandomCrops = 20;
-            int counter = 0;
-            while (counter < numberOfRandomCrops) {
-                int x = rand.nextInt(farm.getRectangle().width);
-                int y = rand.nextInt(farm.getRectangle().height);
-                Tile tile = findTile(x, y);
-                if (tile.getPlaceable() == null) {
-                    Crop crop = new Crop(generateRandomCropType(), App.getGame().getTime(), null, x, y);
-                    tile.setPlaceable(crop);
-                    tile.setWalkable(false);
-                    tile.setSymbol(crop.getSymbol());
-                    farm.getCrops().add(crop);
-                    farm.getPlaceables().add(crop);
-                }
-                counter++;
+    public void generateRandomForagingCrop(Farm farm) {
 
+        int numberOfRandomCrops = 6;
+        int counter = 0;
+        while (counter < numberOfRandomCrops) {
+            int x = rand.nextInt(farm.getRectangle().width) + farm.getRectangle().x;
+            int y = rand.nextInt(farm.getRectangle().height) + farm.getRectangle().y;
+            Tile tile = findTile(x, y);
+            if (tile.getPlaceable() == null) {
+                Crop crop = new Crop(generateRandomCropType(), App.getGame().getTime(), null, x, y);
+                tile.setPlaceable(crop);
+                tile.setWalkable(false);
+                tile.setSymbol(crop.getSymbol());
+                farm.getCrops().add(crop);
+                farm.getPlaceables().add(crop);
             }
+            counter++;
 
+        }
+
+    }
+
+    public void generateRandomStoneFarm(Farm farm) {
+        int numberOfStone = rand.nextInt(2) + 1;
+        int counter = 0;
+
+        while (counter < numberOfStone) {
+            int x = rand.nextInt(farm.getRectangle().width) + farm.getRectangle().x;
+            int y = rand.nextInt(farm.getRectangle().height) + farm.getRectangle().y;
+            Tile tile = findTile(x, y);
+
+            if (tile.getPlaceable() == null) {
+                Stone stone = new Stone(x, y);
+                tile.setPlaceable(stone);
+                tile.setWalkable(false);
+                tile.setSymbol(stone.getSymbol());
+                farm.getStones().add(stone);
+                farm.getPlaceables().add(stone);
+            }
+            counter++;
+        }
     }
 
     public Tile getTileByDirection(Tile currentTile, Direction direction) {
@@ -272,7 +295,7 @@ public class Map {
                     tile.setFertilizer(null);
                     tile.setPlaceable(null);
                     tile.setSymbol('.');
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(ForagingMineral.Coal , 1);
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(ForagingMineral.Coal, 1);
                 }
             }
         }
