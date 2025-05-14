@@ -2,6 +2,7 @@ package models.animals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public enum AnimalType {
@@ -28,6 +29,13 @@ public enum AnimalType {
     private final int Price;
     private final int daysToGetProduct;
     private final ArrayList<AnimalGoodType> animalGoodTypes;
+    private final static HashMap<String, AnimalType> stringToAnimalType = new HashMap<>();
+
+    static {
+        for (AnimalType value : AnimalType.values()) {
+            stringToAnimalType.put(value.name().toLowerCase(), value);
+        }
+    }
 
 
      AnimalType(HabitatType habitatType, HabitatSize habitatSize, int price, int daysToGetProduct, ArrayList<AnimalGoodType> animalGoodTypes){
@@ -56,5 +64,9 @@ public enum AnimalType {
 
     public ArrayList<AnimalGoodType> getAnimalGoods() {
          return animalGoodTypes;
+    }
+
+    public static AnimalType getAnimalTypeByInput(String input) {
+        return stringToAnimalType.getOrDefault(input, null);
     }
 }
