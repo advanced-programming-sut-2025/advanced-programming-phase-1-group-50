@@ -13,12 +13,14 @@ public enum LoginMenuCommands implements Command {
 
 
     private final String pattern;
+
     LoginMenuCommands(String pattern) {
         this.pattern = pattern;
     }
+
     public Matcher getMatcher(String regex) {
         Matcher matcher = Pattern.compile(this.pattern).matcher(regex);
-        if(matcher.matches()) {
+        if (matcher.matches()) {
             return matcher;
         }
         return null;

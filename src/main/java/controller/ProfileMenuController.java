@@ -3,17 +3,19 @@ package controller;
 import models.PasswordUtil;
 import models.Result;
 import models.app.App;
+
 import java.util.regex.*;
 
 public class ProfileMenuController {
     private final LoginAndRegisterController controller = new LoginAndRegisterController();
     private final PasswordUtil passwordUtil = new PasswordUtil();
-    public Result changePassword(String oldPas , String newPas){
+
+    public Result changePassword(String oldPas, String newPas) {
         Matcher matcher;
-        if(!App.getLoggedInUser().getPassword().equals(passwordUtil.hashPassword(oldPas))){
+        if (!App.getLoggedInUser().getPassword().equals(passwordUtil.hashPassword(oldPas))) {
             return new Result(false, "password is incorrect");
         }
-        if(newPas.equals(oldPas)){
+        if (newPas.equals(oldPas)) {
             return new Result(false, "enter a new password");
         }
         String passwordRegex = "^[a-zA-Z0-9?><,\"';:\\/|\\]\\[}{+=)(*&^%$#!]+";
@@ -38,12 +40,13 @@ public class ProfileMenuController {
         App.getLoggedInUser().setPassword(passwordUtil.hashPassword(newPas));
         return new Result(true, "password cahnged succsessfuly");
 
-    } 
-    public Result changeUsername(String username ){
-        if(App.getLoggedInUser().getUsername().equals(username)){
-            return new Result(false , "enter a new username");
+    }
+
+    public Result changeUsername(String username) {
+        if (App.getLoggedInUser().getUsername().equals(username)) {
+            return new Result(false, "enter a new username");
         }
-        if(controller.checkRepeatedUsername(username)){
+        if (controller.checkRepeatedUsername(username)) {
             return new Result(false, "username is already taken");
         }
         Matcher matcher;
@@ -56,24 +59,26 @@ public class ProfileMenuController {
         return new Result(true, "username changed succsessfuly");
     }
 
-    public Result changeNickname(String newNickname){
-        if(App.getLoggedInUser().getNickname().equals(newNickname)){
+    public Result changeNickname(String newNickname) {
+        if (App.getLoggedInUser().getNickname().equals(newNickname)) {
             return new Result(false, "enter a new nickname");
         }
         App.getLoggedInUser().setNickname(newNickname);
         return new Result(true, "nickname changed succsessfuly");
     }
-    public Result changeEmail(String email){
-        if(App.getLoggedInUser().getEmail().equals(email)){
+
+    public Result changeEmail(String email) {
+        if (App.getLoggedInUser().getEmail().equals(email)) {
             return new Result(false, "enter a new email");
         }
-        if(!controller.isValidEmail(email)){
-            return new Result(false , "invalid email format");
+        if (!controller.isValidEmail(email)) {
+            return new Result(false, "invalid email format");
         }
         App.getLoggedInUser().setEmail(email);
         return new Result(true, "email changed succsessfuly");
     }
-    public Result showUserInfo(){
+
+    public Result showUserInfo() {
         StringBuilder sb = new StringBuilder();
         sb.append("Username : " + App.getLoggedInUser().getUsername() + "\n");
         sb.append("Nickname : " + App.getLoggedInUser().getNickname() + "\n");

@@ -1,7 +1,9 @@
 package view;
 
 import java.util.Scanner;
+
 import models.app.*;
+
 public class AppView {
     public void run() {
 

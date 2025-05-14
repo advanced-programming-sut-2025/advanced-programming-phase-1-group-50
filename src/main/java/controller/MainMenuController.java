@@ -5,27 +5,27 @@ import models.app.App;
 import models.app.Menus;
 
 public class MainMenuController {
-    public Result shewCurrentMenu(){
-        return new Result(true , "you are now in the main menu");
+    public Result shewCurrentMenu() {
+        return new Result(true, "you are now in the main menu");
     }
 
-    public Result logout(){
+    public Result logout() {
         App.setLoggedInUser(null);
-        return new Result(true,"user logged out successfully");
+        return new Result(true, "user logged out successfully");
     }
 
-    public Result enterProfileMenu(){
+    public Result enterProfileMenu() {
         App.setMenu(Menus.ProfileMenu);
-        return new Result(true , "you are now in the profile menu");
+        return new Result(true, "you are now in the profile menu");
     }
 
-    public Result enterGameMenu(){
+    public Result enterGameMenu() {
         App.setMenu(Menus.GameMenu);
-        return new Result(true , "you are now in the game menu");
+        return new Result(true, "you are now in the game menu");
     }
 
-    public Result exitMainMenu(){
+    public Result exitMainMenu() {
         App.setMenu(Menus.LoginAndRegister);
-        return new Result(true , "you are now in the login menu");
+        return new Result(true, "you are now in the login menu");
     }
 }

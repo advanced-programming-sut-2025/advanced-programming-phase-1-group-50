@@ -81,7 +81,7 @@ public class ToolController {
 
             switch (price) {
                 case 0: {
-                    return new Result(false , "This tool is at the highest level");
+                    return new Result(false, "This tool is at the highest level");
                 }
                 case 1000: {
                     if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.CopperBar), 0) < 5) {
@@ -158,7 +158,7 @@ public class ToolController {
 
                     switch (price) {
                         case 0: {
-                            return new Result(false , "This tool is at the highest level");
+                            return new Result(false, "This tool is at the highest level");
                         }
                         case 2000: {
                             if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.CopperBar), 0) < 5) {

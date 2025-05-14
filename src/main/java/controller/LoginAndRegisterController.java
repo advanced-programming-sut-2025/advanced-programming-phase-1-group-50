@@ -16,29 +16,33 @@ import java.util.regex.Pattern;
 
 public class LoginAndRegisterController {
     private final PasswordUtil passwordUtil = new PasswordUtil();
-    public User findUser(String username){
-        for(User user : App.users){
-            if(user.getUsername().equals(username)){
+
+    public User findUser(String username) {
+        for (User user : App.users) {
+            if (user.getUsername().equals(username)) {
                 return user;
             }
         }
         return null;
     }
-    public SecurityQuestion findSecurityQuestion(int x){
+
+    public SecurityQuestion findSecurityQuestion(int x) {
         if (x >= 1 && x <= App.securityQuestions.size()) {
             return App.securityQuestions.get(x - 1);
         }
         return null;
     }
+
     public String generatePassword() {
-      String Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789?><,\"';:\\/|][}{+=)(*&^%$#!";
-      SecureRandom rand = new SecureRandom();
-      StringBuilder sb = new StringBuilder();
-      for (int i = 0; i < 10; i++) {
-          sb.append(Characters.charAt(rand.nextInt(Characters.length())));
-      }
-      return sb.toString();
+        String Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789?><,\"';:\\/|][}{+=)(*&^%$#!";
+        SecureRandom rand = new SecureRandom();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 10; i++) {
+            sb.append(Characters.charAt(rand.nextInt(Characters.length())));
+        }
+        return sb.toString();
     }
+
     public boolean checkRepeatedUsername(String username) {
         for (User u : App.users) {
             if (u.getUsername().equals(username)) {
@@ -125,8 +129,7 @@ public class LoginAndRegisterController {
             password = generatePassword();
             System.out.println("your password is " + password);
             passwordConfirm = password;
-        }
-        else {
+        } else {
             matcher = Pattern.compile(passwordRegex).matcher(password);
             if (!matcher.matches()) {
                 return new Result(false, "invalid password format");
@@ -156,34 +159,35 @@ public class LoginAndRegisterController {
         } catch (IllegalArgumentException e) {
             return new Result(false, "Invalid gender");
         }
-        return new Result(true , "now we want to select security question");
-
+        return new Result(true, "now we want to select security question");
 
 
     }
+
     public Result selectSecurityQuestion(String username, String password, String passwordConfirm, String nickname,
                                          String email,
-                                         String gender,String number ,  String answer) {
+                                         String gender, String number, String answer) {
         int counter;
         try {
             counter = Integer.parseInt(number);
-        }catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return new Result(false, "invalid number");
         }
 
-        if(counter > App.securityQuestions.size()) return new Result(false, "please select a valid security question");
+        if (counter > App.securityQuestions.size()) return new Result(false, "please select a valid security question");
         SecurityQuestion question = App.securityQuestions.get(counter);
-        SecurityQuestion s= new SecurityQuestion(question.getQuestion() , answer);
-        App.users.add(new User(username , password , nickname ,email , Gender.valueOf(gender)  , s));
-        return new Result(true , "user registered successfully");
+        SecurityQuestion s = new SecurityQuestion(question.getQuestion(), answer);
+        App.users.add(new User(username, password, nickname, email, Gender.valueOf(gender), s));
+        return new Result(true, "user registered successfully");
 
 
     }
-    public Result login(String username, String password){
-        if(findUser(username) == null){
+
+    public Result login(String username, String password) {
+        if (findUser(username) == null) {
             return new Result(false, "user not found");
         }
-        if(!findUser(username).getPassword().equals(passwordUtil.hashPassword(password))){
+        if (!findUser(username).getPassword().equals(passwordUtil.hashPassword(password))) {
             return new Result(false, "wrong password");
 
         }
@@ -191,25 +195,28 @@ public class LoginAndRegisterController {
         App.setMenu(Menus.MainMenu);
         return new Result(true, "user logged in");
     }
-    public Result askSecurityQuestion(String username){
-        if(findUser(username) == null){
+
+    public Result askSecurityQuestion(String username) {
+        if (findUser(username) == null) {
             return new Result(false, "user not found");
         }
         SecurityQuestion sq = findUser(username).getSecurityQuestion();
-        return new Result(true , sq.getQuestion());
+        return new Result(true, sq.getQuestion());
     }
-    public Result checkAnswerQuestion(String username  , String answer){
-        if(findUser(username) == null){
+
+    public Result checkAnswerQuestion(String username, String answer) {
+        if (findUser(username) == null) {
             return new Result(false, "user not found");
         }
         SecurityQuestion sq = findUser(username).getSecurityQuestion();
-        if(!sq.getAnswer().equals(answer)){
+        if (!sq.getAnswer().equals(answer)) {
             return new Result(false, "wrong answer");
         }
-        return new Result(true , "user answered successfully " + "your password : " + findUser(username).getPassword());
+        return new Result(true, "user answered successfully " + "your password : " + findUser(username).getPassword());
     }
-    public Result setNewPasswordAfterForgetPassword(String username , String newPassword){
-        if(findUser(username) == null){
+
+    public Result setNewPasswordAfterForgetPassword(String username, String newPassword) {
+        if (findUser(username) == null) {
             return new Result(false, "user not found");
         }
         String passwordRegex = "^[a-zA-Z0-9?><,\"';:\\/|\\]\\[}{+=)(*&^%$#!]+";

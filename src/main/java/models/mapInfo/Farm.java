@@ -5,6 +5,7 @@ import models.animals.Habitat;
 import models.foraging.Crop;
 import models.waterBodies.Lake;
 import models.foraging.Tree;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,7 +18,7 @@ public class Farm {
     private final GreenHouse greenHouse;
     private final ArrayList<Lake> lakes;
     private final ArrayList<Quarry> quarries;
-    private  ArrayList<Tree> trees;
+    private ArrayList<Tree> trees;
     private final Rectangle rectangle;
     private final ArrayList<Stone> stones;
     private ArrayList<Placeable> placeables = new ArrayList<>();
@@ -25,8 +26,8 @@ public class Farm {
     private final ArrayList<Habitat> habitats = new ArrayList<>();
     private Door door;
 
-    public Farm( Cottage cottage, GreenHouse greenHouse, ArrayList<Lake> lakes, ArrayList<Quarry> quarries,
-                 ArrayList<Tree> trees, ArrayList<Stone> stones , ArrayList<Crop> crops , Rectangle rectangle , int type) {
+    public Farm(Cottage cottage, GreenHouse greenHouse, ArrayList<Lake> lakes, ArrayList<Quarry> quarries,
+                ArrayList<Tree> trees, ArrayList<Stone> stones, ArrayList<Crop> crops, Rectangle rectangle, int type) {
 
         this.cottage = cottage;
         placeables.add(cottage);
@@ -45,7 +46,6 @@ public class Farm {
         this.crops = crops;
 
         placeables.addAll(crops);
-
 
 
     }
@@ -77,20 +77,24 @@ public class Farm {
     public GreenHouse getGreenHouse() {
         return greenHouse;
     }
+
     public void setTilesSymbol(Tile[][] tiles) {
-        for(int i = this.rectangle.x ; i < this.rectangle.x+this.rectangle.width ; i++) {
-            for(int j=this.rectangle.y ; j < this.rectangle.y+this.rectangle.height ; j++) {
+        for (int i = this.rectangle.x; i < this.rectangle.x + this.rectangle.width; i++) {
+            for (int j = this.rectangle.y; j < this.rectangle.y + this.rectangle.height; j++) {
                 tiles[i][j].setSymbol('.');
             }
         }
     }
+
     public Rectangle getRectangle() {
         return rectangle;
     }
+
     public ArrayList<Placeable> getPlaceables() {
         return placeables;
     }
-    public void addRandomTree(){
+
+    public void addRandomTree() {
         Random rand = new Random();
 
     }
@@ -98,13 +102,16 @@ public class Farm {
     public void setTrees(ArrayList<Tree> trees) {
         this.trees = trees;
     }
+
     public int getType() {
         return type;
     }
+
     public void setDoor(Door door) {
         this.door = door;
         placeables.add(door);
     }
+
     public Door getDoor() {
         return door;
     }
