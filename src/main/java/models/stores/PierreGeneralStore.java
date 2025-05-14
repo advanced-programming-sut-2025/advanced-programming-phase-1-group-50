@@ -1,11 +1,17 @@
 package models.stores;
 
+import models.Bouquet;
 import models.Result;
 import models.app.App;
 import models.date.Season;
+import models.foraging.CropType;
 import models.foraging.Seeds;
 import models.foraging.TreeSource;
+import models.manuFactor.Dehydrator;
+import models.manuFactor.artisanGoods.ArtisanGood;
+import models.manuFactor.artisanGoods.ArtisanGoodType;
 import models.userInfo.BackpackType;
+import models.userInfo.Coin;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,7 +21,7 @@ public class PierreGeneralStore extends Store {
     private ArrayList<ShopItem> inventory;
 
     public PierreGeneralStore(int x, int y, int width, int height) {
-        super(new Rectangle(x,y,width,height),"Pierre",9,23);
+        super(new Rectangle(x, y, width, height), "Pierre", 9, 23);
     }
 
     @Override
@@ -24,21 +30,28 @@ public class PierreGeneralStore extends Store {
         inventory = new ArrayList<>();
 
         //BackpackUpgrade
-        inventory.add(new PierreGeneralStoreBackPackUpgrade("Large Pack", BackpackType.Big,2000,1));
-        inventory.add(new PierreGeneralStoreBackPackUpgrade("Deluxe Pack", BackpackType.Deluxe,10000,1));
+        inventory.add(new PierreGeneralStoreBackPackUpgrade("Large Pack", BackpackType.Big, 2000, 1));
+        inventory.add(new PierreGeneralStoreBackPackUpgrade("Deluxe Pack", BackpackType.Deluxe, 10000, 1));
 
         //Saplings
-        inventory.add(new PierreGeneralStoreSaplingItem("Apple Sapling", TreeSource.AppleSapling,4000,Integer.MAX_VALUE));
-        inventory.add(new PierreGeneralStoreSaplingItem("Apricot Sapling", TreeSource.AppleSapling,2000,Integer.MAX_VALUE));
-        inventory.add(new PierreGeneralStoreSaplingItem("Cherry Sapling", TreeSource.AppleSapling,3400,Integer.MAX_VALUE));
-        inventory.add(new PierreGeneralStoreSaplingItem("Orange Sapling", TreeSource.AppleSapling,4000,Integer.MAX_VALUE));
-        inventory.add(new PierreGeneralStoreSaplingItem("Peach Sapling", TreeSource.AppleSapling,6000,Integer.MAX_VALUE));
-        inventory.add(new PierreGeneralStoreSaplingItem("Pomegranate Sapling", TreeSource.AppleSapling,6000,Integer.MAX_VALUE));
+        inventory.add(new PierreGeneralStoreSaplingItem("Apple Sapling", TreeSource.AppleSapling, 4000,
+                Integer.MAX_VALUE));
+        inventory.add(new PierreGeneralStoreSaplingItem("Apricot Sapling", TreeSource.AppleSapling, 2000,
+                Integer.MAX_VALUE));
+        inventory.add(new PierreGeneralStoreSaplingItem("Cherry Sapling", TreeSource.AppleSapling, 3400,
+                Integer.MAX_VALUE));
+        inventory.add(new PierreGeneralStoreSaplingItem("Orange Sapling", TreeSource.AppleSapling, 4000,
+                Integer.MAX_VALUE));
+        inventory.add(new PierreGeneralStoreSaplingItem("Peach Sapling", TreeSource.AppleSapling, 6000,
+                Integer.MAX_VALUE));
+        inventory.add(new PierreGeneralStoreSaplingItem("Pomegranate Sapling", TreeSource.AppleSapling, 6000,
+                Integer.MAX_VALUE));
 
         //Spring Seeds
         inventory.add(new PierreGeneralStoreSeedsItem("Parsnip Seeds", Seeds.ParsnipSeeds, Season.Spring, 30, 5));
         inventory.add(new PierreGeneralStoreSeedsItem("Bean Starter", Seeds.BeanStarter, Season.Spring, 90, 5));
-        inventory.add(new PierreGeneralStoreSeedsItem("Cauliflower Seeds", Seeds.CauliflowerSeeds, Season.Spring, 120, 5));
+        inventory.add(new PierreGeneralStoreSeedsItem("Cauliflower Seeds", Seeds.CauliflowerSeeds, Season.Spring, 120
+                , 5));
         inventory.add(new PierreGeneralStoreSeedsItem("Potato Seeds", Seeds.PotatoSeeds, Season.Spring, 75, 5));
         inventory.add(new PierreGeneralStoreSeedsItem("Tulip Bulb", Seeds.TulipBulb, Season.Spring, 30, 5));
         inventory.add(new PierreGeneralStoreSeedsItem("Kale Seeds", Seeds.KaleSeeds, Season.Spring, 105, 5));
@@ -58,7 +71,8 @@ public class PierreGeneralStore extends Store {
         inventory.add(new PierreGeneralStoreSeedsItem("Hops Starter", Seeds.HopsStarter, Season.Summer, 90, 5));
         inventory.add(new PierreGeneralStoreSeedsItem("Corn Seeds", Seeds.CornSeeds, Season.Summer, 225, 5));
         inventory.add(new PierreGeneralStoreSeedsItem("Sunflower Seeds", Seeds.SunflowerSeeds, Season.Summer, 300, 5));
-        inventory.add(new PierreGeneralStoreSeedsItem("Red Cabbage Seeds", Seeds.RedCabbageSeeds, Season.Summer, 150, 5));
+        inventory.add(new PierreGeneralStoreSeedsItem("Red Cabbage Seeds", Seeds.RedCabbageSeeds, Season.Summer, 150,
+                5));
 
         //Fall Seeds
         inventory.add(new PierreGeneralStoreSeedsItem("Eggplant Seeds", Seeds.EggplantSeeds, Season.Fall, 30, 5));
@@ -74,16 +88,12 @@ public class PierreGeneralStore extends Store {
         inventory.add(new PierreGeneralStoreSeedsItem("Wheat Seeds", Seeds.WheatSeeds, Season.Fall, 15, 5));
         inventory.add(new PierreGeneralStoreSeedsItem("Artichoke Seeds", Seeds.ArtichokeSeeds, Season.Fall, 45, 5));
 
-        inventory.add(new ShopItem("Rice" , 200 ,Integer.MAX_VALUE));
-        inventory.add(new ShopItem("Wheat Flour" , 100 ,Integer.MAX_VALUE));
-        inventory.add(new ShopItem("Bouquet" , 1000 , 2));
-        inventory.add(new ShopItem("Dehydrator" , 10000 ,1));
-        inventory.add(new ShopItem("Grass Starter Recipe" , 1000 ,1));
-        inventory.add(new ShopItem("Sugar" , 100 ,Integer.MAX_VALUE));
-        inventory.add(new ShopItem("Oil" , 200 ,Integer.MAX_VALUE));
-        inventory.add(new ShopItem("Vinegar" , 200 ,Integer.MAX_VALUE));
-        inventory.add(new ShopItem("Grass Starter" , 100 ,Integer.MAX_VALUE));
-        inventory.add(new ShopItem("Speed Gro", 100,Integer.MAX_VALUE));
+        inventory.add(new ShopItem("Rice", 200, Integer.MAX_VALUE));
+        inventory.add(new ShopItem("Bouquet", 1000, 2));
+        inventory.add(new ShopItem("Dehydrator", 10000, 1));
+        inventory.add(new ShopItem("Oil", 200, Integer.MAX_VALUE));
+        inventory.add(new ShopItem("Vinegar", 200, Integer.MAX_VALUE));
+
 
     }
 
@@ -101,11 +111,12 @@ public class PierreGeneralStore extends Store {
         StringBuilder message = new StringBuilder("PierreGeneralStore Available Products:");
         for (ShopItem item : inventory) {
             if (item.remainingQuantity > 0) {
-                if (item instanceof PierreGeneralStoreSeedsItem &&  ((PierreGeneralStoreSeedsItem) item).getSeason().equals(App.getGame().getTime().getSeason())) {
+                if (item instanceof PierreGeneralStoreSeedsItem && ((PierreGeneralStoreSeedsItem) item).getSeason().equals(App.getGame().getTime().getSeason())) {
 
-                    message.append("\nName: ").append(item.name).append("   Price: ").append((item.price*2)/3).append("   Remaining: ").append(item.remainingQuantity);
+                    message.append("\nName: ").append(item.name).append("   Price: ").append((item.price * 2) / 3).append("   Remaining: ").append(item.remainingQuantity);
                 } else {
-                    message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   Remaining: ").append(item.remainingQuantity);
+                    message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   " +
+                            "Remaining: ").append(item.remainingQuantity);
                 }
             }
         }
@@ -114,7 +125,99 @@ public class PierreGeneralStore extends Store {
 
     @Override
     public Result purchaseProduct(int value, String productName) {
-        return null;
+
+        ShopItem item = null;
+
+        for (ShopItem i : inventory) {
+            if (i.name.equals(productName)) {
+                item = i;
+            }
+        }
+
+        if (item == null) {
+            return new Result(false, "No such product");
+        }
+
+        int totalPrice = calculatePrice(item) * value;
+
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Coin(), 0) < totalPrice) {
+            return new Result(false, "Not enough money");
+        }
+
+        if (item.getRemainingQuantity() < value) {
+            return new Result(false, "Not enough stocks");
+        }
+
+        if (item instanceof PierreGeneralStoreSeedsItem) {
+
+            if (!App.getGame().getCurrentPlayingPlayer().getBackpack().hasCapacity()) {
+                return new Result(false, "Not enough capacity in your inventory");
+            }
+
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(((PierreGeneralStoreSeedsItem) item).getSeeds(), value);
+
+        } else if (item instanceof PierreGeneralStoreBackPackUpgrade) {
+
+            if (item.name.equals("Large Pack")) {
+
+                if (! App.getGame().getCurrentPlayingPlayer().getBackpack().getType().equals(BackpackType.Primary)) {
+                    return new Result(false, "you can't upgrade the backpack to Large Pack from this level");
+                }
+                App.getGame().getCurrentPlayingPlayer().getBackpack().changeType(BackpackType.Big);
+
+            } else {
+
+                if (App.getGame().getCurrentPlayingPlayer().getBackpack().getType().equals(BackpackType.Primary)) {
+                    return new Result(false, "you must first buy the Large Pack");
+                }
+                if (App.getGame().getCurrentPlayingPlayer().getBackpack().getType().equals(BackpackType.Deluxe)) {
+                    return new Result(false, "you can't upgrade the backpack to Deluxe Pack from this level");
+                }
+                App.getGame().getCurrentPlayingPlayer().getBackpack().changeType(BackpackType.Deluxe);
+            }
+
+        } else if (item instanceof PierreGeneralStoreSaplingItem) {
+
+            if (!App.getGame().getCurrentPlayingPlayer().getBackpack().hasCapacity()) {
+                return new Result(false, "Not enough capacity in your inventory");
+            }
+
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(((PierreGeneralStoreSaplingItem) item).getSource(),value);
+
+        } else {
+
+            if (!App.getGame().getCurrentPlayingPlayer().getBackpack().hasCapacity() && !item.name.equals("Dehydrator")) {
+                return new Result(false, "Not enough capacity in your inventory");
+            }
+
+            switch (item.name) {
+
+                case "Rice":{
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(CropType.UnMilledRice,value);
+                    break;
+                }
+                case "Bouquet":{
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Bouquet(),value);
+                    break;
+                }
+                case "Dehydrator":{
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().addArtisanMachine(new Dehydrator());
+                    break;
+                }
+                case "Oil":{
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.Oil),value);
+                    break;
+                }
+                case "Vinegar":{
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.Vinegar),value);
+                    break;
+                }
+            }
+
+        }
+
+        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), -1 * totalPrice);
+        return new Result(true, "You successfully purchased " + value + "number(s) of " + productName);
     }
 
     @Override
@@ -122,6 +225,15 @@ public class PierreGeneralStore extends Store {
         for (ShopItem item : inventory) {
             item.resetQuantityEveryNight();
         }
+    }
+
+    private int calculatePrice(ShopItem item) {
+        if (item instanceof PierreGeneralStoreSeedsItem) {
+            if (App.getGame().getTime().getSeason().equals(((PierreGeneralStoreSeedsItem) item).getSeason())) {
+                return (item.price * 2) / 3;
+            }
+        }
+        return item.getPrice();
     }
 
     @Override
