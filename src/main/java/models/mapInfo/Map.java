@@ -302,13 +302,6 @@ public class Map {
         tiles[x][y].setSymbol(temp.getSymbol());
         tiles[x][y].setFertilizer(null);
 
-        for (Farm farm : farms) {
-            if (farm.getRectangle().contains(x, y)) {
-                farm.getPlaceables().add(temp);
-                break;
-            }
-        }
-
         return true;
     }
 

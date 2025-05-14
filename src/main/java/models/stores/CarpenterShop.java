@@ -4,12 +4,14 @@ import models.Result;
 import models.animals.HabitatSize;
 import models.animals.HabitatType;
 import models.app.App;
+import models.mapInfo.Farm;
 import models.mapInfo.Stone;
 import models.mapInfo.Wood;
 import models.userInfo.Coin;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class CarpenterShop extends Store {
 
@@ -86,7 +88,7 @@ public class CarpenterShop extends Store {
             return false;
         }
 
-        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(new Wood()) < ((CarpenterShopFarmBuildingsItem) item).getWoodCost() ) {
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(new Wood()) < ((CarpenterShopFarmBuildingsItem) item).getWoodCost()) {
             return false;
         }
 
@@ -95,15 +97,84 @@ public class CarpenterShop extends Store {
         }
 
         item.decreaseRemainingQuantity(1);
-        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Coin(),item.price);
-        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Stone(),((CarpenterShopFarmBuildingsItem) item).getStoneCost());
-        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Wood(),((CarpenterShopFarmBuildingsItem) item).getWoodCost());
+        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Coin(), item.price);
+        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Stone(),
+                ((CarpenterShopFarmBuildingsItem) item).getStoneCost());
+        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Wood(),
+                ((CarpenterShopFarmBuildingsItem) item).getWoodCost());
         return true;
     }
 
     @Override
     public Result purchaseProduct(int value, String productName) {
-        return null;
+
+        ShopItem item = null;
+        for (ShopItem i : inventory) {
+            if (i.name.equals(productName)) {
+                item = i;
+                break;
+            }
+        }
+
+        if (item == null) {
+            return new Result(false, "No such product");
+        }
+
+        if (item instanceof CarpenterShopFarmBuildingsItem && (!item.name.equals("Shipping Bin"))) {
+            return new Result(false, "You must build building command in game menu");
+        }
+
+        int totalPrice = item.getPrice() * value;
+
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Coin(), 0) < totalPrice) {
+            return new Result(false, "Not enough money");
+        }
+
+        if (item.getRemainingQuantity() < value) {
+            return new Result(false, "Not enough stocks");
+        }
+
+        if (item.name.equals("Shipping Bin")) {
+
+            Farm temp = App.getGame().getCurrentPlayingPlayer().getFarm();
+            Random rand = new Random();
+
+            while (true) {
+
+                int randomX = rand.nextInt(250);
+                int randomY = rand.nextInt(200);
+
+                if (App.getGame().getCurrentPlayingPlayer().getFarm().getRectangle().contains(randomX, randomY)) {
+                    if(App.getGame().getMap().addShippingBin(randomX, randomY)) {
+                        break;
+                    }
+                }
+
+            }
+
+        } else if (item.name.equals("Wood")){
+
+            if (!App.getGame().getCurrentPlayingPlayer().getBackpack().hasCapacity()) {
+                return new Result(false, "Not enough capacity in your inventory");
+            }
+
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Wood(), value);
+
+        } else {
+
+            if (!App.getGame().getCurrentPlayingPlayer().getBackpack().hasCapacity()) {
+                return new Result(false, "Not enough capacity in your inventory");
+            }
+
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Stone(), value);
+
+        }
+
+        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), (-1) * totalPrice);
+        item.decreaseRemainingQuantity(value);
+
+        return new Result(true, "You successfully purchased " + value + "number(s) of " + productName);
+
     }
 
     @Override

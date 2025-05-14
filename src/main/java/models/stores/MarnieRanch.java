@@ -1,10 +1,7 @@
 package models.stores;
 
 import models.Result;
-import models.animals.Animal;
 import models.animals.AnimalType;
-import models.animals.HabitatSize;
-import models.animals.HabitatType;
 import models.app.App;
 import models.userInfo.Coin;
 
