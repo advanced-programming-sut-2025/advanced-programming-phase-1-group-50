@@ -294,7 +294,7 @@ public class Map {
         }
 
         ShippingBin temp = new ShippingBin(x,y);
-        
+
         this.shippingBins.add(temp);
         tiles[x][y].setPlaceable(temp);
         tiles[x][y].setPlowed(false);
