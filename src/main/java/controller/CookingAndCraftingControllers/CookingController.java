@@ -7,11 +7,8 @@ import models.app.App;
 import models.cooking.Food;
 import models.cooking.Refrigerator;
 import models.foraging.Crop;
-import models.foraging.TreeSource;
-import models.manuFactor.ArtisanMachine;
 import models.manuFactor.Ingredient;
 import models.recipes.CookingRecipe;
-import models.recipes.CraftingRecipes;
 import models.userInfo.Player;
 
 import java.util.ArrayList;
@@ -30,13 +27,17 @@ public class CookingController {
         if (action.equals("put")) {
             if (!player.getBackpack().getIngredientQuantity().containsKey(food))
                 return new Result(false, "You don't have this food in the backpack!");
+            if (!player.getBackpack().getRefrigerator().hasCapacity())
+                return new Result(false, "You don't have enough capacity in refrigerator!");
             player.getBackpack().removeIngredients(food, 1);
             refrigerator.addItem(food, 1);
             return new Result(true, "You put <" + itemName + "> successfully in refrigerator!");
         }
         else {
-            if (!(player.getBackpack().getRefrigerator().getQuantity(food) == 0))
+            if (!player.getBackpack().getRefrigerator().containFood(food))
                 return new Result(false, "You don't have this food in the Refrigerator!");
+            if (!player.getBackpack().hasCapacity())
+                return new Result(false, "You don't have enough space in the Backpack!");
             player.getBackpack().getRefrigerator().removeItem(food, 1);
             player.getBackpack().addIngredients(food, 1);
             return new Result(true, "You pickUp <" + itemName + "> successfully!");
@@ -62,7 +63,7 @@ public class CookingController {
             return new Result(false, "Recipe <" + ItemName + "> not found!");
         if (!player.getBackpack().containRecipe(recipe))
             return new Result(false, "You don't have <" + ItemName + "> CookingRecipe in your backpack!");
-        if (player.getBackpack().hasCapacity())
+        if (!player.getBackpack().hasCapacity())
             return new Result(false, "You don't have enough space in backpack!");
 
         HashMap<Ingredient, Integer> requiredIngredients = recipe.getIngredients();
