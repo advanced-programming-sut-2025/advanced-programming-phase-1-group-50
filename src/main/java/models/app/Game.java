@@ -5,7 +5,9 @@ import models.BetweenPlayersGift;
 import models.animals.Animal;
 import models.date.Time;
 import models.foraging.Crop;
+import models.foraging.Growable;
 import models.foraging.Tree;
+import models.mapInfo.GreenHouse;
 import models.mapInfo.Map;
 import models.mapInfo.Farm;
 import models.mapInfo.Tile;
@@ -166,6 +168,9 @@ public class Game {
             if (player.isFaintedToday()) {
                 player.setEnergy(150);
             }
+            else {
+              player.setEnergy(200);
+            }
             player.setFaintedToday(false);
             Iterator<Tree> treeIterator = player.getFarm().getTrees().iterator();
             while (treeIterator.hasNext()) {
@@ -197,6 +202,24 @@ public class Game {
                     tile.setSymbol('.');
                     tile.setFertilizer(null);
                     tile.setPlowed(false);
+                }
+            }
+
+            GreenHouse gh = player.getFarm().getGreenHouse();
+            Iterator<Growable> cropIterator2 = gh.getGrowables().iterator();
+            if(!gh.isBroken()) {
+                while (cropIterator2.hasNext()) {
+                    Growable growable = cropIterator2.next();
+                    growable.grow(time);
+                    if (!growable.canBeAlive(time)) {
+                        cropIterator2.remove();
+                        if (growable instanceof Crop) {
+                            player.getFarm().getPlaceables().removeIf(p -> p == growable);
+
+                        } else if (growable instanceof Tree) {
+                            player.getFarm().getPlaceables().remove(growable);
+                        }
+                    }
                 }
             }
             map.generateRandomForagingCrop(player.getFarm());

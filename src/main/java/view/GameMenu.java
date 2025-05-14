@@ -1,5 +1,6 @@
 package view;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -260,6 +261,12 @@ public class GameMenu implements AppMenu {
             System.out.println(artisanController.artisanGet(matcher.group("artisanName")));
         } else if ((matcher = GameMenuCommands.CheatAddDollars.getMatcher(input)) != null) {
             System.out.println(controller.cheatAddDollars(matcher));
+        }
+        else if ((matcher = GameMenuCommands.UseGreenHouseForHarvesting.getMatcher(input)) != null){
+            System.out.println(controller.useGreenHouseForWatering());
+        }
+        else if((matcher = GameMenuCommands.UseGreenHouseForHarvesting.getMatcher(input)) != null){
+            System.out.println(controller.useGreenHouseForHarvesting());
         }
         else if(models.enums.GameMenuCommands.NewGame.getMatcher(input)!=null){
             ArrayList<Player> players = new ArrayList<>();

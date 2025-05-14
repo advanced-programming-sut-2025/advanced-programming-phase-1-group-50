@@ -30,6 +30,9 @@ public enum GameMenuCommands implements Command {
     ToolsShowAvailable("\\s*tools\\s+show\\s+available\\s*"),
     ToolUpgrade("\\s*tools\\s+upgrade\\s+-n\\s+(?<name>\\S+)\\s*"),
     ToolUse("\\s*tools\\s+use\\s+-d\\s+(?<direction>\\S+)\\s*"),
+    UseGreenHouseForWatering("use\\s+greenhouse\\s+for\\s+watering\\s*"),
+    UseGreenHouseForHarvesting("use\\s+greenhouse\\s+for\\s+harvesting\\s*"),
+    AddPlantToGreenHouse("\\s*add\\s+plant\\s+to\\s+greenhouse\\s*"),
 
     // cheat codes :
     AdvancedTimeCheatCode("\\s*advanced\\s+time\\s+(?<advancedTime>-?\\d+)\\s*"),
