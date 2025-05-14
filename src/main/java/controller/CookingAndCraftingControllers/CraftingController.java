@@ -35,7 +35,7 @@ public class CraftingController {
             return new Result(false, "Recipe <" + ItemName + "> not found!");
         if (!player.getBackpack().containRecipe(recipe))
             return new Result(false, "You don't have <" + ItemName + "> CraftingRecipe in your backpack!");
-        if (player.getBackpack().hasCapacity())
+        if (!player.getBackpack().hasCapacity())
             return new Result(false, "You don't have enough space in backpack!");
 
         HashMap<Ingredient, Integer> ingredients = recipe.getIngredients();
@@ -63,7 +63,7 @@ public class CraftingController {
 
         if (quantity <= 0)
             return new Result(false, "The quantity must be greater than zero!");
-        if (!player.getBackpack().hasCapacity(quantity))
+        if (!player.getBackpack().hasCapacity())
             return new Result(false, "You don't have enough space in backpack!");
 
         CraftingRecipes craftingRecipe = CraftingRecipes.getRecipeByName(ItemName);
