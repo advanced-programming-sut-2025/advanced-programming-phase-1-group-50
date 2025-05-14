@@ -26,7 +26,7 @@ public abstract class StoreMenu implements AppMenu {
         } else if (StoreMenuCommands.PurchaseProduct.getMatcher(input) != null) {
 
             Matcher matcher = StoreMenuCommands.PurchaseProduct.getMatcher(input);
-            System.out.println(controller.purchaseProduct(matcher));
+            System.out.println(controller.ProcessPurchaseCommand(matcher));
 
         } else if (StoreMenuCommands.Exit.getMatcher(input) != null) {
 

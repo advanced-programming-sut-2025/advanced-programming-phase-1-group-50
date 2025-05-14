@@ -12,7 +12,21 @@ public abstract class StoreController {
 
     public abstract Result showAvailableProducts();
 
-    public abstract Result purchaseProduct(Matcher matcher);
+    public Result ProcessPurchaseCommand(Matcher matcher) {
+
+        int value = 1;
+
+        if (matcher.group("count") != null) {
+            value = Integer.parseInt(matcher.group("count"));
+        }
+
+        String productName = matcher.group("productName");
+
+        return PurchaseProduct(value, productName);
+
+    }
+
+    protected abstract Result PurchaseProduct(int value , String productName);
 
     public void exit() {
         App.setMenu(Menus.GameMenu);

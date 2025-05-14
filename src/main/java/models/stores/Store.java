@@ -46,7 +46,7 @@ public abstract class Store implements Placeable {
     public void loadInventory() {}
     public abstract String showAllProducts();
     public abstract String showAvailableProducts();
-    public abstract Result purchaseProduct();
+    public abstract Result purchaseProduct(int value, String productName);
     public abstract void ResetQuantityEveryNight();
 
 }
