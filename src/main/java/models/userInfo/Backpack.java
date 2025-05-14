@@ -74,10 +74,6 @@ public class Backpack {
         return capacity > ingredientQuantity.size();
     }
 
-    public boolean hasCapacity(int quantity) {
-        return capacity > ingredientQuantity.size() + quantity;
-    }
-
     public void addTool(Tool tool) {
         tools.add(tool);
 
