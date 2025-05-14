@@ -9,6 +9,7 @@ import models.manuFactor.ArtisanMachine;
 import models.manuFactor.Ingredient;
 import models.recipes.CookingRecipe;
 import models.recipes.CraftingRecipes;
+import models.tools.Tool;
 import models.userInfo.Player;
 
 import java.util.ArrayList;
@@ -94,6 +95,12 @@ public class CraftingController {
         TreeSource treeSource = TreeSource.getTreeSourceByName(ItemName);
         if (treeSource != null) {
             player.getBackpack().addIngredients(treeSource, quantity);
+            return new Result(true, "You add <" + ItemName + "> successfully!");
+        }
+
+        Tool tool = Tool.getToolByName(ItemName);
+        if (tool != null) {
+            for (int i = 0; i < quantity; i++) player.getBackpack().addTool(tool);
             return new Result(true, "You add <" + ItemName + "> successfully!");
         }
 
