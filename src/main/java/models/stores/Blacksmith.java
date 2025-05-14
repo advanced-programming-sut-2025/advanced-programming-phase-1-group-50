@@ -1,5 +1,6 @@
 package models.stores;
 
+import models.Result;
 import models.foraging.ForagingMineral;
 import models.manuFactor.artisanGoods.ArtisanGoodType;
 
@@ -39,19 +40,37 @@ public class Blacksmith extends Store {
 
     }
 
-//    @Override
-//    public String showAllProducts() {
-//        return "";
-//    }
-//
-//    @Override
-//    public String showAllAvailableProducts() {
-//        return "";
-//    }
-//
-//    @Override
-//    public void purchase() {
-//
-//    }
+    @Override
+    public String showAllProducts() {
+        StringBuilder message = new StringBuilder("Blacksmith products:");
+        for (ShopItem item : inventory) {
+            message.append("\n" + "Name: ").append(item.name).append("  Price: ").append(item.price);
+        }
+        return message.toString();
+    }
+
+    @Override
+    public String showAvailableProducts() {
+        StringBuilder message = new StringBuilder("Blacksmith Available Products:");
+        for (ShopItem item : inventory) {
+            if (item.remainingQuantity > 0) {
+                message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   Remaining: ").append(item.remainingQuantity);
+            }
+        }
+        return message.toString();
+    }
+
+    @Override
+    public Result purchaseProduct() {
+        return null;
+    }
+
+    @Override
+    public void ResetQuantityEveryNight() {
+        for (ShopItem item : inventory) {
+            item.resetQuantityEveryNight();
+        }
+    }
+
 
 }

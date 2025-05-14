@@ -1,5 +1,7 @@
 package models.stores;
 
+import models.Result;
+import models.app.App;
 import models.date.Season;
 import models.foraging.Seeds;
 import models.foraging.TreeSource;
@@ -86,37 +88,45 @@ public class PierreGeneralStore extends Store {
     }
 
     @Override
+    public String showAllProducts() {
+        StringBuilder message = new StringBuilder("PierreGeneralStore products:");
+        for (ShopItem item : inventory) {
+            message.append("\n" + "Name: ").append(item.name).append("  Price: ").append(item.price);
+        }
+        return message.toString();
+    }
+
+    @Override
+    public String showAvailableProducts() {
+        StringBuilder message = new StringBuilder("PierreGeneralStore Available Products:");
+        for (ShopItem item : inventory) {
+            if (item.remainingQuantity > 0) {
+                if (item instanceof PierreGeneralStoreSeedsItem &&  ((PierreGeneralStoreSeedsItem) item).getSeason().equals(App.getGame().getTime().getSeason())) {
+
+                    message.append("\nName: ").append(item.name).append("   Price: ").append((item.price*2)/3).append("   Remaining: ").append(item.remainingQuantity);
+                } else {
+                    message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   Remaining: ").append(item.remainingQuantity);
+                }
+            }
+        }
+        return message.toString();
+    }
+
+    @Override
+    public Result purchaseProduct() {
+        return null;
+    }
+
+    @Override
+    public void ResetQuantityEveryNight() {
+        for (ShopItem item : inventory) {
+            item.resetQuantityEveryNight();
+        }
+    }
+
+    @Override
     public char getSymbol() {
         return '⚙';
     }
 
-//    @Override
-//    public void removeGood() {
-//
-//    }
-//
-//    @Override
-//    public void addGood() {
-//
-//    }
-//
-//    @Override
-//    public void sellProduct() {
-//
-//    }
-//
-//    @Override
-//    public String showAllProducts() {
-//        return "";
-//    }
-//
-//    @Override
-//    public String showAllAvailableProducts() {
-//        return "";
-//    }
-//
-//    @Override
-//    public void purchase() {
-//
-//    }
 }

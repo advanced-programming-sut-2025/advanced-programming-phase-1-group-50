@@ -1,5 +1,6 @@
 package models.stores;
 
+import models.Result;
 import models.cooking.Food;
 import models.manuFactor.artisanGoods.ArtisanGoodType;
 import models.recipes.CookingRecipe;
@@ -38,37 +39,40 @@ public class StardropSaloon extends Store {
     }
 
     @Override
+    public String showAllProducts() {
+        StringBuilder message = new StringBuilder("StardopSaloon products:");
+        for (ShopItem item : inventory) {
+            message.append("\n" + "Name: ").append(item.name).append("  Price: ").append(item.price);
+        }
+        return message.toString();
+    }
+
+    @Override
+    public String showAvailableProducts() {
+        StringBuilder message = new StringBuilder("StardopSaloon Available Products:");
+        for (ShopItem item : inventory) {
+            if (item.remainingQuantity > 0) {
+                message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   Remaining: ").append(item.remainingQuantity);
+            }
+        }
+        return message.toString();
+    }
+
+    @Override
+    public Result purchaseProduct() {
+        return null;
+    }
+
+    @Override
+    public void ResetQuantityEveryNight() {
+        for (ShopItem item : inventory) {
+            item.resetQuantityEveryNight();
+        }
+    }
+
+    @Override
     public char getSymbol() {
         return '☕';
     }
 
-//    @Override
-//    public void removeGood() {
-//
-//    }
-//
-//    @Override
-//    public void addGood() {
-//
-//    }
-//
-//    @Override
-//    public void sellProduct() {
-//
-//    }
-//
-//    @Override
-//    public String showAllProducts() {
-//        return "";
-//    }
-//
-//    @Override
-//    public String showAllAvailableProducts() {
-//        return "";
-//    }
-//
-//    @Override
-//    public void purchase() {
-//
-//    }
 }
