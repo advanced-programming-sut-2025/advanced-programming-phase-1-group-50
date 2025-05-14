@@ -90,11 +90,17 @@ public class Backpack {
 
 
     public void addIngredients(Ingredient ingredient, int quantity) {
+
         if(capacity > ingredientQuantity.size()){
+
             int value = ingredientQuantity.getOrDefault(ingredient , 0);
             ingredientQuantity.put(ingredient, value + quantity);
-        }
 
+            if (ingredientQuantity.get(ingredient) == 0) {
+                ingredientQuantity.remove(ingredient);
+            }
+
+        }
 
     }
 
