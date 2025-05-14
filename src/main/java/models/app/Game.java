@@ -10,10 +10,7 @@ import models.mapInfo.Farm;
 import models.mapInfo.Tile;
 import models.userInfo.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import models.userInfo.*;
 
@@ -164,24 +161,34 @@ public class Game {
     }
     public void callMethodsForTomorrow() {
         for (Player player : players) {
-            for (Tree tree : player.getFarm().getTrees()) {
-               tree.grow(time);
-               if(!tree.canBeAlive(time)){
-                   player.getFarm().getTrees().remove(tree);
-                   player.getFarm().getPlaceables().remove(tree);
-                   Tile tile = map.findTile(tree.getBounds().x, tree.getBounds().y);
-                   tile.setWalkable(true);
-                   tile.setPlaceable(null);
-                   tile.setSymbol('.');
-                   tile.setFertilizer(null);
-                   tile.setPlowed(false);
-               }
+            if(player.isFaintedToday()) {
+                player.setEnergy(150);
             }
-            for (Crop crop : player.getFarm().getCrops()) {
+            player.setFaintedToday(false);
+            Iterator<Tree> treeIterator = player.getFarm().getTrees().iterator();
+            while (treeIterator.hasNext()) {
+                Tree tree = treeIterator.next();
+                tree.grow(time);
+                if (!tree.canBeAlive(time)) {
+                    treeIterator.remove();
+                    player.getFarm().getPlaceables().remove(tree);
+                    Tile tile = map.findTile(tree.getBounds().x, tree.getBounds().y);
+                    tile.setWalkable(true);
+                    tile.setPlaceable(null);
+                    tile.setSymbol('.');
+                    tile.setFertilizer(null);
+                    tile.setPlowed(false);
+                }
+            }
+
+            Iterator<Crop> cropIterator = player.getFarm().getCrops().iterator();
+            while (cropIterator.hasNext()) {
+                Crop crop = cropIterator.next();
                 crop.grow(time);
-                if(!crop.canBeAlive(time)){
-                    player.getFarm().getCrops().removeIf(c -> c == crop);
-                    player.getFarm().getPlaceables().removeIf(c -> c == crop);
+                if (!crop.canBeAlive(time)) {
+                    cropIterator.remove();
+
+                    player.getFarm().getPlaceables().removeIf(p -> p == crop);
                     Tile tile = map.findTile(crop.getBounds().x, crop.getBounds().y);
                     tile.setWalkable(true);
                     tile.setPlaceable(null);
@@ -190,6 +197,9 @@ public class Game {
                     tile.setPlowed(false);
                 }
             }
+            map.generateRandomForagingCrop(player.getFarm());
+
+
             for (Animal animal : player.getBackpack().getAllAnimals()) {
                 if(animal.isOutOfHabitat()){
                     animal.decrementFriendShip(20);
@@ -204,7 +214,7 @@ public class Game {
         }
         map.GotThunderByStormyWeather();
         map.randomForagingMineralGenerator();
-        map.generateRandomCropType();
+
 
     }
 }

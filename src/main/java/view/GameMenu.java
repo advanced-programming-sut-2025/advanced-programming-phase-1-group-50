@@ -169,53 +169,7 @@ public class GameMenu implements AppMenu {
             String direction = matcher.group(1);
             System.out.println(toolController.useTool(direction));
         }
-        else if(models.enums.GameMenuCommands.NewGame.getMatcher(input)!=null){
-            ArrayList<Player> players = new ArrayList<>();
-            Player currentPlayer = new Player(App.getLoggedInUser().getUsername() , App.getLoggedInUser().getNickname() , App.getLoggedInUser());
-            players.add(currentPlayer);
 
-            Result result1 = controller.createNewGamePlayers(input, players);
-            System.out.println(result1);
-            if(result1.getSuccessful()){
-
-                int x = players.size();
-                System.out.println("number of created players: " + x);
-                for(Player p : players){
-                    System.out.println(p.getUsername());
-                }
-                int[] startXForMap = {0 ,150 ,0 ,150 };
-                int[] startYForMap = {0 , 0 , 125 ,125};
-                for(int i=0 ; i<x  ; i++){
-                    String command ;
-                    while((command = scanner.nextLine()) != null ){
-                        if(models.enums.GameMenuCommands.GameMap.getMatcher(command)!=null){
-                            matcher = models.enums.GameMenuCommands.GameMap.getMatcher(command);
-                            String Map = matcher.group(1);
-                            int mapNumber = Integer.parseInt(matcher.group(1));
-                            Result result  = controller.selectMapForCreateNewGame(mapNumber, players.get(i) ,
-                                    startXForMap[i] , startYForMap[i]);
-                            System.out.println(result);
-                            if(result.getSuccessful()){
-
-                                break;
-                            }
-
-
-                        }
-                        else {
-                            System.out.println("invalid command , please try again!");
-                        }
-
-
-                    }
-
-
-
-                }
-                System.out.println(controller.createNewGame(players));
-
-            }
-        }
         
         else if ((matcher = GameMenuCommands.CraftInfo.getMatcher(input)) != null) {
             System.out.println(foragingController.craftInfo(matcher.group("craftName")));
@@ -306,6 +260,53 @@ public class GameMenu implements AppMenu {
             System.out.println(artisanController.artisanGet(matcher.group("artisanName")));
         } else if ((matcher = GameMenuCommands.CheatAddDollars.getMatcher(input)) != null) {
             System.out.println(controller.cheatAddDollars(matcher));
+        }
+        else if(models.enums.GameMenuCommands.NewGame.getMatcher(input)!=null){
+            ArrayList<Player> players = new ArrayList<>();
+            Player currentPlayer = new Player(App.getLoggedInUser().getUsername() , App.getLoggedInUser().getNickname() , App.getLoggedInUser());
+            players.add(currentPlayer);
+
+            Result result1 = controller.createNewGamePlayers(input, players);
+            System.out.println(result1);
+            if(result1.getSuccessful()){
+
+                int x = players.size();
+                System.out.println("number of created players: " + x);
+                for(Player p : players){
+                    System.out.println(p.getUsername());
+                }
+                int[] startXForMap = {0 ,150 ,0 ,150 };
+                int[] startYForMap = {0 , 0 , 125 ,125};
+                for(int i=0 ; i<x  ; i++){
+                    String command ;
+                    while((command = scanner.nextLine()) != null ){
+                        if(models.enums.GameMenuCommands.GameMap.getMatcher(command)!=null){
+                            matcher = models.enums.GameMenuCommands.GameMap.getMatcher(command);
+                            String Map = matcher.group(1);
+                            int mapNumber = Integer.parseInt(matcher.group(1));
+                            Result result  = controller.selectMapForCreateNewGame(mapNumber, players.get(i) ,
+                                    startXForMap[i] , startYForMap[i]);
+                            System.out.println(result);
+                            if(result.getSuccessful()){
+
+                                break;
+                            }
+
+
+                        }
+                        else {
+                            System.out.println("invalid command , please try again!");
+                        }
+
+
+                    }
+
+
+
+                }
+                System.out.println(controller.createNewGame(players));
+
+            }
         }
         
         else {

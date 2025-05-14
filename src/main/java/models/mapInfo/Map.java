@@ -224,25 +224,26 @@ public class Map {
         CropType[] cropTypes = CropType.values();
         return cropTypes[rand.nextInt(cropTypes.length)];
     }
-    public void generateRandomForagingCrop(){
-        for (Farm farm : farms) {
-            int numberOfRandomCrops = 5;
+    public void generateRandomForagingCrop(Farm farm){
+
+            int numberOfRandomCrops = 20;
             int counter = 0;
             while (counter < numberOfRandomCrops) {
                 int x = rand.nextInt(farm.getRectangle().width);
                 int y = rand.nextInt(farm.getRectangle().height);
                 Tile tile = findTile(x, y);
-                if(tile.getPlaceable() == null){
-                    Crop crop = new Crop(generateRandomCropType() , App.getGame().getTime(), null ,x ,y );
+                if (tile.getPlaceable() == null) {
+                    Crop crop = new Crop(generateRandomCropType(), App.getGame().getTime(), null, x, y);
                     tile.setPlaceable(crop);
                     tile.setWalkable(false);
                     tile.setSymbol(crop.getSymbol());
                     farm.getCrops().add(crop);
                     farm.getPlaceables().add(crop);
                 }
+                counter++;
 
             }
-        }
+
     }
 
     public Tile getTileByDirection(Tile currentTile, Direction direction) {

@@ -18,12 +18,12 @@ public class Player {
     //final
     private int energy = maxEnergy;
     private int consumedEnergyInTurn = 0;
-    private  final String username;  //final
-    private  final String nickname;  //final
+    private  final String username;
+    private  final String nickname;
     private Animal currentAnimal = null;
     private final Ability ability = new Ability(this);
     private Tool currentTool;
-    private  final Backpack backpack = new Backpack(BackpackType.Primary);    //final
+    private  final Backpack backpack = new Backpack(BackpackType.Primary);
     private  final TrashCan trashCan = new TrashCan();
     private Farm farm;
     private boolean isFaintedToday = false;
@@ -222,6 +222,7 @@ public class Player {
         this.consumedEnergyInTurn = consumedEnergyInTurn;
     }
     public void setPlayerPositionInCottage(){
+
         //TODO : walk for going home
     }
     //  TODO : dar method set kardan hame chi baraye farda , bayad yademoon bashe ke isFaintToday hame false beshe , ooni ke true boode hatman bayad energy roozanash beshe 150 az 200;
