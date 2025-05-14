@@ -304,6 +304,8 @@ public class GameMenu implements AppMenu {
         }
         else if ((matcher = GameMenuCommands.ArtisanGet.getMatcher(input)) != null) {
             System.out.println(artisanController.artisanGet(matcher.group("artisanName")));
+        } else if ((matcher = GameMenuCommands.CheatAddDollars.getMatcher(input)) != null) {
+            System.out.println(controller.cheatAddDollars(matcher));
         }
         
         else {

@@ -38,6 +38,7 @@ public enum GameMenuCommands implements Command {
     CheatThunder("\\s*cheat\\s+thor\\s+-l\\s+<(?<thunderX>-?\\d+)\\s*,\\s*(?<thunderY>-?\\d+)\\s*"),
     CheatSetEnergy("\\s*energy\\s+set\\s+-v\\s+(?<energy>-?\\d+)\\s*"),
     CheatUnlimitedEnergy("\\s*energy\\s+unlimited\\s*"),
+    CheatAddDollars("\\s*cheat\\s+add\\s+(?<amount>-?\\d+)\\s*"),
 
     NewGame(".+"),
 
