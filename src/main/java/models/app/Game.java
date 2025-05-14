@@ -1,5 +1,6 @@
 package models.app;
 
+import controller.GameMenuController;
 import models.BetweenPlayersGift;
 import models.animals.Animal;
 import models.date.Time;
@@ -24,6 +25,7 @@ public class Game {
     private RelationNetwork relationsBetweenPlayers;
     private final ArrayList<BetweenPlayersGift> gifts = new ArrayList<>();
     private int giftIndex = 0;
+    private final GameMenuController gameMenuController = new GameMenuController();
 
     public Game(ArrayList<Player> players, ArrayList<Farm> farms, User u, Map x) {
         this.farms.addAll(farms);
@@ -93,12 +95,11 @@ public class Game {
         }
 
         if (checkedPlayers == size) {
-            //TODO
-            // at this time all of players are fainted , so we go to next day.
+            time.advancedDay(1);
         }
 
         if (currentPlayingPlayer.equals(players.get(0))) {
-            App.getGame().getTime().advancedHour(1);
+            time.advancedHour(1);
         }
     }
 
@@ -159,9 +160,10 @@ public class Game {
         return message.toString();
 
     }
+
     public void callMethodsForTomorrow() {
         for (Player player : players) {
-            if(player.isFaintedToday()) {
+            if (player.isFaintedToday()) {
                 player.setEnergy(150);
             }
             player.setFaintedToday(false);
@@ -198,23 +200,24 @@ public class Game {
                 }
             }
             map.generateRandomForagingCrop(player.getFarm());
-
+            map.generateRandomStoneFarm(player.getFarm());
 
             for (Animal animal : player.getBackpack().getAllAnimals()) {
-                if(animal.isOutOfHabitat()){
+                if (animal.isOutOfHabitat()) {
                     animal.decrementFriendShip(20);
                 }
-                if(!animal.hasFedYesterday()){
+                if (!animal.hasFedYesterday()) {
                     animal.decrementFriendShip(20);
                 }
-                if(!animal.hasPettedYesterday()){
+                if (!animal.hasPettedYesterday()) {
                     animal.decrementFriendShip((animal.getFriendShip() / 200) + 10);
                 }
             }
         }
         map.GotThunderByStormyWeather();
         map.randomForagingMineralGenerator();
-
+        setCurrentPlayingPlayer(players.getFirst());
+        System.out.println(gameMenuController.WalkPlayersToTheirHome(players));
 
     }
 }

@@ -61,7 +61,7 @@ public class GameMenuController {
             shortestPath.add(at);
             at = prev[at.getX()][at.getY()];
         }
-        if (at == null) return null; // مسیر پیدا نشد
+        if (at == null) return null; // there is no found
         shortestPath.add(new Position(startX, startY));
         Collections.reverse(shortestPath);
         return shortestPath;
@@ -74,7 +74,7 @@ public class GameMenuController {
             return new Result(false , "invalid command");
         }
         if(tokens.length < 4){
-            return new Result(false, "please select 1 user atleast");
+            return new Result(false, "please select 1 user least");
         }
         if(tokens.length > 6){
             return new Result(false, "please select 3 users");
@@ -138,7 +138,10 @@ public class GameMenuController {
         m.buildMap(players);
         Game x = new Game(players, maps , App.getLoggedInUser() , m);
 
-
+        for(Player p : players){
+            p.getPosition().setX(p.getFarm().getRectangle().x);
+            p.getPosition().setY(p.getFarm().getRectangle().y);
+        }
         App.games.add(x);
         App.setGame(x);
         App.getGame().setCurrentPlayingPlayer(players.getFirst());
@@ -186,7 +189,7 @@ public class GameMenuController {
 
 
     public Result findPath(int endX, int endY, List<Position> positions){
-        Tile destination = App.getGame().getMap().findTile(endX, endY);
+
 
 
         if(App.getGame().getMap().findTile(endX , endY).getPlaceable() != null){
@@ -222,7 +225,7 @@ public class GameMenuController {
     public Result walk(int endX , int endY , List<Position> positions){
         int energy = calculateEnergyBasedOnShortestDistance(positions);
         if(energy > App.getGame().getCurrentPlayingPlayer().getEnergy()){
-            App.getGame().getCurrentPlayingPlayer().faint();
+
             return new Result(false ,"you are fainted");
         }
         App.getGame().getCurrentPlayingPlayer().getPosition().setX(endX);
@@ -281,5 +284,33 @@ public class GameMenuController {
             }
         }
         return new Result(true , String.format("%s not found", name));
+    }
+    public Result WalkPlayersToTheirHome(ArrayList<Player> players){
+        for (Player p : players) {
+            int cottageX = p.getFarm().getCottage().getBounds().x;
+            int cottageY = p.getFarm().getCottage().getBounds().y;
+
+
+            List<Position> path = findShortestPath(
+                    App.getGame().getMap(),
+                    App.getGame().getCurrentPlayingPlayer().getPosition().getX(),
+                    App.getGame().getCurrentPlayingPlayer().getPosition().getY(),
+                    cottageX, cottageY
+            );
+
+            if(path == null){
+                return new Result(false ,"No path found for Player : " + p.getUsername());
+            }
+
+            int energy = calculateEnergyBasedOnShortestDistance(path);
+            p.setConsumedEnergyInTurn(energy);
+            if(!p.isFaintedToday()){
+                p.getPosition().setX(cottageX);
+                p.getPosition().setY(cottageY);
+            }
+        }
+        return new Result(true , "all players are sleeping in their own home");
+
+
     }
 }
