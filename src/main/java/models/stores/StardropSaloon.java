@@ -1,9 +1,12 @@
 package models.stores;
 
 import models.Result;
+import models.app.App;
 import models.cooking.Food;
+import models.manuFactor.artisanGoods.ArtisanGood;
 import models.manuFactor.artisanGoods.ArtisanGoodType;
 import models.recipes.CookingRecipe;
+import models.userInfo.Coin;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -60,7 +63,54 @@ public class StardropSaloon extends Store {
 
     @Override
     public Result purchaseProduct(int value, String productName) {
-        return null;
+
+        ShopItem item = null;
+
+        for (ShopItem i : inventory) {
+            if (i.name.equals(productName)) {
+                item = i;
+            }
+        }
+
+        if (item == null) {
+            return new Result(false, "No such product");
+        }
+
+        int totalPrice = item.getPrice() * value;
+
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Coin(), 0) < totalPrice) {
+            return new Result(false, "Not enough money");
+        }
+
+        if (item.getRemainingQuantity() < value) {
+            return new Result(false, "Not enough stocks");
+        }
+
+        if (item instanceof StardopSaloonRecipeItem) {
+
+                App.getGame().getCurrentPlayingPlayer().getBackpack().addRecipe(((StardopSaloonRecipeItem) item).getRecipe());
+
+        } else if (item instanceof StardopSaloonArtisanGoodItem) {
+
+           if (!App.getGame().getCurrentPlayingPlayer().getBackpack().hasCapacity()) {
+               return new Result(false, "Not enough capacity in your inventory");
+           }
+
+           App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(((StardopSaloonArtisanGoodItem) item).getType()),value);
+
+        } else if (item instanceof StardopSaloonFoodItem) {
+
+            if (!App.getGame().getCurrentPlayingPlayer().getBackpack().hasCapacity()) {
+                return new Result(false, "Not enough capacity in your inventory");
+            }
+
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(((StardopSaloonFoodItem) item).getFood(),value);
+
+        }
+
+        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), (-1) * totalPrice);
+        return new Result(true, "You successfully purchased " + value + "number(s) of " + productName);
+
     }
 
     @Override

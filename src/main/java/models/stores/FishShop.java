@@ -85,10 +85,12 @@ public class FishShop extends Store {
             }
 
             App.getGame().getCurrentPlayingPlayer().getBackpack().addTool(new FishingPole((((FishShopPoleItem) item).getType())));
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), (-1) * totalPrice);
 
         } else if (item instanceof FishShopCraftingRecipe) {
 
             App.getGame().getCurrentPlayingPlayer().getBackpack().addRecipe(((FishShopCraftingRecipe) item).getRecipe());
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), (-1) * totalPrice);
 
         } else {
 
@@ -96,6 +98,8 @@ public class FishShop extends Store {
                 return new Result(false, "Not enough capacity in your inventory");
             }
             App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(Food.TroutSoup,value);
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), (-1) * totalPrice);
+
         }
 
         return new Result(true, "You successfully purchased " + value + "number(s) of " + productName);

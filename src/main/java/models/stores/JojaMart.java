@@ -133,10 +133,12 @@ public class JojaMart extends Store {
             }
 
             App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(((JojaMartSeasonsStock) item).getSeedType(), value);
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), (-1) * totalPrice);
 
         } else {
 
             App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(Food.JojaCola,value);
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), (-1) * totalPrice);
 
         }
 
