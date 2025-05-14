@@ -1,5 +1,6 @@
 package controller;
 import java.util.*;
+import java.util.regex.Matcher;
 
 import controller.GameDateAndWeatherController.DateController;
 import models.Result;
@@ -254,6 +255,13 @@ public class GameMenuController {
         return new Result(true , sb.toString());
 
     }
+
+    public Result cheatAddDollars(Matcher matcher){
+        int value = Integer.parseInt((matcher.group("amount")));
+        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), value);
+        return new Result(true , value + "g added");
+    }
+
     public Result inventoryTrash(String name , int number , boolean hasNumber){
         for(java.util.Map.Entry<Ingredient , Integer> entry : App.getGame().getCurrentPlayingPlayer().getBackpack()
                 .getIngredientQuantity().entrySet()){

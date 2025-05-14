@@ -7,6 +7,11 @@ import java.util.Scanner;
 import java.util.regex.*;
 
 import controller.AbilityAndEnergyController.EnergyController;
+import controller.AnimalsControllers.AnimalsController;
+import controller.CookingAndCraftingControllers.ArtisanController;
+import controller.CookingAndCraftingControllers.CookingController;
+import controller.CookingAndCraftingControllers.CraftingController;
+import controller.ForagingControllers.ForagingController;
 import controller.GameDateAndWeatherController.DateController;
 import controller.GameDateAndWeatherController.WeatherController;
 import controller.ToolsControllers.ToolController;
@@ -17,12 +22,19 @@ import models.mapInfo.Position;
 import models.userInfo.*;
 import models.Result;
 import controller.GameMenuController;
+
 public class GameMenu implements AppMenu {
     private final GameMenuController controller = new GameMenuController();
     private final DateController dateController = new DateController();
     private final WeatherController weatherController = new WeatherController();
     private final EnergyController energyController = new EnergyController();
     private final ToolController toolController = new ToolController();
+    private final ForagingController foragingController = new ForagingController();
+    private final AnimalsController animalsController = new AnimalsController();
+    private final CookingController cookingController = new CookingController();
+    private final CraftingController craftingController = new CraftingController();
+    private final ArtisanController artisanController = new ArtisanController();
+    
     public void check(Scanner scanner) {
         String input = scanner.nextLine();
         input = input.trim();
@@ -204,6 +216,98 @@ public class GameMenu implements AppMenu {
 
             }
         }
+        
+        else if ((matcher = GameMenuCommands.CraftInfo.getMatcher(input)) != null) {
+            System.out.println(foragingController.craftInfo(matcher.group("craftName")));
+        }
+        else if ((matcher = GameMenuCommands.CropInfo.getMatcher(input)) != null) {
+            System.out.println(foragingController.cropInfo(matcher.group("cropName")));
+        }
+        else if ((matcher = GameMenuCommands.TreeInfo.getMatcher(input)) != null) {
+            System.out.println(foragingController.treeInfo(matcher.group("treeName")));
+        }
+        else if ((matcher = GameMenuCommands.ForagingCropInfo.getMatcher(input)) != null) {
+            System.out.println(foragingController.foragingCropInfo(matcher.group("cropName")));
+        }
+        else if ((matcher = GameMenuCommands.ForagingTreeInfo.getMatcher(input)) != null) {
+            System.out.println(foragingController.foragingTreeInfo(matcher.group("treeName")));
+        }
+        else if ((matcher = GameMenuCommands.Plant.getMatcher(input)) != null) {
+            System.out.println(foragingController.plant(matcher.group("seed"), matcher.group("direction")));
+        }
+        else if ((matcher = GameMenuCommands.Fertilize.getMatcher(input)) != null) {
+            System.out.println(foragingController.fertilize(matcher.group("fertilizer"), matcher.group("direction")));
+        }
+        else if ((matcher = GameMenuCommands.ShowPlant.getMatcher(input)) != null) {
+            System.out.println(foragingController.showPlant(
+                    Integer.parseInt(matcher.group("X")), Integer.parseInt(matcher.group("Y"))));
+        }
+
+
+        else if (GameMenuCommands.CraftingShowRecipes.getMatcher(input) != null) {
+            System.out.println(craftingController.craftingShowRecipes());
+        }
+        else if ((matcher = GameMenuCommands.CraftingCraft.getMatcher(input)) != null) {
+            System.out.println(craftingController.craftingCraft(matcher.group("itemName")));
+        }
+        else if ((matcher = GameMenuCommands.CheatAddItem.getMatcher(input)) != null) {
+            System.out.println(craftingController.addItem(
+                    matcher.group("itemName"), Integer.parseInt(matcher.group("count"))));
+        }
+
+
+        else if ((matcher = GameMenuCommands.CookingRefrigeratorPutPick.getMatcher(input)) != null) {
+            System.out.println(cookingController.cookingRefrigeratorPutPick(
+                    matcher.group("action"), matcher.group("itemName")));
+        }
+        else if (GameMenuCommands.CookingShowRecipes.getMatcher(input) != null) {
+            System.out.println(cookingController.cookingShowRecipes());
+        }
+        else if ((matcher = GameMenuCommands.CookingPrepare.getMatcher(input)) != null) {
+            System.out.println(cookingController.cookingPrepare(matcher.group("itemName")));
+        }
+        else if ((matcher = GameMenuCommands.Eat.getMatcher(input)) != null) {
+            System.out.println(cookingController.eat(matcher.group("foodName")));
+        }
+
+
+        else if ((matcher = GameMenuCommands.Pet.getMatcher(input)) != null) {
+            System.out.println(animalsController.pet(matcher.group("name")));
+        }
+        else if ((matcher = GameMenuCommands.CheatSetFriendship.getMatcher(input)) != null) {
+            System.out.println(animalsController.setFriendship(
+                    matcher.group("animalName"), Integer.parseInt(matcher.group("amount"))));
+        }
+        else if (GameMenuCommands.Animals.getMatcher(input) != null) {
+            System.out.println(animalsController.animalsInfo());
+        }
+        else if ((matcher = GameMenuCommands.ShepherdAnimal.getMatcher(input)) != null) {
+            System.out.println(animalsController.shepherdAnimal(
+                    matcher.group("animalName"), Integer.parseInt(matcher.group("X")), Integer.parseInt(matcher.group("Y"))));
+        }
+        else if ((matcher = GameMenuCommands.FeedHay.getMatcher(input)) != null) {
+            System.out.println(animalsController.feedHay(matcher.group("animalName")));
+        }
+        else if (GameMenuCommands.AnimalsProduces.getMatcher(input) != null) {
+            System.out.println(animalsController.animalProduces());
+        }
+        else if ((matcher = GameMenuCommands.CollectProduce.getMatcher(input)) != null) {
+            System.out.println(animalsController.collectProduce(matcher.group("animalName")));
+        }
+        else if ((matcher = GameMenuCommands.SellAnimal.getMatcher(input)) != null) {
+            System.out.println(animalsController.sellAnimal(matcher.group("animalName")));
+        }
+
+
+        else if ((matcher = GameMenuCommands.ArtisanUse.getMatcher(input)) != null) {
+            System.out.println(artisanController.artisanUse(matcher.group("artisanName"), matcher.group("itemName")));
+        }
+        else if ((matcher = GameMenuCommands.ArtisanGet.getMatcher(input)) != null) {
+            System.out.println(artisanController.artisanGet(matcher.group("artisanName")));
+        } else if ((matcher = GameMenuCommands.CheatAddDollars.getMatcher(input)) != null) {
+            System.out.println(controller.cheatAddDollars(matcher));
+        }
+        
         else {
             System.out.println("invalid command");
         }

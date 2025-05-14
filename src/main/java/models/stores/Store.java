@@ -1,6 +1,7 @@
 package models.stores;
 
 import models.Placeable;
+import models.Result;
 import models.app.App;
 
 import java.awt.*;
@@ -42,15 +43,10 @@ public abstract class Store implements Placeable {
     }
 
     public abstract char getSymbol();
-    public void loadInventory() {
-
-    }
-
-
-//    public abstract String showAllProducts();
-//
-//    public abstract String showAllAvailableProducts();
-//
-//    public abstract void purchase();
+    public void loadInventory() {}
+    public abstract String showAllProducts();
+    public abstract String showAvailableProducts();
+    public abstract Result purchaseProduct();
+    public abstract void ResetQuantityEveryNight();
 
 }

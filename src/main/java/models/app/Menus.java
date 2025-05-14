@@ -1,6 +1,7 @@
 package models.app;
 
 import view.*;
+import view.StoreMenus.*;
 
 import java.util.Scanner;
 
@@ -9,7 +10,15 @@ public enum Menus {
     LoginAndRegister(new LoginAndRegisterMenu()),
     GameMenu(new GameMenu()),
     ExitMenu(new ExitMenu()),
-    ProfileMenu((new ProfileMenu()));
+    ProfileMenu((new ProfileMenu())),
+    BlackSmithMenu(new BlackSmithMenu()),
+    CarpenterShopMenu(new CarpenterShopMenu()),
+    FishShopMenu(new FishShopMenu()),
+    JojaMartMenu(new JojaMartMenu()),
+    MarnieRanchMenu(new MarnieRanchMenu()),
+    PierreGeneralStoreMenu(new PierreGeneralStoreMenu()),
+    StardopSaloonMenu(new StardopSaloonMenu());
+
     private final AppMenu menu;
     Menus(AppMenu menu){
         this.menu = menu;

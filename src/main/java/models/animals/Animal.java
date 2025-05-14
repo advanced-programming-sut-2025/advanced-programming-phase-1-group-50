@@ -19,8 +19,8 @@ public class Animal {
         this.type = type;
         this.name = name;
         this.friendShip = 0;
-        this.lastPetTime = null;
-        this.lastFeedTime = null;
+        this.lastPetTime = App.getGame().getTime().clone();
+        this.lastFeedTime = App.getGame().getTime().clone();
         this.lastProductTime = App.getGame().getTime().clone();
         isOutOfHabitat = false;
         this.habitat = habitat;
@@ -56,6 +56,10 @@ public class Animal {
         incrementFriendShip(15);
     }
 
+    public boolean hasPettedYesterday() {
+        return lastPetTime.getDate() == App.getGame().getTime().getDate() - 1;
+    }
+
     public boolean hasPettedToday() {
         return lastPetTime.getDate() == App.getGame().getTime().getDate();
     }
@@ -64,8 +68,12 @@ public class Animal {
         lastFeedTime = App.getGame().getTime().clone();
     }
 
+    public boolean hasFedYesterday() {
+        return lastFeedTime.getDate() == App.getGame().getTime().getDate() - 1;
+    }
+
     public boolean hasFedToday() {
-        return lastFeedTime.getDate() == App.getGame().getTime().getDate();
+        return lastFeedTime.getDate() == App.getGame().getTime().getDate() - 1;
     }
 
     public boolean isReadyProduct() {

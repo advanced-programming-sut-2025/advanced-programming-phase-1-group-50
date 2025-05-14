@@ -27,6 +27,8 @@ public enum Food implements Ingredient {
     SurvivalBurger(125, 180),
     DishOTheSea(150, 220),
     SeaFormPudding(175, 300),
+    JojaCola(13,25),
+    TroutSoup(100,100),
     MinersTreat(125, 200);
 
     private final int energy;
