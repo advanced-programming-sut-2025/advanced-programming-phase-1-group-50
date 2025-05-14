@@ -1,4 +1,4 @@
-package models.waterBodies;
+package models;
 
 import models.manuFactor.Ingredient;
 
