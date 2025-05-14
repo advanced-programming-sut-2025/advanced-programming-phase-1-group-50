@@ -58,7 +58,7 @@ public enum GameMenuCommands implements Command {
     Fertilize("plant\\s+" +
             "-f\\s+(?<fertilizer>\\S+)\\s+" +
             "-d\\s+(?<direction>\\S+)\\s*"),
-    ShowPlant("showPlant\\s+" +
+    ShowPlant("show\\s+plant\\s+" +
             "-l\\s+(?<X>\\d+)\\s*,\\s*(?<Y>\\d+)\\s*"),
     HowMuchWater("howMuch\\s+water\\s*"),
     CraftingShowRecipes("crafting\\s+show\\s+recipes\\s*"),

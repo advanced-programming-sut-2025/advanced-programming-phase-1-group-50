@@ -55,7 +55,7 @@ public class ToolController {
             sb.append("\n");
 
         }
-        return new Result(true, "Available Tools : " + sb);
+        return new Result(true, "Available Tools : \n" + sb);
     }
 
     public Result upgradeTool(String input) {
@@ -311,7 +311,7 @@ public class ToolController {
                 return foragingController.harvestWithScythe(plant, targetTile);
             }
 
-            return new Result(false, "there is no tree or crop fo harvest!");
+            return new Result(false, "there is no tree or crop for harvest!");
         }
         if (tool instanceof WateringCan wateringCan) {
 

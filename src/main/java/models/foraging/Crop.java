@@ -59,7 +59,7 @@ public class Crop implements Ingredient, Growable , Placeable {
 
         if (lastGrowthTime.getDate() + timeForGrow == today.getDate()) {
             levelOfGrowth++;
-            lastGrowthTime = today;
+            lastGrowthTime = today.clone();
         }
 
     }
@@ -76,7 +76,7 @@ public class Crop implements Ingredient, Growable , Placeable {
         int timeForGrow = type.getRegrowthTime();
 
         if (lastHarvestTime == null || lastHarvestTime.getDate() + timeForGrow <= today.getDate()) {
-            lastHarvestTime = today;
+            lastHarvestTime = today.clone();
             return true;
         }
         return false;
@@ -99,6 +99,8 @@ public class Crop implements Ingredient, Growable , Placeable {
     }
 
     public int getNumberOfDaysToComplete() {
+        if (isComplete())
+            return 0;
         int passedDays = 0;
         for (int i = 0; i < levelOfGrowth; i++) {
             passedDays += type.getTimeForGrow(i);

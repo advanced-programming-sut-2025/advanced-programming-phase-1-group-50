@@ -3,6 +3,7 @@ package controller.ForagingControllers;
 import models.Placeable;
 import models.Result;
 import models.app.App;
+import models.date.Season;
 import models.foraging.*;
 import models.mapInfo.Direction;
 import models.mapInfo.Tile;
@@ -142,6 +143,9 @@ public class ForagingController {
         if (targetTile == null) {
             return new Result(false, "Tile in direction <" + directionName + "> not found!");
         }
+        if (targetTile.getPlaceable() != null) {
+            return new Result(false, "You cannot plant in this tile!it isn't free.");
+        }
         if (!targetTile.isPlowed()) {
             return new Result(false, "Tile is not plowed!");
         }
@@ -154,7 +158,8 @@ public class ForagingController {
             if (!player.getBackpack().getIngredientQuantity().containsKey(seed))
                 return new Result(false, "You don't have this seed!");
 
-            if (!seed.getSeason().equals(App.getGame().getTime().getSeason()))
+            if (!seed.getSeason().equals(Season.Special) &&
+                    !seed.getSeason().equals(App.getGame().getTime().getSeason()))
                 return new Result(false, "You can't plant this seed in this season!");
 
             player.getBackpack().removeIngredients(seed, 1);
@@ -167,7 +172,7 @@ public class ForagingController {
             targetTile.setWalkable(false);
             targetTile.setSymbol(crop.getSymbol());
             player.getAbility().increaseFarmingRate(5);
-            return new Result(true, "You successfully plant.");
+            return new Result(true, "You plant <" + crop.getType() + "> successfully!");
 
         }
         else if (treeSource != null) {
