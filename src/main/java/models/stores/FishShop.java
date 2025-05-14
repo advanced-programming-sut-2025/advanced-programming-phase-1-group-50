@@ -69,7 +69,7 @@ public class FishShop extends Store {
         }
 
         int totalPrice = item.getPrice() * value;
-        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Coin(), 0) < value) {
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Coin(), 0) < totalPrice) {
             return new Result(false, "Not enough money");
         }
 
