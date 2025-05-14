@@ -4,6 +4,7 @@ import models.NPCs.NPC;
 import models.NPCs.NPCType;
 import models.Placeable;
 
+import models.ShippingBin;
 import models.app.App;
 import models.date.Weather;
 import models.foraging.Crop;
@@ -28,6 +29,7 @@ public class Map {
     private ArrayList<Farm> farms = new ArrayList<>();
     private NpcVillage npcVillage;
     private final ArrayList<NpcHome> npcHomes = new ArrayList<>();
+    private final ArrayList<ShippingBin> shippingBins = new ArrayList<>();
 
     public Map(ArrayList<Farm> farms) {
         this.farms = farms;
@@ -280,6 +282,34 @@ public class Map {
             case DOWN_LEFT -> findTile(currentTile.getPosition().getX() - 1, currentTile.getPosition().getY() + 1);
             case DOWN_RIGHT -> findTile(currentTile.getPosition().getX() + 1, currentTile.getPosition().getY() + 1);
         };
+    }
+
+    public ArrayList<ShippingBin> getShippingBins() {
+        return shippingBins;
+    }
+
+    public boolean addShippingBin(int x , int y) {
+        if (! (tiles[x][y].getPlaceable() == null)) {
+            return false;
+        }
+
+        ShippingBin temp = new ShippingBin(x,y);
+        
+        this.shippingBins.add(temp);
+        tiles[x][y].setPlaceable(temp);
+        tiles[x][y].setPlowed(false);
+        tiles[x][y].setWalkable(false);
+        tiles[x][y].setSymbol(temp.getSymbol());
+        tiles[x][y].setFertilizer(null);
+
+        for (Farm farm : farms) {
+            if (farm.getRectangle().contains(x, y)) {
+                farm.getPlaceables().add(temp);
+                break;
+            }
+        }
+
+        return true;
     }
 
     // this method should call every day.
