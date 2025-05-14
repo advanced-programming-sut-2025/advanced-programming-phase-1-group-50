@@ -24,7 +24,7 @@ public class Backpack {
 
     private BackpackType type;
     private int capacity = 12;
-    private final ArrayList<Tool> tools = new ArrayList<>();
+    private final ArrayList<Tool> tools=  new ArrayList<>();
     private final Hay hay = new Hay();
     private final ArrayList<CookingRecipe> cookingRecipes = new ArrayList<>();
     private final ArrayList<CraftingRecipes> craftingRecipes = new ArrayList<>();
@@ -36,9 +36,9 @@ public class Backpack {
 
     private final HashMap<Ingredient, Integer> ingredientQuantity = new HashMap<>();
 
-    public Backpack(BackpackType type) {
+    public Backpack(BackpackType type){
         this.type = type;
-        switch (type) {
+        switch(type){
             case Primary:
                 break;
             case Big:
@@ -50,11 +50,11 @@ public class Backpack {
     }
 
     public void changeType(BackpackType type) {
-        switch (type) {
+        switch(type){
             case Big:
                 this.type = BackpackType.Big;
                 this.capacity = 24;
-                break;
+                 break;
             case Primary:
                 this.type = BackpackType.Primary;
                 this.capacity = 12;
@@ -93,9 +93,10 @@ public class Backpack {
     }
 
 
+
     public void addIngredients(Ingredient ingredient, int quantity) {
-        if (capacity > ingredientQuantity.size()) {
-            int value = ingredientQuantity.getOrDefault(ingredient, 0);
+        if(capacity > ingredientQuantity.size()){
+            int value = ingredientQuantity.getOrDefault(ingredient , 0);
             ingredientQuantity.put(ingredient, value + quantity);
         }
 
@@ -103,35 +104,46 @@ public class Backpack {
     }
 
     public void removeIngredients(Ingredient ingredient, int quantity) {
-        int value = ingredientQuantity.getOrDefault(ingredient, 0);
-        if (value == quantity) {
+        int value = ingredientQuantity.getOrDefault(ingredient , 0);
+        if(value == quantity){
             ingredientQuantity.remove(ingredient);
-
-            int returnPercentage = trashCan.getReturnValuePercentage();
-
-            int refund = 0;
-            if (ingredient instanceof AnimalGood ag)
-                refund = ag.getSellPrice() * returnPercentage / 100;
-            else if (ingredient instanceof Fish f)
-                refund = f.getSellPrice() * returnPercentage / 100;
-            else if (ingredient instanceof Crop c)
-                refund = c.getSellPrice() * returnPercentage / 100;
-            else if (ingredient instanceof Fruit fr)
-                refund = fr.getBaseSellPrice() * returnPercentage / 100;
-            else if (ingredient instanceof Food fd)
-                refund = fd.getSellPrice() * returnPercentage / 100;
-            else if (ingredient instanceof ForagingMineral fm)
-                refund = fm.getSellPrice() * returnPercentage / 100;
-
-            if (refund > 0) {
-                Coin coin = new Coin();
-                ingredientQuantity.put(coin, ingredientQuantity.getOrDefault(coin, 0) + refund);
-            }
         } else {
             ingredientQuantity.put(ingredient, value - quantity);
         }
     }
-    // TODO : extract inventory trash from remove ingredient
+    public void inventoryTrash(Ingredient ingredient , int quantity)
+    {
+        int value = ingredientQuantity.getOrDefault(ingredient , 0);
+        if(value == quantity){
+            ingredientQuantity.remove(ingredient);
+
+
+        } else {
+
+            ingredientQuantity.put(ingredient, value - quantity);
+        }
+        int returnPercentage = trashCan.getReturnValuePercentage();
+
+        int refund = 0;
+        if(ingredient instanceof AnimalGood ag)
+            refund = ag.getSellPrice() * quantity * returnPercentage / 100;
+        else if(ingredient instanceof Fish f)
+            refund = f.getSellPrice() * quantity * returnPercentage / 100;
+        else if(ingredient instanceof Crop c)
+            refund = c.getSellPrice() * quantity * returnPercentage / 100;
+        else if(ingredient instanceof Fruit fr)
+            refund = fr.getBaseSellPrice() * quantity * returnPercentage / 100;
+        else if(ingredient instanceof Food fd)
+            refund = fd.getSellPrice() * quantity * returnPercentage / 100;
+        else if(ingredient instanceof ForagingMineral fm)
+            refund = fm.getSellPrice() * quantity * returnPercentage / 100;
+
+        if (refund > 0) {
+            Coin coin = new Coin();
+            ingredientQuantity.put(coin, ingredientQuantity.getOrDefault(coin, 0) + refund);
+        }
+    }
+
 
 
     public HashMap<Ingredient, Integer> getIngredientQuantity() {
@@ -221,7 +233,6 @@ public class Backpack {
     public int getNumberOfHay() {
         return hay.getNumber();
     }
-
     public TrashCan getTrashCan() {
         return trashCan;
     }

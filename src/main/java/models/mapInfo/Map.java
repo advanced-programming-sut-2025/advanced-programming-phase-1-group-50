@@ -6,6 +6,8 @@ import models.Placeable;
 
 import models.app.App;
 import models.date.Weather;
+import models.foraging.Crop;
+import models.foraging.CropType;
 import models.foraging.ForagingMineral;
 import models.foraging.Tree;
 import models.stores.*;
@@ -215,6 +217,30 @@ public class Map {
                     counter++;
 
                 }
+            }
+        }
+    }
+    public CropType generateRandomCropType() {
+        CropType[] cropTypes = CropType.values();
+        return cropTypes[rand.nextInt(cropTypes.length)];
+    }
+    public void generateRandomForagingCrop(){
+        for (Farm farm : farms) {
+            int numberOfRandomCrops = 5;
+            int counter = 0;
+            while (counter < numberOfRandomCrops) {
+                int x = rand.nextInt(farm.getRectangle().width);
+                int y = rand.nextInt(farm.getRectangle().height);
+                Tile tile = findTile(x, y);
+                if(tile.getPlaceable() == null){
+                    Crop crop = new Crop(generateRandomCropType() , App.getGame().getTime(), null ,x ,y );
+                    tile.setPlaceable(crop);
+                    tile.setWalkable(false);
+                    tile.setSymbol(crop.getSymbol());
+                    farm.getCrops().add(crop);
+                    farm.getPlaceables().add(crop);
+                }
+
             }
         }
     }

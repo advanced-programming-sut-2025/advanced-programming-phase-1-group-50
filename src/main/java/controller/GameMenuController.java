@@ -267,13 +267,13 @@ public class GameMenuController {
                 .getIngredientQuantity().entrySet()){
             if(entry.getKey().getClass().getSimpleName().equals(name)){
                 if(hasNumber){
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(entry.getKey() , number);
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().inventoryTrash(entry.getKey() , number);
                     return new Result(true , String.format("%s removed from backpack", entry.getKey()
                             .getClass().getSimpleName()));
                 }
                 else {
                     int quantity = entry.getValue();
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(entry.getKey() , quantity);
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().inventoryTrash(entry.getKey() , quantity);
                     return new Result(true , String.format("%s removed from backpack", entry.getKey()
                             .getClass().getSimpleName()));
                 }
