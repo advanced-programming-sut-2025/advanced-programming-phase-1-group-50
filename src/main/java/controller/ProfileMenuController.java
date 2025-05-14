@@ -1,14 +1,16 @@
 package controller;
 
+import models.PasswordUtil;
 import models.Result;
 import models.app.App;
 import java.util.regex.*;
 
 public class ProfileMenuController {
     private final LoginAndRegisterController controller = new LoginAndRegisterController();
+    private final PasswordUtil passwordUtil = new PasswordUtil();
     public Result changePassword(String oldPas , String newPas){
         Matcher matcher;
-        if(!App.getLoggedInUser().getPassword().equals(oldPas)){
+        if(!App.getLoggedInUser().getPassword().equals(passwordUtil.hashPassword(oldPas))){
             return new Result(false, "password is incorrect");
         }
         if(newPas.equals(oldPas)){
@@ -33,7 +35,7 @@ public class ProfileMenuController {
         if (!controller.hasSpecialCharacters(newPas)) {
             return new Result(false, "please use Special Characters");
         }
-        App.getLoggedInUser().setPassword(newPas);
+        App.getLoggedInUser().setPassword(passwordUtil.hashPassword(newPas));
         return new Result(true, "password cahnged succsessfuly");
 
     } 

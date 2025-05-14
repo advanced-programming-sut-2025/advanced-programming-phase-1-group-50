@@ -1,5 +1,6 @@
 package models.userInfo;
 
+import models.PasswordUtil;
 import models.app.SecurityQuestion;
 
 public class User {
@@ -13,7 +14,8 @@ public class User {
     private int highestScore;
 
     public User(String username, String password, String nickname, String email, Gender gender , SecurityQuestion securityQuestion) {
-        this.username = username;
+        PasswordUtil passwordUtil = new PasswordUtil();
+        this.username = passwordUtil.hashPassword(username);
         this.password = password;
         this.nickname = nickname;
         this.email = email;

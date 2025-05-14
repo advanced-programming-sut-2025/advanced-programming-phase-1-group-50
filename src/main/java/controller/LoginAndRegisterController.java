@@ -1,5 +1,6 @@
 package controller;
 
+import models.PasswordUtil;
 import models.Result;
 import models.app.App;
 import models.app.Menus;
@@ -14,7 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginAndRegisterController {
-
+    private final PasswordUtil passwordUtil = new PasswordUtil();
     public User findUser(String username){
         for(User user : App.users){
             if(user.getUsername().equals(username)){
@@ -156,40 +157,14 @@ public class LoginAndRegisterController {
             return new Result(false, "Invalid gender");
         }
         return new Result(true , "now we want to select security question");
-//        int counter = 1;
-//        for(SecurityQuestion sq : App.securityQuestions) {
-//            System.out.println(counter+ ". " + sq.getQuestion());
-//            counter++;
-//        }
-//        String input = scanner.nextLine();
-//        input = input.trim();
-//
-//        if(LoginMenuCommands.ShowSecurityQuestions.getMatcher(input)!=null){
-//            matcher = LoginMenuCommands.ShowSecurityQuestions.getMatcher(input);
-//            int number = Integer.parseInt(matcher.group(1).trim());
-//            String answer = matcher.group(2).trim();
-//            String answerConfirm = matcher.group(3).trim();
-//            if(!answer.trim().equalsIgnoreCase(answerConfirm.trim())){
-//                return new Result(false , "answer doesn't match");
-//            }
-//            SecurityQuestion sq = findSecurityQuestion(number);
-//            if(sq == null){
-//                return new Result(false , "No security question found");
-//            }
-//            SecurityQuestion s = new SecurityQuestion(sq.getQuestion() , answer);
-//            App.users.add(new User(username, password, nickname, email, g , s));
-//        }
 
-
-
-//        return new Result(true, "user registered successfully");
 
 
     }
     public Result selectSecurityQuestion(String username, String password, String passwordConfirm, String nickname,
                                          String email,
                                          String gender,String number ,  String answer) {
-        int counter = 0;
+        int counter;
         try {
             counter = Integer.parseInt(number);
         }catch(NumberFormatException e) {
@@ -208,7 +183,7 @@ public class LoginAndRegisterController {
         if(findUser(username) == null){
             return new Result(false, "user not found");
         }
-        if(!findUser(username).getPassword().equals(password)){
+        if(!findUser(username).getPassword().equals(passwordUtil.hashPassword(password))){
             return new Result(false, "wrong password");
 
         }
@@ -256,6 +231,7 @@ public class LoginAndRegisterController {
         if (!hasSpecialCharacters(newPassword)) {
             return new Result(false, "please use Special Characters");
         }
+        findUser(username).setPassword(passwordUtil.hashPassword(newPassword));
         return new Result(true, "user password changed successfully");
     }
 }
