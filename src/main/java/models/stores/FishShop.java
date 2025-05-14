@@ -99,6 +99,7 @@ public class FishShop extends Store {
             }
             App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(Food.TroutSoup,value);
             App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), (-1) * totalPrice);
+            item.decreaseRemainingQuantity(value);
 
         }
 

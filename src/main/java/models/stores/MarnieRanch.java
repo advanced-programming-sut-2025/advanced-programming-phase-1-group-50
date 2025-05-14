@@ -1,9 +1,12 @@
 package models.stores;
 
 import models.Result;
+import models.animals.Animal;
 import models.animals.AnimalType;
 import models.animals.HabitatSize;
 import models.animals.HabitatType;
+import models.app.App;
+import models.userInfo.Coin;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -26,17 +29,17 @@ public class MarnieRanch extends Store {
     public void loadInventory() {
 
         inventory = new ArrayList<>();
-        inventory.add(new MarnieRanchLiveStockItem("Chicken", AnimalType.Chicken, HabitatType.Coop , HabitatSize.Regular, 800 ,2));
-        inventory.add(new MarnieRanchLiveStockItem("Cow", AnimalType.Cow, HabitatType.Barn , HabitatSize.Regular, 1500 ,2));
-        inventory.add(new MarnieRanchLiveStockItem("Goat", AnimalType.Goat, HabitatType.Barn , HabitatSize.Big, 4000 ,2));
-        inventory.add(new MarnieRanchLiveStockItem("Duck", AnimalType.Duck, HabitatType.Coop , HabitatSize.Big, 1200 ,2));
-        inventory.add(new MarnieRanchLiveStockItem("Sheep", AnimalType.Sheep, HabitatType.Barn , HabitatSize.Deluxe, 8000 ,2));
-        inventory.add(new MarnieRanchLiveStockItem("Rabbit", AnimalType.Rabbit, HabitatType.Coop , HabitatSize.Deluxe, 8000 ,2));
-        inventory.add(new MarnieRanchLiveStockItem("Dinosaur", AnimalType.Dinosaur, HabitatType.Coop , HabitatSize.Big, 14000 ,2));
-        inventory.add(new MarnieRanchLiveStockItem("Pig", AnimalType.Pig, HabitatType.Barn , HabitatSize.Deluxe, 16000 ,2));
-        inventory.add(new ShopItem("Hay",50,Integer.MAX_VALUE));
-        inventory.add(new ShopItem("Milk Pail",1000,1));
-        inventory.add(new ShopItem("Shears",1000,1));
+        inventory.add(new MarnieRanchLiveStockItem("Chicken", AnimalType.Chicken, 800, 2));
+        inventory.add(new MarnieRanchLiveStockItem("Cow", AnimalType.Cow, 1500, 2));
+        inventory.add(new MarnieRanchLiveStockItem("Goat", AnimalType.Goat, 4000, 2));
+        inventory.add(new MarnieRanchLiveStockItem("Duck", AnimalType.Duck, 1200, 2));
+        inventory.add(new MarnieRanchLiveStockItem("Sheep", AnimalType.Sheep, 8000, 2));
+        inventory.add(new MarnieRanchLiveStockItem("Rabbit", AnimalType.Rabbit, 8000, 2));
+        inventory.add(new MarnieRanchLiveStockItem("Dinosaur", AnimalType.Dinosaur, 14000, 2));
+        inventory.add(new MarnieRanchLiveStockItem("Pig", AnimalType.Pig, 16000, 2));
+        inventory.add(new ShopItem("Hay", 50, Integer.MAX_VALUE));
+        inventory.add(new ShopItem("Milk Pail", 1000, 1));
+        inventory.add(new ShopItem("Shears", 1000, 1));
 
     }
 
@@ -54,10 +57,41 @@ public class MarnieRanch extends Store {
         StringBuilder message = new StringBuilder("MarnieRanch Available Products:");
         for (ShopItem item : inventory) {
             if (item.remainingQuantity > 0) {
-                message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   Remaining: ").append(item.remainingQuantity);
+                message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   " +
+                        "Remaining: ").append(item.remainingQuantity);
             }
         }
         return message.toString();
+    }
+
+    public boolean PurchaseAnimal(AnimalType type) {
+
+        ShopItem item = null;
+
+        for (ShopItem i : inventory) {
+            if (i instanceof MarnieRanchLiveStockItem) {
+                if (((MarnieRanchLiveStockItem) i).getType().equals(type)) {
+                    item = i;
+                }
+            }
+        }
+
+        if (item == null) {
+            return false;
+        }
+
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(new Coin()) < item.price) {
+            return false;
+        }
+
+        if (item.remainingQuantity == 0) {
+            return false;
+        }
+
+        item.decreaseRemainingQuantity(1);
+        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Coin(), item.price);
+
+        return true;
     }
 
     @Override

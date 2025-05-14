@@ -217,6 +217,7 @@ public class PierreGeneralStore extends Store {
         }
 
         App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), -1 * totalPrice);
+        item.decreaseRemainingQuantity(value);
         return new Result(true, "You successfully purchased " + value + "number(s) of " + productName);
     }
 
