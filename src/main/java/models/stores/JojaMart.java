@@ -1,8 +1,11 @@
 package models.stores;
 
 import models.Result;
+import models.app.App;
+import models.cooking.Food;
 import models.date.Season;
 import models.foraging.Seeds;
+import models.userInfo.Coin;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -33,7 +36,7 @@ public class JojaMart extends Store {
         inventory.add(new JojaMartSeasonsStock("Rhubarb Seeds", Seeds.RhubarbSeeds, Season.Spring, 100, 5));
         inventory.add(new JojaMartSeasonsStock("Jazz Seeds", Seeds.JazzSeeds, Season.Spring, 37, 5));
 
-// Summer
+        // Summer
         inventory.add(new JojaMartSeasonsStock("Tomato Seeds", Seeds.TomatoSeeds, Season.Summer, 62, 5));
         inventory.add(new JojaMartSeasonsStock("Pepper Seeds", Seeds.PepperSeeds, Season.Summer, 50, 5));
         inventory.add(new JojaMartSeasonsStock("Wheat Seeds", Seeds.WheatSeeds, Season.Summer, 12, 10));
@@ -47,7 +50,7 @@ public class JojaMart extends Store {
         inventory.add(new JojaMartSeasonsStock("Coffee Beans", Seeds.CoffeeBean, Season.Summer, 200, 1));
         inventory.add(new JojaMartSeasonsStock("Sunflower Seeds", Seeds.SunflowerSeeds, Season.Summer, 125, 5));
 
-// Fall
+        // Fall
         inventory.add(new JojaMartSeasonsStock("Corn Seeds", Seeds.CornSeeds, Season.Fall, 187, 5));
         inventory.add(new JojaMartSeasonsStock("Eggplant Seeds", Seeds.EggplantSeeds, Season.Fall, 25, 5));
         inventory.add(new JojaMartSeasonsStock("Pumpkin Seeds", Seeds.PumpkinSeeds, Season.Fall, 125, 5));
@@ -63,15 +66,12 @@ public class JojaMart extends Store {
         inventory.add(new JojaMartSeasonsStock("Rare Seed", Seeds.RareSeed, Season.Fall, 1000, 1));
         inventory.add(new JojaMartSeasonsStock("Wheat Seeds", Seeds.WheatSeeds, Season.Fall, 12, 5));
 
-// Winter
+        // Winter
         inventory.add(new JojaMartSeasonsStock("Powdermelon Seeds", Seeds.PowdermelonSeeds, Season.Winter, 20, 10));
-//Permanent stock
-        inventory.add(new JojaMartSeasonsStock("Ancient Seed",Seeds.AncientSeeds,Season.Special,500,1));
-        inventory.add(new ShopItem("Joja cola",75,Integer.MAX_VALUE));
-        inventory.add(new ShopItem("Grass Starter",125,Integer.MAX_VALUE));
-        inventory.add(new ShopItem("Sugar",125,Integer.MAX_VALUE));
-        inventory.add(new ShopItem("Wheat Flour",125,Integer.MAX_VALUE));
-        inventory.add(new ShopItem("Rice",250,Integer.MAX_VALUE));
+
+        //Permanent stock
+        inventory.add(new JojaMartSeasonsStock("Ancient Seed", Seeds.AncientSeeds, Season.Special, 500, 1));
+        inventory.add(new ShopItem("Joja cola", 75, Integer.MAX_VALUE));
 
     }
 
@@ -89,7 +89,8 @@ public class JojaMart extends Store {
         StringBuilder message = new StringBuilder("JojaMart Available Products:");
         for (ShopItem item : inventory) {
             if (item.remainingQuantity > 0) {
-                message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   Remaining: ").append(item.remainingQuantity);
+                message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   " +
+                        "Remaining: ").append(item.remainingQuantity);
             }
         }
         return message.toString();
@@ -97,7 +98,49 @@ public class JojaMart extends Store {
 
     @Override
     public Result purchaseProduct(int value, String productName) {
-        return null;
+
+        ShopItem item = null;
+
+        for (ShopItem i : inventory) {
+            if (i.name.equals(productName)) {
+                item = i;
+            }
+        }
+
+        if (item == null) {
+            return new Result(false, "No such product");
+        }
+
+        int totalPrice = item.getPrice() * value;
+
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Coin(), 0) < totalPrice) {
+            return new Result(false, "Not enough money");
+        }
+
+        if (item.getRemainingQuantity() < value) {
+            return new Result(false, "Not enough stocks");
+        }
+
+        if (!App.getGame().getCurrentPlayingPlayer().getBackpack().hasCapacity()) {
+            return new Result(false, "Not enough capacity in your inventory");
+        }
+
+        if (item instanceof JojaMartSeasonsStock) {
+
+            if ((!App.getGame().getTime().getSeason().equals(((JojaMartSeasonsStock) item).getSeason())) &&
+                    (!((JojaMartSeasonsStock) item).getSeason().equals(Season.Special))) {
+                return new Result(false, "you can't buy this item in this season");
+            }
+
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(((JojaMartSeasonsStock) item).getSeedType(), value);
+
+        } else {
+
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(Food.JojaCola,value);
+
+        }
+
+        return new Result(true, "You successfully purchased " + value + "number(s) of " + productName);
     }
 
     @Override
