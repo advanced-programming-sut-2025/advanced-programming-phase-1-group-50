@@ -9,8 +9,7 @@ public enum NPCsCommands  implements Command {
     GiftToNPC("^\\s*gift\\s+NPC\\s+(?<npc_name>.+?)\\s+-i\\s+(?<item>.+?)\\s*$"),
     FriendShipNPCList("^\\s*friendship\\s+NPC\\s+list\\s*$"),
     QuestsList("^\\s*quests\\s+list\\s*$"),
-    FinishingQuest("^\\s*quests\\s+finish\\s+-i\\s+(?<index>.+?)\\s*$"),
-    Exit("^\\s*exit\\s+$");
+    FinishingQuest("^\\s*quests\\s+finish\\s+-i\\s+(?<index>.+?)\\s*$");
 
     private final String pattern;
     NPCsCommands(String pattern) {
