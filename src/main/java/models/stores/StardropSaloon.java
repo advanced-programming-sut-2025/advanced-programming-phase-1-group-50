@@ -65,6 +65,10 @@ public class StardropSaloon extends Store {
     @Override
     public Result purchaseProduct(int value, String productName) {
 
+        if (!this.isOpen()) {
+            return new Result(false, "this store is currently closed");
+        }
+
         ShopItem item = null;
 
         for (ShopItem i : inventory) {

@@ -75,6 +75,10 @@ public class ToolController {
                 return new Result(false, "you should be near blacksmith");
             }
 
+            if (!map.getNpcVillage().getBlacksmith().isOpen()) {
+                return new Result(false, "this store is currently closed");
+            }
+
             TrashCan trashCan = player.getBackpack().getTrashCan();
             price = trashCan.getPriceForUpgrade();
 
@@ -149,6 +153,10 @@ public class ToolController {
 
                     if (!map.isAroundPlaceable(player, map.getNpcVillage().getBlacksmith())) {
                         return new Result(false, "you should be near blacksmith");
+                    }
+
+                    if (!map.getNpcVillage().getBlacksmith().isOpen()) {
+                        return new Result(false, "this store is currently closed");
                     }
 
                     if (t.getToolType() == null) {

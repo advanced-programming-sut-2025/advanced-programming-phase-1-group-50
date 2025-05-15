@@ -66,6 +66,10 @@ public class CarpenterShop extends Store {
 
     public Result purchaseBuilding(HabitatType type, HabitatSize size) {
 
+        if (!this.isOpen()) {
+            return new Result(false, "this store is currently closed");
+        }
+
         ShopItem item = null;
 
         for (ShopItem i : inventory) {
@@ -108,6 +112,10 @@ public class CarpenterShop extends Store {
 
     @Override
     public Result purchaseProduct(int value, String productName) {
+
+        if (!this.isOpen()) {
+            return new Result(false, "this store is currently closed");
+        }
 
         ShopItem item = null;
         for (ShopItem i : inventory) {
