@@ -3,6 +3,7 @@ package models.userInfo;
 import models.NPCs.NPC;
 import models.NPCs.NPCType;
 import models.NPCs.RelationWithNPC;
+import models.Result;
 import models.Notification;
 import models.animals.Animal;
 import models.mapInfo.Farm;
@@ -107,10 +108,9 @@ public class Player {
     }
 
 
-    public void faint() {
+    public Result faint() {
         isFaintedToday = true;
-        App.getGame().nextPlayerTurn();
-
+        return App.getGame().nextPlayerTurn();
     }
 
     public Tool getCurrentTool() {
@@ -178,21 +178,28 @@ public class Player {
             this.energy = maxEnergy;
         }
     }
-    public void consumeEnergy(int energy) {
+    public Result consumeEnergy(int energy) {
         if(isInfinite){
-            return;
+            return new Result(true, "");
         }
         this.energy -= energy;
         consumedEnergyInTurn += energy;
-        if(consumedEnergyInTurn >= 50){
-            App.getGame().nextPlayerTurn();
+
+        if (consumedEnergyInTurn >= 50 && this.energy > 0){
+            Result result = App.getGame().nextPlayerTurn();
+            return new Result(false,
+                    "You consumed " + consumedEnergyInTurn + " energy in your turn! The turn will be changed!\n" + result);
         }
-        if(this.energy < 0){
+        if (this.energy <= 0){
             this.energy = 0;
-            faint();
+            Result result = faint();
+            return new Result(false, "oh!! You don't have enough energy! You fainted!\n" + result);
         }
+
+        return new Result(true, "You consumed " + consumedEnergyInTurn + " energy in your turn!");
+
     }
-    //
+
     public void addEnergy(int energy) {
         if(!isInfinite){
             this.energy += energy;

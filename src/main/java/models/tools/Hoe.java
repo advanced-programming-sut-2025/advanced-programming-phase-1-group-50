@@ -1,5 +1,6 @@
 package models.tools;
 
+import models.Result;
 import models.app.App;
 
 public class Hoe extends Tool {
@@ -10,7 +11,7 @@ public class Hoe extends Tool {
     }
 
     @Override
-    public void useTool() {
+    public Result useTool() {
         int consumedEnergy = switch (type) {
             case Primary -> 5;
             case Coppery -> 4;
@@ -19,8 +20,12 @@ public class Hoe extends Tool {
             case Iridium -> 1;
             default -> 0;
         };
-        App.getGame().getCurrentPlayingPlayer().consumeEnergy(consumedEnergy);
 
+        Result energyConsumptionResult = App.getGame().getCurrentPlayingPlayer().consumeEnergy(consumedEnergy);
+        if (!energyConsumptionResult.getSuccessful())
+            return energyConsumptionResult;
+
+        return new Result(true, "");
     }
 
     public void upgradeTool() {

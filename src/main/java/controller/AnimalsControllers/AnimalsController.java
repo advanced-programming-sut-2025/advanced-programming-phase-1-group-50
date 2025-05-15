@@ -217,14 +217,22 @@ public class AnimalsController {
             return new Result(false, "you don't have a tool, please set your current tool!");
 
         if (animal.getType().equals(AnimalType.Sheep)) {
+
             if (!(tool instanceof Shear shear))
                 return new Result(false, "Your current tool is not Shear!");
-            shear.useTool();
+
+            Result energyConsumptionResult = shear.useTool();
+            if (!energyConsumptionResult.getSuccessful())
+                return energyConsumptionResult;
         }
         else if (animal.getType().equals(AnimalType.Cow) || animal.getType().equals(AnimalType.Goat)) {
+
             if (!(tool instanceof MilkPail milkPail))
                 return new Result(false, "Your current tool is not MilkPail!");
-            milkPail.useTool();
+
+            Result energyConsumptionResult = milkPail.useTool();
+            if (!energyConsumptionResult.getSuccessful())
+                return energyConsumptionResult;
         }
 
         AnimalGood animalGood = animal.getProduct();

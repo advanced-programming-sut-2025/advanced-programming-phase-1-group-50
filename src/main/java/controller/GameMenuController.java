@@ -166,9 +166,8 @@ public class GameMenuController {
     }
 
     public Result nextTurn() {
-        App.getGame().nextPlayerTurn();
-        //App.getGame().getTime().advancedHour(1);
-        return new Result(true, "next turn successful");
+        Result result = App.getGame().nextPlayerTurn();
+        return new Result(true, "next turn successful\n" + result);
     }
 
     public Result buildGreenhouse() {
@@ -232,29 +231,31 @@ public class GameMenuController {
     }
 
     public Result walk(int endX, int endY, List<Position> positions) {
+        Player player = App.getGame().getCurrentPlayingPlayer();
         int energy = calculateEnergyBasedOnShortestDistance(positions);
-        if (energy > App.getGame().getCurrentPlayingPlayer().getEnergy()) {
 
-            return new Result(false, "you are fainted");
-        }
-        App.getGame().getCurrentPlayingPlayer().getPosition().setX(endX);
-        App.getGame().getCurrentPlayingPlayer().getPosition().setY(endY);
-        App.getGame().getCurrentPlayingPlayer().consumeEnergy(energy);
+        Result energyConsumptionResult = player.consumeEnergy(energy);
+        if (!energyConsumptionResult.getSuccessful())
+            return energyConsumptionResult;
+
+        player.getPosition().setX(endX);
+        player.getPosition().setY(endY);
+
         return new Result(true, String.format("you have teleported successfully to " + endX + " " + endY));
     }
 
     public Result helpReadingMap() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("T : tree" + "\n");
-        sb.append("S : stone" + "\n");
-        sb.append("W : wood" + "\n");
-        sb.append("C : cottage" + "\n");
-        sb.append("G : greenhouse" + "\n");
-        sb.append("* : crop" + "\n");
-        sb.append("Q : quarry" + "\n");
-        sb.append("L : lake" + "\n");
-        sb.append("+ : wall" + "\n");
-        return new Result(true, sb.toString());
+        String sb =
+                "T : tree\n" +
+                "S : stone\n" +
+                "W : wood\n" +
+                "C : cottage\n" +
+                "G : greenhouse\n" +
+                "* : crop\n" +
+                "Q : quarry\n" +
+                "L : lake\n" +
+                "+ : wall\n";
+        return new Result(true, sb);
 
     }
 
@@ -296,8 +297,10 @@ public class GameMenuController {
         return new Result(true, String.format("%s not found", name));
     }
 
-    public Result WalkPlayersToTheirHome(ArrayList<Player> players) {
-        for (Player p : players) {
+    public Result walkPlayersToTheirHome() {
+        StringBuilder output = new StringBuilder();
+
+        for (Player p : App.getGame().getPlayers()) {
             int cottageX = p.getFarm().getCottage().getBounds().x;
             int cottageY = p.getFarm().getCottage().getBounds().y;
 
@@ -314,13 +317,18 @@ public class GameMenuController {
             }
 
             int energy = calculateEnergyBasedOnShortestDistance(path);
-            p.consumeEnergy(energy);
-            if (!p.isFaintedToday()) {
+            if (p.getEnergy() >= energy) {
                 p.getPosition().setX(cottageX);
                 p.getPosition().setY(cottageY);
+                p.consumeEnergy(energy);
+                output.append(String.format("Player <%s> walked to its home.\n", p.getUsername()));
+            }
+            else {
+                p.setFaintedToday(true);
+                output.append(String.format("Player <%s> fainted while walking to home!\n", p.getUsername()));
             }
         }
-        return new Result(true, "all players are sleeping in their own home");
+        return new Result(true, output.toString());
 
 
     }

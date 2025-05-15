@@ -2,6 +2,7 @@ package models.app;
 
 import controller.GameMenuController;
 import models.BetweenPlayersGift;
+import models.Result;
 import models.animals.Animal;
 import models.date.Time;
 import models.foraging.Crop;
@@ -16,6 +17,7 @@ import models.userInfo.Player;
 import java.util.*;
 
 import models.userInfo.*;
+import view.GameMenu;
 
 public class Game {
     private final ArrayList<Player> players = new ArrayList<>();
@@ -79,7 +81,7 @@ public class Game {
         this.currentPlayingPlayer.setConsumedEnergyInTurn(0);
     }
 
-    public void nextPlayerTurn() {
+    public Result nextPlayerTurn() {
         int size = players.size();
         int currentIndex = players.indexOf(currentPlayingPlayer);
         int checkedPlayers = 0;
@@ -98,11 +100,17 @@ public class Game {
 
         if (checkedPlayers == size) {
             time.advancedDay(1);
+            return new Result(true, "All players have been fainted! Next day is started!\n" +
+                    "Current player: " + players.getFirst().getUsername());
         }
 
         if (currentPlayingPlayer.equals(players.get(0))) {
             time.advancedHour(1);
+            return new Result(true, "An hour passed!\n" +
+                    "Current player: " + players.getFirst().getUsername());
         }
+
+        return new Result(true, "Next player: " + currentPlayingPlayer.getUsername());
     }
 
     public Map getMap() {
@@ -164,12 +172,14 @@ public class Game {
     }
 
     public void callMethodsForTomorrow() {
+        new GameMenu().doNights();
+
         for (Player player : players) {
             if (player.isFaintedToday()) {
                 player.setEnergy(150);
             }
             else {
-              player.setEnergy(200);
+                player.setEnergy(200);
             }
             player.setFaintedToday(false);
             Iterator<Tree> treeIterator = player.getFarm().getTrees().iterator();
@@ -240,7 +250,6 @@ public class Game {
         map.GotThunderByStormyWeather();
         map.randomForagingMineralGenerator();
         setCurrentPlayingPlayer(players.getFirst());
-        System.out.println(gameMenuController.WalkPlayersToTheirHome(players));
 
     }
 }
