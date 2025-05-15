@@ -16,6 +16,7 @@ import controller.ForagingControllers.ForagingController;
 import controller.GameDateAndWeatherController.DateController;
 import controller.GameDateAndWeatherController.WeatherController;
 import controller.NPCController.NPCController;
+import controller.PlayersRealtionController.PlayersRelationController;
 import controller.ToolsControllers.ToolController;
 import models.app.App;
 import models.app.Menus;
@@ -38,6 +39,7 @@ public class GameMenu implements AppMenu {
     private final CraftingController craftingController = new CraftingController();
     private final ArtisanController artisanController = new ArtisanController();
     private final NPCController npcController = new NPCController();
+    private final PlayersRelationController relationController = new PlayersRelationController();
 
     public void check(Scanner scanner) {
         String input = scanner.nextLine();
@@ -229,6 +231,34 @@ public class GameMenu implements AppMenu {
             int startY = Integer.parseInt(matcher.group("Y"));
             int sizeX = Integer.parseInt(matcher.group("size"));
             System.out.println(controller.printMap(startX, startY, sizeX));
+        } else if ((matcher = GameMenuCommands.SellProduct.getMatcher(input)) != null) {
+
+        } else if (GameMenuCommands.FriendShips.getMatcher(input) != null) {
+
+
+        } else if ((matcher = GameMenuCommands.TalkToPlayer.getMatcher(input)) != null) {
+
+
+        } else if ((matcher = GameMenuCommands.TalkHistory.getMatcher(input)) != null) {
+
+        } else if ((matcher = GameMenuCommands.GiftToPLayer.getMatcher(input)) != null) {
+
+        } else if (GameMenuCommands.GiftList.getMatcher(input) != null) {
+
+        } else if ((matcher = GameMenuCommands.GiftRate.getMatcher(input)) != null) {
+
+        } else if ((matcher = GameMenuCommands.GiftHistory.getMatcher(input)) != null) {
+
+        } else if ((matcher = GameMenuCommands.Hug.getMatcher(input)) != null) {
+
+        } else if ((matcher = GameMenuCommands.FlowerTOPlayer.getMatcher(input)) != null) {
+
+        } else if ((matcher = GameMenuCommands.AskMarriage.getMatcher(input)) != null) {
+
+        } else if ((matcher = GameMenuCommands.RespondMarriageRequest.getMatcher(input)) != null) {
+
+        } else if ((matcher = GameMenuCommands.StartTrade.getMatcher(input)) != null ) {
+
         } else if (models.enums.GameMenuCommands.NewGame.getMatcher(input) != null) {
             ArrayList<Player> players = new ArrayList<>();
             Player currentPlayer = new Player(App.getLoggedInUser().getUsername(),
