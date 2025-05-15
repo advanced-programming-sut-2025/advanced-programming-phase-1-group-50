@@ -232,13 +232,11 @@ public class GameMenu implements AppMenu {
             int sizeX = Integer.parseInt(matcher.group("size"));
             System.out.println(controller.printMap(startX, startY, sizeX));
         } else if ((matcher = GameMenuCommands.SellProduct.getMatcher(input)) != null) {
-
+            //TODO
         } else if (GameMenuCommands.FriendShips.getMatcher(input) != null) {
-
-
+            System.out.println(relationController.friendships());
         } else if ((matcher = GameMenuCommands.TalkToPlayer.getMatcher(input)) != null) {
-
-
+            
         } else if ((matcher = GameMenuCommands.TalkHistory.getMatcher(input)) != null) {
 
         } else if ((matcher = GameMenuCommands.GiftToPLayer.getMatcher(input)) != null) {

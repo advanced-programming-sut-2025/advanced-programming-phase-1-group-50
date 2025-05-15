@@ -190,4 +190,9 @@ public class RelationWithPlayers {
         return talkHistory.toString();
     }
 
+    @Override
+    public String toString() {
+        return  friendshipLevel.toString();
+    }
+
 }
