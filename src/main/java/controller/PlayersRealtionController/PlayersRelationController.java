@@ -207,7 +207,7 @@ public class PlayersRelationController {
         }
 
         return new Result(false, "your friendship level must be at least two");
-        
+
     }
 
 }

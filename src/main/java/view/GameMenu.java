@@ -248,9 +248,9 @@ public class GameMenu implements AppMenu {
         } else if ((matcher = GameMenuCommands.GiftHistory.getMatcher(input)) != null) {
                 System.out.println(relationController.GiftHistory(matcher));
         } else if ((matcher = GameMenuCommands.Hug.getMatcher(input)) != null) {
-                S
+                System.out.println(relationController.hug(matcher));
         } else if ((matcher = GameMenuCommands.FlowerTOPlayer.getMatcher(input)) != null) {
-
+            
         } else if ((matcher = GameMenuCommands.AskMarriage.getMatcher(input)) != null) {
 
         } else if ((matcher = GameMenuCommands.RespondMarriageRequest.getMatcher(input)) != null) {
