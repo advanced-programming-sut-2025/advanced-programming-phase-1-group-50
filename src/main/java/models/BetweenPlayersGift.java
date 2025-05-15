@@ -1,6 +1,5 @@
 package models;
 
-import models.manuFactor.Ingredient;
 import models.stores.Sellable;
 import models.userInfo.Player;
 
