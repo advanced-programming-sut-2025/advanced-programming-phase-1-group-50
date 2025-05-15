@@ -1,26 +1,27 @@
 package models;
 
 import models.manuFactor.Ingredient;
+import models.stores.Sellable;
 import models.userInfo.Player;
 
 public class BetweenPlayersGift {
-    private final Ingredient ingredient;
+    private final Sellable product;
     private final Player sender;
     private final Player receiver;
     private final int id;
     private int rate = 3;
     private boolean isRated;
 
-    public BetweenPlayersGift(Ingredient ingredient, Player sender, Player receiver, int id) {
-        this.ingredient = ingredient;
+    public BetweenPlayersGift(Sellable sellable, Player sender, Player receiver, int id) {
+        this.product = sellable;
         this.sender = sender;
         this.receiver = receiver;
         this.id = id;
         this.isRated = false;
     }
 
-    public Ingredient getIngredient() {
-        return ingredient;
+    public Sellable getProduct() {
+        return product;
     }
 
     public int getId() {
@@ -53,10 +54,10 @@ public class BetweenPlayersGift {
 
     @Override
     public String toString() {
-        return "id:" + id + "   sender:" +  sender.getUsername() + "    rate:" + rate + "   " + ingredient.toString();
+        return "id:" + id + "   sender:" +  sender.getUsername() + "    rate:" + rate + "   " + product.toString();
     }
 
     public String toStringWithReceiver() {
-        return "id:" + id + "   sender:" +  sender.getUsername() + "    receiver:" + receiver.getUsername() + "    rate:" + rate + "   " + ingredient.toString();
+        return "id:" + id + "   sender:" +  sender.getUsername() + "    receiver:" + receiver.getUsername() + "    rate:" + rate + "   " + product.toString();
     }
 }
