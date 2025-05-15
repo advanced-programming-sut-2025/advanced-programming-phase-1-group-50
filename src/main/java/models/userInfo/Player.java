@@ -47,6 +47,11 @@ public class Player {
         this.backpack.getTools().add(new Hoe());
         this.backpack.getTools().add(new Pickaxe());
         this.backpack.getTools().add(new Axe());
+        for(Tool tool : backpack.getTools()) {
+            if(tool instanceof Hoe) {
+                this.currentTool = tool;
+            }
+        }
         this.backpack.getIngredientQuantity().put(new Coin() , 20);
         this.backpack.getIngredientQuantity().put(new Wood() , 100);
         this.relationWithAbigail = new RelationWithNPC(NPCType.Abigail);
