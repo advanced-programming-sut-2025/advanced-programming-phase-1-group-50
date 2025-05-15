@@ -4,7 +4,7 @@ import models.NPCs.NPC;
 import models.NPCs.NPCType;
 import models.NPCs.RelationWithNPC;
 import models.Result;
-import models.Notification;
+import models.Notification.Notification;
 import models.animals.Animal;
 import models.mapInfo.Farm;
 import models.mapInfo.Position;
@@ -31,7 +31,8 @@ public class Player {
     private final ArrayList<Notification> notifications = new ArrayList<>();
     private Farm farm;
     private boolean isFaintedToday = false;
-
+    private boolean isMarried = false;
+    private int remainingNumsAfterMarriageRequestDenied = 0;
 
     private Position currentPosition;
     private boolean isInfinite = false;
@@ -250,5 +251,19 @@ public class Player {
         return notifications;
     }
 
+    public boolean isMarried() {
+        return isMarried;
+    }
 
+    public void setMarried(boolean married) {
+        isMarried = married;
+    }
+
+    public int getRemainingNumsAfterMarriageRequestDenied() {
+        return remainingNumsAfterMarriageRequestDenied;
+    }
+
+    public void setRemainingNumsAfterMarriageRequestDenied(int remainingNumsAfterMarriageRequestDenied) {
+        this.remainingNumsAfterMarriageRequestDenied = remainingNumsAfterMarriageRequestDenied;
+    }
 }

@@ -144,42 +144,21 @@ public class Game {
         gifts.add(gift);
     }
 
-    public String giftList(Player player) {
-
-        StringBuilder message = new StringBuilder("gift list:");
-        for (BetweenPlayersGift gift : gifts) {
-            if (gift.getReceiver().equals(player)) {
-                message.append("\n" + "ID: ").append(gift.getId()).append("  ").append(gift.getIngredient()).append(
-                        "  Rate: ").append(gift.getRate());
-            }
-        }
-        return message.toString();
-
-    }
-
-    public String giftHistory(Player player1, Player player2) {
-
-        StringBuilder message = new StringBuilder("gift history:");
-        for (BetweenPlayersGift gift : gifts) {
-            if ((gift.getReceiver().equals(player1) && gift.getSender().equals(player2)) || (gift.getReceiver().equals(player2) && gift.getSender().equals(player1))) {
-                message.append("\n" + "ID: ").append(gift.getId()).append("  ").append(gift.getIngredient()).append(
-                        "   Sender: ").append(gift.getSender());
-                message.append("    Receiver: ").append(gift.getReceiver()).append("    Rate: ").append(gift.getRate());
-            }
-        }
-        return message.toString();
-
-    }
 
     public void callMethodsForTomorrow() {
         ((GameMenu) App.getMenu().getMenu()).doNights();
 
         for (Player player : players) {
+            int ratio = 1;
+            if (player.getRemainingNumsAfterMarriageRequestDenied() > 0){
+                ratio = 2;
+                player.setRemainingNumsAfterMarriageRequestDenied(player.getRemainingNumsAfterMarriageRequestDenied() - 1);
+            }
             if (player.isFaintedToday()) {
-                player.setEnergy(150);
+                player.setEnergy(150/ratio);
             }
             else {
-                player.setEnergy(200);
+                player.setEnergy(200/ratio);
             }
             player.setFaintedToday(false);
             Iterator<Tree> treeIterator = player.getFarm().getTrees().iterator();

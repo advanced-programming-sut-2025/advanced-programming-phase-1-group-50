@@ -252,9 +252,9 @@ public class GameMenu implements AppMenu {
         } else if ((matcher = GameMenuCommands.FlowerTOPlayer.getMatcher(input)) != null) {
                 System.out.println(relationController.giveFlower(matcher));
         } else if ((matcher = GameMenuCommands.AskMarriage.getMatcher(input)) != null) {
-
+                System.out.println(relationController.askMarriage(matcher));
         } else if ((matcher = GameMenuCommands.RespondMarriageRequest.getMatcher(input)) != null) {
-
+                System.out.println(relationController.respondMarriage(matcher));
         } else if ((matcher = GameMenuCommands.StartTrade.getMatcher(input)) != null ) {
             //TODO
         } else if (models.enums.GameMenuCommands.NewGame.getMatcher(input) != null) {
