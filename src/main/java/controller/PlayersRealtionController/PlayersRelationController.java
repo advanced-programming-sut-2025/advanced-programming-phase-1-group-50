@@ -53,6 +53,13 @@ public class PlayersRelationController {
             return new Result(false, "Player not found");
         }
 
+        int distanceSquare = (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - receiver.getPosition().getX());
+        distanceSquare += (int)Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY());
+
+        if (distanceSquare > 2) {
+            return new Result(false, "You are too far away");
+        }
+
         RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
         Set<Player> lookUpKey = new HashSet<>();
         lookUpKey.add(receiver);
@@ -69,7 +76,7 @@ public class PlayersRelationController {
         receiver.addNotification(new Notification(matcher.group("message")));
 
         return new Result(true, "");
-    }
+    }   
 
     public Result talkHistory(Matcher matcher) {
 
