@@ -250,13 +250,13 @@ public class GameMenu implements AppMenu {
         } else if ((matcher = GameMenuCommands.Hug.getMatcher(input)) != null) {
                 System.out.println(relationController.hug(matcher));
         } else if ((matcher = GameMenuCommands.FlowerTOPlayer.getMatcher(input)) != null) {
-            
+                System.out.println(relationController.giveFlower(matcher));
         } else if ((matcher = GameMenuCommands.AskMarriage.getMatcher(input)) != null) {
 
         } else if ((matcher = GameMenuCommands.RespondMarriageRequest.getMatcher(input)) != null) {
 
         } else if ((matcher = GameMenuCommands.StartTrade.getMatcher(input)) != null ) {
-
+            //TODO
         } else if (models.enums.GameMenuCommands.NewGame.getMatcher(input) != null) {
             ArrayList<Player> players = new ArrayList<>();
             Player currentPlayer = new Player(App.getLoggedInUser().getUsername(),

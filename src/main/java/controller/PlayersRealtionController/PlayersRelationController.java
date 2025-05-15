@@ -1,6 +1,7 @@
 package controller.PlayersRealtionController;
 
 import models.BetweenPlayersGift;
+import models.Bouquet;
 import models.Notification;
 import models.Result;
 import models.app.App;
@@ -60,6 +61,7 @@ public class PlayersRelationController {
         RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
         if (!tempRelation.isHaveTalkedToday()) {
             tempRelation.changeXp(20);
+            tempRelation.setHaveTalkedToday(true);
         }
 
         tempRelation.addDialogue(new DialoguesBetweenPlayers(App.getGame().getCurrentPlayingPlayer(),receiver, matcher.group("message")));
@@ -207,6 +209,50 @@ public class PlayersRelationController {
         }
 
         return new Result(false, "your friendship level must be at least two");
+
+    }
+
+    public Result giveFlower(Matcher matcher) {
+        Player temp = null;
+
+        for (Player p : App.getGame().getPlayers()) {
+            if (p.getUsername().equals(matcher.group("username"))) {
+                temp = p;
+                break;
+            }
+        }
+
+        if (temp == null) {
+            return new Result(false, "Player not found");
+        }
+
+        int distanceSquare = (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX());
+        distanceSquare += (int)Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
+
+        if (distanceSquare > 2) {
+            return new Result(false, "You are too far away");
+        }
+
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(new Bouquet()) == 0) {
+            return new Result(false, "You don't have Bouquet");
+        }
+
+        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
+        lookUpKey.add(temp);
+
+        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+
+        if (tempRelation.canGiveFlower()) {
+            tempRelation.setGaveFlower();
+            tempRelation.setHaveGaveFlowerToday(true);
+            App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Bouquet(),1);
+            temp.getBackpack().addIngredients(new Bouquet(),1);
+            return new Result(true, "che romantic");
+        }
+
+        return new Result(false, "you can't flower this player");
 
     }
 
