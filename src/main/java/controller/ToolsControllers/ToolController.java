@@ -7,6 +7,7 @@ import models.app.App;
 import models.foraging.ForagingMineral;
 import models.foraging.Growable;
 import models.foraging.Tree;
+import models.manuFactor.Ingredient;
 import models.manuFactor.artisanGoods.ArtisanGood;
 import models.manuFactor.artisanGoods.ArtisanGoodType;
 import models.mapInfo.*;
@@ -16,6 +17,8 @@ import models.userInfo.Player;
 import models.userInfo.TrashCan;
 import models.waterBodies.Lake;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class ToolController {
@@ -60,14 +63,15 @@ public class ToolController {
 
     public Result upgradeTool(String input) {
 
-        var player = App.getGame().getCurrentPlayingPlayer();
-        var tools = player.getBackpack().getTools();
-        var ingredients = player.getBackpack().getIngredientQuantity();
+        Player player = App.getGame().getCurrentPlayingPlayer();
+        ArrayList<Tool> tools = player.getBackpack().getTools();
+        HashMap<Ingredient, Integer> ingredients = player.getBackpack().getIngredientQuantity();
+        Map map = App.getGame().getMap();
         int price;
 
         if (input.equals("TrashCan")) {
 
-            if (!App.isAroundPlaceable(player, App.getGame().getMap().getNpcVillage().getBlacksmith())) {
+            if (!map.isAroundPlaceable(player, map.getNpcVillage().getBlacksmith())) {
                 return new Result(false, "you should be near blacksmith");
             }
 
@@ -87,7 +91,7 @@ public class ToolController {
                     if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.CopperBar), 0) < 5) {
                         return new Result(false, "you don't have enough Copper bar");
                     }
-                    if (!App.getGame().getMap().getNpcVillage().getBlacksmith().canUpgradeTool("Copper Trash Can")) {
+                    if (!map.getNpcVillage().getBlacksmith().canUpgradeTool("Copper Trash Can")) {
                         return new Result(false, "Insufficient remaining upgrades for today");
                     }
                     App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.CopperBar), -5);
@@ -98,7 +102,7 @@ public class ToolController {
                     if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.IronBar), 0) < 5) {
                         return new Result(false, "you don't have enough Iron bar");
                     }
-                    if (!App.getGame().getMap().getNpcVillage().getBlacksmith().canUpgradeTool("Steel Trash Can")) {
+                    if (!map.getNpcVillage().getBlacksmith().canUpgradeTool("Steel Trash Can")) {
                         return new Result(false, "Insufficient remaining upgrades for today");
                     }
                     App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.IronBar), -5);
@@ -108,7 +112,7 @@ public class ToolController {
                     if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.GoldBar), 0) < 5) {
                         return new Result(false, "you don't have enough Gold bar");
                     }
-                    if (!App.getGame().getMap().getNpcVillage().getBlacksmith().canUpgradeTool("Gold Trash Can")) {
+                    if (!map.getNpcVillage().getBlacksmith().canUpgradeTool("Gold Trash Can")) {
                         return new Result(false, "Insufficient remaining upgrades for today");
                     }
                     App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.GoldBar), -5);
@@ -118,7 +122,7 @@ public class ToolController {
                     if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.IridiumBar), 0) < 5) {
                         return new Result(false, "you don't have enough Iridium bar");
                     }
-                    if (!App.getGame().getMap().getNpcVillage().getBlacksmith().canUpgradeTool("Iridium Trash Can")) {
+                    if (!map.getNpcVillage().getBlacksmith().canUpgradeTool("Iridium Trash Can")) {
                         return new Result(false, "Insufficient remaining upgrades for today");
                     }
                     App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.IridiumBar), -5);
@@ -143,7 +147,7 @@ public class ToolController {
 
                 } else {
 
-                    if (!App.isAroundPlaceable(player, App.getGame().getMap().getNpcVillage().getBlacksmith())) {
+                    if (!map.isAroundPlaceable(player, map.getNpcVillage().getBlacksmith())) {
                         return new Result(false, "you should be near blacksmith");
                     }
 
@@ -164,7 +168,7 @@ public class ToolController {
                             if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.CopperBar), 0) < 5) {
                                 return new Result(false, "you don't have enough Copper bar");
                             }
-                            if (!App.getGame().getMap().getNpcVillage().getBlacksmith().canUpgradeTool("Copper Tool")) {
+                            if (!map.getNpcVillage().getBlacksmith().canUpgradeTool("Copper Tool")) {
                                 return new Result(false, "Insufficient remaining upgrades for today");
                             }
                             App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.CopperBar), -5);
@@ -175,7 +179,7 @@ public class ToolController {
                             if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.IronBar), 0) < 5) {
                                 return new Result(false, "you don't have enough Iron bar");
                             }
-                            if (!App.getGame().getMap().getNpcVillage().getBlacksmith().canUpgradeTool("Steel Tool")) {
+                            if (!map.getNpcVillage().getBlacksmith().canUpgradeTool("Steel Tool")) {
                                 return new Result(false, "Insufficient remaining upgrades for today");
                             }
                             App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.IronBar), -5);
@@ -185,7 +189,7 @@ public class ToolController {
                             if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.GoldBar), 0) < 5) {
                                 return new Result(false, "you don't have enough Gold bar");
                             }
-                            if (!App.getGame().getMap().getNpcVillage().getBlacksmith().canUpgradeTool("Gold Tool")) {
+                            if (!map.getNpcVillage().getBlacksmith().canUpgradeTool("Gold Tool")) {
                                 return new Result(false, "Insufficient remaining upgrades for today");
                             }
                             App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.GoldBar), -5);
@@ -195,7 +199,7 @@ public class ToolController {
                             if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.IridiumBar), 0) < 5) {
                                 return new Result(false, "you don't have enough Iridium bar");
                             }
-                            if (!App.getGame().getMap().getNpcVillage().getBlacksmith().canUpgradeTool("Iridium Tool")) {
+                            if (!map.getNpcVillage().getBlacksmith().canUpgradeTool("Iridium Tool")) {
                                 return new Result(false, "Insufficient remaining upgrades for today");
                             }
                             App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.IridiumBar), -5);
@@ -213,6 +217,7 @@ public class ToolController {
 
 
         }
+
         return new Result(false, "Tool not found");
 
 

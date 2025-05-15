@@ -323,4 +323,22 @@ public class Map {
             }
         }
     }
+
+    public boolean isAroundPlaceable(Player p, Placeable placeable) {
+        if (p.getPosition().getX() - 1 >= 0 && p.getPosition().getX() + 1 <= 250 && p.getPosition().getY() - 1 >= 0
+                && p.getPosition().getY() + 1 <= 200) {
+
+            for (int i = p.getPosition().getX() - 1; i <= p.getPosition().getX() + 1; i++) {
+                for (int j = p.getPosition().getY() - 1; j <= p.getPosition().getY() + 1; j++) {
+                    if (tiles[i][j].getPlaceable() != null &&
+                            tiles[i][j].getPlaceable().equals(placeable)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        return false;
+    }
 }
