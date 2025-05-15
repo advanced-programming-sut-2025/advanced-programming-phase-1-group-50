@@ -55,7 +55,7 @@ public class RelationWithPlayers {
         this.haveGaveFlowerToday = haveGaveFlowerToday;
     }
 
-    public void checkXp() {
+    private void checkXp() {
 
         if (this.xp < 0) {
             this.xp = 0;
@@ -188,6 +188,11 @@ public class RelationWithPlayers {
             talkHistory.append(dialogue.toString());
         }
         return talkHistory.toString();
+    }
+
+    @Override
+    public String toString() {
+        return  friendshipLevel.toString();
     }
 
 }
