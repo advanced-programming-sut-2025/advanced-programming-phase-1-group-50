@@ -245,6 +245,8 @@ public class GameMenu implements AppMenu {
                 System.out.println(controller.createNewGame(players));
 
             }
+        } else if (GameMenuCommands.StoreMenu.getMatcher(input) != null) {
+            System.out.println(controller.storeMenu());
         } else {
             System.out.println("invalid command");
         }

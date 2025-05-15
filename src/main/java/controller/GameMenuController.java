@@ -339,4 +339,48 @@ public class GameMenuController {
         player.getFarm().getGreenHouse().harvestGrowable();
         return new Result (true, "your plants in your green house are harvesting");
     }
+
+    public Result storeMenu () {
+
+        if (App.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer() , App.getGame().getMap().getNpcVillage().getBlacksmith())) {
+
+            App.setMenu(Menus.BlackSmithMenu);
+            return new Result(true, "Now you are in the blacksmith");
+
+        } else if (App.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer() , App.getGame().getMap().getNpcVillage().getCarpenterShop())) {
+
+            App.setMenu(Menus.CarpenterShopMenu);
+            return new Result(true, "Now you are in the carpenterShop");
+
+        } else if (App.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer() , App.getGame().getMap().getNpcVillage().getMarnieRanch())) {
+
+            App.setMenu(Menus.MarnieRanchMenu);
+            return new Result(true, "Now you are in the Marnie's Ranch");
+
+        } else if (App.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer() , App.getGame().getMap().getNpcVillage().getJojaMart())) {
+
+            App.setMenu(Menus.JojaMartMenu);
+            return new Result(true, "Now you are in the Joja Mart");
+
+        } else if (App.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer() , App.getGame().getMap().getNpcVillage().getPierreGeneralStore())) {
+
+            App.setMenu(Menus.PierreGeneralStoreMenu);
+            return new Result(true, "Now you are in the Pierre General Store");
+
+        } else if (App.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer() , App.getGame().getMap().getNpcVillage().getFishShop())) {
+
+            App.setMenu(Menus.FishShopMenu);
+            return new Result(true, "Now you are in the Fish Shop");
+
+        } else if (App.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer() , App.getGame().getMap().getNpcVillage().getStardopSaloon())) {
+
+            App.setMenu(Menus.StardopSaloonMenu);
+            return new Result(true, "Now you are in the Stardop Saloon");
+
+        } else {
+
+            return new Result(false , "you must be near a store");
+
+        }
+    }
 }
