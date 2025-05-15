@@ -112,7 +112,40 @@ public class PlayersRelationController {
         return new Result(true, message.toString());
     }
 
+    public Result giftRate(Matcher matcher) {
 
+        int rate = Integer.parseInt(matcher.group("rate"));
+        int id = Integer.parseInt(matcher.group("id"));
+        BetweenPlayersGift tempGift = null;
+
+        if (rate <= 0 || id >= 6) {
+            return new Result(false, "Invalid gift rate");
+        }
+
+        for (BetweenPlayersGift gift : App.getGame().getGifts()) {
+            if (gift.getId() == id) {
+                tempGift = gift;
+                break;
+            }
+        }
+
+        if (tempGift == null) {
+            return new Result(false, "Gift not found");
+        }
+
+        if (!tempGift.getReceiver().equals(App.getGame().getCurrentPlayingPlayer())) {
+            return new Result(false, "you can't rate this gift");
+        }
+
+        if (tempGift.isRated()) {
+            return new Result(false, "you have already rated this gift");
+        }
+
+        tempGift.setRate(rate);
+        tempGift.setRated();
+
+        return new Result(true, "you rated this gift successfully");
+    }
 
 
 }

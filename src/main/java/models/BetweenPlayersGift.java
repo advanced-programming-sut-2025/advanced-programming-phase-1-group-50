@@ -9,12 +9,14 @@ public class BetweenPlayersGift {
     private final Player receiver;
     private final int id;
     private int rate = 3;
+    private boolean isRated;
 
     public BetweenPlayersGift(Ingredient ingredient, Player sender, Player receiver, int id) {
         this.ingredient = ingredient;
         this.sender = sender;
         this.receiver = receiver;
         this.id = id;
+        this.isRated = false;
     }
 
     public Ingredient getIngredient() {
@@ -41,8 +43,16 @@ public class BetweenPlayersGift {
         this.rate = rate;
     }
 
+    public boolean isRated() {
+        return isRated;
+    }
+
+    public void setRated() {
+        isRated = true;
+    }
+
     @Override
     public String toString() {
-        return "id:" + id + "   sender:" +  sender.getUsername() + "    " + ingredient.toString();
+        return "id:" + id + "   sender:" +  sender.getUsername() + "    rate:" + rate + "   " + ingredient.toString();
     }
 }
