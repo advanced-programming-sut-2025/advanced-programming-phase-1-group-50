@@ -5,7 +5,9 @@ import models.NPCs.NPCType;
 import models.NPCs.RelationWithNPC;
 import models.Result;
 import models.app.App;
+import models.manuFactor.Ingredient;
 import models.mapInfo.NpcHome;
+import models.stores.Sellable;
 
 import java.util.regex.Matcher;
 
@@ -133,7 +135,190 @@ public class NPCController {
     }
 
     public Result giftToNPC(Matcher matcher) {
-        return null;
+        NpcHome home = null;
+
+        switch (matcher.group("NPCname")) {
+            case "Abigail" -> {
+
+                home = App.getGame().getMap().getNpcHomes().get(0);
+
+                if (!App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
+                    return new Result(false, "You must be near the NPCHome");
+                }
+
+                if (!Sellable.isSellable(matcher.group("item"))) {
+                    return new Result(false, "You can't gift this item");
+                }
+
+                if (Sellable.getSellableByName(matcher.group("item")) == null) {
+                    return new Result(false, "Not enough stock");
+                }
+
+                if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault((Ingredient) Sellable.getSellableByName(matcher.group("item")),0) == 0) {
+                    return new Result(false, "Not enough stock");
+                }
+
+                App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(matcher.group("item")),1);
+
+                if (home.getNpc().isFavoriteGift((Ingredient) Sellable.getSellableByName(matcher.group("item")))) {
+                    App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().increaseNumericalFriendShipLevel(200);
+                }
+
+                if (App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().isFirstTimeGiftToNPC()) {
+                    App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().increaseNumericalFriendShipLevel(50);
+                }
+
+                return new Result(true, "your gift has been received");
+
+            }
+            case "Sebastian" -> {
+
+                home = App.getGame().getMap().getNpcHomes().get(1);
+
+                if (!App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
+                    return new Result(false, "You must be near the NPCHome");
+                }
+
+                if (!Sellable.isSellable(matcher.group("item"))) {
+                    return new Result(false, "You can't gift this item");
+                }
+
+                if (Sellable.getSellableByName(matcher.group("item")) == null) {
+                    return new Result(false, "Not enough stock");
+                }
+
+                if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault((Ingredient) Sellable.getSellableByName(matcher.group("item")),0) == 0) {
+                    return new Result(false, "Not enough stock");
+                }
+
+                App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(matcher.group("item")),1);
+
+                if (home.getNpc().isFavoriteGift((Ingredient) Sellable.getSellableByName(matcher.group("item")))) {
+                    App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().increaseNumericalFriendShipLevel(200);
+                }
+
+                if (App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().isFirstTimeGiftToNPC()) {
+                    App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().increaseNumericalFriendShipLevel(50);
+                }
+
+                return new Result(true, "your gift has been received");
+
+            }
+            case "Leah" -> {
+
+                home = App.getGame().getMap().getNpcHomes().get(2);
+
+                if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
+                    return new Result(false, "You must be near the NPCHome");
+                }
+
+                if (!App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
+                    return new Result(false, "You must be near the NPCHome");
+                }
+
+                if (!Sellable.isSellable(matcher.group("item"))) {
+                    return new Result(false, "You can't gift this item");
+                }
+
+                if (Sellable.getSellableByName(matcher.group("item")) == null) {
+                    return new Result(false, "Not enough stock");
+                }
+
+                if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault((Ingredient) Sellable.getSellableByName(matcher.group("item")),0) == 0) {
+                    return new Result(false, "Not enough stock");
+                }
+
+                App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(matcher.group("item")),1);
+
+                if (home.getNpc().isFavoriteGift((Ingredient) Sellable.getSellableByName(matcher.group("item")))) {
+                    App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().increaseNumericalFriendShipLevel(200);
+                }
+
+                if (App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().isFirstTimeGiftToNPC()) {
+                    App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().increaseNumericalFriendShipLevel(50);
+                }
+
+                return new Result(true, "your gift has been received");
+
+            }
+            case "Robin" -> {
+
+                home = App.getGame().getMap().getNpcHomes().get(3);
+
+                if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
+                    return new Result(false, "You must be near the NPCHome");
+                }
+
+                if (!App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
+                    return new Result(false, "You must be near the NPCHome");
+                }
+
+                if (!Sellable.isSellable(matcher.group("item"))) {
+                    return new Result(false, "You can't gift this item");
+                }
+
+                if (Sellable.getSellableByName(matcher.group("item")) == null) {
+                    return new Result(false, "Not enough stock");
+                }
+
+                if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault((Ingredient) Sellable.getSellableByName(matcher.group("item")),0) == 0) {
+                    return new Result(false, "Not enough stock");
+                }
+
+                App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(matcher.group("item")),1);
+
+                if (home.getNpc().isFavoriteGift((Ingredient) Sellable.getSellableByName(matcher.group("item")))) {
+                    App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().increaseNumericalFriendShipLevel(200);
+                }
+
+                if (App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().isFirstTimeGiftToNPC()) {
+                    App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().increaseNumericalFriendShipLevel(50);
+                }
+
+                return new Result(true, "your gift has been received");
+
+            }
+            case "Harvey" -> {
+
+                home = App.getGame().getMap().getNpcHomes().get(4);
+
+                if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
+                    return new Result(false, "You must be near the NPCHome");
+                }
+
+                if (!App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
+                    return new Result(false, "You must be near the NPCHome");
+                }
+
+                if (!Sellable.isSellable(matcher.group("item"))) {
+                    return new Result(false, "You can't gift this item");
+                }
+
+                if (Sellable.getSellableByName(matcher.group("item")) == null) {
+                    return new Result(false, "Not enough stock");
+                }
+
+                if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault((Ingredient) Sellable.getSellableByName(matcher.group("item")),0) == 0) {
+                    return new Result(false, "Not enough stock");
+                }
+
+                App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(matcher.group("item")),1);
+
+                if (home.getNpc().isFavoriteGift((Ingredient) Sellable.getSellableByName(matcher.group("item")))) {
+                    App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().increaseNumericalFriendShipLevel(200);
+                }
+
+                if (App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().isFirstTimeGiftToNPC()) {
+                    App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().increaseNumericalFriendShipLevel(50);
+                }
+
+                return new Result(true, "your gift has been received");
+
+            }
+
+        }
+
+        return new Result(false, "Not such NPC");
     }
 
     public Result friendShipNPCList() {

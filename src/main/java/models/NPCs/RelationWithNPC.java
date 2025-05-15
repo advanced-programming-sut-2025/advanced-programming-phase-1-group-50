@@ -96,7 +96,7 @@ public class RelationWithNPC {
         }
     }
 
-    public void increaseNumOfDaysAfterUnlockingSecondQuest() {
+    private void increaseNumOfDaysAfterUnlockingSecondQuest() {
         if (!this.isSecondQuestLocked) {
             this.numOfDaysAfterUnlockingSecondQuest++;
         }
@@ -106,7 +106,7 @@ public class RelationWithNPC {
         return numericalFriendShipLevel;
     }
 
-    public void checkUnlockingThirdQuest() {
+    private void checkUnlockingThirdQuest() {
         if (this.type.equals(NPCType.Abigail)) {
             if (this.numOfDaysAfterUnlockingSecondQuest >= 100) {this.isThirdQuestLocked = false;}
         } else if (this.type.equals(NPCType.Sebastian)) {
@@ -119,5 +119,12 @@ public class RelationWithNPC {
             if (this.numOfDaysAfterUnlockingSecondQuest >= 140) {this.isThirdQuestLocked = false;}
         }
 
+    }
+
+    public void checkEveryNight() {
+        isFirstTimeToSpeakWithNPC = true;
+        isFirstTimeGiftToNPC = true;
+        increaseNumOfDaysAfterUnlockingSecondQuest();
+        checkUnlockingThirdQuest();
     }
 }
