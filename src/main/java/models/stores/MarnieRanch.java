@@ -3,6 +3,8 @@ package models.stores;
 import models.Result;
 import models.animals.AnimalType;
 import models.app.App;
+import models.tools.MilkPail;
+import models.tools.Shear;
 import models.userInfo.Coin;
 
 import java.awt.*;
@@ -93,7 +95,53 @@ public class MarnieRanch extends Store {
 
     @Override
     public Result purchaseProduct(int value, String productName) {
-        return null;
+
+        ShopItem item = null;
+
+        for (ShopItem i : inventory) {
+            if (i.name.equals(productName)) {
+                item = i;
+            }
+        }
+
+        if (item == null) {
+            return new Result(false, "No such product");
+        }
+
+        if (item instanceof MarnieRanchLiveStockItem) {
+            return new Result(false, "You must use buy animal command in game menu");
+        }
+
+        int totalPrice = item.getPrice() * value;
+
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Coin(), 0) < totalPrice) {
+            return new Result(false, "Not enough money");
+        }
+
+        if (item.getRemainingQuantity() < value) {
+            return new Result(false, "Not enough stocks");
+        }
+
+        if (item.name.equals("Hay")) {
+
+            App.getGame().getCurrentPlayingPlayer().getBackpack().increaseHay(value);
+
+        } else if (item.name.equals("Milk Pail")) {
+
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addTool(new MilkPail());
+
+        } else if (item.name.equals("Shears")) {
+
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addTool(new Shear());
+
+        }
+
+        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), (-1) * totalPrice);
+        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(((BlackSmithStocksItem) item).getType(), value);
+        item.decreaseRemainingQuantity(value);
+
+        return new Result(true, "You successfully purchased " + value + "number(s) of " + productName);
+
     }
 
     @Override
