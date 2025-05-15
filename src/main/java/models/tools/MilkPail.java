@@ -1,5 +1,6 @@
 package models.tools;
 
+import models.Result;
 import models.app.App;
 
 public class MilkPail extends Tool {
@@ -9,8 +10,12 @@ public class MilkPail extends Tool {
     }
 
     @Override
-    public void useTool() {
-        App.getGame().getCurrentPlayingPlayer().consumeEnergy(4);
+    public Result useTool() {
+        Result energyConsumptionResult = App.getGame().getCurrentPlayingPlayer().consumeEnergy(4);
+        if (!energyConsumptionResult.getSuccessful())
+            return energyConsumptionResult;
+
+        return new Result(true, "");
     }
 
     public ToolType getToolType() {

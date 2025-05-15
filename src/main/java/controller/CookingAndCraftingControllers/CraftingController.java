@@ -39,6 +39,10 @@ public class CraftingController {
         if (!player.getBackpack().hasCapacity())
             return new Result(false, "You don't have enough space in backpack!");
 
+        Result energyConsumptionResult = player.consumeEnergy(2);
+        if (!energyConsumptionResult.getSuccessful())
+            return energyConsumptionResult;
+
         HashMap<Ingredient, Integer> ingredients = recipe.getIngredients();
         for (Ingredient ingredient : ingredients.keySet()) {
             if (!(player.getBackpack().getIngredientQuantity().containsKey(ingredient) &&
@@ -53,8 +57,6 @@ public class CraftingController {
             player.getBackpack().addArtisanMachine(artisanMachine);
         if (recipe.equals(CraftingRecipes.MysticTreeSeed))
             player.getBackpack().addIngredients(TreeSource.MysticTreeSeeds, 1);
-
-        player.consumeEnergy(2);
 
         return new Result(true, "You craft <" + ItemName + "> successfully!");
     }

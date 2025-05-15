@@ -308,4 +308,8 @@ public class GameMenu implements AppMenu {
 
     }
 
+    public void doNights() {
+        System.out.println(controller.walkPlayersToTheirHome());
+    }
+
 }

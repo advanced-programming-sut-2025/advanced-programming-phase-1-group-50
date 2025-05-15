@@ -238,23 +238,27 @@ public class ToolController {
         if (tool instanceof Hoe hoe) {
             if (App.getGame().getMap().getTileByDirection(tile, d) != null &&
                     App.getGame().getMap().getTileByDirection(tile, d).getPlaceable() == null) {
+                Result energyConsumptionResult = hoe.useTool();
+                if (!energyConsumptionResult.getSuccessful())
+                    return energyConsumptionResult;
                 App.getGame().getMap().getTileByDirection(tile, d).setPlowed(true);
-                hoe.useTool();
                 return new Result(true, "tile plowed successfully!");
             } else
                 return new Result(false, "You can't plow this tile with Hoe!");
         }
         if (tool instanceof Pickaxe pickaxe) {
+            Result energyConsumptionResult = pickaxe.useTool();
+            if (!energyConsumptionResult.getSuccessful())
+                return energyConsumptionResult;
+
             if (targetTile.getPlaceable() != null) {
                 if (targetTile.getPlaceable() instanceof Stone stone) {
                     targetTile.setPlaceable(null);
-                    pickaxe.useTool();
                     p.getFarm().getStones().remove(stone);
                     p.getFarm().getPlaceables().remove(stone);
                     targetTile.setSymbol('.');
                     p.getBackpack().addIngredients(stone, 1);
                     return new Result(true, "stone broken");
-
 
                 } else if (targetTile.getPlaceable() instanceof Quarry quarry) {
                     Random rand = new Random();
@@ -264,9 +268,7 @@ public class ToolController {
                                 .get(rand.nextInt(quarry.getForagingMinerals().size()));
                         quarry.getForagingMinerals().remove(fg);
                         p.getBackpack().addIngredients(fg, 1);
-                        pickaxe.useTool();
                         return new Result(true, "you add a foraging mineral to the backpack");
-
 
                     }
                     return new Result(false, "this quarry is empty");
@@ -274,18 +276,18 @@ public class ToolController {
 
             } else {
                 targetTile.setPlowed(false);
-
-                pickaxe.useTool();
                 return new Result(true, "target tile unPlowed successfully!");
             }
         }
         if (tool instanceof Axe axe) {
 
             if (targetTile.getPlaceable() instanceof Tree tree) {
-                targetTile.setPlaceable(null);
-                axe.useTool();
+                Result energyConsumptionResult = axe.useTool();
+                if (!energyConsumptionResult.getSuccessful())
+                    return energyConsumptionResult;
                 p.getFarm().getTrees().remove(tree);
                 p.getFarm().getPlaceables().remove(tree);
+                targetTile.setPlaceable(null);
                 targetTile.setSymbol('.');
                 targetTile.setPlowed(false);
                 targetTile.setFertilizer(null);
@@ -303,7 +305,9 @@ public class ToolController {
         if (tool instanceof FishingPole fishingPole) {
 
             if (targetTile.getPlaceable() instanceof Lake lake) {
-                fishingPole.useTool();
+                Result energyConsumptionResult = fishingPole.useTool();
+                if (!energyConsumptionResult.getSuccessful())
+                    return energyConsumptionResult;
                 return animalsController.fishing(fishingPole);
             }
 
@@ -312,7 +316,9 @@ public class ToolController {
         if (tool instanceof Scythe scythe) {
 
             if (targetTile.getPlaceable() instanceof Growable plant) {
-                scythe.useTool();
+                Result energyConsumptionResult = scythe.useTool();
+                if (!energyConsumptionResult.getSuccessful())
+                    return energyConsumptionResult;
                 return foragingController.harvestWithScythe(plant, targetTile);
             }
 
@@ -324,17 +330,22 @@ public class ToolController {
                 if (wateringCan.getWaterCapacity() <= 0) {
                     return new Result(false, "your wateringCan is empty");
                 }
-                wateringCan.useTool();
+                Result energyConsumptionResult = wateringCan.useTool();
+                if (!energyConsumptionResult.getSuccessful())
+                    return energyConsumptionResult;
                 return foragingController.waterPlantWithUseTool(plant);
             }
             if (targetTile.getPlaceable() instanceof Lake) {
+                Result energyConsumptionResult = wateringCan.useTool();
+                if (!energyConsumptionResult.getSuccessful())
+                    return energyConsumptionResult;
                 wateringCan.makeFull();
             }
+
             return new Result(false, "there is no plant or lake!");
 
         }
-        if (tool instanceof MilkPail ||
-                tool instanceof Shear) {
+        if (tool instanceof MilkPail || tool instanceof Shear) {
             return new Result(false, "please use command : collect produce -n <nameOfAnimal>");
         }
 

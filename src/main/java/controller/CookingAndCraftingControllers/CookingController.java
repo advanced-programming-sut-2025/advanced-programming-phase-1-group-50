@@ -66,6 +66,10 @@ public class CookingController {
         if (!player.getBackpack().hasCapacity())
             return new Result(false, "You don't have enough space in backpack!");
 
+        Result energyConsumptionResult = player.consumeEnergy(3);
+        if (!energyConsumptionResult.getSuccessful())
+            return energyConsumptionResult;
+
         HashMap<Ingredient, Integer> requiredIngredients = recipe.getIngredients();
 
         for (Ingredient requiredIngredient : requiredIngredients.keySet()) {
@@ -84,8 +88,6 @@ public class CookingController {
 
         Food food = Food.getFoodByName(recipe.name());
         player.getBackpack().addIngredients(food, 1);
-
-        player.consumeEnergy(3);
 
         return new Result(true, "You cook <" + food + "> successfully!");
     }
