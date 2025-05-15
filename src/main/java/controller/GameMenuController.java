@@ -26,13 +26,29 @@ public class GameMenuController {
 
     }
 
-    public int calculateEnergyBasedOnShortestDistance(List<Position> shortestPath) {
-        int energy = 0;
-        for (Position p : shortestPath) {
-            energy++;
+    public int calculateEnergyBasedOnComplexFormula(List<Position> positions) {
+        if (positions.size() < 2) return 0;
+
+        int numberOfTurns = 0;
+        int prevDx = positions.get(1).getX() - positions.get(0).getX();
+        int prevDy = positions.get(1).getY() - positions.get(0).getY();
+
+        for (int i = 1; i < positions.size() - 1; i++) {
+            int dx = positions.get(i + 1).getX() - positions.get(i).getX();
+            int dy = positions.get(i + 1).getY() - positions.get(i).getY();
+
+            if (dx != prevDx || dy != prevDy) {
+                numberOfTurns++;
+            }
+
+            prevDx = dx;
+            prevDy = dy;
         }
-        return energy / 20;
+
+        int distance = positions.size();
+        return (distance + 10 * numberOfTurns) / 20;
     }
+
 
     public List<Position> findShortestPath(Map map, int startX, int startY, int endX, int endY) {
         int[] dx = {1, -1, 0, 0};
@@ -226,13 +242,13 @@ public class GameMenuController {
         positions.clear();
         positions.addAll(path);
 
-        int energy = calculateEnergyBasedOnShortestDistance(positions);
+        int energy = calculateEnergyBasedOnComplexFormula(positions);
         return new Result(true, String.format("energy needed: %d", energy));
     }
 
     public Result walk(int endX, int endY, List<Position> positions) {
         Player player = App.getGame().getCurrentPlayingPlayer();
-        int energy = calculateEnergyBasedOnShortestDistance(positions);
+        int energy = calculateEnergyBasedOnComplexFormula(positions);
 
         Result energyConsumptionResult = player.consumeEnergy(energy);
         if (!energyConsumptionResult.getSuccessful())
@@ -316,7 +332,7 @@ public class GameMenuController {
                 return new Result(false, "No path found for Player : " + p.getUsername());
             }
 
-            int energy = calculateEnergyBasedOnShortestDistance(path);
+            int energy = calculateEnergyBasedOnComplexFormula(path);
             if (p.getEnergy() >= energy) {
                 p.getPosition().setX(cottageX);
                 p.getPosition().setY(cottageY);
