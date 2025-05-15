@@ -36,9 +36,9 @@ public class FarmFactory {
                         new Quarry(50 + x, 65 + y, 5, 7)
                 )),
 
-                generateRandomTree( x, y ), // درخت‌ها اگه خاص باشن اینجا اضافه کن
+                generateRandomTree( x, y ),
                 generateRandomStone(x , y),
-                generateRandomCrop(x , y),// سنگ‌ها
+                generateRandomCrop(x , y),
                 new Rectangle(x, y, 100, 75),
                 1
         );
