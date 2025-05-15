@@ -83,7 +83,7 @@ public class StardropSaloon extends Store {
         }
 
         if (item.getRemainingQuantity() < value) {
-            return new Result(false, "Not enough stocks");
+            return new Result(false, "Not enough stock");
         }
 
         if (item instanceof StardopSaloonRecipeItem) {

@@ -74,7 +74,7 @@ public class FishShop extends Store {
         }
 
         if (item.remainingQuantity < value) {
-            return new Result(false, "Not enough stocks");
+            return new Result(false, "Not enough stock");
         }
 
 

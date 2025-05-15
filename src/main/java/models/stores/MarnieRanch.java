@@ -63,7 +63,7 @@ public class MarnieRanch extends Store {
         return message.toString();
     }
 
-    public boolean PurchaseAnimal(AnimalType type) {
+    public Result PurchaseAnimal(AnimalType type) {
 
         ShopItem item = null;
 
@@ -76,21 +76,21 @@ public class MarnieRanch extends Store {
         }
 
         if (item == null) {
-            return false;
+            return new Result(false, "No such animal");
         }
 
         if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(new Coin()) < item.price) {
-            return false;
+            return new Result(false, "You don't have enough money to purchase");
         }
 
         if (item.remainingQuantity == 0) {
-            return false;
+            return new Result(false, "Not enough stock");
         }
 
         item.decreaseRemainingQuantity(1);
         App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Coin(), item.price);
 
-        return true;
+        return new Result(true , "you purchased a" + item.name + "successfully");
     }
 
     @Override
@@ -119,7 +119,7 @@ public class MarnieRanch extends Store {
         }
 
         if (item.getRemainingQuantity() < value) {
-            return new Result(false, "Not enough stocks");
+            return new Result(false, "Not enough stock");
         }
 
         if (item.name.equals("Hay")) {
@@ -140,7 +140,7 @@ public class MarnieRanch extends Store {
         App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(((BlackSmithStocksItem) item).getType(), value);
         item.decreaseRemainingQuantity(value);
 
-        return new Result(true, "You successfully purchased " + value + "number(s) of " + productName);
+        return new Result(true, "");
 
     }
 

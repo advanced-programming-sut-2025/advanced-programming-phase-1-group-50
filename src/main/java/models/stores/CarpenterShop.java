@@ -4,7 +4,6 @@ import models.Result;
 import models.animals.HabitatSize;
 import models.animals.HabitatType;
 import models.app.App;
-import models.mapInfo.Farm;
 import models.mapInfo.Stone;
 import models.mapInfo.Wood;
 import models.userInfo.Coin;
@@ -64,7 +63,7 @@ public class CarpenterShop extends Store {
         return message.toString();
     }
 
-    public boolean purchaseBuilding(HabitatType type, HabitatSize size) {
+    public Result purchaseBuilding(HabitatType type, HabitatSize size) {
 
         ShopItem item = null;
 
@@ -77,23 +76,23 @@ public class CarpenterShop extends Store {
         }
 
         if (item == null) {
-            return false;
+            return new Result(false , "No such product");
         }
 
         if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(new Coin()) < item.price) {
-            return false;
+            return new Result(false , "You don't have enough money");
         }
 
         if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(new Stone()) < ((CarpenterShopFarmBuildingsItem) item).getStoneCost()) {
-            return false;
+            return new Result(false , "You don't have enough stones");
         }
 
         if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(new Wood()) < ((CarpenterShopFarmBuildingsItem) item).getWoodCost()) {
-            return false;
+            return new Result(false , "You don't have enough woods");
         }
 
         if (item.remainingQuantity == 0) {
-            return false;
+            return new Result(false , "Not enough stock");
         }
 
         item.decreaseRemainingQuantity(1);
@@ -102,7 +101,8 @@ public class CarpenterShop extends Store {
                 ((CarpenterShopFarmBuildingsItem) item).getStoneCost());
         App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Wood(),
                 ((CarpenterShopFarmBuildingsItem) item).getWoodCost());
-        return true;
+
+        return new Result(true,"");
     }
 
     @Override
@@ -131,12 +131,11 @@ public class CarpenterShop extends Store {
         }
 
         if (item.getRemainingQuantity() < value) {
-            return new Result(false, "Not enough stocks");
+            return new Result(false, "Not enough stock");
         }
 
         if (item.name.equals("Shipping Bin")) {
 
-            Farm temp = App.getGame().getCurrentPlayingPlayer().getFarm();
             Random rand = new Random();
 
             while (true) {
