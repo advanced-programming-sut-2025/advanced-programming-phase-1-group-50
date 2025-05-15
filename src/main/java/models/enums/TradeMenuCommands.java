@@ -5,9 +5,7 @@ import java.util.regex.Pattern;
 
 public enum TradeMenuCommands implements Command {
 
-    trade("^\\s*trade\\s+-u\\s+(?<username>.+?)\\s+-t\\s+(?<type>offer|request)\\s+-i\\s+(?<item>.+?)\\s+-a\\s+" +
-            "(?<amount>\\d+)(\\s+-p\\s+(?<price>\\d+))?(\\s+-ti\\s+(?<targetItem>.+?)\\s+-ta\\s+(?<targetAmount>\\d+)" +
-            ")?\\s*$"),
+    trade("^\\s*trade\\s+-u\\s+(?<username>.+?)\\s+-i\\s+(?<item>.+?)\\s+-a\\s+(?<amount>\\d+)\\s+-p\\s+(?<price>\\d+)\\s*$"),
     tradeList("^\\s*trade\\s+list\\s*$"),
     tradeResponse("^\\s*trade\\s+response\\s+-(?<state>accept|reject)\\s+-i\\s+(?<id>\\d+)\\s*$"),
     tradeHistory("\\s*trade\\s+history\\s*"),
