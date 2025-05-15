@@ -18,15 +18,32 @@ public enum TreeSource implements Ingredient {
     PineCones(TreeType.PineTree),
     MahoganySeeds(TreeType.MahoganyTree),
     MushroomTreeSeeds(TreeType.MushroomTree),
-    MysticTreeSeeds(TreeType.MysticTree),;
+    MysticTreeSeeds(TreeType.MysticTree);
 
-    private final TreeType treeType;
+    private TreeType treeType;
     private final static HashMap<String, TreeSource> stringToTreeSource = new HashMap<>();
 
     static {
         for (TreeSource value : TreeSource.values()) {
             stringToTreeSource.put(value.name().toLowerCase(), value);
         }
+    }
+
+    public static void completeInitialize() {
+        ApricotSapling.treeType = TreeType.ApricotTree;
+        CherrySapling.treeType = TreeType.CherryTree;
+        BananaSapling.treeType = TreeType.BananaTree;
+        MangoSapling.treeType = TreeType.MangoTree;
+        OrangeSapling.treeType = TreeType.OrangeTree;
+        PeachSapling.treeType = TreeType.PeachTree;
+        AppleSapling.treeType = TreeType.AppleTree;
+        PomegranateSapling.treeType = TreeType.PomegranateTree;
+        Acorns.treeType = TreeType.OakTree;
+        MapleSeeds.treeType = TreeType.MapleTree;
+        PineCones.treeType = TreeType.PineTree;
+        MahoganySeeds.treeType = TreeType.MahoganyTree;
+        MushroomTreeSeeds.treeType = TreeType.MushroomTree;
+        MysticTreeSeeds.treeType = TreeType.MysticTree;
     }
 
     TreeSource(TreeType treeType) {

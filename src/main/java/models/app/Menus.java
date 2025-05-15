@@ -20,11 +20,17 @@ public enum Menus {
     StardopSaloonMenu(new StardopSaloonMenu());
 
     private final AppMenu menu;
-    Menus(AppMenu menu){
+
+    Menus(AppMenu menu) {
         this.menu = menu;
     }
-    public void CheckCommand(Scanner scanner){
+
+    public void CheckCommand(Scanner scanner) {
         this.menu.check(scanner);
+    }
+
+    public AppMenu getMenu() {
+        return menu;
     }
 
 }

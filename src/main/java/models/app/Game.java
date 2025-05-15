@@ -172,7 +172,7 @@ public class Game {
     }
 
     public void callMethodsForTomorrow() {
-        new GameMenu().doNights();
+        ((GameMenu) App.getMenu().getMenu()).doNights();
 
         for (Player player : players) {
             if (player.isFaintedToday()) {
