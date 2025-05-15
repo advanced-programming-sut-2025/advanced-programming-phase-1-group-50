@@ -1,8 +1,11 @@
 package models.foraging;
 
 import models.manuFactor.Ingredient;
+import models.stores.Sellable;
 
-public enum Fruit implements Ingredient {
+import java.util.HashMap;
+
+public enum Fruit implements Ingredient, Sellable {
     Apricot(75, 59),
     Cherry(75, 80),
     Banana(75, 150),
@@ -20,6 +23,13 @@ public enum Fruit implements Ingredient {
 
     private final int energy;
     private final int baseSellPrice;
+    private final static HashMap<String, Fruit> stringToFruit = new HashMap<>();
+
+    static {
+        for (Fruit value : Fruit.values()) {
+            stringToFruit.put(value.name().toLowerCase(), value);
+        }
+    }
 
 
     Fruit(int energy, int baseSellPrice) {
@@ -31,7 +41,11 @@ public enum Fruit implements Ingredient {
         return energy;
     }
 
-    public int getBaseSellPrice() {
+    public int getSellPrice() {
         return baseSellPrice;
+    }
+
+    public static Fruit getFruitByName(String name) {
+        return stringToFruit.getOrDefault(name.toLowerCase(), null);
     }
 }

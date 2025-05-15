@@ -1,8 +1,11 @@
 package models.foraging;
 
 import models.manuFactor.Ingredient;
+import models.stores.Sellable;
 
-public enum ForagingMineral implements Ingredient {
+import java.util.HashMap;
+
+public enum ForagingMineral implements Ingredient, Sellable {
     Quartz(25),
     EarthCrystal(50),
     FrozenTear(75),
@@ -22,6 +25,14 @@ public enum ForagingMineral implements Ingredient {
     Coal(15);
 
     private final int sellPrice;
+    private final static HashMap<String, ForagingMineral> stringToForagingMineral = new HashMap<>();
+
+    static {
+        for (ForagingMineral value : ForagingMineral.values()) {
+            stringToForagingMineral.put(value.name().toLowerCase(), value);
+        }
+    }
+
 
     ForagingMineral(int sellPrice) {
         this.sellPrice = sellPrice;
@@ -33,5 +44,9 @@ public enum ForagingMineral implements Ingredient {
 
     public int getSellPrice() {
         return sellPrice;
+    }
+
+    public static ForagingMineral getForagingMineralByName(String name) {
+        return stringToForagingMineral.getOrDefault(name.toLowerCase(), null);
     }
 }

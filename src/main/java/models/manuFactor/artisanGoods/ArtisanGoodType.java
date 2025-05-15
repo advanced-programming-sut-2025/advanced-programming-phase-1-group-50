@@ -1,5 +1,7 @@
 package models.manuFactor.artisanGoods;
 
+import java.util.HashMap;
+
 public enum ArtisanGoodType {
     Honey(75, 350),
     CheeseByMilk(100, 230),
@@ -33,6 +35,13 @@ public enum ArtisanGoodType {
 
     private int energy;
     private int sellPrice;
+    private final static HashMap<String, ArtisanGoodType> stringToArtisanGoodType = new HashMap<>();
+
+    static {
+        for (ArtisanGoodType value : ArtisanGoodType.values()) {
+            stringToArtisanGoodType.put(value.name().toLowerCase(), value);
+        }
+    }
 
     ArtisanGoodType() {
     }
@@ -48,5 +57,9 @@ public enum ArtisanGoodType {
 
     public int getSellPrice() {
         return sellPrice;
+    }
+
+    public static ArtisanGoodType getArtisanGoodTypeByName(String name) {
+        return stringToArtisanGoodType.getOrDefault(name.toLowerCase(), null);
     }
 }

@@ -1,10 +1,11 @@
 package models.cooking;
 
 import models.manuFactor.Ingredient;
+import models.stores.Sellable;
 
 import java.util.HashMap;
 
-public enum Food implements Ingredient {
+public enum Food implements Ingredient, Sellable {
     FriedEgg(50, 35),
     BakedFish(75, 100),
     Salad(113, 110),

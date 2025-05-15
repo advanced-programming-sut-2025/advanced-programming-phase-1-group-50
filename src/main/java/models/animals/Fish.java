@@ -1,8 +1,11 @@
 package models.animals;
 
 import models.manuFactor.Ingredient;
+import models.stores.Sellable;
 
-public class Fish implements Ingredient {
+import java.util.Objects;
+
+public class Fish implements Ingredient, Sellable {
     private final FishType type;
     private final int sellPrice;
     private final Quality quality;
@@ -30,5 +33,17 @@ public class Fish implements Ingredient {
         return "Fish -> " +
                 "type: " + type +
                 ", quality: " + quality;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Fish fish = (Fish) o;
+        return type == fish.type && quality == fish.quality;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, quality);
     }
 }
