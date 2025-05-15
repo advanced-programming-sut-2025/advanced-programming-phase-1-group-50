@@ -1,11 +1,17 @@
 package controller.PlayersRealtionController;
 
+import models.Notification;
 import models.Result;
 import models.app.App;
+import models.userInfo.DialoguesBetweenPlayers;
 import models.userInfo.Player;
+import models.userInfo.RelationNetwork;
+import models.userInfo.RelationWithPlayers;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.regex.Matcher;
 
 public class PlayersRelationController {
 
@@ -30,6 +36,38 @@ public class PlayersRelationController {
 
     }
 
+    public Result TalkToPlayer(Matcher matcher) {
+
+        Player receiver = null;
+
+        for (Player p : App.getGame().getPlayers()) {
+            if (p.getUsername().equals(matcher.group("username"))) {
+                receiver = p;
+                break;
+            }
+        }
+
+        if (receiver == null) {
+            return new Result(false, "Player not found");
+        }
+
+        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(receiver);
+        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
+
+        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+        if (!tempRelation.isHaveTalkedToday()) {
+            tempRelation.changeXp(20);
+        }
+
+        tempRelation.addDialogue(new DialoguesBetweenPlayers(App.getGame().getCurrentPlayingPlayer(),receiver, matcher.group("message")));
+        tempNetwork.relationNetwork.put(lookUpKey,tempRelation);
+        receiver.addNotification(new Notification(matcher.group("message")));
+
+        return new Result(true, "");
+    }
+
 
 }
-}
+

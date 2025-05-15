@@ -236,7 +236,7 @@ public class GameMenu implements AppMenu {
         } else if (GameMenuCommands.FriendShips.getMatcher(input) != null) {
             System.out.println(relationController.friendships());
         } else if ((matcher = GameMenuCommands.TalkToPlayer.getMatcher(input)) != null) {
-            
+            System.out.println(relationController.TalkToPlayer(matcher));
         } else if ((matcher = GameMenuCommands.TalkHistory.getMatcher(input)) != null) {
 
         } else if ((matcher = GameMenuCommands.GiftToPLayer.getMatcher(input)) != null) {
