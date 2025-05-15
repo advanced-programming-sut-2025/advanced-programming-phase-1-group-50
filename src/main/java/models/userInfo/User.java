@@ -15,8 +15,8 @@ public class User {
 
     public User(String username, String password, String nickname, String email, Gender gender , SecurityQuestion securityQuestion) {
         PasswordUtil passwordUtil = new PasswordUtil();
-        this.username = passwordUtil.hashPassword(username);
-        this.password = password;
+        this.username = username;
+        this.password = passwordUtil.hashPassword(password);
         this.nickname = nickname;
         this.email = email;
         this.gender = gender;

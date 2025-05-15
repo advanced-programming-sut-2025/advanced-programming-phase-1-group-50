@@ -214,6 +214,16 @@ public class GameMenu implements AppMenu {
             System.out.println(controller.useGreenHouseForHarvesting());
         } else if (GameMenuCommands.StoreMenu.getMatcher(input) != null) {
             System.out.println(controller.storeMenu());
+        } else if ((matcher = NPCsCommands.MeetNPC.getMatcher(input)) != null) {
+            System.out.println(npcController.meetNPC(matcher));
+        } else if ((matcher = NPCsCommands.GiftToNPC.getMatcher(input)) != null) {
+            System.out.println(npcController.giftToNPC(matcher));
+        } else if (NPCsCommands.FriendShipNPCList.getMatcher(input) != null) {
+            System.out.println(npcController.friendShipNPCList());
+        } else if (NPCsCommands.QuestsList.getMatcher(input) != null) {
+            System.out.println(npcController.questsList());
+        } else if ((matcher = NPCsCommands.FinishingQuest.getMatcher(input)) != null) {
+            System.out.println(npcController.finishingQuest(matcher));
         } else if (models.enums.GameMenuCommands.NewGame.getMatcher(input) != null) {
             ArrayList<Player> players = new ArrayList<>();
             Player currentPlayer = new Player(App.getLoggedInUser().getUsername(),
@@ -259,16 +269,6 @@ public class GameMenu implements AppMenu {
                 System.out.println(controller.createNewGame(players));
 
             }
-        } else if ((matcher = NPCsCommands.MeetNPC.getMatcher(input)) != null) {
-            System.out.println(npcController.meetNPC(matcher));
-        } else if ((matcher = NPCsCommands.GiftToNPC.getMatcher(input)) != null) {
-            System.out.println(npcController.giftToNPC(matcher));
-        } else if (NPCsCommands.FriendShipNPCList.getMatcher(input) != null) {
-            System.out.println(npcController.friendShipNPCList());
-        } else if (NPCsCommands.QuestsList.getMatcher(input) != null) {
-            System.out.println(npcController.questsList());
-        } else if ((matcher = NPCsCommands.FinishingQuest.getMatcher(input)) != null) {
-            System.out.println(npcController.finishingQuest(matcher));
         } else {
             System.out.println("invalid command");
         }
