@@ -34,6 +34,8 @@ public enum GameMenuCommands implements Command {
     UseGreenHouseForHarvesting("use\\s+greenhouse\\s+for\\s+harvesting\\s*"),
     AddPlantToGreenHouse("\\s*add\\s+plant\\s+to\\s+greenhouse\\s*"),
     StoreMenu("\\s*store\\s+menu\\s*"),
+    PrintMapWithSize("\\s*print\\s+map\\s+-x\\s+(?<X>\\d+)\\s+-y\\s+(?<Y>\\d+)\\s+-size\\s+(?<size>\\d+)\\s*"),
+
 
     // cheat codes :
     AdvancedTimeCheatCode("\\s*advanced\\s+time\\s+(?<advancedTime>-?\\d+)\\s*"),

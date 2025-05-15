@@ -1,5 +1,6 @@
 package models.stores;
 
+import models.ColorPrinter;
 import models.Result;
 import models.app.App;
 import models.cooking.Food;
@@ -11,7 +12,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class JojaMart extends Store {
-
+    private final String colorCode = ColorPrinter.ORANGE;
     private ArrayList<ShopItem> inventory;
 
     public JojaMart(int x, int y, int width, int height) {
@@ -155,6 +156,11 @@ public class JojaMart extends Store {
     @Override
     public char getSymbol() {
         return 'J';
+    }
+
+    @Override
+    public String getColor(){
+        return colorCode;
     }
 
 }

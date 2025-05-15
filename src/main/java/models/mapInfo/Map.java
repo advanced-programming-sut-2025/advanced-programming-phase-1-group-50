@@ -145,20 +145,6 @@ public class Map {
         return npcHomes;
     }
 
-    // this method is only for debug!!!
-    public void printMap() {
-        for (int y = 0; y < 200; y++) {
-            for (int x = 0; x < 250; x++) {
-                if (findTile(x, y).equals(findTile(App.getGame().getCurrentPlayingPlayer().getPosition()))) {
-                    System.out.print('p');
-                } else {
-                    System.out.print(tiles[x][y].getSymbol());
-                }
-            }
-            System.out.println();
-        }
-    }
-
 
     public void setBorderFarmsAndNpcVillage() {
 
@@ -288,12 +274,12 @@ public class Map {
         return shippingBins;
     }
 
-    public boolean addShippingBin(int x , int y) {
-        if (! (tiles[x][y].getPlaceable() == null)) {
+    public boolean addShippingBin(int x, int y) {
+        if (!(tiles[x][y].getPlaceable() == null)) {
             return false;
         }
 
-        ShippingBin temp = new ShippingBin(x,y);
+        ShippingBin temp = new ShippingBin(x, y);
 
         this.shippingBins.add(temp);
         tiles[x][y].setPlaceable(temp);

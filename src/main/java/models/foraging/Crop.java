@@ -1,5 +1,6 @@
 package models.foraging;
 
+import models.ColorPrinter;
 import models.Placeable;
 import models.app.App;
 import models.date.Time;
@@ -11,6 +12,7 @@ import java.awt.*;
 import java.util.Objects;
 
 public class Crop implements Ingredient, Growable , Placeable {
+    private final String colorCode = ColorPrinter.BRIGHT_GREEN;
     private final CropType type;
     private int levelOfGrowth;
     private Time lastGrowthTime;
@@ -155,5 +157,10 @@ public class Crop implements Ingredient, Growable , Placeable {
     @Override
     public int hashCode() {
         return Objects.hashCode(type);
+    }
+
+    @Override
+    public String getColor(){
+        return colorCode;
     }
 }

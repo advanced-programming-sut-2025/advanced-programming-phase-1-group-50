@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 
 import controller.GameDateAndWeatherController.DateController;
+import models.ColorPrinter;
 import models.Result;
 import models.app.*;
 import models.manuFactor.Ingredient;
@@ -313,7 +314,7 @@ public class GameMenuController {
             }
 
             int energy = calculateEnergyBasedOnShortestDistance(path);
-            p.setConsumedEnergyInTurn(energy);
+            p.consumeEnergy(energy);
             if (!p.isFaintedToday()) {
                 p.getPosition().setX(cottageX);
                 p.getPosition().setY(cottageY);
@@ -386,5 +387,48 @@ public class GameMenuController {
             return new Result(false, "you must be near a store");
 
         }
+    }
+    public Result printMapAll(){
+        StringBuilder sb = new StringBuilder();
+        Map map = App.getGame().getMap();
+        for (int y = 0; y < 200; y++) {
+            for (int x = 0; x < 250; x++) {
+                Tile tile = map.findTile(x, y);
+                if (tile.equals(map.findTile(App.getGame().getCurrentPlayingPlayer().getPosition()))) {
+                    sb.append('p');
+                } else {
+                    if(tile.getPlaceable()!=null){
+                        sb.append(tile.getPlaceable().getColor()).append(tile.getSymbol()).append(ColorPrinter.RESET);
+                    }
+                    else{
+                        sb.append(tile.getSymbol());
+                    }
+                }
+            }
+            sb.append("\n");
+        }
+        return new Result(true, sb.toString());
+    }
+    public Result printMap(int x , int y , int size){
+        StringBuilder sb = new StringBuilder();
+        Map map = App.getGame().getMap();
+        for (int i = y; i< y+size; i++) {
+            for (int j = x; j < x + size; j++) {
+                Tile tile = map.findTile(j ,i);
+                if (tile.equals(map.findTile(App.getGame().getCurrentPlayingPlayer().getPosition()))) {
+                    sb.append('p');
+                } else {
+                    if(tile.getPlaceable()!=null){
+                        sb.append(tile.getPlaceable().getColor()).append(tile.getSymbol()).append(ColorPrinter.RESET);
+                    }
+                    else{
+                        sb.append(tile.getSymbol());
+                    }
+                }
+            }
+            sb.append("\n");
+        }
+        return new Result(true, sb.toString());
+
     }
 }

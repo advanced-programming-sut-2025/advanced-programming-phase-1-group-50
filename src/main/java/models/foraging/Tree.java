@@ -1,5 +1,6 @@
 package models.foraging;
 
+import models.ColorPrinter;
 import models.Placeable;
 import models.app.App;
 import models.date.Time;
@@ -8,6 +9,7 @@ import models.date.Weather;
 import java.awt.*;
 
 public class Tree implements Growable, Placeable {
+    private final String colorCode = ColorPrinter.GREEN;
     private final TreeType type;
     private int levelOfGrowth;
     private Time lastGrowthTime;
@@ -130,6 +132,11 @@ public class Tree implements Growable, Placeable {
 
     public String getName() {
         return type.name();
+    }
+
+    @Override
+    public String getColor(){
+        return colorCode;
     }
 
 }

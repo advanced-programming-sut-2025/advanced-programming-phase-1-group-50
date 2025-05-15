@@ -1,5 +1,6 @@
 package models.stores;
 
+import models.ColorPrinter;
 import models.Result;
 import models.app.App;
 import models.cooking.Food;
@@ -12,7 +13,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class StardropSaloon extends Store {
-
+    private final String colorCode= ColorPrinter.PURPLE;
     private ArrayList<ShopItem> inventory;
 
     public StardropSaloon(int x, int y, int width, int height) {
@@ -123,7 +124,12 @@ public class StardropSaloon extends Store {
 
     @Override
     public char getSymbol() {
-        return '☕';
+        return '0';
+    }
+
+    @Override
+    public String getColor(){
+        return colorCode;
     }
 
 }

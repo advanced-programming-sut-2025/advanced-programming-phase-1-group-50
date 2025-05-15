@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.HashMap;
 
 public class ShippingBin implements Placeable{
-
+    private final String colorCode = ColorPrinter.BRIGHT_BLUE;
     private HashMap<Player,Integer> dailyRevenue;
     private final char symbol = 'ø';
     private final Rectangle bounds;
@@ -48,5 +48,10 @@ public class ShippingBin implements Placeable{
 
     public void increaseRevenue(Player player,int revenue) {
         dailyRevenue.put(player,dailyRevenue.get(player) + revenue);
+    }
+
+    @Override
+    public String getColor(){
+        return colorCode;
     }
 }

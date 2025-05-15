@@ -1,5 +1,6 @@
 package models.stores;
 
+import models.ColorPrinter;
 import models.Result;
 import models.app.App;
 import models.cooking.Food;
@@ -12,7 +13,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class FishShop extends Store {
-
+    private final String colorCode = ColorPrinter.BRIGHT_BLUE;
     private ArrayList<ShopItem> inventory;
 
     public FishShop(int x, int y, int width, int height) {
@@ -117,6 +118,11 @@ public class FishShop extends Store {
     @Override
     public char getSymbol() {
         return '≈';
+    }
+
+    @Override
+    public String getColor(){
+        return colorCode;
     }
 
 

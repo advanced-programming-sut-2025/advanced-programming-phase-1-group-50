@@ -1,6 +1,7 @@
 package models.stores;
 
 import models.Bouquet;
+import models.ColorPrinter;
 import models.Result;
 import models.app.App;
 import models.date.Season;
@@ -17,7 +18,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class PierreGeneralStore extends Store {
-
+    private final String colorCode = ColorPrinter.BRIGHT_RED;
     private ArrayList<ShopItem> inventory;
 
     public PierreGeneralStore(int x, int y, int width, int height) {
@@ -240,6 +241,11 @@ public class PierreGeneralStore extends Store {
     @Override
     public char getSymbol() {
         return '⚙';
+    }
+
+    @Override
+    public String getColor(){
+        return colorCode;
     }
 
 }

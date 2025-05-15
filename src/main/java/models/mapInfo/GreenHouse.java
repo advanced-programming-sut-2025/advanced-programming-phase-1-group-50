@@ -1,5 +1,6 @@
 package models.mapInfo;
 
+import models.ColorPrinter;
 import models.Placeable;
 import models.app.App;
 import models.foraging.Crop;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GreenHouse implements Placeable {
+    private final String colorCode = ColorPrinter.BRIGHT_YELLOW;
     private boolean isBroken;
     private final Rectangle bounds;
     private ArrayList<Growable> growables = new ArrayList<>();
@@ -68,5 +70,11 @@ public class GreenHouse implements Placeable {
                 }
             }
         }
+    }
+
+
+    @Override
+    public String getColor(){
+        return colorCode;
     }
 }

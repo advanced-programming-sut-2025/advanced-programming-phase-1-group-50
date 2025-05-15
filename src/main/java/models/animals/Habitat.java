@@ -1,11 +1,13 @@
 package models.animals;
 
+import models.ColorPrinter;
 import models.Placeable;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Habitat implements Placeable {
+    private final  String colorCode = ColorPrinter.BRIGHT_RED;
     private final HabitatType type;
     private final HabitatSize size;
     private final ArrayList<Animal> animals;
@@ -91,5 +93,10 @@ public class Habitat implements Placeable {
             return 'b';
         }
         return 'c';
+    }
+
+    @Override
+    public String getColor(){
+        return colorCode;
     }
 }

@@ -1,5 +1,6 @@
 package models.stores;
 
+import models.ColorPrinter;
 import models.Result;
 import models.animals.AnimalType;
 import models.app.App;
@@ -11,7 +12,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class MarnieRanch extends Store {
-
+    private final String colorCode = ColorPrinter.PINK;
     private ArrayList<ShopItem> inventory;
 
     public MarnieRanch(int x, int y, int width, int height) {
@@ -149,6 +150,11 @@ public class MarnieRanch extends Store {
         for (ShopItem item : inventory) {
             item.resetQuantityEveryNight();
         }
+    }
+
+    @Override
+    public String getColor(){
+        return colorCode;
     }
 
 }

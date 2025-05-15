@@ -96,7 +96,7 @@ public class GameMenu implements AppMenu {
         } else if (GameMenuCommands.ExitMenu.getMatcher(input) != null) {
             App.setMenu(Menus.MainMenu);
         } else if (GameMenuCommands.PrintMap.getMatcher(input) != null) {
-            App.getGame().getMap().printMap();
+            System.out.println(controller.printMapAll());
         } else if (GameMenuCommands.Walk.getMatcher(input) != null) {
             matcher = models.enums.GameMenuCommands.Walk.getMatcher(input);
             int x = Integer.parseInt(matcher.group(1));
@@ -224,6 +224,11 @@ public class GameMenu implements AppMenu {
             System.out.println(npcController.questsList());
         } else if ((matcher = NPCsCommands.FinishingQuest.getMatcher(input)) != null) {
             System.out.println(npcController.finishingQuest(matcher));
+        } else if((matcher = GameMenuCommands.PrintMapWithSize.getMatcher(input)) !=null) {
+            int startX = Integer.parseInt(matcher.group("X"));
+            int startY = Integer.parseInt(matcher.group("Y"));
+            int sizeX = Integer.parseInt(matcher.group("size"));
+            System.out.println(controller.printMap(startX, startY, sizeX));
         } else if (models.enums.GameMenuCommands.NewGame.getMatcher(input) != null) {
             ArrayList<Player> players = new ArrayList<>();
             Player currentPlayer = new Player(App.getLoggedInUser().getUsername(),

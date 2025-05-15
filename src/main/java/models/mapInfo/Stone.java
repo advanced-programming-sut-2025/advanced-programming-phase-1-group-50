@@ -1,11 +1,13 @@
 package models.mapInfo;
 
+import models.ColorPrinter;
 import models.Placeable;
 import models.manuFactor.Ingredient;
 
 import java.awt.*;
 
 public class Stone implements Ingredient , Placeable {
+    private final String colorCode = ColorPrinter.GRAY;
     private Rectangle bounds;
 
     public Stone() {
@@ -32,5 +34,10 @@ public class Stone implements Ingredient , Placeable {
     @Override
     public boolean equals(Object obj) {
         return obj instanceof Stone;
+    }
+
+    @Override
+    public String getColor(){
+        return colorCode;
     }
 }

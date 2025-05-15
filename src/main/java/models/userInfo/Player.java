@@ -50,6 +50,7 @@ public class Player {
         for(Tool tool : backpack.getTools()) {
             if(tool instanceof Hoe) {
                 this.currentTool = tool;
+                break;
             }
         }
         this.backpack.getIngredientQuantity().put(new Coin() , 20);
@@ -228,8 +229,8 @@ public class Player {
     }
     public void setPlayerPositionInCottage(){
 
-        //TODO : walk for going home
+
     }
-    //  TODO : dar method set kardan hame chi baraye farda , bayad yademoon bashe ke isFaintToday hame false beshe , ooni ke true boode hatman bayad energy roozanash beshe 150 az 200;
+
 
 }
