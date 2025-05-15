@@ -55,4 +55,8 @@ public class BetweenPlayersGift {
     public String toString() {
         return "id:" + id + "   sender:" +  sender.getUsername() + "    rate:" + rate + "   " + ingredient.toString();
     }
+
+    public String toStringWithReceiver() {
+        return "id:" + id + "   sender:" +  sender.getUsername() + "    receiver:" + receiver.getUsername() + "    rate:" + rate + "   " + ingredient.toString();
+    }
 }

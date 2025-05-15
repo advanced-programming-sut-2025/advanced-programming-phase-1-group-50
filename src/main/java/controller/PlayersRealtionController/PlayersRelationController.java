@@ -147,6 +147,20 @@ public class PlayersRelationController {
         return new Result(true, "you rated this gift successfully");
     }
 
+    public Result GiftHistory(Matcher matcher) {
+
+        StringBuilder message = new StringBuilder("GiftHistory:");
+
+        for (BetweenPlayersGift gift : App.getGame().getGifts()) {
+            if (gift.getReceiver().equals(App.getGame().getCurrentPlayingPlayer()) || gift.getSender().equals(App.getGame().getCurrentPlayingPlayer())) {
+                message.append("\n");
+                message.append(gift.toStringWithReceiver());
+            }
+        }
+
+        return new Result(true, message.toString());
+    }
+
 
 }
 
