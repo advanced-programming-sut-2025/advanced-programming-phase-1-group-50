@@ -181,6 +181,19 @@ public class RelationWithPlayers {
         this.dialogues.add(dialogue);
     }
 
+    public boolean canHug() {
+        if (this.friendshipLevel.equals(FriendshipLevelsWithPlayers.LevelTwo)) {
+            return true;
+        }
+        if (this.friendshipLevel.equals(FriendshipLevelsWithPlayers.LevelThree)) {
+            return true;
+        }
+        if (this.friendshipLevel.equals(FriendshipLevelsWithPlayers.LevelFour)) {
+            return true;
+        }
+        return false;
+    }
+
     public String getTalkHistory() {
 
         StringBuilder talkHistory = new StringBuilder();

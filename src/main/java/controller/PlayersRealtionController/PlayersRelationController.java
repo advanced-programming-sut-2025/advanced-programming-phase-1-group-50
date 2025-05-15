@@ -170,7 +170,45 @@ public class PlayersRelationController {
         return new Result(true, message.toString());
     }
 
+    public Result hug(Matcher matcher) {
+        Player temp = null;
 
+        for (Player p : App.getGame().getPlayers()) {
+            if (p.getUsername().equals(matcher.group("username"))) {
+                temp = p;
+                break;
+            }
+        }
+
+        if (temp == null) {
+            return new Result(false, "Player not found");
+        }
+
+        int distanceSquare = (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX());
+        distanceSquare += (int)Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
+
+        if (distanceSquare > 2) {
+            return new Result(false, "You are too far away");
+        }
+
+        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
+        lookUpKey.add(temp);
+
+        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+
+        if (tempRelation.canHug()) {
+            if (!tempRelation.isHaveHuggedToday()) {
+                tempRelation.setHaveHuggedToday(true);
+                tempRelation.changeXp(60);
+            }
+            return new Result(true, "masadigh mohtavaye mojremane");
+        }
+
+        return new Result(false, "your friendship level must be at least two");
+        
+    }
 
 }
 
