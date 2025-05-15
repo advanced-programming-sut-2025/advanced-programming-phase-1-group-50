@@ -401,7 +401,7 @@ public class GameMenuController {
                         sb.append(tile.getPlaceable().getColor()).append(tile.getSymbol()).append(ColorPrinter.RESET);
                     }
                     else{
-                        sb.append(tile.getSymbol());
+                        sb.append(ColorPrinter.BRIGHT_WHITE).append(tile.getSymbol()).append(ColorPrinter.RESET);
                     }
                 }
             }
@@ -422,7 +422,7 @@ public class GameMenuController {
                         sb.append(tile.getPlaceable().getColor()).append(tile.getSymbol()).append(ColorPrinter.RESET);
                     }
                     else{
-                        sb.append(tile.getSymbol());
+                        sb.append(ColorPrinter.BRIGHT_WHITE).append(tile.getSymbol()).append(ColorPrinter.RESET);
                     }
                 }
             }

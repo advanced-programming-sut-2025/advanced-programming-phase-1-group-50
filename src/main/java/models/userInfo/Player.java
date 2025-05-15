@@ -15,7 +15,6 @@ import models.app.*;
 
 public class Player {
     private final int maxEnergy = 200;
-    //final
     private int energy = maxEnergy;
     private int consumedEnergyInTurn = 0;
     private  final String username;
