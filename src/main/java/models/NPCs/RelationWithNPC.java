@@ -13,6 +13,7 @@ public class RelationWithNPC {
     public RelationWithNPC(NPCType type) {
         this.type = type;
         this.npcFriendshipLevel = NPCFriendshipLevel.LevelZero;
+        this.numericalFriendShipLevel = 0;
     }
 
     public NPCFriendshipLevel getNpcFriendshipLevel() {
@@ -99,6 +100,10 @@ public class RelationWithNPC {
         if (!this.isSecondQuestLocked) {
             this.numOfDaysAfterUnlockingSecondQuest++;
         }
+    }
+
+    public int getNumericalFriendShipLevel() {
+        return numericalFriendShipLevel;
     }
 
     public void checkUnlockingThirdQuest() {

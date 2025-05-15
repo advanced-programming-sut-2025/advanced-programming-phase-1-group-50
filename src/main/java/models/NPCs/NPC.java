@@ -307,7 +307,7 @@ public class NPC {
 
     public String showQuestLists () {
 
-        String message = "Quests List:\n";
+        String message = "Quests List";
         RelationWithNPC relation = null;
         ArrayList<String> quests = new ArrayList<>();
 
@@ -341,6 +341,8 @@ public class NPC {
         if (relation == null) {
             return message;
         }
+
+        message += "(" + relation.getType().getName() + "):\n";
 
         message += quests.get(0);
 

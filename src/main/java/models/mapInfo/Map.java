@@ -56,11 +56,13 @@ public class Map {
                 tiles[i][j] = new Tile(new Position(i, j));
             }
         }
+
         farms.clear();
         for (Player player : players) {
             player.getFarm().setTilesSymbol(tiles);
             farms.add(player.getFarm());
         }
+
         this.npcVillage = new NpcVillage(new Rectangle(100, 75, 49, 49),
                 new Blacksmith(102, 77, 3, 3),
                 new CarpenterShop(106, 81, 3, 3),
