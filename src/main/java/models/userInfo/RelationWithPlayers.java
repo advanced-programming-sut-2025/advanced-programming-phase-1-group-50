@@ -55,7 +55,7 @@ public class RelationWithPlayers {
         this.haveGaveFlowerToday = haveGaveFlowerToday;
     }
 
-    public void checkXp() {
+    private void checkXp() {
 
         if (this.xp < 0) {
             this.xp = 0;

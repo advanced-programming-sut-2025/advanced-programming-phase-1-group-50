@@ -144,6 +144,15 @@ public class PlayersRelationController {
         tempGift.setRate(rate);
         tempGift.setRated();
 
+        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(tempGift.getReceiver());
+        lookUpKey.add(tempGift.getSender());
+
+        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+        tempRelation.changeXp((rate-3)*30 + 15);
+        tempNetwork.relationNetwork.put(lookUpKey,tempRelation);
+
         return new Result(true, "you rated this gift successfully");
     }
 
@@ -160,6 +169,7 @@ public class PlayersRelationController {
 
         return new Result(true, message.toString());
     }
+
 
 
 }
