@@ -19,17 +19,18 @@ public class ForagingController {
         if (crop == null)
             return new Result(false, "Craft <" + craftName + "> not found");
 
-        String output = String.format("Name: %s\n", crop.getName()) +
-                String.format("Source: %s\n", crop.getSource()) +
-                String.format("Stages: %s\n", crop.getStages()) +
-                String.format("Total Harvest Time: %d\n", crop.getTotalHarvestTime()) +
-                String.format("One Time: %s\n", crop.isOneTime()) +
-                String.format("Regrowth Time: %d\n", crop.getRegrowthTime()) +
-                String.format("Base Sell Price: %d\n", crop.getBaseSellPrice()) +
-                String.format("Is Edible: %s\n", crop.isEdible()) +
-                String.format("Base Energy: %d\n", crop.getEnergy()) +
-                String.format("Season: %s\n", crop.getSeasons()) +
-                String.format("Can Become Giant: %s", crop.CanBecomeGiant());
+        String output =
+                String.format("Name:             %s\n", crop.getName()) +
+                String.format("Source:           %s\n", crop.getSource()) +
+                String.format("Stages:           %s\n", crop.getStages()) +
+                String.format("TotalHarvestTime: %d\n", crop.getTotalHarvestTime()) +
+                String.format("One Time:         %s\n", crop.isOneTime()) +
+                String.format("Regrowth Time:    %d\n", crop.getRegrowthTime()) +
+                String.format("Base Sell Price:  %d\n", crop.getBaseSellPrice()) +
+                String.format("Is Edible:        %s\n", crop.isEdible()) +
+                String.format("Base Energy:      %d\n", crop.getEnergy()) +
+                String.format("Season:           %s\n", crop.getSeasons()) +
+                String.format("Can Become Giant: %s\n", crop.CanBecomeGiant());
 
         return new Result(true, output);
     }
@@ -43,16 +44,17 @@ public class ForagingController {
 
         if (tree == null)
             return new Result(false, "Tree <" + treeName + "> not found");
-        String output = String.format("Name: %s\n", tree.getName()) +
-                String.format("Source: %s\n", tree.getSource()) +
-                String.format("Stages: %s\n", tree.getStages()) +
+        String output =
+                String.format("Name:               %s\n", tree.getName()) +
+                String.format("Source:             %s\n", tree.getSource()) +
+                String.format("Stages:             %s\n", tree.getStages()) +
                 String.format("Total Harvest Time: %d\n", tree.getTotalHarvestTime()) +
-                String.format("Fruit: %s\n", tree.getFruit()) +
-                String.format("HarvestCycle: %d\n", tree.getHarvestCycle()) +
+                String.format("Fruit:              %s\n", tree.getFruit()) +
+                String.format("HarvestCycle:       %d\n", tree.getHarvestCycle()) +
                 String.format("FruitBaseSellPrice: %d\n", tree.getFruitBaseSellPrice()) +
-                String.format("IsFruitEdible: %s\n", tree.isFruitEdible()) +
-                String.format("FruitEnergy: %d\n", tree.getFruitEnergy()) +
-                String.format("Season: %s", tree.getSeason());
+                String.format("IsFruitEdible:      %s\n", tree.isFruitEdible()) +
+                String.format("FruitEnergy:        %d\n", tree.getFruitEnergy()) +
+                String.format("Season:             %s\n", tree.getSeason());
 
         return new Result(true, output);
     }
@@ -63,10 +65,11 @@ public class ForagingController {
         if (foragingCrop == null)
             return new Result(false, "Foraging <" + cropName + "> not found");
 
-        String output = String.format("Name: %s\n", foragingCrop.getName()) +
-                String.format("Season: %s\n", foragingCrop.getSeason()) +
+        String output =
+                String.format("Name:          %s\n", foragingCrop.getName()) +
+                String.format("Season:        %s\n", foragingCrop.getSeason()) +
                 String.format("BaseSellPrice: %d\n", foragingCrop.getBaseSellPrice()) +
-                String.format("Energy: %d", foragingCrop.getEnergy());
+                String.format("Energy:        %d\n", foragingCrop.getEnergy());
 
         return new Result(true, output);
     }
@@ -77,8 +80,9 @@ public class ForagingController {
         if (foragingTreeSource == null)
             return new Result(false, "Foraging <" + treeName + "> not found");
 
-        String output = String.format("Name: %s\n", foragingTreeSource.getName()) +
-                String.format("Season: %s", foragingTreeSource.getSeason());
+        String output =
+                String.format("Name:   %s\n", foragingTreeSource.getName()) +
+                String.format("Season: %s\n", foragingTreeSource.getSeason());
 
         return new Result(true, output);
     }
@@ -252,11 +256,11 @@ public class ForagingController {
             plant = ((Growable) content);
 
         return new Result(true,
-                String.format("Name: %s\n", plant.getName()) +
-                        String.format("Days to complete: %d\n", plant.getNumberOfDaysToComplete()) +
-                        String.format("Current stage: %d\n", plant.getCurrentStage()) +
-                        String.format("Has watered Today: %s\n", plant.hasWateredToday()) +
-                        String.format("Has Fertilized: %s\n", plant.hasFertilized()) +
-                        String.format("Fertilizer: %s", plant.getFertilizer()));
+                        String.format("Name:              %s\n", plant.getName()) +
+                        String.format("Days to complete:  %d\n", plant.getNumberOfDaysToComplete()) +
+                        String.format("Current stage:     %d\n", plant.getCurrentStage()) +
+                        String.format("Has Watered Today: %s\n", plant.hasWateredToday()) +
+                        String.format("Has Fertilized:    %s\n", plant.hasFertilized()) +
+                        String.format("Fertilizer:        %s", plant.getFertilizer()));
     }
 }
