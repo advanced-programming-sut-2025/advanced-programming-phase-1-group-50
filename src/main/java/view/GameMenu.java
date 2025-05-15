@@ -238,11 +238,11 @@ public class GameMenu implements AppMenu {
         } else if ((matcher = GameMenuCommands.TalkToPlayer.getMatcher(input)) != null) {
             System.out.println(relationController.TalkToPlayer(matcher));
         } else if ((matcher = GameMenuCommands.TalkHistory.getMatcher(input)) != null) {
-
+            System.out.println(relationController.talkHistory(matcher));
         } else if ((matcher = GameMenuCommands.GiftToPLayer.getMatcher(input)) != null) {
-
+            //TODO
         } else if (GameMenuCommands.GiftList.getMatcher(input) != null) {
-
+            System.out.println(relationController.GiftList());
         } else if ((matcher = GameMenuCommands.GiftRate.getMatcher(input)) != null) {
 
         } else if ((matcher = GameMenuCommands.GiftHistory.getMatcher(input)) != null) {

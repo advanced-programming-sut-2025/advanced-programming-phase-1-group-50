@@ -40,4 +40,9 @@ public class BetweenPlayersGift {
     public void setRate(int rate) {
         this.rate = rate;
     }
+
+    @Override
+    public String toString() {
+        return "id:" + id + "   sender:" +  sender.getUsername() + "    " + ingredient.toString();
+    }
 }

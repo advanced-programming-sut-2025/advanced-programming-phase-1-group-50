@@ -1,5 +1,6 @@
 package controller.PlayersRealtionController;
 
+import models.BetweenPlayersGift;
 import models.Notification;
 import models.Result;
 import models.app.App;
@@ -67,6 +68,51 @@ public class PlayersRelationController {
 
         return new Result(true, "");
     }
+
+    public Result talkHistory(Matcher matcher) {
+
+        Player temp = null;
+
+        for (Player p : App.getGame().getPlayers()) {
+            if (p.getUsername().equals(matcher.group("username"))) {
+                temp = p;
+                break;
+            }
+        }
+
+        if (temp == null) {
+            return new Result(false, "Player not found");
+        }
+
+        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(temp);
+        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
+        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+
+        String message = "Talking History:";
+        message += tempRelation.getTalkHistory();
+
+        return new Result(true, message);
+
+    }
+
+    public Result GiftList() {
+
+
+        StringBuilder message = new StringBuilder("GiftList:");
+
+        for (BetweenPlayersGift gift : App.getGame().getGifts()) {
+            if (gift.getReceiver().equals(App.getGame().getCurrentPlayingPlayer())) {
+                message.append("\n");
+                message.append(gift);
+            }
+
+        }
+        return new Result(true, message.toString());
+    }
+
+
 
 
 }
