@@ -49,7 +49,7 @@ public class PreservesJar extends ArtisanMachine {
                     player.getBackpack().removeIngredients(ingredient, 1);
                     producingGood = new ArtisanGood(ArtisanGoodType.Jelly,
                             2 * fruit.getEnergy(),
-                            2 * fruit.getBaseSellPrice());
+                            2 * fruit.getSellPrice());
                     return new Result(true, "Your product is being made.Please wait.");
                 }
             }

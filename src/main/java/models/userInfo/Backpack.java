@@ -133,7 +133,7 @@ public class Backpack {
         else if(ingredient instanceof Crop c)
             refund = c.getSellPrice() * quantity * returnPercentage / 100;
         else if(ingredient instanceof Fruit fr)
-            refund = fr.getBaseSellPrice() * quantity * returnPercentage / 100;
+            refund = fr.getSellPrice() * quantity * returnPercentage / 100;
         else if(ingredient instanceof Food fd)
             refund = fd.getSellPrice() * quantity * returnPercentage / 100;
         else if(ingredient instanceof ForagingMineral fm)

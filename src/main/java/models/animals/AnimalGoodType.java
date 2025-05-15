@@ -2,6 +2,8 @@ package models.animals;
 
 import models.manuFactor.Ingredient;
 
+import java.util.HashMap;
+
 public enum AnimalGoodType implements Ingredient {
     Egg(50),
     LargeEgg(95),
@@ -17,6 +19,13 @@ public enum AnimalGoodType implements Ingredient {
     Truffle(625);
 
     private final int price;
+    private static final HashMap<String, AnimalGoodType> stringToAnimalGoodType = new HashMap<>();
+
+    static {
+        for (AnimalGoodType value : AnimalGoodType.values()) {
+            stringToAnimalGoodType.put(value.name().toLowerCase(), value);
+        }
+    }
 
     AnimalGoodType(int price) {
         this.price = price;
@@ -24,5 +33,9 @@ public enum AnimalGoodType implements Ingredient {
 
     public int getPrice() {
         return price;
+    }
+
+    public static AnimalGoodType getAnimalGoodTypeByName(String name) {
+        return stringToAnimalGoodType.getOrDefault(name.toLowerCase(), null);
     }
 }

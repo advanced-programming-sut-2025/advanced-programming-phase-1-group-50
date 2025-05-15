@@ -7,11 +7,12 @@ import models.date.Time;
 import models.date.Weather;
 import models.manuFactor.Ingredient;
 import models.mapInfo.Position;
+import models.stores.Sellable;
 
 import java.awt.*;
 import java.util.Objects;
 
-public class Crop implements Ingredient, Growable , Placeable {
+public class Crop implements Ingredient, Growable , Placeable, Sellable {
     private final String colorCode = ColorPrinter.BRIGHT_GREEN;
     private final CropType type;
     private int levelOfGrowth;

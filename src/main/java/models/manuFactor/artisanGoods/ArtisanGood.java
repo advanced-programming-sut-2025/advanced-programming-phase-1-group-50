@@ -1,10 +1,11 @@
 package models.manuFactor.artisanGoods;
 
 import models.manuFactor.Ingredient;
+import models.stores.Sellable;
 
 import java.util.Objects;
 
-public class ArtisanGood implements Ingredient {
+public class ArtisanGood implements Ingredient, Sellable {
     private final ArtisanGoodType type;
     private final int energy;
     private final int sellPrice;
