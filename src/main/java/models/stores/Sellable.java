@@ -93,4 +93,29 @@ public interface Sellable {
                 ArtisanGoodType.getArtisanGoodTypeByName(name) != null;
 
     }
+
+    static String getNameInString(Sellable sellable) {
+        if (sellable instanceof AnimalGood){
+            return ((AnimalGood) sellable).getType().toString();
+        }
+        if (sellable instanceof Crop){
+            return ((Crop) sellable).getType().toString();
+        }
+        if (sellable instanceof Fish){
+            return ((Fish) sellable).getType().toString();
+        }
+        if (sellable instanceof Food){
+            return sellable.toString();
+        }
+        if (sellable instanceof Fruit){
+            return sellable.toString();
+        }
+        if (sellable instanceof ForagingMineral){
+            return sellable.toString();
+        }
+        if (sellable instanceof ArtisanGood){
+            return ((ArtisanGood) sellable).getType().toString();
+        }
+        return sellable.toString();
+    }
 }
