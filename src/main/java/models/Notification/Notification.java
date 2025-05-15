@@ -1,8 +1,8 @@
-package models;
+    package models.Notification;
 
 public class Notification {
-    private final String message;
-    private boolean isChecked;
+    protected final String message;
+    protected boolean isChecked;
 
     public Notification(String message) {
         this.message = message;

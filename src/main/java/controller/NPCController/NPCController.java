@@ -166,6 +166,7 @@ public class NPCController {
 
                 if (App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().isFirstTimeGiftToNPC()) {
                     App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().increaseNumericalFriendShipLevel(50);
+                    App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().setFirstTimeGiftToNPC(false);
                 }
 
                 return new Result(true, "your gift has been received");

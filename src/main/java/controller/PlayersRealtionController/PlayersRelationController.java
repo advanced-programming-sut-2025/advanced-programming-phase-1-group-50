@@ -2,13 +2,11 @@ package controller.PlayersRealtionController;
 
 import models.BetweenPlayersGift;
 import models.Bouquet;
-import models.Notification;
+import models.Notification.MarriageRequest;
+import models.Notification.Notification;
 import models.Result;
 import models.app.App;
-import models.userInfo.DialoguesBetweenPlayers;
-import models.userInfo.Player;
-import models.userInfo.RelationNetwork;
-import models.userInfo.RelationWithPlayers;
+import models.userInfo.*;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -66,9 +64,14 @@ public class PlayersRelationController {
         lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
 
         RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-        if (!tempRelation.isHaveTalkedToday()) {
+        if (!tempRelation.HaveTalkedToday()) {
             tempRelation.changeXp(20);
             tempRelation.setHaveTalkedToday(true);
+        }
+
+        if (tempRelation.isMarriage()) {
+            App.getGame().getCurrentPlayingPlayer().addEnergy(50);
+            receiver.addEnergy(50);
         }
 
         tempRelation.addDialogue(new DialoguesBetweenPlayers(App.getGame().getCurrentPlayingPlayer(),receiver, matcher.group("message")));
@@ -208,10 +211,16 @@ public class PlayersRelationController {
         RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
 
         if (tempRelation.canHug()) {
-            if (!tempRelation.isHaveHuggedToday()) {
+            if (!tempRelation.HaveHuggedToday()) {
                 tempRelation.setHaveHuggedToday(true);
                 tempRelation.changeXp(60);
             }
+
+            if (tempRelation.isMarriage()) {
+                App.getGame().getCurrentPlayingPlayer().addEnergy(50);
+                temp.addEnergy(50);
+            }
+
             return new Result(true, "masadigh mohtavaye mojremane");
         }
 
@@ -256,10 +265,106 @@ public class PlayersRelationController {
             tempRelation.setHaveGaveFlowerToday(true);
             App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Bouquet(),1);
             temp.getBackpack().addIngredients(new Bouquet(),1);
+            if (tempRelation.isMarriage()) {
+                App.getGame().getCurrentPlayingPlayer().addEnergy(50);
+                temp.addEnergy(50);
+            }
             return new Result(true, "che romantic");
         }
 
         return new Result(false, "you can't flower this player");
+
+    }
+
+    public Result askMarriage(Matcher matcher) {
+
+        Player temp = null;
+
+        for (Player p : App.getGame().getPlayers()) {
+            if (p.getUsername().equals(matcher.group("username"))) {
+                temp = p;
+                break;
+            }
+        }
+
+        if (temp == null) {
+            return new Result(false, "Player not found");
+        }
+
+        int distanceSquare = (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX());
+        distanceSquare += (int)Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
+
+        if (distanceSquare > 2) {
+            return new Result(false, "You are too far away");
+        }
+
+        if (App.getGame().getCurrentPlayingPlayer().getCurrentUser().getGender().equals(Gender.Female) || temp.getCurrentUser().getGender().equals(Gender.Male)) {
+            return new Result(false,"Gender conflict");
+        }
+
+        if (temp.isMarried()) {
+            return new Result(false, "Married and Committed");
+        }
+
+        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
+        lookUpKey.add(temp);
+
+        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+        if (!tempRelation.canRequestMarriage()) {
+            return new Result(false, "you can't request marriage in this friendship level");
+        }
+
+        temp.addNotification(new MarriageRequest("aroos nanam mishi?", App.getGame().getCurrentPlayingPlayer()));
+
+        return new Result(true,"Marriage requested");
+
+    }
+
+    public Result respondMarriage(Matcher matcher) {
+
+        MarriageRequest temp = null;
+
+        for (Notification n : App.getGame().getCurrentPlayingPlayer().getNotifications() ) {
+
+            if (n instanceof MarriageRequest) {
+                if (!n.isChecked() && ((MarriageRequest) n).getSender().getUsername().equals(matcher.group("username"))) {
+                    temp = (MarriageRequest) n;
+                    break;
+                }
+            }
+        }
+
+        if (temp == null) {
+            return new Result(false, "No such marriage request");
+        }
+
+        temp.setChecked(true);
+        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
+        lookUpKey.add(temp.getSender());
+
+        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+
+        if (matcher.group("state").equals("accept")) {
+
+            App.getGame().getCurrentPlayingPlayer().setMarried(true);
+            temp.getSender().setMarried(true);
+
+            tempRelation.setMarriage();
+            tempRelation.setFriendshipLevel(FriendshipLevelsWithPlayers.LevelFour);
+
+            return new Result(true, "You accepted the marriage request");
+
+        } else {
+
+            tempRelation.setFriendshipLevel(FriendshipLevelsWithPlayers.LevelZero);
+
+            temp.getSender().setRemainingNumsAfterMarriageRequestDenied(7);
+            return new Result(true, "You rejected the marriage request");
+        }
 
     }
 

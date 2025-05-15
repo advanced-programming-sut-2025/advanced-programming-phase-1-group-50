@@ -15,7 +15,7 @@ public class RelationWithPlayers {
     private boolean haveGaveFlowerToday = false;
     private final ArrayList<DialoguesBetweenPlayers> dialogues = new ArrayList<>();
 
-    public boolean isHaveTradedToday() {
+    public boolean HaveTradedToday() {
         return haveTradedToday;
     }
 
@@ -23,7 +23,7 @@ public class RelationWithPlayers {
         this.haveTradedToday = haveTradedToday;
     }
 
-    public boolean isHaveTalkedToday() {
+    public boolean HaveTalkedToday() {
         return haveTalkedToday;
     }
 
@@ -31,7 +31,7 @@ public class RelationWithPlayers {
         this.haveTalkedToday = haveTalkedToday;
     }
 
-    public boolean isHaveGaveGiftToday() {
+    public boolean HaveGaveGiftToday() {
         return haveGaveGiftToday;
     }
 
@@ -39,16 +39,12 @@ public class RelationWithPlayers {
         this.haveGaveGiftToday = haveGaveGiftToday;
     }
 
-    public boolean isHaveHuggedToday() {
+    public boolean HaveHuggedToday() {
         return haveHuggedToday;
     }
 
     public void setHaveHuggedToday(boolean haveHuggedToday) {
         this.haveHuggedToday = haveHuggedToday;
-    }
-
-    public boolean isHaveGaveFlowerToday() {
-        return haveGaveFlowerToday;
     }
 
     public void setHaveGaveFlowerToday(boolean haveGaveFlowerToday) {
@@ -108,6 +104,7 @@ public class RelationWithPlayers {
     }
 
     public void setFriendshipLevel(FriendshipLevelsWithPlayers friendshipLevel) {
+        this.xp = 0;
         this.friendshipLevel = friendshipLevel;
     }
 

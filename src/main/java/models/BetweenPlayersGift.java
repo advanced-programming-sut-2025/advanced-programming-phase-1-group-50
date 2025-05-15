@@ -1,6 +1,5 @@
 package models;
 
-import models.manuFactor.Ingredient;
 import models.stores.Sellable;
 import models.userInfo.Player;
 
@@ -54,10 +53,10 @@ public class BetweenPlayersGift {
 
     @Override
     public String toString() {
-        return "id:" + id + "   sender:" +  sender.getUsername() + "    rate:" + rate + "   " + product.toString();
+        return "id:" + id + "   sender:" +  sender.getUsername() + "    rate:" + rate + "   " + Sellable.getNameInString(product);
     }
 
     public String toStringWithReceiver() {
-        return "id:" + id + "   sender:" +  sender.getUsername() + "    receiver:" + receiver.getUsername() + "    rate:" + rate + "   " + product.toString();
+        return "id:" + id + "   sender:" +  sender.getUsername() + "    receiver:" + receiver.getUsername() + "    rate:" + rate + "   " + Sellable.getNameInString(product);
     }
 }
