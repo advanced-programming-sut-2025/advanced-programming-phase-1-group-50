@@ -5,6 +5,7 @@ import models.animals.*;
 import models.app.App;
 import models.date.Season;
 import models.date.Weather;
+import models.mapInfo.Map;
 import models.mapInfo.Tile;
 import models.tools.FishingPole;
 import models.tools.MilkPail;
@@ -19,15 +20,18 @@ public class AnimalsController {
 
     public Result build(String buildingName, int x, int y) {
         Player player = App.getGame().getCurrentPlayingPlayer();
+        Map map = App.getGame().getMap();
         HabitatType habitatType = Habitat.getHabitatTypeByInput(buildingName);
         HabitatSize habitatSize = Habitat.getHabitatSizeByInput(buildingName);
 
         if (habitatType == null || habitatSize == null)
             return new Result(false, "Invalid building name or type");
+        if (!map.isAroundPlaceable(player, map.getNpcVillage().getCarpenterShop()))
+            return new Result(false, "You should be near CarpenterShop");
 
         for (int i = x; i < x + habitatType.getLengthX(); i++) {
             for (int j = y; j < y + habitatType.getLengthY(); j++) {
-                Tile tile = App.getGame().getMap().findTile(i, j);
+                Tile tile = map.findTile(i, j);
                 if (tile == null)
                     return new Result(false, "Invalid tile");
                 if (tile.getPlaceable() != null)
@@ -35,13 +39,15 @@ public class AnimalsController {
             }
         }
 
-        //TODO
+        Result storeResult = map.getNpcVillage().getCarpenterShop().purchaseBuilding(habitatType, habitatSize);
+        if (!storeResult.getSuccessful())
+            return storeResult;
 
         Habitat habitat = new Habitat(habitatType, habitatSize, x, y);
 
         for (int i = x; i < x + habitatType.getLengthX(); i++) {
             for (int j = y; j < y + habitatType.getLengthY(); j++) {
-                Tile tile = App.getGame().getMap().findTile(i, j);
+                Tile tile = map.findTile(i, j);
                 tile.setPlaceable(habitat);
                 tile.setWalkable(false);
                 tile.setSymbol(habitat.getSymbol());
@@ -49,19 +55,22 @@ public class AnimalsController {
         }
 
         player.getFarm().addHabitat(habitat);
+        player.getFarm().getPlaceables().add(habitat);
 
-        return new Result(true, "A <" + buildingName + "> was created successfully!");
+        return new Result(true, "A <" + buildingName + "> was built successfully!");
     }
 
     public Result buyAnimal(String animalT, String name) {
         Player player = App.getGame().getCurrentPlayingPlayer();
-        Animal checkAnimal = player.getBackpack().getAnimalByName(name);
+        Map map = App.getGame().getMap();
         AnimalType animalType = AnimalType.getAnimalTypeByInput(animalT);
 
-        if (checkAnimal != null)
+        if (player.getBackpack().getAnimalByName(name) != null)
             return new Result(false, "Animal with this name already exists! Please choose another name");
         if (animalType == null)
-            return new Result(false, "Invalid animalT type!");
+            return new Result(false, "Invalid animal type!");
+        if(!map.isAroundPlaceable(player, map.getNpcVillage().getMarnieRanch()))
+            return new Result(false, "You should be near Marnie Ranch Shop");
 
         Habitat habitat = null;
         for (Habitat habitat1 : player.getFarm().getHabitats()) {
@@ -73,13 +82,15 @@ public class AnimalsController {
         if (habitat == null)
             return new Result(false, "You don't have any enough capacity to buy this animalT!");
 
-        //TODO
+        Result storeResult = map.getNpcVillage().getMarnieRanch().PurchaseAnimal(animalType);
+        if (!storeResult.getSuccessful())
+            return storeResult;
 
         Animal animal = new Animal(animalType, name, habitat);
         player.getBackpack().addAnimal(animal);
         habitat.addAnimal(animal);
 
-        return new Result(true, "You buy this animal successfully!");
+        return new Result(true, "You buy a <" + animalType + "> with name <" + name + "> successfully!");
     }
 
     public Result pet(String animalName) {

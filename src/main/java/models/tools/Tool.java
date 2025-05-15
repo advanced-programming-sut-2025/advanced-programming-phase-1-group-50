@@ -14,7 +14,7 @@ public abstract class Tool {
     public static Tool getToolByName(String name) {
         return switch (name.toLowerCase()) {
             case "axe" -> new Axe();
-            case "fishingpole" -> new FishingPole();
+            case "fishingpole" -> new FishingPole(PoleType.Training);
             case "hoe" -> new Hoe();
             case "milkpail" -> new MilkPail();
             case "pickaxe" -> new Pickaxe();
