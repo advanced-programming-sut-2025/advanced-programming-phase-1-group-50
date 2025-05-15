@@ -33,7 +33,21 @@ public enum GameMenuCommands implements Command {
     UseGreenHouseForWatering("use\\s+greenhouse\\s+for\\s+watering\\s*"),
     UseGreenHouseForHarvesting("use\\s+greenhouse\\s+for\\s+harvesting\\s*"),
     AddPlantToGreenHouse("\\s*add\\s+plant\\s+to\\s+greenhouse\\s*"),
+
     StoreMenu("\\s*store\\s+menu\\s*"),
+    SellProduct("\\s*sell\\s+(?<productName>.+?)(\\s+-n\\s+(?<amount>\\d+))?\\s*"),
+    FriendShips("\\s*friendships\\s*"),
+    TalkToPlayer("\\s*talk\\s+-u\\s+(?<username>.+?)\\s+-m\\s+(?<message>.+?)\\s*"),
+    TalkHistory("\\s*talk\\s+history\\s+-u\\s+(?<username>.+?)\\s*"),
+    GiftToPLayer("\\s*gift\\s+-u\\s+(?<username>.+?)\\s+-i\\s+(?<item>.+)\\s+-a\\s+(?<amount>\\d+)\\s*"),
+    GiftList("\\s*gift\\s+list\\s*"),
+    GiftRate("\\s*gift\\s+rate\\s+-i\\s+(?<giftNumber>\\d+)\\s+-r\\s+(?<rate>\\d+)\\s*"),
+    GiftHistory("\\s*gift\\s+history\\s+-u\\s+(?<username>.+?)\\s*"),
+    Hug("\\s*hug\\s+-u\\s+(?<username>.+?)\\s*"),
+    FlowerTOPlayer("\\s*flower\\s+-u\\s+(?<username>.+?)\\s*"),
+    AskMarriage("\\s*ask\\s+marriage\\s+-u\\s+(?<username>.+?)\\s*"),
+    RespondMarriageRequest("\\s*respond\\s+-(?<state>accept|reject)\\s+-u\\s+(?<username>.+?)\\s*"),
+    StartTrade("\\s*start\\s+trade\\s*"),
     PrintMapWithSize("\\s*print\\s+map\\s+-x\\s+(?<X>\\d+)\\s+-y\\s+(?<Y>\\d+)\\s+-size\\s+(?<size>\\d+)\\s*"),
 
 
