@@ -1,6 +1,7 @@
 package controller.TradeController;
 
 import models.Result;
+import models.Trade;
 import models.app.App;
 import models.app.Menus;
 
@@ -13,7 +14,15 @@ public class TradeController {
     }
 
     public Result tradeList() {
-        return null;
+        StringBuilder message = new StringBuilder("Requests(not responded): ");
+
+        for (Trade trade : App.getGame().getTrades()) {
+            if (trade.getBuyer().equals(App.getGame().getCurrentPlayingPlayer()) && !trade.isResponded()) {
+                message.append("\n").append(trade);
+            }
+        }
+
+        return new Result(true, message.toString());
     }
 
     public Result tradeResponse(Matcher matcher) {
@@ -21,7 +30,15 @@ public class TradeController {
     }
 
     public Result tradeHistory() {
-        return null;
+        StringBuilder message = new StringBuilder("Trade history: ");
+
+        for (Trade trade : App.getGame().getTrades()) {
+            if (trade.getBuyer().equals(App.getGame().getCurrentPlayingPlayer()) || trade.getSeller().equals(App.getGame().getCurrentPlayingPlayer())) {
+                message.append("\n").append(trade);
+            }
+        }
+
+        return new Result(true, message.toString());
     }
 
     public Result exit() {

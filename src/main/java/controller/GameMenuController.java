@@ -7,6 +7,7 @@ import controller.GameDateAndWeatherController.DateController;
 import models.ColorPrinter;
 import models.Result;
 import models.ShippingBin;
+import models.Trade;
 import models.app.*;
 import models.manuFactor.Ingredient;
 import models.mapInfo.Map;
@@ -457,13 +458,22 @@ public class GameMenuController {
     public Result startTrade() {
 
         App.setMenu(Menus.TradeMenu);
-        String message = "Now you are in the Trade Menu\nAvailable players: ";
+        StringBuilder message = new StringBuilder("Now you are in the Trade Menu\nAvailable players: ");
 
         for (Player player : App.getGame().getPlayers()) {
-            message += "\n" + player.getUsername();
+            message.append("\n").append(player.getUsername());
         }
 
-        return new Result(true, message);
+        message.append("\nNew requests:");
+
+        for (Trade trade : App.getGame().getTrades()) {
+            if (trade.getBuyer().equals(App.getGame().getCurrentPlayingPlayer()) && !trade.isViewed()) {
+                trade.setViewed(true);
+                message.append("\n").append(trade);
+            }
+        }
+
+        return new Result(true, message.toString());
     }
 
     public Result printMapAll(){
