@@ -140,6 +140,11 @@ public class TradeController {
             tempRelation.changeXp(50);
         }
 
+        if (tempRelation.isMarriage()) {
+            App.getGame().getCurrentPlayingPlayer().addEnergy(50);
+            tempTrade.getSeller().addEnergy(50);
+        }
+
         tempRelation.setHaveTradedToday(true);
 
         return new Result(true, "Trade accepted");
