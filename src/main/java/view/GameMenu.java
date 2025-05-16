@@ -256,7 +256,7 @@ public class GameMenu implements AppMenu {
         } else if ((matcher = GameMenuCommands.RespondMarriageRequest.getMatcher(input)) != null) {
                 System.out.println(relationController.respondMarriage(matcher));
         } else if ((matcher = GameMenuCommands.StartTrade.getMatcher(input)) != null ) {
-            //TODO
+                System.out.println(controller.startTrade());
         } else if (models.enums.GameMenuCommands.NewGame.getMatcher(input) != null) {
             ArrayList<Player> players = new ArrayList<>();
             Player currentPlayer = new Player(App.getLoggedInUser().getUsername(),

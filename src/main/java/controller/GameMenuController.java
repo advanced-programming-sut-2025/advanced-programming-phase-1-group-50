@@ -453,6 +453,19 @@ public class GameMenuController {
 
         return new Result(true, "you have sold this product successfully");
     }
+
+    public Result startTrade() {
+
+        App.setMenu(Menus.TradeMenu);
+        String message = "Now you are in the Trade Menu\nAvailable players: ";
+
+        for (Player player : App.getGame().getPlayers()) {
+            message += "\n" + player.getUsername();
+        }
+
+        return new Result(true, message);
+    }
+
     public Result printMapAll(){
         StringBuilder sb = new StringBuilder();
         Map map = App.getGame().getMap();

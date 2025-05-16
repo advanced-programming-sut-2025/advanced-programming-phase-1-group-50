@@ -17,6 +17,7 @@ public enum Menus {
     JojaMartMenu(new JojaMartMenu()),
     MarnieRanchMenu(new MarnieRanchMenu()),
     PierreGeneralStoreMenu(new PierreGeneralStoreMenu()),
+    TradeMenu(new TradeMenu()),
     StardopSaloonMenu(new StardopSaloonMenu());
 
     private final AppMenu menu;
