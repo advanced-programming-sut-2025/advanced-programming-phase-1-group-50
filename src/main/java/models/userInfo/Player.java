@@ -266,4 +266,7 @@ public class Player {
     public void setRemainingNumsAfterMarriageRequestDenied(int remainingNumsAfterMarriageRequestDenied) {
         this.remainingNumsAfterMarriageRequestDenied = remainingNumsAfterMarriageRequestDenied;
     }
+    public boolean isInfinite() {
+        return isInfinite;
+    }
 }

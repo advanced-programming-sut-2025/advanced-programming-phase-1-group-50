@@ -5,6 +5,9 @@ import models.app.App;
 
 public class EnergyController {
     public Result showEnergy(){
+        if(App.getGame().getCurrentPlayingPlayer().isInfinite()){
+            return new Result(false, "your energy is infinite");
+        }
         return new Result(true , "your Energy : " + App.getGame().getCurrentPlayingPlayer()
                 .getEnergy());
     }
