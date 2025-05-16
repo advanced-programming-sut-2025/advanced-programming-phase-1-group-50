@@ -185,10 +185,7 @@ public class RelationWithPlayers {
         if (this.friendshipLevel.equals(FriendshipLevelsWithPlayers.LevelThree)) {
             return true;
         }
-        if (this.friendshipLevel.equals(FriendshipLevelsWithPlayers.LevelFour)) {
-            return true;
-        }
-        return false;
+        return this.friendshipLevel.equals(FriendshipLevelsWithPlayers.LevelFour);
     }
 
     public String getTalkHistory() {

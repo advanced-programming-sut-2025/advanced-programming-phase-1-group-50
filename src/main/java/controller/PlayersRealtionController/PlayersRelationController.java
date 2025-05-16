@@ -6,6 +6,8 @@ import models.Notification.MarriageRequest;
 import models.Notification.Notification;
 import models.Result;
 import models.app.App;
+import models.manuFactor.Ingredient;
+import models.stores.Sellable;
 import models.userInfo.*;
 
 import java.util.HashSet;
@@ -78,7 +80,7 @@ public class PlayersRelationController {
         tempRelation.addDialogue(new DialoguesBetweenPlayers(App.getGame().getCurrentPlayingPlayer(), receiver,
                 matcher.group("message")));
         tempNetwork.relationNetwork.put(lookUpKey, tempRelation);
-        receiver.addNotification(new Notification(matcher.group("message"),App.getGame().getCurrentPlayingPlayer()));
+        receiver.addNotification(new Notification(matcher.group("message"), App.getGame().getCurrentPlayingPlayer()));
 
         return new Result(true, "");
     }
@@ -348,7 +350,7 @@ public class PlayersRelationController {
         for (Notification n : App.getGame().getCurrentPlayingPlayer().getNotifications()) {
 
             if (n instanceof MarriageRequest) {
-                if (!n.isChecked() && ((MarriageRequest) n).getSender().getUsername().equals(matcher.group("username"))) {
+                if (!n.isChecked() && n.getSender().getUsername().equals(matcher.group("username"))) {
                     temp = (MarriageRequest) n;
                     break;
                 }
@@ -360,6 +362,7 @@ public class PlayersRelationController {
         }
 
         temp.setChecked(true);
+
         RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
         Set<Player> lookUpKey = new HashSet<>();
         lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
@@ -385,6 +388,66 @@ public class PlayersRelationController {
             return new Result(true, "You rejected the marriage request");
         }
 
+    }
+
+    public Result GiftToPLayer(Matcher matcher) {
+
+        Player receiver = null;
+
+        for (Player p : App.getGame().getPlayers()) {
+            if (p.getUsername().equals(matcher.group("username"))) {
+                receiver = p;
+                break;
+            }
+        }
+
+        if (receiver == null) {
+            return new Result(false, "Player not found");
+        }
+
+        int distanceSquare =
+                (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - receiver.getPosition().getX());
+        distanceSquare += (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY());
+
+        if (distanceSquare > 2) {
+            return new Result(false, "You are too far away");
+        }
+
+        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
+        lookUpKey.add(receiver);
+
+        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+
+        if (tempRelation.getFriendshipLevel().equals(FriendshipLevelsWithPlayers.LevelZero)) {
+            return new Result(false, "you can't gift this player at this friendship level");
+        }
+
+        if (!Sellable.isSellable(matcher.group("item"))) {
+            return new Result(false, "you can't gift this item");
+        }
+
+        int amount = Integer.parseInt(matcher.group("amount"));
+
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault((Ingredient) Sellable.getSellableByName(matcher.group("item")),0) < amount) {
+            return new Result(false, "Not enough stock");
+        }
+
+        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(matcher.group("item")),amount);
+        receiver.getBackpack().addIngredients((Ingredient) Sellable.getSellableByName(matcher.group("item")),amount);
+
+        receiver.addNotification(new Notification("you have received a gift", App.getGame().getCurrentPlayingPlayer()));
+
+        tempRelation.setHaveGaveGiftToday(true);
+
+        if (tempRelation.isMarriage()) {
+            App.getGame().getCurrentPlayingPlayer().addEnergy(50);
+            receiver.addEnergy(50);
+        }
+
+        return new Result(true, "He/She received the gift");
+        
     }
 
 }

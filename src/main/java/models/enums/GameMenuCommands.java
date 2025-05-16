@@ -38,7 +38,7 @@ public enum GameMenuCommands implements Command {
     FriendShips("\\s*friendships\\s*"),
     TalkToPlayer("\\s*talk\\s+-u\\s+(?<username>.+?)\\s+-m\\s+(?<message>.+?)\\s*"),
     TalkHistory("\\s*talk\\s+history\\s+-u\\s+(?<username>.+?)\\s*"),
-    GiftToPLayer("\\s*gift\\s+-u\\s+(?<username>.+?)\\s+-i\\s+(?<item>.+)\\s+-a\\s+(?<amount>\\d+)\\s*"),//TODO
+    GiftToPLayer("\\s*gift\\s+-u\\s+(?<username>.+?)\\s+-i\\s+(?<item>.+?)\\s+-a\\s+(?<amount>\\d+)\\s*"),
     GiftList("\\s*gift\\s+list\\s*"),
     GiftRate("\\s*gift\\s+rate\\s+-i\\s+(?<id>\\d+)\\s+-r\\s+(?<rate>\\d+)\\s*"),
     GiftHistory("\\s*gift\\s+history\\s+-u\\s+(?<username>.+?)\\s*"),
