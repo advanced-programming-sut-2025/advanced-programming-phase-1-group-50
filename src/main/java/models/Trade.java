@@ -15,7 +15,7 @@ public class Trade {
     private boolean accepted;
     private boolean isViewed;
 
-    public Trade(Player seller, Player buyer, int quantity, Sellable sellable, int price) {
+    public Trade(Player seller, Player buyer, int quantity, Sellable sellable, int price, int id) {
         this.seller = seller;
         this.buyer = buyer;
         this.quantity = quantity;
@@ -24,6 +24,7 @@ public class Trade {
         this.isResponded = false;
         this.isViewed = false;
         this.accepted = false;
+        this.id = id;
     }
 
     public Player getSeller() {
@@ -68,6 +69,14 @@ public class Trade {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
     }
 
     @Override
