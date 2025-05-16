@@ -17,6 +17,7 @@ import models.tools.Tool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Backpack {
 
@@ -25,8 +26,8 @@ public class Backpack {
     private int capacity = 12;
     private final ArrayList<Tool> tools=  new ArrayList<>();
     private final Hay hay = new Hay();
-    private final ArrayList<CookingRecipe> cookingRecipes = new ArrayList<>();
-    private final ArrayList<CraftingRecipes> craftingRecipes = new ArrayList<>();
+    private final HashSet<CookingRecipe> cookingRecipes = new HashSet<>();
+    private final HashSet<CraftingRecipes> craftingRecipes = new HashSet<>();
     private final ArrayList<ArtisanMachine> artisanMachines = new ArrayList<>();
     private final ArrayList<Animal> animals = new ArrayList<>();
     private final Refrigerator refrigerator = new Refrigerator();
@@ -46,6 +47,9 @@ public class Backpack {
             case Deluxe:
                 this.capacity = Integer.MAX_VALUE;
         }
+        cookingRecipes.add(CookingRecipe.FriedEgg);
+        cookingRecipes.add(CookingRecipe.BakedFish);
+        cookingRecipes.add(CookingRecipe.Salad);
     }
 
     public void changeType(BackpackType type) {
@@ -177,7 +181,7 @@ public class Backpack {
         craftingRecipes.add(craftingRecipe);
     }
 
-    public ArrayList<CraftingRecipes> getCraftingRecipes() {
+    public HashSet<CraftingRecipes> getCraftingRecipes() {
         return craftingRecipes;
     }
 
@@ -185,7 +189,7 @@ public class Backpack {
         cookingRecipes.add(cookingRecipe);
     }
 
-    public ArrayList<CookingRecipe> getCookingRecipes() {
+    public HashSet<CookingRecipe> getCookingRecipes() {
         return cookingRecipes;
     }
 

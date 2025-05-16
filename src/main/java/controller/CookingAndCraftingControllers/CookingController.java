@@ -13,6 +13,7 @@ import models.userInfo.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class CookingController {
 
@@ -46,11 +47,13 @@ public class CookingController {
 
     public Result cookingShowRecipes() {
         Player player = App.getGame().getCurrentPlayingPlayer();
-        ArrayList<CookingRecipe> recipes = player.getBackpack().getCookingRecipes();
+        HashSet<CookingRecipe> recipes = player.getBackpack().getCookingRecipes();
         StringBuilder output = new StringBuilder();
         output.append("Cooking Recipes: \n");
-        for (int i = 0; i < recipes.size(); i++) {
-            output.append(i+1).append(". ").append(recipes.get(i).toString()).append("\n");
+        int counter = 1;
+        for (CookingRecipe recipe : recipes) {
+            output.append(String.format("%-2d. %s\n", counter, recipe));
+            counter++;
         }
         return new Result(true, output.toString());
     }
@@ -79,7 +82,7 @@ public class CookingController {
             if (ingredientInBackpack == null)
                 return new Result(false, "You don't have any <" + requiredIngredient + "> in your backpack!");
 
-            if (player.getBackpack().getIngredientQuantity().get(ingredientInBackpack) < requiredIngredients.get(ingredientInBackpack)) {
+            if (player.getBackpack().getIngredientQuantity().get(ingredientInBackpack) < requiredIngredients.get(requiredIngredient)) {
                 return new Result(false, "You don't have enough <" + requiredIngredient + "> in your backpack!");
             }
 
@@ -117,7 +120,7 @@ public class CookingController {
                     "You eat <" + food + "> successfully!And increased your energy " + food.getEnergy() + "!");
         }
         else
-            return new Result(false, "You don't have Food <" + food + "> space in backpack!");
+            return new Result(false, "You don't have Food <" + food + "> in your backpack!");
     }
 
 }

@@ -1,13 +1,18 @@
 package controller.CookingAndCraftingControllers;
 
 import models.Result;
+import models.animals.Fish;
+import models.animals.FishType;
+import models.animals.Quality;
 import models.app.App;
 import models.cooking.Food;
-import models.foraging.Fertilizer;
-import models.foraging.Seeds;
-import models.foraging.TreeSource;
+import models.foraging.*;
 import models.manuFactor.ArtisanMachine;
 import models.manuFactor.Ingredient;
+import models.manuFactor.artisanGoods.ArtisanGood;
+import models.manuFactor.artisanGoods.ArtisanGoodType;
+import models.mapInfo.Stone;
+import models.mapInfo.Wood;
 import models.recipes.CookingRecipe;
 import models.recipes.CraftingRecipes;
 import models.tools.Tool;
@@ -15,16 +20,19 @@ import models.userInfo.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class CraftingController {
 
     public Result craftingShowRecipes() {
         Player player = App.getGame().getCurrentPlayingPlayer();
-        ArrayList<CraftingRecipes> recipes = player.getBackpack().getCraftingRecipes();
+        HashSet<CraftingRecipes> recipes = player.getBackpack().getCraftingRecipes();
         StringBuilder output = new StringBuilder();
         output.append("Crafting Recipes: \n");
-        for (int i = 0; i < recipes.size(); i++) {
-            output.append(i+1).append(". ").append(recipes.get(i).toString()).append("\n");
+        int counter = 1;
+        for (CraftingRecipes recipe : recipes) {
+            output.append(String.format("%-2d. %s\n", counter, recipe));
+            counter++;
         }
         return new Result(true, output.toString());
     }
@@ -79,6 +87,7 @@ public class CraftingController {
             else if (craftingRecipe.equals(CraftingRecipes.MysticTreeSeed)) {
                 player.getBackpack().addIngredients(TreeSource.MysticTreeSeeds, quantity);
             }
+            player.getBackpack().addRecipe(craftingRecipe);
             return new Result(true, "You add <" + itemName + "> successfully!");
         }
 
@@ -86,6 +95,19 @@ public class CraftingController {
         if (cookingRecipe != null) {
             Food food = Food.getFoodByName(itemName);
             player.getBackpack().addIngredients(food, quantity);
+            player.getBackpack().addRecipe(cookingRecipe);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        CropType cropType = CropType.getCropTypeByName(itemName);
+        if (cropType != null) {
+            player.getBackpack().addIngredients(new Crop(cropType, App.getGame().getTime(), null, 1, 1), quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        FishType fishType = FishType.getFishTypeByName(itemName);
+        if (fishType != null) {
+            player.getBackpack().addIngredients(new Fish(fishType, Quality.Regular), quantity);
             return new Result(true, "You add <" + itemName + "> successfully!");
         }
 
@@ -101,9 +123,21 @@ public class CraftingController {
             return new Result(true, "You add <" + itemName + "> successfully!");
         }
 
+        ArtisanGoodType artisanGoodType = ArtisanGoodType.getArtisanGoodTypeByName(itemName);
+        if (artisanGoodType != null) {
+            player.getBackpack().addIngredients(new ArtisanGood(artisanGoodType), quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
         Tool tool = Tool.getToolByName(itemName);
         if (tool != null) {
             for (int i = 0; i < quantity; i++) player.getBackpack().addTool(tool);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        ForagingMineral foragingMineral = ForagingMineral.getForagingMineralByName(itemName);
+        if (foragingMineral != null) {
+            player.getBackpack().addIngredients(foragingMineral, quantity);
             return new Result(true, "You add <" + itemName + "> successfully!");
         }
 
@@ -115,6 +149,16 @@ public class CraftingController {
         
         if (itemName.equalsIgnoreCase("hay")) {
             player.getBackpack().increaseHay(quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        if (itemName.equalsIgnoreCase("wood")) {
+            player.getBackpack().addIngredients(new Wood(), quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        if (itemName.equalsIgnoreCase("stone")) {
+            player.getBackpack().addIngredients(new Stone(), quantity);
             return new Result(true, "You add <" + itemName + "> successfully!");
         }
 

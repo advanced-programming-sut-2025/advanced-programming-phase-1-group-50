@@ -37,7 +37,6 @@ public class Time {
     public void advancedDay(int d){
         for(int i = 0 ; i < d; i++){
             this.date ++;
-            App.getGame().callMethodsForTomorrow();
             if(this.date > 28){
                 this.date = 1;
                 advancedSeason();
@@ -45,15 +44,9 @@ public class Time {
             DaysOfTheWeek[] days = DaysOfTheWeek.values();
             int currentIndex = this.dayOfWeek.ordinal();
             this.dayOfWeek = days[(currentIndex + 1) % days.length];
-        }
-        if(d == 1){
-            this.weather =this.nextDayWeather;
+            this.weather = this.nextDayWeather;
             this.nextDayWeather = createNextDayWeather();
-        }
-        else {
-            this.weather = createNextDayWeather();
-            this.nextDayWeather = createNextDayWeather();
-
+            App.getGame().callMethodsForTomorrow();
         }
     }
     public void advancedSeason(){
