@@ -282,7 +282,7 @@ public class GameMenuController {
         StringBuilder sb = new StringBuilder();
         for (java.util.Map.Entry<Ingredient, Integer> entry : App.getGame().getCurrentPlayingPlayer().getBackpack()
                 .getIngredientQuantity().entrySet()) {
-            sb.append(String.format("%s -> quantity : %d", entry.getKey().getClass().getSimpleName(), entry.getValue()));
+            sb.append(String.format("%s -> quantity : %d", entry.getKey(), entry.getValue()));
             sb.append("\n");
 
         }

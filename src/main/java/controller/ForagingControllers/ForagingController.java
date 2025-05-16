@@ -96,14 +96,14 @@ public class ForagingController {
         if (plant.canGrowAgain()) {
             if (plant.harvest()) {
                 if (plant instanceof Crop crop)
-                    player.getBackpack().addIngredients(crop, 1);
+                    player.getBackpack().addIngredients(crop, new Random().nextInt(2) + 2);
                 else if (plant instanceof Tree tree)
-                    player.getBackpack().addIngredients(tree.getType().getFruit(), 1);
+                    player.getBackpack().addIngredients(tree.getType().getFruit(), new Random().nextInt(3) + 3);
 
                 player.getAbility().increaseFarmingRate(5);
 
                 return new Result(true,
-                        String.format("You picked up %s\nThis plant can grow again!", plant.getNameOfProduct()));
+                        String.format("You picked up %s\nThis plant can grow again! Wait please!", plant.getNameOfProduct()));
             }
             else {
                 return new Result(false, "The plant hasn't grown again completely!");
@@ -148,7 +148,7 @@ public class ForagingController {
             return new Result(false, "Tile in direction <" + directionName + "> not found!");
         }
         if (targetTile.getPlaceable() != null) {
-            return new Result(false, "You cannot plant in this tile!it isn't free.");
+            return new Result(false, "You cannot plant in this tile! it isn't free.");
         }
         if (!targetTile.isPlowed()) {
             return new Result(false, "Tile is not plowed!");
@@ -226,9 +226,16 @@ public class ForagingController {
         Direction direction = Direction.getDirectionByInput(directionName);
         Fertilizer fertilizer = Fertilizer.getFertilizerByName(fertilizerName);
         Player player = App.getGame().getCurrentPlayingPlayer();
+
+        if (direction == null)
+            return new Result(false, "Direction <" + directionName + "> not found");
+
         Tile myTile = App.getGame().getMap().findTile(player.getPosition());
         Tile targetTile = App.getGame().getMap().getTileByDirection(myTile, direction);
-
+        if (targetTile == null)
+            return new Result(false, "Tile in direction <" + directionName + "> not found!");
+        if (targetTile.getPlaceable() != null)
+            return new Result(false, "You cannot fertilize this tile! it isn't free.");
         if (!targetTile.isPlowed())
             return new Result(false, "This tile hasn't plowed yet!");
 
@@ -261,6 +268,6 @@ public class ForagingController {
                         String.format("Current stage:     %d\n", plant.getCurrentStage()) +
                         String.format("Has Watered Today: %s\n", plant.hasWateredToday()) +
                         String.format("Has Fertilized:    %s\n", plant.hasFertilized()) +
-                        String.format("Fertilizer:        %s", plant.getFertilizer()));
+                        String.format("Fertilizer:        %s\n", plant.getFertilizer() != null ? plant.getFertilizer() : "No"));
     }
 }

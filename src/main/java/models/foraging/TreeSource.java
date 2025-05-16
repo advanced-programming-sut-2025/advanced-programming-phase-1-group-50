@@ -22,6 +22,7 @@ public enum TreeSource implements Ingredient {
 
     private TreeType treeType;
     private final static HashMap<String, TreeSource> stringToTreeSource = new HashMap<>();
+    private static boolean firstInitialize = true;
 
     static {
         for (TreeSource value : TreeSource.values()) {
@@ -51,6 +52,10 @@ public enum TreeSource implements Ingredient {
     }
 
     public TreeType getTreeType() {
+        if (firstInitialize) {
+            completeInitialize();
+            firstInitialize = false;
+        }
         return treeType;
     }
 
