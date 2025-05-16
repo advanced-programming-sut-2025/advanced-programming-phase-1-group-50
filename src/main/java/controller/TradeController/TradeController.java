@@ -139,7 +139,7 @@ public class TradeController {
         if (!tempRelation.HaveTradedToday()) {
             tempRelation.changeXp(50);
         }
-        
+
         tempRelation.setHaveTradedToday(true);
 
         return new Result(true, "Trade accepted");

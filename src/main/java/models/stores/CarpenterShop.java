@@ -73,7 +73,13 @@ public class CarpenterShop extends Store {
         ShopItem item = null;
 
         for (ShopItem i : inventory) {
-            if (i instanceof CarpenterShopFarmBuildingsItem) {
+
+            if (i instanceof CarpenterShopFarmBuildingsItem ) {
+
+                if (((CarpenterShopFarmBuildingsItem) i).isShippingBin()) {
+                    continue;
+                }
+
                 if (((CarpenterShopFarmBuildingsItem) i).getHabitatType().equals(type) && ((CarpenterShopFarmBuildingsItem) i).getHabitatSize().equals(size)) {
                     item = i;
                 }
