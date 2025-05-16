@@ -11,6 +11,7 @@ import models.tools.FishingPole;
 import models.tools.MilkPail;
 import models.tools.Shear;
 import models.tools.Tool;
+import models.userInfo.Coin;
 import models.userInfo.Player;
 
 import java.util.ArrayList;
@@ -254,7 +255,9 @@ public class AnimalsController {
 
         double price = animal.getType().getPrice() * (((double)(animal.getFriendShip()) / 1000) + 0.3);
 
-        //TODO should I increase any money
+        player.getBackpack().addIngredients(new Coin(), ((int) price));
+        player.getBackpack().getAllAnimals().remove(animal);
+        animal.getHabitat().getAnimals().remove(animal);
 
         return new Result(true, "You sell Animal <" + animalName + "> $" + price + "!");
     }

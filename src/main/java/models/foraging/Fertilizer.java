@@ -9,7 +9,8 @@ public enum Fertilizer implements Ingredient {
     public static Fertilizer getFertilizerByName(String fertilizerName) {
         if (fertilizerName.equalsIgnoreCase("GrowthFertilizer"))
             return GrowthFertilizer;
-        else
+        else if (fertilizerName.equalsIgnoreCase("WaterFertilizer"))
             return WaterFertilizer;
+        return null;
     }
 }

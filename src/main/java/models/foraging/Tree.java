@@ -57,8 +57,12 @@ public class Tree implements Growable, Placeable {
             return;
 
         int timeForGrow = type.getTimeForGrow(levelOfGrowth);
+        int todayDate = today.getDate();
 
-        if (lastGrowthTime.getDate() + timeForGrow == today.getDate()) {
+        if (today.getSeason() != lastGrowthTime.getSeason())
+            todayDate += 28;
+
+        if (lastGrowthTime.getDate() + timeForGrow == todayDate) {
             levelOfGrowth++;
             lastGrowthTime = today.clone();
         }
@@ -106,7 +110,10 @@ public class Tree implements Growable, Placeable {
         for (int i = 0; i < levelOfGrowth; i++) {
             passedDays += type.getTimeForGrow(i);
         }
-        passedDays += App.getGame().getTime().getDate() - lastGrowthTime.getDate();
+        int todayDate = App.getGame().getTime().getDate();
+        if (App.getGame().getTime().getSeason() != lastGrowthTime.getSeason())
+            todayDate += 28;
+        passedDays += todayDate - lastGrowthTime.getDate();
         return type.getTotalHarvestTime() - passedDays;
     }
 

@@ -3,6 +3,7 @@ package controller.CookingAndCraftingControllers;
 import models.Result;
 import models.app.App;
 import models.cooking.Food;
+import models.foraging.Fertilizer;
 import models.foraging.Seeds;
 import models.foraging.TreeSource;
 import models.manuFactor.ArtisanMachine;
@@ -28,14 +29,14 @@ public class CraftingController {
         return new Result(true, output.toString());
     }
 
-    public Result craftingCraft(String ItemName) {
-        CraftingRecipes recipe = CraftingRecipes.getRecipeByName(ItemName);
+    public Result craftingCraft(String itemName) {
+        CraftingRecipes recipe = CraftingRecipes.getRecipeByName(itemName);
         Player player = App.getGame().getCurrentPlayingPlayer();
 
         if (recipe == null)
-            return new Result(false, "Recipe <" + ItemName + "> not found!");
+            return new Result(false, "Recipe <" + itemName + "> not found!");
         if (!player.getBackpack().containRecipe(recipe))
-            return new Result(false, "You don't have <" + ItemName + "> CraftingRecipe in your backpack!");
+            return new Result(false, "You don't have <" + itemName + "> CraftingRecipe in your backpack!");
         if (!player.getBackpack().hasCapacity())
             return new Result(false, "You don't have enough space in backpack!");
 
@@ -58,10 +59,10 @@ public class CraftingController {
         if (recipe.equals(CraftingRecipes.MysticTreeSeed))
             player.getBackpack().addIngredients(TreeSource.MysticTreeSeeds, 1);
 
-        return new Result(true, "You craft <" + ItemName + "> successfully!");
+        return new Result(true, "You craft <" + itemName + "> successfully!");
     }
 
-    public Result addItem(String ItemName, int quantity) {
+    public Result addItem(String itemName, int quantity) {
         Player player = App.getGame().getCurrentPlayingPlayer();
 
         if (quantity <= 0)
@@ -69,7 +70,7 @@ public class CraftingController {
         if (!player.getBackpack().hasCapacity())
             return new Result(false, "You don't have enough space in backpack!");
 
-        CraftingRecipes craftingRecipe = CraftingRecipes.getRecipeByName(ItemName);
+        CraftingRecipes craftingRecipe = CraftingRecipes.getRecipeByName(itemName);
         ArtisanMachine machine;
         if (craftingRecipe != null) {
             if ((machine = ArtisanMachine.getArtisanMachineByRecipe(craftingRecipe)) != null) {
@@ -78,32 +79,43 @@ public class CraftingController {
             else if (craftingRecipe.equals(CraftingRecipes.MysticTreeSeed)) {
                 player.getBackpack().addIngredients(TreeSource.MysticTreeSeeds, quantity);
             }
-            return new Result(true, "You add <" + ItemName + "> successfully!");
+            return new Result(true, "You add <" + itemName + "> successfully!");
         }
 
-        CookingRecipe cookingRecipe = CookingRecipe.getRecipeByName(ItemName);
+        CookingRecipe cookingRecipe = CookingRecipe.getRecipeByName(itemName);
         if (cookingRecipe != null) {
-            Food food = Food.getFoodByName(ItemName);
+            Food food = Food.getFoodByName(itemName);
             player.getBackpack().addIngredients(food, quantity);
-            return new Result(true, "You add <" + ItemName + "> successfully!");
+            return new Result(true, "You add <" + itemName + "> successfully!");
         }
 
-        Seeds seeds = Seeds.getSeedByName(ItemName);
+        Seeds seeds = Seeds.getSeedByName(itemName);
         if (seeds != null) {
             player.getBackpack().addIngredients(seeds, quantity);
-            return new Result(true, "You add <" + ItemName + "> successfully!");
+            return new Result(true, "You add <" + itemName + "> successfully!");
         }
 
-        TreeSource treeSource = TreeSource.getTreeSourceByName(ItemName);
+        TreeSource treeSource = TreeSource.getTreeSourceByName(itemName);
         if (treeSource != null) {
             player.getBackpack().addIngredients(treeSource, quantity);
-            return new Result(true, "You add <" + ItemName + "> successfully!");
+            return new Result(true, "You add <" + itemName + "> successfully!");
         }
 
-        Tool tool = Tool.getToolByName(ItemName);
+        Tool tool = Tool.getToolByName(itemName);
         if (tool != null) {
             for (int i = 0; i < quantity; i++) player.getBackpack().addTool(tool);
-            return new Result(true, "You add <" + ItemName + "> successfully!");
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        Fertilizer fertilizer = Fertilizer.getFertilizerByName(itemName);
+        if (fertilizer != null) {
+            player.getBackpack().addIngredients(fertilizer, quantity);
+            return new Result(true, "You add <" + fertilizer + "> successfully!");
+        }
+        
+        if (itemName.equalsIgnoreCase("hay")) {
+            player.getBackpack().increaseHay(quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
         }
 
         return new Result(false, "There is no such Item!");

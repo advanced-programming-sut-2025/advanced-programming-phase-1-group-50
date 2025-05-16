@@ -305,7 +305,10 @@ public class ToolController {
                     Wood wood = new Wood();
                     p.getBackpack().addIngredients(wood, numberOfWoods);
                 }
-                p.getBackpack().addIngredients(tree.getType().getSource(), 2);
+                int numberOfSeeds = new Random().nextInt(2) + 1;
+                p.getBackpack().addIngredients(tree.getType().getSource(), numberOfSeeds);
+                return new Result(true, String.format(
+                        "tree cut successfully! You got %d woods and %d Seeds!", numberOfWoods, numberOfSeeds));
             }
 
             return new Result(false, "there is no tree for cut!");

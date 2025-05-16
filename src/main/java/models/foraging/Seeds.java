@@ -52,6 +52,7 @@ public enum Seeds implements Ingredient {
     private final Season season;
     private CropType crop;
     private final static HashMap<String, Seeds> stringToSeeds = new HashMap<>();
+    private static boolean firstInitialize = true;
 
     static {
         for (Seeds value : Seeds.values()) {
@@ -118,6 +119,10 @@ public enum Seeds implements Ingredient {
     }
 
     public CropType getCrop() {
+        if (firstInitialize) {
+            completeInitialize();
+            firstInitialize = false;
+        }
         return crop;
     }
 
