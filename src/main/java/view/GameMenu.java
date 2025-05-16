@@ -232,7 +232,7 @@ public class GameMenu implements AppMenu {
             int sizeX = Integer.parseInt(matcher.group("size"));
             System.out.println(controller.printMap(startX, startY, sizeX));
         } else if ((matcher = GameMenuCommands.SellProduct.getMatcher(input)) != null) {
-            //TODO
+            System.out.println(controller.sellProduct(matcher));
         } else if (GameMenuCommands.FriendShips.getMatcher(input) != null) {
             System.out.println(relationController.friendships());
         } else if ((matcher = GameMenuCommands.TalkToPlayer.getMatcher(input)) != null) {
@@ -240,7 +240,7 @@ public class GameMenu implements AppMenu {
         } else if ((matcher = GameMenuCommands.TalkHistory.getMatcher(input)) != null) {
             System.out.println(relationController.talkHistory(matcher));
         } else if ((matcher = GameMenuCommands.GiftToPLayer.getMatcher(input)) != null) {
-            //TODO
+             System.out.println(relationController.GiftToPLayer(matcher));
         } else if (GameMenuCommands.GiftList.getMatcher(input) != null) {
             System.out.println(relationController.GiftList());
         } else if ((matcher = GameMenuCommands.GiftRate.getMatcher(input)) != null) {

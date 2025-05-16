@@ -428,6 +428,10 @@ public class PlayersRelationController {
             return new Result(false, "you can't gift this item");
         }
 
+        if (Sellable.getSellableByName(matcher.group("item")) == null) {
+            return new Result(false, "Not enough stock");
+        }
+
         int amount = Integer.parseInt(matcher.group("amount"));
 
         if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault((Ingredient) Sellable.getSellableByName(matcher.group("item")),0) < amount) {
@@ -447,8 +451,7 @@ public class PlayersRelationController {
         }
 
         return new Result(true, "He/She received the gift");
-        
+
     }
 
 }
-
