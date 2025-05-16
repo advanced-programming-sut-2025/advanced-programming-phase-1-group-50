@@ -1,5 +1,6 @@
 package models.stores;
 
+import models.BackgroundColors;
 import models.ColorPrinter;
 import models.Result;
 import models.app.App;
@@ -13,6 +14,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class FishShop extends Store {
+    private final  String backgroundCode = BackgroundColors.BRIGHT_CYAN;
     private final String colorCode = ColorPrinter.BRIGHT_BLUE;
     private ArrayList<ShopItem> inventory;
 
@@ -129,5 +131,9 @@ public class FishShop extends Store {
         return colorCode;
     }
 
+    @Override
+    public String getBackground(){
+        return backgroundCode;
+    }
 
 }

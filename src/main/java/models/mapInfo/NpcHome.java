@@ -1,5 +1,6 @@
 package models.mapInfo;
 
+import models.BackgroundColors;
 import models.ColorPrinter;
 import models.NPCs.NPC;
 import models.Placeable;
@@ -7,6 +8,7 @@ import models.Placeable;
 import java.awt.*;
 
 public class NpcHome implements Placeable {
+    private final  String backgroundCode = BackgroundColors.CYAN;
     private final Rectangle rectangle;
     private final  String colorCode = ColorPrinter.BRIGHT_PURPLE;
     private final NPC npc;
@@ -31,4 +33,10 @@ public class NpcHome implements Placeable {
     public String getColor(){
         return colorCode;
     }
+
+    @Override
+    public String getBackground(){
+        return backgroundCode;
+    }
+
 }

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class Blacksmith extends Store {
     private final String colorCode = ColorPrinter.GRAY;
+    private final String backgroundCode = ColorPrinter.WHITE;
     private ArrayList<ShopItem> inventory;
 
     public Blacksmith(int x, int y, int width, int height) {
@@ -136,6 +137,11 @@ public class Blacksmith extends Store {
     @Override
     public String getColor(){
         return colorCode;
+    }
+
+    @Override
+    public String getBackground(){
+        return backgroundCode;
     }
 
 }

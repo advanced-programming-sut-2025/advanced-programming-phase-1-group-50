@@ -6,5 +6,6 @@ public interface Placeable {
     Rectangle getBounds();
     char getSymbol();
     String getColor();
+    String getBackground();
 
 }

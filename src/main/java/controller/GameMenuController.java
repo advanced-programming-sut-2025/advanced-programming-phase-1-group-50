@@ -486,7 +486,8 @@ public class GameMenuController {
                     sb.append('p');
                 } else {
                     if(tile.getPlaceable()!=null){
-                        sb.append(tile.getPlaceable().getColor()).append(tile.getSymbol()).append(ColorPrinter.RESET);
+                        sb.append(tile.getPlaceable().getBackground()).append(tile.getPlaceable().getColor())
+                                .append(tile.getSymbol()).append(ColorPrinter.RESET);
                     }
                     else{
                         sb.append(ColorPrinter.BRIGHT_WHITE).append(tile.getSymbol()).append(ColorPrinter.RESET);
@@ -507,7 +508,8 @@ public class GameMenuController {
                     sb.append('p');
                 } else {
                     if(tile.getPlaceable()!=null){
-                        sb.append(tile.getPlaceable().getColor()).append(tile.getSymbol()).append(ColorPrinter.RESET);
+                        sb.append(tile.getPlaceable().getBackground()).append(tile.getPlaceable().getColor())
+                                .append(tile.getSymbol()).append(ColorPrinter.RESET);
                     }
                     else{
                         sb.append(ColorPrinter.BRIGHT_WHITE).append(tile.getSymbol()).append(ColorPrinter.RESET);

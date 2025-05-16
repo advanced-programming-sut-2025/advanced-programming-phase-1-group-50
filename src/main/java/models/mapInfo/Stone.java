@@ -1,5 +1,6 @@
 package models.mapInfo;
 
+import models.BackgroundColors;
 import models.ColorPrinter;
 import models.Placeable;
 import models.manuFactor.Ingredient;
@@ -7,6 +8,7 @@ import models.manuFactor.Ingredient;
 import java.awt.*;
 
 public class Stone implements Ingredient , Placeable {
+    private final String backgroundCode = BackgroundColors.BLACK;
     private final String colorCode = ColorPrinter.GRAY;
     private Rectangle bounds;
 
@@ -45,4 +47,10 @@ public class Stone implements Ingredient , Placeable {
     public String toString() {
         return "Stone";
     }
+
+    @Override
+    public String getBackground(){
+        return backgroundCode;
+    }
+
 }

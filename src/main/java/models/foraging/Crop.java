@@ -14,6 +14,7 @@ import java.util.Objects;
 
 public class Crop implements Ingredient, Growable , Placeable, Sellable {
     private final String colorCode = ColorPrinter.BRIGHT_GREEN;
+    private final String backgroundCode = ColorPrinter.BRIGHT_YELLOW;
     private final CropType type;
     private int levelOfGrowth;
     private Time lastGrowthTime;
@@ -176,4 +177,10 @@ public class Crop implements Ingredient, Growable , Placeable, Sellable {
     public String toString() {
         return type.toString();
     }
+
+    @Override
+    public String getBackground(){
+        return backgroundCode;
+    }
+
 }

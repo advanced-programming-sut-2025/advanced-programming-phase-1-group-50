@@ -1,5 +1,6 @@
 package models.stores;
 
+import models.BackgroundColors;
 import models.ColorPrinter;
 import models.Result;
 import models.animals.AnimalType;
@@ -12,6 +13,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class MarnieRanch extends Store {
+    private final String backgroundCode = BackgroundColors.RED;
     private final String colorCode = ColorPrinter.PINK;
     private ArrayList<ShopItem> inventory;
 
@@ -164,5 +166,11 @@ public class MarnieRanch extends Store {
     public String getColor(){
         return colorCode;
     }
+
+    @Override
+    public String getBackground(){
+        return backgroundCode;
+    }
+
 
 }

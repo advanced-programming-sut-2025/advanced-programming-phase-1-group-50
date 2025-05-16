@@ -1,5 +1,6 @@
 package models.mapInfo;
 
+import models.BackgroundColors;
 import models.ColorPrinter;
 import models.Placeable;
 import models.foraging.ForagingMineral;
@@ -8,6 +9,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Quarry implements Placeable {
+    private final String backgroundCode = BackgroundColors.BRIGHT_CYAN;
     private final String colorCode = ColorPrinter.BRIGHT_BLACK;
     private final Rectangle bounds;
     private final ArrayList<ForagingMineral> foragingMinerals = new ArrayList<>();
@@ -37,4 +39,10 @@ public class Quarry implements Placeable {
     public String getColor() {
         return colorCode;
     }
+
+    @Override
+    public String getBackground(){
+        return backgroundCode;
+    }
+
 }

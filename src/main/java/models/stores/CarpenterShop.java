@@ -1,5 +1,6 @@
 package models.stores;
 
+import models.BackgroundColors;
 import models.ColorPrinter;
 import models.Result;
 import models.animals.HabitatSize;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class CarpenterShop extends Store {
+    private final String backgroundCode = BackgroundColors.BRIGHT_RED;
     private final String colorCode = ColorPrinter.BRIGHT_CYAN;
     private ArrayList<ShopItem> inventory;
 
@@ -207,5 +209,11 @@ public class CarpenterShop extends Store {
     public String getColor(){
         return colorCode;
     }
+
+    @Override
+    public String getBackground(){
+        return backgroundCode;
+    }
+
 
 }

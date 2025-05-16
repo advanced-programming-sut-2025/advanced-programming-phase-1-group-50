@@ -1,5 +1,6 @@
 package models.mapInfo;
 
+import models.BackgroundColors;
 import models.ColorPrinter;
 import models.Placeable;
 import models.app.App;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GreenHouse implements Placeable {
+    private final String backgroundCode = BackgroundColors.GREEN;
     private final String colorCode = ColorPrinter.BRIGHT_YELLOW;
     private boolean isBroken;
     private final Rectangle bounds;
@@ -77,4 +79,10 @@ public class GreenHouse implements Placeable {
     public String getColor(){
         return colorCode;
     }
+
+    @Override
+    public String getBackground(){
+        return backgroundCode;
+    }
+
 }

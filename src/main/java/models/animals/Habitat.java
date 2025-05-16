@@ -1,5 +1,6 @@
 package models.animals;
 
+import models.BackgroundColors;
 import models.ColorPrinter;
 import models.Placeable;
 
@@ -7,6 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Habitat implements Placeable {
+    private final String backgroundCode = BackgroundColors.YELLOW;
     private final  String colorCode = ColorPrinter.BRIGHT_RED;
     private final HabitatType type;
     private final HabitatSize size;
@@ -99,4 +101,10 @@ public class Habitat implements Placeable {
     public String getColor(){
         return colorCode;
     }
+
+    @Override
+    public String getBackground(){
+        return backgroundCode;
+    }
+
 }

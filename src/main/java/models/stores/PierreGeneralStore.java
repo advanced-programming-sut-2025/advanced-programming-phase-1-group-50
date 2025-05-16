@@ -1,5 +1,6 @@
 package models.stores;
 
+import models.BackgroundColors;
 import models.Bouquet;
 import models.ColorPrinter;
 import models.Result;
@@ -18,6 +19,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class PierreGeneralStore extends Store {
+    private final String backgroundCode = BackgroundColors.YELLOW;
     private final String colorCode = ColorPrinter.BRIGHT_RED;
     private ArrayList<ShopItem> inventory;
 
@@ -251,5 +253,11 @@ public class PierreGeneralStore extends Store {
     public String getColor(){
         return colorCode;
     }
+
+    @Override
+    public String getBackground(){
+        return backgroundCode;
+    }
+
 
 }

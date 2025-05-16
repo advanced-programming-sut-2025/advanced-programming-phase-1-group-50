@@ -1,5 +1,6 @@
 package models.stores;
 
+import models.BackgroundColors;
 import models.ColorPrinter;
 import models.Result;
 import models.app.App;
@@ -13,6 +14,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class StardropSaloon extends Store {
+    private final String backgroundCode = BackgroundColors.BRIGHT_BLUE;
     private final String colorCode= ColorPrinter.PURPLE;
     private ArrayList<ShopItem> inventory;
 
@@ -135,5 +137,11 @@ public class StardropSaloon extends Store {
     public String getColor(){
         return colorCode;
     }
+
+    @Override
+    public String getBackground(){
+        return backgroundCode;
+    }
+
 
 }

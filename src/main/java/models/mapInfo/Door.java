@@ -1,11 +1,13 @@
 package models.mapInfo;
 
+import models.BackgroundColors;
 import models.ColorPrinter;
 import models.Placeable;
 
 import java.awt.*;
 
 public class Door implements Placeable {
+    private final String backgroundCode = BackgroundColors.WHITE;
     private final String colorCode = ColorPrinter.GRAY;
     private final Rectangle doorPosition;
     public Door(int x, int y , int width, int height) {
@@ -23,4 +25,10 @@ public class Door implements Placeable {
     public String getColor(){
         return colorCode;
     }
+
+    @Override
+    public String getBackground(){
+        return backgroundCode;
+    }
+
 }

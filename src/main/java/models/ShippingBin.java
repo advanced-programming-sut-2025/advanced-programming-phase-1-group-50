@@ -9,6 +9,7 @@ import java.awt.*;
 import java.util.HashMap;
 
 public class ShippingBin implements Placeable{
+    private final String backgroundCode = BackgroundColors.RED;
     private final String colorCode = ColorPrinter.BRIGHT_BLUE;
     private HashMap<Player,Integer> dailyRevenue;
     private final char symbol = 'ø';
@@ -54,4 +55,10 @@ public class ShippingBin implements Placeable{
     public String getColor(){
         return colorCode;
     }
+
+    @Override
+    public String getBackground(){
+        return backgroundCode;
+    }
+
 }
