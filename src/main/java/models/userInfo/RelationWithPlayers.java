@@ -129,7 +129,7 @@ public class RelationWithPlayers {
         return this.friendshipLevel.equals(FriendshipLevelsWithPlayers.LevelThree) && xp == 400;
     }
 
-    public void checkXpEveryNight() {
+    public void checkEveryNight() {
 
         if (marriage) {
             return;

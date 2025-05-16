@@ -1,6 +1,11 @@
 package models.NPCs;
 
+import models.app.App;
+import models.mapInfo.NpcHome;
+import models.userInfo.Player;
+
 public class RelationWithNPC {
+
     private final NPCType type;
     private NPCFriendshipLevel npcFriendshipLevel;
     private int numericalFriendShipLevel;
@@ -121,10 +126,20 @@ public class RelationWithNPC {
 
     }
 
-    public void checkEveryNight() {
+    public void checkEveryNight(Player player) {
+
         isFirstTimeToSpeakWithNPC = true;
         isFirstTimeGiftToNPC = true;
         increaseNumOfDaysAfterUnlockingSecondQuest();
         checkUnlockingThirdQuest();
+
+        if (this.npcFriendshipLevel.equals(NPCFriendshipLevel.LevelThree)) {
+            for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
+                if (home.getNpc().getType().equals(this.type)) {
+                    home.getNpc().giveRandomGiftToPlayer(player);
+                }
+            }
+        }
+
     }
 }

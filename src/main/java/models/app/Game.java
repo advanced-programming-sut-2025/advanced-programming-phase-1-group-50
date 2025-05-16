@@ -3,6 +3,7 @@ package models.app;
 import controller.GameMenuController;
 import models.BetweenPlayersGift;
 import models.Result;
+import models.ShippingBin;
 import models.Trade;
 import models.animals.Animal;
 import models.date.Time;
@@ -243,6 +244,30 @@ public class Game {
         map.GotThunderByStormyWeather();
         map.randomForagingMineralGenerator();
         setCurrentPlayingPlayer(players.getFirst());
+
+        for (ShippingBin bin : this.map.getShippingBins()) {
+            bin.checkEveryNight();
+        }
+
+        for (RelationWithPlayers relation : App.getGame().relationsBetweenPlayers.relationNetwork.values()) {
+            relation.checkEveryNight();
+        }
+
+        for (Player player : players) {
+            player.getRelationWithAbigail().checkEveryNight(player);
+            player.getRelationWithHarvey().checkEveryNight(player);
+            player.getRelationWithLeah().checkEveryNight(player);
+            player.getRelationWithRobin().checkEveryNight(player);
+            player.getRelationWithSebastian().checkEveryNight(player);
+        }
+
+        this.getMap().getNpcVillage().getBlacksmith().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getMarnieRanch().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getPierreGeneralStore().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getJojaMart().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getFishShop().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getCarpenterShop().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getStardopSaloon().ResetQuantityEveryNight();
 
     }
 }
