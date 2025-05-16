@@ -22,10 +22,8 @@ public class LoginAndRegisterMenu implements AppMenu {
             String nickname = matcher.group(4).trim();
             String email = matcher.group(5).trim();
             String gender = matcher.group(6).trim();
-            System.out.println(controller.register(username , password , passwordConfirm , nickname , email , gender ,
-                    scanner));
-            if(controller.register(username , password , passwordConfirm , nickname , email , gender ,
-                    scanner).getSuccessful()){
+            System.out.println(controller.register(username , password , passwordConfirm , nickname , email , gender ));
+            if(controller.register(username , password , passwordConfirm , nickname , email , gender ).getSuccessful()){
                 int counter =0 ;
                 for(SecurityQuestion sq : App.securityQuestions){
                     System.out.println(counter + ". " + sq.getQuestion());

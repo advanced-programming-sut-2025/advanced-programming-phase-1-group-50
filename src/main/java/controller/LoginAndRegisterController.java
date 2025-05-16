@@ -108,7 +108,8 @@ public class LoginAndRegisterController {
     }
 
     public Result register(String username, String password, String passwordConfirm, String nickname, String email,
-                           String gender, Scanner scanner) {
+                           String gender) {
+        boolean randomPassword = false;
         Matcher matcher;
         if (!checkRepeatedUsername(username)) {
             return new Result(false, "Username is already taken");
@@ -127,8 +128,8 @@ public class LoginAndRegisterController {
 
         if (password.equals("random") && passwordConfirm.equals("random")) {
             password = generatePassword();
-            System.out.println("your password is " + password);
-            passwordConfirm = password;
+            randomPassword = true;
+
         } else {
             matcher = Pattern.compile(passwordRegex).matcher(password);
             if (!matcher.matches()) {
@@ -148,9 +149,8 @@ public class LoginAndRegisterController {
             if (!hasSpecialCharacters(password)) {
                 return new Result(false, "please use Special Characters");
             }
-            while (!password.equals(passwordConfirm)) {
-                System.out.println("Passwords do not match, please try again:");
-                passwordConfirm = scanner.nextLine();
+            if(!password.equals(passwordConfirm)) {
+                return new Result(false, "passwords do not match");
             }
         }
         Gender g;
@@ -158,6 +158,10 @@ public class LoginAndRegisterController {
             g = Gender.valueOf(gender.trim());
         } catch (IllegalArgumentException e) {
             return new Result(false, "Invalid gender");
+        }
+        if(randomPassword) {
+            return new Result(true , "now we want to select security question, your random password : "
+                    + password );
         }
         return new Result(true, "now we want to select security question");
 
