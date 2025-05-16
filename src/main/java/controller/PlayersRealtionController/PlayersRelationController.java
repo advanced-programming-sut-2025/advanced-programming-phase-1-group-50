@@ -454,7 +454,7 @@ public class PlayersRelationController {
             receiver.addEnergy(50);
         }
 
-        return new Result(true, "He/She received the gift");
+        return new Result(true, "He/She received your gift with id " + App.getGame().getGiftIndex());
 
     }
 

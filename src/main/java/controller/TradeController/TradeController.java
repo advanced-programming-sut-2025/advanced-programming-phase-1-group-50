@@ -4,13 +4,47 @@ import models.Result;
 import models.Trade;
 import models.app.App;
 import models.app.Menus;
+import models.manuFactor.Ingredient;
+import models.stores.Sellable;
+import models.userInfo.Player;
 
 import java.util.regex.Matcher;
 
 public class TradeController {
 
     public Result trade(Matcher matcher) {
-        return null;
+
+        Player buyer = null;
+
+        for (Player p : App.getGame().getPlayers()) {
+            if (p.getUsername().equals(matcher.group("username"))) {
+                buyer = p;
+            }
+        }
+
+        if (buyer == null) {
+            return new Result(false, "player not found");
+        }
+
+        if (Sellable.isSellable(matcher.group("item"))) {
+            return new Result(false, "Invalid item for trade");
+        }
+
+        if (Sellable.getSellableByName(matcher.group("item")) == null) {
+            return new Result(false, "Not enough stock");
+        }
+
+        int amount = Integer.parseInt(matcher.group("amount"));
+
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault((Ingredient) Sellable.getSellableByName(matcher.group("item")), 0) < amount) {
+            return new Result(false, "Not enough stock");
+        }
+
+        App.getGame().addTradesIndex();
+        App.getGame().addToTrades(new Trade(App.getGame().getCurrentPlayingPlayer(), buyer, amount,
+                Sellable.getSellableByName(matcher.group("item")), Integer.parseInt(matcher.group("price"))));
+
+        return new Result(true, "your offer with id " + App.getGame().getTradeIndex() +" successfully submitted");
     }
 
     public Result tradeList() {
@@ -43,6 +77,6 @@ public class TradeController {
 
     public Result exit() {
         App.setMenu(Menus.GameMenu);
-        return new Result(true,"you are in game menu now");
+        return new Result(true, "you are in game menu now");
     }
 }
