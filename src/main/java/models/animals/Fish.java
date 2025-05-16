@@ -28,11 +28,15 @@ public class Fish implements Ingredient, Sellable {
         return quality;
     }
 
-    @Override
-    public String toString() {
+    public String getInfo() {
         return "Fish -> " +
                 "type: " + type +
                 ", quality: " + quality;
+    }
+
+    @Override
+    public String toString() {
+        return quality + " " + type;
     }
 
     @Override

@@ -13,4 +13,9 @@ public class Coin implements Ingredient {
     public boolean equals(Object obj) {
         return obj instanceof Coin;
     }
+
+    @Override
+    public String toString() {
+        return "Coin";
+    }
 }

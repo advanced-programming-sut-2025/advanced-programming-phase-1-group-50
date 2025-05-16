@@ -13,4 +13,9 @@ public class Bouquet implements Ingredient {
     public boolean equals(Object obj) {
         return obj instanceof Bouquet;
     }
+
+    @Override
+    public String toString() {
+        return "Bouquet";
+    }
 }

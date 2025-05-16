@@ -171,4 +171,9 @@ public class Crop implements Ingredient, Growable , Placeable, Sellable {
     public String getColor(){
         return colorCode;
     }
+
+    @Override
+    public String toString() {
+        return type.toString();
+    }
 }

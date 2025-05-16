@@ -285,7 +285,7 @@ public class AnimalsController {
         StringBuilder output = new StringBuilder();
         output.append(String.format("Number of Fishes: %d\n" ,numberOfFish));
         for (Fish fish : caughtFish) {
-            output.append("\t").append(fish.toString()).append("\n");
+            output.append("\t").append(fish.getInfo()).append("\n");
         }
 
         player.getAbility().increaseFishingRate(5);

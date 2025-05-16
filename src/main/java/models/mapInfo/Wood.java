@@ -12,4 +12,9 @@ public class Wood implements Ingredient {
     public boolean equals(Object obj) {
         return obj instanceof Wood;
     }
+
+    @Override
+    public String toString() {
+        return "Wood";
+    }
 }

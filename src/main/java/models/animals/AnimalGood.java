@@ -39,4 +39,9 @@ public class AnimalGood implements Ingredient, Sellable {
     public int hashCode() {
         return Objects.hash(type, quality);
     }
+
+    @Override
+    public String toString() {
+        return quality + " " + type;
+    }
 }

@@ -40,4 +40,9 @@ public class Stone implements Ingredient , Placeable {
     public String getColor(){
         return colorCode;
     }
+
+    @Override
+    public String toString() {
+        return "Stone";
+    }
 }
