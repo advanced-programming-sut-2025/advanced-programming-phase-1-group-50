@@ -166,7 +166,10 @@ public class PlayersRelationController {
         lookUpKey.add(tempGift.getSender());
 
         RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-        tempRelation.changeXp((rate - 3) * 30 + 15);
+        if (!tempRelation.HaveGaveGiftToday()) {
+            tempRelation.changeXp((rate - 3) * 30 + 15);
+        }
+        tempRelation.setHaveGaveGiftToday(true);
         tempNetwork.relationNetwork.put(lookUpKey, tempRelation);
 
         return new Result(true, "you rated this gift successfully");
@@ -447,7 +450,6 @@ public class PlayersRelationController {
 
         receiver.addNotification(new Notification("you have received a gift", App.getGame().getCurrentPlayingPlayer()));
 
-        tempRelation.setHaveGaveGiftToday(true);
 
         if (tempRelation.isMarriage()) {
             App.getGame().getCurrentPlayingPlayer().addEnergy(50);
