@@ -51,8 +51,9 @@ public class PlayersRelationController {
             return new Result(false, "Player not found");
         }
 
-        int distanceSquare = (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - receiver.getPosition().getX());
-        distanceSquare += (int)Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY());
+        int distanceSquare =
+                (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - receiver.getPosition().getX());
+        distanceSquare += (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY());
 
         if (distanceSquare > 2) {
             return new Result(false, "You are too far away");
@@ -74,12 +75,13 @@ public class PlayersRelationController {
             receiver.addEnergy(50);
         }
 
-        tempRelation.addDialogue(new DialoguesBetweenPlayers(App.getGame().getCurrentPlayingPlayer(),receiver, matcher.group("message")));
-        tempNetwork.relationNetwork.put(lookUpKey,tempRelation);
-        receiver.addNotification(new Notification(matcher.group("message")));
+        tempRelation.addDialogue(new DialoguesBetweenPlayers(App.getGame().getCurrentPlayingPlayer(), receiver,
+                matcher.group("message")));
+        tempNetwork.relationNetwork.put(lookUpKey, tempRelation);
+        receiver.addNotification(new Notification(matcher.group("message"),App.getGame().getCurrentPlayingPlayer()));
 
         return new Result(true, "");
-    }   
+    }
 
     public Result talkHistory(Matcher matcher) {
 
@@ -162,18 +164,32 @@ public class PlayersRelationController {
         lookUpKey.add(tempGift.getSender());
 
         RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-        tempRelation.changeXp((rate-3)*30 + 15);
-        tempNetwork.relationNetwork.put(lookUpKey,tempRelation);
+        tempRelation.changeXp((rate - 3) * 30 + 15);
+        tempNetwork.relationNetwork.put(lookUpKey, tempRelation);
 
         return new Result(true, "you rated this gift successfully");
     }
 
     public Result GiftHistory(Matcher matcher) {
 
+        Player temp = null;
+
+        for (Player p : App.getGame().getPlayers()) {
+            if (p.getUsername().equals(matcher.group("username"))) {
+                temp = p;
+                break;
+            }
+        }
+
+        if (temp == null) {
+            return new Result(false, "Player not found");
+        }
+
         StringBuilder message = new StringBuilder("GiftHistory:");
 
         for (BetweenPlayersGift gift : App.getGame().getGifts()) {
-            if (gift.getReceiver().equals(App.getGame().getCurrentPlayingPlayer()) || gift.getSender().equals(App.getGame().getCurrentPlayingPlayer())) {
+            if (gift.getReceiver().equals(App.getGame().getCurrentPlayingPlayer()) && gift.getSender().equals(temp) ||
+                    gift.getSender().equals(App.getGame().getCurrentPlayingPlayer()) && gift.getReceiver().equals(temp)) {
                 message.append("\n");
                 message.append(gift.toStringWithReceiver());
             }
@@ -196,8 +212,9 @@ public class PlayersRelationController {
             return new Result(false, "Player not found");
         }
 
-        int distanceSquare = (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX());
-        distanceSquare += (int)Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
+        int distanceSquare =
+                (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX());
+        distanceSquare += (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
 
         if (distanceSquare > 2) {
             return new Result(false, "You are too far away");
@@ -242,8 +259,9 @@ public class PlayersRelationController {
             return new Result(false, "Player not found");
         }
 
-        int distanceSquare = (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX());
-        distanceSquare += (int)Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
+        int distanceSquare =
+                (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX());
+        distanceSquare += (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
 
         if (distanceSquare > 2) {
             return new Result(false, "You are too far away");
@@ -263,8 +281,8 @@ public class PlayersRelationController {
         if (tempRelation.canGiveFlower()) {
             tempRelation.setGaveFlower();
             tempRelation.setHaveGaveFlowerToday(true);
-            App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Bouquet(),1);
-            temp.getBackpack().addIngredients(new Bouquet(),1);
+            App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Bouquet(), 1);
+            temp.getBackpack().addIngredients(new Bouquet(), 1);
             if (tempRelation.isMarriage()) {
                 App.getGame().getCurrentPlayingPlayer().addEnergy(50);
                 temp.addEnergy(50);
@@ -291,15 +309,16 @@ public class PlayersRelationController {
             return new Result(false, "Player not found");
         }
 
-        int distanceSquare = (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX());
-        distanceSquare += (int)Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
+        int distanceSquare =
+                (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX());
+        distanceSquare += (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
 
         if (distanceSquare > 2) {
             return new Result(false, "You are too far away");
         }
 
         if (App.getGame().getCurrentPlayingPlayer().getCurrentUser().getGender().equals(Gender.Female) || temp.getCurrentUser().getGender().equals(Gender.Male)) {
-            return new Result(false,"Gender conflict");
+            return new Result(false, "Gender conflict");
         }
 
         if (temp.isMarried()) {
@@ -318,7 +337,7 @@ public class PlayersRelationController {
 
         temp.addNotification(new MarriageRequest("aroos nanam mishi?", App.getGame().getCurrentPlayingPlayer()));
 
-        return new Result(true,"Marriage requested");
+        return new Result(true, "Marriage requested");
 
     }
 
@@ -326,7 +345,7 @@ public class PlayersRelationController {
 
         MarriageRequest temp = null;
 
-        for (Notification n : App.getGame().getCurrentPlayingPlayer().getNotifications() ) {
+        for (Notification n : App.getGame().getCurrentPlayingPlayer().getNotifications()) {
 
             if (n instanceof MarriageRequest) {
                 if (!n.isChecked() && ((MarriageRequest) n).getSender().getUsername().equals(matcher.group("username"))) {

@@ -4,13 +4,13 @@ import models.userInfo.Player;
 
 public class MarriageRequest extends Notification {
 
-    private final Player sender;
     public MarriageRequest(String message, Player sender) {
-        super(message);
-        this.sender = sender;
+        super(message , sender);
     }
 
-    public Player getSender() {
-        return sender;
+    @Override
+    public String toString() {
+        return "sender : " + sender.getUsername() + "  message: " + getMessage() +"   (Marriage Request)";
     }
+
 }
