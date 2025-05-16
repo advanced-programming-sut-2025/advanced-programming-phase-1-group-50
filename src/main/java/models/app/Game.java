@@ -3,6 +3,7 @@ package models.app;
 import controller.GameMenuController;
 import models.BetweenPlayersGift;
 import models.Result;
+import models.Trade;
 import models.animals.Animal;
 import models.date.Time;
 import models.foraging.Crop;
@@ -29,6 +30,8 @@ public class Game {
     private RelationNetwork relationsBetweenPlayers;
     private final ArrayList<BetweenPlayersGift> gifts = new ArrayList<>();
     private int giftIndex = 0;
+    private int tradeIndex = 0;
+    private final ArrayList<Trade> trades = new ArrayList<>();
     private final GameMenuController gameMenuController = new GameMenuController();
 
     public Game(ArrayList<Player> players, ArrayList<Farm> farms, User u, Map x) {
@@ -46,10 +49,6 @@ public class Game {
 
     public RelationNetwork getRelationsBetweenPlayers() {
         return relationsBetweenPlayers;
-    }
-
-    public void setRelationsBetweenPlayers(RelationNetwork relationsBetweenPlayers) {
-        this.relationsBetweenPlayers = relationsBetweenPlayers;
     }
 
     public ArrayList<Player> getPlayers() {
@@ -144,6 +143,21 @@ public class Game {
         gifts.add(gift);
     }
 
+    public void addTradesIndex() {
+        tradeIndex++;
+    }
+
+    public int getTradeIndex() {
+        return tradeIndex;
+    }
+
+    public void addToTrades(Trade trade) {
+        trades.add(trade);
+    }
+
+    public ArrayList<Trade> getTrades() {
+        return trades;
+    }
 
     public void callMethodsForTomorrow() {
         ((GameMenu) App.getMenu().getMenu()).doNights();

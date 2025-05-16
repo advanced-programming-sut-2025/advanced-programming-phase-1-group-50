@@ -438,6 +438,10 @@ public class PlayersRelationController {
             return new Result(false, "Not enough stock");
         }
 
+        App.getGame().addGiftsIndex();
+        BetweenPlayersGift tempGift = new BetweenPlayersGift(Sellable.getSellableByName(matcher.group("item")),App.getGame().getCurrentPlayingPlayer(),receiver,App.getGame().getGiftIndex());
+        App.getGame().addToGifts(tempGift);
+
         App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(matcher.group("item")),amount);
         receiver.getBackpack().addIngredients((Ingredient) Sellable.getSellableByName(matcher.group("item")),amount);
 
