@@ -44,4 +44,9 @@ public class ArtisanGood implements Ingredient, Sellable {
     public int hashCode() {
         return Objects.hashCode(type);
     }
+
+    @Override
+    public String toString() {
+        return type.toString();
+    }
 }

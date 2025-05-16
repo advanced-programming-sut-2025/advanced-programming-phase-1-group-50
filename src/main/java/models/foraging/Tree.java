@@ -146,4 +146,8 @@ public class Tree implements Growable, Placeable {
         return colorCode;
     }
 
+    @Override
+    public String toString() {
+        return type.toString();
+    }
 }
