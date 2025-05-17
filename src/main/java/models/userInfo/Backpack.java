@@ -170,6 +170,8 @@ public class Backpack {
     public ArtisanMachine getArtisanMachineByName(String name) {
         ArtisanMachine machineIns = ArtisanMachine.getArtisanMachineByRecipe(CraftingRecipes.getRecipeByName(name));
 
+        if (machineIns == null) return null;
+
         for (ArtisanMachine machine : artisanMachines) {
             if (machine.getClass() == machineIns.getClass())
                 return machine;

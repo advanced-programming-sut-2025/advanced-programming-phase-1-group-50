@@ -43,13 +43,12 @@ public abstract class ArtisanMachine {
             return new Result(false, "You don't have any artisan goods in machine yet!!");
         int todayDate = App.getGame().getTime().getDate();
         int todayHour = App.getGame().getTime().getHour();
-        if (App.getGame().getTime().getSeason() != timeOfRequest.getSeason()) {
+        if (App.getGame().getTime().getSeason() != timeOfRequest.getSeason())
             todayDate += 28;
-            if(timeOfRequest.getDate() + processingTimes.get(producingGood).getDays() < todayDate ||
-                    timeOfRequest.getDate() + processingTimes.get(producingGood).getDays() == todayDate &&
-                    timeOfRequest.getHour() + processingTimes.get(producingGood).getHours() <= todayHour)
-                return new Result(true, "Your product is Ready.");
-        }
+        if(timeOfRequest.getDate() + processingTimes.get(producingGood).getDays() < todayDate ||
+                timeOfRequest.getDate() + processingTimes.get(producingGood).getDays() == todayDate &&
+                timeOfRequest.getHour() + processingTimes.get(producingGood).getHours() <= todayHour)
+            return new Result(true, "Your product is Ready.");
         return new Result(false, "Your product is Not Ready.");
     }
 
