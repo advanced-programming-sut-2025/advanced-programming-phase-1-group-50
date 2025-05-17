@@ -334,16 +334,19 @@ public class NPCController {
         message += App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().getNpcFriendshipLevel().toString();
         message += "    ";
         message += App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().getNumericalFriendShipLevel();
+        message += "\n";
 
         message += "Leah: ";
         message += App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().getNpcFriendshipLevel().toString();
         message += "    ";
         message += App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().getNumericalFriendShipLevel();
+        message += "\n";
 
         message += "Robin: ";
         message += App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().getNpcFriendshipLevel().toString();
         message += "    ";
         message += App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().getNumericalFriendShipLevel();
+        message += "\n";
 
         message += "Harvey: ";
         message += App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().getNpcFriendshipLevel().toString();
