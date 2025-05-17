@@ -54,7 +54,7 @@ public enum GameMenuCommands implements Command {
     AdvancedTimeCheatCode("\\s*advanced\\s+time\\s+(?<advancedTime>-?\\d+)\\s*"),
     AdvancedDateCheatCode("\\s*advanced\\s+date\\s+(?<advancedDate>-?\\d+)\\s*"),
     CheatWeatherSetCode("\\s*cheat\\s+weather\\s+set\\s+(?<weather>\\S+)\\s*"),
-    CheatThunder("\\s*cheat\\s+thor\\s+-l\\s+<(?<thunderX>-?\\d+)\\s*,\\s*(?<thunderY>-?\\d+)\\s*"),
+    CheatThunder("\\s*cheat\\s+thor\\s+-l\\s+<(?<thunderX>-?\\d+)\\s*,\\s*(?<thunderY>-?\\d+)>\\s*"),
     CheatSetEnergy("\\s*energy\\s+set\\s+-v\\s+(?<energy>-?\\d+)\\s*"),
     CheatUnlimitedEnergy("\\s*energy\\s+unlimited\\s*"),
     CheatAddDollars("\\s*cheat\\s+add\\s+(?<amount>-?\\d+)\\s+dollars\\s*"),
