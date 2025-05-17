@@ -27,7 +27,6 @@ public class Player {
     private final Ability ability = new Ability(this);
     private Tool currentTool;
     private  final Backpack backpack = new Backpack(BackpackType.Primary);
-    private  final TrashCan trashCan = new TrashCan();
     private final ArrayList<Notification> notifications = new ArrayList<>();
     private Farm farm;
     private boolean isFaintedToday = false;
