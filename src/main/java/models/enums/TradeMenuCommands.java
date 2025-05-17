@@ -10,7 +10,7 @@ public enum TradeMenuCommands implements Command {
     tradeResponse("^\\s*trade\\s+response\\s+-(?<state>accept|reject)\\s+-i\\s+(?<id>\\d+)\\s*$"),
     tradeHistory("\\s*trade\\s+history\\s*"),
     ShowCurrentMenu("^\\s*show\\s+current\\s+menu\\s*$"),
-    Exit("^\\s*exit\\s*$");
+    Exit("^\\s*menu\\s+exit\\s*$");
 
     private final String pattern;
 
