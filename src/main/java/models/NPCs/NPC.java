@@ -236,13 +236,13 @@ public class NPC {
         return this.type.getSymbol();
     }
 
-    public boolean giveRandomGiftToPlayer(Player player) {
+    public void giveRandomGiftToPlayer(Player player) {
 
         Random rand = new Random();
         int randomNumber = rand.nextInt(2);
 
         if (randomNumber == 0) {
-            return false;
+            return;
         }
 
         int playerIndex = App.getGame().getPlayers().indexOf(player);
@@ -302,7 +302,6 @@ public class NPC {
         }
 
 
-        return true;
     }
 
     public String showQuestLists () {

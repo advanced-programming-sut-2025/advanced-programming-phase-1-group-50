@@ -101,16 +101,16 @@ public class Game {
         if (checkedPlayers == size) {
             time.advancedDay(1);
             return new Result(true, "All players have been fainted! Next day is started!\n" +
-                    "Current player: " + players.getFirst().getUsername());
+                    "Current player: " + players.getFirst().getUsername() + "\n\n" + players.getFirst().UncheckedNotifications());
         }
 
         if (currentPlayingPlayer.equals(players.get(0))) {
             time.advancedHour(1);
             return new Result(true, "An hour passed!\n" +
-                    "Current player: " + players.getFirst().getUsername());
+                    "Current player: " + players.getFirst().getUsername() + "\n\n" + players.getFirst().UncheckedNotifications());
         }
 
-        return new Result(true, "Next player: " + currentPlayingPlayer.getUsername());
+        return new Result(true, "Next player: " + currentPlayingPlayer.getUsername() + "\n\n" + currentPlayingPlayer.UncheckedNotifications());
     }
 
     public Map getMap() {

@@ -3,6 +3,7 @@ package models.userInfo;
 import models.NPCs.NPC;
 import models.NPCs.NPCType;
 import models.NPCs.RelationWithNPC;
+import models.Notification.MarriageRequest;
 import models.Result;
 import models.Notification.Notification;
 import models.animals.Animal;
@@ -117,15 +118,7 @@ public class Player {
         return currentTool;
     }
 
-    public void talkToNPC(NPC npc) {
-
-    }
-
     public void fishing(){
-
-    }
-
-    public void tradeWithPlayer(Player player) {
 
     }
 
@@ -266,7 +259,29 @@ public class Player {
     public void setRemainingNumsAfterMarriageRequestDenied(int remainingNumsAfterMarriageRequestDenied) {
         this.remainingNumsAfterMarriageRequestDenied = remainingNumsAfterMarriageRequestDenied;
     }
+
     public boolean isInfinite() {
         return isInfinite;
+    }
+
+    public String UncheckedNotifications() {
+
+        StringBuilder result = new StringBuilder("Notifications:");
+
+        for (Notification notification : notifications) {
+
+            if (!notification.isChecked()) {
+
+                result.append("\n").append(notification);
+
+                if (!(notification instanceof MarriageRequest)) {
+                    notification.setChecked(true);
+                }
+
+            }
+
+        }
+
+        return result.toString();
     }
 }

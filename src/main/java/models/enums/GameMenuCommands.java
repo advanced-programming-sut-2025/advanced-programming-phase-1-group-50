@@ -46,7 +46,7 @@ public enum GameMenuCommands implements Command {
     FlowerTOPlayer("\\s*flower\\s+-u\\s+(?<username>.+?)\\s*"),
     AskMarriage("\\s*ask\\s+marriage\\s+-u\\s+(?<username>.+?)\\s*"),
     RespondMarriageRequest("\\s*respond\\s+-(?<state>accept|reject)\\s+-u\\s+(?<username>.+?)\\s*"),
-    StartTrade("\\s*start\\s+trade\\s*"),//TODO
+    StartTrade("\\s*start\\s+trade\\s*"),
     PrintMapWithSize("\\s*print\\s+map\\s+-x\\s+(?<X>\\d+)\\s+-y\\s+(?<Y>\\d+)\\s+-size\\s+(?<size>\\d+)\\s*"),
 
 
