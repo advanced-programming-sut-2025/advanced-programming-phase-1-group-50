@@ -292,6 +292,7 @@ public class PlayersRelationController {
                 App.getGame().getCurrentPlayingPlayer().addEnergy(50);
                 temp.addEnergy(50);
             }
+            tempRelation.changeXp(0);
             return new Result(true, "che romantic");
         }
 
