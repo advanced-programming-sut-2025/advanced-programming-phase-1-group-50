@@ -63,7 +63,7 @@ public class Crop implements Ingredient, Growable , Placeable, Sellable {
         int todayDate = today.getDate();
 
         if (today.getSeason() != lastGrowthTime.getSeason())
-            todayDate += 28;
+            todayDate += Math.abs(lastGrowthTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
 
         if (lastGrowthTime.getDate() + timeForGrow == todayDate) {
             levelOfGrowth++;
@@ -103,7 +103,10 @@ public class Crop implements Ingredient, Growable , Placeable, Sellable {
             watering();
             return true;
         }
-        return today.getDate() <= lastWaterTime.getDate() + numberOfDaysCanBeAliveWithoutWater;
+        int todayDate = today.getDate();
+        if (today.getSeason() != lastGrowthTime.getSeason())
+            todayDate += Math.abs(lastGrowthTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
+        return todayDate <= lastWaterTime.getDate() + numberOfDaysCanBeAliveWithoutWater;
     }
 
     public int getNumberOfDaysToComplete() {
@@ -113,9 +116,10 @@ public class Crop implements Ingredient, Growable , Placeable, Sellable {
         for (int i = 0; i < levelOfGrowth; i++) {
             passedDays += type.getTimeForGrow(i);
         }
-        int todayDate = App.getGame().getTime().getDate();
-        if (App.getGame().getTime().getSeason() != lastGrowthTime.getSeason())
-            todayDate += 28;
+        Time today = App.getGame().getTime().clone();
+        int todayDate = today.getDate();
+        if (today.getSeason() != lastGrowthTime.getSeason())
+            todayDate += Math.abs(lastGrowthTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
         passedDays += todayDate - lastGrowthTime.getDate();
         return type.getTotalHarvestTime() - passedDays;
     }

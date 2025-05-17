@@ -20,11 +20,7 @@ public class Habitat implements Placeable {
         this.type = type;
         this.size = size;
         animals = new ArrayList<>();
-        if (HabitatType.Barn.equals(type)) {
-            this.bounds = new Rectangle(x, y, 7, 4);
-        } else {
-            this.bounds = new Rectangle(x, y, 6, 3);
-        }
+        this.bounds = new Rectangle(x, y, type.getLengthX(), type.getLengthY());
     }
 
     public HabitatType getType() {
