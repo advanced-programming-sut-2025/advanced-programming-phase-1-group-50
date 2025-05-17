@@ -245,4 +245,7 @@ public class LoginAndRegisterController {
         findUser(username).setPassword(passwordUtil.hashPassword(newPassword));
         return new Result(true, "user password changed successfully");
     }
+    public Result showMenu(){
+        return new Result(true,"login and register menu");
+    }
 }
