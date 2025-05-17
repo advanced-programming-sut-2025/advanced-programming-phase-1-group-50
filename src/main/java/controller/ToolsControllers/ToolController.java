@@ -266,6 +266,7 @@ public class ToolController {
                     p.getFarm().getPlaceables().remove(stone);
                     targetTile.setSymbol('.');
                     p.getBackpack().addIngredients(stone, 1);
+                    p.getAbility().increaseMiningRate(10);
                     return new Result(true, "stone broken");
 
                 } else if (targetTile.getPlaceable() instanceof Quarry quarry) {
@@ -275,7 +276,10 @@ public class ToolController {
                         ForagingMineral fg = quarry.getForagingMinerals()
                                 .get(rand.nextInt(quarry.getForagingMinerals().size()));
                         quarry.getForagingMinerals().remove(fg);
-                        p.getBackpack().addIngredients(fg, 1);
+                        int q  = 1;
+                        if(p.getAbility().getMiningLevel() > 2) q = 2;
+                        p.getBackpack().addIngredients(fg, q);
+                        p.getAbility().increaseMiningRate(10);
                         return new Result(true, "you add a foraging mineral to the backpack");
 
                     }
@@ -330,6 +334,7 @@ public class ToolController {
                 Result energyConsumptionResult = scythe.useTool();
                 if (!energyConsumptionResult.getSuccessful())
                     return energyConsumptionResult;
+                p.getAbility().increaseForagingRate(10);
                 return foragingController.harvestWithScythe(plant, targetTile);
             }
 

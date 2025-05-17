@@ -177,6 +177,10 @@ public class GameMenuController {
     }
 
     public Result exitGame() {
+        if(!App.getGame().getCurrentPlayingPlayer().getUsername().equals(App.getGame().getGameCreator().getUsername())){
+            return new Result (false,"only game creators can exit game");
+        }
+        App.setGame(null);
         return new Result(true, "exit game successful");
     }
 
@@ -273,6 +277,7 @@ public class GameMenuController {
                 "* : crop\n" +
                 "Q : quarry\n" +
                 "L : lake\n" +
+                "d : door\n" +
                 "+ : wall\n";
         return new Result(true, sb);
 
@@ -320,6 +325,7 @@ public class GameMenuController {
         StringBuilder output = new StringBuilder();
 
         for (Player p : App.getGame().getPlayers()) {
+            if(p.isFaintedToday()) break;
             int cottageX = p.getFarm().getCottage().getBounds().x;
             int cottageY = p.getFarm().getCottage().getBounds().y;
 

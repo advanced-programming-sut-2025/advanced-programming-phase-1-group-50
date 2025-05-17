@@ -3,6 +3,7 @@ package controller.GameDateAndWeatherController;
 import models.Result;
 import models.app.App;
 import models.date.Weather;
+import models.foraging.Growable;
 import models.mapInfo.Tile;
 
 public class WeatherController {
@@ -41,6 +42,13 @@ public class WeatherController {
         Tile t = findTilePosition(x , y);
         if(t == null){
             return new Result(false, "Tile not found");
+        }
+        if(t.getPlaceable() instanceof Growable){
+            t.setPlaceable(null);
+            t.setSymbol('.');
+            t.setFertilizer(null);
+            t.setPlowed(false);
+
         }
         t.setGotThunder(true);
         return new Result(true , "position with x : " + x + " and y : " + y + " is going thunder");
