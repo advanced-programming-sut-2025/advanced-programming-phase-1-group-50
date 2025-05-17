@@ -294,6 +294,7 @@ public class PlayersRelationController {
 
         if (distanceSquare > 2) {
             return new Result(false, "You are too far away");
+
         }
 
         if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Bouquet(),0) == 0) {
