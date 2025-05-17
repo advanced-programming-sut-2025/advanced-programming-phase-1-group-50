@@ -8,7 +8,8 @@ public enum StoreMenuCommands implements Command {
     ShowAllProducts("^\\s*show\\s+all\\s+products\\s*$"),
     ShowAvailableProducts("^\\s*show\\s+all\\s+available\\s+products\\s*$"),
     PurchaseProduct("^\\s*purchase\\s+(?<productName>.+?)(?:\\s+-n\\s+(?<count>\\d+))?\\s*$"),
-    Exit("^\\s*exit\\s+$");
+    ShowCurrentMenu("^\\s*show\\s+current\\s+menu\\s*$"),
+    Exit("^\\s*menu\\s+exit\\s*$");
 
     private final String pattern;
 

@@ -1,6 +1,5 @@
 package models.userInfo;
 
-import models.NPCs.NPC;
 import models.NPCs.NPCType;
 import models.NPCs.RelationWithNPC;
 import models.Notification.MarriageRequest;

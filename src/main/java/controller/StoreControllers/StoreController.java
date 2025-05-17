@@ -32,5 +32,9 @@ public abstract class StoreController {
         App.setMenu(Menus.GameMenu);
     }
 
+    public Result ShowCurrentMenu() {
+        return new Result(true,"StoreMenu");
+    }
+
 
 }

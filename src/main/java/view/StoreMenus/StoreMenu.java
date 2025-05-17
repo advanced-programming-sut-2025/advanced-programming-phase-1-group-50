@@ -33,6 +33,10 @@ public abstract class StoreMenu implements AppMenu {
             controller.exit();
             System.out.println("Returning to game menu...");
 
+        } else if (StoreMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
+
+            System.out.println(controller.ShowCurrentMenu());
+
         } else {
 
             System.out.println("Invalid command");

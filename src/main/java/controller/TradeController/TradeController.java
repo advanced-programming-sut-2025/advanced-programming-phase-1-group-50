@@ -162,6 +162,10 @@ public class TradeController {
         return new Result(true, message.toString());
     }
 
+    public Result ShowCurrentMenu() {
+        return new Result(true, "Trade Menu");
+    }
+
     public Result exit() {
         App.setMenu(Menus.GameMenu);
         return new Result(true, "you are in game menu now");
