@@ -60,7 +60,12 @@ public class MarnieRanch extends Store {
         for (ShopItem item : inventory) {
             if (item.remainingQuantity > 0) {
                 message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   " +
-                        "Remaining: ").append(item.remainingQuantity);
+                        "Remaining: ");
+                if (item.remainingQuantity > 10000) {
+                    message.append("infinity");
+                } else {
+                    message.append(item.remainingQuantity);
+                }
             }
         }
         return message.toString();
@@ -148,7 +153,6 @@ public class MarnieRanch extends Store {
         }
 
         App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), (-1) * totalPrice);
-        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(((BlackSmithStocksItem) item).getType(), value);
         item.decreaseRemainingQuantity(value);
 
         return new Result(true, "");

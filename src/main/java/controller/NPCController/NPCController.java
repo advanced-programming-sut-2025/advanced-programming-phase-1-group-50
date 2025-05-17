@@ -42,7 +42,7 @@ public class NPCController {
             }
             case "Sebastian" -> {
 
-                home = App.getGame().getMap().getNpcHomes().get(1);
+                home = App.getGame().getMap().getNpcHomes().get(4);
 
                 if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
 
@@ -64,7 +64,7 @@ public class NPCController {
             }
             case "Leah" -> {
 
-                home = App.getGame().getMap().getNpcHomes().get(2);
+                home = App.getGame().getMap().getNpcHomes().get(3);
 
                 if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
 
@@ -86,7 +86,7 @@ public class NPCController {
             }
             case "Robin" -> {
 
-                home = App.getGame().getMap().getNpcHomes().get(3);
+                home = App.getGame().getMap().getNpcHomes().get(2);
 
                 if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
 
@@ -108,7 +108,7 @@ public class NPCController {
             }
             case "Harvey" -> {
 
-                home = App.getGame().getMap().getNpcHomes().get(4);
+                home = App.getGame().getMap().getNpcHomes().get(1);
 
                 if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
 

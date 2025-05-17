@@ -58,7 +58,12 @@ public class StardropSaloon extends Store {
         StringBuilder message = new StringBuilder("StardopSaloon Available Products:");
         for (ShopItem item : inventory) {
             if (item.remainingQuantity > 0) {
-                message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   Remaining: ").append(item.remainingQuantity);
+                message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   Remaining: ");
+                if (item.remainingQuantity > 10000) {
+                    message.append("infinity");
+                } else {
+                    message.append(item.remainingQuantity);
+                }
             }
         }
         return message.toString();

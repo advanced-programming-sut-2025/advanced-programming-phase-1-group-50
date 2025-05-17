@@ -119,7 +119,12 @@ public class PierreGeneralStore extends Store {
                     message.append("\nName: ").append(item.name).append("   Price: ").append((item.price * 2) / 3).append("   Remaining: ").append(item.remainingQuantity);
                 } else {
                     message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   " +
-                            "Remaining: ").append(item.remainingQuantity);
+                            "Remaining: ");
+                    if (item.remainingQuantity > 10000) {
+                        message.append("infinity");
+                    } else {
+                        message.append(item.remainingQuantity);
+                    }
                 }
             }
         }
