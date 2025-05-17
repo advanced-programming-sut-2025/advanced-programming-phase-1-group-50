@@ -75,13 +75,15 @@ public class AnimalsController {
 
         Habitat habitat = null;
         for (Habitat habitat1 : player.getFarm().getHabitats()) {
-            if (habitat1.getType().equals(animalType.getAnimalHabitat()) && habitat1.hasEmptyCapacity()) {
+            if (habitat1.getType().equals(animalType.getAnimalHabitat()) &&
+                    habitat1.getSize().compareTo(animalType.getHabitatSize()) >= 0 &&
+                    habitat1.hasEmptyCapacity()) {
                 habitat = habitat1;
                 break;
             }
         }
         if (habitat == null)
-            return new Result(false, "You don't have any enough capacity to buy this animalT!");
+            return new Result(false, "You don't have any enough habitat to buy this animal!");
 
         Result storeResult = map.getNpcVillage().getMarnieRanch().PurchaseAnimal(animalType);
         if (!storeResult.getSuccessful())
@@ -100,6 +102,8 @@ public class AnimalsController {
 
         if (animal == null)
             return new Result(false, "Animal <" + animalName + "> not found!");
+        if (!App.getGame().getMap().isAroundPlaceable(player, animal.getHabitat()))
+            return new Result(false, "You are not near to house of <" + animalName + ">!");
 
         animal.pet();
 
@@ -114,6 +118,8 @@ public class AnimalsController {
             return new Result(false, "Animal <" + animalName + "> not found!");
         if (amount <= 0)
             return new Result(false, "You can't set friendship to negative amount!");
+        if (amount > 1000)
+            return new Result(false, "You can't set friendship more than 1000!");
 
         animal.setFriendShip(amount);
 
@@ -212,12 +218,14 @@ public class AnimalsController {
             return new Result(false, "Animal <" + animalName + "> not found!");
         if (!animal.isReadyProduct())
             return new Result(false, "Product is not ready!");
+        if (!App.getGame().getMap().isAroundPlaceable(player, animal.getHabitat()))
+            return new Result(false, "You are not near to house of <" + animalName + ">!");
 
         Tool tool = player.getCurrentTool();
-        if (tool == null)
-            return new Result(false, "you don't have a tool, please set your current tool!");
 
         if (animal.getType().equals(AnimalType.Sheep)) {
+            if (tool == null)
+                return new Result(false, "you don't have a tool, please set your current tool!");
 
             if (!(tool instanceof Shear shear))
                 return new Result(false, "Your current tool is not Shear!");
@@ -227,6 +235,8 @@ public class AnimalsController {
                 return energyConsumptionResult;
         }
         else if (animal.getType().equals(AnimalType.Cow) || animal.getType().equals(AnimalType.Goat)) {
+            if (tool == null)
+                return new Result(false, "you don't have a tool, please set your current tool!");
 
             if (!(tool instanceof MilkPail milkPail))
                 return new Result(false, "Your current tool is not MilkPail!");
@@ -242,7 +252,7 @@ public class AnimalsController {
         animal.incrementFriendShip(5);
 
         return new Result(true,
-                String.format("You collect %s with quality %s. Previous price: %s -> New Price: %s",
+                String.format("You collect %s with quality %s. Base price: %s -> New Price: %s",
                         animalGood.getType(), animalGood.getQuality(), animalGood.getType().getPrice(), animalGood.getSellPrice()));
     }
 

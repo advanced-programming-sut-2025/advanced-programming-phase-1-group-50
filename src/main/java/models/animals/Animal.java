@@ -73,15 +73,15 @@ public class Animal {
     }
 
     public boolean hasFedToday() {
-        return lastFeedTime.getDate() == App.getGame().getTime().getDate() - 1;
+        return lastFeedTime.getDate() == App.getGame().getTime().getDate();
     }
 
     public boolean isReadyProduct() {
         //TODO -> for pig is different
         Time today = App.getGame().getTime().clone();
         int dayOfToday = today.getDate();
-        if (today.getSeason().equals(lastProductTime.getSeason()))
-            dayOfToday += 28;
+        if (!today.getSeason().equals(lastProductTime.getSeason()))
+            dayOfToday += Math.abs(lastProductTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
         return dayOfToday >= lastProductTime.getDate() + type.getDaysToGetProduct();
     }
 
