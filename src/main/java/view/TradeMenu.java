@@ -26,6 +26,8 @@ public class TradeMenu implements AppMenu{
             System.out.println(controller.tradeHistory());
         } else if (TradeMenuCommands.Exit.getMatcher(input) != null) {
             System.out.println(controller.exit());
+        } else if (TradeMenuCommands.ShowCurrentMenu.getMatcher(input) != null) {
+          System.out.println(controller.ShowCurrentMenu());
         } else {
             System.out.println("Invalid command");
         }
