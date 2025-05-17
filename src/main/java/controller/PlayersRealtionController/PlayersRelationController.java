@@ -57,9 +57,10 @@ public class PlayersRelationController {
             return new Result(false, "you can't choose yourself");
         }
 
-        int distanceSquare =
-                (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - receiver.getPosition().getX());
-        distanceSquare += (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY());
+        int distanceSquare = (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - receiver.getPosition().getX()) *
+                (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - receiver.getPosition().getX()) +
+                (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY()) *
+                        (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY());
 
         if (distanceSquare > 2) {
             return new Result(false, "You are too far away");
@@ -233,9 +234,10 @@ public class PlayersRelationController {
             return new Result(false, "you can't choose yourself");
         }
 
-        int distanceSquare =
-                (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX());
-        distanceSquare += (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
+        int distanceSquare = (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX()) *
+                (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX()) +
+                (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY()) *
+                        (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
 
         if (distanceSquare > 2) {
             return new Result(false, "You are too far away");
@@ -284,9 +286,11 @@ public class PlayersRelationController {
             return new Result(false, "you can't choose yourself");
         }
 
-        int distanceSquare =
-                (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX());
-        distanceSquare += (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
+        int distanceSquare = (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX()) *
+                            (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX()) +
+                            (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY()) *
+                            (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
+
 
         if (distanceSquare > 2) {
             return new Result(false, "You are too far away");
@@ -339,9 +343,10 @@ public class PlayersRelationController {
             return new Result(false, "you can't choose yourself");
         }
 
-        int distanceSquare =
-                (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX());
-        distanceSquare += (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
+        int distanceSquare = (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX()) *
+                (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX()) +
+                (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY()) *
+                        (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
 
         if (distanceSquare > 2) {
             return new Result(false, "You are too far away");
@@ -437,9 +442,10 @@ public class PlayersRelationController {
             return new Result(false, "you can't choose yourself");
         }
 
-        int distanceSquare =
-                (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - receiver.getPosition().getX());
-        distanceSquare += (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY());
+        int distanceSquare = (App.getGame().getCurrentPlayingPlayer().getPosition().getX() -receiver.getPosition().getX()) *
+                (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - receiver.getPosition().getX()) +
+                (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY()) *
+                        (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY());
 
         if (distanceSquare > 2) {
             return new Result(false, "You are too far away");
