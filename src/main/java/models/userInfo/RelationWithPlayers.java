@@ -199,7 +199,7 @@ public class RelationWithPlayers {
 
     @Override
     public String toString() {
-        return  friendshipLevel.toString();
+        return  friendshipLevel.toString() + "      xp: " + this.xp ;
     }
 
 }

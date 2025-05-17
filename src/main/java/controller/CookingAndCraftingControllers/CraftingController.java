@@ -1,9 +1,7 @@
 package controller.CookingAndCraftingControllers;
 
 import models.Result;
-import models.animals.Fish;
-import models.animals.FishType;
-import models.animals.Quality;
+import models.animals.*;
 import models.app.App;
 import models.cooking.Food;
 import models.foraging.*;
@@ -145,6 +143,12 @@ public class CraftingController {
         if (fertilizer != null) {
             player.getBackpack().addIngredients(fertilizer, quantity);
             return new Result(true, "You add <" + fertilizer + "> successfully!");
+        }
+
+        AnimalGoodType animalGoodType = AnimalGoodType.getAnimalGoodTypeByName(itemName);
+        if (animalGoodType != null) {
+            player.getBackpack().addIngredients(new AnimalGood(animalGoodType, Quality.Regular), quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
         }
         
         if (itemName.equalsIgnoreCase("hay")) {

@@ -143,7 +143,7 @@ public class PlayersRelationController {
         int id = Integer.parseInt(matcher.group("id"));
         BetweenPlayersGift tempGift = null;
 
-        if (rate <= 0 || id >= 6) {
+        if (rate <= 0 || rate >= 6) {
             return new Result(false, "Invalid gift rate");
         }
 
@@ -294,6 +294,7 @@ public class PlayersRelationController {
 
         if (distanceSquare > 2) {
             return new Result(false, "You are too far away");
+
         }
 
         if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Bouquet(),0) == 0) {

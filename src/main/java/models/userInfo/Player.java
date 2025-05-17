@@ -16,6 +16,8 @@ import models.tools.Tool;
 import models.app.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Player {
     private final int maxEnergy = 200;
@@ -281,5 +283,35 @@ public class Player {
         }
 
         return result.toString();
+    }
+
+    public boolean canWalkToOtherFarm (Farm farm) {
+
+        Player temp = null;
+
+        for (Player p : App.getGame().getPlayers()) {
+            if (p.getFarm().equals(farm)) {
+                temp = p;
+                break;
+            }
+        }
+
+        if (temp == null) {
+            return false;
+        }
+
+        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
+        lookUpKey.add(temp);
+
+        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+
+        if  (tempRelation.isMarriage()) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }
