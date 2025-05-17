@@ -29,7 +29,7 @@ public class AbigailQuests {
         for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient instanceof ArtisanGood) {
                 if (((ArtisanGood) ingredient).getType().equals(ArtisanGoodType.GoldBar)) {
-                    int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                    int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
                     if ( value > 0) {
                         App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 1);
                         isGoldBarAvailable = true;
@@ -65,7 +65,7 @@ public class AbigailQuests {
         for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient instanceof Crop) {
                 if (((Crop) ingredient).getType().equals(CropType.Pumpkin)) {
-                    int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                    int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
                     if ( value > 0) {
                         App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient,1);
                         isPumpkinAvailable= true;
@@ -101,7 +101,7 @@ public class AbigailQuests {
         for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient instanceof Crop) {
                 if (((Crop) ingredient).getType().equals(CropType.Wheat)) {
-                    int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                    int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
                     if ( value >= 50) {
                         App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 50);
                         are50WheatAvailable = true;

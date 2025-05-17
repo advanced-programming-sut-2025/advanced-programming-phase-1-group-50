@@ -55,7 +55,7 @@ public class CraftingController {
         HashMap<Ingredient, Integer> ingredients = recipe.getIngredients();
         for (Ingredient ingredient : ingredients.keySet()) {
             if (!(player.getBackpack().getIngredientQuantity().containsKey(ingredient) &&
-                    player.getBackpack().getIngredientQuantity().get(ingredient) >= ingredients.get(ingredient))) {
+                    player.getBackpack().getIngredientQuantity().getOrDefault(ingredient,0) >= ingredients.get(ingredient))) {
                 return new Result(false, "You don't have enough <" + ingredient + "> in your backpack!");
             }
             player.getBackpack().removeIngredients(ingredient, ingredients.get(ingredient));

@@ -86,7 +86,7 @@ public class MarnieRanch extends Store {
             return new Result(false, "No such animal");
         }
 
-        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(new Coin()) < item.price) {
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Coin(),0) < item.price) {
             return new Result(false, "You don't have enough money to purchase");
         }
 

@@ -31,7 +31,7 @@ public class LeahQuests {
             if (ingredient instanceof ArtisanGood) {
                 if (((ArtisanGood) ingredient).getType().equals(ArtisanGoodType.GoldBar)) {
                     int value =
-                            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
                     if (value > 0) {
                         App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 1);
                         isGoldBarAvailable = true;
@@ -67,7 +67,7 @@ public class LeahQuests {
         for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient instanceof Fish) {
                 if (((Fish) ingredient).getType().equals(FishType.Salmon)) {
-                    int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                    int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
                     if (value > 0) {
                         App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 1);
                         isSalmonAvailable = true;
@@ -102,7 +102,7 @@ public class LeahQuests {
                 App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient instanceof Wood) {
                 int value =
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
                 if (value >= 200) {
                     App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient,200);
                     are200WoodAvailable = true;

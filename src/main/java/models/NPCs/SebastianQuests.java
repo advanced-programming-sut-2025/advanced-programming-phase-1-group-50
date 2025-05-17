@@ -27,7 +27,7 @@ public class SebastianQuests {
                 App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient.equals(ForagingMineral.Iron)) {
                 int value =
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
                 if (value >= 50) {
                     App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 50);
                     are50IronsAvailable = true;
@@ -61,7 +61,7 @@ public class SebastianQuests {
 
         for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient.equals(Food.PumpkinPie)) {
-                int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
                 if (value > 0) {
                     App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient,1);
                     isPumpkinPieAvailable = true;
@@ -95,7 +95,7 @@ public class SebastianQuests {
 
         for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient instanceof Stone) {
-                int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
                 if (value >= 150) {
                     App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 150);
                     are150StonesAvailable = true;

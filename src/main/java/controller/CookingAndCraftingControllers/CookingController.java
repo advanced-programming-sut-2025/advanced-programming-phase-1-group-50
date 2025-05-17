@@ -82,7 +82,7 @@ public class CookingController {
             if (ingredientInBackpack == null)
                 return new Result(false, "You don't have any <" + requiredIngredient + "> in your backpack!");
 
-            if (player.getBackpack().getIngredientQuantity().get(ingredientInBackpack) < requiredIngredients.get(requiredIngredient)) {
+            if (player.getBackpack().getIngredientQuantity().getOrDefault(ingredientInBackpack,0) < requiredIngredients.get(requiredIngredient)) {
                 return new Result(false, "You don't have enough <" + requiredIngredient + "> in your backpack!");
             }
 

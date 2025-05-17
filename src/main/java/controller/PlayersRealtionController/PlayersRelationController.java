@@ -29,7 +29,7 @@ public class PlayersRelationController {
             Player p1 = iterator.next();
             Player p2 = iterator.next();
 
-            message.append(p1.getUsername()).append(" and ").append(p2.getUsername()).append(":");
+            message.append(p1.getUsername()).append(" and ").append(p2.getUsername()).append(": ");
             message.append(App.getGame().getRelationsBetweenPlayers().relationNetwork.get(key).toString());
 
         }
@@ -292,7 +292,7 @@ public class PlayersRelationController {
             return new Result(false, "You are too far away");
         }
 
-        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(new Bouquet()) == 0) {
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Bouquet(),0) == 0) {
             return new Result(false, "You don't have Bouquet");
         }
 

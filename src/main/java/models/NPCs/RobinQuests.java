@@ -28,7 +28,7 @@ public class RobinQuests{
                 App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient instanceof Wood) {
                 int value =
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
                 if (value >= 80) {
                     App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 80);
                     are80WoodAvailable = true;
@@ -63,7 +63,7 @@ public class RobinQuests{
         for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient instanceof ArtisanGood) {
                 if (((ArtisanGood) ingredient).getType().equals(ArtisanGoodType.IronBar)) {
-                    int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                    int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
                     if ( value >= 10) {
                         App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 10);
                         are10IronBarAvailable= true;
@@ -102,7 +102,7 @@ public class RobinQuests{
                 App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient instanceof Wood) {
                 int value =
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().get(ingredient);
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
                 if (value >= 1000) {
                     App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 1000);
                     are1000WoodAvailable = true;
