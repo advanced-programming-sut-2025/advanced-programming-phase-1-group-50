@@ -53,6 +53,10 @@ public class PlayersRelationController {
             return new Result(false, "Player not found");
         }
 
+        if (receiver.equals(App.getGame().getCurrentPlayingPlayer())) {
+            return new Result(false, "you can't choose yourself");
+        }
+
         int distanceSquare =
                 (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getX() - receiver.getPosition().getX());
         distanceSquare += (int) Math.sqrt(App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY());
@@ -98,6 +102,10 @@ public class PlayersRelationController {
 
         if (temp == null) {
             return new Result(false, "Player not found");
+        }
+
+        if (temp.equals(App.getGame().getCurrentPlayingPlayer())) {
+            return new Result(false, "you can't choose yourself");
         }
 
         RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
@@ -190,6 +198,10 @@ public class PlayersRelationController {
             return new Result(false, "Player not found");
         }
 
+        if (temp.equals(App.getGame().getCurrentPlayingPlayer())) {
+            return new Result(false, "you can't choose yourself");
+        }
+
         StringBuilder message = new StringBuilder("GiftHistory:");
 
         for (BetweenPlayersGift gift : App.getGame().getGifts()) {
@@ -215,6 +227,10 @@ public class PlayersRelationController {
 
         if (temp == null) {
             return new Result(false, "Player not found");
+        }
+
+        if (temp.equals(App.getGame().getCurrentPlayingPlayer())) {
+            return new Result(false, "you can't choose yourself");
         }
 
         int distanceSquare =
@@ -262,6 +278,10 @@ public class PlayersRelationController {
 
         if (temp == null) {
             return new Result(false, "Player not found");
+        }
+
+        if (temp.equals(App.getGame().getCurrentPlayingPlayer())) {
+            return new Result(false, "you can't choose yourself");
         }
 
         int distanceSquare =
@@ -313,6 +333,10 @@ public class PlayersRelationController {
 
         if (temp == null) {
             return new Result(false, "Player not found");
+        }
+
+        if (temp.equals(App.getGame().getCurrentPlayingPlayer())) {
+            return new Result(false, "you can't choose yourself");
         }
 
         int distanceSquare =
@@ -407,6 +431,10 @@ public class PlayersRelationController {
 
         if (receiver == null) {
             return new Result(false, "Player not found");
+        }
+
+        if (receiver.equals(App.getGame().getCurrentPlayingPlayer())) {
+            return new Result(false, "you can't choose yourself");
         }
 
         int distanceSquare =
