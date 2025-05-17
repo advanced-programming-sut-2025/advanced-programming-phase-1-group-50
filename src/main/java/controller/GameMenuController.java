@@ -231,6 +231,9 @@ public class GameMenuController {
                 continue;
             }
             if (p.getFarm().getRectangle().contains(endX, endY)) {
+                if(App.getGame().getCurrentPlayingPlayer().canWalkToOtherFarm(p.getFarm())){
+                    continue;
+                }
                 return new Result(false, "this position is not in your farm");
             }
         }
