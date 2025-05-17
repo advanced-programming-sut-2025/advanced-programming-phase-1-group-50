@@ -31,7 +31,7 @@ public class TradeController {
             return new Result(false, "player not found");
         }
 
-        if (Sellable.isSellable(matcher.group("item"))) {
+        if (!Sellable.isSellable(matcher.group("item"))) {
             return new Result(false, "Invalid item for trade");
         }
 
