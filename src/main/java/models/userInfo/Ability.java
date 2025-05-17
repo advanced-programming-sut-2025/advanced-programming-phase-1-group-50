@@ -61,7 +61,7 @@ public class Ability {
 
     public void increaseFarmingRate(int amount) {
         farmingRate += amount;
-        while (farmingLevel < maxLevel && farmingRate >= getRequiredPointsForLevel(farmingLevel + 1)) {
+        while (farmingLevel < maxLevel && farmingRate >= getRequiredPointsForLevel(farmingLevel)) {
             farmingRate -= getRequiredPointsForLevel(farmingLevel + 1);
             increaseFarmingLevel();
         }
@@ -69,7 +69,7 @@ public class Ability {
 
     public void increaseMiningRate(int amount) {
         miningRate += amount;
-        while (miningLevel < maxLevel && miningRate >= getRequiredPointsForLevel(miningLevel + 1)) {
+        while (miningLevel < maxLevel && miningRate >= getRequiredPointsForLevel(miningLevel)) {
             miningRate -= getRequiredPointsForLevel(miningLevel + 1);
             increaseMiningLevel();
         }
@@ -77,7 +77,7 @@ public class Ability {
 
     public void increaseForagingRate(int amount) {
         foragingRate += amount;
-        while (foragingLevel < maxLevel && foragingRate >= getRequiredPointsForLevel(foragingLevel + 1)) {
+        while (foragingLevel < maxLevel && foragingRate >= getRequiredPointsForLevel(foragingLevel)) {
             foragingRate -= getRequiredPointsForLevel(foragingLevel + 1);
             increaseForagingLevel();
         }
@@ -85,7 +85,7 @@ public class Ability {
 
     public void increaseFishingRate(int amount) {
         fishingRate += amount;
-        while (fishingLevel < maxLevel && fishingRate >= getRequiredPointsForLevel(fishingLevel + 1)) {
+        while (fishingLevel < maxLevel && fishingRate >= getRequiredPointsForLevel(fishingLevel)) {
             fishingRate -= getRequiredPointsForLevel(fishingLevel + 1);
             increaseFishingLevel();
         }
