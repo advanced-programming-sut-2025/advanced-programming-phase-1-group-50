@@ -71,6 +71,9 @@ public class LoginAndRegisterMenu implements AppMenu {
 
 
         }
+        else if(LoginMenuCommands.ShowMenu.getMatcher(input) != null) {
+            System.out.println(controller.showMenu());
+        }
         else {
             System.out.println("invalid command");
         }
