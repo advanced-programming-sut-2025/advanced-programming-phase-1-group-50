@@ -210,7 +210,7 @@ public class GameMenu implements AppMenu {
             System.out.println(artisanController.artisanGet(matcher.group("artisanName")));
         } else if ((matcher = GameMenuCommands.CheatAddDollars.getMatcher(input)) != null) {
             System.out.println(controller.cheatAddDollars(matcher));
-        } else if ((matcher = GameMenuCommands.UseGreenHouseForHarvesting.getMatcher(input)) != null) {
+        } else if ((matcher = GameMenuCommands.UseGreenHouseForWatering.getMatcher(input)) != null) {
             System.out.println(controller.useGreenHouseForWatering());
         } else if ((matcher = GameMenuCommands.UseGreenHouseForHarvesting.getMatcher(input)) != null) {
             System.out.println(controller.useGreenHouseForHarvesting());
