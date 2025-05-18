@@ -385,38 +385,98 @@ public class GameMenuController {
 
         if (gameMap.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), gameMap.getNpcVillage().getBlacksmith())) {
 
-            App.setMenu(Menus.BlackSmithMenu);
-            return new Result(true, "Now you are in the blacksmith");
+            if (gameMap.getNpcVillage().getBlacksmith().isOpen()) {
+
+                App.setMenu(Menus.BlackSmithMenu);
+                return new Result(true, "Now you are in the blacksmith");
+
+            } else {
+
+                return new Result(false, "Blacksmith is closed");
+
+            }
+
 
         } else if (gameMap.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), gameMap.getNpcVillage().getCarpenterShop())) {
 
-            App.setMenu(Menus.CarpenterShopMenu);
-            return new Result(true, "Now you are in the carpenterShop");
+            if (gameMap.getNpcVillage().getCarpenterShop().isOpen()) {
+
+                App.setMenu(Menus.CarpenterShopMenu);
+                return new Result(true, "Now you are in the carpenterShop");
+
+            } else {
+
+                return new Result(false, "carpenterShop is closed");
+
+            }
 
         } else if (gameMap.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), gameMap.getNpcVillage().getMarnieRanch())) {
 
-            App.setMenu(Menus.MarnieRanchMenu);
-            return new Result(true, "Now you are in the Marnie's Ranch");
+            if (gameMap.getNpcVillage().getMarnieRanch().isOpen()) {
+
+                App.setMenu(Menus.MarnieRanchMenu);
+                return new Result(true, "Now you are in the Marnie's Ranch");
+
+            } else {
+
+                return new Result(false, "MarnieRanch is closed");
+
+            }
 
         } else if (gameMap.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), gameMap.getNpcVillage().getJojaMart())) {
 
-            App.setMenu(Menus.JojaMartMenu);
-            return new Result(true, "Now you are in the Joja Mart");
+            if (gameMap.getNpcVillage().getJojaMart().isOpen()) {
+
+                App.setMenu(Menus.JojaMartMenu);
+                return new Result(true, "Now you are in the Joja Mart");
+
+            } else {
+
+                return new Result(false, "Joja Mart is closed");
+
+            }
 
         } else if (gameMap.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), gameMap.getNpcVillage().getPierreGeneralStore())) {
 
-            App.setMenu(Menus.PierreGeneralStoreMenu);
-            return new Result(true, "Now you are in the Pierre General Store");
+            if (gameMap.getNpcVillage().getPierreGeneralStore().isOpen()) {
+
+                App.setMenu(Menus.PierreGeneralStoreMenu);
+                return new Result(true, "Now you are in the Pierre General Store");
+
+            } else {
+
+                return new Result(false, "Pierre General Store is closed");
+
+            }
+
 
         } else if (gameMap.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), gameMap.getNpcVillage().getFishShop())) {
 
-            App.setMenu(Menus.FishShopMenu);
-            return new Result(true, "Now you are in the Fish Shop");
+            if (gameMap.getNpcVillage().getFishShop().isOpen()) {
+
+                App.setMenu(Menus.FishShopMenu);
+                return new Result(true, "Now you are in the Fish Shop");
+
+            } else {
+
+                return new Result(false, "Fish Shop is closed");
+
+            }
+
 
         } else if (gameMap.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), gameMap.getNpcVillage().getStardopSaloon())) {
 
-            App.setMenu(Menus.StardopSaloonMenu);
-            return new Result(true, "Now you are in the Stardop Saloon");
+            if (gameMap.getNpcVillage().getStardopSaloon().isOpen()) {
+
+                App.setMenu(Menus.StardopSaloonMenu);
+                return new Result(true, "Now you are in the Stardop Saloon");
+
+            } else {
+
+                return new Result(false, "StardopSaloon is closed");
+
+            }
+
 
         } else {
 

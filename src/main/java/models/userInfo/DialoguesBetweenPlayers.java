@@ -17,6 +17,6 @@ public class DialoguesBetweenPlayers {
 
     @Override
     public String toString() {
-        return sender.getNickname() + " : " + dialogue;
+        return sender.getUsername() + " : " + dialogue;
     }
 }

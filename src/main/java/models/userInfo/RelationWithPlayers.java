@@ -192,6 +192,7 @@ public class RelationWithPlayers {
 
         StringBuilder talkHistory = new StringBuilder();
         for (DialoguesBetweenPlayers dialogue: dialogues) {
+            talkHistory.append("\n");
             talkHistory.append(dialogue.toString());
         }
         return talkHistory.toString();
