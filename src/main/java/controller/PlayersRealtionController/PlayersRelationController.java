@@ -367,6 +367,7 @@ public class PlayersRelationController {
         lookUpKey.add(temp);
 
         RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+
         if (!tempRelation.canRequestMarriage()) {
             return new Result(false, "you can't request marriage in this friendship level");
         }

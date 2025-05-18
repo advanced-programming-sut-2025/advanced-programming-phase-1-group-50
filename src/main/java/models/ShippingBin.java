@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class ShippingBin implements Placeable{
     private final String backgroundCode = BackgroundColors.RED;
     private final String colorCode = ColorPrinter.BRIGHT_BLUE;
-    private HashMap<Player,Integer> dailyRevenue;
+    private HashMap<Player,Integer> dailyRevenue = new HashMap<>();
     private final char symbol = 'ø';
     private final Rectangle bounds;
 
@@ -19,6 +19,7 @@ public class ShippingBin implements Placeable{
 
         this.bounds = new Rectangle(x,y,1,1);
         for (Player player : App.getGame().getPlayers()) {
+
             dailyRevenue.put(player,0);
         }
 
