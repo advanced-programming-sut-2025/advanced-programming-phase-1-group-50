@@ -113,6 +113,7 @@ public class GameMenu implements AppMenu {
         }
         else if (GameMenuCommands.EnergyShow.getMatcher(input) != null) {
             System.out.println(energyController.showEnergy());
+
         }
         else if (GameMenuCommands.CheatSetEnergy.getMatcher(input) != null) {
             matcher = models.enums.GameMenuCommands.CheatSetEnergy.getMatcher(input);
