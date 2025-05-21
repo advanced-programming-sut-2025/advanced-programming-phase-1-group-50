@@ -21,6 +21,7 @@ import java.util.Set;
 
 public class Player {
     private final int maxEnergy = 200;
+
     private int energy = maxEnergy;
     private int consumedEnergyInTurn = 0;
     private  final String username;
