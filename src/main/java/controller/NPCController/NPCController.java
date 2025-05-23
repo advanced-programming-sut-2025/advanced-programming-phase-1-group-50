@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 
 public class NPCController {
 
+
     public Result meetNPC(Matcher matcher) {
 
         NpcHome home = null;
