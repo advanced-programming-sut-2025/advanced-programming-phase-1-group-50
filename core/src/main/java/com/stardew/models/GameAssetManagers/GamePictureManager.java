@@ -7,7 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 public class GamePictureManager {
     public static Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
-
+    public static Skin getSkin() {
+        return skin;
+    }
     //Tools :
         //Axe :
 
@@ -95,7 +97,7 @@ public class GamePictureManager {
         public static Texture stoneIndex668Texture = new Texture("Rock/Stone_Index668.png");
         public static Texture stoneIndex670Texture = new Texture("Rock/Stone_Index670.png");
 
-    //Cooking_recipes:
+    //Cooking_recipes :
 
         public static Texture firedEggTexture = new Texture("Recipe/Fried_Egg.png");
         public static Texture bakedFishTexture = new Texture("Recipe/Baked_Fish.png");
@@ -121,5 +123,26 @@ public class GamePictureManager {
         public static Texture seaFoamPuddingTexture = new Texture("Recipe/Seafoam_Pudding.png");
         public static Texture minersTreatTexture = new Texture("Recipe/Miner%27s_Treat.png");
 
+    //Crafting :
 
+        public static Texture cherryBombTexture = new Texture("Crafting/Cherry_Bomb.png");
+        public static Texture bombTexture = new Texture("Crafting/Bomb.png");
+        public static Texture megaBombTexture = new Texture("Crafting/Mega_Bomb.png");
+        public static Texture sprinklerTexture = new Texture("Crafting/Sprinkler.png");
+        public static Texture qualitySprinklerTexture = new Texture("Crafting/Quality_Sprinkler.png");
+        public static Texture iridiumSprinklerTexture = new Texture("Crafting/Iridium_Sprinkler.png");
+        public static Texture charcoalKilnTexture = new Texture("Crafting/Charcoal_Kiln.png");
+        public static Texture furnaceTexture = new Texture("Crafting/Furnace.png");
+        public static Texture scarecrowTexture = new Texture("Crafting/Scarecrow.png");
+        public static Texture deluxeScarecrowTexture = new Texture("Crafting/Deluxe_Scarecrow.png");
+        public static Texture beeHouseTexture = new Texture("Crafting/Bee_House.png");
+        public static Texture cheesePressTexture = new Texture("Crafting/Cheese_Press.png");
+        public static Texture kegTexture = new Texture("Crafting/Keg.png");
+        public static Texture loomTexture = new Texture("Crafting/Loom.png");
+        public static Texture mayonnaiseMachineTexture = new Texture("Crafting/Mayonnaise_Machine.png");
+        public static Texture oilMakerTexture = new Texture("Crafting/Oil_Maker.png");
+        public static Texture preservesJarTexture = new Texture("Crafting/Preserves_Jar.png");
+        public static Texture dehydratorTexture = new Texture("Crafting/Dehydrator.png");
+        public static Texture fishSmokerTexture = new Texture("Crafting/Fish_Smoker.png");
+        public static Texture mysticTreeSeedTexture = new Texture("Crafting/Mystic_Tree_Seed.png");
 }
