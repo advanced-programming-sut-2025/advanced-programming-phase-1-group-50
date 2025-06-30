@@ -87,7 +87,7 @@ public class LoginAndRegisterMenu implements AppMenu , Screen {
         loginButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                controller.handleLogin();
             }
         });
 
@@ -96,7 +96,7 @@ public class LoginAndRegisterMenu implements AppMenu , Screen {
         forgetPasswordButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                controller.handleForgetPassword();
             }
         });
 

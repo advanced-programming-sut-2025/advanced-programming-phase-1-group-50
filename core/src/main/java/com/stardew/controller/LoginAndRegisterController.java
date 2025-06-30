@@ -17,9 +17,7 @@ import com.stardew.models.app.SecurityQuestion;
 import com.stardew.models.enums.LoginMenuCommands;
 import com.stardew.models.userInfo.Gender;
 import com.stardew.models.userInfo.User;
-import com.stardew.view.AppMenu;
-import com.stardew.view.LoginAndRegisterMenu;
-import com.stardew.view.SelectSecurityQuestionMenu;
+import com.stardew.view.*;
 
 import java.security.SecureRandom;
 import java.util.Scanner;
@@ -294,7 +292,6 @@ public class LoginAndRegisterController {
             SelectSecurityQuestionMenu sqMenu = new SelectSecurityQuestionMenu(selectSecurityQuestionController , username , password , nickname , email , genderEnum);
             Main.getMain().setScreen(sqMenu);
             currentScreen.dispose();
-           //TODO : register user and go to main menu
         }
         else{
             Dialog dialog = new Dialog("error" , GamePictureManager.skin);
@@ -314,6 +311,37 @@ public class LoginAndRegisterController {
     public void handleRandomPassword(){
         String password = generatePassword();
         loginAndRegisterMenu.getPasswordTextField().setText(password);
+
+    }
+
+
+    public void handleLogin(){
+        String username = loginAndRegisterMenu.getUsernameInputTextField().getText();
+        String password = loginAndRegisterMenu.getPasswordInputTextField().getText();
+        Result loginResult = login(username , password);
+        if(loginResult.getSuccessful()){
+            Screen currentScreen = Main.getMain().getScreen();
+            MainMenu mainMenu = new MainMenu();
+            Main.getMain().setScreen(mainMenu);
+            currentScreen.dispose();
+            //TODO : enter main menu , first we should create main menu
+        }
+        else {
+            Dialog loginError = new Dialog("error" , GamePictureManager.skin);
+            loginError.getContentTable().add(new Label(loginResult.getMessage(), GamePictureManager.skin));
+            loginError.getContentTable().getCell(loginError.getContentTable().getChildren().first()).getActor().setColor(Color.RED);
+            loginError.button("OK");
+            loginError.show(loginAndRegisterMenu.getStage());
+        }
+    }
+
+    public void handleForgetPassword(){
+        String username = loginAndRegisterMenu.getUsernameInputTextField().getText();
+        Screen currentScreen = Main.getMain().getScreen();
+        ForgetPasswordController forgetPasswordController = new ForgetPasswordController();
+        ForgetPasswordMenu forgetPasswordMenu = new ForgetPasswordMenu(forgetPasswordController , username);
+        Main.getMain().setScreen(forgetPasswordMenu);
+        currentScreen.dispose();
 
     }
 

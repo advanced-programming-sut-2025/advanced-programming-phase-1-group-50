@@ -3,8 +3,10 @@ package com.stardew.controller;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.app.Menus;
+import com.stardew.view.MainMenu;
 
 public class MainMenuController {
+    private MainMenu menu;
     public Result shewCurrentMenu() {
         return new Result(true, "you are now in the main menu");
     }
@@ -28,4 +30,12 @@ public class MainMenuController {
         App.setMenu(Menus.LoginAndRegister);
         return new Result(true, "you are now in the login menu");
     }
+
+    public void setView(MainMenu view) {
+        this.menu = view;
+    }
+
+
+
+
 }

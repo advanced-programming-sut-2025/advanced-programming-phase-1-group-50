@@ -13,6 +13,7 @@ import com.stardew.models.app.App;
 import com.stardew.models.app.SecurityQuestion;
 import com.stardew.models.userInfo.Gender;
 import com.stardew.models.userInfo.User;
+import com.stardew.view.LoginAndRegisterMenu;
 import com.stardew.view.SelectSecurityQuestionMenu;
 
 public class SelectSecurityQuestionController {
@@ -62,7 +63,8 @@ public class SelectSecurityQuestionController {
                     Actions.fadeOut(1f),
                     Actions.run(() -> {
                         successfullyRegisterWithSq.hide();
-
+                        LoginAndRegisterMenu lok = new LoginAndRegisterMenu(GamePictureManager.skin);
+                        Main.getMain().setScreen(lok);
                         currentScreen.dispose();
 
                     })
