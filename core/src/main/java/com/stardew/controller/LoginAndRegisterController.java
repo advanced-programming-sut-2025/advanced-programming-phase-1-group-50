@@ -275,6 +275,7 @@ public class LoginAndRegisterController {
         String email = loginAndRegisterMenu.getEmailTextField().getText();
         String confirmPassword = loginAndRegisterMenu.getConfirmPasswordTextField().getText();
         String gender = loginAndRegisterMenu.getGenderSelectBox().getSelected();
+        System.out.println(password);
         Gender genderEnum;
         try{
              genderEnum = Gender.valueOf(gender);
@@ -307,6 +308,12 @@ public class LoginAndRegisterController {
         }
 
 
+
+    }
+
+    public void handleRandomPassword(){
+        String password = generatePassword();
+        loginAndRegisterMenu.getPasswordTextField().setText(password);
 
     }
 
