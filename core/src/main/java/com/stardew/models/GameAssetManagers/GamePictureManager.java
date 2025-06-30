@@ -53,21 +53,21 @@ public class GamePictureManager {
 
         //wateringCan :
 
-            public static Texture wateringCanTexture = new Texture("Tools/Watering_Can/Watering_Can.png");
-            public static Texture copperWateringCanTexture = new Texture("Tools/Watering_Can/Copper_Watering_Can.png");
-            public static Texture goldWateringCanTexture = new Texture("Tools/Watering_Can/Gold_Watering_Can.png");
-            public static Texture steelWateringCanTexture = new Texture("Tools/Watering_Can/Steel_Watering_Can.png");
-            public static Texture iridiumWateringCanTexture = new Texture("Tools/Watering_Can/Iridium_Watering_Can.png");
+            public static Texture wateringCanTexture = new Texture("Watering_Can/Watering_Can.png");
+            public static Texture copperWateringCanTexture = new Texture("Watering_Can/Copper_Watering_Can.png");
+            public static Texture goldWateringCanTexture = new Texture("Watering_Can/Gold_Watering_Can.png");
+            public static Texture steelWateringCanTexture = new Texture("Watering_Can/Steel_Watering_Can.png");
+            public static Texture iridiumWateringCanTexture = new Texture("Watering_Can/Iridium_Watering_Can.png");
 
     //Villagers :
 
-        public static Texture abigailTexture = new Texture("Villages/Abigail.png");
-        public static Texture harveyTexture = new Texture("Villages/Harvey.png");
-        public static Texture leahTexture = new Texture("Villages/Leah.png");
-        public static Texture marnieTexture = new Texture("Villages/Marnie.png");
-        public static Texture pierreTexture = new Texture("Villages/Pierre.png");
-        public static Texture robinTexture = new Texture("Villages/Robin.png");
-        public static Texture sebastianTexture = new Texture("Villages/Sebastian.png");
+        public static Texture abigailTexture = new Texture("Villagers/Abigail.png");
+        public static Texture harveyTexture = new Texture("Villagers/Harvey.png");
+        public static Texture leahTexture = new Texture("Villagers/Leah.png");
+        public static Texture marnieTexture = new Texture("Villagers/Marnie.png");
+        public static Texture pierreTexture = new Texture("Villagers/Pierre.png");
+        public static Texture robinTexture = new Texture("Villagers/Robin.png");
+        public static Texture sebastianTexture = new Texture("Villagers/Sebastian.png");
         public static Texture willyTexture = new Texture("Villagers/Willy.png");
 
     //Rock :
@@ -95,7 +95,31 @@ public class GamePictureManager {
         public static Texture stoneIndex668Texture = new Texture("Rock/Stone_Index668.png");
         public static Texture stoneIndex670Texture = new Texture("Rock/Stone_Index670.png");
 
+    //Cooking_recipes:
 
+        public static Texture firedEggTexture = new Texture("Recipe/Fried_Egg.png");
+        public static Texture bakedFishTexture = new Texture("Recipe/Baked_Fish.png");
+        public static Texture saladTexture = new Texture("Recipe/Salad.png");
+        public static Texture omeletTexture = new Texture("Recipe/Omelet.png");
+        public static Texture pumpkinPieTexture = new Texture("Recipe/Pumpkin_Pie.png");
+        public static Texture spaghettiTexture = new Texture("Recipe/Spaghetti.png");
+        public static Texture pizzaTexture = new Texture("Recipe/Pizza.png");
+        public static Texture tortillaTexture = new Texture("Recipe/Tortilla.png");
+        public static Texture makiRollTexture = new Texture("Recipe/Maki_Roll.png");
+        public static Texture tripleShotEspressoTexture = new Texture("Recipe/Triple_Shot_Espresso.png");
+        public static Texture cookieTexture = new Texture("Recipe/Cookie.png");
+        public static Texture hashbrownsTexture = new Texture("Recipe/Hashbrowns.png");
+        public static Texture pancakesTexture = new Texture("Recipe/Pancakes.png");
+        public static Texture fruitSaladTexture = new Texture("Recipe/Fruit_Salad.png");
+        public static Texture redPlateTexture = new Texture("Recipe/Red_Plate.png");
+        public static Texture breadTexture = new Texture("Recipe/Bread.png");
+        public static Texture salmonDinnereTexture = new Texture("Recipe/Salmon_Dinner.png");
+        public static Texture vegetableMedleyTexture = new Texture("Recipe/Vegetable_Medley.png");
+        public static Texture farmersLunchTexture = new Texture("Recipe/Farmer%27s_Lunch.png");
+        public static Texture survivalBurgerTexture = new Texture("Recipe/Survival_Burger.png");
+        public static Texture dishOTheSeaTexture = new Texture("Recipe/Dish_O%27_The_Sea.png");
+        public static Texture seaFoamPuddingTexture = new Texture("Recipe/Seafoam_Pudding.png");
+        public static Texture minersTreatTexture = new Texture("Recipe/Miner%27s_Treat.png");
 
 
 }
