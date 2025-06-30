@@ -19,6 +19,7 @@ import com.stardew.models.userInfo.Gender;
 import com.stardew.models.userInfo.User;
 import com.stardew.view.AppMenu;
 import com.stardew.view.LoginAndRegisterMenu;
+import com.stardew.view.SelectSecurityQuestionMenu;
 
 import java.security.SecureRandom;
 import java.util.Scanner;
@@ -274,10 +275,24 @@ public class LoginAndRegisterController {
         String email = loginAndRegisterMenu.getEmailTextField().getText();
         String confirmPassword = loginAndRegisterMenu.getConfirmPasswordTextField().getText();
         String gender = loginAndRegisterMenu.getGenderSelectBox().getSelected();
+        Gender genderEnum;
+        try{
+             genderEnum = Gender.valueOf(gender);
+        }
+        catch(IllegalArgumentException e){
+            return;
+        }
+
 
 
         Result registerResult = register(username , password , confirmPassword , nickname , email , gender);
+        System.out.println(registerResult.getSuccessful());
         if(registerResult.getSuccessful()){
+            Screen currentScreen = Main.getMain().getScreen();
+            SelectSecurityQuestionController selectSecurityQuestionController = new SelectSecurityQuestionController();
+            SelectSecurityQuestionMenu sqMenu = new SelectSecurityQuestionMenu(selectSecurityQuestionController , username , password , nickname , email , genderEnum);
+            Main.getMain().setScreen(sqMenu);
+            currentScreen.dispose();
            //TODO : register user and go to main menu
         }
         else{
