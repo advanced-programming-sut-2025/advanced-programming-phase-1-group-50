@@ -1,5 +1,6 @@
 package com.stardew.view.StoreMenus;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.controller.StoreControllers.JojaMartController;
 import com.stardew.view.AppMenu;
 
@@ -11,4 +12,8 @@ public class JojaMartMenu extends StoreMenu {
         controller = new JojaMartController();
     }
 
+    @Override
+    public Stage getStage() {
+        return null;
+    }
 }

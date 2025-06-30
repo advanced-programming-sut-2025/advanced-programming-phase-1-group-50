@@ -7,9 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 public class GamePictureManager {
     public static Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
-    public static Skin getSkin() {
-        return skin;
-    }
+
     //Tools :
         //Axe :
 

@@ -3,6 +3,7 @@ package com.stardew.view;
 import java.util.Scanner;
 import java.util.regex.*;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.controller.ProfileMenuController;
 import com.stardew.models.app.App;
 import com.stardew.models.app.Menus;
@@ -52,5 +53,10 @@ public class ProfileMenu implements AppMenu {
             System.out.println("invalid command");
         }
 
+    }
+
+    @Override
+    public Stage getStage() {
+        return null;
     }
 }

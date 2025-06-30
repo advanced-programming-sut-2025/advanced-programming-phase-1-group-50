@@ -1,5 +1,6 @@
 package com.stardew.view;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.controller.TradeController.TradeController;
 import com.stardew.models.enums.TradeMenuCommands;
 
@@ -32,5 +33,10 @@ public class TradeMenu implements AppMenu{
             System.out.println("Invalid command");
         }
 
+    }
+
+    @Override
+    public Stage getStage() {
+        return null;
     }
 }

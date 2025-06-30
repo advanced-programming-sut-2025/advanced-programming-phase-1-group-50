@@ -1,5 +1,14 @@
 package com.stardew.controller;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Timer;
+import com.stardew.Main;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.PasswordUtil;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
@@ -8,6 +17,9 @@ import com.stardew.models.app.SecurityQuestion;
 import com.stardew.models.enums.LoginMenuCommands;
 import com.stardew.models.userInfo.Gender;
 import com.stardew.models.userInfo.User;
+import com.stardew.view.AppMenu;
+import com.stardew.view.LoginAndRegisterMenu;
+import com.stardew.view.SelectSecurityQuestionMenu;
 
 import java.security.SecureRandom;
 import java.util.Scanner;
@@ -16,6 +28,12 @@ import java.util.regex.Pattern;
 
 public class LoginAndRegisterController {
     private final PasswordUtil passwordUtil = new PasswordUtil();
+    private LoginAndRegisterMenu loginAndRegisterMenu;
+
+
+    public void setView(LoginAndRegisterMenu loginAndRegisterMenu) {
+        this.loginAndRegisterMenu = loginAndRegisterMenu;
+    }
 
     public User findUser(String username) {
         for (User user : App.users) {
@@ -248,4 +266,55 @@ public class LoginAndRegisterController {
     public Result showMenu(){
         return new Result(true,"login and register menu");
     }
+
+
+    public void handleRegister(){
+        String username = loginAndRegisterMenu.getUsernameTextField().getText();
+        String password = loginAndRegisterMenu.getPasswordTextField().getText();
+        String nickname = loginAndRegisterMenu.getNicknameTextField().getText();
+        String email = loginAndRegisterMenu.getEmailTextField().getText();
+        String confirmPassword = loginAndRegisterMenu.getConfirmPasswordTextField().getText();
+        String gender = loginAndRegisterMenu.getGenderSelectBox().getSelected();
+        System.out.println(password);
+        Gender genderEnum;
+        try{
+             genderEnum = Gender.valueOf(gender);
+        }
+        catch(IllegalArgumentException e){
+            return;
+        }
+
+
+
+        Result registerResult = register(username , password , confirmPassword , nickname , email , gender);
+        System.out.println(registerResult.getSuccessful());
+        if(registerResult.getSuccessful()){
+            Screen currentScreen = Main.getMain().getScreen();
+            SelectSecurityQuestionController selectSecurityQuestionController = new SelectSecurityQuestionController();
+            SelectSecurityQuestionMenu sqMenu = new SelectSecurityQuestionMenu(selectSecurityQuestionController , username , password , nickname , email , genderEnum);
+            Main.getMain().setScreen(sqMenu);
+            currentScreen.dispose();
+           //TODO : register user and go to main menu
+        }
+        else{
+            Dialog dialog = new Dialog("error" , GamePictureManager.skin);
+            dialog.getContentTable().add(new Label(registerResult.getMessage(), GamePictureManager.skin));
+            dialog.getContentTable().getCell(dialog.getContentTable().getChildren().first())
+                .getActor().setColor(Color.RED);
+            dialog.setColor(1, 234 , 54 , 70);
+
+            dialog.button("OK");
+            dialog.show(loginAndRegisterMenu.getStage());
+        }
+
+
+
+    }
+
+    public void handleRandomPassword(){
+        String password = generatePassword();
+        loginAndRegisterMenu.getPasswordTextField().setText(password);
+
+    }
+
 }
