@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.*;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.controller.AbilityAndEnergyController.AbilityController;
 import com.stardew.controller.AbilityAndEnergyController.EnergyController;
 import com.stardew.controller.AnimalsControllers.AnimalsController;
@@ -425,6 +426,11 @@ public class GameMenu implements AppMenu {
             System.out.println("invalid command");
         }
 
+    }
+
+    @Override
+    public Stage getStage() {
+        return null;
     }
 
     public void doNights() {

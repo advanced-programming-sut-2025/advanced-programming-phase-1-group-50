@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class GamePictureManager {
-    public static Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+    public static Skin skin  = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
 
     //Tools :
@@ -53,21 +53,21 @@ public class GamePictureManager {
 
         //wateringCan :
 
-            public static Texture wateringCanTexture = new Texture("Tools/Watering_Can/Watering_Can.png");
-            public static Texture copperWateringCanTexture = new Texture("Tools/Watering_Can/Copper_Watering_Can.png");
-            public static Texture goldWateringCanTexture = new Texture("Tools/Watering_Can/Gold_Watering_Can.png");
-            public static Texture steelWateringCanTexture = new Texture("Tools/Watering_Can/Steel_Watering_Can.png");
-            public static Texture iridiumWateringCanTexture = new Texture("Tools/Watering_Can/Iridium_Watering_Can.png");
+            public static Texture wateringCanTexture = new Texture("Watering_Can/Watering_Can.png");
+            public static Texture copperWateringCanTexture = new Texture("Watering_Can/Copper_Watering_Can.png");
+            public static Texture goldWateringCanTexture = new Texture("Watering_Can/Gold_Watering_Can.png");
+            public static Texture steelWateringCanTexture = new Texture("Watering_Can/Steel_Watering_Can.png");
+            public static Texture iridiumWateringCanTexture = new Texture("Watering_Can/Iridium_Watering_Can.png");
 
     //Villagers :
 
-        public static Texture abigailTexture = new Texture("Villages/Abigail.png");
-        public static Texture harveyTexture = new Texture("Villages/Harvey.png");
-        public static Texture leahTexture = new Texture("Villages/Leah.png");
-        public static Texture marnieTexture = new Texture("Villages/Marnie.png");
-        public static Texture pierreTexture = new Texture("Villages/Pierre.png");
-        public static Texture robinTexture = new Texture("Villages/Robin.png");
-        public static Texture sebastianTexture = new Texture("Villages/Sebastian.png");
+        public static Texture abigailTexture = new Texture("Villagers/Abigail.png");
+        public static Texture harveyTexture = new Texture("Villagers/Harvey.png");
+        public static Texture leahTexture = new Texture("Villagers/Leah.png");
+        public static Texture marnieTexture = new Texture("Villagers/Marnie.png");
+        public static Texture pierreTexture = new Texture("Villagers/Pierre.png");
+        public static Texture robinTexture = new Texture("Villagers/Robin.png");
+        public static Texture sebastianTexture = new Texture("Villagers/Sebastian.png");
         public static Texture willyTexture = new Texture("Villagers/Willy.png");
 
     //Rock :
@@ -94,6 +94,7 @@ public class GamePictureManager {
         public static Texture stoneIndex450Texture = new Texture("Rock/Stone_Index450.png");
         public static Texture stoneIndex668Texture = new Texture("Rock/Stone_Index668.png");
         public static Texture stoneIndex670Texture = new Texture("Rock/Stone_Index670.png");
+
 
 
 

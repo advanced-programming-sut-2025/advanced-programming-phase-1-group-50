@@ -2,6 +2,7 @@ package com.stardew.view;
 
 import java.util.Scanner;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.controller.MainMenuController;
 
 public class MainMenu implements AppMenu {
@@ -30,5 +31,10 @@ public class MainMenu implements AppMenu {
         System.out.println("invalid command");
     }
 
+    }
+
+    @Override
+    public Stage getStage() {
+        return null;
     }
 }
