@@ -92,6 +92,7 @@ public class ForgetPasswordMenu implements Screen {
 
 
         stage.addActor(forgetPasswordLabel);
+        stage.addActor(enterNewPasswordTextField);
         stage.addActor(usernameTextField);
         stage.addActor(showSecurityQuestionLabel);
         stage.addActor(answerTextField);

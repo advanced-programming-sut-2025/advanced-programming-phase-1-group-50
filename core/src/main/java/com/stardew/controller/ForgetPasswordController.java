@@ -14,7 +14,7 @@ import com.stardew.view.MainMenu;
 
 public class ForgetPasswordController {
     private ForgetPasswordMenu menu;
-    private LoginAndRegisterController loginAndRegisterController;
+    private final LoginAndRegisterController loginAndRegisterController = new LoginAndRegisterController();
 
     public void setView(ForgetPasswordMenu menu) {
         this.menu = menu;

@@ -1,14 +1,26 @@
 package com.stardew.controller;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.PasswordUtil;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
+import com.stardew.view.ProfileMenu;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
+import java.awt.*;
 import java.util.regex.*;
 
 public class ProfileMenuController {
     private final LoginAndRegisterController controller = new LoginAndRegisterController();
     private final PasswordUtil passwordUtil = new PasswordUtil();
+    private ProfileMenu profileMenu;
+
+    public void setView(ProfileMenu profileMenu) {
+        this.profileMenu = profileMenu;
+    }
 
     public Result changePassword(String oldPas, String newPas) {
         Matcher matcher;
@@ -86,6 +98,71 @@ public class ProfileMenuController {
         sb.append("Number of games : " + App.getLoggedInUser().getNumberOfGames() + "\n");
 
         return new Result(true, sb.toString());
+
+    }
+
+    public void handleChangePassword(){
+        TextField oldPassword = new TextField("change password", GamePictureManager.skin);
+        Dialog dialog = new Dialog("enter your password here" , GamePictureManager.skin){
+            protected void result(Object object) {
+                if((boolean)object){
+                    String password = oldPassword.getText();
+                    Dialog error;
+                    boolean re = true;
+                    String message = "";
+
+                    if(!controller.isaValidPasswordLength(password)){
+                        re = false;
+                        message = "Password is too short";
+
+                    }
+                    if(!controller.hasUpperCasePassword(password)){
+                        re = false;
+                        message = "use Upper Case Letter";
+                    }
+                    if(!controller.hasLowerCasePassword(password)){
+                        re = false;
+                        message = "please use Lower Case Letter";
+                    }
+                    if(!controller.hasSpecialCharacters(password)){
+                        re = false;
+                        message = "please use Special Characters";
+
+                    }
+                    if(re){
+                        message = "password changed successfully";
+                    }
+                    error = new Dialog("error" , GamePictureManager.skin);
+                    Label messageLabel = new Label(message, GamePictureManager.skin);
+                    messageLabel.setColor(Color.RED);
+                    messageLabel.setFontScale(1.1f);
+
+
+                    error.getContentTable().add(messageLabel).pad(20).row();
+
+
+                    error.button("OK");
+
+
+                    error.center();
+                    error.show(profileMenu.getStage());
+                }
+            }
+
+        };
+        //final TextField passwordField = new TextField("", GamePictureManager.skin);
+
+
+        Label label = new Label("" , GamePictureManager.skin);
+        label.setColor(Color.RED);
+        dialog.getContentTable().add(label).padBottom(10).row();
+
+        dialog.getContentTable().row();
+        dialog.getContentTable().add(oldPassword).width(200);
+
+        dialog.button("OK", true);
+        dialog.button("Cancel", false);
+        dialog.show(profileMenu.getStage());
 
     }
 }

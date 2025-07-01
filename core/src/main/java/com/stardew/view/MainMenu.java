@@ -54,7 +54,7 @@ public class MainMenu implements AppMenu , Screen {
         profileButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                controller.goToProfileMenu();
             }
         });
         gameButton = new TextButton("Game" , GamePictureManager.skin);

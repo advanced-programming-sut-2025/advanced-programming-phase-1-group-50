@@ -1,9 +1,12 @@
 package com.stardew.controller;
 
+import com.badlogic.gdx.Screen;
+import com.stardew.Main;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.app.Menus;
 import com.stardew.view.MainMenu;
+import com.stardew.view.ProfileMenu;
 
 public class MainMenuController {
     private MainMenu menu;
@@ -33,6 +36,13 @@ public class MainMenuController {
 
     public void setView(MainMenu view) {
         this.menu = view;
+    }
+
+    public void goToProfileMenu() {
+        Screen currentScreen = Main.getMain().getScreen();
+        ProfileMenu profileMenu = new ProfileMenu();
+        Main.getMain().setScreen(profileMenu);
+        currentScreen.dispose();
     }
 
 

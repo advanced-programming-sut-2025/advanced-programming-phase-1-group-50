@@ -3,14 +3,32 @@ package com.stardew.view;
 import java.util.Scanner;
 import java.util.regex.*;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.stardew.Main;
 import com.stardew.controller.ProfileMenuController;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
 import com.stardew.models.app.Menus;
 import com.stardew.models.enums.ProfileMenuCommands;
 
-public class ProfileMenu implements AppMenu {
+
+public class ProfileMenu implements AppMenu , Screen {
     private final  ProfileMenuController controller = new ProfileMenuController();
+    private Stage stage;
+    private final Label profileMenu;
+    private final TextButton changePassword;
+    private final TextButton changeUsername;
+    private final TextButton changeEmail;
+    private final TextButton showUserInfo;
+    private final TextButton back;
     public void check(Scanner scanner) {
         String input = scanner.nextLine();
         input = input.trim();
@@ -55,8 +73,110 @@ public class ProfileMenu implements AppMenu {
 
     }
 
+    public ProfileMenu() {
+        stage = new Stage();
+        profileMenu = new Label("Profile Menu" , GamePictureManager.skin);
+
+        changePassword = new TextButton("Change Password", GamePictureManager.skin);
+        changePassword.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                controller.handleChangePassword();
+            }
+        });
+        changeUsername = new TextButton("Change Username", GamePictureManager.skin);
+        changeUsername.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+            }
+        });
+        changeEmail = new TextButton("Change Email", GamePictureManager.skin);
+        changeEmail.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+            }
+        });
+        showUserInfo = new TextButton("Show UserInfo", GamePictureManager.skin);
+
+        showUserInfo.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+            }
+        });
+        back = new TextButton("Back", GamePictureManager.skin);
+        back.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+            }
+        });
+
+        controller.setView(this);
+
+    }
+
     @Override
     public Stage getStage() {
-        return null;
+        return stage;
+    }
+
+    @Override
+    public void show() {
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+
+        Table table = new Table();
+        table.setFillParent(true);
+        table.center();
+
+        profileMenu.setFontScale(2);
+
+        table.add(profileMenu).padBottom(40).row();
+        table.add(changePassword).width(250).height(50).pad(10).row();
+        table.add(changeUsername).width(250).height(50).pad(10).row();
+        table.add(changeEmail).width(250).height(50).pad(10).row();
+        table.add(showUserInfo).width(250).height(50).pad(10).row();
+        table.add(back).width(250).height(50).pad(10).row();
+
+        stage.addActor(table);
+    }
+
+
+    @Override
+    public void render(float v) {
+        ScreenUtils.clear(0 , 0  , 0 , 1);
+        Main.getBatch().begin();
+        Main.getBatch().end();
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
+
+    }
+
+    @Override
+    public void resize(int i, int i1) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+
     }
 }
