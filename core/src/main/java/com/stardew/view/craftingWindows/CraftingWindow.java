@@ -57,9 +57,9 @@ public class CraftingWindow extends Window {
 
         //Player player = App.getGame().getCurrentPlayingPlayer();
 
-        TooltipManager tooltipManager = new TooltipManager();
-        tooltipManager.initialTime = 0.2f;
-        tooltipManager.subsequentTime = 0.1f;
+        TooltipManager tooltipManager = TooltipManager.getInstance();
+        tooltipManager.initialTime = 0f;
+        tooltipManager.subsequentTime = 0f;
 
         for (CraftingAsset craftingAsset : CraftingAsset.values()) {
             ImageButton button = buttons.get(craftingAsset);
