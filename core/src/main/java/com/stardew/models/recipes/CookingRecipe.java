@@ -35,7 +35,7 @@ public enum CookingRecipe implements Ingredient {
     FarmersLunch(new HashMap<>(Map.of(Food.Omelet, 1, CropType.Parsnip, 1))),
     SurvivalBurger(new HashMap<>(Map.of(Food.Bread, 1, CropType.Carrot, 1, CropType.Eggplant, 1))),
     DishOTheSea(new HashMap<>(Map.of(FishType.Sardine, 2,Food.HashBrowns, 1))),
-    SeaFormPudding(new HashMap<>(Map.of(FishType.Flounder, 1, FishType.MidnightCarp, 1))),
+    SeaFoamPudding(new HashMap<>(Map.of(FishType.Flounder, 1, FishType.MidnightCarp, 1))),
     MinersTreat(new HashMap<>(Map.of(CropType.Carrot, 1, AnimalGoodType.Milk, 1)));
 
     private final HashMap<Ingredient, Integer> ingredients;
@@ -59,5 +59,15 @@ public enum CookingRecipe implements Ingredient {
         if (name == null || name.isEmpty())
             return null;
         return stringToRecipes.getOrDefault(name.toLowerCase(), null);
+    }
+
+    public static String getDescription(CookingRecipe recipe) {
+        StringBuilder description = new StringBuilder();
+        description.append("\n< ").append(recipe).append(" >").append('\n').append('\n');
+        for (Map.Entry<Ingredient, Integer> entry : recipe.getIngredients().entrySet()) {
+            description.append(entry.getValue()).append("   ").append(entry.getKey()).append("\n");
+        }
+        description.append('\n');
+        return description.toString();
     }
 }

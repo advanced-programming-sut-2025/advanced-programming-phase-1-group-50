@@ -104,5 +104,15 @@ public enum CraftingRecipes {
             return null;
         return stringToRecipes.getOrDefault(name.toLowerCase(), null);
     }
+
+    public static String getDescription(CraftingRecipes recipe) {
+        StringBuilder description = new StringBuilder();
+        description.append("\n< ").append(recipe).append(" >").append("\n\n");
+        for (Map.Entry<Ingredient, Integer> entry : recipe.getIngredients().entrySet()) {
+            description.append(entry.getValue()).append("   ").append(entry.getKey()).append("\n");
+        }
+        description.append('\n');
+        return description.toString();
+    }
 }
 
