@@ -127,7 +127,7 @@ public class LoginAndRegisterController {
                            String gender) {
         boolean randomPassword = false;
         Matcher matcher;
-        if (!checkRepeatedUsername(username)) {
+        if (checkRepeatedUsername(username)) {
             return new Result(false, "Username is already taken");
         }
 
