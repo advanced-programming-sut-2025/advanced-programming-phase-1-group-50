@@ -141,7 +141,7 @@ public class Ability {
         if (fishingLevel == 2)
             player.getBackpack().addRecipe(CookingRecipe.DishOTheSea);
         if (fishingLevel == 3)
-            player.getBackpack().addRecipe(CookingRecipe.SeaFormPudding);
+            player.getBackpack().addRecipe(CookingRecipe.SeaFoamPudding);
     }
 
 }
