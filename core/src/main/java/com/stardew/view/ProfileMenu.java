@@ -88,7 +88,7 @@ public class ProfileMenu implements AppMenu , Screen {
         changeUsername.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                controller.handleChangeUsername();
             }
         });
         changeEmail = new TextButton("Change Email", GamePictureManager.skin);

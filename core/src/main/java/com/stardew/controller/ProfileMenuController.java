@@ -165,4 +165,50 @@ public class ProfileMenuController {
         dialog.show(profileMenu.getStage());
 
     }
+
+    public void handleChangeUsername(){
+        TextField changeUsername = new TextField("change username", GamePictureManager.skin);
+        Dialog dialog = new Dialog("enter your new username" , GamePictureManager.skin){
+            protected void result(Object object) {
+                if((boolean)object){
+                    Dialog error = new Dialog("error" , GamePictureManager.skin);
+                    Label messageLabel = new Label("", GamePictureManager.skin);
+                    messageLabel.setColor(Color.RED);
+                    messageLabel.setFontScale(1.1f);
+
+
+                    error.getContentTable().add(messageLabel).pad(20).row();
+
+
+                    error.button("OK");
+
+
+                    error.center();
+                    Result changeUsernameResult = changeUsername(changeUsername.getText());
+                    if(changeUsernameResult.getSuccessful()){
+                        error.text("congratulations!");
+                    }
+                    else{
+                        error.text("Something went wrong");
+                    }
+                    messageLabel.setText(changeUsernameResult.getMessage());
+                    error.show(profileMenu.getStage());
+
+
+                }
+            }
+        };
+        Label label = new Label("" , GamePictureManager.skin);
+        label.setColor(Color.RED);
+        dialog.getContentTable().add(label).padBottom(10).row();
+
+        dialog.getContentTable().row();
+        dialog.getContentTable().add(changeUsername).width(200);
+
+        dialog.button("OK", true);
+        dialog.button("Cancel", false);
+        dialog.show(profileMenu.getStage());
+    }
+
+
 }
