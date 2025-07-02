@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.stardew.models.recipes.CraftingRecipes;
 
 public enum CraftingAsset {
@@ -49,6 +50,7 @@ public enum CraftingAsset {
         labelStyle.fontColor = Color.GOLD;
         labelStyle.background = GamePictureManager.woodBackground;
         description = new Label(CraftingRecipes.getDescription(recipe), labelStyle);
+        description.setAlignment(Align.center);
     }
 
     public TextureRegionDrawable getNormalImage() {

@@ -107,9 +107,9 @@ public enum CraftingRecipes {
 
     public static String getDescription(CraftingRecipes recipe) {
         StringBuilder description = new StringBuilder();
-        description.append("\n").append("       ").append("< ").append(recipe).append(" >").append("       ").append("\n\n");
+        description.append("\n").append("   ").append("< ").append(recipe).append(" >").append("   ").append("\n\n");
         for (Map.Entry<Ingredient, Integer> entry : recipe.getIngredients().entrySet()) {
-            description.append("       ").append(entry.getValue()).append("   ").append(entry.getKey()).append("\n");
+            description.append("   ").append(entry.getValue()).append("   ").append(entry.getKey()).append("   ").append("\n");
         }
         description.append('\n');
         return description.toString();
