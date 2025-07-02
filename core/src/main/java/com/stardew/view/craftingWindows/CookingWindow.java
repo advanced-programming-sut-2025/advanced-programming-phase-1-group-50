@@ -18,42 +18,6 @@ public class CookingWindow extends Window {
     private CookingController controller = new CookingController();
     private Stage stage;
 
-    {
-        for (CookingAsset cookingAsset : CookingAsset.values()) {
-            buttons.put(cookingAsset, new ImageButton(cookingAsset.getStyle()));
-        }
-
-        //Player player = App.getGame().getCurrentPlayingPlayer();
-
-        TooltipManager tooltipManager = new TooltipManager();
-        tooltipManager.initialTime = 0.2f;
-        tooltipManager.subsequentTime = 0.1f;
-
-        for (CookingAsset cookingAsset : CookingAsset.values()) {
-            ImageButton button = buttons.get(cookingAsset);
-            //button.setDisabled(!player.getBackpack().containRecipe(cookingAsset.getRecipe()));
-            button.setDisabled(true);  //delete this line
-            button.addListener(new Tooltip<>(cookingAsset.getDescription(), tooltipManager));
-            button.addListener(new ClickListener() {
-                public void clicked(InputEvent event, float x, float y) {
-                    button.setDisabled(false);  //delete this line
-//                    if (!button.isDisabled()) {
-//                        Result result = controller.cookingPrepare(cookingAsset.name());
-//                        Dialog dialog = new Dialog("Result", GamePictureManager.skin);
-//                        dialog.setColor(Color.LIGHT_GRAY);
-//                        dialog.text(result.getMessage());
-//                        dialog.getContentTable().getCell(dialog.getContentTable().getChildren().first())
-//                            .getActor().setColor(result.getSuccessful() ? Color.GREEN : Color.RED);
-//                        dialog.button(new TextButton("OK", GamePictureManager.skin, "small"));
-//                        dialog.show(stage);
-//                    }
-                }
-            });
-        }
-
-    }
-
-
     public CookingWindow(Stage stage) {
         super("Cooking Menu", GamePictureManager.skin);
 
@@ -62,6 +26,8 @@ public class CookingWindow extends Window {
         setModal(true);
         setMovable(false);
         setResizable(false);
+
+        createUI();
 
         pad(150);
         defaults().space(20);
@@ -78,6 +44,43 @@ public class CookingWindow extends Window {
         setPosition(
             Gdx.graphics.getWidth() / 2f - getWidth() / 2,
             Gdx.graphics.getHeight() / 2f - getHeight() / 2);
+    }
+
+
+    private void createUI() {
+
+        for (CookingAsset cookingAsset : CookingAsset.values()) {
+            buttons.put(cookingAsset, new ImageButton(cookingAsset.getStyle()));
+        }
+
+        //Player player = App.getGame().getCurrentPlayingPlayer();
+
+        TooltipManager tooltipManager = new TooltipManager();
+        tooltipManager.initialTime = 0.2f;
+        tooltipManager.subsequentTime = 0.1f;
+
+        for (CookingAsset cookingAsset : CookingAsset.values()) {
+            ImageButton button = buttons.get(cookingAsset);
+            //button.setDisabled(!player.getBackpack().containRecipe(cookingAsset.getRecipe()));
+            button.setDisabled(true);  //delete this line
+            button.addListener(new Tooltip<>(cookingAsset.getDescription(), tooltipManager));
+            button.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    button.setDisabled(false);  //delete this line
+//                    if (!button.isDisabled()) {
+//                        Result result = controller.cookingPrepare(cookingAsset.name());
+//                        Dialog dialog = new Dialog("Result", GamePictureManager.skin);
+//                        dialog.setColor(Color.LIGHT_GRAY);
+//                        dialog.text(result.getMessage());
+//                        dialog.getContentTable().getCell(dialog.getContentTable().getChildren().first())
+//                            .getActor().setColor(result.getSuccessful() ? Color.GREEN : Color.RED);
+//                        dialog.button(new TextButton("OK", GamePictureManager.skin, "small"));
+//                        dialog.show(stage);
+//                    }
+                }
+            });
+        }
     }
 
 }

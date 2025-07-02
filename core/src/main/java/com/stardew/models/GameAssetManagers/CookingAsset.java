@@ -48,8 +48,8 @@ public enum CookingAsset {
 
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = new BitmapFont();
-        labelStyle.fontColor = Color.BLUE;
-        labelStyle.background = GamePictureManager.greenBackground;
+        labelStyle.fontColor = Color.GOLD;
+        labelStyle.background = GamePictureManager.woodBackground;
         description = new Label(CookingRecipe.getDescription(recipe), labelStyle);
     }
 

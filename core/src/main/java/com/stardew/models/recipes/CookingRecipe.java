@@ -63,10 +63,11 @@ public enum CookingRecipe implements Ingredient {
 
     public static String getDescription(CookingRecipe recipe) {
         StringBuilder description = new StringBuilder();
-        description.append("< ").append(recipe).append(" >").append('\n');
+        description.append("\n< ").append(recipe).append(" >").append('\n').append('\n');
         for (Map.Entry<Ingredient, Integer> entry : recipe.getIngredients().entrySet()) {
             description.append(entry.getValue()).append("   ").append(entry.getKey()).append("\n");
         }
+        description.append('\n');
         return description.toString();
     }
 }
