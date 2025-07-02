@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class GamePictureManager {
-    public static Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+    public static Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.skin"));
 
     public static TextureRegionDrawable woodBackground =
         new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Wood_Floor.png"))));

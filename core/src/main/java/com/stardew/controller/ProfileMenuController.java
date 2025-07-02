@@ -185,6 +185,7 @@ public class ProfileMenuController {
 
                     error.center();
                     Result changeUsernameResult = changeUsername(changeUsername.getText());
+                    System.out.println(changeUsernameResult.getMessage());
                     if(changeUsernameResult.getSuccessful()){
                         error.text("congratulations!");
                     }
@@ -192,6 +193,7 @@ public class ProfileMenuController {
                         error.text("Something went wrong");
                     }
                     messageLabel.setText(changeUsernameResult.getMessage());
+                    System.out.println(changeUsernameResult.getMessage());
                     error.show(profileMenu.getStage());
 
 
@@ -208,6 +210,91 @@ public class ProfileMenuController {
         dialog.button("OK", true);
         dialog.button("Cancel", false);
         dialog.show(profileMenu.getStage());
+    }
+
+    public void handleChangeNickname(){
+        TextField changeNickname = new TextField("change nickname", GamePictureManager.skin);
+        Dialog dialog = new Dialog("enter your new nickname", GamePictureManager.skin){
+            protected void result(Object object) {
+                if((boolean)object){
+                    Dialog error = new Dialog("error" , GamePictureManager.skin);
+                    Label messageLabel = new Label("", GamePictureManager.skin);
+                    messageLabel.setColor(Color.RED);
+                    messageLabel.setFontScale(1.1f);
+                    error.getContentTable().add(messageLabel).pad(20).row();
+                    error.button("OK");
+                    error.center();
+                    Result changeNicknameResult = changeNickname(changeNickname.getText());
+                    if(changeNicknameResult.getSuccessful()){
+                        error.text("congratulations!");
+                    }
+                    else{
+                        error.text("Something went wrong");
+                    }
+                    messageLabel.setText(changeNicknameResult.getMessage());
+                    error.show(profileMenu.getStage());
+
+                }
+            }
+        };
+        Label label = new Label("" , GamePictureManager.skin);
+        label.setColor(Color.RED);
+        dialog.getContentTable().add(label).padBottom(10).row();
+        dialog.getContentTable().row();
+        dialog.getContentTable().add(changeNickname).width(200);
+        dialog.button("OK", true);
+        dialog.button("Cancel", false);
+        dialog.show(profileMenu.getStage());
+
+    }
+
+    public void handleChangeEmail(){
+        TextField changeEmail = new TextField("change email", GamePictureManager.skin);
+        Dialog dialog = new Dialog("enter your new email", GamePictureManager.skin){
+            protected void result(Object object) {
+                if((boolean)object){
+                    Dialog error = new Dialog("error" , GamePictureManager.skin);
+                    Label messageLabel = new Label("", GamePictureManager.skin);
+                    messageLabel.setColor(Color.RED);
+                    messageLabel.setFontScale(1.1f);
+                    error.getContentTable().add(messageLabel).pad(20).row();
+                    error.button("OK");
+                    error.center();
+                    Result changeEmailResult = changeEmail(changeEmail.getText());
+                    if(changeEmailResult.getSuccessful()){
+                        error.text("congratulations!");
+                    }
+                    else{
+                        error.text("Something went wrong");
+                    }
+                    messageLabel.setText(changeEmailResult.getMessage());
+                    error.show(profileMenu.getStage());
+
+
+                }
+            }
+        };
+        Label label = new Label("" , GamePictureManager.skin);
+        label.setColor(Color.RED);
+        dialog.getContentTable().add(label).padBottom(10).row();
+        dialog.getContentTable().row();
+        dialog.getContentTable().add(changeEmail).width(200);
+        dialog.button("OK", true);
+        dialog.button("Cancel", false);
+        dialog.show(profileMenu.getStage());
+
+    }
+
+    public void handleShowUserInfo(){
+        Dialog showInfo = new Dialog("showInfo" , GamePictureManager.skin);
+        String message = showUserInfo().getMessage();
+        Label messageLabel = new Label(message, GamePictureManager.skin);
+        messageLabel.setColor(Color.RED);
+        messageLabel.setFontScale(1.1f);
+        showInfo.getContentTable().add(messageLabel).pad(20).row();
+        showInfo.button("OK");
+        showInfo.center();
+        showInfo.show(profileMenu.getStage());
     }
 
 

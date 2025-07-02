@@ -26,6 +26,7 @@ public class ProfileMenu implements AppMenu , Screen {
     private final Label profileMenu;
     private final TextButton changePassword;
     private final TextButton changeUsername;
+    private final TextButton changeNickname;
     private final TextButton changeEmail;
     private final TextButton showUserInfo;
     private final TextButton back;
@@ -95,7 +96,14 @@ public class ProfileMenu implements AppMenu , Screen {
         changeEmail.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                controller.handleChangeEmail();
+            }
+        });
+        changeNickname = new TextButton("Change Nickname", GamePictureManager.skin);
+        changeNickname.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                controller.handleChangeNickname();
             }
         });
         showUserInfo = new TextButton("Show UserInfo", GamePictureManager.skin);
@@ -103,13 +111,18 @@ public class ProfileMenu implements AppMenu , Screen {
         showUserInfo.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                controller.handleShowUserInfo();
             }
         });
         back = new TextButton("Back", GamePictureManager.skin);
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+
+                Screen screen = Main.getMain().getScreen();
+                MainMenu mainMenu = new MainMenu();
+                Main.getMain().setScreen(mainMenu);
+                screen.dispose();
 
             }
         });
@@ -137,6 +150,7 @@ public class ProfileMenu implements AppMenu , Screen {
         table.add(profileMenu).padBottom(40).row();
         table.add(changePassword).width(250).height(50).pad(10).row();
         table.add(changeUsername).width(250).height(50).pad(10).row();
+        table.add(changeNickname).width(250).height(50).pad(10).row();
         table.add(changeEmail).width(250).height(50).pad(10).row();
         table.add(showUserInfo).width(250).height(50).pad(10).row();
         table.add(back).width(250).height(50).pad(10).row();

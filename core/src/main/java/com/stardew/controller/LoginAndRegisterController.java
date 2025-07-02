@@ -62,10 +62,10 @@ public class LoginAndRegisterController {
     public boolean checkRepeatedUsername(String username) {
         for (User u : App.users) {
             if (u.getUsername().equals(username)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public boolean isValidEmail(String email) {
