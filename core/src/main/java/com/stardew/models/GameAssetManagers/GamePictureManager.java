@@ -10,7 +10,9 @@ public class GamePictureManager {
     public static Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.skin"));
 
     public static TextureRegionDrawable woodBackground =
-        new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Wood_Floor.png"))));
+        new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("wood_bg.png"))));
+    public static TextureRegionDrawable windowWoodBackground =
+        new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("wood_bg_window.png"))));
 
 
     //Tools :
@@ -195,4 +197,33 @@ public class GamePictureManager {
         public static TextureRegionDrawable fishSmokerDisable = new TextureRegionDrawable(new TextureRegion(new Texture("LockedCrafting/Fish_Smoker.png")));
         public static TextureRegionDrawable mysticTreeSeedDisable = new TextureRegionDrawable(new TextureRegion(new Texture("LockedCrafting/Mystic_Tree_Seed.png")));
 
+    //Artisan_Goods :
+
+        public static Texture honeyTexture = new Texture("Artisan_good/Honey.png");
+        public static Texture cheeseTexture = new Texture("Artisan_good/Cheese.png");
+        public static Texture goatCheeseTexture = new Texture("Artisan_good/Goat_Cheese.png");
+        public static Texture beerTexture = new Texture("Artisan_good/Beer.png");
+        public static Texture vinegarTexture = new Texture("Artisan_good/Vinegar.png");
+        public static Texture coffeeTexture = new Texture("Artisan_good/Coffee.png");
+        public static Texture juiceTexture = new Texture("Artisan_good/Juice.png");
+        public static Texture meadTexture = new Texture("Artisan_good/Mead.png");
+        public static Texture paleAleTexture = new Texture("Artisan_good/Pale_Ale.png");
+        public static Texture wineTexture = new Texture("Artisan_good/Wine.png");
+        public static Texture driedMushroomsTexture = new Texture("Artisan_good/Dried_Mushrooms.png");
+        public static Texture driedFruitTexture = new Texture("Artisan_good/Dried_Fruit.png");
+        public static Texture raisinsTexture = new Texture("Artisan_good/Raisins.png");
+        public static Texture coalTexture = new Texture("Artisan_good/Coal.png");
+        public static Texture clothTexture = new Texture("Artisan_good/Cloth.png");
+        public static Texture mayonnaiseTexture = new Texture("Artisan_good/Mayonnaise.png");
+        public static Texture duckMayonnaiseTexture = new Texture("Artisan_good/Duck_Mayonnaise.png");
+        public static Texture dinosaurMayonnaiseTexture = new Texture("Artisan_good/Dinosaur_Mayonnaise.png");
+        public static Texture oilTexture = new Texture("Artisan_good/Oil.png");
+        public static Texture truffleOilTexture = new Texture("Artisan_good/Truffle_Oil.png");
+        public static Texture picklesTexture = new Texture("Artisan_good/Pickles.png");
+        public static Texture jellyTexture = new Texture("Artisan_good/Jelly.png");
+        public static Texture smokedFishTexture = new Texture("Artisan_good/Smoked_Fish.png");
+        public static Texture ironBarTexture = new Texture("Artisan_good/Iron_Bar.png");
+        public static Texture iridiumBarTexture = new Texture("Artisan_good/Iridium_Bar.png");
+        public static Texture copperBarTexture = new Texture("Artisan_good/Copper_Bar.png");
+        public static Texture goldBarTexture = new Texture("Artisan_good/Gold_Bar.png");
 }
