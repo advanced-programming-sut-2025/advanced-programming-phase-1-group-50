@@ -42,7 +42,6 @@ public class CraftingWindow extends Window {
 
         pack();
         setBackground(GamePictureManager.windowWoodBackground);
-        setColor(Color.BROWN);
         setPosition(
             Gdx.graphics.getWidth() / 2f - getWidth() / 2,
             Gdx.graphics.getHeight() / 2f - getHeight() / 2);

@@ -23,8 +23,8 @@ public class ArtisanWindow extends Window {
         setMovable(false);
         setResizable(false);
 
-        pad(50, 5, 60, 5);
-        defaults().space(20);
+        pad(65, 5, 25, 5);
+        defaults().space(10);
 
         TooltipManager tooltipManager = TooltipManager.getInstance();
         tooltipManager.initialTime = 0f;
@@ -46,7 +46,6 @@ public class ArtisanWindow extends Window {
 
         pack();
         setBackground(GamePictureManager.windowWoodBackground);
-        setColor(Color.CORAL);
         setPosition(x, y);
 
     }

@@ -12,7 +12,7 @@ public class GamePictureManager {
     public static TextureRegionDrawable woodBackground =
         new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("wood_bg.png"))));
     public static TextureRegionDrawable windowWoodBackground =
-        new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("wood_bg_window.png"))));
+        new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("window_org.png"))));
 
 
     //Tools :
