@@ -2,6 +2,7 @@ package com.stardew.view.craftingWindows;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -17,6 +18,7 @@ public class CraftingWindow extends Window {
     private HashMap<CraftingAsset, ImageButton> buttons = new HashMap<>();
     private CraftingController controller = new CraftingController();
     private Stage stage;
+    private ImageButton closeButton;
 
 
     public CraftingWindow(Stage stage) {
@@ -82,5 +84,16 @@ public class CraftingWindow extends Window {
                 }
             });
         }
+
+        //adding close button for the window
+        closeButton = new ImageButton(GamePictureManager.closeWindow);
+        getTitleTable().add(closeButton);
+        closeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                getChildren().forEach(Actor::clearListeners);
+                remove();
+            }
+        });
     }
 }

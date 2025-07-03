@@ -13,17 +13,18 @@ import com.stardew.models.GameAssetManagers.GamePictureManager;
 import java.util.ArrayList;
 
 public class ArtisanWindow extends Window {
-    ArtisanController controller = new ArtisanController();
+    private ArtisanController controller = new ArtisanController();
+    private ImageButton closeButton;
 
 
     public ArtisanWindow(ArtisanAsset artisanAsset, float x, float y) {
-        super("Artisan Menu", GamePictureManager.skin);
+        super("Artisan Menu  ", GamePictureManager.skin);
 
         setModal(true);
         setMovable(false);
         setResizable(false);
 
-        pad(65, 5, 25, 5);
+        pad(30, 5, 25, 0);
         defaults().space(10);
 
         TooltipManager tooltipManager = TooltipManager.getInstance();
@@ -43,6 +44,17 @@ public class ArtisanWindow extends Window {
                 }
             });
         }
+
+        //adding close button for the window
+        closeButton = new ImageButton(GamePictureManager.closeWindow);
+        getTitleTable().add(closeButton);
+        closeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                getChildren().forEach(Actor::clearListeners);
+                remove();
+            }
+        });
 
         pack();
         setBackground(GamePictureManager.windowWoodBackground);
