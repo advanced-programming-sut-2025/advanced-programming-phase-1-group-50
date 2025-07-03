@@ -45,11 +45,40 @@ public abstract class ArtisanMachine {
         int todayHour = App.getGame().getTime().getHour();
         if (App.getGame().getTime().getSeason() != timeOfRequest.getSeason())
             todayDate += 28;
-        if(timeOfRequest.getDate() + processingTimes.get(producingGood).getDays() < todayDate ||
-                timeOfRequest.getDate() + processingTimes.get(producingGood).getDays() == todayDate &&
-                timeOfRequest.getHour() + processingTimes.get(producingGood).getHours() <= todayHour)
+
+        int exactDays = timeOfRequest.getDate() + processingTimes.get(producingGood).getDays();
+        int exactHours = timeOfRequest.getHour() + processingTimes.get(producingGood).getHours();
+        if (exactHours > 22) {
+            exactHours -= 22 - 9;
+            exactDays += 1;
+        }
+        if(exactDays < todayDate ||
+                exactDays == todayDate &&
+                exactHours <= todayHour)
             return new Result(true, "Your product is Ready.");
         return new Result(false, "Your product is Not Ready.");
+    }
+
+    public int getPassedTime() {
+        int todayDate = App.getGame().getTime().getDate();
+        int todayHour = App.getGame().getTime().getHour();
+        if (App.getGame().getTime().getSeason() != timeOfRequest.getSeason())
+            todayDate += 28;
+        int passedDays;
+        int passedHours;
+        if (todayDate > timeOfRequest.getDate()) {
+            passedDays = todayDate - timeOfRequest.getDate() - 1;
+            passedHours = (22 - timeOfRequest.getHour()) + (todayHour);
+        }
+        else {
+            passedDays = 0;
+            passedHours = todayHour - timeOfRequest.getHour();
+        }
+        return passedDays * (22 - 9) + passedHours;
+    }
+
+    public int getTotalProcessingTime() {
+        return processingTimes.get(producingGood).getDays() * (22 - 9) + processingTimes.get(producingGood).getHours();
     }
 
     public static ArtisanMachine getArtisanMachineByRecipe(CraftingRecipes recipe) {

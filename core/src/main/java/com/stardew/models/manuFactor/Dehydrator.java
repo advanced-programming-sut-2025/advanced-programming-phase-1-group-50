@@ -32,6 +32,11 @@ public class Dehydrator extends ArtisanMachine {
     }
 
     @Override
+    public int getTotalProcessingTime() {
+        return 22 - timeOfRequest.getHour();
+    }
+
+    @Override
     public Result canUse(Player player, String product) {
         switch (product) {
             case "Dried_Mushroom", "dried_mushroom" -> {

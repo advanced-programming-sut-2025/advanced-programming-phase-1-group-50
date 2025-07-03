@@ -41,4 +41,35 @@ public class ArtisanController {
         return result;
     }
 
+    public Result cancelProcess(String artisanName) {
+        Player player = App.getGame().getCurrentPlayingPlayer();
+        ArtisanMachine artisanMachine = player.getBackpack().getArtisanMachineByName(artisanName);
+
+        if (artisanMachine == null)
+            return new Result(false, "Artisan Machine not found!");
+
+        artisanMachine.reset();
+        return new Result(true, "You cancelled the Artisan machine process!");
+    }
+
+    public Result getPassedTime(String artisanName) {
+        Player player = App.getGame().getCurrentPlayingPlayer();
+        ArtisanMachine artisanMachine = player.getBackpack().getArtisanMachineByName(artisanName);
+
+        if (artisanMachine == null)
+            return new Result(false, "Artisan Machine not found!");
+
+        return new Result(true, artisanMachine.getPassedTime() + "");
+    }
+
+    public Result getProcessingTime(String artisanName) {
+        Player player = App.getGame().getCurrentPlayingPlayer();
+        ArtisanMachine artisanMachine = player.getBackpack().getArtisanMachineByName(artisanName);
+
+        if (artisanMachine == null)
+            return new Result(false, "Artisan Machine not found!");
+
+        return new Result(true, artisanMachine.getTotalProcessingTime() + "");
+    }
+
 }

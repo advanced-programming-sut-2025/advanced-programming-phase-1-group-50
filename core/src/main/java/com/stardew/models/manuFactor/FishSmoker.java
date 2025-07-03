@@ -14,10 +14,18 @@ public class FishSmoker extends ArtisanMachine {
     public Result isReady() {
         if (timeOfRequest == null)
             return new Result(false, "You don't have any artisan goods in machine yet!!");
-        if (timeOfRequest.getDate() + processingTimes.get(producingGood).getDays() < App.getGame().getTime().getDate() ||
+        int todayDate = App.getGame().getTime().getDate();
+        if (App.getGame().getTime().getSeason() != timeOfRequest.getSeason())
+            todayDate += 28;
+        if (timeOfRequest.getDate() < todayDate ||
                 timeOfRequest.getHour() + 1 <= App.getGame().getTime().getHour())
             return new Result(true, "Your product is Ready.");
         return new Result(false, "Your product is Not Ready.");
+    }
+
+    @Override
+    public int getTotalProcessingTime() {
+        return 1;
     }
 
     @Override
