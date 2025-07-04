@@ -1,5 +1,7 @@
 package com.stardew.models.manuFactor;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.foraging.ForagingMineral;
@@ -8,6 +10,11 @@ import com.stardew.models.manuFactor.artisanGoods.ArtisanGoodType;
 import com.stardew.models.userInfo.Player;
 
 public class Furnace extends ArtisanMachine {
+
+    public Furnace() {
+        super();
+        image = new Image(GamePictureManager.furnaceNormal);
+    }
 
     @Override
     public Result isReady() {

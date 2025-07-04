@@ -228,4 +228,8 @@ public class GamePictureManager {
         public static Texture iridiumBarTexture = new Texture("Artisan_good/Iridium_Bar.png");
         public static Texture copperBarTexture = new Texture("Artisan_good/Copper_Bar.png");
         public static Texture goldBarTexture = new Texture("Artisan_good/Gold_Bar.png");
+
+    //end_process image :
+
+        public static Texture endProcessTexture = new Texture("Achievement/end_process.png");
 }

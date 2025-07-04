@@ -1,5 +1,7 @@
 package com.stardew.models.manuFactor;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.foraging.Crop;
@@ -14,6 +16,7 @@ public class Dehydrator extends ArtisanMachine {
 
     public Dehydrator() {
         super();
+        image = new Image(GamePictureManager.dehydratorNormal);
     }
 
     @Override

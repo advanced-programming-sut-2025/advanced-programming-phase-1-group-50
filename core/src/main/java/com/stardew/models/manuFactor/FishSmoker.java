@@ -1,5 +1,7 @@
 package com.stardew.models.manuFactor;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.animals.Fish;
 import com.stardew.models.animals.FishType;
@@ -9,6 +11,11 @@ import com.stardew.models.manuFactor.artisanGoods.ArtisanGoodType;
 import com.stardew.models.userInfo.Player;
 
 public class FishSmoker extends ArtisanMachine {
+
+    public FishSmoker() {
+        super();
+        image = new Image(GamePictureManager.fishSmokerNormal);
+    }
 
     @Override
     public Result isReady() {
