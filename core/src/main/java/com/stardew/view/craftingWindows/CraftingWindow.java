@@ -73,13 +73,7 @@ public class CraftingWindow extends Window {
                     button.setDisabled(false);  //delete this line
 //                    if (!button.isDisabled()) {
 //                        Result result = controller.craftingCraft(craftingAsset.name());
-//                        Dialog dialog = new Dialog("Result", GamePictureManager.skin);
-//                        dialog.setColor(Color.LIGHT_GRAY);
-//                        dialog.text(result.getMessage());
-//                        dialog.getContentTable().getCell(dialog.getContentTable().getChildren().first())
-//                            .getActor().setColor(result.getSuccessful() ? Color.GREEN : Color.RED);
-//                        dialog.button(new TextButton("OK", GamePictureManager.skin, "small"));
-//                        dialog.show(stage);
+//                        showResult(result);
 //                    }
                 }
             });
@@ -95,5 +89,17 @@ public class CraftingWindow extends Window {
                 remove();
             }
         });
+    }
+
+    private void showResult(Result result) {
+        Dialog dialog = new Dialog("Result", GamePictureManager.skin);
+        dialog.setColor(Color.LIGHT_GRAY);
+        dialog.pad(30, 5, 20, 5);
+        dialog.setBackground(GamePictureManager.windowWoodBackground);
+        dialog.text(result.getMessage());
+        dialog.getContentTable().getCell(dialog.getContentTable().getChildren().first())
+            .getActor().setColor(result.getSuccessful() ? Color.GREEN : Color.RED);
+        dialog.button(new TextButton("OK", GamePictureManager.skin, "small"));
+        dialog.show(stage);
     }
 }
