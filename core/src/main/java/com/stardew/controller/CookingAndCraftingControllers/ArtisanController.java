@@ -52,6 +52,17 @@ public class ArtisanController {
         return new Result(true, "You cancelled the Artisan machine process!");
     }
 
+    public boolean isReadyProduct(String artisanName) {
+        Player player = App.getGame().getCurrentPlayingPlayer();
+        ArtisanMachine artisanMachine = player.getBackpack().getArtisanMachineByName(artisanName);
+
+        if (artisanMachine == null)
+            return false;
+
+        Result result = artisanMachine.isReady();
+        return result.getSuccessful();
+    }
+
     public Result getPassedTime(String artisanName) {
         Player player = App.getGame().getCurrentPlayingPlayer();
         ArtisanMachine artisanMachine = player.getBackpack().getArtisanMachineByName(artisanName);
@@ -70,6 +81,16 @@ public class ArtisanController {
             return new Result(false, "Artisan Machine not found!");
 
         return new Result(true, artisanMachine.getTotalProcessingTime() + "");
+    }
+
+    public void cheatFinishProcess(String artisanName) {
+        Player player = App.getGame().getCurrentPlayingPlayer();
+        ArtisanMachine artisanMachine = player.getBackpack().getArtisanMachineByName(artisanName);
+
+        if (artisanMachine == null)
+            return;
+
+        artisanMachine.setCheatReady(true);
     }
 
 }

@@ -12,6 +12,8 @@ public class FishSmoker extends ArtisanMachine {
 
     @Override
     public Result isReady() {
+        if (cheatReady)
+            return new Result(true, "Your product is Ready.");
         if (timeOfRequest == null)
             return new Result(false, "You don't have any artisan goods in machine yet!!");
         int todayDate = App.getGame().getTime().getDate();

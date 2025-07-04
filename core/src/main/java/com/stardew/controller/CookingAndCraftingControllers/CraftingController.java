@@ -77,14 +77,7 @@ public class CraftingController {
             return new Result(false, "You don't have enough space in backpack!");
 
         CraftingRecipes craftingRecipe = CraftingRecipes.getRecipeByName(itemName);
-        ArtisanMachine machine;
         if (craftingRecipe != null) {
-            if ((machine = ArtisanMachine.getArtisanMachineByRecipe(craftingRecipe)) != null) {
-                player.getBackpack().addArtisanMachine(machine);
-            }
-            else if (craftingRecipe.equals(CraftingRecipes.MysticTreeSeed)) {
-                player.getBackpack().addIngredients(TreeSource.MysticTreeSeeds, quantity);
-            }
             player.getBackpack().addRecipe(craftingRecipe);
             return new Result(true, "You add <" + itemName + "> successfully!");
         }

@@ -14,6 +14,7 @@ public abstract class ArtisanMachine {
     protected Time timeOfRequest;
     protected HashMap<ArtisanGood, TimeInterval> processingTimes;
     protected ArtisanGood producingGood;
+    protected boolean cheatReady = false;
 
     public ArtisanMachine() {
         processingTimes = new HashMap<>();
@@ -36,9 +37,12 @@ public abstract class ArtisanMachine {
     public void reset() {
         timeOfRequest = null;
         producingGood = null;
+        cheatReady = false;
     }
 
     public Result isReady() {
+        if (cheatReady)
+            return new Result(true, "Your product is Ready.");
         if (timeOfRequest == null)
             return new Result(false, "You don't have any artisan goods in machine yet!!");
         int todayDate = App.getGame().getTime().getDate();
@@ -79,6 +83,10 @@ public abstract class ArtisanMachine {
 
     public int getTotalProcessingTime() {
         return processingTimes.get(producingGood).getDays() * (22 - 9) + processingTimes.get(producingGood).getHours();
+    }
+
+    public void setCheatReady(boolean cheatReady) {
+        this.cheatReady = cheatReady;
     }
 
     public static ArtisanMachine getArtisanMachineByRecipe(CraftingRecipes recipe) {
