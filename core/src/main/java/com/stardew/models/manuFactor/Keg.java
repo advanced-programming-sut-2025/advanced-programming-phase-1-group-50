@@ -1,5 +1,7 @@
 package com.stardew.models.manuFactor;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.date.TimeInterval;
 import com.stardew.models.foraging.Crop;
@@ -13,6 +15,7 @@ public class Keg extends ArtisanMachine {
 
     public Keg() {
         super();
+        image = new Image(GamePictureManager.kegNormal);
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Beer), new TimeInterval(1, 0));
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Vinegar), new TimeInterval(0, 10));
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Coffee), new TimeInterval(0, 2));

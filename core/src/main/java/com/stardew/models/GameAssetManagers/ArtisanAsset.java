@@ -1,6 +1,10 @@
 package com.stardew.models.GameAssetManagers;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Align;
+import com.stardew.models.manuFactor.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,12 +51,56 @@ public enum ArtisanAsset {
         ArtisanGoodAsset.Jelly));
 
     private final ArrayList<ArtisanGoodAsset> products;
+    private final Label descriptionLabel;
 
     ArtisanAsset(List<ArtisanGoodAsset> products) {
         this.products = new ArrayList<>(products);
+
+        StringBuilder des = new StringBuilder();
+        des.append("\n<").append(this.name()).append(">\n");
+        for (ArtisanGoodAsset product : products) {
+            des.append("---------------------------------------").append(product.getDescription().getText());
+        }
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = new BitmapFont();
+        labelStyle.fontColor = Color.CYAN;
+        labelStyle.background = GamePictureManager.woodBackground;
+        descriptionLabel = new Label(des.toString(), labelStyle);
+        descriptionLabel.setAlignment(Align.center);
     }
 
     public ArrayList<ArtisanGoodAsset> getProducts() {
         return new ArrayList<>(products);
+    }
+
+    public Label getDescriptionLabel() {
+        return descriptionLabel;
+    }
+
+    public static ArtisanAsset getArtisanAssetByInstance(ArtisanMachine artisanMachine) {
+        if (artisanMachine instanceof BeeHouse)
+            return BeeHouse;
+        if (artisanMachine instanceof CharcoalKiln)
+            return CharcoalKiln;
+        if (artisanMachine instanceof CheesePress)
+            return CheesePress;
+        if (artisanMachine instanceof Dehydrator)
+            return Dehydrator;
+        if (artisanMachine instanceof FishSmoker)
+            return FishSmoker;
+        if (artisanMachine instanceof Furnace)
+            return Furnace;
+        if (artisanMachine instanceof Keg)
+            return Keg;
+        if (artisanMachine instanceof Loom)
+            return Loom;
+        if (artisanMachine instanceof MayonnaiseMachine)
+            return MayonnaiseMachine;
+        if (artisanMachine instanceof OilMaker)
+            return OilMaker;
+        if (artisanMachine instanceof PreservesJar)
+            return PreservesJar;
+        else
+            return null;
     }
 }

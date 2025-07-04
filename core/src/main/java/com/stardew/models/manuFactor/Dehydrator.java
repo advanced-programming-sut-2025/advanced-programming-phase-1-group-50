@@ -1,5 +1,7 @@
 package com.stardew.models.manuFactor;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.foraging.Crop;
@@ -14,10 +16,13 @@ public class Dehydrator extends ArtisanMachine {
 
     public Dehydrator() {
         super();
+        image = new Image(GamePictureManager.dehydratorNormal);
     }
 
     @Override
     public Result isReady() {
+        if (cheatReady)
+            return new Result(true, "Your product is Ready.");
         if (timeOfRequest == null)
             return new Result(false, "You don't have any artisan goods in machine yet!!");
         int todayDate = App.getGame().getTime().getDate();
@@ -29,6 +34,11 @@ public class Dehydrator extends ArtisanMachine {
             return new Result(true, "Your product is Ready.");
         else
             return new Result(false, "Your product is Not Ready.");
+    }
+
+    @Override
+    public int getTotalProcessingTime() {
+        return 22 - timeOfRequest.getHour();
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.stardew.models.manuFactor;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.date.TimeInterval;
 import com.stardew.models.foraging.Crop;
@@ -12,6 +14,7 @@ public class PreservesJar extends ArtisanMachine {
 
     public PreservesJar() {
         super();
+        image = new Image(GamePictureManager.preservesJarNormal);
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Pickles), new TimeInterval(0, 6));
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Jelly), new TimeInterval(3, 0));
     }

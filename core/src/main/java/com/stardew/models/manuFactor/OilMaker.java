@@ -1,5 +1,7 @@
 package com.stardew.models.manuFactor;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.animals.AnimalGood;
 import com.stardew.models.animals.AnimalGoodType;
@@ -15,6 +17,7 @@ public class OilMaker extends ArtisanMachine {
 
     public OilMaker() {
         super();
+        image = new Image(GamePictureManager.oilMakerNormal);
         processingTimes.put(new ArtisanGood(ArtisanGoodType.TruffleOil), new TimeInterval(0, 6));
         //for oil, it will calculate dynamically
     }
