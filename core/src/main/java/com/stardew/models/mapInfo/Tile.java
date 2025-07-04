@@ -1,5 +1,7 @@
 package com.stardew.models.mapInfo;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
 import com.stardew.models.foraging.Fertilizer;
 
@@ -13,6 +15,7 @@ public class Tile {
     private Placeable placeable;
     private boolean isPlowed = false;
     private Fertilizer fertilizer = null;
+    private Texture texture = GamePictureManager.farmBoulderTexture;
     public Tile(Position position) {
         this.position = position;
         this.gotThunder = false;
@@ -53,6 +56,7 @@ public class Tile {
     }
     public void setPlaceable(Placeable placeable) {
         this.placeable = placeable;
+        setTexture(placeable.getTexture());
     }
 
     public boolean isPlowed() {
@@ -69,5 +73,13 @@ public class Tile {
 
     public void setFertilizer(Fertilizer fertilizer) {
         this.fertilizer = fertilizer;
+    }
+
+    public Texture getTexture() {
+        return texture;
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
     }
 }

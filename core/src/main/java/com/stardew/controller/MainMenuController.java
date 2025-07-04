@@ -5,6 +5,7 @@ import com.stardew.Main;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.app.Menus;
+import com.stardew.view.GameMenu;
 import com.stardew.view.MainMenu;
 import com.stardew.view.ProfileMenu;
 
@@ -43,6 +44,15 @@ public class MainMenuController {
         ProfileMenu profileMenu = new ProfileMenu();
         Main.getMain().setScreen(profileMenu);
         currentScreen.dispose();
+    }
+
+    public void goToGameMenu(){
+
+        Screen screen = Main.getMain().getScreen();
+        GameMenu gameMenu = new GameMenu();
+        Main.getMain().setScreen(gameMenu);
+        screen.dispose();
+
     }
 
 

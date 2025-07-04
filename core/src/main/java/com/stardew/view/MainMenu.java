@@ -61,7 +61,7 @@ public class MainMenu implements AppMenu , Screen {
         gameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                controller.goToGameMenu();
             }
         });
 

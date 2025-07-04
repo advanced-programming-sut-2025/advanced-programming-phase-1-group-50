@@ -3,8 +3,12 @@ package com.stardew.controller;
 import java.util.*;
 import java.util.regex.Matcher;
 
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.stardew.Main;
 import com.stardew.controller.GameDateAndWeatherController.DateController;
 import com.stardew.models.ColorPrinter;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.ShippingBin;
 import com.stardew.models.Trade;
@@ -14,10 +18,13 @@ import com.stardew.models.mapInfo.Map;
 import com.stardew.models.stores.Sellable;
 import com.stardew.models.userInfo.*;
 import com.stardew.models.mapInfo.*;
+import com.stardew.view.CreateNewGameMenu;
+import com.stardew.view.GameMenu;
 
 
 public class GameMenuController {
     private final DateController dateController = new DateController();
+    private GameMenu gameMenu;
 
     public User findUser(String username) {
         for (User u : App.users) {
@@ -27,6 +34,10 @@ public class GameMenuController {
         }
         return null;
 
+    }
+
+    public void setView(GameMenu gameMenu) {
+        this.gameMenu = gameMenu;
     }
 
     public int calculateEnergyBasedOnComplexFormula(List<Position> positions) {
@@ -528,6 +539,16 @@ public class GameMenuController {
             sb.append("\n");
         }
         return new Result(true, sb.toString());
+
+    }
+
+    public void handleCreateNewGame(){
+
+        Screen screen = Main.getMain().getScreen();
+        CreateNewGameMenu menu = new CreateNewGameMenu();
+        Main.getMain().setScreen(menu);
+        screen.dispose();
+
 
     }
 }

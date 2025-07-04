@@ -6,7 +6,17 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.*;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.stardew.Main;
 import com.stardew.controller.AbilityAndEnergyController.AbilityController;
 import com.stardew.controller.AbilityAndEnergyController.EnergyController;
 import com.stardew.controller.AnimalsControllers.AnimalsController;
@@ -19,6 +29,7 @@ import com.stardew.controller.GameDateAndWeatherController.WeatherController;
 import com.stardew.controller.NPCController.NPCController;
 import com.stardew.controller.PlayersRealtionController.PlayersRelationController;
 import com.stardew.controller.ToolsControllers.ToolController;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
 import com.stardew.models.app.Menus;
 import com.stardew.models.enums.GameMenuCommands;
@@ -28,7 +39,7 @@ import com.stardew.models.userInfo.*;
 import com.stardew.models.Result;
 import com.stardew.controller.GameMenuController;
 
-public class GameMenu implements AppMenu {
+public class GameMenu implements AppMenu , Screen {
     private final GameMenuController controller = new GameMenuController();
     private final DateController dateController = new DateController();
     private final WeatherController weatherController = new WeatherController();
@@ -42,6 +53,46 @@ public class GameMenu implements AppMenu {
     private final NPCController npcController = new NPCController();
     private final PlayersRelationController relationController = new PlayersRelationController();
     private final AbilityController abilityController = new AbilityController();
+    private Stage stage;
+    private final TextButton createNewGame;
+    private final TextButton loadGame;
+    private final TextButton showCurrentGame;
+    private final TextButton exitGame;
+
+
+    public GameMenu() {
+        this.stage = new Stage();
+        controller.setView(this);
+        createNewGame = new TextButton("create game" , GamePictureManager.skin);
+        createNewGame.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                controller.handleCreateNewGame();
+            }
+        });
+        loadGame = new TextButton("load game" , GamePictureManager.skin);
+        loadGame.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+            }
+        });
+        showCurrentGame = new TextButton("show current game" , GamePictureManager.skin);
+        showCurrentGame.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+            }
+        });
+        exitGame = new TextButton("exit game" , GamePictureManager.skin);
+        exitGame.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+            }
+        });
+    }
+
 
     public void check(Scanner scanner) {
         String input = scanner.nextLine();
@@ -437,4 +488,71 @@ public class GameMenu implements AppMenu {
         System.out.println(controller.walkPlayersToTheirHome());
     }
 
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
+
+        float centerX = Gdx.graphics.getWidth() / 2f;
+        float centerY = Gdx.graphics.getHeight() / 2f;
+
+
+
+        createNewGame.setSize(200, 40);
+        createNewGame.setPosition(centerX - 100, centerY + 60);
+
+        loadGame.setSize(200, 40);
+        loadGame.setPosition(centerX - 100, centerY);
+
+        showCurrentGame.setSize(200, 40);
+        showCurrentGame.setPosition(centerX - 100, centerY - 60);
+
+        exitGame.setSize(200, 40);
+        exitGame.setPosition(centerX - 100, centerY - 120);
+
+        stage.addActor(createNewGame);
+        stage.addActor(loadGame);
+        stage.addActor(showCurrentGame);
+        stage.addActor(exitGame);
+
+
+        MenuAnimationController.addHoverAnimation(createNewGame);
+        MenuAnimationController.addHoverAnimation(loadGame);
+        MenuAnimationController.addHoverAnimation(exitGame);
+    }
+
+    @Override
+    public void render(float v) {
+        ScreenUtils.clear(0 , 0  , 0 , 1);
+        Main.getBatch().begin();
+        Main.getBatch().end();
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
+
+
+    }
+
+    @Override
+    public void resize(int i, int i1) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
 }
