@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import java.util.ArrayList;
+
 public class GamePictureManager {
     public static Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.skin"));
 
@@ -229,7 +231,237 @@ public class GamePictureManager {
         public static Texture copperBarTexture = new Texture("Artisan_good/Copper_Bar.png");
         public static Texture goldBarTexture = new Texture("Artisan_good/Gold_Bar.png");
 
+
     //end_process image :
 
         public static Texture endProcessTexture = new Texture("Achievement/end_process.png");
+
+    //Tree :
+        //Apple:
+
+        public static Texture appleFruitTexture = new Texture("Trees/Apple.png");
+        public static Texture appleSaplingTexture = new Texture("Trees/Apple_Sapling.png");
+        public static Texture appleStage1Texture = new Texture("Trees/Apple_Stage_1.png");
+        public static Texture appleStage2Texture = new Texture("Trees/Apple_Stage_2.png");
+        public static Texture appleStage3Texture = new Texture("Trees/Apple_Stage_3.png");
+        public static Texture appleStage4Texture = new Texture("Trees/Apple_Stage_4.png");
+        public static Texture appleStage5Texture = new Texture("Trees/Apple_Stage_5.png");
+        public static Texture appleStage5WithFruit = new Texture("Trees/Apple_Stage_5_Fruit.png");
+
+        public static ArrayList<Texture> appleStageTextures = new ArrayList<>();
+        static {
+            appleStageTextures.add(appleStage1Texture);
+            appleStageTextures.add(appleStage2Texture);
+            appleStageTextures.add(appleStage3Texture);
+            appleStageTextures.add(appleStage4Texture);
+            appleStageTextures.add(appleStage5Texture);
+        }
+
+        //Apricot :
+
+        public static Texture apricotTexture = new Texture("Trees/Apricot.png");
+        public static Texture apricotSaplingTexture = new Texture("Trees/Apricot_Sapling.png");
+        public static Texture apricotStage1Texture = new Texture("Trees/Apricot_Stage_1.png");
+        public static Texture apricotStage2Texture = new Texture("Trees/Apricot_Stage_2.png");
+        public static Texture apricotStage3Texture = new Texture("Trees/Apricot_Stage_3.png");
+        public static Texture apricotStage4Texture = new Texture("Trees/Apricot_Stage_4.png");
+        public static Texture apricotStage5Texture = new Texture("Trees/Apricot_Stage_5.png");
+        public static Texture apricotStage5WithFruit = new Texture("Trees/Apricot_Stage_5_Fruit.png");
+
+        public static ArrayList<Texture> apricotStageTextures = new ArrayList<>();
+        static {
+            apricotStageTextures.add(apricotStage1Texture);
+            apricotStageTextures.add(apricotStage2Texture);
+            apricotStageTextures.add(apricotStage3Texture);
+            apricotStageTextures.add(apricotStage4Texture);
+            apricotStageTextures.add(apricotStage5Texture);
+        }
+
+        //Banana :
+
+        public static Texture bananaTexture = new Texture("Trees/Banana.png");
+        public static Texture bananaSaplingTexture = new Texture("Trees/Banana_Sapling.png");
+        public static Texture bananaStage1Texture = new Texture("Trees/Banana_Stage_1.png");
+        public static Texture bananaStage2Texture = new Texture("Trees/Banana_Stage_2.png");
+        public static Texture bananaStage3Texture = new Texture("Trees/Banana_Stage_3.png");
+        public static Texture bananaStage4Texture = new Texture("Trees/Banana_Stage_4.png");
+        public static Texture bananaStage5Texture = new Texture("Trees/Banana_Stage_5.png");
+        public static Texture bananaStage5WithFruit = new Texture("Trees/Banana_Stage_5_Fruit.png");
+
+        public static ArrayList<Texture> bananaStageTextures = new ArrayList<>();
+        static {
+            bananaStageTextures.add(bananaStage1Texture);
+            bananaStageTextures.add(bananaStage2Texture);
+            bananaStageTextures.add(bananaStage3Texture);
+            bananaStageTextures.add(bananaStage4Texture);
+            bananaStageTextures.add(bananaStage5Texture);
+        }
+
+
+        //Cherry :
+
+        public static Texture cherryTexture = new Texture("Trees/Cherry.png");
+        public static Texture cherrySaplingTexture = new Texture("Trees/Cherry_Sapling.png");
+        public static Texture cherryStage1Texture = new Texture("Trees/Cherry_Stage_1.png");
+
+
+
+
+
+
+        // Mango
+        public static Texture mangoTexture = new Texture("Trees/Mango.png");
+        public static Texture mangoSaplingTexture = new Texture("Trees/Mango_Sapling.png");
+        public static Texture mangoStage1Texture = new Texture("Trees/Mango_Stage_1.png");
+        public static Texture mangoStage2Texture = new Texture("Trees/Mango_Stage_2.png");
+        public static Texture mangoStage3Texture = new Texture("Trees/Mango_Stage_3.png");
+        public static Texture mangoStage4Texture = new Texture("Trees/Mango_Stage_4.png");
+        public static Texture mangoStage5Texture = new Texture("Trees/Mango_Stage_5.png");
+        public static Texture mangoStage5WithFruit = new Texture("Trees/Mango_Stage_5_Fruit.png");
+
+        public static ArrayList<Texture> mangoStageTextures = new ArrayList<>();
+        static {
+            mangoStageTextures.add(mangoStage1Texture);
+            mangoStageTextures.add(mangoStage2Texture);
+            mangoStageTextures.add(mangoStage3Texture);
+            mangoStageTextures.add(mangoStage4Texture);
+            mangoStageTextures.add(mangoStage5Texture);
+        }
+
+        // Maple
+
+        public static Texture mapleSaplingTexture = new Texture("Trees/Maple_Seed.png");
+        public static Texture mapleStage1Texture = new Texture("Trees/Maple_Stage_1.png");
+        public static Texture mapleStage2Texture = new Texture("Trees/Maple_Stage_2.png");
+        public static Texture mapleStage3Texture = new Texture("Trees/Maple_Stage_3.png");
+        public static Texture mapleStage4Texture = new Texture("Trees/Maple_Stage_4.png");
+        public static Texture mapleStage5Texture = new Texture("Trees/Maple_Stage_5.png");
+
+        public static ArrayList<Texture> mapleStageTextures = new ArrayList<>();
+        static {
+            mapleStageTextures.add(mapleStage1Texture);
+            mapleStageTextures.add(mapleStage2Texture);
+            mapleStageTextures.add(mapleStage3Texture);
+            mapleStageTextures.add(mapleStage4Texture);
+            mapleStageTextures.add(mapleStage5Texture);
+        }
+
+
+        // MushroomTree
+        public static Texture mushroomTreeTexture = new Texture("Trees/Mushroom_stump.png");
+        public static Texture mushroomTreeSaplingTexture = new Texture("Trees/Mushroom_Tree_Seed.png");
+        public static Texture mushroomTreeStage1Texture = new Texture("Trees/MushroomTree_Stage_1.png");
+        public static Texture mushroomTreeStage2Texture = new Texture("Trees/MushroomTree_Stage_2.png");
+        public static Texture mushroomTreeStage3Texture = new Texture("Trees/MushroomTree_Stage_3.png");
+        public static Texture mushroomTreeStage4Texture = new Texture("Trees/MushroomTree_Stage_4.png");
+        public static Texture mushroomTreeStage5Texture = new Texture("Trees/MushroomTree_Stage_5.png");
+
+        public static ArrayList<Texture> mushroomTreeTextures = new ArrayList<>();
+        static {
+            mushroomTreeTextures.add(mushroomTreeSaplingTexture);
+            mushroomTreeTextures.add(mushroomTreeStage1Texture);
+            mushroomTreeTextures.add(mushroomTreeStage2Texture);
+            mushroomTreeTextures.add(mushroomTreeStage3Texture);
+            mushroomTreeTextures.add(mushroomTreeStage4Texture);
+            mushroomTreeTextures.add(mushroomTreeStage5Texture);
+        }
+
+
+        // Mystic_Tree
+
+        public static Texture mysticTreeSaplingTexture = new Texture("Trees/Mystic_Tree_Seed.png");
+        public static Texture mysticTreeStage1Texture = new Texture("Trees/Mystic_Tree_Stage_1.png");
+        public static Texture mysticTreeStage2Texture = new Texture("Trees/Mystic_Tree_Stage_2.png");
+        public static Texture mysticTreeStage3Texture = new Texture("Trees/Mystic_Tree_Stage_3.png");
+        public static Texture mysticTreeStage4Texture = new Texture("Trees/Mystic_Tree_Stage_4.png");
+        public static Texture mysticTreeStage5Texture = new Texture("Trees/Mystic_Tree_Stage_5.png");
+
+        public static ArrayList<Texture> mysticTreeTextures = new ArrayList<>();
+        static {
+            mysticTreeTextures.add(mysticTreeSaplingTexture);
+            mysticTreeTextures.add(mysticTreeStage1Texture);
+            mysticTreeTextures.add(mysticTreeStage2Texture);
+            mysticTreeTextures.add(mysticTreeStage3Texture);
+            mysticTreeTextures.add(mysticTreeStage4Texture);
+            mysticTreeTextures.add(mysticTreeStage5Texture);
+        }
+
+
+        // Orange
+        public static Texture orangeTexture = new Texture("Trees/Orange.png");
+        public static Texture orangeSaplingTexture = new Texture("Trees/Orange_Sapling.png");
+        public static Texture orangeStage1Texture = new Texture("Trees/Orange_Stage_1.png");
+        public static Texture orangeStage2Texture = new Texture("Trees/Orange_Stage_2.png");
+        public static Texture orangeStage3Texture = new Texture("Trees/Orange_Stage_3.png");
+        public static Texture orangeStage4Texture = new Texture("Trees/Orange_Stage_4.png");
+        public static Texture orangeStage5Texture = new Texture("Trees/Orange_Stage_5.png");
+        public static Texture orangeStage5WithFruit = new Texture("Trees/Orange_Stage_5_Fruit.png");
+
+        public static ArrayList<Texture> orangeTextures = new ArrayList<>();
+        static {
+            orangeTextures.add(orangeStage1Texture);
+            orangeTextures.add(orangeStage2Texture);
+            orangeTextures.add(orangeStage3Texture);
+            orangeTextures.add(orangeStage4Texture);
+            orangeTextures.add(orangeStage5Texture);
+        }
+
+        // Peach
+        public static Texture peachTexture = new Texture("Trees/Peach.png");
+        public static Texture peachSaplingTexture = new Texture("Trees/Peach_Sapling.png");
+        public static Texture peachStage1Texture = new Texture("Trees/Peach_Stage_1.png");
+        public static Texture peachStage2Texture = new Texture("Trees/Peach_Stage_2.png");
+        public static Texture peachStage3Texture = new Texture("Trees/Peach_Stage_3.png");
+        public static Texture peachStage4Texture = new Texture("Trees/Peach_Stage_4.png");
+        public static Texture peachStage5Texture = new Texture("Trees/Peach_Stage_5.png");
+        public static Texture peachStage5WithFruit = new Texture("Trees/Peach_Stage_5_Fruit.png");
+
+        public static ArrayList<Texture> peachTextures = new ArrayList<>();
+        static {
+            peachTextures.add(peachStage1Texture);
+            peachTextures.add(peachStage2Texture);
+            peachTextures.add(peachStage3Texture);
+            peachTextures.add(peachStage4Texture);
+            peachTextures.add(peachStage5Texture);
+        }
+
+        // Pine
+
+        public static Texture pineSaplingTexture = new Texture("Trees/Pine_Cone.png");
+        public static Texture pineStage1Texture = new Texture("Trees/Pine_Stage_1.png");
+        public static Texture pineStage2Texture = new Texture("Trees/Pine_Stage_2.png");
+        public static Texture pineStage3Texture = new Texture("Trees/Pine_Stage_3.png");
+        public static Texture pineStage4Texture = new Texture("Trees/Pine_Stage_4.png");
+        public static Texture pineStage5Texture = new Texture("Trees/Pine_Stage_5.png");
+
+        public static ArrayList<Texture> pineTextures = new ArrayList<>();
+        static {
+            pineTextures.add(pineStage1Texture);
+            pineTextures.add(pineStage2Texture);
+            pineTextures.add(pineStage3Texture);
+            pineTextures.add(pineStage4Texture);
+            pineTextures.add(pineStage5Texture);
+        }
+
+
+        // Pomegranate
+        public static Texture pomegranateTexture = new Texture("Trees/Pomegranate.png");
+        public static Texture pomegranateSaplingTexture = new Texture("Trees/Pomegranate_Sapling.png");
+        public static Texture pomegranateStage1Texture = new Texture("Trees/Pomegranate_Stage_1.png");
+        public static Texture pomegranateStage2Texture = new Texture("Trees/Pomegranate_Stage_2.png");
+        public static Texture pomegranateStage3Texture = new Texture("Trees/Pomegranate_Stage_3.png");
+        public static Texture pomegranateStage4Texture = new Texture("Trees/Pomegranate_Stage_4.png");
+        public static Texture pomegranateStage5Texture = new Texture("Trees/Pomegranate_Stage_5.png");
+        public static Texture pomegranateStage5WithFruit = new Texture("Trees/Pomegranate_Stage_5_Fruit.png");
+
+        public static ArrayList<Texture> pomegranateTextures = new ArrayList<>();
+        static {
+            pomegranateTextures.add(pomegranateStage1Texture);
+            pomegranateTextures.add(pomegranateStage2Texture);
+            pomegranateTextures.add(pomegranateStage3Texture);
+            pomegranateTextures.add(pomegranateStage4Texture);
+            pomegranateTextures.add(pomegranateStage5Texture);
+        }
+
+
 }

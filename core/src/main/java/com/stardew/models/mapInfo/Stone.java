@@ -1,5 +1,6 @@
 package com.stardew.models.mapInfo;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
 import com.stardew.models.Placeable;
@@ -51,6 +52,11 @@ public class Stone implements Ingredient , Placeable {
     @Override
     public String getBackground(){
         return backgroundCode;
+    }
+
+    @Override
+    public Texture getTexture() {
+        return null;
     }
 
 }

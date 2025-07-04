@@ -1,5 +1,6 @@
 package com.stardew.models.stores;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
 import com.stardew.models.Result;
@@ -174,6 +175,11 @@ public class MarnieRanch extends Store {
     @Override
     public String getBackground(){
         return backgroundCode;
+    }
+
+    @Override
+    public Texture getTexture() {
+        return null;
     }
 
 

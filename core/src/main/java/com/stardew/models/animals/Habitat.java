@@ -1,5 +1,6 @@
 package com.stardew.models.animals;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
 import com.stardew.models.Placeable;
@@ -101,6 +102,11 @@ public class Habitat implements Placeable {
     @Override
     public String getBackground(){
         return backgroundCode;
+    }
+
+    @Override
+    public Texture getTexture() {
+        return null;
     }
 
 }
