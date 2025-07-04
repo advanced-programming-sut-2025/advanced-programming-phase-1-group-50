@@ -1,5 +1,6 @@
 package com.stardew.models.foraging;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
 import com.stardew.models.Placeable;
@@ -20,6 +21,7 @@ public class Tree implements Growable, Placeable {
     private final Fertilizer fertilizer;
     private final int numberOfDaysCanBeAliveWithoutWater;
     private Rectangle bounds;
+    private Texture texture ;
 
     public Tree(TreeType type, Time timeOfPlanting, Fertilizer fertilizer, int x, int y, int width, int height){
         this.type = type;
@@ -160,6 +162,11 @@ public class Tree implements Growable, Placeable {
     @Override
     public String getBackground(){
         return backgroundCode;
+    }
+
+    @Override
+    public Texture getTexture(){
+        return texture;
     }
 
 }

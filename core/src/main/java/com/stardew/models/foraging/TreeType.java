@@ -1,5 +1,6 @@
 package com.stardew.models.foraging;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.stardew.models.date.Season;
 
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public enum TreeType {
     private final int fruitEnergy;
     private final Season season;
     private final static HashMap<String, TreeType> stringToTreeType = new HashMap<>();
+    private final ArrayList<Texture> stageTextures = new ArrayList<>();
 
     static {
         for (TreeType value : TreeType.values()) {
@@ -114,6 +116,10 @@ public enum TreeType {
         if (name == null || name.isEmpty())
             return null;
         return stringToTreeType.getOrDefault(name.toLowerCase(), null);
+    }
+
+    public ArrayList<Texture> getStageTextures() {
+        return stageTextures;
     }
 
 }
