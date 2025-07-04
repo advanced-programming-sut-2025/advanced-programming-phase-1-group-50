@@ -42,6 +42,7 @@ public class Tree implements Growable, Placeable {
             }
         }
         this.bounds = new Rectangle(x, y, width, height);
+        texture = type.getStageTextures().getFirst();
     }
 
     public Rectangle getBounds() {
@@ -61,7 +62,9 @@ public class Tree implements Growable, Placeable {
             return;
 
         int timeForGrow = type.getTimeForGrow(levelOfGrowth);
+
         int todayDate = today.getDate();
+        texture = type.getStageTextureByLevel(levelOfGrowth);
 
         if (today.getSeason() != lastGrowthTime.getSeason())
             todayDate += Math.abs(lastGrowthTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;

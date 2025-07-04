@@ -342,7 +342,7 @@ public class GamePictureManager {
 
         // MushroomTree
         public static Texture mushroomTreeTexture = new Texture("Trees/Mushroom_stump.png");
-        public static Texture mushroomTreeSaplingTexture = new Texture("Trees/MushroomTree_Sapling.png");
+        public static Texture mushroomTreeSaplingTexture = new Texture("Trees/Mushroom_Tree_Seed.png");
         public static Texture mushroomTreeStage1Texture = new Texture("Trees/MushroomTree_Stage_1.png");
         public static Texture mushroomTreeStage2Texture = new Texture("Trees/MushroomTree_Stage_2.png");
         public static Texture mushroomTreeStage3Texture = new Texture("Trees/MushroomTree_Stage_3.png");
@@ -361,7 +361,7 @@ public class GamePictureManager {
 
 
         // Mystic_Tree
-        public static Texture mysticTreeTexture = new Texture("Trees/Mystic_Tree.png");
+
         public static Texture mysticTreeSaplingTexture = new Texture("Trees/Mystic_Tree_Seed.png");
         public static Texture mysticTreeStage1Texture = new Texture("Trees/Mystic_Tree_Stage_1.png");
         public static Texture mysticTreeStage2Texture = new Texture("Trees/Mystic_Tree_Stage_2.png");

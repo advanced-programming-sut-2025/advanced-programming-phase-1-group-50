@@ -1,5 +1,6 @@
 package com.stardew.models;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.stardew.models.app.App;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.userInfo.Coin;
@@ -59,6 +60,11 @@ public class ShippingBin implements Placeable{
     @Override
     public String getBackground(){
         return backgroundCode;
+    }
+
+    @Override
+    public Texture getTexture() {
+        return null;
     }
 
 }
