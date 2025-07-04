@@ -1,5 +1,7 @@
 package com.stardew.models.manuFactor;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.date.TimeInterval;
 import com.stardew.models.manuFactor.artisanGoods.ArtisanGood;
@@ -11,6 +13,7 @@ public class CharcoalKiln extends ArtisanMachine {
 
     public CharcoalKiln() {
         super();
+        image = new Image(GamePictureManager.charcoalKilnNormal);
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Coal), new TimeInterval(0, 1));
     }
 

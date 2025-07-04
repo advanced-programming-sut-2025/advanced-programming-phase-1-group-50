@@ -1,5 +1,7 @@
 package com.stardew.models.manuFactor;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.animals.AnimalGood;
 import com.stardew.models.animals.AnimalGoodType;
@@ -12,6 +14,7 @@ public class Loom extends ArtisanMachine {
 
     public Loom() {
         super();
+        image = new Image(GamePictureManager.loomNormal);
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Cloth), new TimeInterval(0, 4));
     }
 
