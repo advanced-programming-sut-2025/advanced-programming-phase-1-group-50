@@ -7,6 +7,7 @@ import com.stardew.models.Result;
 import com.stardew.models.Notification.Notification;
 import com.stardew.models.animals.Animal;
 import com.stardew.models.mapInfo.Farm;
+import com.stardew.models.mapInfo.Pair;
 import com.stardew.models.mapInfo.Position;
 import com.stardew.models.mapInfo.Wood;
 import com.stardew.models.tools.Axe;
@@ -34,6 +35,7 @@ public class Player {
     private boolean isFaintedToday = false;
     private boolean isMarried = false;
     private int remainingNumsAfterMarriageRequestDenied = 0;
+    private Pair<Float , Float> playerPosition = new Pair<>(0f, 0f);
 
     private Position currentPosition;
     private boolean isInfinite = false;
@@ -313,5 +315,9 @@ public class Player {
             return false;
         }
 
+    }
+
+    public Pair<Float , Float> getPlayerPosition(){
+        return playerPosition;
     }
 }
