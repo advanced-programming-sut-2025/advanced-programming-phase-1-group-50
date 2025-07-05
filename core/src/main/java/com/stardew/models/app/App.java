@@ -5,6 +5,7 @@ import com.stardew.models.date.Time;
 import com.stardew.models.foraging.Tree;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.mapInfo.*;
+import com.stardew.models.userInfo.Gender;
 import com.stardew.models.userInfo.Player;
 import com.stardew.models.userInfo.User;
 import com.stardew.models.waterBodies.Lake;
@@ -29,6 +30,17 @@ public class App {
                 " , Forza Inter!"));
 
         securityQuestions.add(new SecurityQuestion("what is your favorite food?", "default"));
+    }
+
+    static {
+        User u = new User("ali" , "ksdfkklf" , "fkmd" , "emua@dfjk.com" , Gender.Male , securityQuestions.get(0) );
+        users.add(u);
+        User u2 = new User("mamad" ,"ksdfkklf" , "fkmd" , "emua@dfjk.com" , Gender.Male , securityQuestions.get(0) );
+        users.add(u2);
+        User u3 = new User("hossein" ,"ksdfkklf" , "fkmd" , "emua@dfjk.com" , Gender.Male , securityQuestions.get(0) );
+        users.add(u3);
+        User u4 = new User("sina" ,"ksdfkklf" , "fkmd" , "emua@dfjk.com" , Gender.Male , securityQuestions.get(0) );
+        users.add(u4);
     }
 
 
