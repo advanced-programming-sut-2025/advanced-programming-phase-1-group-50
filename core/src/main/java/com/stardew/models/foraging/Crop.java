@@ -84,7 +84,16 @@ public class Crop implements Ingredient, Growable , Placeable, Sellable {
         Time today = App.getGame().getTime().clone();
         int timeForGrow = type.getRegrowthTime();
 
-        if (lastHarvestTime == null || lastHarvestTime.getDate() + timeForGrow <= today.getDate()) {
+        if (lastHarvestTime == null) {
+            lastHarvestTime = today.clone();
+            return true;
+        }
+
+        int todayDate = today.getDate();
+        if (today.getSeason() != lastHarvestTime.getSeason())
+            todayDate += Math.abs(lastHarvestTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
+
+        if (lastHarvestTime.getDate() + timeForGrow <= todayDate) {
             lastHarvestTime = today.clone();
             return true;
         }
