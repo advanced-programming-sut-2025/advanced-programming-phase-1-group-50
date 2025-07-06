@@ -1,14 +1,20 @@
 package com.stardew.view;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.animals.GameModel;
+import com.stardew.models.mapInfo.Pair;
 import com.stardew.models.mapInfo.Tile;
 
 public class GameRenderer {
     private final GameModel gameModel;
     private SpriteBatch batch;
+    private int moveDirection;
+    private float stateTime = 0f;
 
     public GameRenderer(GameModel gameModel) {
         this.gameModel = gameModel;
@@ -19,6 +25,7 @@ public class GameRenderer {
         batch.setProjectionMatrix(gameModel.getCamera().combined);
         batch.begin();
         renderMapTiles();
+        renderPlayer();
         batch.end();
     }
 
@@ -53,6 +60,20 @@ public class GameRenderer {
 
             }
         }
+    }
+
+    public void renderPlayer(){
+
+        Pair<Float , Float> pos = gameModel.getPlayerController().getPlayer().getPlayerPosition();
+        moveDirection = gameModel.getPlayerController().getPlayer().getMoveDirection();
+
+        stateTime += Gdx.graphics.getDeltaTime();
+
+        Animation<TextureRegion> currentAnimation = GamePictureManager.playerAnimations.get(moveDirection);
+        TextureRegion currentFrame = currentAnimation.getKeyFrame(stateTime, true);
+
+        batch.draw(currentFrame, pos.getFirst() * GamePictureManager.TILE_SIZE, pos.getSecond() * GamePictureManager.TILE_SIZE, GamePictureManager.TILE_SIZE, GamePictureManager.TILE_SIZE * 2);
+
     }
 
 }

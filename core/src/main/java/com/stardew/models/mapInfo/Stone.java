@@ -3,6 +3,7 @@ package com.stardew.models.mapInfo;
 import com.badlogic.gdx.graphics.Texture;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
 import com.stardew.models.manuFactor.Ingredient;
 
@@ -12,6 +13,7 @@ public class Stone implements Ingredient , Placeable {
     private final String backgroundCode = BackgroundColors.BLACK;
     private final String colorCode = ColorPrinter.GRAY;
     private Rectangle bounds;
+    private Texture texture = GamePictureManager.farmBoulderTexture;
 
     public Stone() {
 
@@ -56,7 +58,11 @@ public class Stone implements Ingredient , Placeable {
 
     @Override
     public Texture getTexture() {
-        return null;
+        return texture;
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
     }
 
 }

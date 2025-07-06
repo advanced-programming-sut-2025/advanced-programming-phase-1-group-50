@@ -2,6 +2,7 @@ package com.stardew.models.animals;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.stardew.controller.PlayerController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
 import com.stardew.models.mapInfo.Map;
@@ -13,6 +14,7 @@ public class GameModel {
     private OrthographicCamera camera;
     private Map map;
     private final int mapWidth, mapHeight;
+    private PlayerController playerController;
 
     public GameModel(Map map  , int mapWidth , int mapHeight) {
         this.map = map;
@@ -24,6 +26,10 @@ public class GameModel {
         camera.position.set(p.getPlayerPosition().getFirst() , p.getPlayerPosition().getSecond() , 0);
 
 
+    }
+
+    public void setPlayerController(PlayerController playerController) {
+        this.playerController = playerController;
     }
 
     public void update(float delta) {
@@ -75,5 +81,9 @@ public class GameModel {
 
     public int getMapHeight() {
         return mapHeight;
+    }
+
+    public PlayerController getPlayerController() {
+        return playerController;
     }
 }

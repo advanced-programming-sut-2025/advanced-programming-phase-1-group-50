@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.stardew.controller.PlayerController;
 import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
 
@@ -12,14 +13,18 @@ public class GameScreenMenu implements Screen {
     private GameModel gameModel;
     private GameRenderer gameRenderer;
     private GameMenuInputAdapter gameMenuInputAdapter;
+    private PlayerController playerController;
 
     public GameScreenMenu(){
         initializeGame();
     }
 
     public void initializeGame(){
+
         gameModel = new GameModel(App.getGame().getMap() , 100 , 100);
-        gameMenuInputAdapter = new GameMenuInputAdapter();
+        playerController = new PlayerController(App.getGame().getCurrentPlayingPlayer(), gameModel);
+        gameModel.setPlayerController(playerController);
+        gameMenuInputAdapter = new GameMenuInputAdapter(gameModel);
         gameRenderer = new GameRenderer(gameModel);
         Gdx.input.setInputProcessor(gameMenuInputAdapter);
 
@@ -38,6 +43,7 @@ public class GameScreenMenu implements Screen {
 
         gameModel.update(v);
         gameRenderer.render();
+        gameMenuInputAdapter.update(v);
 
     }
 

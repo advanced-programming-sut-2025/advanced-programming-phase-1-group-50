@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class GamePictureManager {
     public static Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.skin"));
-    public static int TILE_SIZE = 120;
+    public static int TILE_SIZE = 60;
 
     public static TextureRegionDrawable woodBackground =
         new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("wood_bg.png"))));
