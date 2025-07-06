@@ -8,6 +8,7 @@ import com.stardew.models.mapInfo.Map;
 import com.stardew.models.mapInfo.Pair;
 import com.stardew.models.userInfo.Player;
 
+
 public class GameModel {
     private OrthographicCamera camera;
     private Map map;
