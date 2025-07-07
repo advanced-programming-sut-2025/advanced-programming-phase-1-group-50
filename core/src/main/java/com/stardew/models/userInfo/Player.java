@@ -7,6 +7,7 @@ import com.stardew.models.Result;
 import com.stardew.models.Notification.Notification;
 import com.stardew.models.animals.Animal;
 import com.stardew.models.mapInfo.Farm;
+import com.stardew.models.mapInfo.Pair;
 import com.stardew.models.mapInfo.Position;
 import com.stardew.models.mapInfo.Wood;
 import com.stardew.models.tools.Axe;
@@ -34,6 +35,7 @@ public class Player {
     private boolean isFaintedToday = false;
     private boolean isMarried = false;
     private int remainingNumsAfterMarriageRequestDenied = 0;
+    private Pair<Float , Float> playerPosition = new Pair<>(3f, 3f);
 
     private Position currentPosition;
     private boolean isInfinite = false;
@@ -42,6 +44,11 @@ public class Player {
     private RelationWithNPC relationWithHarvey;
     private RelationWithNPC relationWithLeah;
     private RelationWithNPC relationWithRobin;
+
+
+    private int moveDirection = 0;
+    private float speed = 2f;
+    private float vx , vy = 0;
 
 
     private final User currentUser;
@@ -314,4 +321,42 @@ public class Player {
         }
 
     }
+
+    public Pair<Float , Float> getPlayerPosition(){
+        return playerPosition;
+    }
+
+    public void setPlayerPosition(Pair<Float , Float> playerPosition) {
+        this.playerPosition = playerPosition;
+    }
+
+    public void setMoveDirection(int dir){
+        this.moveDirection = dir;
+    }
+
+    public int getMoveDirection(){
+        return moveDirection;
+    }
+
+    public void setSpeed(float speed){
+        this.speed = speed;
+    }
+
+    public float getSpeed(){
+        return speed;
+    }
+
+    public void setVelocity(float vx , float vy){
+        this.vx = vx;
+        this.vy = vy;
+    }
+
+    public float getVx(){
+        return vx;
+    }
+
+    public float getVy(){
+        return vy;
+    }
+
 }

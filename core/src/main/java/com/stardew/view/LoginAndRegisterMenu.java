@@ -52,11 +52,11 @@ public class LoginAndRegisterMenu implements AppMenu , Screen {
         Gdx.input.setInputProcessor(stage);
         this.skin = GamePictureManager.skin;
         register = new Label("Register", skin);
-        usernameTextField = new TextField("Enter username here", skin);
-        passwordTextField = new TextField("Enter password here", skin);
-        confirmPasswordTextField = new TextField("Enter confirm password here", skin);
-        nicknameTextField = new TextField("Enter nickname here", skin);
-        emailTextField = new TextField("Enter email here", skin);
+        usernameTextField = new TextField("", skin);
+        passwordTextField = new TextField("", skin);
+        confirmPasswordTextField = new TextField("", skin);
+        nicknameTextField = new TextField("", skin);
+        emailTextField = new TextField("", skin);
         genderSelectBox = new SelectBox<>(skin);
         Array<String> genders = new Array<>();
         genders.add("Male");

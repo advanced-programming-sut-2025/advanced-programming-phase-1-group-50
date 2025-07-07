@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class CreateNewGameMenu implements Screen {
     private final Stage stage;
-    private final TextField username1;
+
     private final TextField username2;
     private final TextField username3;
     private final TextField username4;
@@ -29,7 +29,7 @@ public class CreateNewGameMenu implements Screen {
 
     public CreateNewGameMenu() {
         stage = new Stage();
-        username1 = new TextField("" , GamePictureManager.skin);
+
 
         username2 = new TextField("" , GamePictureManager.skin);
 
@@ -59,8 +59,7 @@ public class CreateNewGameMenu implements Screen {
         table.center();
 
 
-        table.add("Username 1:").pad(10);
-        table.add(username1).width(200).row();
+
 
         table.add("Username 2:").pad(10);
         table.add(username2).width(200).row();
@@ -134,7 +133,5 @@ public class CreateNewGameMenu implements Screen {
         return username2;
     }
 
-    public TextField getUsername1() {
-        return username1;
-    }
+
 }

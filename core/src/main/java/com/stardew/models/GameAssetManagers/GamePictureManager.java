@@ -2,10 +2,13 @@ package com.stardew.models.GameAssetManagers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.models.date.Season;
+import com.badlogic.gdx.utils.Array;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +16,7 @@ import java.util.Map;
 
 public class GamePictureManager {
     public static Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.skin"));
+    public static int TILE_SIZE = 60;
 
     public static TextureRegionDrawable woodBackground =
         new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("wood_bg.png"))));
@@ -1279,4 +1283,29 @@ public class GamePictureManager {
 
         //MixedSeeds:
         public static Texture mixedSeedsTexture = new Texture("Crops/Mixed_Seeds.png");
+
+
+    public static TextureAtlas character1Atlas = new TextureAtlas(Gdx.files.internal("Characters/sprites_player.atlas"));
+    public static ArrayList<Animation<TextureRegion>> playerAnimations = new ArrayList<>();
+    static {
+        for (int i = 14; i > 9; i--) {
+            Array<TextureRegion> walkFrames = new Array<>();
+            if (i == 14) {
+                for (int j = 0; j < 4; j++) {
+                    String region = "player_" + 13 + "_" + 0;
+                    walkFrames.add(character1Atlas.findRegion(region));
+                }
+            } else {
+                for (int j = 0; j < 4; j++) {
+                    String region = "player_" + i + "_" + j;
+                    walkFrames.add(character1Atlas.findRegion(region));
+                }
+            }
+            Animation<TextureRegion> a = new Animation<>(0.15f, walkFrames, Animation.PlayMode.LOOP);
+            playerAnimations.add(new Animation<>(0.15f, walkFrames, Animation.PlayMode.LOOP));
+        }
+    }
+
+    public static Texture defaultTileTexture = new Texture("Flooring/Flooring_50.png");
+
 }

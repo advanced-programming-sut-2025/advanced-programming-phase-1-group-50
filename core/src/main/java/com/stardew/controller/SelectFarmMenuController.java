@@ -1,11 +1,15 @@
 package com.stardew.controller;
 
+import com.badlogic.gdx.Screen;
+import com.stardew.Main;
 import com.stardew.models.app.App;
 import com.stardew.models.app.FarmFactory;
 import com.stardew.models.app.Game;
 import com.stardew.models.mapInfo.Farm;
 import com.stardew.models.mapInfo.Map;
 import com.stardew.models.userInfo.Player;
+import com.stardew.view.GameMenu;
+import com.stardew.view.GameScreenMenu;
 import com.stardew.view.SelectFarmMenu;
 
 import java.util.ArrayList;
@@ -20,16 +24,16 @@ public class SelectFarmMenuController {
     public void setPlayerFarm(Player player , String farmName , int sx , int sy) {
 
         switch (farmName){
-            case "Farm1" :
+            case "Farm 1" :
                 player.setFarm(FarmFactory.makeFarm1(sx , sy));
                 break;
-            case "Farm2" :
+            case "Farm 2" :
                 player.setFarm(FarmFactory.makeFarm2(sx , sy));
                 break;
-            case "Farm3" :
+            case "Farm 3" :
                 player.setFarm(FarmFactory.makeFarm3(sx , sy));
                 break;
-            case "Farm4" :
+            case "Farm 4" :
                 player.setFarm(FarmFactory.makeFarm4(sx , sy));
                 break;
         }
@@ -51,11 +55,13 @@ public class SelectFarmMenuController {
 
         for (int i = 0; i < players.size(); i++) {
             setPlayerFarm(players.get(i), selected.get(i) , startXForMap[i] , startYForMap[i]);
+            if(players.get(i).getFarm() == null) System.out.println(players.get(i).getUsername() + "null");
         }
 
         ArrayList<Farm> farms = new ArrayList<>();
         for (Player p : players) {
             farms.add(p.getFarm());
+            System.out.println(p.getUsername());
         }
 
         Map map = new Map(farms);
@@ -68,6 +74,12 @@ public class SelectFarmMenuController {
         App.games.add(x);
         App.setGame(x);
         App.getGame().setCurrentPlayingPlayer(players.getFirst());
+
+        GameScreenMenu gameMenu = new GameScreenMenu();
+        Screen currentScreen = Main.getMain().getScreen();
+        Main.getMain().setScreen(gameMenu);
+        currentScreen.dispose();
+
 
 
 

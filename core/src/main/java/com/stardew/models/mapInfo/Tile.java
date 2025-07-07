@@ -15,7 +15,7 @@ public class Tile {
     private Placeable placeable;
     private boolean isPlowed = false;
     private Fertilizer fertilizer = null;
-    private Texture texture = GamePictureManager.farmBoulderTexture;
+    private Texture texture = GamePictureManager.defaultTileTexture;
     public Tile(Position position) {
         this.position = position;
         this.gotThunder = false;

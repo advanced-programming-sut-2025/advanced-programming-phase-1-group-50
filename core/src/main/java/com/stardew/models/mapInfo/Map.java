@@ -59,6 +59,7 @@ public class Map {
 
         farms.clear();
         for (Player player : players) {
+            System.out.println(player.getUsername());
             player.getFarm().setTilesSymbol(tiles);
             farms.add(player.getFarm());
         }

@@ -31,7 +31,7 @@ public class CreateNewGameController {
     }
 
     public void handleStartNewGame(ArrayList<Player> players){
-        String username1 = view.getUsername1().getText();
+        String username1 = view.getUsername4().getText();
         String username2 = view.getUsername2().getText();
         String username3 = view.getUsername3().getText();
         Dialog UsernameError = new Dialog("error" , GamePictureManager.skin);
@@ -61,12 +61,16 @@ public class CreateNewGameController {
             User u1 = findUserByName(username1);
             User u2 = findUserByName(username2);
             User u3 = findUserByName(username3);
+            User u = App.getLoggedInUser();
+            Player p = new Player(u.getUsername() , u.getNickname() , u);
             Player p1 = new Player(u1.getUsername() , u1.getNickname() , u1);
             Player p2 = new Player(u2.getUsername() , u2.getNickname() , u2);
             Player p3 = new Player(u3.getUsername() , u3.getNickname() , u3);
+            players.add(p);
             players.add(p1);
             players.add(p2);
             players.add(p3);
+
 
 
 

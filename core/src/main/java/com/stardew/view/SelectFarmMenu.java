@@ -69,7 +69,7 @@ public class SelectFarmMenu implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
 
-        Table table = new Table();
+        Table table = new Table(GamePictureManager.skin);
         table.setFillParent(true);
         table.center();
 
