@@ -1,8 +1,6 @@
-package com.stardew.view.craftingWindows;
+package com.stardew.view.windows;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -10,25 +8,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.stardew.controller.CookingAndCraftingControllers.CraftingController;
 import com.stardew.models.GameAssetManagers.CraftingAsset;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Result;
 
 import java.util.HashMap;
 
-public class CraftingWindow extends Window {
+public class CraftingWindow extends CloseableWindow {
     private HashMap<CraftingAsset, ImageButton> buttons = new HashMap<>();
     private CraftingController controller = new CraftingController();
-    private Stage stage;
-    private ImageButton closeButton;
-
 
     public CraftingWindow(Stage stage) {
-        super("Crafting Menu", GamePictureManager.skin);
-
-        this.stage = stage;
-
-        setModal(true);
-        setMovable(false);
-        setResizable(false);
+        super("Crafting Menu", stage);
 
         createUI();
 
@@ -43,7 +31,6 @@ public class CraftingWindow extends Window {
         }
 
         pack();
-        setBackground(GamePictureManager.windowWoodBackground);
         setPosition(
             Gdx.graphics.getWidth() / 2f - getWidth() / 2,
             Gdx.graphics.getHeight() / 2f - getHeight() / 2);
@@ -78,28 +65,5 @@ public class CraftingWindow extends Window {
                 }
             });
         }
-
-        //adding close button for the window
-        closeButton = new ImageButton(GamePictureManager.closeWindow);
-        getTitleTable().add(closeButton);
-        closeButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                getChildren().forEach(Actor::clearListeners);
-                remove();
-            }
-        });
-    }
-
-    private void showResult(Result result) {
-        Dialog dialog = new Dialog("Result", GamePictureManager.skin);
-        dialog.setColor(Color.LIGHT_GRAY);
-        dialog.pad(30, 5, 20, 5);
-        dialog.setBackground(GamePictureManager.windowWoodBackground);
-        dialog.text(result.getMessage());
-        dialog.getContentTable().getCell(dialog.getContentTable().getChildren().first())
-            .getActor().setColor(result.getSuccessful() ? Color.GREEN : Color.RED);
-        dialog.button(new TextButton("OK", GamePictureManager.skin, "small"));
-        dialog.show(stage);
     }
 }
