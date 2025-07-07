@@ -1,5 +1,6 @@
 package com.stardew.models.app;
 
+import com.stardew.models.date.Season;
 import com.stardew.models.date.Time;
 import com.stardew.models.foraging.Crop;
 import com.stardew.models.foraging.CropType;
@@ -145,7 +146,10 @@ public class FarmFactory {
             if (usedPositions.contains(p)) continue;
 
             usedPositions.add(p);
-            Tree t = new Tree(getRandomTreeType(), new Time(), null, randomX, randomY, 1, 1);
+            TreeType type = getRandomTreeType();
+            Tree t = new Tree(type, new Time(), null, randomX, randomY, 1, 1);
+            t.setGeneratedRandomly(true);
+            t.setTexture(type.getStage5Texture(Season.Spring));
             trees.add(t);
         }
         return trees;

@@ -17,6 +17,8 @@ import java.util.Map;
 public class GamePictureManager {
     public static Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.skin"));
     public static int TILE_SIZE = 60;
+    public static int Tree_SIze_Width = 96;
+    public static int Tree_SIze_Height = 160;
 
     public static TextureRegionDrawable woodBackground =
         new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("wood_bg.png"))));

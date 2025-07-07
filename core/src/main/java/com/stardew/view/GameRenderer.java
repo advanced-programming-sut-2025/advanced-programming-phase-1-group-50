@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.animals.GameModel;
+import com.stardew.models.foraging.Tree;
 import com.stardew.models.mapInfo.Pair;
 import com.stardew.models.mapInfo.Tile;
 
@@ -43,8 +44,8 @@ public class GameRenderer {
 
         int startX = Math.max(0, (int) (cameraLeft / tileSize) - 2);
         int startY = Math.max(0, (int) (cameraBottom / tileSize) - 2);
-        int endX = Math.min(tiles.length, (int) ((camX + viewportWidth / 2) / tileSize) + 2);
-        int endY = Math.min(tiles[0].length, (int) ((camY + viewportHeight / 2) / tileSize) + 2);
+        int endX = Math.min(tiles.length, (int) ((camX + viewportWidth / 2) / tileSize) + 4);
+        int endY = Math.min(tiles[0].length, (int) ((camY + viewportHeight / 2) / tileSize) + 4);
 
         for(int x = startX; x < endX; x++){
             for(int y = startY; y < endY; y++){
@@ -57,9 +58,18 @@ public class GameRenderer {
                     if(backTex != null){
                         batch.draw(backTex, drawX, drawY , tileSize, tileSize);
                     }
-                    if(tex != null){
-                        batch.draw(tex, drawX, drawY , tileSize, tileSize);
+                    if (tex != null) {
+                        if (tile.getPlaceable() instanceof Tree) {
+                            float adjustedX = drawX - (GamePictureManager.Tree_SIze_Width - tileSize) / 2f;
+                            float adjustedY = drawY - (GamePictureManager.Tree_SIze_Height - tileSize);
+                            batch.draw(tex, adjustedX, adjustedY, GamePictureManager.Tree_SIze_Width, GamePictureManager.Tree_SIze_Height);
+
+                        } else {
+                            batch.draw(tex, drawX, drawY, tileSize, tileSize);
+                        }
                     }
+
+
                 }
 
             }

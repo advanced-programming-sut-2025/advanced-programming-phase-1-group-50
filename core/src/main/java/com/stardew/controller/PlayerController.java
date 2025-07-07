@@ -60,7 +60,7 @@ public class PlayerController {
             playerHeight * tileSize
         );
 
-        // بررسی برخورد با tileهای اطراف
+
         int startX = Math.max(0, (int) newXPos - 1);
         int endX = Math.min(tiles.length, (int) (newXPos + playerWidth) + 2);
         int startY = Math.max(0, (int) newYPos - 1);
@@ -83,7 +83,7 @@ public class PlayerController {
             }
         }
 
-        // اگه برخوردی نبود، موقعیت جدید رو ثبت کن
+
         player.setPlayerPosition(new Pair<>(newXPos, newYPos));
         return true;
     }

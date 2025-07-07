@@ -22,6 +22,8 @@ public class Tree implements Growable, Placeable {
     private final Fertilizer fertilizer;
     private final int numberOfDaysCanBeAliveWithoutWater;
     private Rectangle bounds;
+    private boolean isGeneratedRandomly = false;
+    private TextureRegion texture;
 
     public Tree(TreeType type, Time timeOfPlanting, Fertilizer fertilizer, int x, int y, int width, int height) {
         this.type = type;
@@ -188,7 +190,20 @@ public class Tree implements Growable, Placeable {
 
     @Override
     public TextureRegion getTexture() {
-        return null;
+        return texture;
     }
+
+    public void setGeneratedRandomly(boolean generatedRandomly) {
+        this.isGeneratedRandomly = generatedRandomly;
+    }
+
+    public boolean isGeneratedRandomly() {
+        return isGeneratedRandomly;
+    }
+
+    public void setTexture(TextureRegion texture) {
+        this.texture = texture;
+    }
+
 
 }
