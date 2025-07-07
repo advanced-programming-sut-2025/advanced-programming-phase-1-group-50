@@ -1,56 +1,59 @@
 package com.stardew.models.foraging;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.date.Season;
 import com.stardew.models.manuFactor.Ingredient;
 
 import java.util.HashMap;
 
 public enum Seeds implements Ingredient {
-    JazzSeeds(Season.Spring, CropType.BlueJazz),
-    CarrotSeeds(Season.Spring, CropType.Carrot),
-    CauliflowerSeeds(Season.Spring, CropType.Cauliflower),
-    CoffeeBean(Season.Spring, CropType.CoffeeBean),
-    GarlicSeeds(Season.Spring, CropType.Garlic),
-    BeanStarter(Season.Spring, CropType.GreenBean),
-    KaleSeeds(Season.Spring, CropType.Kale),
-    ParsnipSeeds(Season.Spring, CropType.Parsnip),
-    PotatoSeeds(Season.Spring, CropType.Potato),
-    RhubarbSeeds(Season.Spring, CropType.Rhubarb),
-    StrawberrySeeds(Season.Spring, CropType.Strawberry),
-    TulipBulb(Season.Spring, CropType.Tulip),
-    RiceShoot(Season.Spring, CropType.UnMilledRice),
-    BlueberrySeeds(Season.Summer, CropType.Blueberry),
-    CornSeeds(Season.Summer, CropType.Corn),
-    HopsStarter(Season.Summer, CropType.Hops),
-    PepperSeeds(Season.Summer, CropType.HotPepper),
-    MelonSeeds(Season.Summer, CropType.Melon),
-    PoppySeeds(Season.Summer, CropType.Poppy),
-    RadishSeeds(Season.Summer, CropType.Radish),
-    RedCabbageSeeds(Season.Summer, CropType.RedCabbage),
-    StarfruitSeeds(Season.Summer, CropType.Starfruit),
-    SpangleSeeds(Season.Summer, CropType.SummerSpangle),
-    SummerSquashSeeds(Season.Summer, CropType.SummerSquash),
-    SunflowerSeeds(Season.Summer, CropType.Sunflower),
-    TomatoSeeds(Season.Summer, CropType.Tomato),
-    WheatSeeds(Season.Summer, CropType.Wheat),
-    AmaranthSeeds(Season.Fall,CropType.Amaranth ),
-    ArtichokeSeeds(Season.Fall, CropType.Artichoke),
-    BeetSeeds(Season.Fall, CropType.Beet),
-    BokChoySeeds(Season.Fall, CropType.BokChoy),
-    BroccoliSeeds(Season.Fall, CropType.Broccoli),
-    CranberrySeeds(Season.Fall, CropType.Cranberries),
-    EggplantSeeds(Season.Fall, CropType.Eggplant),
-    FairySeeds(Season.Fall, CropType.FairyRose),
-    GrapeStarter(Season.Fall, CropType.Grape),
-    PumpkinSeeds(Season.Fall, CropType.Pumpkin),
-    YamSeeds(Season.Fall, CropType.Yam),
-    RareSeed(Season.Fall, CropType.SweetGemBerry),
-    PowdermelonSeeds(Season.Winter, CropType.PowderMelon),
-    AncientSeeds(Season.Special, CropType.AncientFruit),
-    MixedSeeds(Season.Special, null);
+    JazzSeeds(Season.Spring, CropType.BlueJazz, GamePictureManager.jazzSeedsTexture),
+    CarrotSeeds(Season.Spring, CropType.Carrot, GamePictureManager.carrotSeedsTexture),
+    CauliflowerSeeds(Season.Spring, CropType.Cauliflower, GamePictureManager.cauliflowerSeedsTexture),
+    CoffeeBean(Season.Spring, CropType.CoffeeBean, GamePictureManager.coffeeBeanTexture),
+    GarlicSeeds(Season.Spring, CropType.Garlic, GamePictureManager.garlicSeedsTexture),
+    BeanStarter(Season.Spring, CropType.GreenBean, GamePictureManager.beanStarterTexture),
+    KaleSeeds(Season.Spring, CropType.Kale, GamePictureManager.kaleSeedsTexture),
+    ParsnipSeeds(Season.Spring, CropType.Parsnip, GamePictureManager.parsnipSeedsTexture),
+    PotatoSeeds(Season.Spring, CropType.Potato, GamePictureManager.potatoSeedsTexture),
+    RhubarbSeeds(Season.Spring, CropType.Rhubarb, GamePictureManager.rhubarbSeedsTexture),
+    StrawberrySeeds(Season.Spring, CropType.Strawberry, GamePictureManager.strawberrySeedsTexture),
+    TulipBulb(Season.Spring, CropType.Tulip, GamePictureManager.tulipBulbTexture),
+    RiceShoot(Season.Spring, CropType.UnMilledRice, GamePictureManager.riceShootTexture),
+    BlueberrySeeds(Season.Summer, CropType.Blueberry, GamePictureManager.blueberrySeedsTexture),
+    CornSeeds(Season.Summer, CropType.Corn, GamePictureManager.cornSeedsTexture),
+    HopsStarter(Season.Summer, CropType.Hops, GamePictureManager.hopsStarterTexture),
+    PepperSeeds(Season.Summer, CropType.HotPepper, GamePictureManager.pepperSeedsTexture),
+    MelonSeeds(Season.Summer, CropType.Melon, GamePictureManager.melonSeedsTexture),
+    PoppySeeds(Season.Summer, CropType.Poppy, GamePictureManager.poppySeedsTexture),
+    RadishSeeds(Season.Summer, CropType.Radish, GamePictureManager.radishSeedsTexture),
+    RedCabbageSeeds(Season.Summer, CropType.RedCabbage, GamePictureManager.redCabbageSeedsTexture),
+    StarfruitSeeds(Season.Summer, CropType.Starfruit, GamePictureManager.starfruitSeedsTexture),
+    SpangleSeeds(Season.Summer, CropType.SummerSpangle, GamePictureManager.spangleSeedsTexture),
+    SummerSquashSeeds(Season.Summer, CropType.SummerSquash, GamePictureManager.summerSquashSeedsTexture),
+    SunflowerSeeds(Season.Summer, CropType.Sunflower, GamePictureManager.sunflowerSeedsTexture),
+    TomatoSeeds(Season.Summer, CropType.Tomato, GamePictureManager.tomatoSeedsTexture),
+    WheatSeeds(Season.Summer, CropType.Wheat, GamePictureManager.wheatSeedsTexture),
+    AmaranthSeeds(Season.Fall,CropType.Amaranth, GamePictureManager.amaranthSeedsTexture),
+    ArtichokeSeeds(Season.Fall, CropType.Artichoke, GamePictureManager.artichokeSeedsTexture),
+    BeetSeeds(Season.Fall, CropType.Beet, GamePictureManager.beetSeedsTexture),
+    BokChoySeeds(Season.Fall, CropType.BokChoy, GamePictureManager.bokChoySeedsTexture),
+    BroccoliSeeds(Season.Fall, CropType.Broccoli, GamePictureManager.broccoliSeedsTexture),
+    CranberrySeeds(Season.Fall, CropType.Cranberries, GamePictureManager.cranberrySeedsTexture),
+    EggplantSeeds(Season.Fall, CropType.Eggplant, GamePictureManager.eggplantSeedsTexture),
+    FairySeeds(Season.Fall, CropType.FairyRose, GamePictureManager.fairySeedsTexture),
+    GrapeStarter(Season.Fall, CropType.Grape, GamePictureManager.grapeStarterTexture),
+    PumpkinSeeds(Season.Fall, CropType.Pumpkin, GamePictureManager.pumpkinSeedsTexture),
+    YamSeeds(Season.Fall, CropType.Yam, GamePictureManager.yamSeedsTexture),
+    RareSeed(Season.Fall, CropType.SweetGemBerry, GamePictureManager.rareSeedTexture),
+    PowdermelonSeeds(Season.Winter, CropType.PowderMelon, GamePictureManager.powdermelonSeedsTexture),
+    AncientSeeds(Season.Special, CropType.AncientFruit, GamePictureManager.ancientSeedsTexture),
+    MixedSeeds(Season.Special, null, GamePictureManager.mixedSeedsTexture);
 
     private final Season season;
     private CropType crop;
+    private final Texture texture;
     private final static HashMap<String, Seeds> stringToSeeds = new HashMap<>();
     private static boolean firstInitialize = true;
 
@@ -105,9 +108,10 @@ public enum Seeds implements Ingredient {
 
     }
 
-    Seeds(Season season, CropType crop) {
+    Seeds(Season season, CropType crop, Texture texture) {
         this.season = season;
         this.crop = crop;
+        this.texture = texture;
     }
 
     public String getName(){

@@ -6,7 +6,8 @@ public interface Growable {
     void grow(Time today);
     boolean canGrowAgain();
     boolean isComplete();
-    boolean harvest();
+    boolean isCompleteAgain();
+    void doAgainHarvesting();
     void watering();
     boolean canBeAlive(Time today);
     int getNumberOfDaysToComplete();

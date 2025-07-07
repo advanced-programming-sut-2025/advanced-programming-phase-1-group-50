@@ -57,8 +57,11 @@ public class Crop implements Ingredient, Growable , Placeable, Sellable {
     }
 
     public void grow(Time today) {
-        if (isComplete())
+        if (isComplete()) {
+            if (isCompleteAgain())
+                levelOfGrowth = type.getNumberOfStages();
             return;
+        }
 
         int timeForGrow = type.getTimeForGrow(levelOfGrowth);
         int todayDate = today.getDate();
@@ -77,18 +80,27 @@ public class Crop implements Ingredient, Growable , Placeable, Sellable {
         return !type.isOneTime();
     }
 
-    public boolean harvest() {
+    public boolean isCompleteAgain() {
         if (!isComplete() || type.isOneTime())
             return false;
+
+        if (lastHarvestTime == null) {
+            return true;
+        }
 
         Time today = App.getGame().getTime().clone();
         int timeForGrow = type.getRegrowthTime();
 
-        if (lastHarvestTime == null || lastHarvestTime.getDate() + timeForGrow <= today.getDate()) {
-            lastHarvestTime = today.clone();
-            return true;
-        }
-        return false;
+        int todayDate = today.getDate();
+        if (today.getSeason() != lastHarvestTime.getSeason())
+            todayDate += Math.abs(lastHarvestTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
+
+        return lastHarvestTime.getDate() + timeForGrow <= todayDate;
+    }
+
+    public void doAgainHarvesting() {
+        lastHarvestTime = App.getGame().getTime().clone();
+        levelOfGrowth = type.getNumberOfStages() + 1;
     }
 
     public boolean isComplete() {
@@ -190,7 +202,7 @@ public class Crop implements Ingredient, Growable , Placeable, Sellable {
 
     @Override
     public Texture getTexture() {
-        return null;
+        return type.getLevelsTextures()[levelOfGrowth];
     }
 
 }
