@@ -1,5 +1,6 @@
 package com.stardew.models.app;
 
+import com.stardew.models.date.Season;
 import com.stardew.models.date.Time;
 import com.stardew.models.foraging.Crop;
 import com.stardew.models.foraging.CropType;
@@ -21,14 +22,14 @@ public class FarmFactory {
     private static final Random rand = new Random();
     public static Farm makeFarm1(int x  ,int y) {
         markUsedArea(10 + x , 10 + y , 4 ,4 );
-        markUsedArea(20 + x , 60 + y , 6 ,6 );
+        markUsedArea(3 + x , 3 + y , 6 ,6 );
         markUsedArea(60 + x , 15 + y , 3 , 12);
         markUsedArea(60 +x ,45+y , 3 , 14);
         markUsedArea(50 + x , 65 + y , 5 , 7);
 
         return new Farm(
                 new Cottage(10 + x, 10 + y, 4, 4),
-                new GreenHouse(20 + x, 60 + y, 6, 6),
+                new GreenHouse(3 + x, 3 + y, 6, 6),
                 new ArrayList<>(Arrays.asList(
                         new Lake(60 + x, 15 + y, 3, 12),
                         new Lake(60 + x, 45 + y, 3, 14)
@@ -145,7 +146,10 @@ public class FarmFactory {
             if (usedPositions.contains(p)) continue;
 
             usedPositions.add(p);
-            Tree t = new Tree(getRandomTreeType(), new Time(), null, randomX, randomY, 1, 1);
+            TreeType type = getRandomTreeType();
+            Tree t = new Tree(type, new Time(), null, randomX, randomY, 1, 1);
+            t.setGeneratedRandomly(true);
+            t.setTexture(type.getStage5Texture(Season.Spring));
             trees.add(t);
         }
         return trees;

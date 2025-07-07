@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class SelectFarmMenuController {
     private SelectFarmMenu view;
+    private final GameMenuController gameMenuController = new GameMenuController();
 
     public void setView(SelectFarmMenu view) {
         this.view = view;
@@ -79,6 +80,9 @@ public class SelectFarmMenuController {
         Screen currentScreen = Main.getMain().getScreen();
         Main.getMain().setScreen(gameMenu);
         currentScreen.dispose();
+
+
+        System.out.println(gameMenuController.printMapAll());
 
 
 

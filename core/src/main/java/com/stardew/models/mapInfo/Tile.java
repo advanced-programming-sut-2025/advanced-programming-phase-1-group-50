@@ -1,11 +1,13 @@
 package com.stardew.models.mapInfo;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
 import com.stardew.models.foraging.Fertilizer;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Tile {
     private Position position;
@@ -15,11 +17,14 @@ public class Tile {
     private Placeable placeable;
     private boolean isPlowed = false;
     private Fertilizer fertilizer = null;
-    private Texture texture = GamePictureManager.defaultTileTexture;
+    private TextureRegion texture ;
+    private TextureRegion backgroundTexture ;
     public Tile(Position position) {
         this.position = position;
         this.gotThunder = false;
         this.walkable = true;
+        texture = new TextureRegion(getRandomDefaultTexture());
+        backgroundTexture = new TextureRegion(getRandomDefaultTexture());
 
     }
     public void setPosition(Position position) {
@@ -75,11 +80,30 @@ public class Tile {
         this.fertilizer = fertilizer;
     }
 
-    public Texture getTexture() {
+    public TextureRegion getTexture() {
         return texture;
     }
 
-    public void setTexture(Texture texture) {
+    public void setTexture(TextureRegion texture) {
         this.texture = texture;
+    }
+
+
+    public void setBackgroundTexture(TextureRegion backgroundTexture) {
+        this.backgroundTexture = backgroundTexture;
+    }
+
+    public TextureRegion getBackgroundTexture() {
+        return backgroundTexture;
+    }
+
+    public Texture getRandomDefaultTexture() {
+        ArrayList<Texture> textures  = new ArrayList<>();
+        textures.add(GamePictureManager.defaultTileTexture);
+        textures.add(GamePictureManager.defaultTileTexture2);
+        textures.add(GamePictureManager.defaultTileTexture3);
+
+        Random rand = new Random();
+        return textures.get(rand.nextInt(textures.size()));
     }
 }

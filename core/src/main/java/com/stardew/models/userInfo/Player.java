@@ -35,7 +35,7 @@ public class Player {
     private boolean isFaintedToday = false;
     private boolean isMarried = false;
     private int remainingNumsAfterMarriageRequestDenied = 0;
-    private Pair<Float , Float> playerPosition = new Pair<>(3f, 3f);
+    private Pair<Float , Float> playerPosition = new Pair<>(15f, 8f);
 
     private Position currentPosition;
     private boolean isInfinite = false;

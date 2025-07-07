@@ -1,8 +1,10 @@
 package com.stardew.models.mapInfo;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
 import com.stardew.models.app.App;
 import com.stardew.models.foraging.Crop;
@@ -19,6 +21,7 @@ public class GreenHouse implements Placeable {
     private boolean isBroken;
     private final Rectangle bounds;
     private ArrayList<Growable> growables = new ArrayList<>();
+    private TextureRegion texture = new TextureRegion(GamePictureManager.greenHouseTexture);
     public GreenHouse(int x, int y, int width, int height) {
         bounds = new Rectangle(x, y, width, height);
         this.isBroken = true;
@@ -87,8 +90,12 @@ public class GreenHouse implements Placeable {
     }
 
     @Override
-    public Texture getTexture() {
-        return null;
+    public TextureRegion getTexture() {
+        return texture;
+    }
+
+    public void setTexture(TextureRegion texture) {
+        this.texture = texture;
     }
 
 }

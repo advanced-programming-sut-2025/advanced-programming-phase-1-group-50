@@ -81,8 +81,8 @@ public class LoginAndRegisterMenu implements AppMenu , Screen {
 
 
         loginLabel = new Label("Login", skin);
-        usernameInputTextField = new TextField("Enter username here", skin);
-        passwordInputTextField = new TextField("Enter password here", skin);
+        usernameInputTextField = new TextField("", skin);
+        passwordInputTextField = new TextField("", skin);
         loginButton = new TextButton("Login", skin);
         loginButton.addListener(new ClickListener() {
             @Override

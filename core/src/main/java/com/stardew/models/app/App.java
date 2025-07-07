@@ -33,7 +33,7 @@ public class App {
     }
 
     static {
-        User u = new User("ali" , "ksdfkklf" , "fkmd" , "emua@dfjk.com" , Gender.Male , securityQuestions.get(0) );
+        User u = new User("ali" , "wwwwww" , "fkmd" , "emua@dfjk.com" , Gender.Male , securityQuestions.get(0) );
         users.add(u);
         User u2 = new User("mamad" ,"ksdfkklf" , "fkmd" , "emua@dfjk.com" , Gender.Male , securityQuestions.get(0) );
         users.add(u2);
