@@ -16,8 +16,8 @@ import com.stardew.models.date.TimeInterval;
 import com.stardew.models.manuFactor.artisanGoods.ArtisanGood;
 import com.stardew.models.recipes.CraftingRecipes;
 import com.stardew.models.userInfo.Player;
-import com.stardew.view.craftingWindows.ArtisanOptionWindow;
-import com.stardew.view.craftingWindows.ArtisanWindow;
+import com.stardew.view.windows.ArtisanOptionWindow;
+import com.stardew.view.windows.ArtisanWindow;
 
 import java.util.HashMap;
 
