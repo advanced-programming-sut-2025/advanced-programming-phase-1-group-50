@@ -17,8 +17,9 @@ import java.util.Map;
 public class GamePictureManager {
     public static Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.skin"));
     public static int TILE_SIZE = 60;
-    public static int Tree_SIze_Width = 96;
-    public static int Tree_SIze_Height = 160;
+    public static int Tree_SIze_Width = 75;
+    public static int Tree_SIze_Height = 150;
+    public static int ROCK_SIZE = 50;
 
     public static TextureRegionDrawable woodBackground =
         new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("wood_bg.png"))));
@@ -1309,5 +1310,14 @@ public class GamePictureManager {
     }
 
     public static Texture defaultTileTexture = new Texture("Flooring/Flooring_50.png");
+    public static Texture defaultTileTexture2 = new Texture("Flooring/Flooring_28.png");
+    public static Texture defaultTileTexture3 = new Texture("Flooring/Flooring_44.png");
+
+
+    public static Texture greenHouseTexture = new Texture("Greenhouse/greenhouse.png");
+    public static TextureRegion[][] regions ;
+    static {
+        regions = TextureRegion.split(greenHouseTexture , greenHouseTexture.getWidth() / 6, greenHouseTexture.getHeight() / 6);
+    }
 
 }

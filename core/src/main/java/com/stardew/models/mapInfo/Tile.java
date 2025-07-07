@@ -7,6 +7,7 @@ import com.stardew.models.Placeable;
 import com.stardew.models.foraging.Fertilizer;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Tile {
     private Position position;
@@ -16,12 +17,14 @@ public class Tile {
     private Placeable placeable;
     private boolean isPlowed = false;
     private Fertilizer fertilizer = null;
-    private TextureRegion texture = new TextureRegion(GamePictureManager.defaultTileTexture);
-    private TextureRegion backgroundTexture = new TextureRegion(GamePictureManager.defaultTileTexture);
+    private TextureRegion texture ;
+    private TextureRegion backgroundTexture ;
     public Tile(Position position) {
         this.position = position;
         this.gotThunder = false;
         this.walkable = true;
+        texture = new TextureRegion(getRandomDefaultTexture());
+        backgroundTexture = new TextureRegion(getRandomDefaultTexture());
 
     }
     public void setPosition(Position position) {
@@ -92,5 +95,15 @@ public class Tile {
 
     public TextureRegion getBackgroundTexture() {
         return backgroundTexture;
+    }
+
+    public Texture getRandomDefaultTexture() {
+        ArrayList<Texture> textures  = new ArrayList<>();
+        textures.add(GamePictureManager.defaultTileTexture);
+        textures.add(GamePictureManager.defaultTileTexture2);
+        textures.add(GamePictureManager.defaultTileTexture3);
+
+        Random rand = new Random();
+        return textures.get(rand.nextInt(textures.size()));
     }
 }

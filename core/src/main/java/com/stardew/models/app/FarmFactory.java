@@ -22,14 +22,14 @@ public class FarmFactory {
     private static final Random rand = new Random();
     public static Farm makeFarm1(int x  ,int y) {
         markUsedArea(10 + x , 10 + y , 4 ,4 );
-        markUsedArea(20 + x , 60 + y , 6 ,6 );
+        markUsedArea(3 + x , 3 + y , 6 ,6 );
         markUsedArea(60 + x , 15 + y , 3 , 12);
         markUsedArea(60 +x ,45+y , 3 , 14);
         markUsedArea(50 + x , 65 + y , 5 , 7);
 
         return new Farm(
                 new Cottage(10 + x, 10 + y, 4, 4),
-                new GreenHouse(20 + x, 60 + y, 6, 6),
+                new GreenHouse(3 + x, 3 + y, 6, 6),
                 new ArrayList<>(Arrays.asList(
                         new Lake(60 + x, 15 + y, 3, 12),
                         new Lake(60 + x, 45 + y, 3, 14)
