@@ -42,6 +42,7 @@ public class ArtisanWindow extends CloseableWindow {
         }
 
         pack();
+        setSize(150, 400);
         setPosition(x, y);
 
     }
