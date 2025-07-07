@@ -173,6 +173,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		font: font
 		up: button-small
+		over: button-small-over
 		down: button-small-down
 	}
 	small: {

@@ -24,18 +24,26 @@ button-down
   index: -1
 button-small
   rotate: false
-  xy: 1, 460
-  size: 130, 46
+  xy: 520, 45
+  size: 160, 64
   split: 21, 21, 22, 20
-  orig: 130, 46
+  orig: 160, 64
   offset: 0, 0
   index: -1
 button-small-down
   rotate: false
-  xy: 344, 812
-  size: 130, 46
+  xy: 520, 116
+  size: 160, 64
   split: 21, 21, 22, 20
-  orig: 130, 46
+  orig: 160, 64
+  offset: 0, 0
+  index: -1
+button-small-over
+  rotate: false
+  xy: 520, 216
+  size: 160, 64
+  split: 21, 21, 22, 20
+  orig: 160, 64
   offset: 0, 0
   index: -1
 checkbox
