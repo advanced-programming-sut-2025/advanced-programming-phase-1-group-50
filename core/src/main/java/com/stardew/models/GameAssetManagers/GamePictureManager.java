@@ -1312,6 +1312,7 @@ public class GamePictureManager {
     public static Texture defaultTileTexture = new Texture("Flooring/Flooring_50.png");
     public static Texture defaultTileTexture2 = new Texture("Flooring/Flooring_28.png");
     public static Texture defaultTileTexture3 = new Texture("Flooring/Flooring_44.png");
+    public static Texture lakeTexture = new Texture("Flooring/Flooring_26.png");
 
 
     public static Texture greenHouseTexture = new Texture("Greenhouse/greenhouse.png");

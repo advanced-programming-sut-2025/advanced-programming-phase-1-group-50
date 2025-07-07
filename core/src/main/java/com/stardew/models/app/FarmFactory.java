@@ -184,7 +184,9 @@ public class FarmFactory {
             if (usedPositions.contains(p)) continue;
 
             usedPositions.add(p);
-            Crop c = new Crop(getRandomCropType(), new Time(), null, randomX, randomY);
+            CropType type = getRandomCropType();
+            Crop c = new Crop(type, new Time(), null, randomX, randomY);
+            c.setGeneratedRandomly(true);
             crops.add(c);
         }
         return crops;
