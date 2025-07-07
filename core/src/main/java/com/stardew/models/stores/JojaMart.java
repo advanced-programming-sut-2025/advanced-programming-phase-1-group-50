@@ -1,6 +1,7 @@
 package com.stardew.models.stores;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
 import com.stardew.models.Result;
@@ -181,7 +182,7 @@ public class JojaMart extends Store {
     }
 
     @Override
-    public Texture getTexture() {
+    public TextureRegion getTexture() {
         return null;
     }
 

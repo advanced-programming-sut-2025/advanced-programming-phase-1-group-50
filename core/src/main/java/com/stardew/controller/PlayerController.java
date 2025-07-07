@@ -2,6 +2,8 @@ package com.stardew.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Rectangle;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.animals.GameModel;
 import com.stardew.models.mapInfo.Pair;
 import com.stardew.models.mapInfo.Tile;
@@ -23,19 +25,77 @@ public class PlayerController {
         tryMove(delta * player.getVx() , delta * player.getVy());
     }
 
-    public boolean tryMove(float dx , float dy ){
-        int newX = (int) (player.getPlayerPosition().getFirst() + dx);
-        int newY = (int) (player.getPlayerPosition().getSecond() + dy);
-        if (newX < 0 || newX >= tiles.length || newY < 0 || newY >= tiles[0].length) return false;
-        if (tiles[newX][newY].isWalkable()) {
-            float newXPos = player.getPlayerPosition().getFirst() + dx;
-            float newYPos = player.getPlayerPosition().getSecond() + dy;
-            Pair<Float , Float> playerPosition = new Pair<>(newXPos, newYPos);
-            player.setPlayerPosition(playerPosition);
-            return true;
+//    public boolean tryMove(float dx, float dy) {
+//        float newXPos = player.getPlayerPosition().getFirst() + dx;
+//        float newYPos = player.getPlayerPosition().getSecond() + dy;
+//
+//        float width = 0.8f;  // به اندازه بازیکن در tile
+//        float height = 1.8f; // چون sprite دو برابر tileه
+//
+//        // بررسی 4 گوشه بازیکن
+//        if (
+//            isWalkable(newXPos, newYPos) &&
+//                isWalkable(newXPos + width, newYPos) &&
+//                isWalkable(newXPos, newYPos + height) &&
+//                isWalkable(newXPos + width, newYPos + height)
+//        ) {
+//            player.setPlayerPosition(new Pair<>(newXPos, newYPos));
+//            return true;
+//        }
+//        return false;
+    //    }
+    public boolean tryMove(float dx, float dy) {
+        float tileSize = GamePictureManager.TILE_SIZE;
+
+        float newXPos = player.getPlayerPosition().getFirst() + dx;
+        float newYPos = player.getPlayerPosition().getSecond() + dy;
+
+        float playerWidth = 0.8f;
+        float playerHeight = 1.8f;
+
+        Rectangle playerRect = new Rectangle(
+            newXPos * tileSize,
+            newYPos * tileSize,
+            playerWidth * tileSize,
+            playerHeight * tileSize
+        );
+
+        // بررسی برخورد با tileهای اطراف
+        int startX = Math.max(0, (int) newXPos - 1);
+        int endX = Math.min(tiles.length, (int) (newXPos + playerWidth) + 2);
+        int startY = Math.max(0, (int) newYPos - 1);
+        int endY = Math.min(tiles[0].length, (int) (newYPos + playerHeight) + 2);
+
+        for (int x = startX; x < endX; x++) {
+            for (int y = startY; y < endY; y++) {
+                Tile tile = tiles[x][y];
+                if (tile != null && !tile.isWalkable()) {
+                    Rectangle tileRect = new Rectangle(
+                        x * tileSize,
+                        y * tileSize,
+                        tileSize,
+                        tileSize
+                    );
+                    if (playerRect.overlaps(tileRect)) {
+                        return false;
+                    }
+                }
+            }
         }
-        return false;
+
+        // اگه برخوردی نبود، موقعیت جدید رو ثبت کن
+        player.setPlayerPosition(new Pair<>(newXPos, newYPos));
+        return true;
     }
+
+    private boolean isWalkable(float x, float y) {
+        int tileX = (int) x;
+        int tileY = (int) y;
+
+        if (tileX < 0 || tileX >= tiles.length || tileY < 0 || tileY >= tiles[0].length) return false;
+        return tiles[tileX][tileY].isWalkable();
+    }
+
 
     public Player getPlayer() {
         return player;

@@ -1,6 +1,7 @@
 package com.stardew.models.waterBodies;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
 import com.stardew.models.Placeable;
@@ -34,7 +35,7 @@ public class Lake extends WaterBody implements Placeable {
     }
 
     @Override
-    public Texture getTexture() {
+    public TextureRegion getTexture() {
         return null;
     }
 

@@ -50,9 +50,13 @@ public class GameRenderer {
             for(int y = startY; y < endY; y++){
                 Tile tile = gameModel.getMap().findTile(x, y);
                 if(tile != null){
-                    float drawX = x * tileSize - cameraLeft;
-                    float drawY = y * tileSize - cameraBottom;
-                    Texture  tex = tile.getTexture();
+                    float drawX = x * tileSize;
+                    float drawY = y * tileSize;
+                    TextureRegion  tex = tile.getTexture();
+                    TextureRegion backTex = tile.getBackgroundTexture();
+                    if(backTex != null){
+                        batch.draw(backTex, drawX, drawY , tileSize, tileSize);
+                    }
                     if(tex != null){
                         batch.draw(tex, drawX, drawY , tileSize, tileSize);
                     }

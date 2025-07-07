@@ -1,6 +1,7 @@
 package com.stardew.models.stores;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.Bouquet;
 import com.stardew.models.ColorPrinter;
@@ -266,7 +267,7 @@ public class PierreGeneralStore extends Store {
     }
 
     @Override
-    public Texture getTexture() {
+    public TextureRegion getTexture() {
         return null;
     }
 

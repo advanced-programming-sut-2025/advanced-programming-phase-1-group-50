@@ -1,6 +1,7 @@
 package com.stardew.models.stores;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.ColorPrinter;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
@@ -148,7 +149,7 @@ public class Blacksmith extends Store {
     }
 
     @Override
-    public Texture getTexture() {
+    public TextureRegion getTexture() {
         return null;
     }
 

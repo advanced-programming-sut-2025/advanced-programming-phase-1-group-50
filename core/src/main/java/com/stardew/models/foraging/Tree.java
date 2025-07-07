@@ -187,7 +187,7 @@ public class Tree implements Growable, Placeable {
     }
 
     @Override
-    public Texture getTexture() {
+    public TextureRegion getTexture() {
         return null;
     }
 

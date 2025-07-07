@@ -1,6 +1,7 @@
 package com.stardew.models.mapInfo;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
 import com.stardew.models.foraging.Fertilizer;
@@ -15,7 +16,8 @@ public class Tile {
     private Placeable placeable;
     private boolean isPlowed = false;
     private Fertilizer fertilizer = null;
-    private Texture texture = GamePictureManager.defaultTileTexture;
+    private TextureRegion texture = new TextureRegion(GamePictureManager.defaultTileTexture);
+    private TextureRegion backgroundTexture = new TextureRegion(GamePictureManager.defaultTileTexture);
     public Tile(Position position) {
         this.position = position;
         this.gotThunder = false;
@@ -75,11 +77,20 @@ public class Tile {
         this.fertilizer = fertilizer;
     }
 
-    public Texture getTexture() {
+    public TextureRegion getTexture() {
         return texture;
     }
 
-    public void setTexture(Texture texture) {
+    public void setTexture(TextureRegion texture) {
         this.texture = texture;
+    }
+
+
+    public void setBackgroundTexture(TextureRegion backgroundTexture) {
+        this.backgroundTexture = backgroundTexture;
+    }
+
+    public TextureRegion getBackgroundTexture() {
+        return backgroundTexture;
     }
 }
