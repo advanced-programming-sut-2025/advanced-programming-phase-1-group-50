@@ -1,6 +1,5 @@
-package com.stardew.view.craftingWindows;
+package com.stardew.view.windows;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,23 +9,15 @@ import com.stardew.controller.CookingAndCraftingControllers.ArtisanController;
 import com.stardew.models.GameAssetManagers.ArtisanAsset;
 import com.stardew.models.GameAssetManagers.ArtisanGoodAsset;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Result;
 
 import java.util.ArrayList;
 
-public class ArtisanWindow extends Window {
+public class ArtisanWindow extends CloseableWindow {
     private ArtisanController controller = new ArtisanController();
-    private ImageButton closeButton;
-    private Stage stage;
 
 
     public ArtisanWindow(ArtisanAsset artisanAsset, Stage stage, float x, float y) {
-        super("Artisan Menu  ", GamePictureManager.skin);
-        this.stage = stage;
-
-        setModal(true);
-        setMovable(false);
-        setResizable(false);
+        super("Artisan Menu  ", stage);
 
         pad(30, 5, 25, 0);
         defaults().space(10);
@@ -43,38 +34,15 @@ public class ArtisanWindow extends Window {
             product.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    //TODO crafting selected item
                     getChildren().forEach(Actor::clearListeners);
                     remove();
                 }
             });
         }
 
-        //adding close button for the window
-        closeButton = new ImageButton(GamePictureManager.closeWindow);
-        getTitleTable().add(closeButton);
-        closeButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                getChildren().forEach(Actor::clearListeners);
-                remove();
-            }
-        });
-
         pack();
-        setBackground(GamePictureManager.windowWoodBackground);
         setPosition(x, y);
 
-    }
-
-    private void showResult(Result result) {
-        Dialog dialog = new Dialog("Result", GamePictureManager.skin);
-        dialog.setColor(Color.LIGHT_GRAY);
-        dialog.pad(30, 5, 20, 5);
-        dialog.setBackground(GamePictureManager.windowWoodBackground);
-        dialog.text(result.getMessage());
-        dialog.getContentTable().getCell(dialog.getContentTable().getChildren().first())
-            .getActor().setColor(result.getSuccessful() ? Color.GREEN : Color.RED);
-        dialog.button(new TextButton("OK", GamePictureManager.skin, "small"));
-        dialog.show(stage);
     }
 }
