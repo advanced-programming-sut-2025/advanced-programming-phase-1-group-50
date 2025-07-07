@@ -1285,6 +1285,45 @@ public class GamePictureManager {
         public static Texture mixedSeedsTexture = new Texture("Crops/Mixed_Seeds.png");
 
 
+    // Animals :
+
+        //Chicken :
+        public static TextureRegion chickenTexture = new TextureRegion(new Texture("Animals/Brown_Chicken.png"));
+        public static TextureRegion eggTexture = new TextureRegion(new Texture("Animal_product/Brown_Egg.png"));
+        public static TextureRegion largeEggTexture = new TextureRegion(new Texture("Animal_product/Large_Brown_Egg.png"));
+
+        //Duck :
+        public static TextureRegion duckTexture = new TextureRegion(new Texture("Animals/Duck.png"));
+        public static TextureRegion duckEggTexture = new TextureRegion(new Texture("Animal_product/Duck_Egg.png"));
+        public static TextureRegion duckFeatherTexture = new TextureRegion(new Texture("Animal_product/Duck_Feather.png"));
+
+        //Rabbit :
+        public static TextureRegion rabbitTexture = new TextureRegion(new Texture("Animals/Rabbit.png"));
+        public static TextureRegion rabbitFootTexture = new TextureRegion(new Texture("Animal_product/Rabbit%27s_Foot.png"));
+        public static TextureRegion woolTexture = new TextureRegion(new Texture("Animal_product/Wool.png"));
+
+        //Dinosaur :
+        public static TextureRegion dinosaurTexture = new TextureRegion(new Texture("Animals/Dinosaur.png"));
+        public static TextureRegion dinosaurEggTexture = new TextureRegion(new Texture("Animal_product/Dinosaur_Egg.png"));
+
+        //Cow :
+        public static TextureRegion cowTexture = new TextureRegion(new Texture("Animals/White_Cow.png"));
+        public static TextureRegion milkTexture = new TextureRegion(new Texture("Animal_product/Milk.png"));
+        public static TextureRegion largeMilkTexture = new TextureRegion(new Texture("Animal_product/Large_Milk.png"));
+
+        //Goat :
+        public static TextureRegion goatTexture = new TextureRegion(new Texture("Animals/Goat.png"));
+        public static TextureRegion goatMilkTexture = new TextureRegion(new Texture("Animal_product/Goat_Milk.png"));
+        public static TextureRegion largeGoatMilkTexture = new TextureRegion(new Texture("Animal_product/Large_Goat_Milk.png"));
+
+        //Sheep :
+        public static TextureRegion sheepTexture = new TextureRegion(new Texture("Animals/Sheep.png"));
+
+        //Pig :
+        public static TextureRegion pigTexture = new TextureRegion(new Texture("Animals/Pig.png"));
+        public static TextureRegion truffleTexture = new TextureRegion(new Texture("Animal_product/Truffle.png"));
+
+
     public static TextureAtlas character1Atlas = new TextureAtlas(Gdx.files.internal("Characters/sprites_player.atlas"));
     public static ArrayList<Animation<TextureRegion>> playerAnimations = new ArrayList<>();
     static {
