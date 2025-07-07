@@ -1,6 +1,7 @@
 package com.stardew.models.foraging;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
 import com.stardew.models.Placeable;
@@ -21,9 +22,8 @@ public class Tree implements Growable, Placeable {
     private final Fertilizer fertilizer;
     private final int numberOfDaysCanBeAliveWithoutWater;
     private Rectangle bounds;
-    private Texture texture ;
 
-    public Tree(TreeType type, Time timeOfPlanting, Fertilizer fertilizer, int x, int y, int width, int height){
+    public Tree(TreeType type, Time timeOfPlanting, Fertilizer fertilizer, int x, int y, int width, int height) {
         this.type = type;
         this.lastGrowthTime = timeOfPlanting.clone();
         this.lastWaterTime = timeOfPlanting.clone();
@@ -31,8 +31,7 @@ public class Tree implements Growable, Placeable {
         if (fertilizer == null) {
             this.levelOfGrowth = 0;
             numberOfDaysCanBeAliveWithoutWater = 2;
-        }
-        else {
+        } else {
             if (fertilizer.equals(Fertilizer.WaterFertilizer)) {
                 levelOfGrowth = 0;
                 numberOfDaysCanBeAliveWithoutWater = 3;
@@ -42,7 +41,6 @@ public class Tree implements Growable, Placeable {
             }
         }
         this.bounds = new Rectangle(x, y, width, height);
-        texture = type.getStageTextures().getFirst();
     }
 
     public Rectangle getBounds() {
@@ -61,10 +59,8 @@ public class Tree implements Growable, Placeable {
         if (isComplete())
             return;
 
-        int timeForGrow = type.getTimeForGrow(levelOfGrowth);
-
         int todayDate = today.getDate();
-        texture = type.getStageTextureByLevel(levelOfGrowth);
+        int timeForGrow = type.getTimeForGrow(levelOfGrowth);
 
         if (today.getSeason() != lastGrowthTime.getSeason())
             todayDate += Math.abs(lastGrowthTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
@@ -84,18 +80,26 @@ public class Tree implements Growable, Placeable {
         return levelOfGrowth >= type.getStages().size();
     }
 
-    public boolean harvest() {
+    public boolean isCompleteAgain() {
         if (!isComplete())
             return false;
+
+        if (lastHarvestTime == null)
+            return true;
 
         Time today = App.getGame().getTime().clone();
         int timeForGrow = type.getHarvestCycle();
 
-        if (lastHarvestTime == null || lastHarvestTime.getDate() + timeForGrow <= today.getDate()) {
-            lastHarvestTime = today.clone();
-            return true;
-        }
-        return false;
+        int todayDate = today.getDate();
+        if (today.getSeason() != lastHarvestTime.getSeason())
+            todayDate += Math.abs(lastHarvestTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
+
+        return lastHarvestTime.getDate() + timeForGrow <= todayDate;
+    }
+
+    @Override
+    public void doAgainHarvesting() {
+        lastHarvestTime = App.getGame().getTime().clone();
     }
 
     public void watering() {
@@ -153,7 +157,7 @@ public class Tree implements Growable, Placeable {
     }
 
     @Override
-    public String getColor(){
+    public String getColor() {
         return colorCode;
     }
 
@@ -163,13 +167,28 @@ public class Tree implements Growable, Placeable {
     }
 
     @Override
-    public String getBackground(){
+    public String getBackground() {
         return backgroundCode;
     }
 
+    public TextureRegion getTextureRegion() {
+        if (levelOfGrowth <= type.getStages().size() - 1) {
+            return type.getStageTextures()[levelOfGrowth];
+        }
+        else if (type.getSeason() != App.getGame().getTime().getSeason()) {
+            return type.getStage5Texture(App.getGame().getTime().getSeason());
+        }
+        else {
+            if (isCompleteAgain())
+                return type.getStage5WithFruitTexture(App.getGame().getTime().getSeason());
+            else
+                return type.getStage5Texture(App.getGame().getTime().getSeason());
+        }
+    }
+
     @Override
-    public Texture getTexture(){
-        return texture;
+    public Texture getTexture() {
+        return null;
     }
 
 }

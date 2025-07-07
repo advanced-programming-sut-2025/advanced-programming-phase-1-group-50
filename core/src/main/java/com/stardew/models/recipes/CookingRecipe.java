@@ -13,7 +13,7 @@ import com.stardew.models.manuFactor.artisanGoods.ArtisanGoodType;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum CookingRecipe implements Ingredient {
+public enum CookingRecipe {
     FriedEgg(new HashMap<>(Map.of(AnimalGoodType.Egg, 1))),
     BakedFish(new HashMap<>(Map.of(FishType.Sardine, 1, FishType.Salmon, 1, CropType.Wheat, 1))),
     Salad(new HashMap<>(Map.of(ForagingCrop.Leek, 1, ForagingCrop.Dandelion, 1))),

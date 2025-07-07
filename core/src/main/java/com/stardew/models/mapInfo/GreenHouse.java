@@ -8,7 +8,6 @@ import com.stardew.models.app.App;
 import com.stardew.models.foraging.Crop;
 import com.stardew.models.foraging.Growable;
 import com.stardew.models.foraging.Tree;
-import com.stardew.models.manuFactor.Ingredient;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -62,8 +61,9 @@ public class GreenHouse implements Placeable {
             Iterator<Growable> iterator = growables.iterator();
             while (iterator.hasNext()) {
                 Growable growable = iterator.next();
-                if (growable.harvest()) {
-                    growables.removeIf(c -> c == growable);
+                if (growable.isCompleteAgain()) {
+                    iterator.remove();
+                    growable.doAgainHarvesting();
                     if (growable instanceof Tree tree) {
                         int numberOfWoods = tree.getCurrentStage();
                         App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Wood(), numberOfWoods);

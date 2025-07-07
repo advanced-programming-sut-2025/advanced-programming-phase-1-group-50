@@ -94,12 +94,17 @@ public class ForagingController {
             return new Result(false, "Plant hasn't grown completely!");
 
         if (plant.canGrowAgain()) {
-            if (plant.harvest()) {
+            if (plant.isCompleteAgain()) {
                 if (plant instanceof Crop crop)
                     player.getBackpack().addIngredients(crop, new Random().nextInt(2) + 2);
-                else if (plant instanceof Tree tree)
+                else if (plant instanceof Tree tree) {
+                    if (tree.getType().getSeason() != Season.Special &&
+                        tree.getType().getSeason() != App.getGame().getTime().getSeason())
+                        return new Result(false, "You can't get fruit in this season!");
                     player.getBackpack().addIngredients(tree.getType().getFruit(), new Random().nextInt(3) + 3);
+                }
 
+                plant.doAgainHarvesting();
                 player.getAbility().increaseFarmingRate(5);
 
                 return new Result(true,
@@ -183,9 +188,6 @@ public class ForagingController {
 
             if (!player.getBackpack().getIngredientQuantity().containsKey(treeSource))
                 return new Result(false, "You don't have this seed!");
-
-            if (!treeSource.getTreeType().getSeason().equals(App.getGame().getTime().getSeason()))
-                return new Result(false, "You can't plant this tree in this season!");
 
             player.getBackpack().removeIngredients(treeSource, 1);
             Tree tree = new Tree(treeSource.getTreeType(), App.getGame().getTime(), targetTile.getFertilizer(),

@@ -1,6 +1,5 @@
 package com.stardew.models.foraging;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.manuFactor.Ingredient;
@@ -16,17 +15,17 @@ public enum TreeSource implements Ingredient {
     PeachSapling(TreeType.PeachTree , GamePictureManager.peachSaplingTexture),
     AppleSapling(TreeType.AppleTree , GamePictureManager.appleSaplingTexture),
     PomegranateSapling(TreeType.PomegranateTree , GamePictureManager.pomegranateSaplingTexture),
-    Acorns(TreeType.OakTree , null),
-    MapleSeeds(TreeType.MapleTree , GamePictureManager.mapleSaplingTexture),
-    PineCones(TreeType.PineTree, GamePictureManager.pineSaplingTexture),
-    MahoganySeeds(TreeType.MahoganyTree , null),
-    MushroomTreeSeeds(TreeType.MushroomTree , GamePictureManager.mushroomTreeSaplingTexture),
-    MysticTreeSeeds(TreeType.MysticTree ,  GamePictureManager.mysticTreeSaplingTexture),;
+    Acorns(TreeType.OakTree , GamePictureManager.acornTexture),
+    MapleSeeds(TreeType.MapleTree , GamePictureManager.mapleSeedsTexture),
+    PineCones(TreeType.PineTree, GamePictureManager.pineConeTexture),
+    MahoganySeeds(TreeType.MahoganyTree , GamePictureManager.mahoganySeedTexture),
+    MushroomTreeSeeds(TreeType.MushroomTree , GamePictureManager.mushroomTreeSeedTexture),
+    MysticTreeSeeds(TreeType.MysticTree ,  GamePictureManager.mysticTreeSeedTexture),;
 
     private TreeType treeType;
     private final static HashMap<String, TreeSource> stringToTreeSource = new HashMap<>();
     private static boolean firstInitialize = true;
-    private final Texture saplingTexture;
+    private final Texture texture;
 
     static {
         for (TreeSource value : TreeSource.values()) {
@@ -51,9 +50,9 @@ public enum TreeSource implements Ingredient {
         MysticTreeSeeds.treeType = TreeType.MysticTree;
     }
 
-    TreeSource(TreeType treeType , Texture saplingTexture) {
+    TreeSource(TreeType treeType , Texture texture) {
         this.treeType = treeType;
-        this.saplingTexture = saplingTexture;
+        this.texture = texture;
     }
 
     public TreeType getTreeType() {
@@ -70,7 +69,7 @@ public enum TreeSource implements Ingredient {
         return stringToTreeSource.getOrDefault(treeSource.toLowerCase(), null);
     }
 
-    public Texture getSaplingTexture() {
-        return saplingTexture;
+    public Texture getTexture() {
+        return texture;
     }
 }
