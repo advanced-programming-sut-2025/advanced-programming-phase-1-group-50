@@ -21,6 +21,9 @@ public class GamePictureManager {
     public static int Tree_SIze_Height = 150;
     public static int ROCK_SIZE = 50;
 
+    public static TextureRegionDrawable menuBackground = new TextureRegionDrawable(new TextureRegion
+        (new Texture(Gdx.files.internal("menu_bg.png"))));
+
     public static TextureRegionDrawable woodBackground =
         new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("wood_bg.png"))));
     public static TextureRegionDrawable windowWoodBackground =
