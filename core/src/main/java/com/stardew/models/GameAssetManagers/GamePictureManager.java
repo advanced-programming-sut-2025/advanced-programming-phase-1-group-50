@@ -22,6 +22,9 @@ public class GamePictureManager {
     public static int Tree_SIze_Height = 150;
     public static int ROCK_SIZE = 50;
 
+    public static TextureRegionDrawable menuBackground = new TextureRegionDrawable(new TextureRegion
+        (new Texture(Gdx.files.internal("menu_bg.png"))));
+
     public static TextureRegionDrawable woodBackground =
         new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("wood_bg.png"))));
     public static TextureRegionDrawable windowWoodBackground =
@@ -1444,6 +1447,7 @@ public class GamePictureManager {
     public static Texture defaultTileTexture = new Texture("Flooring/Flooring_50.png");
     public static Texture defaultTileTexture2 = new Texture("Flooring/Flooring_28.png");
     public static Texture defaultTileTexture3 = new Texture("Flooring/Flooring_44.png");
+    public static Texture lakeTexture = new Texture("Flooring/Flooring_26.png");
 
 
     public static Texture greenHouseTexture = new Texture("Greenhouse/greenhouse.png");

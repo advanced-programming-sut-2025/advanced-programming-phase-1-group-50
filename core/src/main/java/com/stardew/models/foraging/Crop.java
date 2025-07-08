@@ -25,6 +25,7 @@ public class Crop implements Ingredient, Growable , Placeable, Sellable {
     private final Fertilizer fertilizer;
     private final int numberOfDaysCanBeAliveWithoutWater;
     private final Rectangle bounds;
+    private boolean isGeneratedRandomly = false;
 
 
 
@@ -203,7 +204,18 @@ public class Crop implements Ingredient, Growable , Placeable, Sellable {
 
     @Override
     public TextureRegion getTexture() {
+        if(isGeneratedRandomly){
+            return new TextureRegion(type.getLevelsTextures()[type.getNumberOfStages()]);
+        }
         return new TextureRegion(type.getLevelsTextures()[levelOfGrowth]);
+    }
+
+    public boolean isGeneratedRandomly() {
+        return isGeneratedRandomly;
+    }
+
+    public void setGeneratedRandomly(boolean isGeneratedRandomly) {
+        this.isGeneratedRandomly = isGeneratedRandomly;
     }
 
 }

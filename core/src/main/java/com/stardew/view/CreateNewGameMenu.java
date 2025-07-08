@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.stardew.Main;
 import com.stardew.controller.CreateNewGameController;
@@ -54,6 +56,10 @@ public class CreateNewGameMenu implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        TextureRegionDrawable bgTex = GamePictureManager.menuBackground;
+        Image background = new Image(bgTex);
+        background.setFillParent(true);
+        stage.addActor(background);
         table = new Table(GamePictureManager.skin);
         table.setFillParent(true);
         table.center();

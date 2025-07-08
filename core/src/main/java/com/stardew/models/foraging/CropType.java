@@ -315,4 +315,8 @@ public enum CropType implements Ingredient {
             return null;
         return stringToCropType.getOrDefault(name.toLowerCase(), null);
     }
+
+    public Texture getMainTexture(){
+        return mainTexture;
+    }
 }
