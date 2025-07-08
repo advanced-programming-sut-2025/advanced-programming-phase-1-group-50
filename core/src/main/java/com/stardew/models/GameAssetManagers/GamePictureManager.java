@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.stardew.models.animals.AnimalState;
 import com.stardew.models.date.Season;
 import com.badlogic.gdx.utils.Array;
 
@@ -1297,37 +1298,129 @@ public class GamePictureManager {
         public static TextureRegion chickenTexture = new TextureRegion(new Texture("Animals/Brown_Chicken.png"));
         public static TextureRegion eggTexture = new TextureRegion(new Texture("Animal_product/Brown_Egg.png"));
         public static TextureRegion largeEggTexture = new TextureRegion(new Texture("Animal_product/Large_Brown_Egg.png"));
+        public static Map<AnimalState, Animation<TextureRegion>> chickenAnimations = new HashMap<>();
+        static {
+            TextureRegion[][] chicken = TextureRegion.split(new Texture("Animals_animation/Chicken_Brown.png"), 16, 16);
+            chickenAnimations.put(AnimalState.MOVING_RIGHT, new Animation<>(0.15f, chicken[1]));
+            chickenAnimations.put(AnimalState.MOVING_LEFT, new Animation<>(0.15f, chicken[3]));
+            chickenAnimations.put(AnimalState.MOVING_UP, new Animation<>(0.15f, chicken[2]));
+            chickenAnimations.put(AnimalState.MOVING_DOWN, new Animation<>(0.15f, chicken[0]));
+            chickenAnimations.put(AnimalState.IN_FARM_EATING, new Animation<>(0.15f, chicken[6]));
+            chickenAnimations.put(AnimalState.IS_PETTING, new Animation<>(0.15f, chicken[4]));
+        }
+
 
         //Duck :
         public static TextureRegion duckTexture = new TextureRegion(new Texture("Animals/Duck.png"));
         public static TextureRegion duckEggTexture = new TextureRegion(new Texture("Animal_product/Duck_Egg.png"));
         public static TextureRegion duckFeatherTexture = new TextureRegion(new Texture("Animal_product/Duck_Feather.png"));
+        public static Map<AnimalState, Animation<TextureRegion>> duckAnimations = new HashMap<>();
+        static {
+            TextureRegion[][] duck = TextureRegion.split(new Texture("Animals_animation/Duck.png"), 16, 16);
+            duckAnimations.put(AnimalState.MOVING_RIGHT, new Animation<>(0.15f, duck[1]));
+            duckAnimations.put(AnimalState.MOVING_LEFT, new Animation<>(0.15f, duck[3]));
+            duckAnimations.put(AnimalState.MOVING_UP, new Animation<>(0.15f, duck[2]));
+            duckAnimations.put(AnimalState.MOVING_DOWN, new Animation<>(0.15f, duck[0]));
+            duckAnimations.put(AnimalState.IN_FARM_EATING, new Animation<>(0.15f, duck[6]));
+            duckAnimations.put(AnimalState.IS_PETTING, new Animation<>(0.15f, duck[4]));
+        }
 
         //Rabbit :
         public static TextureRegion rabbitTexture = new TextureRegion(new Texture("Animals/Rabbit.png"));
         public static TextureRegion rabbitFootTexture = new TextureRegion(new Texture("Animal_product/Rabbit%27s_Foot.png"));
         public static TextureRegion woolTexture = new TextureRegion(new Texture("Animal_product/Wool.png"));
+        public static Map<AnimalState, Animation<TextureRegion>> rabbitAnimations = new HashMap<>();
+        static {
+            TextureRegion[][] rabbit = TextureRegion.split(new Texture("Animals_animation/Rabbit.png"), 16, 16);
+            rabbitAnimations.put(AnimalState.MOVING_RIGHT, new Animation<>(0.15f, rabbit[1]));
+            rabbitAnimations.put(AnimalState.MOVING_LEFT, new Animation<>(0.15f, rabbit[3]));
+            rabbitAnimations.put(AnimalState.MOVING_UP, new Animation<>(0.15f, rabbit[2]));
+            rabbitAnimations.put(AnimalState.MOVING_DOWN, new Animation<>(0.15f, rabbit[0]));
+            rabbitAnimations.put(AnimalState.IN_FARM_EATING, new Animation<>(0.15f, rabbit[6]));
+            rabbitAnimations.put(AnimalState.IS_PETTING, new Animation<>(0.15f, rabbit[4]));
+        }
 
         //Dinosaur :
         public static TextureRegion dinosaurTexture = new TextureRegion(new Texture("Animals/Dinosaur.png"));
         public static TextureRegion dinosaurEggTexture = new TextureRegion(new Texture("Animal_product/Dinosaur_Egg.png"));
+        public static Map<AnimalState, Animation<TextureRegion>> dinosaurAnimations = new HashMap<>();
+        static {
+            TextureRegion[][] dinosaur = TextureRegion.split(new Texture("Animals_animation/Dinosaur.png"), 16, 16);
+            dinosaurAnimations.put(AnimalState.MOVING_RIGHT, new Animation<>(0.15f, dinosaur[1]));
+            dinosaurAnimations.put(AnimalState.MOVING_LEFT, new Animation<>(0.15f, dinosaur[3]));
+            dinosaurAnimations.put(AnimalState.MOVING_UP, new Animation<>(0.15f, dinosaur[2]));
+            dinosaurAnimations.put(AnimalState.MOVING_DOWN, new Animation<>(0.15f, dinosaur[0]));
+            dinosaurAnimations.put(AnimalState.IN_FARM_EATING, new Animation<>(0.15f, dinosaur[6]));
+            dinosaurAnimations.put(AnimalState.IS_PETTING, new Animation<>(0.15f, dinosaur[4]));
+        }
 
         //Cow :
         public static TextureRegion cowTexture = new TextureRegion(new Texture("Animals/White_Cow.png"));
         public static TextureRegion milkTexture = new TextureRegion(new Texture("Animal_product/Milk.png"));
         public static TextureRegion largeMilkTexture = new TextureRegion(new Texture("Animal_product/Large_Milk.png"));
+        public static Map<AnimalState, Animation<TextureRegion>> cowAnimations = new HashMap<>();
+        static { //TODO
+            TextureRegion[][] cow = TextureRegion.split(new Texture("Animals_animation/Cow_White.png"), 32, 32);
+            cowAnimations.put(AnimalState.MOVING_RIGHT, new Animation<>(0.15f, cow[1]));
+            cowAnimations.put(AnimalState.MOVING_LEFT, new Animation<>(0.15f, cow[0])); //dont have
+            cowAnimations.put(AnimalState.MOVING_UP, new Animation<>(0.15f, cow[2]));
+            cowAnimations.put(AnimalState.MOVING_DOWN, new Animation<>(0.15f, cow[0]));
+            cowAnimations.put(AnimalState.IN_FARM_EATING, new Animation<>(0.15f, cow[4]));
+            cowAnimations.put(AnimalState.IS_PETTING, new Animation<>(0.15f, cow[3]));
+        }
 
         //Goat :
         public static TextureRegion goatTexture = new TextureRegion(new Texture("Animals/Goat.png"));
         public static TextureRegion goatMilkTexture = new TextureRegion(new Texture("Animal_product/Goat_Milk.png"));
         public static TextureRegion largeGoatMilkTexture = new TextureRegion(new Texture("Animal_product/Large_Goat_Milk.png"));
+        public static Map<AnimalState, Animation<TextureRegion>> goatAnimations = new HashMap<>();
+        static {
+            TextureRegion[][] goat = TextureRegion.split(new Texture("Animals_animation/Goat.png"), 32, 32);
+            goatAnimations.put(AnimalState.MOVING_RIGHT, new Animation<>(0.15f, goat[1]));
+            goatAnimations.put(AnimalState.MOVING_LEFT, new Animation<>(0.15f, goat[0]));  //dont have
+            goatAnimations.put(AnimalState.MOVING_UP, new Animation<>(0.15f, goat[2]));
+            goatAnimations.put(AnimalState.MOVING_DOWN, new Animation<>(0.15f, goat[0]));
+            goatAnimations.put(AnimalState.IN_FARM_EATING, new Animation<>(0.15f, goat[4]));
+            goatAnimations.put(AnimalState.IS_PETTING, new Animation<>(0.15f, goat[3]));
+        }
 
         //Sheep :
         public static TextureRegion sheepTexture = new TextureRegion(new Texture("Animals/Sheep.png"));
+        public static Map<AnimalState, Animation<TextureRegion>> sheepAnimations = new HashMap<>();
+        static {
+            TextureRegion[][] sheep = TextureRegion.split(new Texture("Animals_animation/Sheep.png"), 32, 32);
+            sheepAnimations.put(AnimalState.MOVING_RIGHT, new Animation<>(0.15f, sheep[1]));
+            sheepAnimations.put(AnimalState.MOVING_LEFT, new Animation<>(0.15f, sheep[0]));  //dont have
+            sheepAnimations.put(AnimalState.MOVING_UP, new Animation<>(0.15f, sheep[2]));
+            sheepAnimations.put(AnimalState.MOVING_DOWN, new Animation<>(0.15f, sheep[0]));
+            sheepAnimations.put(AnimalState.IN_FARM_EATING, new Animation<>(0.15f, sheep[4]));
+            sheepAnimations.put(AnimalState.IS_PETTING, new Animation<>(0.15f, sheep[3]));
+        }
 
         //Pig :
         public static TextureRegion pigTexture = new TextureRegion(new Texture("Animals/Pig.png"));
         public static TextureRegion truffleTexture = new TextureRegion(new Texture("Animal_product/Truffle.png"));
+        public static Map<AnimalState, Animation<TextureRegion>> pigAnimations = new HashMap<>();
+        static {
+            TextureRegion[][] pig = TextureRegion.split(new Texture("Animals_animation/Pig.png"), 32, 32);
+            pigAnimations.put(AnimalState.MOVING_RIGHT, new Animation<>(0.15f, pig[1]));
+            pigAnimations.put(AnimalState.MOVING_LEFT, new Animation<>(0.15f, pig[0]));  //dont have
+            pigAnimations.put(AnimalState.MOVING_UP, new Animation<>(0.15f, pig[2]));
+            pigAnimations.put(AnimalState.MOVING_DOWN, new Animation<>(0.15f, pig[0]));
+            pigAnimations.put(AnimalState.IN_FARM_EATING, new Animation<>(0.15f, pig[4]));
+            pigAnimations.put(AnimalState.IS_PETTING, new Animation<>(0.15f, pig[3]));
+        }
+
+    //Animal_Habitat :
+
+        //Barn :
+        public static TextureRegion barnTexture = new TextureRegion(new Texture("Animal_Habitat/Barn.png"));
+        public static TextureRegion bigBarnTexture = new TextureRegion(new Texture("Animal_Habitat/Big_Barn.png"));
+        public static TextureRegion deluxeBarnTexture = new TextureRegion(new Texture("Animal_Habitat/Deluxe_Barn.png"));
+        //Coop :
+        public static TextureRegion coopTexture = new TextureRegion(new Texture("Animal_Habitat/Coop.png"));
+        public static TextureRegion bigCoopTexture = new TextureRegion(new Texture("Animal_Habitat/Big_Coop.png"));
+        public static TextureRegion deluxeCoopTexture = new TextureRegion(new Texture("Animal_Habitat/Deluxe_Coop.png"));
 
 
     public static TextureAtlas character1Atlas = new TextureAtlas(Gdx.files.internal("Characters/sprites_player.atlas"));

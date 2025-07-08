@@ -303,9 +303,9 @@ public class GameMenu implements AppMenu , Screen {
             System.out.println(animalsController.buyAnimal(
                     matcher.group("animal"), matcher.group("name")));
         }
-        else if ((matcher = GameMenuCommands.Pet.getMatcher(input)) != null) {
-            System.out.println(animalsController.pet(matcher.group("name")));
-        }
+//        else if ((matcher = GameMenuCommands.Pet.getMatcher(input)) != null) {
+//            System.out.println(animalsController.pet(matcher.group("name")));
+//        }
         else if ((matcher = GameMenuCommands.CheatSetFriendship.getMatcher(input)) != null) {
             System.out.println(animalsController.setFriendship(
                     matcher.group("animalName"), Integer.parseInt(matcher.group("amount"))));
@@ -313,23 +313,22 @@ public class GameMenu implements AppMenu , Screen {
         else if (GameMenuCommands.Animals.getMatcher(input) != null) {
             System.out.println(animalsController.animalsInfo());
         }
-        else if ((matcher = GameMenuCommands.ShepherdAnimal.getMatcher(input)) != null) {
-            System.out.println(animalsController.shepherdAnimal(
-                    matcher.group("animalName"), Integer.parseInt(matcher.group("X")),
-                    Integer.parseInt(matcher.group("Y"))));
-        }
-        else if ((matcher = GameMenuCommands.FeedHay.getMatcher(input)) != null) {
-            System.out.println(animalsController.feedHay(matcher.group("animalName")));
-        }
+//        else if ((matcher = GameMenuCommands.ShepherdAnimal.getMatcher(input)) != null) {
+//            System.out.println(animalsController.shepherdAnimal(
+//                    matcher.group("animalName")));
+//        }
+//        else if ((matcher = GameMenuCommands.FeedHay.getMatcher(input)) != null) {
+//            System.out.println(animalsController.feedHay(matcher.group("animalName")));
+//        }
         else if (GameMenuCommands.AnimalsProduces.getMatcher(input) != null) {
             System.out.println(animalsController.animalProduces());
         }
-        else if ((matcher = GameMenuCommands.CollectProduce.getMatcher(input)) != null) {
-            System.out.println(animalsController.collectProduce(matcher.group("animalName")));
-        }
-        else if ((matcher = GameMenuCommands.SellAnimal.getMatcher(input)) != null) {
-            System.out.println(animalsController.sellAnimal(matcher.group("animalName")));
-        }
+//        else if ((matcher = GameMenuCommands.CollectProduce.getMatcher(input)) != null) {
+//            System.out.println(animalsController.collectProduce(matcher.group("animalName")));
+//        }
+//        else if ((matcher = GameMenuCommands.SellAnimal.getMatcher(input)) != null) {
+//            System.out.println(animalsController.sellAnimal(matcher.group("animalName")));
+//        }
 
 
         else if ((matcher = GameMenuCommands.ArtisanUse.getMatcher(input)) != null) {
