@@ -1,30 +1,36 @@
 package com.stardew.models.animals;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public enum AnimalType {
     Chicken(HabitatType.Coop , HabitatSize.Regular, 800, 1,
-            new ArrayList<>(Arrays.asList(AnimalGoodType.Egg, AnimalGoodType.LargeEgg)), GamePictureManager.chickenTexture),
+            new ArrayList<>(Arrays.asList(AnimalGoodType.Egg, AnimalGoodType.LargeEgg)),
+            GamePictureManager.chickenAnimations, GamePictureManager.chickenTexture),
     Duck(HabitatType.Coop , HabitatSize.Big, 1200, 2,
-            new ArrayList<>(Arrays.asList(AnimalGoodType.DuckEgg, AnimalGoodType.DuckFeather)), GamePictureManager.duckTexture),
+            new ArrayList<>(Arrays.asList(AnimalGoodType.DuckEgg, AnimalGoodType.DuckFeather)),
+            GamePictureManager.duckAnimations, GamePictureManager.duckTexture),
     Rabbit(HabitatType.Coop , HabitatSize.Deluxe, 8000, 4,
-            new ArrayList<>(Arrays.asList(AnimalGoodType.Wool, AnimalGoodType.RabbitFoot)), GamePictureManager.rabbitTexture),
+            new ArrayList<>(Arrays.asList(AnimalGoodType.Wool, AnimalGoodType.RabbitFoot)),
+            GamePictureManager.rabbitAnimations, GamePictureManager.rabbitTexture),
     Dinosaur(HabitatType.Coop , HabitatSize.Big, 14000, 7,
-            new ArrayList<>(List.of(AnimalGoodType.DinosaurEgg)), GamePictureManager.dinosaurTexture),
+            new ArrayList<>(List.of(AnimalGoodType.DinosaurEgg)),
+            GamePictureManager.dinosaurAnimations, GamePictureManager.dinosaurTexture),
     Cow(HabitatType.Barn , HabitatSize.Regular, 1500, 1,
-            new ArrayList<>(Arrays.asList(AnimalGoodType.Milk, AnimalGoodType.LargeMilk)), GamePictureManager.cowTexture),
+            new ArrayList<>(Arrays.asList(AnimalGoodType.Milk, AnimalGoodType.LargeMilk)),
+            GamePictureManager.cowAnimations, GamePictureManager.cowTexture),
     Goat(HabitatType.Barn , HabitatSize.Big, 4000, 2,
-            new ArrayList<>(Arrays.asList(AnimalGoodType.GoatMilk, AnimalGoodType.LargeGoatMilk)), GamePictureManager.goatTexture),
+            new ArrayList<>(Arrays.asList(AnimalGoodType.GoatMilk, AnimalGoodType.LargeGoatMilk)),
+            GamePictureManager.goatAnimations, GamePictureManager.goatTexture),
     Sheep(HabitatType.Barn , HabitatSize.Deluxe, 8000, 3,
-            new ArrayList<>(List.of(AnimalGoodType.Wool)), GamePictureManager.sheepTexture),
+            new ArrayList<>(List.of(AnimalGoodType.Wool)),
+            GamePictureManager.sheepAnimations, GamePictureManager.sheepTexture),
     Pig(HabitatType.Barn , HabitatSize.Deluxe, 16000, 0,
-            new ArrayList<>(List.of(AnimalGoodType.Truffle)), GamePictureManager.pigTexture);
+            new ArrayList<>(List.of(AnimalGoodType.Truffle)),
+            GamePictureManager.pigAnimations, GamePictureManager.pigTexture);
 
 
     private final HabitatType habitatType;
@@ -32,7 +38,8 @@ public enum AnimalType {
     private final int Price;
     private final int daysToGetProduct;
     private final ArrayList<AnimalGoodType> animalGoodTypes;
-    private final TextureRegion textureRegion;
+    private final Map<AnimalState, Animation<TextureRegion>> animations;
+    private final TextureRegion normalTexture;
 
     private final static HashMap<String, AnimalType> stringToAnimalType = new HashMap<>();
     static {
@@ -42,13 +49,15 @@ public enum AnimalType {
     }
 
 
-     AnimalType(HabitatType habitatType, HabitatSize habitatSize, int price, int daysToGetProduct, ArrayList<AnimalGoodType> animalGoodTypes, TextureRegion textureRegion){
+     AnimalType(HabitatType habitatType, HabitatSize habitatSize, int price, int daysToGetProduct,
+                ArrayList<AnimalGoodType> animalGoodTypes, Map<AnimalState, Animation<TextureRegion>> animations, TextureRegion normalTexture){
         this.habitatType = habitatType;
          this.habitatSize = habitatSize;
          this.Price = price;
          this.daysToGetProduct = daysToGetProduct;
          this.animalGoodTypes = animalGoodTypes;
-         this.textureRegion = textureRegion;
+         this.animations = animations;
+         this.normalTexture = normalTexture;
      }
 
     public int getPrice() {
@@ -71,8 +80,12 @@ public enum AnimalType {
          return animalGoodTypes;
     }
 
-    public TextureRegion getTextureRegion() {
-        return textureRegion;
+    public Animation<TextureRegion> getAnimation(AnimalState state) {
+        return animations.get(state);
+    }
+
+    public TextureRegion getNormalTexture() {
+        return normalTexture;
     }
 
     public static AnimalType getAnimalTypeByInput(String input) {

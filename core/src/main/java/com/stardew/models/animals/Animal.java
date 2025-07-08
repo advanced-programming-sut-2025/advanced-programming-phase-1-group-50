@@ -1,29 +1,49 @@
 package com.stardew.models.animals;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.stardew.models.Placeable;
 import com.stardew.models.app.App;
 import com.stardew.models.date.Time;
 
+import java.awt.*;
 
-public class Animal {
+
+public class Animal implements Placeable {
     private final AnimalType type;
     private final String name;
     private int friendShip;
     private Time lastPetTime;
     private Time lastFeedTime;
     private Time lastProductTime;
-    private boolean isOutOfHabitat;
     private Habitat habitat;
+    private AnimalState state;
+    private AnimalState nextState;
+    private Vector2 position;
+    private Vector2 targetPosition;
+    private float stateTime = 0f;
+    private final float PET_TIME = 5f;
+    private final float speed = 50f;
     private final static int maxFriendShip = 1000;
+
+    public Animal() {
+        type = null;
+        name = null;
+        state = AnimalState.IN_HABITAT;
+    }
 
     public Animal(AnimalType type, String name, Habitat habitat) {
         this.type = type;
         this.name = name;
         this.friendShip = 0;
-        this.lastPetTime = App.getGame().getTime().clone();
-        this.lastFeedTime = App.getGame().getTime().clone();
-        this.lastProductTime = App.getGame().getTime().clone();
-        isOutOfHabitat = false;
+//        this.lastPetTime = App.getGame().getTime().clone();
+//        this.lastFeedTime = App.getGame().getTime().clone();
+//        this.lastProductTime = App.getGame().getTime().clone();
         this.habitat = habitat;
+        this.state = AnimalState.IN_HABITAT;
+        this.position = new Vector2(habitat.getPosition().x + 50, habitat.getPosition().y);
     }
 
     public AnimalType getType() {
@@ -53,6 +73,8 @@ public class Animal {
 
     public void pet() {
         lastPetTime = App.getGame().getTime().clone();
+        state = AnimalState.IS_PETTING;
+        stateTime = 0;
         incrementFriendShip(15);
     }
 
@@ -114,14 +136,92 @@ public class Animal {
     }
 
     public boolean isOutOfHabitat() {
-        return isOutOfHabitat;
+        return state != AnimalState.IN_HABITAT;
+    }
+
+    private void moveTo(Vector2 destination) {
+        targetPosition = destination;
+
+        Vector2 diff = targetPosition.cpy().sub(position);
+        if (Math.abs(diff.x) > Math.abs(diff.y)) {
+            state = diff.x > 0 ? AnimalState.MOVING_RIGHT : AnimalState.MOVING_LEFT;
+        }
+        else {
+            state = diff.y > 0 ? AnimalState.MOVING_UP : AnimalState.MOVING_DOWN;
+        }
+
+        stateTime = 0f;
     }
 
     public void goToHabitat() {
-        isOutOfHabitat = false;
+        moveTo(new Vector2(habitat.getPosition().x + 50, habitat.getPosition().y));
+        nextState = AnimalState.IN_HABITAT;
     }
 
-    public void shepherdAnimal() {
-        isOutOfHabitat = true;
+    public void shepherdAnimal(float x, float y) {
+        moveTo(new Vector2(x, y));
+        nextState = AnimalState.IN_FARM_EATING;
+    }
+
+    public boolean isMoving() {
+        return switch (state) {
+            case MOVING_RIGHT, MOVING_LEFT, MOVING_UP, MOVING_DOWN -> true;
+            default -> false;
+        };
+    }
+
+    public void update(float delta) {
+        if (state == AnimalState.IN_HABITAT) return;
+
+        stateTime += delta;
+        if (isMoving()) {
+            float distance = position.dst(targetPosition);
+            if (distance <= 1f) {
+                state = nextState;
+                stateTime = 0f;
+            } else {
+                Vector2 direction = targetPosition.cpy().sub(position).nor();
+                position.add(direction.scl(speed * delta));
+            }
+        }
+        else if (state == AnimalState.IS_PETTING) {
+            if (stateTime >= PET_TIME)
+                state = AnimalState.IN_FARM_EATING;
+        }
+
+    }
+
+    public void render(Batch batch) {
+        if (state == AnimalState.IN_HABITAT) return;
+
+        Animation<TextureRegion> animation = type.getAnimation(state);
+        TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
+
+        batch.draw(currentFrame, position.x, position.y, 40, 40);
+    }
+
+    @Override
+    public Rectangle getBounds() {
+        return null;
+    }
+
+    @Override
+    public char getSymbol() {
+        return 0;
+    }
+
+    @Override
+    public String getColor() {
+        return "";
+    }
+
+    @Override
+    public String getBackground() {
+        return "";
+    }
+
+    @Override
+    public TextureRegion getTexture() {
+        return null;
     }
 }

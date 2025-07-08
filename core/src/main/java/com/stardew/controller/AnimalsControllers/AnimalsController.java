@@ -96,18 +96,17 @@ public class AnimalsController {
         return new Result(true, "You buy a <" + animalType + "> with name <" + name + "> successfully!");
     }
 
-    public Result pet(String animalName) {
-        Player player = App.getGame().getCurrentPlayingPlayer();
-        Animal animal = player.getBackpack().getAnimalByName(animalName);
+    public Result pet(Animal animal) {
 
         if (animal == null)
-            return new Result(false, "Animal <" + animalName + "> not found!");
-        if (!App.getGame().getMap().isAroundPlaceable(player, animal.getHabitat()))
-            return new Result(false, "You are not near to house of <" + animalName + ">!");
+            return new Result(false, "Animal not found!");
+
+        if (!animal.isOutOfHabitat())
+            return new Result(false, "<" + animal.getName() + ">  isn't out of habitat!");
 
         animal.pet();
 
-        return new Result(true, "You pet <" + animalName + "> successfully!");
+        return new Result(true, "You pet <" + animal.getName() + "> successfully!");
     }
 
     public Result setFriendship(String animalName, int amount) {
@@ -147,39 +146,45 @@ public class AnimalsController {
         return new Result(true, animalsInfo.toString());
     }
 
-    public Result shepherdAnimal(String animalName, int x, int y) {
-        Player player = App.getGame().getCurrentPlayingPlayer();
-        Animal animal = player.getBackpack().getAnimalByName(animalName);
-        Tile tile = App.getGame().getMap().findTile(x, y);
+    public Result shepherdAnimal(Animal animal) {
 
         if (animal == null)
-            return new Result(false, "Animal <" + animalName + "> not found!");
-        if (tile == null)
-            return new Result(false, "This position not found!");
-        if (tile.getPlaceable() != null)
-            return new Result(false, "This position is not free!");
+            return new Result(false, "Animal not found!");
+
+        float randomX = new Random().nextInt(100) + 100;
+        if (new Random().nextBoolean())
+            randomX *= -1;
+        float randomY = new Random().nextInt(50) + 30;
+
+        float x = animal.getHabitat().getPosition().x + randomX;
+        float y = animal.getHabitat().getPosition().y - randomY;
+        Tile tile = App.getGame().getMap().findTile(((int) x), ((int) y));
+
+        if (tile == null || tile.getPlaceable() != null)
+            return shepherdAnimal(animal);
 
         if (animal.isOutOfHabitat()) {
             animal.goToHabitat();
-            return new Result(true, "You put <" + animalName + "> in the habitat!");
+            return new Result(true, "You put <" + animal + "> in the habitat!");
         }
 
         if (!App.getGame().getTime().getWeather().equals(Weather.Sunny))
             return new Result(false, "Weather is not Sunny! you can't shepherd your animal!");
 
-        animal.shepherdAnimal();
+        animal.shepherdAnimal(x, y);
         animal.feed();
         animal.incrementFriendShip(8);
+//        tile.setPlaceable(animal); TODO checking this
+        tile.setWalkable(false);
 
         return new Result(true, "You shepherd your animal!");
     }
 
-    public Result feedHay(String animalName) {
+    public Result feedHay(Animal animal) {
         Player player = App.getGame().getCurrentPlayingPlayer();
-        Animal animal = player.getBackpack().getAnimalByName(animalName);
 
         if (animal == null)
-            return new Result(false, "Animal <" + animalName + "> not found!");
+            return new Result(false, "Animal not found!");
 
         if (!player.getBackpack().hasEnoughHay(1))
             return new Result(false, "You don't have enough hay to feed animal!");
@@ -188,7 +193,7 @@ public class AnimalsController {
         animal.feed();
         animal.incrementFriendShip(4);
 
-        return new Result(true, "You feed animal <" + animalName + "> successfully!");
+        return new Result(true, "You feed animal <" + animal.getName() + "> successfully!");
     }
 
     public Result animalProduces() {
@@ -210,16 +215,13 @@ public class AnimalsController {
         return new Result(true, output.toString());
     }
 
-    public Result collectProduce(String animalName) {
+    public Result collectProduce(Animal animal) {
         Player player = App.getGame().getCurrentPlayingPlayer();
-        Animal animal = player.getBackpack().getAnimalByName(animalName);
 
         if (animal == null)
-            return new Result(false, "Animal <" + animalName + "> not found!");
+            return new Result(false, "Animal not found!");
         if (!animal.isReadyProduct())
             return new Result(false, "Product is not ready!");
-        if (!App.getGame().getMap().isAroundPlaceable(player, animal.getHabitat()))
-            return new Result(false, "You are not near to house of <" + animalName + ">!");
 
         Tool tool = player.getCurrentTool();
 
@@ -256,12 +258,11 @@ public class AnimalsController {
                         animalGood.getType(), animalGood.getQuality(), animalGood.getType().getPrice(), animalGood.getSellPrice()));
     }
 
-    public Result sellAnimal(String animalName) {
+    public Result sellAnimal(Animal animal) {
         Player player = App.getGame().getCurrentPlayingPlayer();
-        Animal animal = player.getBackpack().getAnimalByName(animalName);
 
         if (animal == null)
-            return new Result(false, "Animal <" + animalName + "> not found!");
+            return new Result(false, "Animal not found!");
 
         double price = animal.getType().getPrice() * (((double)(animal.getFriendShip()) / 1000) + 0.3);
 
@@ -269,7 +270,7 @@ public class AnimalsController {
         player.getBackpack().getAllAnimals().remove(animal);
         animal.getHabitat().getAnimals().remove(animal);
 
-        return new Result(true, "You sell Animal <" + animalName + "> $" + price + "!");
+        return new Result(true, "You sell Animal <" + animal.getName() + "> $" + price + "!");
     }
 
     public Result fishing(FishingPole fishingPole) {

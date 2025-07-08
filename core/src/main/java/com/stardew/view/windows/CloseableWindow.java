@@ -37,8 +37,7 @@ public abstract class CloseableWindow extends Window {
         closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                getChildren().forEach(Actor::clearListeners);
-                remove();
+                closeWindow();
             }
         });
     }
@@ -51,7 +50,12 @@ public abstract class CloseableWindow extends Window {
         dialog.text(result.getMessage());
         dialog.getContentTable().getCell(dialog.getContentTable().getChildren().first())
             .getActor().setColor(result.getSuccessful() ? Color.GREEN : Color.RED);
-        dialog.button(new TextButton("OK", GamePictureManager.skin, "small"));
+        dialog.button(new TextButton("OK", GamePictureManager.skin));
         dialog.show(stage);
+    }
+
+    protected void closeWindow() {
+        getChildren().forEach(Actor::clearListeners);
+        remove();
     }
 }

@@ -1,9 +1,11 @@
 package com.stardew.models.animals;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
 
 import java.awt.*;
@@ -16,6 +18,8 @@ public class Habitat implements Placeable {
     private final HabitatSize size;
     private final ArrayList<Animal> animals;
     private final Rectangle bounds;
+    private final Vector2 position;
+    private final TextureRegion textureRegion;
 
 
     public Habitat(HabitatType type, HabitatSize size, int x, int y) {
@@ -23,6 +27,23 @@ public class Habitat implements Placeable {
         this.size = size;
         animals = new ArrayList<>();
         this.bounds = new Rectangle(x, y, type.getLengthX(), type.getLengthY());
+        this.position = new Vector2(x, y);
+
+        if (type == HabitatType.Barn) {
+            switch (size) {
+                case Regular -> textureRegion = GamePictureManager.barnTexture;
+                case Big -> textureRegion = GamePictureManager.bigBarnTexture;
+                case Deluxe -> textureRegion = GamePictureManager.deluxeBarnTexture;
+                default -> textureRegion = null;
+            }
+        } else if (type == HabitatType.Coop) {
+            switch (size) {
+                case Regular -> textureRegion = GamePictureManager.coopTexture;
+                case Big -> textureRegion = GamePictureManager.bigCoopTexture;
+                case Deluxe -> textureRegion = GamePictureManager.deluxeCoopTexture;
+                default -> textureRegion = null;
+            }
+        } else textureRegion = null;
     }
 
     public HabitatType getType() {
@@ -57,6 +78,10 @@ public class Habitat implements Placeable {
 
     public void removeAnimal(Animal animal) {
         animals.remove(animal);
+    }
+
+    public Vector2 getPosition() {
+        return position;
     }
 
     public static HabitatType getHabitatTypeByInput(String input) {
@@ -107,7 +132,11 @@ public class Habitat implements Placeable {
 
     @Override
     public TextureRegion getTexture() {
-        return null;
+        return textureRegion;
+    }
+
+    public void render(Batch batch) {
+        batch.draw(textureRegion, position.x, position.y);
     }
 
 }
