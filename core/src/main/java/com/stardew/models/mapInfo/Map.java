@@ -66,12 +66,12 @@ public class Map {
 
         this.npcVillage = new NpcVillage(new Rectangle(100, 75, 49, 49),
                 new Blacksmith(102, 77, 6, 4),
-                new CarpenterShop(106, 81, 3, 3),
-                new FishShop(110, 85, 3, 3),
-                new JojaMart(114, 89, 3, 3),
-                new MarnieRanch(118, 93, 3, 3),
-                new PierreGeneralStore(122, 97, 3, 3),
-                new StardropSaloon(126, 101, 3, 3));
+                new CarpenterShop(101, 83, 16, 12),
+                new FishShop(110, 97, 4, 4),
+                new JojaMart(138, 89, 4, 4),
+                new MarnieRanch(118, 116, 18, 8),
+                new PierreGeneralStore(138, 97, 4, 4),
+                new StardropSaloon(138, 110, 4, 4));
 
         NPC abigailNpc = new NPC(NPCType.Abigail);
         NPC sebastianNpc = new NPC(NPCType.Sebastian);

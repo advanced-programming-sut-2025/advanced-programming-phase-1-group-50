@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.animals.HabitatSize;
 import com.stardew.models.animals.HabitatType;
@@ -21,6 +22,8 @@ public class CarpenterShop extends Store {
     private final String backgroundCode = BackgroundColors.BRIGHT_RED;
     private final String colorCode = ColorPrinter.BRIGHT_CYAN;
     private ArrayList<ShopItem> inventory;
+    private final TextureRegion[][] region = GamePictureManager.carpenterShopRegions;
+    private final TextureRegion texture = new TextureRegion(GamePictureManager.carpenterShopTexture);
 
     public CarpenterShop(int x, int y, int width, int height) {
         super(new Rectangle(x, y, width, height), "Robin", 9, 20);
@@ -209,6 +212,11 @@ public class CarpenterShop extends Store {
     }
 
     @Override
+    public TextureRegion[][] getRegions() {
+        return region;
+    }
+
+    @Override
     public char getSymbol() {
         return 'w';
     }
@@ -225,7 +233,7 @@ public class CarpenterShop extends Store {
 
     @Override
     public TextureRegion getTexture() {
-        return null;
+        return texture;
     }
 
     @Override

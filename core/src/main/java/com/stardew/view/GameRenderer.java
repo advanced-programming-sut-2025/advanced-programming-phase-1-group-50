@@ -13,6 +13,7 @@ import com.stardew.models.foraging.Crop;
 import com.stardew.models.foraging.Tree;
 import com.stardew.models.mapInfo.*;
 import com.stardew.models.stores.Blacksmith;
+import com.stardew.models.stores.Store;
 import com.stardew.models.userInfo.Player;
 
 import java.awt.*;
@@ -127,15 +128,15 @@ public class GameRenderer {
                             }
 
                         }
-                        else if(tile.getPlaceable() instanceof Blacksmith blacksmith){
-                            int baseX = blacksmith.getBounds().x;
-                            int baseY = blacksmith.getBounds().y;
+                        else if(tile.getPlaceable() instanceof Store store){
+                            int baseX = store.getBounds().x;
+                            int baseY = store.getBounds().y;
                             int localX = x - baseX;
                             int localY = y - baseY;
                             if (localX >= 0 && localY >= 0 &&
-                                localX < GamePictureManager.blacksmithRegions.length && localY < GamePictureManager.blacksmithRegions[0].length) {
-                                int flippedY = GamePictureManager.blacksmithRegions.length - 1 - localY;
-                                TextureRegion region = GamePictureManager.blacksmithRegions[flippedY][localX];
+                                localX < store.getRegions().length && localY < store.getRegions()[0].length) {
+                                int flippedY = store.getRegions().length - 1 - localY;
+                                TextureRegion region = store.getRegions()[flippedY][localX];
                                 batch.draw(region, drawX, drawY, tileSize, tileSize);
                             }
 

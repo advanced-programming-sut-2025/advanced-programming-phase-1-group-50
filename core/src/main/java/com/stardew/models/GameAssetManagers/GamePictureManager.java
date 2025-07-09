@@ -1486,6 +1486,46 @@ public class GamePictureManager {
         blacksmithRegions = TextureRegion.split(blacksmithTexture , blacksmithTexture.getWidth() / 6, blacksmithTexture.getHeight() / 4);
     }
 
+    public static Texture fishShopTexture = new Texture("Stores/Fish_Shop.png");
+    public static TextureRegion[][] fishShopRegions ;
+    static {
+        fishShopRegions = TextureRegion.split(fishShopTexture , fishShopTexture.getWidth() / 4, fishShopTexture.getHeight() / 4);
+    }
+
+    public static Texture carpenterShopTexture = new Texture("Stores/Carpenter's_Shop.png");
+    public static TextureRegion[][] carpenterShopRegions ;
+    static {
+        carpenterShopRegions = TextureRegion.split(carpenterShopTexture , carpenterShopTexture.getWidth() / 16, carpenterShopTexture.getHeight() / 12);
+    }
+
+
+    public static Texture marnieRanchTexture = new Texture("Stores/Ranch.png");
+    public static TextureRegion[][] marnieRanchRegions ;
+    static {
+        marnieRanchRegions = TextureRegion.split(marnieRanchTexture , marnieRanchTexture.getWidth() / 18, marnieRanchTexture.getHeight() / 8);
+
+    }
+
+    public static Texture stardopSaloonTexture = new Texture("Stores/Saloon.png");
+    public static TextureRegion[][] stardopSaloonRegions ;
+    static {
+        stardopSaloonRegions = TextureRegion.split(stardopSaloonTexture , stardopSaloonTexture.getWidth() / 4, stardopSaloonTexture.getHeight() / 4);
+
+    }
+
+
+    public static Texture jojaMartTexture = new Texture("Stores/Jojamart.png");
+    public static TextureRegion[][] jojaMartRegions ;
+    static {
+        jojaMartRegions = TextureRegion.split(jojaMartTexture , jojaMartTexture.getWidth() / 4, jojaMartTexture.getHeight() / 4);
+    }
+
+
+    public static Texture pierresShopTexture = new Texture("Stores/Pierres_Shop.png");
+    public static TextureRegion[][] pierresShopRegions ;
+    static {
+        pierresShopRegions = TextureRegion.split(pierresShopTexture , pierresShopTexture.getWidth() / 4, pierresShopTexture.getHeight() / 4);
+    }
 
     public static Texture npcHome1Texture = new Texture("NpcHomes/NpcHome1.png");
     public static TextureRegion[][] npcHome1Regions;

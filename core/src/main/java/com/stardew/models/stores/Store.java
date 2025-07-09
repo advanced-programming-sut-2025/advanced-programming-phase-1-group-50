@@ -1,5 +1,6 @@
 package com.stardew.models.stores;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.Placeable;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
@@ -12,6 +13,7 @@ public abstract class Store implements Placeable {
     protected final String shopAssistantName;
     protected final int startHour;
     protected final int endHour;
+    protected TextureRegion[][] regions;
 
     public Store(Rectangle bounds, String shopAssistantName, int startHour, int endHour) {
         this.bounds = bounds;
@@ -48,5 +50,7 @@ public abstract class Store implements Placeable {
     public abstract String showAvailableProducts();
     public abstract Result purchaseProduct(int value, String productName);
     public abstract void ResetQuantityEveryNight();
+    public abstract TextureRegion[][] getRegions();
+
 
 }

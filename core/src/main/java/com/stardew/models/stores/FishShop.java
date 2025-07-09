@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.cooking.Food;
@@ -20,6 +21,8 @@ public class FishShop extends Store {
     private final  String backgroundCode = BackgroundColors.BRIGHT_CYAN;
     private final String colorCode = ColorPrinter.BRIGHT_BLUE;
     private ArrayList<ShopItem> inventory;
+    private final TextureRegion texture = new TextureRegion(GamePictureManager.fishShopTexture);
+    private final TextureRegion[][] regions = GamePictureManager.fishShopRegions;
 
     public FishShop(int x, int y, int width, int height) {
         super(new Rectangle(x, y, width, height), "willy", 9, 17);
@@ -130,6 +133,11 @@ public class FishShop extends Store {
     }
 
     @Override
+    public TextureRegion[][] getRegions() {
+        return regions;
+    }
+
+    @Override
     public char getSymbol() {
         return '≈';
     }
@@ -146,7 +154,7 @@ public class FishShop extends Store {
 
     @Override
     public TextureRegion getTexture() {
-        return null;
+        return texture;
     }
 
     @Override

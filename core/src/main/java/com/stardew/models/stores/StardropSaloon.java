@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.cooking.Food;
@@ -20,6 +21,8 @@ public class StardropSaloon extends Store {
     private final String backgroundCode = BackgroundColors.BRIGHT_BLUE;
     private final String colorCode= ColorPrinter.PURPLE;
     private ArrayList<ShopItem> inventory;
+    private final TextureRegion[][] regions = GamePictureManager.stardopSaloonRegions;
+    private final TextureRegion texture = new TextureRegion(GamePictureManager.stardopSaloonTexture);
 
     public StardropSaloon(int x, int y, int width, int height) {
         super(new Rectangle(x, y, width, height), "Gus", 12, 24);
@@ -137,6 +140,11 @@ public class StardropSaloon extends Store {
     }
 
     @Override
+    public TextureRegion[][] getRegions() {
+        return regions;
+    }
+
+    @Override
     public char getSymbol() {
         return '0';
     }
@@ -153,7 +161,7 @@ public class StardropSaloon extends Store {
 
     @Override
     public TextureRegion getTexture() {
-        return null;
+        return texture;
     }
 
     @Override
