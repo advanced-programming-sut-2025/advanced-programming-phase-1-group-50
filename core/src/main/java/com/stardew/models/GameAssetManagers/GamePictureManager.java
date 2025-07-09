@@ -1,6 +1,7 @@
 package com.stardew.models.GameAssetManagers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -1455,5 +1456,30 @@ public class GamePictureManager {
     static {
         regions = TextureRegion.split(greenHouseTexture , greenHouseTexture.getWidth() / 6, greenHouseTexture.getHeight() / 6);
     }
+
+    public static TextureRegion cottageTexture = new TextureRegion(new Texture("Cottage.png"));
+    public static Texture cottageTexture2 = new Texture("Cottage.png");
+    public static TextureRegion[][] cottageRegions ;
+    static {
+        cottageRegions = TextureRegion.split(cottageTexture2 , cottageTexture.getRegionWidth() / 4 , cottageTexture.getRegionHeight() / 4);
+    }
+
+
+    public static Texture whiteBox;
+
+    public static void loadWhiteBox() {
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(1, 1, 1, 1);
+        pixmap.fill();
+        whiteBox = new Texture(pixmap);
+        pixmap.dispose();
+    }
+
+    static {
+        loadWhiteBox();
+    }
+
+
+
 
 }

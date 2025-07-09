@@ -1,5 +1,6 @@
 package com.stardew.models;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -11,5 +12,6 @@ public interface Placeable {
     String getColor();
     String getBackground();
     TextureRegion getTexture();
+    Color getMiniMapColor();
 
 }

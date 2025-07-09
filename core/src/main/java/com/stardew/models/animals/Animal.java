@@ -1,5 +1,6 @@
 package com.stardew.models.animals;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -27,6 +28,7 @@ public class Animal implements Placeable {
     private final float PET_TIME = 5f;
     private final float speed = 50f;
     private final static int maxFriendShip = 1000;
+
 
     public Animal() {
         type = null;
@@ -223,5 +225,10 @@ public class Animal implements Placeable {
     @Override
     public TextureRegion getTexture() {
         return null;
+    }
+
+    @Override
+    public Color getMiniMapColor() {
+        return Color.BROWN;
     }
 }

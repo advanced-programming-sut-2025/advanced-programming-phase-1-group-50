@@ -1,9 +1,11 @@
 package com.stardew.models.mapInfo;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
 
 import java.awt.*;
@@ -12,7 +14,7 @@ public class Cottage implements Placeable {
     private final String backgroundCode = BackgroundColors.WHITE;
     private final String colorCode = ColorPrinter.BRIGHT_BLACK;
     private final Rectangle bounds;
-    private  Texture texture ;
+    private  TextureRegion texture = GamePictureManager.cottageTexture;
     public Cottage(int x, int y, int width, int height) {
         bounds = new Rectangle(x, y, width, height);
     }
@@ -39,7 +41,12 @@ public class Cottage implements Placeable {
 
     @Override
     public TextureRegion getTexture(){
-        return null;
+        return texture;
+    }
+
+    @Override
+    public Color getMiniMapColor() {
+        return Color.WHITE;
     }
 
 

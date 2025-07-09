@@ -1,5 +1,6 @@
 package com.stardew.models.animals;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -133,6 +134,11 @@ public class Habitat implements Placeable {
     @Override
     public TextureRegion getTexture() {
         return textureRegion;
+    }
+
+    @Override
+    public Color getMiniMapColor() {
+        return Color.ORANGE;
     }
 
     public void render(Batch batch) {

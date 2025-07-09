@@ -1,5 +1,6 @@
 package com.stardew.models;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.app.App;
@@ -66,6 +67,11 @@ public class ShippingBin implements Placeable{
     @Override
     public TextureRegion getTexture() {
         return null;
+    }
+
+    @Override
+    public Color getMiniMapColor() {
+        return Color.PURPLE;
     }
 
 }
