@@ -1,5 +1,6 @@
 package com.stardew.models.mapInfo;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
@@ -92,6 +93,11 @@ public class GreenHouse implements Placeable {
     @Override
     public TextureRegion getTexture() {
         return texture;
+    }
+
+    @Override
+    public Color getMiniMapColor() {
+        return Color.MAGENTA;
     }
 
     public void setTexture(TextureRegion texture) {

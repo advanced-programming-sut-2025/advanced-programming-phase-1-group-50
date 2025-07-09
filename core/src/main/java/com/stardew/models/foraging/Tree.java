@@ -1,5 +1,6 @@
 package com.stardew.models.foraging;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -191,6 +192,11 @@ public class Tree implements Growable, Placeable {
             else
                 return type.getStage5Texture(App.getGame().getTime().getSeason());
         }
+    }
+
+    @Override
+    public Color getMiniMapColor() {
+        return Color.GREEN;
     }
 
     public void setGeneratedRandomly(boolean generatedRandomly) {

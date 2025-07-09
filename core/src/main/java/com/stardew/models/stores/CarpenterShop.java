@@ -1,5 +1,6 @@
 package com.stardew.models.stores;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
@@ -225,6 +226,11 @@ public class CarpenterShop extends Store {
     @Override
     public TextureRegion getTexture() {
         return null;
+    }
+
+    @Override
+    public Color getMiniMapColor() {
+        return Color.LIGHT_GRAY;
     }
 
 

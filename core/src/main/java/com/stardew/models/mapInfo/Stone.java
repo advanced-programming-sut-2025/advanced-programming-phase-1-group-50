@@ -1,5 +1,6 @@
 package com.stardew.models.mapInfo;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
@@ -60,6 +61,11 @@ public class Stone implements Ingredient , Placeable {
     @Override
     public TextureRegion getTexture() {
         return new TextureRegion(texture);
+    }
+
+    @Override
+    public Color getMiniMapColor() {
+        return Color.GRAY;
     }
 
     public void setTexture(Texture texture) {

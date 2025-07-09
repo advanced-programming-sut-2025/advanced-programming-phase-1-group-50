@@ -21,11 +21,11 @@ public class GameScreenMenu implements Screen {
 
     public void initializeGame(){
 
-        gameModel = new GameModel(App.getGame().getMap() , 100 , 100);
+        gameModel = new GameModel(App.getGame().getMap() , 250 , 200);
         playerController = new PlayerController(App.getGame().getCurrentPlayingPlayer(), gameModel);
         gameModel.setPlayerController(playerController);
         gameMenuInputAdapter = new GameMenuInputAdapter(gameModel);
-        gameRenderer = new GameRenderer(gameModel);
+        gameRenderer = new GameRenderer(gameModel , gameMenuInputAdapter);
         Gdx.input.setInputProcessor(gameMenuInputAdapter);
 
     }

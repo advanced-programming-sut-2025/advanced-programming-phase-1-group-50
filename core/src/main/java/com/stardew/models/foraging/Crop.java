@@ -1,5 +1,6 @@
 package com.stardew.models.foraging;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -210,6 +211,11 @@ public class Crop implements Ingredient, Growable , Placeable, Sellable {
             return new TextureRegion(type.getLevelsTextures()[type.getNumberOfStages()]);
         }
         return new TextureRegion(type.getLevelsTextures()[levelOfGrowth]);
+    }
+
+    @Override
+    public Color getMiniMapColor() {
+        return Color.GREEN;
     }
 
     public boolean isGeneratedRandomly() {

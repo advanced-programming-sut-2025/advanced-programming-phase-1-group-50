@@ -10,10 +10,7 @@ import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.models.foraging.Crop;
 import com.stardew.models.foraging.Tree;
-import com.stardew.models.mapInfo.GreenHouse;
-import com.stardew.models.mapInfo.Pair;
-import com.stardew.models.mapInfo.Stone;
-import com.stardew.models.mapInfo.Tile;
+import com.stardew.models.mapInfo.*;
 import com.stardew.models.userInfo.Player;
 
 import java.awt.*;
@@ -23,11 +20,15 @@ public class GameRenderer {
     private SpriteBatch batch;
     private int moveDirection;
     private float stateTime = 0f;
+    private GameMenuInputAdapter gameMenuInputAdapter;
+    private MiniMapRenderer miniMapRenderer ;
 
 
-    public GameRenderer(GameModel gameModel) {
+    public GameRenderer(GameModel gameModel , GameMenuInputAdapter gameMenuInputAdapter) {
         this.gameModel = gameModel;
         batch = new SpriteBatch();
+        this.gameMenuInputAdapter = gameMenuInputAdapter;
+        miniMapRenderer = new MiniMapRenderer(gameModel , 250 , 200);
     }
 
     public void render(){
@@ -35,6 +36,17 @@ public class GameRenderer {
         batch.begin();
 
         renderMapTilesAndPlayer();
+
+        if(gameMenuInputAdapter.isShowingMap()){
+            Texture miniMap = miniMapRenderer.getMiniMapTexture();
+
+            float windowWidth = 400;
+            float windowHeight = 300;
+            float windowX = (gameModel.getCamera().viewportWidth - windowWidth) / 2 + gameModel.getCamera().position.x - gameModel.getCamera().viewportWidth / 2;
+            float windowY = (gameModel.getCamera().viewportHeight - windowHeight) / 2 + gameModel.getCamera().position.y - gameModel.getCamera().viewportHeight / 2;
+            batch.draw(GamePictureManager.whiteBox , windowX + 10 , windowY + 10 , windowWidth , windowHeight);
+            batch.draw(miniMap, windowX, windowY, windowWidth, windowHeight);
+        }
 
         //System.out.println(App.getGame().getCurrentPlayingPlayer().getPlayerPosition().getFirst() + " " + App.getGame().getCurrentPlayingPlayer().getPlayerPosition().getSecond());
         batch.end();
@@ -95,8 +107,23 @@ public class GameRenderer {
                                 batch.draw(region, drawX, drawY, tileSize, tileSize);
                             }
                         }
-                        else if (tile.getPlaceable() instanceof Crop crop)
+                        else if (tile.getPlaceable() instanceof Crop crop) {
                             crop.render(batch);
+                        }
+                        else if(tile.getPlaceable() instanceof Cottage cot){
+                            int baseX = cot.getBounds().x;
+                            int baseY = cot.getBounds().y;
+                            int localX = x - baseX;
+                            int localY = y - baseY;
+
+                            if (localX >= 0 && localY >= 0 &&
+                                localX < GamePictureManager.cottageRegions.length && localY < GamePictureManager.cottageRegions[0].length) {
+                                int flippedY = GamePictureManager.cottageRegions.length - 1 - localY;
+                                TextureRegion region = GamePictureManager.cottageRegions[flippedY][localX];
+                                batch.draw(region, drawX, drawY, tileSize, tileSize);
+                            }
+
+                        }
 
 
 //                        else {
@@ -146,7 +173,5 @@ public class GameRenderer {
         int tileY = (int)(player.getPlayerPosition().getSecond() / tileSize);
         System.out.println("Player is currently on tile (" + tileX + ", " + tileY + ")");
     }
-
-
 
 }

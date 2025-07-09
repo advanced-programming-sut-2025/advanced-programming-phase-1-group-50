@@ -13,6 +13,7 @@ import java.util.Set;
 public class GameMenuInputAdapter extends InputAdapter {
     private GameModel model;
     private final Set<Integer> keys = new HashSet<>();
+    private boolean showingMap = false;
 
 
     public GameMenuInputAdapter(GameModel model) {
@@ -22,6 +23,9 @@ public class GameMenuInputAdapter extends InputAdapter {
     @Override
     public boolean keyDown(int keycode) {
         keys.add(keycode);
+        if(keycode == Input.Keys.M) {
+            showingMap = true;
+        }
         return true;
     }
 
@@ -29,6 +33,9 @@ public class GameMenuInputAdapter extends InputAdapter {
     @Override
     public boolean keyUp(int keycode) {
         keys.remove(keycode);
+        if(keycode == Input.Keys.M) {
+            showingMap = false;
+        }
         return true;
     }
 
@@ -58,6 +65,7 @@ public class GameMenuInputAdapter extends InputAdapter {
             dir = 2;
         }
 
+
         float length = (float) Math.sqrt(vx * vx + vy * vy);
         if(length > 0){
             vx/=length;
@@ -72,6 +80,10 @@ public class GameMenuInputAdapter extends InputAdapter {
         model.getPlayerController().update(delta);
 
 
+    }
+
+    public boolean isShowingMap() {
+        return showingMap;
     }
 
 
