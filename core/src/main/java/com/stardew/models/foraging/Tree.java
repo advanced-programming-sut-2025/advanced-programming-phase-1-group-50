@@ -1,11 +1,14 @@
 package com.stardew.models.foraging;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
 import com.stardew.models.app.App;
+import com.stardew.models.date.Season;
 import com.stardew.models.date.Time;
 import com.stardew.models.date.Weather;
 
@@ -23,7 +26,6 @@ public class Tree implements Growable, Placeable {
     private final int numberOfDaysCanBeAliveWithoutWater;
     private Rectangle bounds;
     private boolean isGeneratedRandomly = false;
-    private TextureRegion texture;
 
     public Tree(TreeType type, Time timeOfPlanting, Fertilizer fertilizer, int x, int y, int width, int height) {
         this.type = type;
@@ -173,7 +175,10 @@ public class Tree implements Growable, Placeable {
         return backgroundCode;
     }
 
-    public TextureRegion getTextureRegion() {
+    public TextureRegion getTexture() {
+        if (isGeneratedRandomly)  //TODO it must change according to season (it throws null pointer now)
+            return type.getStage5Texture(Season.Spring);
+
         if (levelOfGrowth <= type.getStages().size() - 1) {
             return type.getStageTextures()[levelOfGrowth];
         }
@@ -188,11 +193,6 @@ public class Tree implements Growable, Placeable {
         }
     }
 
-    @Override
-    public TextureRegion getTexture() {
-        return texture;
-    }
-
     public void setGeneratedRandomly(boolean generatedRandomly) {
         this.isGeneratedRandomly = generatedRandomly;
     }
@@ -201,9 +201,7 @@ public class Tree implements Growable, Placeable {
         return isGeneratedRandomly;
     }
 
-    public void setTexture(TextureRegion texture) {
-        this.texture = texture;
+    public void render(Batch batch) {
+        batch.draw(getTexture(), bounds.x * GamePictureManager.TILE_SIZE, bounds.y * GamePictureManager.TILE_SIZE);
     }
-
-
 }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
+import com.stardew.models.foraging.Crop;
 import com.stardew.models.foraging.Tree;
 import com.stardew.models.mapInfo.GreenHouse;
 import com.stardew.models.mapInfo.Pair;
@@ -32,14 +33,14 @@ public class GameRenderer {
     public void render(){
         batch.setProjectionMatrix(gameModel.getCamera().combined);
         batch.begin();
-        renderMapTiles();
-        renderPlayer();
+
+        renderMapTilesAndPlayer();
 
         //System.out.println(App.getGame().getCurrentPlayingPlayer().getPlayerPosition().getFirst() + " " + App.getGame().getCurrentPlayingPlayer().getPlayerPosition().getSecond());
         batch.end();
     }
 
-    public void renderMapTiles(){
+    public void renderMapTilesAndPlayer() {
         Tile[][] tiles = gameModel.getMap().getTiles();
         float camX = gameModel.getCamera().position.x;
         float camY = gameModel.getCamera().position.y;
@@ -56,6 +57,10 @@ public class GameRenderer {
         int endX = Math.min(tiles.length, (int) ((camX + viewportWidth / 2) / tileSize) + 4);
         int endY = Math.min(tiles[0].length, (int) ((camY + viewportHeight / 2) / tileSize) + 4);
 
+        renderBackground(startX, startY, endX, endY, tileSize);
+
+        renderPlayer();
+
         for(int x = startX; x < endX; x++){
             for(int y = startY; y < endY; y++){
                 Tile tile = gameModel.getMap().findTile(x, y);
@@ -63,16 +68,13 @@ public class GameRenderer {
                     float drawX = x * tileSize;
                     float drawY = y * tileSize;
                     TextureRegion  tex = tile.getTexture();
-                    TextureRegion backTex = tile.getBackgroundTexture();
-                    if(backTex != null){
-                        batch.draw(backTex, drawX, drawY , tileSize, tileSize);
-                    }
-                    if (tex != null) {
-                        if (tile.getPlaceable() instanceof Tree) {
-                            float adjustedX = drawX - (GamePictureManager.Tree_SIze_Width - tileSize) / 2f;
-                            float adjustedY = drawY - (GamePictureManager.Tree_SIze_Height - tileSize);
-                            batch.draw(tex, adjustedX, adjustedY, GamePictureManager.Tree_SIze_Width, GamePictureManager.Tree_SIze_Height);
 
+                    if (tex != null) {
+                        if (tile.getPlaceable() instanceof Tree tree) {
+//                            float adjustedX = drawX - (GamePictureManager.Tree_SIze_Width - tileSize) / 2f;
+//                            float adjustedY = drawY - (GamePictureManager.Tree_SIze_Height - tileSize);
+//                            batch.draw(tex, adjustedX, adjustedY, GamePictureManager.Tree_SIze_Width, GamePictureManager.Tree_SIze_Height);
+                            tree.render(batch);
 
                         }
                         else if(tile.getPlaceable() instanceof Stone){
@@ -93,11 +95,13 @@ public class GameRenderer {
                                 batch.draw(region, drawX, drawY, tileSize, tileSize);
                             }
                         }
+                        else if (tile.getPlaceable() instanceof Crop crop)
+                            crop.render(batch);
 
 
-                        else {
-                            batch.draw(tex, drawX, drawY, tileSize, tileSize);
-                        }
+//                        else {
+//                            batch.draw(tex, drawX, drawY, tileSize, tileSize);
+//                        }
                     }
 
 
@@ -117,9 +121,26 @@ public class GameRenderer {
         Animation<TextureRegion> currentAnimation = GamePictureManager.playerAnimations.get(moveDirection);
         TextureRegion currentFrame = currentAnimation.getKeyFrame(stateTime, true);
 
-        batch.draw(currentFrame, pos.getFirst() * GamePictureManager.TILE_SIZE, pos.getSecond() * GamePictureManager.TILE_SIZE, GamePictureManager.TILE_SIZE, GamePictureManager.TILE_SIZE * 2);
+        batch.draw(currentFrame, pos.getFirst() * GamePictureManager.TILE_SIZE, pos.getSecond() * GamePictureManager.TILE_SIZE, currentFrame.getRegionWidth() * 3, currentFrame.getRegionHeight() * 3);
 
     }
+
+    public void renderBackground(int startX, int startY, int endX, int endY, int tileSize) {
+        for(int x = startX; x < endX; x++) {
+            for (int y = startY; y < endY; y++) {
+                Tile tile = gameModel.getMap().findTile(x, y);
+                if(tile != null) {
+                    float drawX = x * tileSize;
+                    float drawY = y * tileSize;
+                    TextureRegion backTex = tile.getBackgroundTexture();
+                    if (backTex != null) {
+                        batch.draw(backTex, drawX, drawY, tileSize, tileSize);
+                    }
+                }
+            }
+        }
+    }
+
     public void logPlayerTilePosition(Player player, int tileSize) {
         int tileX = (int)(player.getPlayerPosition().getFirst() / tileSize);
         int tileY = (int)(player.getPlayerPosition().getSecond() / tileSize);
