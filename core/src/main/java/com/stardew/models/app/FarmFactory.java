@@ -149,7 +149,6 @@ public class FarmFactory {
             TreeType type = getRandomTreeType();
             Tree t = new Tree(type, new Time(), null, randomX, randomY, 1, 1);
             t.setGeneratedRandomly(true);
-            t.setTexture(type.getStage5Texture(Season.Spring));
             trees.add(t);
         }
         return trees;

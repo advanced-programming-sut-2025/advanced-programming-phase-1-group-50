@@ -47,7 +47,7 @@ public class Player {
 
 
     private int moveDirection = 0;
-    private float speed = 2f;
+    private float speed = 5f;
     private float vx , vy = 0;
 
 

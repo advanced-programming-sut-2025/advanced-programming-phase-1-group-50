@@ -1,7 +1,5 @@
 package com.stardew.controller;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Rectangle;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.animals.GameModel;
@@ -51,7 +49,7 @@ public class PlayerController {
         float newYPos = player.getPlayerPosition().getSecond() + dy;
 
         float playerWidth = 0.8f;
-        float playerHeight = 1.8f;
+        float playerHeight = 0.5f;
 
         Rectangle playerRect = new Rectangle(
             newXPos * tileSize,

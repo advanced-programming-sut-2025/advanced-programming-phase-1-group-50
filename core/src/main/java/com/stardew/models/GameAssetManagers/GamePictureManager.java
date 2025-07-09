@@ -1458,9 +1458,9 @@ public class GamePictureManager {
     }
 
     public static TextureRegion cottageTexture = new TextureRegion(new Texture("Cottage.png"));
-    public static Texture cottageTexture2 = new Texture("Cottage.png");
     public static TextureRegion[][] cottageRegions ;
     static {
+        Texture cottageTexture2 = new Texture("Cottage.png");
         cottageRegions = TextureRegion.split(cottageTexture2 , cottageTexture.getRegionWidth() / 4 , cottageTexture.getRegionHeight() / 4);
     }
 

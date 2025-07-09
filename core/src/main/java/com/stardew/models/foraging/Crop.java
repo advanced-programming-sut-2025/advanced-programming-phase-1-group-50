@@ -2,8 +2,10 @@ package com.stardew.models.foraging;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.ColorPrinter;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
 import com.stardew.models.app.App;
 import com.stardew.models.date.Time;
@@ -222,6 +224,10 @@ public class Crop implements Ingredient, Growable , Placeable, Sellable {
 
     public void setGeneratedRandomly(boolean isGeneratedRandomly) {
         this.isGeneratedRandomly = isGeneratedRandomly;
+    }
+
+    public void render(Batch batch) {
+        batch.draw(getTexture(), bounds.x * GamePictureManager.TILE_SIZE, bounds.y * GamePictureManager.TILE_SIZE);
     }
 
 }
