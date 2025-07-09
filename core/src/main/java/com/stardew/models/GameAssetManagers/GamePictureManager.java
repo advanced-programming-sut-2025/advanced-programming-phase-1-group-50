@@ -1480,6 +1480,48 @@ public class GamePictureManager {
     }
 
 
+    public static Texture blacksmithTexture = new Texture("Stores/Blacksmith.png");
+    public static TextureRegion[][] blacksmithRegions ;
+    static {
+        blacksmithRegions = TextureRegion.split(blacksmithTexture , blacksmithTexture.getWidth() / 6, blacksmithTexture.getHeight() / 4);
+    }
+
+
+    public static Texture npcHome1Texture = new Texture("NpcHomes/NpcHome1.png");
+    public static TextureRegion[][] npcHome1Regions;
+    static {
+        npcHome1Regions = TextureRegion.split(npcHome1Texture , npcHome1Texture.getWidth() / 6, npcHome1Texture.getHeight() / 6);
+
+    }
+
+    public static Texture npcHome2Texture = new Texture("NpcHomes/NpcHome2.png");
+    public static TextureRegion[][] npcHome2Regions;
+    static {
+        npcHome2Regions = TextureRegion.split(npcHome2Texture , npcHome2Texture.getWidth() / 6, npcHome2Texture.getHeight() / 6);
+
+    }
+
+    public static Texture npcHome3Texture = new Texture("NpcHomes/NpcHome3.png");
+    public static TextureRegion[][] npcHome3Regions;
+    static {
+        npcHome3Regions = TextureRegion.split(npcHome3Texture , npcHome3Texture.getWidth() / 6, npcHome3Texture.getHeight() / 6);
+
+    }
+
+
+    public static Texture npcHome4Texture = new Texture("NpcHomes/NpcHome4.png");
+    public static TextureRegion[][] npcHome4Regions;
+    static {
+        npcHome4Regions = TextureRegion.split(npcHome4Texture , npcHome4Texture.getWidth() / 6, npcHome4Texture.getHeight() / 6);
+
+    }
+
+    public static Texture npcHome5Texture = new Texture("NpcHomes/NpcHome5.png");
+    public static TextureRegion[][] npcHome5Regions;
+    static {
+        npcHome5Regions = TextureRegion.split(npcHome5Texture , npcHome5Texture.getWidth() / 6, npcHome5Texture.getHeight() / 6);
+
+    }
 
 
 }

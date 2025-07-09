@@ -65,7 +65,7 @@ public class Map {
         }
 
         this.npcVillage = new NpcVillage(new Rectangle(100, 75, 49, 49),
-                new Blacksmith(102, 77, 3, 3),
+                new Blacksmith(102, 77, 6, 4),
                 new CarpenterShop(106, 81, 3, 3),
                 new FishShop(110, 85, 3, 3),
                 new JojaMart(114, 89, 3, 3),
@@ -79,15 +79,15 @@ public class Map {
         NPC robinNpc = new NPC(NPCType.Robin);
         NPC harveyNpc = new NPC(NPCType.Harvey);
 
-        NpcHome abigailHome = new NpcHome(130, 104, 3, 3, abigailNpc);
+        NpcHome abigailHome = new NpcHome(130, 77, 6, 6, abigailNpc);
         npcHomes.add(abigailHome);
-        NpcHome harveyHome = new NpcHome(130, 109, 3, 3, harveyNpc);
+        NpcHome harveyHome = new NpcHome(130, 85, 6, 6, harveyNpc);
         npcHomes.add(harveyHome);
-        NpcHome robinHome = new NpcHome(130, 114, 3, 3, robinNpc);
+        NpcHome robinHome = new NpcHome(130, 93, 6, 6, robinNpc);
         npcHomes.add(robinHome);
-        NpcHome leahHome = new NpcHome(130, 119, 3, 3, leahNpc);
+        NpcHome leahHome = new NpcHome(130, 101, 6, 6, leahNpc);
         npcHomes.add(leahHome);
-        NpcHome sebastianHome = new NpcHome(130, 99, 3, 3, sebastianNpc);
+        NpcHome sebastianHome = new NpcHome(130, 109,6 ,6 , sebastianNpc);
         npcHomes.add(sebastianHome);
 
 

@@ -1,5 +1,8 @@
 package com.stardew.models.NPCs;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.animals.AnimalGood;
 import com.stardew.models.animals.AnimalGoodType;
 import com.stardew.models.app.App;
@@ -369,6 +372,39 @@ public class NPC {
         }
 
         return message;
+    }
+
+    public TextureRegion[][] getRegions (NPCType type) {
+       switch (type) {
+           case Leah:
+               return GamePictureManager.npcHome1Regions;
+           case Robin:
+               return GamePictureManager.npcHome2Regions;
+           case Harvey:
+               return GamePictureManager.npcHome3Regions;
+           case Sebastian:
+               return GamePictureManager.npcHome4Regions;
+           case Abigail:
+               return GamePictureManager.npcHome5Regions;
+       }
+       return null;
+    }
+
+    public Texture getHomeTextureByType(NPCType type){
+
+        switch (type){
+            case Leah:
+                return GamePictureManager.npcHome1Texture;
+            case Robin:
+                return GamePictureManager.npcHome2Texture;
+            case Harvey:
+                return GamePictureManager.npcHome3Texture;
+            case Sebastian:
+                return GamePictureManager.npcHome4Texture;
+            case Abigail:
+                return GamePictureManager.npcHome5Texture;
+        }
+        return null;
     }
 
 }
