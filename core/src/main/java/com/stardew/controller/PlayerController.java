@@ -43,6 +43,9 @@ public class PlayerController {
 //        return false;
     //    }
     public boolean tryMove(float dx, float dy) {
+        if (dx == 0 && dy == 0)
+            return false;
+
         float tileSize = GamePictureManager.TILE_SIZE;
 
         float newXPos = player.getPlayerPosition().getFirst() + dx;
