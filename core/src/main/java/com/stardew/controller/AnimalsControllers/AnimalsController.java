@@ -83,7 +83,8 @@ public class AnimalsController {
             }
         }
         if (habitat == null)
-            return new Result(false, "You don't have any enough habitat to buy this animal!");
+            return new Result(false, "You don't have any enough habitat to buy this animal!\n" +
+                "Or type or size of habitats isn't compatible with animals!");
 
         Result storeResult = map.getNpcVillage().getMarnieRanch().PurchaseAnimal(animalType);
         if (!storeResult.getSuccessful())
@@ -125,25 +126,19 @@ public class AnimalsController {
         return new Result(true, "You set friendship with <" + animalName + "> to " + amount + "!");
     }
 
-    public Result animalsInfo() {
-        Player player = App.getGame().getCurrentPlayingPlayer();
-        ArrayList<Animal> animals = player.getBackpack().getAllAnimals();
+    public Result animalInfo(Animal animal) {
 
-        if (animals.isEmpty())
+        if (animal == null)
             return new Result(false, "No animals found!");
 
-        StringBuilder animalsInfo = new StringBuilder();
-        animalsInfo.append("Animals:\n");
-        for (int i = 0; i < animals.size(); i++) {
-            animalsInfo.append(String.format("\t%-2d: \n", i+1));
-            animalsInfo.append(String.format("\t    Name: %s\n", animals.get(i).getName()));
-            animalsInfo.append(String.format("\t    Type: %s\n", animals.get(i).getType()));
-            animalsInfo.append(String.format("\t    LevelOfFriendship: %d\n", animals.get(i).getFriendShip()));
-            animalsInfo.append(String.format("\t    hasPettedToday: %s\n", animals.get(i).hasPettedToday()));
-            animalsInfo.append(String.format("\t    hasFedToday: %s\n", animals.get(i).hasFedToday()));
-        }
+        String animalsInfo = "\n\n" +
+            String.format("     Name: %s   \n\n", animal.getName()) +
+            String.format("     Type: %s   \n\n", animal.getType()) +
+            String.format("     LevelOfFriendship: %d   \n\n", animal.getFriendShip());
+//            String.format("     hasPettedToday: %s   \n\n", animal.hasPettedToday()) +
+//            String.format("     hasFedToday: %s   \n\n", animal.hasFedToday());
 
-        return new Result(true, animalsInfo.toString());
+        return new Result(true, animalsInfo);
     }
 
     public Result shepherdAnimal(Animal animal) {
@@ -151,30 +146,37 @@ public class AnimalsController {
         if (animal == null)
             return new Result(false, "Animal not found!");
 
-        float randomX = new Random().nextInt(100) + 100;
-        if (new Random().nextBoolean())
-            randomX *= -1;
-        float randomY = new Random().nextInt(50) + 30;
-
-        float x = animal.getHabitat().getPosition().x + randomX;
-        float y = animal.getHabitat().getPosition().y - randomY;
-        Tile tile = App.getGame().getMap().findTile(((int) x), ((int) y));
-
-        if (tile == null || tile.getPlaceable() != null)
-            return shepherdAnimal(animal);
-
         if (animal.isOutOfHabitat()) {
             animal.goToHabitat();
+            Tile animalTile = App.getGame().getMap().findTile(((int) animal.getPosition().x), ((int)animal.getPosition().y));
+            animalTile.setPlaceable(null);
+            animalTile.setWalkable(true);
             return new Result(true, "You put <" + animal + "> in the habitat!");
         }
 
         if (!App.getGame().getTime().getWeather().equals(Weather.Sunny))
             return new Result(false, "Weather is not Sunny! you can't shepherd your animal!");
 
+        float randomX, randomY;
+        float x, y;
+        Tile tile;
+
+        do {
+            randomX = new Random().nextInt(3) + 3;
+            if (new Random().nextBoolean())
+                randomX *= -1;
+            randomY = new Random().nextInt(3) + 2f;
+
+            x = animal.getHabitat().getPosition().x + randomX;
+            y = animal.getHabitat().getPosition().y - randomY;
+            tile = App.getGame().getMap().findTile(((int) x), ((int) y));
+
+        } while (tile == null || tile.getPlaceable() != null);
+
         animal.shepherdAnimal(x, y);
         animal.feed();
         animal.incrementFriendShip(8);
-//        tile.setPlaceable(animal); TODO checking this
+        tile.setPlaceable(animal);
         tile.setWalkable(false);
 
         return new Result(true, "You shepherd your animal!");
@@ -188,6 +190,9 @@ public class AnimalsController {
 
         if (!player.getBackpack().hasEnoughHay(1))
             return new Result(false, "You don't have enough hay to feed animal!");
+
+        if (animal.isOutOfHabitat())
+            return new Result(false, "You can't feed Animal out of habitat!");
 
         player.getBackpack().decreaseHay(1);
         animal.feed();
@@ -263,6 +268,9 @@ public class AnimalsController {
 
         if (animal == null)
             return new Result(false, "Animal not found!");
+
+        if (animal.isOutOfHabitat())
+            return new Result(false, "Animal must be in habitat!");
 
         double price = animal.getType().getPrice() * (((double)(animal.getFriendShip()) / 1000) + 0.3);
 
