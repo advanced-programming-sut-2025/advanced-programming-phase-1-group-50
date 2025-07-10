@@ -11,13 +11,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.Main;
 import com.stardew.controller.AbilityAndEnergyController.AbilityController;
 import com.stardew.controller.AbilityAndEnergyController.EnergyController;
@@ -294,25 +291,25 @@ public class GameMenu implements AppMenu , Screen {
         }
 
 
-        else if ((matcher = GameMenuCommands.Build.getMatcher(input)) != null) {
-            System.out.println(animalsController.build(
-                    matcher.group("buildingName"), Integer.parseInt(matcher.group("X")),
-                    Integer.parseInt(matcher.group("Y"))));
-        }
-        else if ((matcher = GameMenuCommands.BuyAnimal.getMatcher(input)) != null) {
-            System.out.println(animalsController.buyAnimal(
-                    matcher.group("animal"), matcher.group("name")));
-        }
+//        else if ((matcher = GameMenuCommands.Build.getMatcher(input)) != null) {
+//            System.out.println(animalsController.build(
+//                    matcher.group("buildingName"), Integer.parseInt(matcher.group("X")),
+//                    Integer.parseInt(matcher.group("Y"))));
+//        }
+//        else if ((matcher = GameMenuCommands.BuyAnimal.getMatcher(input)) != null) {
+//            System.out.println(animalsController.buyAnimal(
+//                    matcher.group("animal"), matcher.group("name")));
+//        }
 //        else if ((matcher = GameMenuCommands.Pet.getMatcher(input)) != null) {
 //            System.out.println(animalsController.pet(matcher.group("name")));
 //        }
-        else if ((matcher = GameMenuCommands.CheatSetFriendship.getMatcher(input)) != null) {
-            System.out.println(animalsController.setFriendship(
-                    matcher.group("animalName"), Integer.parseInt(matcher.group("amount"))));
-        }
-        else if (GameMenuCommands.Animals.getMatcher(input) != null) {
-            System.out.println(animalsController.animalsInfo());
-        }
+//        else if ((matcher = GameMenuCommands.CheatSetFriendship.getMatcher(input)) != null) {
+//            System.out.println(animalsController.setFriendship(
+//                    matcher.group("animalName"), Integer.parseInt(matcher.group("amount"))));
+//        }
+//        else if (GameMenuCommands.Animals.getMatcher(input) != null) {
+//            System.out.println(animalsController.animalsInfo());
+//        }
 //        else if ((matcher = GameMenuCommands.ShepherdAnimal.getMatcher(input)) != null) {
 //            System.out.println(animalsController.shepherdAnimal(
 //                    matcher.group("animalName")));
@@ -320,9 +317,9 @@ public class GameMenu implements AppMenu , Screen {
 //        else if ((matcher = GameMenuCommands.FeedHay.getMatcher(input)) != null) {
 //            System.out.println(animalsController.feedHay(matcher.group("animalName")));
 //        }
-        else if (GameMenuCommands.AnimalsProduces.getMatcher(input) != null) {
-            System.out.println(animalsController.animalProduces());
-        }
+//        else if (GameMenuCommands.AnimalsProduces.getMatcher(input) != null) {
+//            System.out.println(animalsController.animalProduces());
+//        }
 //        else if ((matcher = GameMenuCommands.CollectProduce.getMatcher(input)) != null) {
 //            System.out.println(animalsController.collectProduce(matcher.group("animalName")));
 //        }
