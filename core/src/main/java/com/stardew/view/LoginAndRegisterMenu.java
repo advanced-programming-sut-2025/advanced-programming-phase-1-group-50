@@ -2,11 +2,8 @@ package com.stardew.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -15,13 +12,9 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.controller.LoginAndRegisterController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.App;
-import com.stardew.models.app.SecurityQuestion;
-import com.stardew.models.enums.LoginMenuCommands;
 import com.stardew.Main;
 
 import java.util.Scanner;
-import java.util.regex.Matcher;
 
 public class LoginAndRegisterMenu implements AppMenu , Screen {
     private  LoginAndRegisterController controller = new LoginAndRegisterController();
@@ -119,7 +112,6 @@ public class LoginAndRegisterMenu implements AppMenu , Screen {
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(stage);
 
         TextureRegionDrawable bgTex = GamePictureManager.menuBackground;
         Image background = new Image(bgTex);
