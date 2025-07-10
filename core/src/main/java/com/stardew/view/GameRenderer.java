@@ -27,16 +27,14 @@ public class GameRenderer {
     private MiniMapRenderer miniMapRenderer ;
 
 
-    public GameRenderer(GameModel gameModel , GameMenuInputAdapter gameMenuInputAdapter) {
+    public GameRenderer(GameModel gameModel, GameMenuInputAdapter gameMenuInputAdapter, SpriteBatch batch) {
         this.gameModel = gameModel;
-        batch = Main.getBatch();
+        this.batch = batch;
         this.gameMenuInputAdapter = gameMenuInputAdapter;
         miniMapRenderer = new MiniMapRenderer(gameModel , 250 , 200);
     }
 
     public void render(){
-        batch.setProjectionMatrix(gameModel.getCamera().combined);
-        batch.begin();
 
         renderMapTilesAndPlayer();
         System.out.println(gameModel.getPlayerController().getPlayer().getPlayerPosition().getFirst() + " " + gameModel.getPlayerController().getPlayer().getPlayerPosition().getSecond());
@@ -53,7 +51,6 @@ public class GameRenderer {
         }
 
         //System.out.println(App.getGame().getCurrentPlayingPlayer().getPlayerPosition().getFirst() + " " + App.getGame().getCurrentPlayingPlayer().getPlayerPosition().getSecond());
-        batch.end();
     }
 
     public void renderMapTilesAndPlayer() {
