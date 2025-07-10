@@ -1,9 +1,11 @@
 package com.stardew.view.windows;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -24,6 +26,14 @@ public abstract class CloseableWindow extends Window {
         setResizable(false);
 
         setBackground(GamePictureManager.windowWoodBackground);
+
+        setTransform(true);
+        setScale(0.7f);
+        getColor().a = 0f;
+        addAction(Actions.parallel(
+            Actions.fadeIn(0.3f),
+            Actions.scaleTo(1, 1, 0.3f, Interpolation.fade)
+        ));
 
         //adding close button for the window
         ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
@@ -51,11 +61,23 @@ public abstract class CloseableWindow extends Window {
         dialog.getContentTable().getCell(dialog.getContentTable().getChildren().first())
             .getActor().setColor(result.getSuccessful() ? Color.GREEN : Color.RED);
         dialog.button(new TextButton("OK", GamePictureManager.skin));
-        dialog.show(stage);
+        dialog.pack();
+        dialog.setPosition(
+            stage.getCamera().position.x - dialog.getWidth() / 2,
+            stage.getCamera().position.y - dialog.getHeight() / 2);
+        stage.addActor(dialog);
     }
 
     protected void closeWindow() {
         getChildren().forEach(Actor::clearListeners);
-        remove();
+
+        addAction(Actions.sequence(
+            Actions.parallel(
+                Actions.fadeOut(0.3f),
+                Actions.scaleTo(0.7f, 0.7f, 0.3f)
+            ),
+            Actions.removeActor()
+        ));
+
     }
 }

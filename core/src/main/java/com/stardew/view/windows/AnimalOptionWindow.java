@@ -19,7 +19,7 @@ public class AnimalOptionWindow extends CloseableWindow {
 
 
     public AnimalOptionWindow(Stage stage, Animal animal, float x, float y) {
-        super("Options", stage);
+        super(animal.getType() + " -> " + animal.getName(), stage);
 
         pad(30, 5, 20, 0);
         defaults().space(5);

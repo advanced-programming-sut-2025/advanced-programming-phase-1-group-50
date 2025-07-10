@@ -1,6 +1,8 @@
 package com.stardew.view.windows;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -37,12 +39,22 @@ public class ArtisanOptionWindow extends CloseableWindow {
 //        if (!controller.isReadyProduct(artisanAsset.name()))
             add(collectProductButton).row();
 
-        TooltipManager tooltipManager = TooltipManager.getInstance();
-        tooltipManager.initialTime = 0f;
-        tooltipManager.resetTime = 0f;
-        tooltipManager.subsequentTime = 0f;
+        SmartTooltip tooltip = SmartTooltip.getInstance();
 
-        showInfoButton.addListener(new Tooltip<>(artisanAsset.getDescriptionLabel(), tooltipManager));
+        showInfoButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                tooltip.show(artisanAsset.getDescription());
+                return true;
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                if (toActor == null || !toActor.isDescendantOf(event.getListenerActor()))
+                    tooltip.hide();
+            }
+        });
+
         cheatFinishProcessButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

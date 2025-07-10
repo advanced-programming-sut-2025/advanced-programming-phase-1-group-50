@@ -1,13 +1,12 @@
 package com.stardew.view.windows;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.stardew.controller.CookingAndCraftingControllers.CraftingController;
 import com.stardew.models.GameAssetManagers.CraftingAsset;
-import com.stardew.models.GameAssetManagers.GamePictureManager;
 
 import java.util.HashMap;
 
@@ -32,8 +31,8 @@ public class CraftingWindow extends CloseableWindow {
 
         pack();
         setPosition(
-            Gdx.graphics.getWidth() / 2f - getWidth() / 2,
-            Gdx.graphics.getHeight() / 2f - getHeight() / 2);
+            stage.getCamera().position.x - getWidth() / 2,
+            stage.getCamera().position.y - getHeight() / 2);
     }
 
 
@@ -45,23 +44,32 @@ public class CraftingWindow extends CloseableWindow {
 
         //Player player = App.getGame().getCurrentPlayingPlayer();
 
-        TooltipManager tooltipManager = TooltipManager.getInstance();
-        tooltipManager.initialTime = 0f;
-        tooltipManager.subsequentTime = 0f;
-
         for (CraftingAsset craftingAsset : CraftingAsset.values()) {
-            ImageButton button = buttons.get(craftingAsset);
-            //button.setDisabled(!player.getBackpack().containRecipe(craftingAsset.getRecipe()));
-            button.setDisabled(true); //delete this line
-            button.addListener(new Tooltip<>(craftingAsset.getDescription(), tooltipManager));
-            button.addListener(new ClickListener() {
+            ImageButton imageButton = buttons.get(craftingAsset);
+            //imageButton.setDisabled(!player.getBackpack().containRecipe(craftingAsset.getRecipe()));
+            imageButton.setDisabled(true); //delete this line
+            SmartTooltip tooltip = SmartTooltip.getInstance();
+
+            imageButton.addListener(new InputListener() {
                 @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    button.setDisabled(false);  //delete this line
-//                    if (!button.isDisabled()) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    imageButton.setDisabled(false);  //delete this line
+//                    if (!imageButton.isDisabled()) {
 //                        Result result = controller.craftingCraft(craftingAsset.name());
 //                        showResult(result);
+//                        return true;
 //                    }
+                    return false;
+                }
+
+                @Override
+                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                    tooltip.show(craftingAsset.getDescription());
+                }
+
+                @Override
+                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                    tooltip.hide();
                 }
             });
         }
