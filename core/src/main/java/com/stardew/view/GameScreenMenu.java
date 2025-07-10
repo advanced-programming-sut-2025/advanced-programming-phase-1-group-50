@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.stardew.Main;
 import com.stardew.controller.PlayerController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.animals.GameModel;
@@ -18,6 +20,7 @@ public class GameScreenMenu implements Screen {
     private GameRenderer gameRenderer;
     private GameMenuInputAdapter gameMenuInputAdapter;
     private Stage stage;
+    private SpriteBatch batch;
 
     public GameScreenMenu(){
         initializeGame();
@@ -28,7 +31,8 @@ public class GameScreenMenu implements Screen {
         gameModel = new GameModel(App.getGame().getMap() , 250 , 200);
         gameModel.setPlayerController(new PlayerController(App.getGame().getCurrentPlayingPlayer(), gameModel));
         gameMenuInputAdapter = new GameMenuInputAdapter(gameModel);
-        gameRenderer = new GameRenderer(gameModel , gameMenuInputAdapter);
+        batch = Main.getBatch();
+        gameRenderer = new GameRenderer(gameModel, gameMenuInputAdapter, batch);
 
         stage = new Stage(new ScreenViewport(gameModel.getCamera()));
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
@@ -51,9 +55,14 @@ public class GameScreenMenu implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        batch.setProjectionMatrix(gameModel.getCamera().combined);
+        batch.begin();
+
         gameModel.update(v);
         gameRenderer.render();
         gameMenuInputAdapter.update(v);
+
+        batch.end();
 
         stage.act(v);
         stage.draw();
