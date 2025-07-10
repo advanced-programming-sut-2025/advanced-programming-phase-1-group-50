@@ -1,11 +1,7 @@
 package com.stardew.models.GameAssetManagers;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.stardew.models.recipes.CraftingRecipes;
 
 public enum CraftingAsset {
@@ -34,7 +30,7 @@ public enum CraftingAsset {
     private final TextureRegionDrawable disabledImage;
     private final ImageButton.ImageButtonStyle style;
     private final CraftingRecipes recipe;
-    private final Label description;
+    private final String description;
 
     CraftingAsset(TextureRegionDrawable normalImage, TextureRegionDrawable disabledImage, CraftingRecipes recipe) {
         this.normalImage = normalImage;
@@ -45,12 +41,7 @@ public enum CraftingAsset {
         style.imageUp = normalImage;
         style.imageDisabled = disabledImage;
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = new BitmapFont();
-        labelStyle.fontColor = Color.GOLD;
-        labelStyle.background = GamePictureManager.woodBackground;
-        description = new Label(CraftingRecipes.getDescription(recipe), labelStyle);
-        description.setAlignment(Align.center);
+        description = CraftingRecipes.getDescription(recipe);
     }
 
     public TextureRegionDrawable getNormalImage() {
@@ -69,7 +60,7 @@ public enum CraftingAsset {
         return recipe;
     }
 
-    public Label getDescription() {
+    public String getDescription() {
         return description;
     }
 }
