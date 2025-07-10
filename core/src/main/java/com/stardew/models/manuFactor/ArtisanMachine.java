@@ -39,11 +39,14 @@ public abstract class ArtisanMachine {
         timeOfRequest = null;
         producingGood = null;
         endProcessImage = new Image(GamePictureManager.endProcessTexture);
-        processBar = new ProgressBar(0, getTotalProcessingTime(), 1, false, GamePictureManager.skin);
-        processLabel = new Label("0 / " + getTotalProcessingTime(), GamePictureManager.skin);
+        processBar = new ProgressBar(0, 10, 1, false, GamePictureManager.skin);
+        processLabel = new Label("0 / ", GamePictureManager.skin);
     }
 
-    public void setPosition(Stage stage, float x, float y) {
+    public void prepareWindows(Stage stage, float x, float y) {
+        x *= GamePictureManager.TILE_SIZE;
+        y *= GamePictureManager.TILE_SIZE;
+
         image.setPosition(x, y);
         endProcessImage.setPosition(x + image.getWidth() / 2 - endProcessImage.getWidth() / 2, y + image.getHeight() + 10);
         endProcessImage.setVisible(false);
@@ -51,7 +54,7 @@ public abstract class ArtisanMachine {
         processBar.setPosition(x + image.getWidth() / 2 - processBar.getWidth() / 2, y + image.getHeight() + 10);
         processBar.setVisible(false);
         processBar.setAnimateDuration(0.5f);
-        processLabel.setPosition(x + 5, y + 5);
+        processLabel.setPosition(processBar.getX() + 5, processBar.getY() + 5);
         processLabel.setVisible(false);
 
         stage.addActor(image);
@@ -94,6 +97,7 @@ public abstract class ArtisanMachine {
             processBar.setVisible(false);
             processLabel.setVisible(false);
             endProcessImage.setVisible(false);
+            return;
         }
         int passedTime = getPassedTime();
         int totalProcessingTime = getTotalProcessingTime();
@@ -106,6 +110,7 @@ public abstract class ArtisanMachine {
             processLabel.setVisible(true);
             endProcessImage.setVisible(false);
             processBar.setValue(passedTime);
+            processBar.setRange(0, totalProcessingTime);
             processLabel.setText(((int)processBar.getValue()) + " / " + ((int)processBar.getMaxValue()) + " Hours");
         }
     }
