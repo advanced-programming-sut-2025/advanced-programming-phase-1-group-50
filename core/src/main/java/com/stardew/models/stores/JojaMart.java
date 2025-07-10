@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.cooking.Food;
@@ -19,6 +20,8 @@ public class JojaMart extends Store {
     private final String backgroundCode = BackgroundColors.BRIGHT_YELLOW;
     private final String colorCode = ColorPrinter.ORANGE;
     private ArrayList<ShopItem> inventory;
+    private final TextureRegion texture = new TextureRegion(GamePictureManager.jojaMartTexture);
+    private final TextureRegion[][] regions = GamePictureManager.jojaMartRegions;
 
     public JojaMart(int x, int y, int width, int height) {
         super(new Rectangle(x, y, width, height), "Morris", 9, 23);
@@ -168,6 +171,11 @@ public class JojaMart extends Store {
     }
 
     @Override
+    public TextureRegion[][] getRegions() {
+        return regions;
+    }
+
+    @Override
     public char getSymbol() {
         return 'J';
     }
@@ -184,7 +192,7 @@ public class JojaMart extends Store {
 
     @Override
     public TextureRegion getTexture() {
-        return null;
+        return texture;
     }
 
     @Override

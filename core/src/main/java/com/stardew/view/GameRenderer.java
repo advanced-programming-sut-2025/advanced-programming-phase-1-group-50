@@ -5,12 +5,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stardew.Main;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.models.foraging.Crop;
 import com.stardew.models.foraging.Tree;
 import com.stardew.models.mapInfo.*;
+import com.stardew.models.stores.Blacksmith;
+import com.stardew.models.stores.Store;
 import com.stardew.models.userInfo.Player;
 
 import java.awt.*;
@@ -26,7 +29,7 @@ public class GameRenderer {
 
     public GameRenderer(GameModel gameModel , GameMenuInputAdapter gameMenuInputAdapter) {
         this.gameModel = gameModel;
-        batch = new SpriteBatch();
+        batch = Main.getBatch();
         this.gameMenuInputAdapter = gameMenuInputAdapter;
         miniMapRenderer = new MiniMapRenderer(gameModel , 250 , 200);
     }
@@ -36,12 +39,13 @@ public class GameRenderer {
         batch.begin();
 
         renderMapTilesAndPlayer();
+        System.out.println(gameModel.getPlayerController().getPlayer().getPlayerPosition().getFirst() + " " + gameModel.getPlayerController().getPlayer().getPlayerPosition().getSecond());
 
         if(gameMenuInputAdapter.isShowingMap()){
             Texture miniMap = miniMapRenderer.getMiniMapTexture();
 
-            float windowWidth = 400;
-            float windowHeight = 300;
+            float windowWidth = 700;
+            float windowHeight = 600;
             float windowX = (gameModel.getCamera().viewportWidth - windowWidth) / 2 + gameModel.getCamera().position.x - gameModel.getCamera().viewportWidth / 2;
             float windowY = (gameModel.getCamera().viewportHeight - windowHeight) / 2 + gameModel.getCamera().position.y - gameModel.getCamera().viewportHeight / 2;
             batch.draw(GamePictureManager.whiteBox , windowX + 10 , windowY + 10 , windowWidth , windowHeight);
@@ -120,6 +124,34 @@ public class GameRenderer {
                                 localX < GamePictureManager.cottageRegions.length && localY < GamePictureManager.cottageRegions[0].length) {
                                 int flippedY = GamePictureManager.cottageRegions.length - 1 - localY;
                                 TextureRegion region = GamePictureManager.cottageRegions[flippedY][localX];
+                                batch.draw(region, drawX, drawY, tileSize, tileSize);
+                            }
+
+                        }
+                        else if(tile.getPlaceable() instanceof Store store){
+                            int baseX = store.getBounds().x;
+                            int baseY = store.getBounds().y;
+                            int localX = x - baseX;
+                            int localY = y - baseY;
+                            if (localX >= 0 && localY >= 0 &&
+                                localX < store.getRegions().length && localY < store.getRegions()[0].length) {
+                                int flippedY = store.getRegions().length - 1 - localY;
+                                TextureRegion region = store.getRegions()[flippedY][localX];
+                                batch.draw(region, drawX, drawY, tileSize, tileSize);
+                            }
+
+                        }
+
+                        else if(tile.getPlaceable() instanceof NpcHome npcHome){
+                            int baseX = npcHome.getBounds().x;
+                            int baseY = npcHome.getBounds().y;
+                            int localX = x - baseX;
+                            int localY = y - baseY;
+                            TextureRegion [][] tx = npcHome.getRegions();
+                            if (localX >= 0 && localY >= 0 &&
+                                localX < tx.length && localY < tx[0].length) {
+                                int flippedY = tx.length - 1 - localY;
+                                TextureRegion region = tx[flippedY][localX];
                                 batch.draw(region, drawX, drawY, tileSize, tileSize);
                             }
 

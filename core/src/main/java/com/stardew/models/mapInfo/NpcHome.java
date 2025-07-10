@@ -15,9 +15,14 @@ public class NpcHome implements Placeable {
     private final Rectangle rectangle;
     private final  String colorCode = ColorPrinter.BRIGHT_PURPLE;
     private final NPC npc;
+    private TextureRegion[][] regions;
+    private TextureRegion texture ;
     public NpcHome(int x, int y, int width, int height , NPC npc) {
         rectangle = new Rectangle(x, y, width, height);
         this.npc = npc;
+        regions = npc.getRegions(npc.getType());
+        texture = new TextureRegion(npc.getHomeTextureByType(npc.getType()));
+
     }
 
     public Rectangle getBounds() {
@@ -44,12 +49,17 @@ public class NpcHome implements Placeable {
 
     @Override
     public TextureRegion getTexture() {
-        return null;
+        return texture;
     }
 
     @Override
     public Color getMiniMapColor() {
         return Color.WHITE;
+    }
+
+
+    public TextureRegion[][] getRegions() {
+        return regions;
     }
 
 }

@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.animals.AnimalType;
 import com.stardew.models.app.App;
+import com.stardew.models.app.Game;
 import com.stardew.models.tools.MilkPail;
 import com.stardew.models.tools.Shear;
 import com.stardew.models.userInfo.Coin;
@@ -19,6 +21,8 @@ public class MarnieRanch extends Store {
     private final String backgroundCode = BackgroundColors.RED;
     private final String colorCode = ColorPrinter.PINK;
     private ArrayList<ShopItem> inventory;
+    private final TextureRegion[][] regions = GamePictureManager.marnieRanchRegions;
+    private final TextureRegion texture = new TextureRegion(GamePictureManager.marnieRanchTexture);
 
     public MarnieRanch(int x, int y, int width, int height) {
         super(new Rectangle(x, y, width, height), "Marnie", 9, 16);
@@ -170,6 +174,11 @@ public class MarnieRanch extends Store {
     }
 
     @Override
+    public TextureRegion[][] getRegions() {
+        return regions;
+    }
+
+    @Override
     public String getColor(){
         return colorCode;
     }
@@ -181,7 +190,7 @@ public class MarnieRanch extends Store {
 
     @Override
     public TextureRegion getTexture() {
-        return null;
+        return texture;
     }
 
     @Override

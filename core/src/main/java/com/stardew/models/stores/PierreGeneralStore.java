@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.Bouquet;
 import com.stardew.models.ColorPrinter;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.date.Season;
@@ -25,7 +26,8 @@ public class PierreGeneralStore extends Store {
     private final String backgroundCode = BackgroundColors.YELLOW;
     private final String colorCode = ColorPrinter.BRIGHT_RED;
     private ArrayList<ShopItem> inventory;
-
+    private final TextureRegion[][] regions = GamePictureManager.pierresShopRegions;
+    private final TextureRegion texture = new TextureRegion(GamePictureManager.pierresShopTexture);
     public PierreGeneralStore(int x, int y, int width, int height) {
         super(new Rectangle(x, y, width, height), "Pierre", 9, 23);
     }
@@ -243,6 +245,11 @@ public class PierreGeneralStore extends Store {
         }
     }
 
+    @Override
+    public TextureRegion[][] getRegions() {
+        return regions;
+    }
+
     private int calculatePrice(ShopItem item) {
         if (item instanceof PierreGeneralStoreSeedsItem) {
             if (App.getGame().getTime().getSeason().equals(((PierreGeneralStoreSeedsItem) item).getSeason())) {
@@ -269,7 +276,7 @@ public class PierreGeneralStore extends Store {
 
     @Override
     public TextureRegion getTexture() {
-        return null;
+        return texture;
     }
 
     @Override
