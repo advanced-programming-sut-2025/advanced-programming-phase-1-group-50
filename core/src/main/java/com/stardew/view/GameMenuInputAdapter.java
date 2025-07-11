@@ -2,11 +2,11 @@ package com.stardew.view;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.models.userInfo.Player;
+import com.stardew.view.GridMap.TileSelectionWindow;
 import com.stardew.view.cheatConsole.CheatWindow;
 
 import java.util.HashSet;
@@ -69,6 +69,10 @@ public class GameMenuInputAdapter extends InputAdapter {
         if ((keys.contains(Input.Keys.SHIFT_LEFT) || keys.contains(Input.Keys.SHIFT_RIGHT)) &&
             justPressedKeys.contains(Input.Keys.L)) {
             stage.addActor(new CheatWindow(stage));
+        }
+
+        if (justPressedKeys.contains(Input.Keys.SPACE)) {
+            stage.addActor(new TileSelectionWindow(stage));
         }
 
 
