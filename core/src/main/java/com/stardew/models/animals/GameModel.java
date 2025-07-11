@@ -8,13 +8,17 @@ import com.stardew.models.app.App;
 import com.stardew.models.mapInfo.Map;
 import com.stardew.models.mapInfo.Pair;
 import com.stardew.models.userInfo.Player;
+import com.stardew.view.modelsManager.AnimalsManager;
+import com.stardew.view.modelsManager.ArtisanMachinesManager;
 
 
 public class GameModel {
-    private OrthographicCamera camera;
-    private Map map;
+    private final OrthographicCamera camera;
+    private final Map map;
     private final int mapWidth, mapHeight;
     private PlayerController playerController;
+    private final AnimalsManager animalsManager;
+    private final ArtisanMachinesManager artisanMachinesManager;
 
     public GameModel(Map map  , int mapWidth , int mapHeight) {
         this.map = map;
@@ -25,6 +29,8 @@ public class GameModel {
         Player p = App.getGame().getCurrentPlayingPlayer();
         camera.position.set(p.getPlayerPosition().getFirst() , p.getPlayerPosition().getSecond() , 0);
 
+        animalsManager = new AnimalsManager();
+        artisanMachinesManager = new ArtisanMachinesManager();
 
     }
 
@@ -63,6 +69,8 @@ public class GameModel {
         camera.position.set(cameraX, cameraY, 0);
         camera.update();
 
+        animalsManager.update(delta);
+        artisanMachinesManager.update();
 
 
     }

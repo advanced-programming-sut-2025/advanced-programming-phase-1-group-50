@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.Color;
 
 import com.stardew.Main;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.animals.Animal;
 import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.models.date.Time;
@@ -169,6 +170,10 @@ public class GameRenderer {
                                 batch.draw(region, drawX, drawY, tileSize, tileSize);
                             }
 
+                        }
+
+                        else if (tile.getPlaceable() instanceof Animal animal) {
+                            animal.render(batch);
                         }
 
 

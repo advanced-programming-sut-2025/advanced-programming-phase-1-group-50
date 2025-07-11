@@ -1,12 +1,11 @@
-package com.stardew.view.renderers;
+package com.stardew.view.modelsManager;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.stardew.models.animals.Animal;
 import com.stardew.models.app.App;
 
 import java.util.ArrayList;
 
-public class AnimalsRenderer {
+public class AnimalsManager {
     private ArrayList<Animal> animals;
 
     private void updateList() {
@@ -20,9 +19,4 @@ public class AnimalsRenderer {
         }
     }
 
-    public void render(Batch batch) {
-        for (Animal animal : animals) {
-            animal.render(batch);
-        }
-    }
 }
