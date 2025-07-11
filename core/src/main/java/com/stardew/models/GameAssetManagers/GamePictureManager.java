@@ -27,11 +27,15 @@ public class GamePictureManager {
         (new Texture(Gdx.files.internal("menu_bg.png"))));
 
     public static TextureRegionDrawable woodBackground =
-        new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("wood_bg.png"))));
+        new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Window/wood_bg.png"))));
     public static TextureRegionDrawable windowWoodBackground =
-        new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("window_org.png"))));
+        new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Window/window_org.png"))));
     public static TextureRegionDrawable closeWindow =
-        new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("close_window.png"))));
+        new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Window/close_window.png"))));
+    public static TextureRegionDrawable OKButtonUp =
+        new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Window/OK_Button_up.png"))));
+    public static TextureRegionDrawable OKButtonDown =
+        new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Window/OK_Button_down.png"))));
 
 
     //Tools :
@@ -1566,6 +1570,7 @@ public class GamePictureManager {
 
     public static TextureRegion clockTexture = new TextureRegion(new Texture("Clock/newClock.png"));
 
-
+    public static TextureRegion emptyTile = new TextureRegion(new Texture("Tile_Selection/Empty_Tile.png"));
+    public static TextureRegion selectedTile = new TextureRegion(new Texture("Tile_Selection/Selected_Tile.png"));
 
 }

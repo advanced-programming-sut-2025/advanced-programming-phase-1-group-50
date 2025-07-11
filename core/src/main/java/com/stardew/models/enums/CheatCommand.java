@@ -12,7 +12,8 @@ public enum CheatCommand implements Command {
     CheatUnlimitedEnergy("\\s*energy\\s+unlimited\\s*"),
     CheatAddDollars("\\s*cheat\\s+add\\s+(?<amount>-?\\d+)\\s+dollars\\s*"),
     CheatAddItem("cheat\\s+add\\s+item\\s+-n\\s+(?<itemName>.+?)\\s+-c\\s+(?<count>-?\\d+)\\s*"),
-    CheatSetFriendship("cheat\\s+set\\s+friendship\\s+-n\\s+(?<animalName>.+?)\\s+-c\\s+(?<amount>-?\\d+)\\s*");
+    CheatSetFriendship("cheat\\s+set\\s+friendship\\s+-n\\s+(?<animalName>.+?)\\s+-c\\s+(?<amount>-?\\d+)\\s*"),
+    NextTurn("\\s*next\\s+turn\\s*");
 
 
     private final String command;
