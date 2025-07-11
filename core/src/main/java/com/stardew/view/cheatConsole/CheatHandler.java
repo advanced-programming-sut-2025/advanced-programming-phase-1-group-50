@@ -56,6 +56,9 @@ public class CheatHandler {
                 matcher.group("animalName"),
                 Integer.parseInt(matcher.group("amount"))).getMessage();
         }
+        else if ((matcher = CheatCommand.NextTurn.getMatcher(input)) != null) {
+            return gameMenuController.nextTurn().getMessage();
+        }
         else {
             return "invalid command";
         }

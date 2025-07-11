@@ -18,7 +18,7 @@ public class CheatWindow extends CloseableWindow {
     public CheatWindow(Stage stage) {
         super("Cheat Box", stage);
 
-        pad(25, 7, 20, 7);
+        pad(25, 7, 20, 0);
         pack();
         setPosition(
             stage.getCamera().position.x - getWidth() / 2,
@@ -46,7 +46,7 @@ public class CheatWindow extends CloseableWindow {
         });
 
 
-        defaults().pad(5);
+        defaults().pad(5, 8, 5, 15);
         row();
         add(scrollPane).expand().fill().colspan(2).height(250);
         row();
