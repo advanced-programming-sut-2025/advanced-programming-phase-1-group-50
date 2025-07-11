@@ -69,6 +69,7 @@ public class GameScreenMenu implements Screen {
 
         SmartTooltip.initialize(stage, GamePictureManager.skin);
         startTimer();
+        gameMenuInputAdapter.setStage(stage);
 
 
     }

@@ -55,7 +55,7 @@ public class GameRenderer {
         //updateTimeUi();
 //        timeLabel.draw(batch, 1f);
 //        batch.draw(clockTexture, clockImage.getX(), clockImage.getY(), clockImage.getWidth(), clockImage.getHeight());
-        System.out.println(gameModel.getPlayerController().getPlayer().getPlayerPosition().getFirst() + " " + gameModel.getPlayerController().getPlayer().getPlayerPosition().getSecond());
+//        System.out.println(gameModel.getPlayerController().getPlayer().getPlayerPosition().getFirst() + " " + gameModel.getPlayerController().getPlayer().getPlayerPosition().getSecond());
 
         if(gameMenuInputAdapter.isShowingMap()){
             Texture miniMap = miniMapRenderer.getMiniMapTexture();
