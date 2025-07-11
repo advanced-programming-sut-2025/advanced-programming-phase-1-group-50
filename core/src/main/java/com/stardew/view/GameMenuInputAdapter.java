@@ -3,17 +3,21 @@ package com.stardew.view;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.models.userInfo.Player;
+import com.stardew.view.cheatConsole.CheatWindow;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class GameMenuInputAdapter extends InputAdapter {
-    private GameModel model;
+    private final GameModel model;
     private final Set<Integer> keys = new HashSet<>();
+    private final Set<Integer> justPressedKeys = new HashSet<>();
     private boolean showingMap = false;
+    private Stage stage;
 
 
     public GameMenuInputAdapter(GameModel model) {
@@ -23,6 +27,7 @@ public class GameMenuInputAdapter extends InputAdapter {
     @Override
     public boolean keyDown(int keycode) {
         keys.add(keycode);
+        justPressedKeys.add(keycode);
         return true;
     }
 
@@ -61,6 +66,18 @@ public class GameMenuInputAdapter extends InputAdapter {
 
         showingMap = keys.contains(Input.Keys.M);
 
+        if ((keys.contains(Input.Keys.SHIFT_LEFT) || keys.contains(Input.Keys.SHIFT_RIGHT)) &&
+            justPressedKeys.contains(Input.Keys.L)) {
+            stage.addActor(new CheatWindow(stage));
+        }
+
+
+        handlePlayerMove(p, vx, vy, dir, delta);
+
+        justPressedKeys.clear();
+    }
+
+    private void handlePlayerMove(Player p, float vx, float vy, int dir, float delta) {
 
         float length = (float) Math.sqrt(vx * vx + vy * vy);
         if(length > 0){
@@ -82,5 +99,7 @@ public class GameMenuInputAdapter extends InputAdapter {
         return showingMap;
     }
 
-
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 }

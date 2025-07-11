@@ -1521,7 +1521,7 @@ public class GamePictureManager {
     }
 
 
-    public static Texture pierresShopTexture = new Texture("Stores/Pierres_Shop.png");
+    public static Texture pierresShopTexture = new Texture("Stores/Pierres_shop.png");
     public static TextureRegion[][] pierresShopRegions ;
     static {
         pierresShopRegions = TextureRegion.split(pierresShopTexture , pierresShopTexture.getWidth() / 4, pierresShopTexture.getHeight() / 4);
