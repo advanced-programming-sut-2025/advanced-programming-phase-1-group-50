@@ -161,7 +161,7 @@ public class Game {
     }
 
     public void callMethodsForTomorrow() {
-        ((GameMenu) App.getMenu().getMenu()).doNights();
+        //((GameMenu) App.getMenu().getMenu()).doNights();
 
         for (Player player : players) {
             int ratio = 1;

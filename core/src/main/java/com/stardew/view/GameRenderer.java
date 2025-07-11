@@ -5,10 +5,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.Color;
+
+
 import com.stardew.Main;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
+import com.stardew.models.date.Time;
 import com.stardew.models.foraging.Crop;
 import com.stardew.models.foraging.Tree;
 import com.stardew.models.mapInfo.*;
@@ -18,6 +26,8 @@ import com.stardew.models.userInfo.Player;
 
 import java.awt.*;
 
+
+
 public class GameRenderer {
     private final GameModel gameModel;
     private SpriteBatch batch;
@@ -25,6 +35,9 @@ public class GameRenderer {
     private float stateTime = 0f;
     private GameMenuInputAdapter gameMenuInputAdapter;
     private MiniMapRenderer miniMapRenderer ;
+    private Label timeLabel;
+    private TextureRegion clockTexture = GamePictureManager.clockTexture;
+    Image clockImage = new Image(clockTexture);
 
 
     public GameRenderer(GameModel gameModel, GameMenuInputAdapter gameMenuInputAdapter, SpriteBatch batch) {
@@ -32,11 +45,15 @@ public class GameRenderer {
         this.batch = batch;
         this.gameMenuInputAdapter = gameMenuInputAdapter;
         miniMapRenderer = new MiniMapRenderer(gameModel , 250 , 200);
+
     }
 
     public void render(){
 
         renderMapTilesAndPlayer();
+        //updateTimeUi();
+//        timeLabel.draw(batch, 1f);
+//        batch.draw(clockTexture, clockImage.getX(), clockImage.getY(), clockImage.getWidth(), clockImage.getHeight());
         System.out.println(gameModel.getPlayerController().getPlayer().getPlayerPosition().getFirst() + " " + gameModel.getPlayerController().getPlayer().getPlayerPosition().getSecond());
 
         if(gameMenuInputAdapter.isShowingMap()){
@@ -197,10 +214,8 @@ public class GameRenderer {
         }
     }
 
-    public void logPlayerTilePosition(Player player, int tileSize) {
-        int tileX = (int)(player.getPlayerPosition().getFirst() / tileSize);
-        int tileY = (int)(player.getPlayerPosition().getSecond() / tileSize);
-        System.out.println("Player is currently on tile (" + tileX + ", " + tileY + ")");
-    }
+
+
+
 
 }

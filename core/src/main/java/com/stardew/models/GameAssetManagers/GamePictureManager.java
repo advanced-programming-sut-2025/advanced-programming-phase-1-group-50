@@ -1564,4 +1564,8 @@ public class GamePictureManager {
     }
 
 
+    public static TextureRegion clockTexture = new TextureRegion(new Texture("Clock/newClock.png"));
+
+
+
 }
