@@ -22,16 +22,18 @@ public class TimeManager {
     private Image blackFadeImage;
     private boolean isFaded = false;
     private Image nightOverlay;
-    private final Stage uiStage = new Stage(new ScreenViewport());
+    private final Stage uiStage ;
     private TextureRegion clockTexture = GamePictureManager.clockTexture;
     private Image clockImage = new Image(clockTexture);
 
 
 
-    public TimeManager() {
+    public TimeManager(Stage uiStage) {
+        this.uiStage = uiStage;
         initializeTime();
         initializeFadeImage();
         initializeOverlayImage();
+
 
 
     }
@@ -53,7 +55,7 @@ public class TimeManager {
     public void checkForDayTransition(){
         Time time = App.getGame().getTime();
         int hour = time.getHour();
-        if(hour == 21 && !isFaded){
+        if(hour == 22 && !isFaded){
             isFaded = true;
             blackFadeImage.getColor().a = 0f;
             blackFadeImage.addAction(Actions.sequence(

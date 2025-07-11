@@ -26,6 +26,11 @@ public class Player {
     private int consumedEnergyInTurn = 0;
     private  final String username;
     private  final String nickname;
+
+    public int getMaxEnergy() {
+        return maxEnergy;
+    }
+
     private Animal currentAnimal = null;
     private final Ability ability = new Ability(this);
     private Tool currentTool;

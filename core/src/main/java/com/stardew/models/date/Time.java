@@ -25,8 +25,8 @@ public class Time {
 
     public void advancedHour(int h){
         this.hour += h;
-        while (this.hour >= 22){
-            this.hour -= 22 ;
+        while (this.hour >= 23){
+            this.hour -= 23 ;
             this.hour += 9;
             advancedDay(1);
 

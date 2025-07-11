@@ -11,6 +11,9 @@ public class PlayerController {
     private Player player;
     private GameModel model;
     private final Tile[][] tiles;
+    private float moveDistance;
+    private final float distanceByTile = 5.0f;
+
 
 
     public PlayerController(Player player , GameModel model) {
@@ -23,26 +26,10 @@ public class PlayerController {
         tryMove(delta * player.getVx() , delta * player.getVy());
     }
 
-//    public boolean tryMove(float dx, float dy) {
-//        float newXPos = player.getPlayerPosition().getFirst() + dx;
-//        float newYPos = player.getPlayerPosition().getSecond() + dy;
-//
-//        float width = 0.8f;  // به اندازه بازیکن در tile
-//        float height = 1.8f; // چون sprite دو برابر tileه
-//
-//        // بررسی 4 گوشه بازیکن
-//        if (
-//            isWalkable(newXPos, newYPos) &&
-//                isWalkable(newXPos + width, newYPos) &&
-//                isWalkable(newXPos, newYPos + height) &&
-//                isWalkable(newXPos + width, newYPos + height)
-//        ) {
-//            player.setPlayerPosition(new Pair<>(newXPos, newYPos));
-//            return true;
-//        }
-//        return false;
-    //    }
     public boolean tryMove(float dx, float dy) {
+
+        if(player.getEnergy() <= 0) return false;
+
         if (dx == 0 && dy == 0)
             return false;
 
@@ -84,18 +71,22 @@ public class PlayerController {
             }
         }
 
+        float distanceMoved =(float) Math.sqrt(dx * dx + dy * dy);
+        moveDistance += distanceMoved;
+        if (moveDistance > distanceByTile) {
+            int times = (int)(moveDistance / distanceByTile);
+            for (int i = 0; i < times; i++) {
+                player.consumeEnergy(1);
+            }
+            moveDistance %= distanceByTile;
+        }
+
 
         player.setPlayerPosition(new Pair<>(newXPos, newYPos));
         return true;
     }
 
-    private boolean isWalkable(float x, float y) {
-        int tileX = (int) x;
-        int tileY = (int) y;
 
-        if (tileX < 0 || tileX >= tiles.length || tileY < 0 || tileY >= tiles[0].length) return false;
-        return tiles[tileX][tileY].isWalkable();
-    }
 
 
     public Player getPlayer() {

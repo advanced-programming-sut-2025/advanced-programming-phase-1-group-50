@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.Main;
+import com.stardew.controller.EnergyManager;
 import com.stardew.controller.PlayerController;
 import com.stardew.controller.TimeManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
@@ -32,12 +33,16 @@ public class GameScreenMenu implements Screen {
     private GameRenderer gameRenderer;
     private GameMenuInputAdapter gameMenuInputAdapter;
     private Stage stage;
-    private Stage uiStage;
+
+
     private SpriteBatch batch;
     private float start = 0f;
+    private final Stage uiStage = new Stage(new ScreenViewport());
 
 
-    private final TimeManager timeManager = new TimeManager();
+    private final TimeManager timeManager = new TimeManager(uiStage);
+
+    private final EnergyManager energyManager = new EnergyManager(uiStage);
 
 
 
@@ -57,7 +62,9 @@ public class GameScreenMenu implements Screen {
         gameRenderer = new GameRenderer(gameModel, gameMenuInputAdapter, batch);
 
         stage = new Stage(new ScreenViewport(gameModel.getCamera()));
-        uiStage = timeManager.getUiStage();
+
+
+
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(stage);
         inputMultiplexer.addProcessor(gameMenuInputAdapter);
@@ -102,6 +109,9 @@ public class GameScreenMenu implements Screen {
         uiStage.act(v);
         uiStage.draw();
 
+        energyManager.getProgressBar().setValue(gameModel.getPlayerController().getPlayer().getEnergy());
+
+
         timeManager.checkForDayTransition();
         timeManager.updateNightOverlay();
     }
@@ -131,14 +141,7 @@ public class GameScreenMenu implements Screen {
 
     }
 
-//    public void startTimer(){
-//        Timer.schedule(new Timer.Task() {
-//            @Override
-//            public void run() {
-//                App.getGame().getTime().advancedHour(1);
-//            }
-//        }, 60, 60);
-//    }
+
 
     public void updateTimeUi(){
         Time time = App.getGame().getTime();
@@ -158,7 +161,7 @@ public class GameScreenMenu implements Screen {
 
     public void updateTime(float v){
         start += v;
-        if(start >= 6){
+        if(start >= 60){
             start = 0;
             App.getGame().getTime().advancedHour(1);
         }
