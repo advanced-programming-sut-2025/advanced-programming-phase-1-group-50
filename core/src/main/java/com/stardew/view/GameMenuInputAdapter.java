@@ -23,9 +23,6 @@ public class GameMenuInputAdapter extends InputAdapter {
     @Override
     public boolean keyDown(int keycode) {
         keys.add(keycode);
-        if(keycode == Input.Keys.M) {
-            showingMap = true;
-        }
         return true;
     }
 
@@ -33,9 +30,6 @@ public class GameMenuInputAdapter extends InputAdapter {
     @Override
     public boolean keyUp(int keycode) {
         keys.remove(keycode);
-        if(keycode == Input.Keys.M) {
-            showingMap = false;
-        }
         return true;
     }
 
@@ -64,6 +58,8 @@ public class GameMenuInputAdapter extends InputAdapter {
             vx += 1;
             dir = 2;
         }
+
+        showingMap = keys.contains(Input.Keys.M);
 
 
         float length = (float) Math.sqrt(vx * vx + vy * vy);

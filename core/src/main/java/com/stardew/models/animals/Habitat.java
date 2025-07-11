@@ -1,13 +1,21 @@
 package com.stardew.models.animals;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
+import com.stardew.view.windows.HabitatWindow;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -21,6 +29,7 @@ public class Habitat implements Placeable {
     private final Rectangle bounds;
     private final Vector2 position;
     private final TextureRegion textureRegion;
+    private final Image image;
 
 
     public Habitat(HabitatType type, HabitatSize size, int x, int y) {
@@ -45,6 +54,31 @@ public class Habitat implements Placeable {
                 default -> textureRegion = null;
             }
         } else textureRegion = null;
+
+        image = new Image(textureRegion);
+        image.setPosition(position.x * GamePictureManager.TILE_SIZE, position.y * GamePictureManager.TILE_SIZE);
+    }
+
+    public void prepareWindow(Stage stage) {
+        stage.addActor(image);
+        Habitat thisHabitat = this;
+        image.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                stage.addActor(new HabitatWindow(stage, thisHabitat, (x + image.getX()), y + image.getY() - 50));
+                return true;
+            }
+
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                Gdx.graphics.setSystemCursor(com.badlogic.gdx.graphics.Cursor.SystemCursor.Hand);
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
+            }
+        });
     }
 
     public HabitatType getType() {
@@ -72,9 +106,7 @@ public class Habitat implements Placeable {
     }
 
     public void addAnimal(Animal animal) {
-        if (hasEmptyCapacity()) {
             animals.add(animal);
-        }
     }
 
     public void removeAnimal(Animal animal) {
@@ -142,7 +174,7 @@ public class Habitat implements Placeable {
     }
 
     public void render(Batch batch) {
-        batch.draw(textureRegion, position.x, position.y);
+        batch.draw(textureRegion, position.x * GamePictureManager.TILE_SIZE, position.y * GamePictureManager.TILE_SIZE);
     }
 
 }

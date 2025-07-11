@@ -2,6 +2,7 @@ package com.stardew.view.windows;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -17,32 +18,38 @@ public class ArtisanWindow extends CloseableWindow {
 
 
     public ArtisanWindow(ArtisanAsset artisanAsset, Stage stage, float x, float y) {
-        super("Artisan Menu  ", stage);
+        super("Artisan Menu", stage);
 
-        pad(30, 5, 25, 0);
+        pad(25, 5, 20, 0);
         defaults().space(10);
-
-        TooltipManager tooltipManager = TooltipManager.getInstance();
-        tooltipManager.initialTime = 0f;
-        tooltipManager.subsequentTime = 0f;
 
         ArrayList<ArtisanGoodAsset> products = artisanAsset.getProducts();
         for (ArtisanGoodAsset asset : products) {
             Image product = asset.getImage();
             add(product).row();
-            product.addListener(new Tooltip<>(asset.getDescription(), tooltipManager));
-            product.addListener(new ClickListener() {
+
+            SmartTooltip tooltip = SmartTooltip.getInstance();
+            product.addListener(new InputListener() {
                 @Override
-                public void clicked(InputEvent event, float x, float y) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     //TODO crafting selected item
-                    getChildren().forEach(Actor::clearListeners);
-                    remove();
+                    return true;
+                }
+
+                @Override
+                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                    tooltip.show(asset.getDescription());
+                }
+
+                @Override
+                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                    tooltip.hide();
                 }
             });
         }
 
         pack();
-        setSize(150, 400);
+        setSize(150, 45 + products.size() * 65);
         setPosition(x, y);
 
     }

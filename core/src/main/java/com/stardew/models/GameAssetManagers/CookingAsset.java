@@ -1,11 +1,7 @@
 package com.stardew.models.GameAssetManagers;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.stardew.models.recipes.CookingRecipe;
 
 public enum CookingAsset {
@@ -37,7 +33,7 @@ public enum CookingAsset {
     private final TextureRegionDrawable disabledImage;
     private final ImageButton.ImageButtonStyle style;
     private final CookingRecipe recipe;
-    private final Label description;
+    private final String description;
 
     CookingAsset(TextureRegionDrawable normalImage, TextureRegionDrawable disabledImage, CookingRecipe recipe) {
         this.normalImage = normalImage;
@@ -47,12 +43,7 @@ public enum CookingAsset {
         style.imageUp = normalImage;
         style.imageDisabled = disabledImage;
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = new BitmapFont();
-        labelStyle.fontColor = Color.GOLD;
-        labelStyle.background = GamePictureManager.woodBackground;
-        description = new Label(CookingRecipe.getDescription(recipe), labelStyle);
-        description.setAlignment(Align.center);
+        description = CookingRecipe.getDescription(recipe);
     }
 
     public ImageButton.ImageButtonStyle getStyle() {
@@ -71,7 +62,7 @@ public enum CookingAsset {
         return recipe;
     }
 
-    public Label getDescription() {
+    public String getDescription() {
         return description;
     }
 }

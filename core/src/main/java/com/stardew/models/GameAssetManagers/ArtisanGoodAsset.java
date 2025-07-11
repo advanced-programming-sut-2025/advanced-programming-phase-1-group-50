@@ -63,24 +63,18 @@ public enum ArtisanGoodAsset {
         "GoldBar\n----------\n 5 Any Ore\n 1 Coal\n----------\n 4 Hours\n----------\n Inedible"),;
 
     private final Image image;
-    private final Label description;
+    private final String description;
 
     ArtisanGoodAsset(Image image, String description) {
         this.image = image;
-
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = new BitmapFont();
-        labelStyle.fontColor = Color.CYAN;
-        labelStyle.background = GamePictureManager.woodBackground;
-        this.description = new Label("\n" + description + "\n", labelStyle);
-        this.description.setAlignment(Align.center);
+        this.description = description;
     }
 
     public Image getImage() {
         return image;
     }
 
-    public Label getDescription() {
-        return description;
+    public String getDescription() {
+        return "\n" + description + "\n";
     }
 }

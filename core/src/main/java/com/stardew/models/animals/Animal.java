@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
 import com.stardew.models.app.App;
 import com.stardew.models.date.Time;
@@ -19,33 +20,27 @@ public class Animal implements Placeable {
     private Time lastPetTime;
     private Time lastFeedTime;
     private Time lastProductTime;
-    private Habitat habitat;
+    private final Habitat habitat;
     private AnimalState state;
     private AnimalState nextState;
     private Vector2 position;
     private Vector2 targetPosition;
     private float stateTime = 0f;
     private final float PET_TIME = 5f;
-    private final float speed = 50f;
+    private final float speed = 1f;
     private final static int maxFriendShip = 1000;
 
-
-    public Animal() {
-        type = null;
-        name = null;
-        state = AnimalState.IN_HABITAT;
-    }
 
     public Animal(AnimalType type, String name, Habitat habitat) {
         this.type = type;
         this.name = name;
         this.friendShip = 0;
-//        this.lastPetTime = App.getGame().getTime().clone();
-//        this.lastFeedTime = App.getGame().getTime().clone();
-//        this.lastProductTime = App.getGame().getTime().clone();
+        this.lastPetTime = App.getGame().getTime().clone();
+        this.lastFeedTime = App.getGame().getTime().clone();
+        this.lastProductTime = App.getGame().getTime().clone();
         this.habitat = habitat;
         this.state = AnimalState.IN_HABITAT;
-        this.position = new Vector2(habitat.getPosition().x + 50, habitat.getPosition().y);
+        this.position = new Vector2(habitat.getPosition().x + 1, habitat.getPosition().y + 1);
     }
 
     public AnimalType getType() {
@@ -133,10 +128,6 @@ public class Animal implements Placeable {
         return habitat;
     }
 
-    public void setHabitat(Habitat habitat) {
-        this.habitat = habitat;
-    }
-
     public boolean isOutOfHabitat() {
         return state != AnimalState.IN_HABITAT;
     }
@@ -156,7 +147,7 @@ public class Animal implements Placeable {
     }
 
     public void goToHabitat() {
-        moveTo(new Vector2(habitat.getPosition().x + 50, habitat.getPosition().y));
+        moveTo(new Vector2(habitat.getPosition().x + 1, habitat.getPosition().y + 1));
         nextState = AnimalState.IN_HABITAT;
     }
 
@@ -172,13 +163,18 @@ public class Animal implements Placeable {
         };
     }
 
+    public Vector2 getPosition() {
+        return position;
+    }
+
     public void update(float delta) {
         if (state == AnimalState.IN_HABITAT) return;
 
         stateTime += delta;
         if (isMoving()) {
             float distance = position.dst(targetPosition);
-            if (distance <= 1f) {
+            if (distance <= 0.1f) {
+                position.set(targetPosition);
                 state = nextState;
                 stateTime = 0f;
             } else {
@@ -199,7 +195,11 @@ public class Animal implements Placeable {
         Animation<TextureRegion> animation = type.getAnimation(state);
         TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
 
-        batch.draw(currentFrame, position.x, position.y, 40, 40);
+        batch.draw(currentFrame,
+            position.x * GamePictureManager.TILE_SIZE,
+            position.y * GamePictureManager.TILE_SIZE,
+            type.getAnimalHabitat() == HabitatType.Coop ? 40 : 65,
+            type.getAnimalHabitat() == HabitatType.Coop ? 40 : 65);
     }
 
     @Override

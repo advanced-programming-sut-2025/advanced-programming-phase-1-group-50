@@ -61,7 +61,8 @@ public class Tile {
     }
     public void setPlaceable(Placeable placeable) {
         this.placeable = placeable;
-        setTexture(placeable.getTexture());
+        if (placeable != null)
+            setTexture(placeable.getTexture());
     }
 
     public boolean isPlowed() {

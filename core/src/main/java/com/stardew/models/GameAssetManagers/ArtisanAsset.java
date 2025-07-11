@@ -1,9 +1,5 @@
 package com.stardew.models.GameAssetManagers;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Align;
 import com.stardew.models.manuFactor.*;
 
 import java.util.ArrayList;
@@ -51,7 +47,7 @@ public enum ArtisanAsset {
         ArtisanGoodAsset.Jelly));
 
     private final ArrayList<ArtisanGoodAsset> products;
-    private final Label descriptionLabel;
+    private final String description;
 
     ArtisanAsset(List<ArtisanGoodAsset> products) {
         this.products = new ArrayList<>(products);
@@ -59,22 +55,18 @@ public enum ArtisanAsset {
         StringBuilder des = new StringBuilder();
         des.append("\n<").append(this.name()).append(">\n");
         for (ArtisanGoodAsset product : products) {
-            des.append("---------------------------------------").append(product.getDescription().getText());
+            des.append("---------------------------------------").append(product.getDescription());
         }
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = new BitmapFont();
-        labelStyle.fontColor = Color.CYAN;
-        labelStyle.background = GamePictureManager.woodBackground;
-        descriptionLabel = new Label(des.toString(), labelStyle);
-        descriptionLabel.setAlignment(Align.center);
+
+        description = des.toString();
     }
 
     public ArrayList<ArtisanGoodAsset> getProducts() {
         return new ArrayList<>(products);
     }
 
-    public Label getDescriptionLabel() {
-        return descriptionLabel;
+    public String getDescription() {
+        return description;
     }
 
     public static ArtisanAsset getArtisanAssetByInstance(ArtisanMachine artisanMachine) {
