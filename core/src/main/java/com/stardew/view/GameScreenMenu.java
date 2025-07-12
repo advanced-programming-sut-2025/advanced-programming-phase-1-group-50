@@ -34,17 +34,11 @@ public class GameScreenMenu implements Screen {
     private GameMenuInputAdapter gameMenuInputAdapter;
     private Stage stage;
 
-
     private SpriteBatch batch;
-    private float start = 0f;
     private final Stage uiStage = new Stage(new ScreenViewport());
 
-
     private final TimeManager timeManager = new TimeManager(uiStage);
-
     private final EnergyManager energyManager = new EnergyManager(uiStage);
-
-
 
 
 
@@ -62,8 +56,6 @@ public class GameScreenMenu implements Screen {
         gameRenderer = new GameRenderer(gameModel, gameMenuInputAdapter, batch);
 
         stage = new Stage(new ScreenViewport(gameModel.getCamera()));
-
-
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(stage);
@@ -88,15 +80,13 @@ public class GameScreenMenu implements Screen {
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        updateTime(v);
-        updateTimeUi();
-
-
 
 
         batch.setProjectionMatrix(gameModel.getCamera().combined);
         batch.begin();
 
+        timeManager.updateTime(v);
+        energyManager.update();
         gameModel.update(v);
         gameRenderer.render();
         gameMenuInputAdapter.update(v);
@@ -108,8 +98,6 @@ public class GameScreenMenu implements Screen {
 
         uiStage.act(v);
         uiStage.draw();
-
-        energyManager.getProgressBar().setValue(gameModel.getPlayerController().getPlayer().getEnergy());
 
 
         timeManager.checkForDayTransition();
@@ -140,38 +128,6 @@ public class GameScreenMenu implements Screen {
     public void dispose() {
 
     }
-
-
-
-    public void updateTimeUi(){
-        Time time = App.getGame().getTime();
-        int hour = time.getHour();
-        int day = time.getDate();
-        String dayOfTheWeek = time.getDayOfWeek().getDayOfWeek();
-        String season = time.getSeason().name();
-        String timeText = hour + ":00" + " " + day;
-        String seasonAndDayOfTheWeek = season + " " + dayOfTheWeek;
-        int playerGold = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity()
-            .getOrDefault(new Coin() , 0);
-        timeManager.getTimeLabel().setText(timeText);
-        timeManager.getSeasonAndDayLabel().setText(seasonAndDayOfTheWeek);
-        timeManager.getPlayerGoldLabel().setText(playerGold + "");
-
-    }
-
-    public void updateTime(float v){
-        start += v;
-        if(start >= 60){
-            start = 0;
-            App.getGame().getTime().advancedHour(1);
-        }
-    }
-
-
-
-
-
-
 
 
 
