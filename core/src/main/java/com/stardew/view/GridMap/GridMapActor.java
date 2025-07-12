@@ -11,14 +11,19 @@ import com.stardew.models.mapInfo.Tile;
 import com.stardew.models.userInfo.Player;
 
 public class GridMapActor extends Actor {
-    private int cols = 100; //TODO
-    private int rows = 75; //TODO
-    private float cellSize = 24; //TODO
+    private final int cols = 100; //TODO
+    private final int rows = 75; //TODO
+    private final float cellSize = 24; //TODO
     private CellInfo[][] grid;
+    private Tile[][] tiles;
     private int selectedX = -1;
     private int selectedY = -1;
-    private TextureRegion normalTexture = GamePictureManager.emptyTile;  //TODO
-    private TextureRegion selectedTexture = GamePictureManager.selectedTile;  //TODO
+    private int selectedTileX = -1;
+    private int selectedTileY = -1;
+    private final TextureRegion normalTexture = GamePictureManager.emptyTile;  //TODO
+    private final TextureRegion selectedTexture = GamePictureManager.selectedTile;  //TODO
+    private int startX;
+    private int startY;
 
     public GridMapActor() {
         initializeGrid();
@@ -33,6 +38,8 @@ public class GridMapActor extends Actor {
                 if (cellX >= 0 && cellX < cols && cellY >= 0 && cellY < rows) {
                     selectedX = cellX;
                     selectedY = cellY;
+                    selectedTileX = cellX + startX;
+                    selectedTileY = cellY + startY;
                 }
                 return true;
             }
@@ -40,29 +47,30 @@ public class GridMapActor extends Actor {
     }
 
     public void initializeGrid() {
-        Tile[][] tiles = App.getGame().getMap().getTiles();
-        int startX, startY; //TODO according to player
+        tiles = App.getGame().getMap().getTiles();
 
         int[] startXForMap = {0, 150, 0, 150};
         int[] startYForMap = {0, 0, 125, 125};
         Player currentPlayer = App.getGame().getCurrentPlayingPlayer();
-        int index;
-        for (index = 0; index < App.getGame().getPlayers().size(); index++) {
-            if (App.getGame().getPlayers().get(index).getUsername().equals(currentPlayer.getUsername())) break;
+
+        int playerIndex;
+        for (playerIndex = 0; playerIndex < App.getGame().getPlayers().size(); playerIndex++) {
+            if (App.getGame().getPlayers().get(playerIndex).getUsername().equals(currentPlayer.getUsername())) break;
         }
 
-        startX = startXForMap[index];
-        startY = startYForMap[index];
+        startX = startXForMap[playerIndex];
+        startY = startYForMap[playerIndex];
 
         grid = new CellInfo[cols][rows];
-        for (int x = startX; x < startX + cols; x++) {
-            for (int y = startY; y < startY + rows; y++) {
+        for (int x = 0; x < cols; x++) {
+            for (int y = 0; y < rows; y++) {
                 grid[x][y] = new CellInfo();
-                grid[x][y].occupied = tiles[x][y].getPlaceable() != null;
-                if (tiles[x][y].getPlaceable() != null && tiles[x][y].getPlaceable().getTexture() != null) {
-                    grid[x][y].contentTexture = tiles[x][y].getPlaceable().getTexture();
-                } else {
+                if (tiles[x + startX][y + startY].getPlaceable() == null) {
+                    grid[x][y].occupied = false;
                     grid[x][y].contentTexture = null;
+                } else {
+                    grid[x][y].occupied = true;
+                    grid[x][y].contentTexture = tiles[x + startX][y + startY].getPlaceable().getTexture();
                 }
             }
         }
@@ -84,6 +92,12 @@ public class GridMapActor extends Actor {
                 }
             }
         }
+    }
+
+    public Tile getSelectedTile() {
+        if (selectedTileX == -1 || selectedTileY == -1)
+            return null;
+        return tiles[selectedTileX][selectedTileY];
     }
 
 
