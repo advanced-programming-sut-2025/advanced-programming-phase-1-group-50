@@ -10,10 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
 import com.stardew.models.date.Time;
+import com.stardew.models.userInfo.Coin;
 
 public class TimeManager {
     private Label timeLabel ;
@@ -22,9 +22,10 @@ public class TimeManager {
     private Image blackFadeImage;
     private boolean isFaded = false;
     private Image nightOverlay;
+    private float start = 0f;
     private final Stage uiStage ;
-    private TextureRegion clockTexture = GamePictureManager.clockTexture;
-    private Image clockImage = new Image(clockTexture);
+    private final Image clockImage = new Image(GamePictureManager.clockTexture);
+    private int previousDigitsOfGold = 0;
 
 
 
@@ -113,42 +114,36 @@ public class TimeManager {
 
     }
 
-    public Label getTimeLabel() {
-        return timeLabel;
+    public void updateTime(float v){
+        start += v;
+        if(start >= 60){
+            start = 0;
+            App.getGame().getTime().advancedHour(1);
+        }
+        updateTimeUi();
     }
 
-    public Label getSeasonAndDayLabel() {
-        return seasonAndDayLabel;
-    }
-
-    public Image getBlackFadeImage() {
-        return blackFadeImage;
-    }
-
-    public Label getPlayerGoldLabel() {
-        return playerGoldLabel;
-    }
-
-    public boolean isFaded() {
-        return isFaded;
-    }
-
-    public Image getNightOverlay() {
-        return nightOverlay;
-    }
-
-    public Stage getUiStage() {
-        return uiStage;
-    }
-
-    public void setIsFaded(boolean isFaded) {
-        this.isFaded = isFaded;
+    private void updateTimeUi(){
+        Time time = App.getGame().getTime();
+        int hour = time.getHour();
+        int day = time.getDate();
+        int minute = (((int)start) / 10) * 10;
+        String dayOfTheWeek = time.getDayOfWeek().getDayOfWeek();
+        String season = time.getSeason().name();
+        String timeText = String.format("%02d:%02d    %2d", hour, minute, day);
+        String seasonAndDayOfTheWeek = String.format("%-6s%11s", season, dayOfTheWeek);
+        int playerGold = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity()
+            .getOrDefault(new Coin() , 0);
+        timeLabel.setText(timeText);
+        seasonAndDayLabel.setText(seasonAndDayOfTheWeek);
+        playerGoldLabel.setText(playerGold + "");
+        setPlayerGoldLabelPosition(playerGold);
     }
 
     public void initializeTime(){
 
 
-        clockImage.setSize(300, 200);
+        clockImage.setSize(330, 200);
         clockImage.setPosition(Gdx.graphics.getWidth() - 330, Gdx.graphics.getHeight() - 220);
 
         Label.LabelStyle style = new Label.LabelStyle();
@@ -157,23 +152,37 @@ public class TimeManager {
 
 
         timeLabel = new Label("", style);
-        timeLabel.setPosition(clockImage.getX() + 163, clockImage.getY() + 180);
+        timeLabel.setPosition(clockImage.getX() + 170, clockImage.getY() + 178);
 
         timeLabel.setFontScale(1.4f);
 
         seasonAndDayLabel = new Label("", style);
-        seasonAndDayLabel.setPosition(clockImage.getX() + 135, clockImage.getY() + 110);
+        seasonAndDayLabel.setPosition(clockImage.getX() + 135, clockImage.getY() + 113);
 
         seasonAndDayLabel.setFontScale(1.2f);
 
         playerGoldLabel = new Label("", style);
         playerGoldLabel.setPosition(clockImage.getX() + 135, clockImage.getY() + 50);
 
-        playerGoldLabel.setFontScale(1.2f);
+        playerGoldLabel.setFontScale(2.2f);
 
         uiStage.addActor(clockImage);
         uiStage.addActor(timeLabel);
         uiStage.addActor(seasonAndDayLabel);
         uiStage.addActor(playerGoldLabel);
+    }
+
+    private void setPlayerGoldLabelPosition(int gold) {
+        if (gold < 0) return;
+        int digitsOfGold;
+        if (gold > 0)
+            digitsOfGold = (int) Math.log10(gold) + 1;
+        else
+            digitsOfGold = 1;
+
+        if (digitsOfGold != previousDigitsOfGold) {
+            previousDigitsOfGold = digitsOfGold;
+            playerGoldLabel.setPosition(clockImage.getX() + 280 - digitsOfGold * 17, clockImage.getY() + 55);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.stardew.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -30,12 +31,10 @@ public class EnergyManager {
         stage.addActor(progressBar);
     }
 
-    public Stage getUiStage() {
-        return stage;
-    }
 
-    public ProgressBar getProgressBar() {
-        return progressBar;
+    public void update() {
+        Player player = App.getGame().getCurrentPlayingPlayer();
+        progressBar.setValue(player.getEnergy());
     }
 
 }
