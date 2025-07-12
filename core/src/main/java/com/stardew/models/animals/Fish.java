@@ -1,5 +1,6 @@
 package com.stardew.models.animals;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.stores.Sellable;
 
@@ -49,5 +50,10 @@ public class Fish implements Ingredient, Sellable {
     @Override
     public int hashCode() {
         return Objects.hash(type, quality);
+    }
+
+    @Override
+    public TextureRegion getInventoryTexture() {
+        return null;
     }
 }

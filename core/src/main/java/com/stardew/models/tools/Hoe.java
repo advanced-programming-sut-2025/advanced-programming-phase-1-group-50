@@ -1,10 +1,13 @@
 package com.stardew.models.tools;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 
 public class Hoe extends Tool {
     private ToolType type = ToolType.Primary;
+    private TextureRegion hoeTexture = GamePictureManager.hoeTexture;
     @Override
     public int getConsumptionEnergy() {
         return 0;
@@ -31,15 +34,19 @@ public class Hoe extends Tool {
     public void upgradeTool() {
         if(this.type == ToolType.Primary) {
             this.type = ToolType.Coppery;
+            this.hoeTexture = GamePictureManager.copperHoeTexture;
         }
         else if(this.type == ToolType.Coppery) {
             this.type = ToolType.Metal;
+            this.hoeTexture = GamePictureManager.steelHoeTexture;
         }
         else if(this.type == ToolType.Metal ){
             this.type = ToolType.Golden;
+            this.hoeTexture = GamePictureManager.goldHoeTexture;
         }
         else if(this.type == ToolType.Golden){
             this.type = ToolType.Iridium;
+            this.hoeTexture = GamePictureManager.iridiumHoeTexture;
         }
 
 
@@ -50,5 +57,11 @@ public class Hoe extends Tool {
     }
     public PoleType getPoleType() {
         return null;
+    }
+
+
+    @Override
+    public TextureRegion getInventoryTexture() {
+        return hoeTexture;
     }
 }

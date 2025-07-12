@@ -1,5 +1,7 @@
 package com.stardew.models.tools;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.date.Weather;
@@ -7,16 +9,22 @@ import com.stardew.models.userInfo.Ability;
 
 public class Axe extends Tool {
     private ToolType type = ToolType.Primary;
+    private TextureRegion texture = new TextureRegion(GamePictureManager.axeTexture);
 
     public void upgradeTool() {
         if (this.type == ToolType.Primary) {
             this.type = ToolType.Coppery;
+            texture = new TextureRegion(GamePictureManager.copperAxeTexture);
         } else if (this.type == ToolType.Coppery) {
             this.type = ToolType.Metal;
+            texture = new TextureRegion(GamePictureManager.steelAxeTexture);
         } else if (this.type == ToolType.Metal) {
             this.type = ToolType.Golden;
+            texture = new TextureRegion(GamePictureManager.goldAxeTexture);
         } else if (this.type == ToolType.Golden) {
+
             this.type = ToolType.Iridium;
+            texture = new TextureRegion(GamePictureManager.iridiumAxeTexture);
         }
     }
 
@@ -69,4 +77,9 @@ public class Axe extends Tool {
         return null;
     }
 
+    @Override
+    public TextureRegion getInventoryTexture() {
+        //type.getTextureRegion : Todo
+        return texture;
+    }
 }

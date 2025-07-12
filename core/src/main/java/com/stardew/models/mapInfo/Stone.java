@@ -72,4 +72,8 @@ public class Stone implements Ingredient , Placeable {
         this.texture = texture;
     }
 
+    @Override
+    public TextureRegion getInventoryTexture() {
+        return new TextureRegion(texture);
+    }
 }

@@ -1,6 +1,7 @@
 package com.stardew.models.foraging;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.stores.Sellable;
@@ -51,5 +52,10 @@ public enum Fruit implements Ingredient, Sellable {
 
     public static Fruit getFruitByName(String name) {
         return stringToFruit.getOrDefault(name.toLowerCase(), null);
+    }
+
+    @Override
+    public TextureRegion getInventoryTexture() {
+        return new TextureRegion(texture);
     }
 }

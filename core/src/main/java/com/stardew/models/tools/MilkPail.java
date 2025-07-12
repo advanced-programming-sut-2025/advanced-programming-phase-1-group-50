@@ -1,5 +1,6 @@
 package com.stardew.models.tools;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 
@@ -27,6 +28,11 @@ public class MilkPail extends Tool {
     }
 
     public PoleType getPoleType() {
+        return null;
+    }
+
+    @Override
+    public TextureRegion getInventoryTexture() {
         return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.stardew.models.manuFactor.artisanGoods;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.stores.Sellable;
 
@@ -48,5 +49,10 @@ public class ArtisanGood implements Ingredient, Sellable {
     @Override
     public String toString() {
         return type.toString();
+    }
+
+    @Override
+    public TextureRegion getInventoryTexture() {
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.stardew.models.foraging;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.manuFactor.Ingredient;
 
 public enum Fertilizer implements Ingredient {
@@ -11,6 +12,11 @@ public enum Fertilizer implements Ingredient {
             return GrowthFertilizer;
         else if (fertilizerName.equalsIgnoreCase("WaterFertilizer"))
             return WaterFertilizer;
+        return null;
+    }
+
+    @Override
+    public TextureRegion getInventoryTexture() {
         return null;
     }
 }

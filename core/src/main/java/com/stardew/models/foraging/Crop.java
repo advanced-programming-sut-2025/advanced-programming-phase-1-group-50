@@ -230,4 +230,8 @@ public class Crop implements Ingredient, Growable , Placeable, Sellable {
         batch.draw(getTexture(), bounds.x * GamePictureManager.TILE_SIZE, bounds.y * GamePictureManager.TILE_SIZE);
     }
 
+    @Override
+    public TextureRegion getInventoryTexture() {
+        return new TextureRegion(type.getMainTexture());
+    }
 }

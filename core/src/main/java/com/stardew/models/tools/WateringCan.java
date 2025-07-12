@@ -1,5 +1,6 @@
 package com.stardew.models.tools;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.date.Weather;
@@ -85,5 +86,10 @@ public class WateringCan extends Tool {
 
     public void makeFull() {
         waterCapacity = capacity;
+    }
+
+    @Override
+    public TextureRegion getInventoryTexture() {
+        return null;
     }
 }

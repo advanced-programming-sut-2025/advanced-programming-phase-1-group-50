@@ -1,6 +1,7 @@
 package com.stardew.models.foraging;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.date.Season;
 import com.stardew.models.manuFactor.Ingredient;
@@ -318,5 +319,9 @@ public enum CropType implements Ingredient {
 
     public Texture getMainTexture(){
         return mainTexture;
+    }
+
+    public TextureRegion getInventoryTexture() {
+        return new TextureRegion(mainTexture);
     }
 }

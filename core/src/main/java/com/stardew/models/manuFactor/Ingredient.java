@@ -1,4 +1,6 @@
 package com.stardew.models.manuFactor;
 
-public interface Ingredient {
+import com.stardew.models.InventoryItem;
+
+public interface Ingredient extends InventoryItem {
 }

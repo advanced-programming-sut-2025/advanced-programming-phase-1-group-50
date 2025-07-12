@@ -1,5 +1,6 @@
 package com.stardew.models.userInfo;
 
+import com.stardew.models.InventoryItem;
 import com.stardew.models.NPCs.NPCType;
 import com.stardew.models.NPCs.RelationWithNPC;
 import com.stardew.models.Notification.MarriageRequest;
@@ -55,6 +56,9 @@ public class Player {
     private float speed = 5f;
     private float vx , vy = 0;
 
+    private InventoryItem currentInventoryItem = null;
+    private ArrayList<InventoryItem> inventoryItems = new ArrayList<>();
+
 
     private final User currentUser;
     public Player(String username , String nickname , User currentUser) {
@@ -62,9 +66,12 @@ public class Player {
         this.nickname = nickname;
         this.currentUser = currentUser;
         this.currentPosition = new Position(0 , 0);
-        this.backpack.getTools().add(new Hoe());
-        this.backpack.getTools().add(new Pickaxe());
-        this.backpack.getTools().add(new Axe());
+        Axe axe = new Axe();
+        Hoe hoe = new Hoe();
+        Pickaxe pickaxe = new Pickaxe();
+        this.backpack.getTools().add(hoe);
+        this.backpack.getTools().add(pickaxe);
+        this.backpack.getTools().add(axe);
         for(Tool tool : backpack.getTools()) {
             if(tool instanceof Hoe) {
                 this.currentTool = tool;
@@ -73,6 +80,11 @@ public class Player {
         }
         this.backpack.getIngredientQuantity().put(new Coin() , 20);
         this.backpack.getIngredientQuantity().put(new Wood() , 100);
+        inventoryItems.add(new Coin());
+        inventoryItems.add(new Wood());
+        inventoryItems.add(hoe);
+        inventoryItems.add(pickaxe);
+        inventoryItems.add(axe);
         this.relationWithAbigail = new RelationWithNPC(NPCType.Abigail);
         this.relationWithSebastian = new RelationWithNPC(NPCType.Sebastian);
         this.relationWithHarvey = new RelationWithNPC(NPCType.Harvey);
@@ -363,5 +375,51 @@ public class Player {
     public float getVy(){
         return vy;
     }
+
+    public void setCurrentInventoryItem(InventoryItem item){
+        this.currentInventoryItem = item;
+    }
+
+    public InventoryItem getCurrentInventoryItem(){
+        return currentInventoryItem;
+    }
+
+    public void addInventoryItem(InventoryItem item){
+        this.inventoryItems.add(item);
+    }
+
+    public ArrayList<InventoryItem> getInventoryItems(){
+        return inventoryItems;
+    }
+
+    public InventoryItem[] getHotBar() {
+        InventoryItem[] hotBar = new InventoryItem[10];
+        for (int i = 0; i < 10; i++) {
+            if (i < inventoryItems.size()) {
+                hotBar[i] = inventoryItems.get(i);
+            } else {
+                hotBar[i] = null;
+            }
+        }
+        return hotBar;
+    }
+
+
+
+    public void swapInventoryItem(InventoryItem item1, InventoryItem item2) {
+        if (item1 == null || item2 == null || item1.equals(item2)) return;
+
+        int index1 = inventoryItems.indexOf(item1);
+        int index2 = inventoryItems.indexOf(item2);
+
+        if (index1 == -1 || index2 == -1) return;
+
+        inventoryItems.set(index1, item2);
+        inventoryItems.set(index2, item1);
+    }
+
+
+
+
 
 }

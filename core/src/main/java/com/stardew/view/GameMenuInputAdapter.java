@@ -7,6 +7,8 @@ import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.models.userInfo.Player;
 import com.stardew.view.GridMap.TileSelectionWindow;
+import com.stardew.view.InventoryWindows.HotBarActor;
+import com.stardew.view.InventoryWindows.InventoryWindow;
 import com.stardew.view.cheatConsole.CheatWindow;
 
 import java.util.HashSet;
@@ -18,6 +20,7 @@ public class GameMenuInputAdapter extends InputAdapter {
     private final Set<Integer> justPressedKeys = new HashSet<>();
     private boolean showingMap = false;
     private Stage stage;
+    private HotBarActor hotBar;
 
 
     public GameMenuInputAdapter(GameModel model) {
@@ -28,6 +31,15 @@ public class GameMenuInputAdapter extends InputAdapter {
     public boolean keyDown(int keycode) {
         keys.add(keycode);
         justPressedKeys.add(keycode);
+        if(hotBar != null) {
+            if(keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {
+                hotBar.setSelectedIndex(keycode - Input.Keys.NUM_1);
+
+            }
+            else if(keycode == Input.Keys.NUM_0){
+                hotBar.setSelectedIndex(9);
+            }
+        }
         return true;
     }
 
@@ -75,6 +87,10 @@ public class GameMenuInputAdapter extends InputAdapter {
             stage.addActor(new TileSelectionWindow(stage));
         }
 
+        if(justPressedKeys.contains(Input.Keys.ESCAPE)){
+            stage.addActor(new InventoryWindow(stage));
+        }
+
 
         handlePlayerMove(p, vx, vy, dir, delta);
 
@@ -105,5 +121,29 @@ public class GameMenuInputAdapter extends InputAdapter {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+
+    public void setHotBar(HotBarActor hotBar) {
+        this.hotBar = hotBar;
+    }
+
+    public HotBarActor getHotBar() {
+        return hotBar;
+    }
+
+    @Override
+    public boolean scrolled(float amountX , float amountY){
+        if (hotBar != null) {
+            int current = hotBar.getSelectedIndex();
+            int count = hotBar.getItemCount();
+
+            if (amountY > 0) {
+                hotBar.setSelectedIndex((current + 1) % count);
+            } else if (amountY < 0) {
+                hotBar.setSelectedIndex((current - 1 + count) % count);
+            }
+        }
+        return true;
     }
 }

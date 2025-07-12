@@ -1,6 +1,7 @@
 package com.stardew.models.foraging;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.date.Season;
 import com.stardew.models.manuFactor.Ingredient;
@@ -136,5 +137,9 @@ public enum Seeds implements Ingredient {
         return stringToSeeds.getOrDefault(name.toLowerCase(), null);
     }
 
+    @Override
+    public TextureRegion getInventoryTexture() {
+        return new TextureRegion(texture);
+    }
 }
 

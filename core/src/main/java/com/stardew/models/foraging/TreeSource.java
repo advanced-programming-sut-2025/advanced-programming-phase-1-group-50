@@ -1,6 +1,7 @@
 package com.stardew.models.foraging;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.manuFactor.Ingredient;
 
@@ -71,5 +72,10 @@ public enum TreeSource implements Ingredient {
 
     public Texture getTexture() {
         return texture;
+    }
+
+    @Override
+    public TextureRegion getInventoryTexture() {
+        return new TextureRegion(texture);
     }
 }
