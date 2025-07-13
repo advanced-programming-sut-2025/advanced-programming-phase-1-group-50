@@ -264,31 +264,31 @@ public class GameMenu implements AppMenu , Screen {
         }
 
 
-        else if (GameMenuCommands.CraftingShowRecipes.getMatcher(input) != null) {
-            System.out.println(craftingController.craftingShowRecipes());
-        }
-        else if ((matcher = GameMenuCommands.CraftingCraft.getMatcher(input)) != null) {
-            System.out.println(craftingController.craftingCraft(matcher.group("itemName")));
-        }
-        else if ((matcher = GameMenuCommands.CheatAddItem.getMatcher(input)) != null) {
-            System.out.println(craftingController.addItem(
-                    matcher.group("itemName"), Integer.parseInt(matcher.group("count"))));
-        }
+//        else if (GameMenuCommands.CraftingShowRecipes.getMatcher(input) != null) {
+//            System.out.println(craftingController.craftingShowRecipes());
+//        }
+//        else if ((matcher = GameMenuCommands.CraftingCraft.getMatcher(input)) != null) {
+//            System.out.println(craftingController.craftingCraft(matcher.group("itemName")));
+//        }
+//        else if ((matcher = GameMenuCommands.CheatAddItem.getMatcher(input)) != null) {
+//            System.out.println(craftingController.addItem(
+//                    matcher.group("itemName"), Integer.parseInt(matcher.group("count"))));
+//        }
 
 
-        else if ((matcher = GameMenuCommands.CookingRefrigeratorPutPick.getMatcher(input)) != null) {
-            System.out.println(cookingController.cookingRefrigeratorPutPick(
-                    matcher.group("action"), matcher.group("itemName")));
-        }
-        else if (GameMenuCommands.CookingShowRecipes.getMatcher(input) != null) {
-            System.out.println(cookingController.cookingShowRecipes());
-        }
-        else if ((matcher = GameMenuCommands.CookingPrepare.getMatcher(input)) != null) {
-            System.out.println(cookingController.cookingPrepare(matcher.group("itemName")));
-        }
-        else if ((matcher = GameMenuCommands.Eat.getMatcher(input)) != null) {
-            System.out.println(cookingController.eat(matcher.group("foodName")));
-        }
+//        else if ((matcher = GameMenuCommands.CookingRefrigeratorPutPick.getMatcher(input)) != null) {
+//            System.out.println(cookingController.cookingRefrigeratorPutPick(
+//                    matcher.group("action"), matcher.group("itemName")));
+//        }
+//        else if (GameMenuCommands.CookingShowRecipes.getMatcher(input) != null) {
+//            System.out.println(cookingController.cookingShowRecipes());
+//        }
+//        else if ((matcher = GameMenuCommands.CookingPrepare.getMatcher(input)) != null) {
+//            System.out.println(cookingController.cookingPrepare(matcher.group("itemName")));
+//        }
+//        else if ((matcher = GameMenuCommands.Eat.getMatcher(input)) != null) {
+//            System.out.println(cookingController.eat(matcher.group("foodName")));
+//        }
 
 
 //        else if ((matcher = GameMenuCommands.Build.getMatcher(input)) != null) {
@@ -328,12 +328,12 @@ public class GameMenu implements AppMenu , Screen {
 //        }
 
 
-        else if ((matcher = GameMenuCommands.ArtisanUse.getMatcher(input)) != null) {
-            System.out.println(artisanController.artisanUse(matcher.group("artisanName"), matcher.group("itemName")));
-        }
-        else if ((matcher = GameMenuCommands.ArtisanGet.getMatcher(input)) != null) {
-            System.out.println(artisanController.artisanGet(matcher.group("artisanName")));
-        }
+//        else if ((matcher = GameMenuCommands.ArtisanUse.getMatcher(input)) != null) {
+//            System.out.println(artisanController.artisanUse(matcher.group("artisanName"), matcher.group("itemName")));
+//        }
+//        else if ((matcher = GameMenuCommands.ArtisanGet.getMatcher(input)) != null) {
+//            System.out.println(artisanController.artisanGet(matcher.group("artisanName")));
+//        }
 
 
 
