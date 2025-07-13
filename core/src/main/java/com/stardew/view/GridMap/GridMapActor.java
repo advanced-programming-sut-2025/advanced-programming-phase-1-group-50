@@ -16,16 +16,19 @@ public class GridMapActor extends Actor {
     private final float cellSize = 24; //TODO
     private CellInfo[][] grid;
     private Tile[][] tiles;
-    private int selectedX = -1;
-    private int selectedY = -1;
-    private int selectedTileX = -1;
-    private int selectedTileY = -1;
+    private int selectedX = -1;  //selected index X in cells in this Actor
+    private int selectedY = -1;  //selected index Y in cells in this Actor
+    private final int selectionWidth;
+    private final int selectionHeight;
     private final TextureRegion normalTexture = GamePictureManager.emptyTile;  //TODO
     private final TextureRegion selectedTexture = GamePictureManager.selectedTile;  //TODO
-    private int startX;
-    private int startY;
+    private int startX;  //the X index of tiles in map for current player
+    private int startY;  //the Y index of tiles in map for current player
 
-    public GridMapActor() {
+    public GridMapActor(int selectionWidth, int selectionHeight) {
+        this.selectionWidth = selectionWidth;
+        this.selectionHeight = selectionHeight;
+
         initializeGrid();
 
         setSize(cols * cellSize, rows * cellSize);
@@ -35,11 +38,10 @@ public class GridMapActor extends Actor {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 int cellX = (int)(x / cellSize);
                 int cellY = (int)(y / cellSize);
-                if (cellX >= 0 && cellX < cols && cellY >= 0 && cellY < rows) {
+                if (cellX >= 0 && cellX < cols && cellY >= 0 && cellY < rows &&
+                    cellX + selectionWidth <= cols && cellY + selectionHeight <= rows) {
                     selectedX = cellX;
                     selectedY = cellY;
-                    selectedTileX = cellX + startX;
-                    selectedTileY = cellY + startY;
                 }
                 return true;
             }
@@ -49,17 +51,10 @@ public class GridMapActor extends Actor {
     public void initializeGrid() {
         tiles = App.getGame().getMap().getTiles();
 
-        int[] startXForMap = {0, 150, 0, 150};
-        int[] startYForMap = {0, 0, 125, 125};
         Player currentPlayer = App.getGame().getCurrentPlayingPlayer();
 
-        int playerIndex;
-        for (playerIndex = 0; playerIndex < App.getGame().getPlayers().size(); playerIndex++) {
-            if (App.getGame().getPlayers().get(playerIndex).getUsername().equals(currentPlayer.getUsername())) break;
-        }
-
-        startX = startXForMap[playerIndex];
-        startY = startYForMap[playerIndex];
+        startX = App.getGame().getMap().getFarmStartX(currentPlayer);
+        startY = App.getGame().getMap().getFarmStartY(currentPlayer);
 
         grid = new CellInfo[cols][rows];
         for (int x = 0; x < cols; x++) {
@@ -83,7 +78,11 @@ public class GridMapActor extends Actor {
                 float drawX = x * cellSize;
                 float drawY = y * cellSize;
 
-                TextureRegion base = (x == selectedX && y == selectedY) ? selectedTexture : normalTexture;
+                boolean inSelection = selectedX != -1 && selectedY != -1 &&
+                                      x >= selectedX && x < selectedX + selectionWidth &&
+                                      y >= selectedY && y < selectedY + selectionHeight;
+
+                TextureRegion base = inSelection ? selectedTexture : normalTexture;
                 batch.draw(base, getX() + drawX, getY() + drawY, cellSize, cellSize);
 
                 CellInfo cell = grid[x][y];
@@ -95,9 +94,9 @@ public class GridMapActor extends Actor {
     }
 
     public Tile getSelectedTile() {
-        if (selectedTileX == -1 || selectedTileY == -1)
+        if (selectedX == -1 || selectedY == -1)
             return null;
-        return tiles[selectedTileX][selectedTileY];
+        return tiles[selectedX + startX][selectedY + startY];
     }
 
 

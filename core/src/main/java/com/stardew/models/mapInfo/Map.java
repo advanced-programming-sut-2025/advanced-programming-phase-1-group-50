@@ -330,4 +330,26 @@ public class Map {
 
         return false;
     }
+
+    public int getFarmStartX(Player player) {
+        int[] startXForMap = {0, 150, 0, 150};
+
+        int playerIndex;
+        for (playerIndex = 0; playerIndex < App.getGame().getPlayers().size(); playerIndex++) {
+            if (App.getGame().getPlayers().get(playerIndex).getUsername().equals(player.getUsername())) break;
+        }
+
+        return startXForMap[playerIndex];
+    }
+
+    public int getFarmStartY(Player player) {
+        int[] startYForMap = {0, 0, 125, 125};
+
+        int playerIndex;
+        for (playerIndex = 0; playerIndex < App.getGame().getPlayers().size(); playerIndex++) {
+            if (App.getGame().getPlayers().get(playerIndex).getUsername().equals(player.getUsername())) break;
+        }
+
+        return startYForMap[playerIndex];
+    }
 }
