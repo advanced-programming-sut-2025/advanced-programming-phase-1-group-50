@@ -1587,6 +1587,19 @@ public class GamePictureManager {
     public static TextureRegion trashTexture = new TextureRegion(new Texture("Inventory/Trash.png"));
     public static TextureRegionDrawable trashDrawable = new TextureRegionDrawable(trashTexture);
 
+    public static TextureRegionDrawable socialHeartTextureDrawable = new TextureRegionDrawable
+        (new TextureRegion(new Texture("Inventory/Social.png")));
+
+    public static TextureRegionDrawable skillsTextureDrawable = new TextureRegionDrawable
+        (new TextureRegion(new Texture("Inventory/Skills.png")));
+
+    public static TextureRegionDrawable mapTextureDrawable = new TextureRegionDrawable
+        (new TextureRegion(new Texture("Inventory/Map.png")));
+
+    public static TextureRegionDrawable exitTextureDrawable = new TextureRegionDrawable
+        (new TextureRegion(new Texture("Inventory/Exit.png")));
+
+
 
 
 }

@@ -70,6 +70,7 @@ public class Player {
         Axe axe = new Axe();
         Hoe hoe = new Hoe();
         Pickaxe pickaxe = new Pickaxe();
+        this.backpack.setPlayer(this);
         this.backpack.getTools().add(hoe);
         this.backpack.getTools().add(pickaxe);
         this.backpack.getTools().add(axe);

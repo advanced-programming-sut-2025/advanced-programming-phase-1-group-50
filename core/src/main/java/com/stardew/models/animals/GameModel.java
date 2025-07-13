@@ -9,6 +9,7 @@ import com.stardew.models.app.App;
 import com.stardew.models.mapInfo.Map;
 import com.stardew.models.mapInfo.Pair;
 import com.stardew.models.userInfo.Player;
+import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.modelsManager.AnimalsManager;
 import com.stardew.view.modelsManager.ArtisanMachinesManager;
 
@@ -20,8 +21,9 @@ public class GameModel {
     private PlayerController playerController;
     private final AnimalsManager animalsManager;
     private final ArtisanMachinesManager artisanMachinesManager;
+    private final HotBarActor hotBarActor;
 
-    public GameModel(Map map  , int mapWidth , int mapHeight) {
+    public GameModel(Map map  , int mapWidth , int mapHeight, HotBarActor hotBarActor) {
         this.map = map;
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
@@ -32,8 +34,11 @@ public class GameModel {
 
         animalsManager = new AnimalsManager();
         artisanMachinesManager = new ArtisanMachinesManager();
+        this.hotBarActor = hotBarActor;
 
     }
+
+
 
     public void setPlayerController(PlayerController playerController) {
         this.playerController = playerController;
@@ -72,6 +77,7 @@ public class GameModel {
 
         animalsManager.update(delta);
         artisanMachinesManager.update();
+        hotBarActor.update();
 
 
     }

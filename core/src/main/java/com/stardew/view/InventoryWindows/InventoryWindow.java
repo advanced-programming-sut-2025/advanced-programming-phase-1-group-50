@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -26,10 +27,10 @@ import java.util.Map;
 public class InventoryWindow extends CloseableWindow {
 
     private final Label playerNameLabel;
-//    private final ImageButton skillsButton;
-//    private final ImageButton socialButton;
-//    private final ImageButton mapButton;
-//    private final ImageButton settingsButton;
+    private final ImageButton skillsButton;
+    private final ImageButton socialButton;
+    private final ImageButton mapButton;
+    private final ImageButton exitButton;
     private final ImageButton trashButton;
     private final HotBarActor hotBar;
 
@@ -103,7 +104,7 @@ public class InventoryWindow extends CloseableWindow {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 int xx = backpackGrid.getSelectedX();
                 int yy = backpackGrid.getSelectedY();
-                if(xx == -1 && yy == -1) {
+                if(xx == -1 && yy ==     -1) {
                     return false;
                 }
 
@@ -125,7 +126,59 @@ public class InventoryWindow extends CloseableWindow {
                 return true;
             }
         });
-        add(trashButton).width(50).height(70).bottom().left();
+
+
+
+        socialButton = new ImageButton(GamePictureManager.socialHeartTextureDrawable);
+        socialButton.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+        });
+
+
+        skillsButton = new ImageButton(GamePictureManager.skillsTextureDrawable);
+        skillsButton.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+        });
+
+
+        mapButton = new ImageButton(GamePictureManager.mapTextureDrawable);
+        mapButton.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+        });
+
+
+        exitButton = new ImageButton(GamePictureManager.exitTextureDrawable);
+        exitButton.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                return true;
+            }
+
+        });
+
+
+        Table buttonRowTable = new Table();
+        buttonRowTable.add(trashButton).width(50).height(70).padRight(10);
+        buttonRowTable.add(socialButton).width(50).height(70).padRight(10);
+        buttonRowTable.add(skillsButton).width(50).height(70).padRight(10);
+        buttonRowTable.add(mapButton).width(50).height(70).padRight(10);
+        buttonRowTable.add(exitButton).width(50).height(70);
+
+        row();
+        add(buttonRowTable).padTop(10).left();
+
+
+
+
 
     }
 

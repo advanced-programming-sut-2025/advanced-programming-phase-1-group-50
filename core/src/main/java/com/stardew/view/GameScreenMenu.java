@@ -53,7 +53,7 @@ public class GameScreenMenu implements Screen {
 
     public void initializeGame(){
 
-        gameModel = new GameModel(App.getGame().getMap() , 250 , 200);
+        gameModel = new GameModel(App.getGame().getMap() , 250 , 200 , hotBarActor);
         gameModel.setPlayerController(new PlayerController(App.getGame().getCurrentPlayingPlayer(), gameModel));
         gameMenuInputAdapter = new GameMenuInputAdapter(gameModel);
         gameMenuInputAdapter.setHotBar(hotBarActor);
