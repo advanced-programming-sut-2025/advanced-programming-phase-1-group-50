@@ -1,7 +1,6 @@
 package com.stardew.models.mapInfo;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
@@ -15,7 +14,7 @@ public class Stone implements Ingredient , Placeable {
     private final String backgroundCode = BackgroundColors.BLACK;
     private final String colorCode = ColorPrinter.GRAY;
     private Rectangle bounds;
-    private Texture texture = GamePictureManager.farmBoulderTexture;
+    private TextureRegion texture = GamePictureManager.farmBoulderTexture;
 
     public Stone() {
 
@@ -60,7 +59,7 @@ public class Stone implements Ingredient , Placeable {
 
     @Override
     public TextureRegion getTexture() {
-        return new TextureRegion(texture);
+        return texture;
     }
 
     @Override
@@ -68,12 +67,8 @@ public class Stone implements Ingredient , Placeable {
         return Color.GRAY;
     }
 
-    public void setTexture(Texture texture) {
-        this.texture = texture;
-    }
-
     @Override
     public TextureRegion getInventoryTexture() {
-        return new TextureRegion(texture);
+        return texture;
     }
 }

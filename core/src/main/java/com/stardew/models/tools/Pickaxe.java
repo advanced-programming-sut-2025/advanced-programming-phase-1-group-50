@@ -1,6 +1,5 @@
 package com.stardew.models.tools;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
@@ -10,7 +9,7 @@ import com.stardew.models.userInfo.Ability;
 
 public class Pickaxe extends Tool {
     private ToolType type = ToolType.Primary;
-    private TextureRegion texture =new TextureRegion( GamePictureManager.pickaxeTexture);
+    private TextureRegion texture = GamePictureManager.pickaxeTexture;
 
     @Override
     public int getConsumptionEnergy() {
@@ -55,17 +54,17 @@ public class Pickaxe extends Tool {
     public void upgradeTool() {
         if (this.type == ToolType.Primary) {
             this.type = ToolType.Coppery;
-            texture = new TextureRegion(GamePictureManager.copperPickaxeTexture);
+            texture = GamePictureManager.copperPickaxeTexture;
         } else if (this.type == ToolType.Coppery) {
             this.type = ToolType.Metal;
-            texture = new TextureRegion(GamePictureManager.steelPickaxeTexture);
+            texture = GamePictureManager.steelPickaxeTexture;
         } else if (this.type == ToolType.Metal) {
 
             this.type = ToolType.Golden;
-            texture = new TextureRegion(GamePictureManager.goldPickaxeTexture);
+            texture = GamePictureManager.goldPickaxeTexture;
         } else if (this.type == ToolType.Golden) {
             this.type = ToolType.Iridium;
-            texture = new TextureRegion(GamePictureManager.iriduimPiclaxeTexture);
+            texture = GamePictureManager.iridiumPickaxeTexture;
         }
     }
 
