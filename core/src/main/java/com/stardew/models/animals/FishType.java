@@ -1,5 +1,6 @@
 package com.stardew.models.animals;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.date.Season;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.userInfo.Ability;
@@ -85,5 +86,11 @@ public enum FishType implements Ingredient {
                     });
         }
         return fishes;
+    }
+
+
+    @Override
+    public TextureRegion getInventoryTexture() {
+        return null;
     }
 }

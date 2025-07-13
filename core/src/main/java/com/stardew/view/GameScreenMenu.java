@@ -25,6 +25,7 @@ import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.models.date.Time;
 import com.stardew.models.userInfo.Coin;
+import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.windows.SmartTooltip;
 
 public class GameScreenMenu implements Screen {
@@ -33,6 +34,8 @@ public class GameScreenMenu implements Screen {
     private GameRenderer gameRenderer;
     private GameMenuInputAdapter gameMenuInputAdapter;
     private Stage stage;
+
+    private final HotBarActor hotBarActor= new HotBarActor();
 
     private SpriteBatch batch;
     private final Stage uiStage = new Stage(new ScreenViewport());
@@ -44,6 +47,7 @@ public class GameScreenMenu implements Screen {
 
     public GameScreenMenu(){
         initializeGame();
+        uiStage.addActor(hotBarActor);
 
     }
 
@@ -52,6 +56,7 @@ public class GameScreenMenu implements Screen {
         gameModel = new GameModel(App.getGame().getMap() , 250 , 200);
         gameModel.setPlayerController(new PlayerController(App.getGame().getCurrentPlayingPlayer(), gameModel));
         gameMenuInputAdapter = new GameMenuInputAdapter(gameModel);
+        gameMenuInputAdapter.setHotBar(hotBarActor);
         batch = Main.getBatch();
         gameRenderer = new GameRenderer(gameModel, gameMenuInputAdapter, batch);
 
@@ -59,6 +64,7 @@ public class GameScreenMenu implements Screen {
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(stage);
+        inputMultiplexer.addProcessor(uiStage);
         inputMultiplexer.addProcessor(gameMenuInputAdapter);
         Gdx.input.setInputProcessor(inputMultiplexer);
 

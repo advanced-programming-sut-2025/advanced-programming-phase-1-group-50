@@ -1,5 +1,6 @@
 package com.stardew.models.foraging;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.stores.Sellable;
 
@@ -48,5 +49,10 @@ public enum ForagingMineral implements Ingredient, Sellable {
 
     public static ForagingMineral getForagingMineralByName(String name) {
         return stringToForagingMineral.getOrDefault(name.toLowerCase(), null);
+    }
+
+    @Override
+    public TextureRegion getInventoryTexture() {
+        return null;
     }
 }

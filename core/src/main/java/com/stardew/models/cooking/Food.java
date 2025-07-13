@@ -66,4 +66,8 @@ public enum Food implements Ingredient, Sellable {
     public static Food getFoodByName(String name) {
         return stringToFood.getOrDefault(name.toLowerCase(), null);
     }
+
+    public TextureRegion getInventoryTexture() {
+        return textureRegion;
+    }
 }

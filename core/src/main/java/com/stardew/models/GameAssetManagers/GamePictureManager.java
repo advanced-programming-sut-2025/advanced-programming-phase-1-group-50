@@ -1573,4 +1573,17 @@ public class GamePictureManager {
     public static TextureRegion emptyTile = new TextureRegion(new Texture("Tile_Selection/Empty_Tile.png"));
     public static TextureRegion selectedTile = new TextureRegion(new Texture("Tile_Selection/Selected_Tile.png"));
 
+    public static TextureRegion coinTexture = new TextureRegion(new Texture("Gem/Diamond.png"));
+
+    public static TextureRegion hoeTexture = new TextureRegion(new Texture("Hoe/Hoe.png"));
+    public static TextureRegion copperHoeTexture = new TextureRegion(new Texture("Hoe/Copper_Hoe.png"));
+    public static TextureRegion steelHoeTexture = new TextureRegion(new Texture("Hoe/Steel_Hoe.png"));
+    public static TextureRegion goldHoeTexture = new TextureRegion(new Texture("Hoe/Gold_Hoe.png"));
+    public static TextureRegion iridiumHoeTexture = new TextureRegion(new Texture("Hoe/Iridium_Hoe.png"));
+
+
+    public static TextureRegion woodTexture = new TextureRegion(new Texture("Wood.png"));
+
+
+
 }

@@ -1,8 +1,9 @@
 package com.stardew.models.tools;
 
+import com.stardew.models.InventoryItem;
 import com.stardew.models.Result;
 
-public abstract class Tool {
+public abstract class Tool implements InventoryItem {
     protected ToolType toolType;
     protected PoleType poleType;
     protected String name;
@@ -26,4 +27,6 @@ public abstract class Tool {
             default -> null;
         };
     }
+
+
 }

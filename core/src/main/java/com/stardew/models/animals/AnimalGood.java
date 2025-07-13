@@ -1,5 +1,6 @@
 package com.stardew.models.animals;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.stores.Sellable;
 
@@ -43,5 +44,11 @@ public class AnimalGood implements Ingredient, Sellable {
     @Override
     public String toString() {
         return quality + " " + type;
+    }
+
+
+    @Override
+    public TextureRegion getInventoryTexture() {
+        return type.getInventoryTexture();
     }
 }

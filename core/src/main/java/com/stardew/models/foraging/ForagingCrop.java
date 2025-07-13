@@ -1,5 +1,6 @@
 package com.stardew.models.foraging;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.date.Season;
 import com.stardew.models.manuFactor.Ingredient;
 
@@ -81,5 +82,10 @@ public enum ForagingCrop implements Ingredient {
         if (name == null || name.isEmpty())
             return null;
         return stringToForagingCrop.getOrDefault(name.toLowerCase(), null);
+    }
+
+    @Override
+    public TextureRegion getInventoryTexture() {
+        return null;
     }
 }

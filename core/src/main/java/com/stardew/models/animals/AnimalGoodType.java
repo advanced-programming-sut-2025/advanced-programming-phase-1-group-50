@@ -39,7 +39,7 @@ public enum AnimalGoodType implements Ingredient {
         return price;
     }
 
-    public TextureRegion getTextureRegion() {
+    public TextureRegion getInventoryTexture() {
         return textureRegion;
     }
 
