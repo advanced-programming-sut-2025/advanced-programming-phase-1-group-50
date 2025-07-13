@@ -1,5 +1,6 @@
 package com.stardew.models.stores;
 
+import com.stardew.models.app.App;
 import com.stardew.models.date.Season;
 import com.stardew.models.foraging.Seeds;
 
@@ -21,5 +22,13 @@ public class PierreGeneralStoreSeedsItem extends ShopItem {
 
     public Season getSeason() {
         return season;
+    }
+
+    @Override
+    public int getPrice() {
+        if (season.equals(App.getGame().getTime().getSeason())) {
+            return (price * 2)/3;
+        }
+        return price;
     }
 }

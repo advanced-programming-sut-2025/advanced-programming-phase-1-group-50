@@ -110,7 +110,7 @@ public class PierreGeneralStore extends Store {
         return (ArrayList<ShopItem>) inventory.clone();
 //        StringBuilder message = new StringBuilder("PierreGeneralStore products:");
 //        for (ShopItem item : inventory) {
-//            message.append("\n" + "Name: ").append(item.name).append("  Price: ").append(item.price);
+//            message.append("\n" + "Name: ").append(item.name).append("  Price: ").append(item.getPrice());
 //        }
 //        return message.toString();
     }
@@ -127,17 +127,12 @@ public class PierreGeneralStore extends Store {
 //        StringBuilder message = new StringBuilder("PierreGeneralStore Available Products:");
 //        for (ShopItem item : inventory) {
 //            if (item.remainingQuantity > 0) {
-//                if (item instanceof PierreGeneralStoreSeedsItem && ((PierreGeneralStoreSeedsItem) item).getSeason().equals(App.getGame().getTime().getSeason())) {
-//
-//                    message.append("\nName: ").append(item.name).append("   Price: ").append((item.price * 2) / 3).append("   Remaining: ").append(item.remainingQuantity);
-//                } else {
-//                    message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   " +
+//                    message.append("\nName: ").append(item.name).append("   Price: ").append(item.getPrice()).append("   " +
 //                            "Remaining: ");
 //                    if (item.remainingQuantity > 10000) {
 //                        message.append("infinity");
 //                    } else {
 //                        message.append(item.remainingQuantity);
-//                    }
 //                }
 //            }
 //        }
@@ -163,7 +158,7 @@ public class PierreGeneralStore extends Store {
             return new Result(false, "No such product");
         }
 
-        int totalPrice = calculatePrice(item) * value;
+        int totalPrice = item.getPrice() * value;
 
         if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Coin(), 0) < totalPrice) {
             return new Result(false, "Not enough money");
@@ -256,15 +251,6 @@ public class PierreGeneralStore extends Store {
     @Override
     public TextureRegion[][] getRegions() {
         return regions;
-    }
-
-    private int calculatePrice(ShopItem item) {
-        if (item instanceof PierreGeneralStoreSeedsItem) {
-            if (App.getGame().getTime().getSeason().equals(((PierreGeneralStoreSeedsItem) item).getSeason())) {
-                return (item.price * 2) / 3;
-            }
-        }
-        return item.getPrice();
     }
 
     @Override

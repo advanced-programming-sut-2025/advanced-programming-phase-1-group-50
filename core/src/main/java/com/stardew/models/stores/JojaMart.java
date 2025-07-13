@@ -89,7 +89,7 @@ public class JojaMart extends Store {
         return (ArrayList<ShopItem>) inventory.clone();
 //        StringBuilder message = new StringBuilder("JojaMart products:");
 //        for (ShopItem item : inventory) {
-//            message.append("\n" + "Name: ").append(item.name).append("  Price: ").append(item.price);
+//            message.append("\n" + "Name: ").append(item.name).append("  Price: ").append(item.getPrice());
 //        }
 //        return message.toString();
     }
@@ -106,7 +106,7 @@ public class JojaMart extends Store {
 //        StringBuilder message = new StringBuilder("JojaMart Available Products:");
 //        for (ShopItem item : inventory) {
 //            if (item.remainingQuantity > 0) {
-//                message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   " +
+//                message.append("\nName: ").append(item.name).append("   Price: ").append(item.getPrice()).append("   " +
 //                        "Remaining: ");
 //                if (item.remainingQuantity > 10000) {
 //                    message.append("infinity");
