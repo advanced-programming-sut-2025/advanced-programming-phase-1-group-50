@@ -58,14 +58,13 @@ public class CookingController {
         return new Result(true, output.toString());
     }
 
-    public Result cookingPrepare(String ItemName) {
-        CookingRecipe recipe = CookingRecipe.getRecipeByName(ItemName);
+    public Result cookingPrepare(CookingRecipe recipe) {
         Player player = App.getGame().getCurrentPlayingPlayer();
 
         if (recipe == null)
-            return new Result(false, "Recipe <" + ItemName + "> not found!");
+            return new Result(false, "Recipe not found!");
         if (!player.getBackpack().containRecipe(recipe))
-            return new Result(false, "You don't have <" + ItemName + "> CookingRecipe in your backpack!");
+            return new Result(false, "You don't have <" + recipe.name() + "> CookingRecipe in your backpack!");
         if (!player.getBackpack().hasCapacity())
             return new Result(false, "You don't have enough space in backpack!");
 
@@ -85,7 +84,10 @@ public class CookingController {
             if (player.getBackpack().getIngredientQuantity().getOrDefault(ingredientInBackpack,0) < requiredIngredients.get(requiredIngredient)) {
                 return new Result(false, "You don't have enough <" + requiredIngredient + "> in your backpack!");
             }
-
+        }
+        //decrease all needed ingredients
+        for (Ingredient requiredIngredient : requiredIngredients.keySet()) {
+            Ingredient ingredientInBackpack = getIngredient(requiredIngredient, player);
             player.getBackpack().removeIngredients(ingredientInBackpack, requiredIngredients.get(requiredIngredient));
         }
 
