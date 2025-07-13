@@ -1,19 +1,39 @@
 package com.stardew.view.InventoryWindows;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.InventoryItem;
 import com.stardew.models.app.App;
+import com.stardew.models.manuFactor.Ingredient;
+import com.stardew.models.tools.Tool;
+import com.stardew.models.userInfo.Player;
 import com.stardew.view.windows.CloseableWindow;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 public class InventoryWindow extends CloseableWindow {
+
     private final Label playerNameLabel;
+//    private final ImageButton skillsButton;
+//    private final ImageButton socialButton;
+//    private final ImageButton mapButton;
+//    private final ImageButton settingsButton;
+    private final ImageButton trashButton;
+    private final HotBarActor hotBar;
+
+
 
 
     private final BackpackGridActor backpackGrid;
@@ -21,9 +41,9 @@ public class InventoryWindow extends CloseableWindow {
     private final ScrollPane backpackScrollPane;
     private final ImageButton OKButton;
 
-    public InventoryWindow(Stage stage) {
+    public InventoryWindow(Stage stage , HotBarActor hotBar) {
         super("Inventory", stage);
-
+        this.hotBar = hotBar;
 
         Label titleLabel = getTitleLabel();
 
@@ -75,6 +95,57 @@ public class InventoryWindow extends CloseableWindow {
         getTitleTable().add(titleLabel).expandX().left();
         getTitleTable().add(OKButton).padRight(5).right();
         getTitleTable().add(closeButton).right();
+
+        trashButton = new ImageButton(GamePictureManager.trashDrawable);
+        trashButton.setSize(50 , 70);
+        trashButton.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                int xx = backpackGrid.getSelectedX();
+                int yy = backpackGrid.getSelectedY();
+                if(xx == -1 && yy == -1) {
+                    return false;
+                }
+
+                Player p = App.getGame().getCurrentPlayingPlayer();
+
+                InventoryItem item = backpackGrid.getInventoryItemByXAndY(xx , yy);
+                if(item != null) {
+                    if(item instanceof Tool t){
+                        p.getBackpack().getTools().remove(findTool(t , p.getBackpack().getTools()));
+                    }
+
+                    else if(item instanceof Ingredient ing){
+                        p.getBackpack().getIngredientQuantity().remove(findIngredient(ing , p.getBackpack().getIngredientQuantity()));
+                    }
+                }
+                p.updateInventoryItems();
+                hotBar.update();
+                backpackGrid.update();
+                return true;
+            }
+        });
+        add(trashButton).width(50).height(70).bottom().left();
+
+    }
+
+    public Tool findTool(Tool t , ArrayList<Tool> tools) {
+        for(Tool tool : tools) {
+            if(tool.equals(t)) {
+                return tool;
+            }
+        }
+        return null;
+    }
+
+    public Ingredient findIngredient(Ingredient ing, HashMap<Ingredient , Integer> map) {
+        for(Map.Entry<Ingredient , Integer> entry : map.entrySet()) {
+            if(entry.getKey().equals(ing)) {
+                return entry.getKey();
+            }
+        }
+
+        return null;
     }
 
 }

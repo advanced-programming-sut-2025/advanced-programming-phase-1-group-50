@@ -124,7 +124,7 @@ public class GameMenuInputAdapter extends InputAdapter {
         }
 
         if(justPressedKeys.contains(Input.Keys.ESCAPE)){
-            stage.addActor(new InventoryWindow(stage));
+            stage.addActor(new InventoryWindow(stage , hotBar));
         }
 
 

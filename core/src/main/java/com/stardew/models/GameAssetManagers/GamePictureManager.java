@@ -1584,6 +1584,9 @@ public class GamePictureManager {
 
     public static TextureRegion woodTexture = new TextureRegion(new Texture("Wood.png"));
 
+    public static TextureRegion trashTexture = new TextureRegion(new Texture("Inventory/Trash.png"));
+    public static TextureRegionDrawable trashDrawable = new TextureRegionDrawable(trashTexture);
+
 
 
 }

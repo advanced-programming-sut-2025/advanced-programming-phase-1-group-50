@@ -85,5 +85,9 @@ public class HotBarActor extends Actor {
     public int getItemCount() {
         return itemCount;
     }
+
+    public void update(){
+        initialize();
+    }
 }
 

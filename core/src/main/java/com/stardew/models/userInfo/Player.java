@@ -7,6 +7,7 @@ import com.stardew.models.Notification.MarriageRequest;
 import com.stardew.models.Result;
 import com.stardew.models.Notification.Notification;
 import com.stardew.models.animals.Animal;
+import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.mapInfo.Farm;
 import com.stardew.models.mapInfo.Pair;
 import com.stardew.models.mapInfo.Position;
@@ -80,11 +81,7 @@ public class Player {
         }
         this.backpack.getIngredientQuantity().put(new Coin() , 20);
         this.backpack.getIngredientQuantity().put(new Wood() , 100);
-        inventoryItems.add(new Coin());
-        inventoryItems.add(new Wood());
-        inventoryItems.add(hoe);
-        inventoryItems.add(pickaxe);
-        inventoryItems.add(axe);
+        updateInventoryItems();
         this.relationWithAbigail = new RelationWithNPC(NPCType.Abigail);
         this.relationWithSebastian = new RelationWithNPC(NPCType.Sebastian);
         this.relationWithHarvey = new RelationWithNPC(NPCType.Harvey);
@@ -92,6 +89,13 @@ public class Player {
         this.relationWithRobin = new RelationWithNPC(NPCType.Robin);
 
     }
+    public void updateInventoryItems() {
+        inventoryItems.clear();
+        inventoryItems.addAll(getBackpack().getIngredientQuantity().keySet());
+        inventoryItems.addAll(backpack.getTools());
+
+    }
+
     public RelationWithNPC getRelationWithAbigail() {
         return relationWithAbigail;
     }
