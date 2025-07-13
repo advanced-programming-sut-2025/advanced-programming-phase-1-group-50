@@ -1,5 +1,6 @@
 package com.stardew.view.modelsManager;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.stardew.models.animals.Animal;
 import com.stardew.models.app.App;
 
@@ -16,6 +17,13 @@ public class AnimalsManager {
         updateList();
         for (Animal animal : animals) {
             animal.update(delta);
+        }
+    }
+
+    public void render(Batch batch) {
+        for (Animal animal : animals) {
+            animal.render(batch);
+//            System.out.println("animal name: " + animal.getName());
         }
     }
 

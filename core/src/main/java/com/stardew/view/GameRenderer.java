@@ -5,40 +5,23 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.Color;
 
 
-import com.stardew.Main;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.animals.Animal;
 import com.stardew.models.animals.GameModel;
-import com.stardew.models.app.App;
-import com.stardew.models.date.Time;
 import com.stardew.models.foraging.Crop;
 import com.stardew.models.foraging.Tree;
 import com.stardew.models.mapInfo.*;
-import com.stardew.models.stores.Blacksmith;
 import com.stardew.models.stores.Store;
-import com.stardew.models.userInfo.Player;
-
-import java.awt.*;
-
 
 
 public class GameRenderer {
     private final GameModel gameModel;
-    private SpriteBatch batch;
+    private final SpriteBatch batch;
     private int moveDirection;
     private float stateTime = 0f;
-    private GameMenuInputAdapter gameMenuInputAdapter;
-    private MiniMapRenderer miniMapRenderer ;
-    private Label timeLabel;
-    private TextureRegion clockTexture = GamePictureManager.clockTexture;
-    Image clockImage = new Image(clockTexture);
+    private final GameMenuInputAdapter gameMenuInputAdapter;
+    private final MiniMapRenderer miniMapRenderer ;
 
 
     public GameRenderer(GameModel gameModel, GameMenuInputAdapter gameMenuInputAdapter, SpriteBatch batch) {
@@ -52,6 +35,8 @@ public class GameRenderer {
     public void render(){
 
         renderMapTilesAndPlayer();
+
+        gameModel.getAnimalsManager().render(batch);
 
 
 
@@ -171,9 +156,9 @@ public class GameRenderer {
 
                         }
 
-                        else if (tile.getPlaceable() instanceof Animal animal) {
-                            animal.render(batch);
-                        }
+//                        else if (tile.getPlaceable() instanceof Animal animal) {
+//                            animal.render(batch);
+//                        }
 
 
 //                        else {

@@ -224,7 +224,7 @@ public class Animal implements Placeable {
 
     @Override
     public TextureRegion getTexture() {
-        return null;
+        return type.getNormalTexture();
     }
 
     @Override

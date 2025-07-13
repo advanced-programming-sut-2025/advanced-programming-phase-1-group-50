@@ -1,5 +1,6 @@
 package com.stardew.controller.AnimalsControllers;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.models.Result;
 import com.stardew.models.animals.*;
 import com.stardew.models.app.App;
@@ -13,13 +14,14 @@ import com.stardew.models.tools.Shear;
 import com.stardew.models.tools.Tool;
 import com.stardew.models.userInfo.Coin;
 import com.stardew.models.userInfo.Player;
+import com.stardew.view.GridMap.TileSelectionWindow;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class AnimalsController {
 
-    public Result build(String buildingName, int x, int y) {
+    public Result build(Stage stage, String buildingName) {
         Player player = App.getGame().getCurrentPlayingPlayer();
         Map map = App.getGame().getMap();
         HabitatType habitatType = Habitat.getHabitatTypeByInput(buildingName);
@@ -27,38 +29,55 @@ public class AnimalsController {
 
         if (habitatType == null || habitatSize == null)
             return new Result(false, "Invalid building name or type");
-        if (!map.isAroundPlaceable(player, map.getNpcVillage().getCarpenterShop()))
-            return new Result(false, "You should be near CarpenterShop");
+//        if (!map.isAroundPlaceable(player, map.getNpcVillage().getCarpenterShop()))
+//            return new Result(false, "You should be near CarpenterShop");
 
-        for (int i = x; i < x + habitatType.getLengthX(); i++) {
-            for (int j = y; j < y + habitatType.getLengthY(); j++) {
-                Tile tile = map.findTile(i, j);
-                if (tile == null)
-                    return new Result(false, "Invalid tile");
-                if (tile.getPlaceable() != null)
-                    return new Result(false, "You cannot build in this area! The area is not empty!");
+        TileSelectionWindow tileSelectionWindow = new TileSelectionWindow(stage,
+            habitatType.getLengthX(), habitatType.getLengthY());
+        stage.addActor(tileSelectionWindow);
+        tileSelectionWindow.setOnCloseCallback(tile -> {
+            if (tile == null)
+                tileSelectionWindow.showResult(new Result(false, "You did not select a tile!"));
+            else {
+                //TODO according to store
+                int x = tile.getPosition().getX();
+                int y = tile.getPosition().getY();
+                Habitat habitat = new Habitat(habitatType, habitatSize, x, y);
+                habitat.prepareWindow(stage);
+                Tile[][] tiles = map.getTiles();
+                for (int i = x; i < x + habitatType.getLengthX(); i++) {
+                    for (int j = y; j < y + habitatType.getLengthY(); j++) {
+                        tiles[i][j].setPlaceable(habitat);
+                        tiles[i][j].setWalkable(false);
+                        tiles[i][j].setSymbol(habitat.getSymbol());
+                    }
+                }
+
+                player.getFarm().addHabitat(habitat);
+                player.getFarm().getPlaceables().add(habitat);
+
             }
-        }
+        });
 
-        Result storeResult = map.getNpcVillage().getCarpenterShop().purchaseBuilding(habitatType, habitatSize);
-        if (!storeResult.getSuccessful())
-            return storeResult;
+//        Result storeResult = map.getNpcVillage().getCarpenterShop().purchaseBuilding(habitatType, habitatSize);
+//        if (!storeResult.getSuccessful())
+//            return storeResult;
+//
+//        Habitat habitat = new Habitat(habitatType, habitatSize, x, y);
+//
+//        for (int i = x; i < x + habitatType.getLengthX(); i++) {
+//            for (int j = y; j < y + habitatType.getLengthY(); j++) {
+//                Tile tile = map.findTile(i, j);
+//                tile.setPlaceable(habitat);
+//                tile.setWalkable(false);
+//                tile.setSymbol(habitat.getSymbol());
+//            }
+//        }
+//
+//        player.getFarm().addHabitat(habitat);
+//        player.getFarm().getPlaceables().add(habitat);
 
-        Habitat habitat = new Habitat(habitatType, habitatSize, x, y);
-
-        for (int i = x; i < x + habitatType.getLengthX(); i++) {
-            for (int j = y; j < y + habitatType.getLengthY(); j++) {
-                Tile tile = map.findTile(i, j);
-                tile.setPlaceable(habitat);
-                tile.setWalkable(false);
-                tile.setSymbol(habitat.getSymbol());
-            }
-        }
-
-        player.getFarm().addHabitat(habitat);
-        player.getFarm().getPlaceables().add(habitat);
-
-        return new Result(true, "A <" + buildingName + "> was built successfully!");
+        return new Result(true, "Please select a tile to place the machine!");
     }
 
     public Result buyAnimal(String animalT, String name) {
@@ -70,8 +89,8 @@ public class AnimalsController {
             return new Result(false, "Animal with this name already exists! Please choose another name");
         if (animalType == null)
             return new Result(false, "Invalid animal type!");
-        if(!map.isAroundPlaceable(player, map.getNpcVillage().getMarnieRanch()))
-            return new Result(false, "You should be near Marnie Ranch Shop");
+//        if(!map.isAroundPlaceable(player, map.getNpcVillage().getMarnieRanch()))
+//            return new Result(false, "You should be near Marnie Ranch Shop");
 
         Habitat habitat = null;
         for (Habitat habitat1 : player.getFarm().getHabitats()) {
@@ -86,9 +105,9 @@ public class AnimalsController {
             return new Result(false, "You don't have any enough habitat to buy this animal!\n" +
                 "Or type or size of habitats isn't compatible with animals!");
 
-        Result storeResult = map.getNpcVillage().getMarnieRanch().PurchaseAnimal(animalType);
-        if (!storeResult.getSuccessful())
-            return storeResult;
+//        Result storeResult = map.getNpcVillage().getMarnieRanch().PurchaseAnimal(animalType);
+//        if (!storeResult.getSuccessful())
+//            return storeResult;
 
         Animal animal = new Animal(animalType, name, habitat);
         player.getBackpack().addAnimal(animal);
@@ -134,9 +153,9 @@ public class AnimalsController {
         String animalsInfo = "\n\n" +
             String.format("     Name: %s   \n\n", animal.getName()) +
             String.format("     Type: %s   \n\n", animal.getType()) +
-            String.format("     LevelOfFriendship: %d   \n\n", animal.getFriendShip());
-//            String.format("     hasPettedToday: %s   \n\n", animal.hasPettedToday()) +
-//            String.format("     hasFedToday: %s   \n\n", animal.hasFedToday());
+            String.format("     LevelOfFriendship: %d   \n\n", animal.getFriendShip()) +
+            String.format("     hasPettedToday: %s   \n\n", animal.hasPettedToday()) +
+            String.format("     hasFedToday: %s   \n\n", animal.hasFedToday());
 
         return new Result(true, animalsInfo);
     }

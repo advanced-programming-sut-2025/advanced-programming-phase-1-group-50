@@ -89,6 +89,6 @@ public enum AnimalType {
     }
 
     public static AnimalType getAnimalTypeByInput(String input) {
-        return stringToAnimalType.getOrDefault(input, null);
+        return stringToAnimalType.getOrDefault(input.toLowerCase(), null);
     }
 }
