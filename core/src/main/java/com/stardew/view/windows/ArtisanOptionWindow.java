@@ -13,10 +13,10 @@ import com.stardew.models.Result;
 
 public class ArtisanOptionWindow extends CloseableWindow {
     private final ArtisanController controller = new ArtisanController();
-    private TextButton cancelProcessButton;
-    private TextButton cheatFinishProcessButton;
-    private TextButton showInfoButton;
-    private TextButton collectProductButton;
+    private final TextButton cancelProcessButton;
+    private final TextButton cheatFinishProcessButton;
+    private final TextButton showInfoButton;
+    private final TextButton collectProductButton;
 
     public ArtisanOptionWindow(ArtisanAsset artisanAsset,Stage stage, float x, float y) {
         super("options", stage);
@@ -36,7 +36,7 @@ public class ArtisanOptionWindow extends CloseableWindow {
         add(cheatFinishProcessButton).row();
         add(cancelProcessButton).row();
 
-//        if (!controller.isReadyProduct(artisanAsset.name()))
+        if (controller.isReadyProduct(artisanAsset.name()))
             add(collectProductButton).row();
 
         SmartTooltip tooltip = SmartTooltip.getInstance();

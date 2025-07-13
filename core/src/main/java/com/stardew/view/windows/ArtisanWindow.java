@@ -10,6 +10,7 @@ import com.stardew.controller.CookingAndCraftingControllers.ArtisanController;
 import com.stardew.models.GameAssetManagers.ArtisanAsset;
 import com.stardew.models.GameAssetManagers.ArtisanGoodAsset;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.Result;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,8 @@ public class ArtisanWindow extends CloseableWindow {
             product.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    //TODO crafting selected item
+                    Result result = controller.artisanUse(asset.getMachineMakerName(), asset.name());
+                    showResult(result);
                     return true;
                 }
 

@@ -2,7 +2,9 @@ package com.stardew.models.manuFactor;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cursor;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -10,8 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.models.GameAssetManagers.ArtisanAsset;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.Placeable;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.date.Time;
@@ -22,9 +26,10 @@ import com.stardew.models.userInfo.Player;
 import com.stardew.view.windows.ArtisanOptionWindow;
 import com.stardew.view.windows.ArtisanWindow;
 
+import java.awt.*;
 import java.util.HashMap;
 
-public abstract class ArtisanMachine {
+public abstract class ArtisanMachine implements Placeable {
     protected Time timeOfRequest;
     protected HashMap<ArtisanGood, TimeInterval> processingTimes;
     protected ArtisanGood producingGood;
@@ -116,6 +121,7 @@ public abstract class ArtisanMachine {
     }
 
     public void use() {
+        cheatReady = false;
         timeOfRequest = App.getGame().getTime().clone();
         updateMachine();
     }
@@ -169,7 +175,7 @@ public abstract class ArtisanMachine {
         int passedHours;
         if (todayDate > timeOfRequest.getDate()) {
             passedDays = todayDate - timeOfRequest.getDate() - 1;
-            passedHours = (22 - timeOfRequest.getHour()) + (todayHour);
+            passedHours = (22 - timeOfRequest.getHour()) + (todayHour - 9);
         }
         else {
             passedDays = 0;
@@ -186,6 +192,42 @@ public abstract class ArtisanMachine {
         this.cheatReady = cheatReady;
         updateMachine();
     }
+
+    public boolean isAnyProducing() {
+        return timeOfRequest != null;
+    }
+
+
+    @Override
+    public Rectangle getBounds() {
+        return null;
+    }
+
+    @Override
+    public char getSymbol() {
+        return 0;
+    }
+
+    @Override
+    public String getColor() {
+        return "";
+    }
+
+    @Override
+    public String getBackground() {
+        return "";
+    }
+
+    @Override
+    public TextureRegion getTexture() {
+        return ((TextureRegionDrawable)(image.getDrawable())).getRegion();
+    }
+
+    @Override
+    public Color getMiniMapColor() {
+        return Color.BLUE;
+    }
+
 
     public static ArtisanMachine getArtisanMachineByRecipe(CraftingRecipes recipe) {
         if (recipe == null)

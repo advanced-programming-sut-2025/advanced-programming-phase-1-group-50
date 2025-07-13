@@ -14,8 +14,6 @@ public class ArtisanController {
 
         if (artisanMachine == null)
             return new Result(false, "Artisan Machine not found!");
-        if (!App.getGame().getMap().isAroundPlaceable(player, player.getFarm().getCottage()))
-            return new Result(false, "You are not around your cottage!");
 
         Result result = artisanMachine.canUse(player, itemName);
         if (result.getSuccessful()) {
@@ -48,6 +46,9 @@ public class ArtisanController {
         if (artisanMachine == null)
             return new Result(false, "Artisan Machine not found!");
 
+        if (!artisanMachine.isAnyProducing())
+            return new Result(false, "Artisan Machine is not producing!");
+
         artisanMachine.reset();
         return new Result(true, "You cancelled the Artisan machine process!");
     }
@@ -61,26 +62,6 @@ public class ArtisanController {
 
         Result result = artisanMachine.isReady();
         return result.getSuccessful();
-    }
-
-    public Result getPassedTime(String artisanName) {
-        Player player = App.getGame().getCurrentPlayingPlayer();
-        ArtisanMachine artisanMachine = player.getBackpack().getArtisanMachineByName(artisanName);
-
-        if (artisanMachine == null)
-            return new Result(false, "Artisan Machine not found!");
-
-        return new Result(true, artisanMachine.getPassedTime() + "");
-    }
-
-    public Result getProcessingTime(String artisanName) {
-        Player player = App.getGame().getCurrentPlayingPlayer();
-        ArtisanMachine artisanMachine = player.getBackpack().getArtisanMachineByName(artisanName);
-
-        if (artisanMachine == null)
-            return new Result(false, "Artisan Machine not found!");
-
-        return new Result(true, artisanMachine.getTotalProcessingTime() + "");
     }
 
     public void cheatFinishProcess(String artisanName) {
