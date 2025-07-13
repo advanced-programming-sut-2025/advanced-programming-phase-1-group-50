@@ -23,7 +23,7 @@ public class Ability {
         return maxLevel;
     }
 
-    public static int getRequiredPointsForLevel(int level) {
+    public int getRequiredPointsForLevel(int level) {
         return 100 * level + 50;
     }
 

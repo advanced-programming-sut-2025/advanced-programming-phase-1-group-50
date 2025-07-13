@@ -1600,6 +1600,13 @@ public class GamePictureManager {
         (new TextureRegion(new Texture("Inventory/Exit.png")));
 
 
+    public static TextureRegionDrawable fishingTextureDrawable = new TextureRegionDrawable
+        (new TextureRegion(new Texture("Inventory/Carp.png")));
+
+    public static TextureRegionDrawable foragingTextureDrawable = new TextureRegionDrawable
+        (new TextureRegion(new Texture("Inventory/Dandelion.png")));
+
+
 
 
 }
