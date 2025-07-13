@@ -39,11 +39,11 @@ public class FishSmoker extends ArtisanMachine {
 
     @Override
     public Result canUse(Player player, String product) {
-        FishType fishType = FishType.getFishTypeByName(product);
-        if (fishType != null) {
+
+        if (product.equalsIgnoreCase("SmokedFish")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
 
-                if (ingredient instanceof Fish fish && fish.getType().equals(fishType)) {
+                if (ingredient instanceof Fish fish) {
                     for (Ingredient ingredient1 : player.getBackpack().getIngredientQuantity().keySet()) {
                         if (ingredient1.equals(new ArtisanGood(ArtisanGoodType.Coal))) {
 

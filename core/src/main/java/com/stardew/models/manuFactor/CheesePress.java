@@ -44,7 +44,7 @@ public class CheesePress extends ArtisanMachine {
             }
             return new Result(false, "You don't have enough Ingredients!");
         }
-        else if (product.equals("Goat_Cheese") || product.equals("goat_cheese")) {
+        else if (product.equalsIgnoreCase("GoatCheese") || product.equalsIgnoreCase("goat_cheese")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
 
                 if (ingredient instanceof AnimalGood animalGood &&

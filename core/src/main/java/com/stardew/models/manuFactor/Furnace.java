@@ -39,7 +39,7 @@ public class Furnace extends ArtisanMachine {
     @Override
     public Result canUse(Player player, String product) {
         switch (product) {
-            case "Iron_Bar", "iron_bar" -> {
+            case "IronBar" -> {
                 for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                     if (ingredient.equals(ForagingMineral.Iron) &&
                             player.getBackpack().getIngredientQuantity().get(ingredient) >= 5) {
@@ -62,7 +62,7 @@ public class Furnace extends ArtisanMachine {
                 }
                 return new Result(false, "You don't have enough Ingredients!");
             }
-            case "Iridium_Bar", "iridium_bar" -> {
+            case "IridiumBar" -> {
                 for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                     if (ingredient.equals(ForagingMineral.Iridium) &&
                             player.getBackpack().getIngredientQuantity().get(ingredient) >= 5) {
@@ -85,7 +85,7 @@ public class Furnace extends ArtisanMachine {
                 }
                 return new Result(false, "You don't have enough Ingredients!");
             }
-            case "Copper_Bar", "copper_bar" -> {
+            case "CopperBar" -> {
                 for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                     if (ingredient.equals(ForagingMineral.Copper) &&
                             player.getBackpack().getIngredientQuantity().get(ingredient) >= 5) {
@@ -108,7 +108,7 @@ public class Furnace extends ArtisanMachine {
                 }
                 return new Result(false, "You don't have enough Ingredients!");
             }
-            case "Gold_Bar", "gold_bar" -> {
+            case "GoldBar" -> {
                 for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                     if (ingredient.equals(ForagingMineral.Gold) &&
                             player.getBackpack().getIngredientQuantity().get(ingredient) >= 5) {

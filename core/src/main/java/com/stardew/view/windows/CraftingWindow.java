@@ -7,12 +7,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.stardew.controller.CookingAndCraftingControllers.CraftingController;
 import com.stardew.models.GameAssetManagers.CraftingAsset;
+import com.stardew.models.Result;
+import com.stardew.models.app.App;
+import com.stardew.models.userInfo.Player;
 
 import java.util.HashMap;
 
 public class CraftingWindow extends CloseableWindow {
-    private HashMap<CraftingAsset, ImageButton> buttons = new HashMap<>();
-    private CraftingController controller = new CraftingController();
+    private final HashMap<CraftingAsset, ImageButton> buttons = new HashMap<>();
+    private final CraftingController controller = new CraftingController();
 
     public CraftingWindow(Stage stage) {
         super("Crafting Menu", stage);
@@ -42,23 +45,22 @@ public class CraftingWindow extends CloseableWindow {
             buttons.put(craftingAsset, new ImageButton(craftingAsset.getStyle()));
         }
 
-        //Player player = App.getGame().getCurrentPlayingPlayer();
+        Player player = App.getGame().getCurrentPlayingPlayer();
 
         for (CraftingAsset craftingAsset : CraftingAsset.values()) {
             ImageButton imageButton = buttons.get(craftingAsset);
-            //imageButton.setDisabled(!player.getBackpack().containRecipe(craftingAsset.getRecipe()));
-            imageButton.setDisabled(true); //delete this line
-            SmartTooltip tooltip = SmartTooltip.getInstance();
 
+            imageButton.setDisabled(!player.getBackpack().containRecipe(craftingAsset.getRecipe()));
+
+            SmartTooltip tooltip = SmartTooltip.getInstance();
             imageButton.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    imageButton.setDisabled(false);  //delete this line
-//                    if (!imageButton.isDisabled()) {
-//                        Result result = controller.craftingCraft(craftingAsset.name());
-//                        showResult(result);
-//                        return true;
-//                    }
+                    if (!imageButton.isDisabled()) {
+                        Result result = controller.craftingCraft(craftingAsset.getRecipe(), stage);
+                        showResult(result);
+                        return true;
+                    }
                     return false;
                 }
 
