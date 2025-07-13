@@ -1,6 +1,5 @@
 package com.stardew.models.foraging;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.manuFactor.Ingredient;
@@ -26,7 +25,7 @@ public enum TreeSource implements Ingredient {
     private TreeType treeType;
     private final static HashMap<String, TreeSource> stringToTreeSource = new HashMap<>();
     private static boolean firstInitialize = true;
-    private final Texture texture;
+    private final TextureRegion texture;
 
     static {
         for (TreeSource value : TreeSource.values()) {
@@ -51,7 +50,7 @@ public enum TreeSource implements Ingredient {
         MysticTreeSeeds.treeType = TreeType.MysticTree;
     }
 
-    TreeSource(TreeType treeType , Texture texture) {
+    TreeSource(TreeType treeType , TextureRegion texture) {
         this.treeType = treeType;
         this.texture = texture;
     }
@@ -70,12 +69,8 @@ public enum TreeSource implements Ingredient {
         return stringToTreeSource.getOrDefault(treeSource.toLowerCase(), null);
     }
 
-    public Texture getTexture() {
-        return texture;
-    }
-
     @Override
     public TextureRegion getInventoryTexture() {
-        return new TextureRegion(texture);
+        return texture;
     }
 }

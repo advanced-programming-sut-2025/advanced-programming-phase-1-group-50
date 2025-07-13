@@ -9,22 +9,22 @@ import com.stardew.models.userInfo.Ability;
 
 public class Axe extends Tool {
     private ToolType type = ToolType.Primary;
-    private TextureRegion texture = new TextureRegion(GamePictureManager.axeTexture);
+    private TextureRegion texture = GamePictureManager.axeTexture;
 
     public void upgradeTool() {
         if (this.type == ToolType.Primary) {
             this.type = ToolType.Coppery;
-            texture = new TextureRegion(GamePictureManager.copperAxeTexture);
+            texture = GamePictureManager.copperAxeTexture;
         } else if (this.type == ToolType.Coppery) {
             this.type = ToolType.Metal;
-            texture = new TextureRegion(GamePictureManager.steelAxeTexture);
+            texture = GamePictureManager.steelAxeTexture;
         } else if (this.type == ToolType.Metal) {
             this.type = ToolType.Golden;
-            texture = new TextureRegion(GamePictureManager.goldAxeTexture);
+            texture = GamePictureManager.goldAxeTexture;
         } else if (this.type == ToolType.Golden) {
 
             this.type = ToolType.Iridium;
-            texture = new TextureRegion(GamePictureManager.iridiumAxeTexture);
+            texture = GamePictureManager.iridiumAxeTexture;
         }
     }
 

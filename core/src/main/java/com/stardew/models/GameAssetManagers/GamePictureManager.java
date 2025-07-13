@@ -41,89 +41,89 @@ public class GamePictureManager {
     //Tools :
         //Axe :
 
-            public static Texture axeTexture = new Texture("Tools/Axe/Axe.png");
-            public static Texture steelAxeTexture = new Texture("Tools/Axe/Steel_Axe.png");
-            public static Texture copperAxeTexture = new Texture("Tools/Axe/Copper_Axe.png");
-            public static Texture goldAxeTexture = new Texture("Tools/Axe/Gold_Axe.png");
-            public static Texture iridiumAxeTexture = new Texture("Tools/Axe/Iridium_Axe.png");
+            public static TextureRegion axeTexture = new TextureRegion(new Texture("Tools/Axe/Axe.png"));
+            public static TextureRegion steelAxeTexture = new TextureRegion(new Texture("Tools/Axe/Steel_Axe.png"));
+            public static TextureRegion copperAxeTexture = new TextureRegion(new Texture("Tools/Axe/Copper_Axe.png"));
+            public static TextureRegion goldAxeTexture = new TextureRegion(new Texture("Tools/Axe/Gold_Axe.png"));
+            public static TextureRegion iridiumAxeTexture = new TextureRegion(new Texture("Tools/Axe/Iridium_Axe.png"));
 
         //Pickaxe :
 
-            public static Texture pickaxeTexture = new Texture("Tools/Pickaxe/Pickaxe.png");
-            public static Texture steelPickaxeTexture = new Texture("Tools/Pickaxe/Steel_Pickaxe.png");
-            public static Texture copperPickaxeTexture = new Texture("Tools/Pickaxe/Copper_Pickaxe.png");
-            public static Texture goldPickaxeTexture = new Texture("Tools/Pickaxe/Gold_Pickaxe.png");
-            public static Texture iriduimPiclaxeTexture = new Texture("Tools/Pickaxe/Iridium_Pickaxe.png");
+            public static TextureRegion pickaxeTexture = new TextureRegion(new Texture("Tools/Pickaxe/Pickaxe.png"));
+            public static TextureRegion steelPickaxeTexture = new TextureRegion(new Texture("Tools/Pickaxe/Steel_Pickaxe.png"));
+            public static TextureRegion copperPickaxeTexture = new TextureRegion(new Texture("Tools/Pickaxe/Copper_Pickaxe.png"));
+            public static TextureRegion goldPickaxeTexture = new TextureRegion(new Texture("Tools/Pickaxe/Gold_Pickaxe.png"));
+            public static TextureRegion iridiumPickaxeTexture = new TextureRegion(new Texture("Tools/Pickaxe/Iridium_Pickaxe.png"));
 
         //Scythe :
 
-            public static Texture scytheTexture = new Texture("Tools/Scythe.png");
-            public static Texture goldScytheTexture = new Texture("Tools/Golden_Scythe.png");
-            public static Texture iridiumScytheTexture = new Texture("Tools/Iridium_Scythe.png");
+            public static TextureRegion scytheTexture = new TextureRegion(new Texture("Tools/Scythe.png"));
+            public static TextureRegion goldScytheTexture = new TextureRegion(new Texture("Tools/Golden_Scythe.png"));
+            public static TextureRegion iridiumScytheTexture = new TextureRegion(new Texture("Tools/Iridium_Scythe.png"));
 
         //Backpack :
 
-            public static Texture backpackTexture = new Texture("Tools/Backpack.png");
-            public static Texture backpack36Texture = new Texture("Tools/36_Backpack.png");
+            public static TextureRegion backpackTexture = new TextureRegion(new Texture("Tools/Backpack.png"));
+            public static TextureRegion backpack36Texture = new TextureRegion(new Texture("Tools/36_Backpack.png"));
 
         //TrashCan :
 
-            public static Texture copperTrashCanTexture = new Texture("Tools/Trash_Can_Copper.png");
-            public static Texture goldTrashCanTexture = new Texture("Tools/Trash_Can_Gold.png");
-            public static Texture steelTrashCanTexture = new Texture("Tools/Trash_Can_Steel.png");
-            public static Texture iridiumTrashCanTexture = new Texture("Tools/Trash_Can_Iridium.png");
+            public static TextureRegion copperTrashCanTexture = new TextureRegion(new Texture("Tools/Trash_Can_Copper.png"));
+            public static TextureRegion goldTrashCanTexture = new TextureRegion(new Texture("Tools/Trash_Can_Gold.png"));
+            public static TextureRegion steelTrashCanTexture = new TextureRegion(new Texture("Tools/Trash_Can_Steel.png"));
+            public static TextureRegion iridiumTrashCanTexture = new TextureRegion(new Texture("Tools/Trash_Can_Iridium.png"));
 
         //MilkPail :
 
-            public static Texture milkPailTexture = new Texture("Tools/Milk_Pail.png");
+            public static TextureRegion milkPailTexture = new TextureRegion(new Texture("Tools/Milk_Pail.png"));
 
         //Shear :
 
-            public static Texture shearTexture = new Texture("Tools/Shears.png");
+            public static TextureRegion shearTexture = new TextureRegion(new Texture("Tools/Shears.png"));
 
         //wateringCan :
 
-            public static Texture wateringCanTexture = new Texture("Watering_Can/Watering_Can.png");
-            public static Texture copperWateringCanTexture = new Texture("Watering_Can/Copper_Watering_Can.png");
-            public static Texture goldWateringCanTexture = new Texture("Watering_Can/Gold_Watering_Can.png");
-            public static Texture steelWateringCanTexture = new Texture("Watering_Can/Steel_Watering_Can.png");
-            public static Texture iridiumWateringCanTexture = new Texture("Watering_Can/Iridium_Watering_Can.png");
+            public static TextureRegion wateringCanTexture = new TextureRegion(new Texture("Watering_Can/Watering_Can.png"));
+            public static TextureRegion copperWateringCanTexture = new TextureRegion(new Texture("Watering_Can/Copper_Watering_Can.png"));
+            public static TextureRegion goldWateringCanTexture = new TextureRegion(new Texture("Watering_Can/Gold_Watering_Can.png"));
+            public static TextureRegion steelWateringCanTexture = new TextureRegion(new Texture("Watering_Can/Steel_Watering_Can.png"));
+            public static TextureRegion iridiumWateringCanTexture = new TextureRegion(new Texture("Watering_Can/Iridium_Watering_Can.png"));
 
     //Villagers :
 
-        public static Texture abigailTexture = new Texture("Villagers/Abigail.png");
-        public static Texture harveyTexture = new Texture("Villagers/Harvey.png");
-        public static Texture leahTexture = new Texture("Villagers/Leah.png");
-        public static Texture marnieTexture = new Texture("Villagers/Marnie.png");
-        public static Texture pierreTexture = new Texture("Villagers/Pierre.png");
-        public static Texture robinTexture = new Texture("Villagers/Robin.png");
-        public static Texture sebastianTexture = new Texture("Villagers/Sebastian.png");
-        public static Texture willyTexture = new Texture("Villagers/Willy.png");
+        public static TextureRegion abigailTexture = new TextureRegion(new Texture("Villagers/Abigail.png"));
+        public static TextureRegion harveyTexture = new TextureRegion(new Texture("Villagers/Harvey.png"));
+        public static TextureRegion leahTexture = new TextureRegion(new Texture("Villagers/Leah.png"));
+        public static TextureRegion marnieTexture = new TextureRegion(new Texture("Villagers/Marnie.png"));
+        public static TextureRegion pierreTexture = new TextureRegion(new Texture("Villagers/Pierre.png"));
+        public static TextureRegion robinTexture = new TextureRegion(new Texture("Villagers/Robin.png"));
+        public static TextureRegion sebastianTexture = new TextureRegion(new Texture("Villagers/Sebastian.png"));
+        public static TextureRegion willyTexture = new TextureRegion(new Texture("Villagers/Willy.png"));
 
     //Rock :
 
-        public static Texture farmBoulderTexture = new Texture("Rock/Farm_Boulder.png");
-        public static Texture MineBoulderTexture1 = new Texture("Rock/Mine_Boulder_1.png");
-        public static Texture mineBoulderTexture2 = new Texture("Rock/Mine_Boulder_2.png");
-        public static Texture mineBoulderTexture3 = new Texture("Rock/Mine_Boulder_3.png");
-        public static Texture mineBoulderTexture4 = new Texture("Rock/Mine_Boulder_4.png");
-        public static Texture quarryBoulderTexture = new Texture("Rock/Quarry_Boulder.png");
-        public static Texture stoneIndex32Texture = new Texture("Rock/Stone_Index32.png");
-        public static Texture stoneIndex34Texture = new Texture("Rock/Stone_Index34.png");
-        public static Texture stoneIndex36Texture = new Texture("Rock/Stone_Index36.png");
-        public static Texture stoneIndex38Texture = new Texture("Rock/Stone_Index38.png");
-        public static Texture stoneIndex40Texture = new Texture("Rock/Stone_Index40.png");
-        public static Texture stoneIndex42Texture = new Texture("Rock/Stone_Index42.png");
-        public static Texture stoneIndex48Texture = new Texture("Rock/Stone_Index48.png");
-        public static Texture stoneIndex50Texture = new Texture("Rock/Stone_Index50.png");
-        public static Texture stoneIndex52Texture = new Texture("Rock/Stone_Index52.png");
-        public static Texture stoneIndex54Texture = new Texture("Rock/Stone_Index54.png");
-        public static Texture stoneIndex56Texture = new Texture("Rock/Stone_Index56.png");
-        public static Texture stoneIndex58Texture = new Texture("Rock/Stone_Index58.png");
-        public static Texture stoneIndex343Texture = new Texture("Rock/Stone_Index343.png");
-        public static Texture stoneIndex450Texture = new Texture("Rock/Stone_Index450.png");
-        public static Texture stoneIndex668Texture = new Texture("Rock/Stone_Index668.png");
-        public static Texture stoneIndex670Texture = new Texture("Rock/Stone_Index670.png");
+        public static TextureRegion farmBoulderTexture = new TextureRegion(new Texture("Rock/Farm_Boulder.png"));
+        public static TextureRegion MineBoulderTexture1 = new TextureRegion(new Texture("Rock/Mine_Boulder_1.png"));
+        public static TextureRegion mineBoulderTexture2 = new TextureRegion(new Texture("Rock/Mine_Boulder_2.png"));
+        public static TextureRegion mineBoulderTexture3 = new TextureRegion(new Texture("Rock/Mine_Boulder_3.png"));
+        public static TextureRegion mineBoulderTexture4 = new TextureRegion(new Texture("Rock/Mine_Boulder_4.png"));
+        public static TextureRegion quarryBoulderTexture = new TextureRegion(new Texture("Rock/Quarry_Boulder.png"));
+        public static TextureRegion stoneIndex32Texture = new TextureRegion(new Texture("Rock/Stone_Index32.png"));
+        public static TextureRegion stoneIndex34Texture = new TextureRegion(new Texture("Rock/Stone_Index34.png"));
+        public static TextureRegion stoneIndex36Texture = new TextureRegion(new Texture("Rock/Stone_Index36.png"));
+        public static TextureRegion stoneIndex38Texture = new TextureRegion(new Texture("Rock/Stone_Index38.png"));
+        public static TextureRegion stoneIndex40Texture = new TextureRegion(new Texture("Rock/Stone_Index40.png"));
+        public static TextureRegion stoneIndex42Texture = new TextureRegion(new Texture("Rock/Stone_Index42.png"));
+        public static TextureRegion stoneIndex48Texture = new TextureRegion(new Texture("Rock/Stone_Index48.png"));
+        public static TextureRegion stoneIndex50Texture = new TextureRegion(new Texture("Rock/Stone_Index50.png"));
+        public static TextureRegion stoneIndex52Texture = new TextureRegion(new Texture("Rock/Stone_Index52.png"));
+        public static TextureRegion stoneIndex54Texture = new TextureRegion(new Texture("Rock/Stone_Index54.png"));
+        public static TextureRegion stoneIndex56Texture = new TextureRegion(new Texture("Rock/Stone_Index56.png"));
+        public static TextureRegion stoneIndex58Texture = new TextureRegion(new Texture("Rock/Stone_Index58.png"));
+        public static TextureRegion stoneIndex343Texture = new TextureRegion(new Texture("Rock/Stone_Index343.png"));
+        public static TextureRegion stoneIndex450Texture = new TextureRegion(new Texture("Rock/Stone_Index450.png"));
+        public static TextureRegion stoneIndex668Texture = new TextureRegion(new Texture("Rock/Stone_Index668.png"));
+        public static TextureRegion stoneIndex670Texture = new TextureRegion(new Texture("Rock/Stone_Index670.png"));
 
     //Cooking_recipes :
 
@@ -224,33 +224,33 @@ public class GamePictureManager {
 
     //Artisan_Goods :
 
-        public static Texture honeyTexture = new Texture("Artisan_good/Honey.png");
-        public static Texture cheeseTexture = new Texture("Artisan_good/Cheese.png");
-        public static Texture goatCheeseTexture = new Texture("Artisan_good/Goat_Cheese.png");
-        public static Texture beerTexture = new Texture("Artisan_good/Beer.png");
-        public static Texture vinegarTexture = new Texture("Artisan_good/Vinegar.png");
-        public static Texture coffeeTexture = new Texture("Artisan_good/Coffee.png");
-        public static Texture juiceTexture = new Texture("Artisan_good/Juice.png");
-        public static Texture meadTexture = new Texture("Artisan_good/Mead.png");
-        public static Texture paleAleTexture = new Texture("Artisan_good/Pale_Ale.png");
-        public static Texture wineTexture = new Texture("Artisan_good/Wine.png");
-        public static Texture driedMushroomsTexture = new Texture("Artisan_good/Dried_Mushrooms.png");
-        public static Texture driedFruitTexture = new Texture("Artisan_good/Dried_Fruit.png");
-        public static Texture raisinsTexture = new Texture("Artisan_good/Raisins.png");
-        public static Texture coalTexture = new Texture("Artisan_good/Coal.png");
-        public static Texture clothTexture = new Texture("Artisan_good/Cloth.png");
-        public static Texture mayonnaiseTexture = new Texture("Artisan_good/Mayonnaise.png");
-        public static Texture duckMayonnaiseTexture = new Texture("Artisan_good/Duck_Mayonnaise.png");
-        public static Texture dinosaurMayonnaiseTexture = new Texture("Artisan_good/Dinosaur_Mayonnaise.png");
-        public static Texture oilTexture = new Texture("Artisan_good/Oil.png");
-        public static Texture truffleOilTexture = new Texture("Artisan_good/Truffle_Oil.png");
-        public static Texture picklesTexture = new Texture("Artisan_good/Pickles.png");
-        public static Texture jellyTexture = new Texture("Artisan_good/Jelly.png");
-        public static Texture smokedFishTexture = new Texture("Artisan_good/Smoked_Fish.png");
-        public static Texture ironBarTexture = new Texture("Artisan_good/Iron_Bar.png");
-        public static Texture iridiumBarTexture = new Texture("Artisan_good/Iridium_Bar.png");
-        public static Texture copperBarTexture = new Texture("Artisan_good/Copper_Bar.png");
-        public static Texture goldBarTexture = new Texture("Artisan_good/Gold_Bar.png");
+        public static TextureRegion honeyTexture = new TextureRegion(new Texture("Artisan_good/Honey.png"));
+        public static TextureRegion cheeseTexture = new TextureRegion(new Texture("Artisan_good/Cheese.png"));
+        public static TextureRegion goatCheeseTexture = new TextureRegion(new Texture("Artisan_good/Goat_Cheese.png"));
+        public static TextureRegion beerTexture = new TextureRegion(new Texture("Artisan_good/Beer.png"));
+        public static TextureRegion vinegarTexture = new TextureRegion(new Texture("Artisan_good/Vinegar.png"));
+        public static TextureRegion coffeeTexture = new TextureRegion(new Texture("Artisan_good/Coffee.png"));
+        public static TextureRegion juiceTexture = new TextureRegion(new Texture("Artisan_good/Juice.png"));
+        public static TextureRegion meadTexture = new TextureRegion(new Texture("Artisan_good/Mead.png"));
+        public static TextureRegion paleAleTexture = new TextureRegion(new Texture("Artisan_good/Pale_Ale.png"));
+        public static TextureRegion wineTexture = new TextureRegion(new Texture("Artisan_good/Wine.png"));
+        public static TextureRegion driedMushroomsTexture = new TextureRegion(new Texture("Artisan_good/Dried_Mushrooms.png"));
+        public static TextureRegion driedFruitTexture = new TextureRegion(new Texture("Artisan_good/Dried_Fruit.png"));
+        public static TextureRegion raisinsTexture = new TextureRegion(new Texture("Artisan_good/Raisins.png"));
+        public static TextureRegion coalTexture = new TextureRegion(new Texture("Artisan_good/Coal.png"));
+        public static TextureRegion clothTexture = new TextureRegion(new Texture("Artisan_good/Cloth.png"));
+        public static TextureRegion mayonnaiseTexture = new TextureRegion(new Texture("Artisan_good/Mayonnaise.png"));
+        public static TextureRegion duckMayonnaiseTexture = new TextureRegion(new Texture("Artisan_good/Duck_Mayonnaise.png"));
+        public static TextureRegion dinosaurMayonnaiseTexture = new TextureRegion(new Texture("Artisan_good/Dinosaur_Mayonnaise.png"));
+        public static TextureRegion oilTexture = new TextureRegion(new Texture("Artisan_good/Oil.png"));
+        public static TextureRegion truffleOilTexture = new TextureRegion(new Texture("Artisan_good/Truffle_Oil.png"));
+        public static TextureRegion picklesTexture = new TextureRegion(new Texture("Artisan_good/Pickles.png"));
+        public static TextureRegion jellyTexture = new TextureRegion(new Texture("Artisan_good/Jelly.png"));
+        public static TextureRegion smokedFishTexture = new TextureRegion(new Texture("Artisan_good/Smoked_Fish.png"));
+        public static TextureRegion ironBarTexture = new TextureRegion(new Texture("Artisan_good/Iron_Bar.png"));
+        public static TextureRegion iridiumBarTexture = new TextureRegion(new Texture("Artisan_good/Iridium_Bar.png"));
+        public static TextureRegion copperBarTexture = new TextureRegion(new Texture("Artisan_good/Copper_Bar.png"));
+        public static TextureRegion goldBarTexture = new TextureRegion(new Texture("Artisan_good/Gold_Bar.png"));
 
 
     //end_process image :
@@ -260,8 +260,8 @@ public class GamePictureManager {
     //Tree :
 
         //Apricot :
-        public static Texture apricotTexture = new Texture("Trees/Apricot.png");
-        public static Texture apricotSaplingTexture = new Texture("Trees/Apricot_Sapling.png");
+        public static TextureRegion apricotTexture = new TextureRegion(new Texture("Trees/Apricot.png"));
+        public static TextureRegion apricotSaplingTexture = new TextureRegion(new Texture("Trees/Apricot_Sapling.png"));
         public static TextureRegion apricotStage1Texture = new TextureRegion(new Texture("Trees/Apricot_Stage_1.png"));
         public static TextureRegion apricotStage2Texture = new TextureRegion(new Texture("Trees/Apricot_Stage_2.png"));
         public static TextureRegion apricotStage3Texture = new TextureRegion(new Texture("Trees/Apricot_Stage_3.png"));
@@ -283,8 +283,8 @@ public class GamePictureManager {
         };
 
         //Cherry :
-        public static Texture cherryTexture = new Texture("Trees/Cherry.png");
-        public static Texture cherrySaplingTexture = new Texture("Trees/Cherry_Sapling.png");
+        public static TextureRegion cherryTexture = new TextureRegion(new Texture("Trees/Cherry.png"));
+        public static TextureRegion cherrySaplingTexture = new TextureRegion(new Texture("Trees/Cherry_Sapling.png"));
         public static TextureRegion cherryStage1Texture = new TextureRegion(new Texture("Trees/Cherry_Stage_1.png"));
         public static TextureRegion cherryStage2Texture = new TextureRegion(new Texture("Trees/Cherry_Stage_2.png"));
         public static TextureRegion cherryStage3Texture = new TextureRegion(new Texture("Trees/Cherry_Stage_3.png"));
@@ -306,8 +306,8 @@ public class GamePictureManager {
         };
 
         //Banana :
-        public static Texture bananaTexture = new Texture("Trees/Banana.png");
-        public static Texture bananaSaplingTexture = new Texture("Trees/Banana_Sapling.png");
+        public static TextureRegion bananaTexture = new TextureRegion(new Texture("Trees/Banana.png"));
+        public static TextureRegion bananaSaplingTexture = new TextureRegion(new Texture("Trees/Banana_Sapling.png"));
         public static TextureRegion bananaStage1Texture = new TextureRegion(new Texture("Trees/Banana_Stage_1.png"));
         public static TextureRegion bananaStage2Texture = new TextureRegion(new Texture("Trees/Banana_Stage_2.png"));
         public static TextureRegion bananaStage3Texture = new TextureRegion(new Texture("Trees/Banana_Stage_3.png"));
@@ -329,8 +329,8 @@ public class GamePictureManager {
         };
 
         // Mango:
-        public static Texture mangoTexture = new Texture("Trees/Mango.png");
-        public static Texture mangoSaplingTexture = new Texture("Trees/Mango_Sapling.png");
+        public static TextureRegion mangoTexture = new TextureRegion(new Texture("Trees/Mango.png"));
+        public static TextureRegion mangoSaplingTexture = new TextureRegion(new Texture("Trees/Mango_Sapling.png"));
         public static TextureRegion mangoStage1Texture = new TextureRegion(new Texture("Trees/Mango_Stage_1.png"));
         public static TextureRegion mangoStage2Texture = new TextureRegion(new Texture("Trees/Mango_Stage_2.png"));
         public static TextureRegion mangoStage3Texture = new TextureRegion(new Texture("Trees/Mango_Stage_3.png"));
@@ -352,8 +352,8 @@ public class GamePictureManager {
         };
 
         // Orange:
-        public static Texture orangeTexture = new Texture("Trees/Orange.png");
-        public static Texture orangeSaplingTexture = new Texture("Trees/Orange_Sapling.png");
+        public static TextureRegion orangeTexture = new TextureRegion(new Texture("Trees/Orange.png"));
+        public static TextureRegion orangeSaplingTexture = new TextureRegion(new Texture("Trees/Orange_Sapling.png"));
         public static TextureRegion orangeStage1Texture = new TextureRegion(new Texture("Trees/Orange_Stage_1.png"));
         public static TextureRegion orangeStage2Texture = new TextureRegion(new Texture("Trees/Orange_Stage_2.png"));
         public static TextureRegion orangeStage3Texture = new TextureRegion(new Texture("Trees/Orange_Stage_3.png"));
@@ -375,8 +375,8 @@ public class GamePictureManager {
         };
 
         // Peach:
-        public static Texture peachTexture = new Texture("Trees/Peach.png");
-        public static Texture peachSaplingTexture = new Texture("Trees/Peach_Sapling.png");
+        public static TextureRegion peachTexture = new TextureRegion(new Texture("Trees/Peach.png"));
+        public static TextureRegion peachSaplingTexture = new TextureRegion(new Texture("Trees/Peach_Sapling.png"));
         public static TextureRegion peachStage1Texture = new TextureRegion(new Texture("Trees/Peach_Stage_1.png"));
         public static TextureRegion peachStage2Texture = new TextureRegion(new Texture("Trees/Peach_Stage_2.png"));
         public static TextureRegion peachStage3Texture = new TextureRegion(new Texture("Trees/Peach_Stage_3.png"));
@@ -398,8 +398,8 @@ public class GamePictureManager {
         };
 
         //Apple:
-        public static Texture appleTexture = new Texture("Trees/Apple.png");
-        public static Texture appleSaplingTexture = new Texture("Trees/Apple_Sapling.png");
+        public static TextureRegion appleTexture = new TextureRegion(new Texture("Trees/Apple.png"));
+        public static TextureRegion appleSaplingTexture = new TextureRegion(new Texture("Trees/Apple_Sapling.png"));
         public static TextureRegion appleStage1Texture = new TextureRegion(new Texture("Trees/Apple_Stage_1.png"));
         public static TextureRegion appleStage2Texture = new TextureRegion(new Texture("Trees/Apple_Stage_2.png"));
         public static TextureRegion appleStage3Texture = new TextureRegion(new Texture("Trees/Apple_Stage_3.png"));
@@ -421,8 +421,8 @@ public class GamePictureManager {
         };
 
         // Pomegranate:
-        public static Texture pomegranateTexture = new Texture("Trees/Pomegranate.png");
-        public static Texture pomegranateSaplingTexture = new Texture("Trees/Pomegranate_Sapling.png");
+        public static TextureRegion pomegranateTexture = new TextureRegion(new Texture("Trees/Pomegranate.png"));
+        public static TextureRegion pomegranateSaplingTexture = new TextureRegion(new Texture("Trees/Pomegranate_Sapling.png"));
         public static TextureRegion pomegranateStage1Texture = new TextureRegion(new Texture("Trees/Pomegranate_Stage_1.png"));
         public static TextureRegion pomegranateStage2Texture = new TextureRegion(new Texture("Trees/Pomegranate_Stage_2.png"));
         public static TextureRegion pomegranateStage3Texture = new TextureRegion(new Texture("Trees/Pomegranate_Stage_3.png"));
@@ -445,8 +445,8 @@ public class GamePictureManager {
 
 
         // Oak:
-        public static Texture oakResinTexture = new Texture("Trees/Oak_Resin.png");   //fruit
-        public static Texture acornTexture = new Texture("Trees/Acorn.png");          //source
+        public static TextureRegion oakResinTexture = new TextureRegion(new Texture("Trees/Oak_Resin.png")); //fruit
+        public static TextureRegion acornTexture = new TextureRegion(new Texture("Trees/Acorn.png"));        //source
         public static TextureRegion oakStage1Texture = new TextureRegion(new Texture("Trees/Oak_Stage_1.png"));
         public static TextureRegion oakStage2Texture = new TextureRegion(new Texture("Trees/Oak_Stage_2.png"));
         public static TextureRegion oakStage3Texture = new TextureRegion(new Texture("Trees/Oak_Stage_3.png"));
@@ -468,8 +468,8 @@ public class GamePictureManager {
 
 
         // Maple:
-        public static Texture mapleSyrupTexture = new Texture("Trees/Maple_Syrup.png");  //fruit
-        public static Texture mapleSeedsTexture = new Texture("Trees/Maple_Seed.png");   //source
+        public static TextureRegion mapleSyrupTexture = new TextureRegion(new Texture("Trees/Maple_Syrup.png"));  //fruit
+        public static TextureRegion mapleSeedsTexture = new TextureRegion(new Texture("Trees/Maple_Seed.png"));   //source
         public static TextureRegion mapleStage1Texture = new TextureRegion(new Texture("Trees/Maple_Stage_1.png"));
         public static TextureRegion mapleStage2Texture = new TextureRegion(new Texture("Trees/Maple_Stage_2.png"));
         public static TextureRegion mapleStage3Texture = new TextureRegion(new Texture("Trees/Maple_Stage_3.png"));
@@ -490,8 +490,8 @@ public class GamePictureManager {
         };
 
         // Pine:
-        public static Texture pineTarTexture = new Texture("Trees/Pine_Tar.png");    //fruit
-        public static Texture pineConeTexture = new Texture("Trees/Pine_Cone.png");  //source
+        public static TextureRegion pineTarTexture = new TextureRegion(new Texture("Trees/Pine_Tar.png"));    //fruit
+        public static TextureRegion pineConeTexture = new TextureRegion(new Texture("Trees/Pine_Cone.png"));  //source
         public static TextureRegion pineStage1Texture = new TextureRegion(new Texture("Trees/Pine_Stage_1.png"));
         public static TextureRegion pineStage2Texture = new TextureRegion(new Texture("Trees/Pine_Stage_2.png"));
         public static TextureRegion pineStage3Texture = new TextureRegion(new Texture("Trees/Pine_Stage_3.png"));
@@ -512,8 +512,8 @@ public class GamePictureManager {
         };
 
         // Mahogany:
-        public static Texture sapTexture = new Texture("Trees/Sap.png");                     //fruit
-        public static Texture mahoganySeedTexture = new Texture("Trees/Mahogany_Seed.png");  //source
+        public static TextureRegion sapTexture = new TextureRegion(new Texture("Trees/Sap.png"));    //fruit
+        public static TextureRegion mahoganySeedTexture = new TextureRegion(new Texture("Trees/Mahogany_Seed.png"));  //source
         public static TextureRegion mahoganyStage1Texture = new TextureRegion(new Texture("Trees/Mahogany_Stage_1.png"));
         public static TextureRegion mahoganyStage2Texture = new TextureRegion(new Texture("Trees/Mahogany_Stage_2.png"));
         public static TextureRegion mahoganyStage3Texture = new TextureRegion(new Texture("Trees/Mahogany_Stage_3.png"));
@@ -534,8 +534,8 @@ public class GamePictureManager {
         };
 
         // MushroomTree:
-        public static Texture commonMushroom = new Texture("Trees/Common_Mushroom.png");             //fruit
-        public static Texture mushroomTreeSeedTexture = new Texture("Trees/Mushroom_Tree_Seed.png"); //source
+        public static TextureRegion commonMushroom = new TextureRegion(new Texture("Trees/Common_Mushroom.png"));   //fruit
+        public static TextureRegion mushroomTreeSeedTexture = new TextureRegion(new Texture("Trees/Mushroom_Tree_Seed.png")); //source
         public static TextureRegion mushroomTreeStage1Texture = new TextureRegion(new Texture("Trees/MushroomTree_Stage_1.png"));
         public static TextureRegion mushroomTreeStage2Texture = new TextureRegion(new Texture("Trees/MushroomTree_Stage_2.png"));
         public static TextureRegion mushroomTreeStage3Texture = new TextureRegion(new Texture("Trees/MushroomTree_Stage_3.png"));
@@ -550,8 +550,8 @@ public class GamePictureManager {
         };
 
         // Mystic_Tree
-        public static Texture mysticSyrupTexture = new Texture("Trees/Mystic_Syrup.png");           //fruit
-        public static Texture mysticTreeSeedTexture = new Texture("Trees/Mystic_Tree_Seed.png"); //source
+        public static TextureRegion mysticSyrupTexture = new TextureRegion(new Texture("Trees/Mystic_Syrup.png"));     //fruit
+        public static TextureRegion mysticTreeSeedTexture = new TextureRegion(new Texture("Trees/Mystic_Tree_Seed.png")); //source
         public static TextureRegion mysticTreeStage1Texture = new TextureRegion(new Texture("Trees/Mystic_Tree_Stage_1.png"));
         public static TextureRegion mysticTreeStage2Texture = new TextureRegion(new Texture("Trees/Mystic_Tree_Stage_2.png"));
         public static TextureRegion mysticTreeStage3Texture = new TextureRegion(new Texture("Trees/Mystic_Tree_Stage_3.png"));
