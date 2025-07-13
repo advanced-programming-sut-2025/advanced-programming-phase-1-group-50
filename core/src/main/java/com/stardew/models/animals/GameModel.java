@@ -2,6 +2,7 @@ package com.stardew.models.animals;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.stardew.Main;
 import com.stardew.controller.PlayerController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
@@ -93,5 +94,9 @@ public class GameModel {
 
     public PlayerController getPlayerController() {
         return playerController;
+    }
+
+    public AnimalsManager getAnimalsManager() {
+        return animalsManager;
     }
 }
