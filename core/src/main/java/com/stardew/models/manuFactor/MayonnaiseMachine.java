@@ -41,7 +41,7 @@ public class MayonnaiseMachine extends ArtisanMachine {
                 }
                 return new Result(false, "You don't have enough Ingredients!");
             }
-            case "Duck_Mayonnaise", "duck_mayonnaise" -> {
+            case "DuckMayonnaise" -> {
                 for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                     if (ingredient instanceof AnimalGood animalGood && animalGood.getType().equals(AnimalGoodType.DuckEgg)) {
 
@@ -57,7 +57,7 @@ public class MayonnaiseMachine extends ArtisanMachine {
                 }
                 return new Result(false, "You don't have enough Ingredients!");
             }
-            case "Dinosaur_Mayonnaise", "dinosaur_mayonnaise" -> {
+            case "DinosaurMayonnaise" -> {
                 for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                     if (ingredient instanceof AnimalGood animalGood && animalGood.getType().equals(AnimalGoodType.DinosaurEgg)) {
 

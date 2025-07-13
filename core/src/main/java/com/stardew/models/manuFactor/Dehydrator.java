@@ -44,7 +44,7 @@ public class Dehydrator extends ArtisanMachine {
     @Override
     public Result canUse(Player player, String product) {
         switch (product) {
-            case "Dried_Mushroom", "dried_mushroom" -> {
+            case "DriedMushroom" -> {
                 for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
 
                     if (ingredient.equals(ForagingCrop.CommonMushroom) ||
@@ -65,7 +65,7 @@ public class Dehydrator extends ArtisanMachine {
                 }
                 return new Result(false, "You don't have enough Ingredients!");
             }
-            case "Dried_Fruit", "dried_fruit" -> {
+            case "DriedFruit" -> {
                 for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
 
                     if (ingredient instanceof Fruit ||
@@ -90,7 +90,7 @@ public class Dehydrator extends ArtisanMachine {
                 }
                 return new Result(false, "You don't have enough Ingredients!");
             }
-            case "Raisins", "raisins" -> {
+            case "Raisins" -> {
                 for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
 
                     if (ingredient instanceof Crop crop && crop.getType().equals(CropType.Grape)) {

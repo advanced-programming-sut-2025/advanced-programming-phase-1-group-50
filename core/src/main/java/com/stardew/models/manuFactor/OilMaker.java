@@ -24,7 +24,7 @@ public class OilMaker extends ArtisanMachine {
 
     @Override
     public Result canUse(Player player, String product) {
-        if (product.equals("Truffle_Oil") || product.equals("truffle_oil")) {
+        if (product.equalsIgnoreCase("TruffleOil")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                 if (ingredient instanceof AnimalGood animalGood && animalGood.getType().equals(AnimalGoodType.Truffle)) {
 
@@ -40,7 +40,7 @@ public class OilMaker extends ArtisanMachine {
             }
             return new Result(false, "You don't have enough Ingredients!");
         }
-        else if (product.equals("Oil") || product.equals("oil")) {
+        else if (product.equalsIgnoreCase("Oil")) {
             for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                 if (ingredient instanceof Crop crop && crop.getType().equals(CropType.Corn)) {
                     player.getBackpack().removeIngredients(ingredient, 1);

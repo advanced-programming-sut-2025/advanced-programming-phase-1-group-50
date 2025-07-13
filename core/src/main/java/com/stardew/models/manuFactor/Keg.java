@@ -110,7 +110,7 @@ public class Keg extends ArtisanMachine {
                 }
                 return new Result(false, "You don't have enough Ingredients!");
             }
-            case "Pale_Ale", "pale_ale" -> {
+            case "PaleAle", "pale_ale" -> {
                 for (Ingredient ingredient : player.getBackpack().getIngredientQuantity().keySet()) {
                     if (ingredient instanceof Crop crop && crop.getType().equals(CropType.Hops)) {
 
