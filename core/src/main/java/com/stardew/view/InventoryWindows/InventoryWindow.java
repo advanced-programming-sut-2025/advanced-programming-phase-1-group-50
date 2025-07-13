@@ -133,6 +133,7 @@ public class InventoryWindow extends CloseableWindow {
         socialButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                stage.addActor(new SocialWindow(stage));
                 return true;
             }
         });
@@ -152,6 +153,7 @@ public class InventoryWindow extends CloseableWindow {
         mapButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                stage.addActor(new MapWindow(stage));
                 return true;
             }
         });
@@ -161,6 +163,7 @@ public class InventoryWindow extends CloseableWindow {
         exitButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                stage.addActor(new SettingWindow(stage));
                 return true;
             }
 
