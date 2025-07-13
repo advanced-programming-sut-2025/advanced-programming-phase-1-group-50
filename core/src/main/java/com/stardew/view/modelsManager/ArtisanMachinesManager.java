@@ -7,11 +7,13 @@ import java.util.ArrayList;
 
 public class ArtisanMachinesManager {
     private ArrayList<ArtisanMachine> artisanMachines;
-    private int previousHour;
+    private int previousUpdateHour;
+    private int previousUpdateDay;
 
     public ArtisanMachinesManager() {
         artisanMachines = App.getGame().getCurrentPlayingPlayer().getBackpack().getArtisanMachines();
-        previousHour = App.getGame().getTime().getHour();
+        previousUpdateHour = App.getGame().getTime().getHour();
+        previousUpdateDay = App.getGame().getTime().getDate();
     }
 
     private void updateList() {
@@ -19,13 +21,15 @@ public class ArtisanMachinesManager {
     }
 
     private boolean isChangedTime() {
-        int now = App.getGame().getTime().getHour();
-        return now != previousHour;
+        int nowHour = App.getGame().getTime().getHour();
+        int nowDay = App.getGame().getTime().getDate();
+        return nowHour != previousUpdateHour || nowDay != previousUpdateDay;
     }
 
     public void update() {
         if (isChangedTime()) {
-            previousHour = App.getGame().getTime().getHour();
+            previousUpdateHour = App.getGame().getTime().getHour();
+            previousUpdateDay = App.getGame().getTime().getDate();
             updateList();
             for (ArtisanMachine machine : artisanMachines) {
                 machine.updateMachine();

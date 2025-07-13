@@ -52,7 +52,7 @@ public abstract class CloseableWindow extends Window {
         });
     }
 
-    protected void showResult(Result result) {
+    public void showResult(Result result) {
         Dialog dialog = new Dialog("Result", GamePictureManager.skin);
         dialog.setColor(Color.LIGHT_GRAY);
         dialog.pad(30, 5, 20, 5);
