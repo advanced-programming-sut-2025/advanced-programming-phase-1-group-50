@@ -2,7 +2,10 @@ package com.stardew.view;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.stardew.controller.AnimalsControllers.AnimalsController;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.models.userInfo.Player;
@@ -10,6 +13,8 @@ import com.stardew.view.GridMap.TileSelectionWindow;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.InventoryWindows.InventoryWindow;
 import com.stardew.view.cheatConsole.CheatWindow;
+import com.stardew.view.windows.CookingWindow;
+import com.stardew.view.windows.CraftingWindow;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -50,6 +55,21 @@ public class GameMenuInputAdapter extends InputAdapter {
         return true;
     }
 
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        Player currentPlayer = App.getGame().getCurrentPlayingPlayer();
+
+        int startX = App.getGame().getMap().getFarmStartX(currentPlayer);
+        int startY = App.getGame().getMap().getFarmStartY(currentPlayer);
+
+        Vector2 stageCoords = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
+        int indexTileX = ((int)(stageCoords.x / GamePictureManager.TILE_SIZE)) + startX;
+        int indexTileY = ((int)(stageCoords.y / GamePictureManager.TILE_SIZE)) + startY;
+
+//        System.out.println("tile X: " + indexTileX + ", Y: " + indexTileY); //TODO for planting
+
+        return true;
+    }
 
     public void update(float delta) {
         Player p = App.getGame().getCurrentPlayingPlayer();
@@ -84,7 +104,23 @@ public class GameMenuInputAdapter extends InputAdapter {
         }
 
         if (justPressedKeys.contains(Input.Keys.SPACE)) {
-            stage.addActor(new TileSelectionWindow(stage));
+            stage.addActor(new TileSelectionWindow(stage, 5, 3));
+        }
+
+        if (justPressedKeys.contains(Input.Keys.B)) {
+            stage.addActor(new CraftingWindow(stage));
+        }
+
+        if (justPressedKeys.contains(Input.Keys.E)) {
+            stage.addActor(new CookingWindow(stage));
+        }
+
+        if (justPressedKeys.contains(Input.Keys.Q)) {
+            new AnimalsController().build(stage, "big_coop");
+        }
+
+        if (justPressedKeys.contains(Input.Keys.I)) {
+            System.out.println(new AnimalsController().buyAnimal("Goat", "amir2"));
         }
 
         if(justPressedKeys.contains(Input.Keys.ESCAPE)){
