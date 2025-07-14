@@ -8,9 +8,9 @@ import java.util.HashMap;
 public enum ArtisanGoodType {
     Honey(75, 350, GamePictureManager.honeyTexture),
     CheeseByMilk(100, 230, GamePictureManager.cheeseTexture),
-    CheeseByLargeMilk(100, 345, GamePictureManager.cheeseTexture),
+    CheeseByLargeMilk(100, 345, GamePictureManager.cheeseByLargeMilkTexture),
     GoatCheeseByMilk(100, 400, GamePictureManager.goatCheeseTexture),
-    GoatCheeseByLargeMilk(100, 600, GamePictureManager.goatCheeseTexture),
+    GoatCheeseByLargeMilk(100, 600, GamePictureManager.goatCheeseByLargeMilkTexture),
     Beer(50, 200, GamePictureManager.beerTexture),
     Vinegar(13, 100, GamePictureManager.vinegarTexture),
     Coffee(75, 150, GamePictureManager.coffeeTexture),

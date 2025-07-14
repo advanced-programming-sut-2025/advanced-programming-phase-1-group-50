@@ -1,17 +1,20 @@
 package com.stardew.controller.CookingAndCraftingControllers;
 
+import com.stardew.models.InventoryItem;
 import com.stardew.models.Result;
 import com.stardew.models.animals.AnimalGood;
 import com.stardew.models.animals.Fish;
 import com.stardew.models.app.App;
+import com.stardew.models.cooking.Eatable;
 import com.stardew.models.cooking.Food;
 import com.stardew.models.cooking.Refrigerator;
 import com.stardew.models.foraging.Crop;
+import com.stardew.models.foraging.ForagingMineral;
 import com.stardew.models.manuFactor.Ingredient;
+import com.stardew.models.manuFactor.artisanGoods.ArtisanGood;
 import com.stardew.models.recipes.CookingRecipe;
 import com.stardew.models.userInfo.Player;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -35,7 +38,7 @@ public class CookingController {
             return new Result(true, "You put <" + itemName + "> successfully in refrigerator!");
         }
         else {
-            if (!player.getBackpack().getRefrigerator().containFood(food))
+            if (!player.getBackpack().getRefrigerator().containEatable(food))
                 return new Result(false, "You don't have this food in the Refrigerator!");
             if (!player.getBackpack().hasCapacity())
                 return new Result(false, "You don't have enough space in the Backpack!");
@@ -43,6 +46,47 @@ public class CookingController {
             player.getBackpack().addIngredients(food, 1);
             return new Result(true, "You pickUp <" + itemName + "> successfully!");
         }
+    }
+
+    public Result putInRefrigerator(InventoryItem item) {
+        if (item == null)
+            return new Result(false, "item not found!");
+        if (!(item instanceof Eatable eatable) || eatable.getEnergy() == 0) {
+            if (item instanceof ForagingMineral)
+                System.out.println("ForagingMineral");
+            if (item instanceof ArtisanGood)
+                System.out.println("ArtisanGood");
+
+            return new Result(false, "This item is not eatable! You cannot put it in refrigerator!!");
+        }
+
+        Player player = App.getGame().getCurrentPlayingPlayer();
+        Refrigerator refrigerator = player.getBackpack().getRefrigerator();
+
+        if (!player.getBackpack().getIngredientQuantity().containsKey(eatable))
+            return new Result(false, "You don't have this item in the backpack!");
+        if (!player.getBackpack().getRefrigerator().hasCapacity())
+            return new Result(false, "You don't have enough capacity in refrigerator!");
+        player.getBackpack().removeIngredients(eatable, 1);
+        refrigerator.addItem(eatable, 1);
+        return new Result(true, "You put <" + eatable + "> successfully in refrigerator!");
+    }
+
+    public Result pickFromRefrigerator(Eatable eatable) {
+        if (eatable == null)
+            return new Result(false, "Eatable not found!");
+
+        Player player = App.getGame().getCurrentPlayingPlayer();
+        Refrigerator refrigerator = player.getBackpack().getRefrigerator();
+
+        if (!player.getBackpack().getRefrigerator().containEatable(eatable))
+            return new Result(false, "You don't have this item in the Refrigerator!");
+        if (!player.getBackpack().hasCapacity())
+            return new Result(false, "You don't have enough space in the Backpack!");
+        refrigerator.removeItem(eatable, 1);
+        player.getBackpack().addIngredients(eatable, 1);
+        return new Result(true, "You pickUp <" + eatable + "> successfully!");
+
     }
 
     public Result cookingShowRecipes() {
@@ -109,20 +153,21 @@ public class CookingController {
         return null;
     }
 
-    public Result eat(String foodName) {
-        Food food = Food.getFoodByName(foodName);
-        Player player = App.getGame().getCurrentPlayingPlayer();
+    public Result eat(Eatable item) {
+        if (item == null)
+            return new Result(false, "item not found!");
 
-        if (food == null)
-            return new Result(false, "Food <" + foodName + "> not found!");
-        if (player.getBackpack().getIngredientQuantity().containsKey(food)) {
-            player.getBackpack().removeIngredients(food, 1);
-            player.addEnergy(food.getEnergy());
+        Player player = App.getGame().getCurrentPlayingPlayer();
+        Refrigerator refrigerator = player.getBackpack().getRefrigerator();
+
+        if (refrigerator.containEatable(item)) {
+            refrigerator.removeItem(item, 1);
+            player.addEnergy(item.getEnergy());
             return new Result(true,
-                    "You eat <" + food + "> successfully!And increased your energy " + food.getEnergy() + "!");
+                    "You eat <" + item + "> successfully!And increased your energy " + item.getEnergy() + "!");
         }
         else
-            return new Result(false, "You don't have Food <" + food + "> in your backpack!");
+            return new Result(false, "You don't have Item <" + item + "> in your backpack!");
     }
 
 }

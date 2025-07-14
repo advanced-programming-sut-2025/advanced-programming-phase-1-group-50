@@ -1,12 +1,13 @@
 package com.stardew.models.manuFactor.artisanGoods;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stardew.models.cooking.Eatable;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.stores.Sellable;
 
 import java.util.Objects;
 
-public class ArtisanGood implements Ingredient, Sellable {
+public class ArtisanGood implements Ingredient, Sellable, Eatable {
     private final ArtisanGoodType type;
     private final int energy;
     private final int sellPrice;
