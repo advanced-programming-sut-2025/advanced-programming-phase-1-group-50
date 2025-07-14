@@ -1297,6 +1297,79 @@ public class GamePictureManager {
         public static Texture mixedSeedsTexture = new Texture("Crops/Mixed_Seeds.png");
 
 
+    //ForagingCrops:
+
+        public static TextureRegion daffodil = new TextureRegion(new Texture("Foraging/Daffodil.png"));
+        public static TextureRegion dandelion = new TextureRegion(new Texture("Foraging/Dandelion.png"));
+        public static TextureRegion leek = new TextureRegion(new Texture("Foraging/Leek.png"));
+        public static TextureRegion morel = new TextureRegion(new Texture("Foraging/Morel.png"));
+        public static TextureRegion salmonBerry = new TextureRegion(new Texture("Foraging/SalmonBerry.png"));
+        public static TextureRegion springOnion = new TextureRegion(new Texture("Foraging/Spring_Onion.png"));
+        public static TextureRegion wildHorseradish = new TextureRegion(new Texture("Foraging/Wild_Horseradish.png"));
+        public static TextureRegion fiddleHeadFern = new TextureRegion(new Texture("Foraging/Fiddlehead_Fern.png"));
+        public static TextureRegion grape = new TextureRegion(new Texture("Foraging/Grape.png"));
+        public static TextureRegion redMushroom = new TextureRegion(new Texture("Foraging/Red_Mushroom.png"));
+        public static TextureRegion spiceBerry = new TextureRegion(new Texture("Foraging/Spice_Berry.png"));
+        public static TextureRegion sweetPea = new TextureRegion(new Texture("Foraging/Sweet_Pea.png"));
+        public static TextureRegion blackberry = new TextureRegion(new Texture("Foraging/Blackberry.png"));
+        public static TextureRegion chanterelle = new TextureRegion(new Texture("Foraging/Chanterelle.png"));
+        public static TextureRegion hazelnut = new TextureRegion(new Texture("Foraging/Hazelnut.png"));
+        public static TextureRegion purpleMushroom = new TextureRegion(new Texture("Foraging/Purple_Mushroom.png"));
+        public static TextureRegion wildPlum = new TextureRegion(new Texture("Foraging/Wild_Plum.png"));
+        public static TextureRegion crocus = new TextureRegion(new Texture("Foraging/Crocus.png"));
+        public static TextureRegion crystalFruit = new TextureRegion(new Texture("Foraging/Crystal_Fruit.png"));
+        public static TextureRegion holly = new TextureRegion(new Texture("Foraging/Holly.png"));
+        public static TextureRegion snowYam = new TextureRegion(new Texture("Foraging/Snow_Yam.png"));
+        public static TextureRegion winterRoot = new TextureRegion(new Texture("Foraging/Winter_Root.png"));
+
+
+    //Fertilizer:
+        public static TextureRegion waterFertilizer = new TextureRegion(new Texture("Fertilizer/Basic_Retaining_Soil.png"));
+        public static TextureRegion growthFertilizer = new TextureRegion(new Texture("Fertilizer/Hyper_Speed-Gro.png"));
+
+    //Minerals:
+        public static TextureRegion quartz = new TextureRegion(new Texture("Mineral/Quartz.png"));
+        public static TextureRegion earthCrystal = new TextureRegion(new Texture("Mineral/Earth_Crystal.png"));
+        public static TextureRegion frozenTear = new TextureRegion(new Texture("Mineral/Frozen_Tear.png"));
+        public static TextureRegion fireQuartz = new TextureRegion(new Texture("Mineral/Fire_Quartz.png"));
+        public static TextureRegion emerald = new TextureRegion(new Texture("Gem/Emerald.png"));
+        public static TextureRegion aquamarine = new TextureRegion(new Texture("Gem/Aquamarine.png"));
+        public static TextureRegion ruby = new TextureRegion(new Texture("Gem/Ruby.png"));
+        public static TextureRegion amethyst = new TextureRegion(new Texture("Gem/Amethyst.png"));
+        public static TextureRegion topaz = new TextureRegion(new Texture("Gem/Topaz.png"));
+        public static TextureRegion jade = new TextureRegion(new Texture("Gem/Jade.png"));
+        public static TextureRegion diamond = new TextureRegion(new Texture("Gem/Diamond.png"));
+        public static TextureRegion prismaticShard = new TextureRegion(new Texture("Gem/Prismatic_Shard.png"));
+        public static TextureRegion copperOre = new TextureRegion(new Texture("Resource/Copper_Ore.png"));
+        public static TextureRegion ironOre = new TextureRegion(new Texture("Resource/Iron_Ore.png"));
+        public static TextureRegion goldOre = new TextureRegion(new Texture("Resource/Gold_Ore.png"));
+        public static TextureRegion iridiumOre = new TextureRegion(new Texture("Resource/Iridium_Ore.png"));
+        public static TextureRegion coalMineral = new TextureRegion(new Texture("Resource/Coal.png"));
+
+
+    //Fish:
+        public static TextureRegion salmon = new TextureRegion(new Texture("Fish/Salmon.png"));
+        public static TextureRegion sardine = new TextureRegion(new Texture("Fish/Sardine.png"));
+        public static TextureRegion shad = new TextureRegion(new Texture("Fish/Shad.png"));
+        public static TextureRegion blueDiscus = new TextureRegion(new Texture("Fish/Blue_Discus.png"));
+        public static TextureRegion midnightCarp = new TextureRegion(new Texture("Fish/Midnight_Carp.png"));
+        public static TextureRegion squid = new TextureRegion(new Texture("Fish/Squid.png"));
+        public static TextureRegion tuna = new TextureRegion(new Texture("Fish/Tuna.png"));
+        public static TextureRegion perch = new TextureRegion(new Texture("Fish/Perch.png"));
+        public static TextureRegion flounder = new TextureRegion(new Texture("Fish/Flounder.png"));
+        public static TextureRegion lionfish = new TextureRegion(new Texture("Fish/Lionfish.png"));
+        public static TextureRegion herring = new TextureRegion(new Texture("Fish/Herring.png"));
+        public static TextureRegion ghostfish = new TextureRegion(new Texture("Fish/Ghostfish.png"));
+        public static TextureRegion tilapia = new TextureRegion(new Texture("Fish/Tilapia.png"));
+        public static TextureRegion dorado = new TextureRegion(new Texture("Fish/Dorado.png"));
+        public static TextureRegion sunfish = new TextureRegion(new Texture("Fish/Sunfish.png"));
+        public static TextureRegion rainbowTrout = new TextureRegion(new Texture("Fish/Rainbow_Trout.png"));
+        public static TextureRegion legend = new TextureRegion(new Texture("Fish/Legend.png"));
+        public static TextureRegion glacierfish = new TextureRegion(new Texture("Fish/Glacierfish.png"));
+        public static TextureRegion angler = new TextureRegion(new Texture("Fish/Angler.png"));
+        public static TextureRegion crimsonfish = new TextureRegion(new Texture("Fish/Crimsonfish.png"));
+
+
     // Animals :
 
         //Chicken :
@@ -1573,7 +1646,7 @@ public class GamePictureManager {
     public static TextureRegion emptyTile = new TextureRegion(new Texture("Tile_Selection/Empty_Tile.png"));
     public static TextureRegion selectedTile = new TextureRegion(new Texture("Tile_Selection/Selected_Tile.png"));
 
-    public static TextureRegion coinTexture = new TextureRegion(new Texture("Gem/Diamond.png"));
+    public static TextureRegion coinTexture = new TextureRegion(new Texture("Gold.png"));
 
     public static TextureRegion hoeTexture = new TextureRegion(new Texture("Hoe/Hoe.png"));
     public static TextureRegion copperHoeTexture = new TextureRegion(new Texture("Hoe/Copper_Hoe.png"));
