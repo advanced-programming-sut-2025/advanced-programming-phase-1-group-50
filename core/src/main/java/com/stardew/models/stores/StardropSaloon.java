@@ -53,11 +53,6 @@ public class StardropSaloon extends Store {
     @Override
     public ArrayList<ShopItem> showAllProducts() {
         return (ArrayList<ShopItem>) inventory.clone();
-//        StringBuilder message = new StringBuilder("StardopSaloon products:");
-//        for (ShopItem item : inventory) {
-//            message.append("\n" + "Name: ").append(item.name).append("  Price: ").append(item.getPrice());
-//        }
-//        return message.toString();
     }
 
     @Override
@@ -69,18 +64,6 @@ public class StardropSaloon extends Store {
             }
         }
         return availableProducts;
-//        StringBuilder message = new StringBuilder("StardopSaloon Available Products:");
-//        for (ShopItem item : inventory) {
-//            if (item.remainingQuantity > 0) {
-//                message.append("\nName: ").append(item.name).append("   Price: ").append(item.getPrice()).append("   Remaining: ");
-//                if (item.remainingQuantity > 10000) {
-//                    message.append("infinity");
-//                } else {
-//                    message.append(item.remainingQuantity);
-//                }
-//            }
-//        }
-//        return message.toString();
     }
 
     @Override

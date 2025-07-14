@@ -45,11 +45,6 @@ public class Blacksmith extends Store {
     @Override
     public ArrayList<ShopItem> showAllProducts() {
         return (ArrayList<ShopItem>) inventory.clone();
-//        StringBuilder message = new StringBuilder("Blacksmith products:");
-//        for (ShopItem item : inventory) {
-//            message.append("\n" + "Name: ").append(item.name).append("  Price: ").append(item.getPrice);
-//        }
-//        return message.toString();
     }
 
     @Override
@@ -61,19 +56,6 @@ public class Blacksmith extends Store {
             }
         }
         return availableProducts;
-//        StringBuilder message = new StringBuilder("Blacksmith Available Products:");
-//        for (ShopItem item : inventory) {
-//            if (item.remainingQuantity > 0) {
-//                message.append("\nName: ").append(item.name).append("   Price: ").append(item.getPrice).append("   " +
-//                        "Remaining: ");
-//                if (item.remainingQuantity > 10000) {
-//                    message.append("infinity");
-//                } else {
-//                    message.append(item.remainingQuantity);
-//                }
-//            }
-//        }
-//        return message.toString();
     }
 
 
@@ -132,7 +114,7 @@ public class Blacksmith extends Store {
                 value);
         item.decreaseRemainingQuantity(value);
 
-        return new Result(true, "You successfully purchased " + value + "number(s) of " + productName);
+        return new Result(true, "You successfully purchased " + value + " number(s) of " + productName);
 
     }
 

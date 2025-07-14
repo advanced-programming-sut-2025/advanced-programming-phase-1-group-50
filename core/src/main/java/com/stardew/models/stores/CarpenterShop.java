@@ -53,11 +53,6 @@ public class CarpenterShop extends Store {
     @Override
     public ArrayList<ShopItem> showAllProducts() {
         return (ArrayList<ShopItem>) inventory.clone();
-//        StringBuilder message = new StringBuilder("CarpenterShop products:");
-//        for (ShopItem item : inventory) {
-//            message.append("\n" + "Name: ").append(item.name).append("  Price: ").append(item.getPrice());
-//        }
-//        return message.toString();
     }
 
     @Override
@@ -69,20 +64,6 @@ public class CarpenterShop extends Store {
             }
         }
         return availableProducts;
-
-//        StringBuilder message = new StringBuilder("CarpenterShop Available Products:");
-//        for (ShopItem item : inventory) {
-//            if (item.remainingQuantity > 0) {
-//                message.append("\nName: ").append(item.name).append("   Price: ").append(item.getPrice()).append("   " +
-//                        "Remaining: ");
-//                if (item.remainingQuantity > 10000) {
-//                    message.append("infinity");
-//                } else {
-//                    message.append(item.remainingQuantity);
-//                }
-//            }
-//        }
-//        return message.toString();
     }
 
     public Result purchaseBuilding(HabitatType type, HabitatSize size) {
