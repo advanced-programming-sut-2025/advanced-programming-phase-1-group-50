@@ -26,10 +26,13 @@ public class GameMenuInputAdapter extends InputAdapter {
     private boolean showingMap = false;
     private Stage stage;
     private HotBarActor hotBar;
+    private int indexTileX;
+    private int indexTileY;
 
 
     public GameMenuInputAdapter(GameModel model) {
         this.model = model;
+        this.model.getToolManager().setAdapter(this);
     }
 
     @Override
@@ -63,10 +66,12 @@ public class GameMenuInputAdapter extends InputAdapter {
         int startY = App.getGame().getMap().getFarmStartY(currentPlayer);
 
         Vector2 stageCoords = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
-        int indexTileX = ((int)(stageCoords.x / GamePictureManager.TILE_SIZE)) + startX;
-        int indexTileY = ((int)(stageCoords.y / GamePictureManager.TILE_SIZE)) + startY;
+        indexTileX = ((int)(stageCoords.x / GamePictureManager.TILE_SIZE)) + startX;
+        indexTileY = ((int)(stageCoords.y / GamePictureManager.TILE_SIZE)) + startY;
 
-//        System.out.println("tile X: " + indexTileX + ", Y: " + indexTileY); //TODO for planting
+        model.getToolManager().useTool();
+
+        //System.out.println("tile X: " + indexTileX + ", Y: " + indexTileY); //TODO for planting
 
         return true;
     }
@@ -181,5 +186,13 @@ public class GameMenuInputAdapter extends InputAdapter {
             }
         }
         return true;
+    }
+
+    public int getIndexTileX() {
+        return indexTileX;
+    }
+
+    public int getIndexTileY() {
+        return indexTileY;
     }
 }

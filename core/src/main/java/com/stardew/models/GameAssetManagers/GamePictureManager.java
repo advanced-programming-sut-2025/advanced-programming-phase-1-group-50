@@ -1606,6 +1606,8 @@ public class GamePictureManager {
     public static TextureRegionDrawable foragingTextureDrawable = new TextureRegionDrawable
         (new TextureRegion(new Texture("Inventory/Dandelion.png")));
 
+    public static TextureRegion plowedTile = new TextureRegion(new Texture("PlowedTile.png"));
+
 
 
 

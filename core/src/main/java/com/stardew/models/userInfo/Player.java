@@ -12,10 +12,7 @@ import com.stardew.models.mapInfo.Farm;
 import com.stardew.models.mapInfo.Pair;
 import com.stardew.models.mapInfo.Position;
 import com.stardew.models.mapInfo.Wood;
-import com.stardew.models.tools.Axe;
-import com.stardew.models.tools.Hoe;
-import com.stardew.models.tools.Pickaxe;
-import com.stardew.models.tools.Tool;
+import com.stardew.models.tools.*;
 import com.stardew.models.app.*;
 
 import java.util.ArrayList;
@@ -70,8 +67,10 @@ public class Player {
         Axe axe = new Axe();
         Hoe hoe = new Hoe();
         Pickaxe pickaxe = new Pickaxe();
+        Scythe scythe = new Scythe();
         this.backpack.setPlayer(this);
         this.backpack.getTools().add(hoe);
+        this.backpack.getTools().add(scythe);
         this.backpack.getTools().add(pickaxe);
         this.backpack.getTools().add(axe);
         for(Tool tool : backpack.getTools()) {
@@ -140,7 +139,8 @@ public class Player {
 
     public Result faint() {
         isFaintedToday = true;
-        return App.getGame().nextPlayerTurn();
+       // return App.getGame().nextPlayerTurn();
+        return new Result(false , "");
     }
 
     public Tool getCurrentTool() {
@@ -207,11 +207,11 @@ public class Player {
         this.energy -= energy;
         consumedEnergyInTurn += energy;
 
-        if (consumedEnergyInTurn >= 50 && this.energy > 0){
-            Result result = App.getGame().nextPlayerTurn();
-            return new Result(false,
-                    "You consumed " + consumedEnergyInTurn + " energy in your turn! The turn will be changed!\n" + result);
-        }
+//        if (consumedEnergyInTurn >= 50 && this.energy > 0){
+//            Result result = App.getGame().nextPlayerTurn();
+//            return new Result(false,
+//                    "You consumed " + consumedEnergyInTurn + " energy in your turn! The turn will be changed!\n" + result);
+//        }
         if (this.energy <= 0){
             this.energy = 0;
             Result result = faint();

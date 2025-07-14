@@ -19,12 +19,14 @@ public class Tile {
     private Fertilizer fertilizer = null;
     private TextureRegion texture ;
     private TextureRegion backgroundTexture ;
+    private final TextureRegion pastTexture;
     public Tile(Position position) {
         this.position = position;
         this.gotThunder = false;
         this.walkable = true;
         texture = new TextureRegion(getRandomDefaultTexture());
         backgroundTexture = new TextureRegion(getRandomDefaultTexture());
+        pastTexture = backgroundTexture;
 
     }
     public void setPosition(Position position) {
@@ -71,6 +73,13 @@ public class Tile {
 
     public void setPlowed(boolean plowed) {
         isPlowed = plowed;
+        if(plowed){
+
+            this.backgroundTexture = GamePictureManager.plowedTile;
+        }
+        else {
+            this.backgroundTexture = pastTexture;
+        }
     }
 
     public Fertilizer getFertilizer() {
