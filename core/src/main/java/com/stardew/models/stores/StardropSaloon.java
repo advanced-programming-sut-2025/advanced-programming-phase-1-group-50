@@ -1,7 +1,6 @@
 package com.stardew.models.stores;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
@@ -119,7 +118,7 @@ public class StardropSaloon extends Store {
 
         App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), (-1) * totalPrice);
         item.decreaseRemainingQuantity(value);
-        return new Result(true, "You successfully purchased " + value + "number(s) of " + productName);
+        return new Result(true, "You successfully purchased " + value + " number(s) of " + productName);
 
     }
 

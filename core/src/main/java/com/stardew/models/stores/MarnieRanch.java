@@ -1,7 +1,6 @@
 package com.stardew.models.stores;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
@@ -9,7 +8,6 @@ import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.animals.AnimalType;
 import com.stardew.models.app.App;
-import com.stardew.models.app.Game;
 import com.stardew.models.tools.MilkPail;
 import com.stardew.models.tools.Shear;
 import com.stardew.models.userInfo.Coin;

@@ -189,7 +189,7 @@ public class CarpenterShop extends Store {
         App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), (-1) * totalPrice);
         item.decreaseRemainingQuantity(value);
 
-        return new Result(true, "You successfully purchased " + value + "number(s) of " + productName);
+        return new Result(true, "You successfully purchased " + value + " number(s) of " + productName);
 
     }
 

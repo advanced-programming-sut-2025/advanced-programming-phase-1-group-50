@@ -1,7 +1,6 @@
 package com.stardew.models.stores;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
@@ -112,7 +111,7 @@ public class FishShop extends Store {
 
         }
 
-        return new Result(true, "You successfully purchased " + value + "number(s) of " + productName);
+        return new Result(true, "You successfully purchased " + value + " number(s) of " + productName);
 
     }
 
