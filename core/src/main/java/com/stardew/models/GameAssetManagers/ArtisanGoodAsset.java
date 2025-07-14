@@ -19,7 +19,7 @@ public enum ArtisanGoodAsset {
         "CheesePress"),
 
     DriedMushroom(new Image(GamePictureManager.driedMushroomsTexture),
-        "DriedMushroom\n----------\n 5 Mushrooms\n----------\n Next morning\n----------\n 50 Energy",
+        "DriedMushroom\n----------\n 5 Mushrooms\n (Common, Red, Purple)\n----------\n Next morning\n----------\n 50 Energy",
         "Dehydrator"),
     DriedFruit(new Image(GamePictureManager.driedFruitTexture),
         "DriedFruit\n----------\n 5 Fruit\n----------\n Next morning\n----------\n 75 Energy",
@@ -83,16 +83,16 @@ public enum ArtisanGoodAsset {
         "PreservesJar"),
 
     IronBar(new Image(GamePictureManager.ironBarTexture),
-        "IronBar\n----------\n 5 Any Ore\n 1 Coal\n----------\n 4 Hours\n----------\n Inedible",
+        "IronBar\n----------\n 5 iron (mineral)\n 1 Coal\n----------\n 4 Hours\n----------\n Inedible",
         "Furnace"),
     IridiumBar(new Image(GamePictureManager.iridiumBarTexture),
-        "IridiumBar\n----------\n 5 Any Ore\n 1 Coal\n----------\n 4 Hours\n----------\n Inedible",
+        "IridiumBar\n----------\n 5 iridium (mineral)\n 1 Coal\n----------\n 4 Hours\n----------\n Inedible",
         "Furnace"),
     CopperBar(new Image(GamePictureManager.copperBarTexture),
-        "CopperBar\n----------\n 5 Any Ore\n 1 Coal\n----------\n 4 Hours\n----------\n Inedible",
+        "CopperBar\n----------\n 5 copper (mineral)\n 1 Coal\n----------\n 4 Hours\n----------\n Inedible",
         "Furnace"),
     GoldBar(new Image(GamePictureManager.goldBarTexture),
-        "GoldBar\n----------\n 5 Any Ore\n 1 Coal\n----------\n 4 Hours\n----------\n Inedible",
+        "GoldBar\n----------\n 5 gold (mineral)\n 1 Coal\n----------\n 4 Hours\n----------\n Inedible",
         "Furnace");
 
     private final Image image;

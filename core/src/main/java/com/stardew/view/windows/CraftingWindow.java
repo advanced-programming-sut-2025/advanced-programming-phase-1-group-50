@@ -56,12 +56,9 @@ public class CraftingWindow extends CloseableWindow {
             imageButton.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    if (!imageButton.isDisabled()) {
-                        Result result = controller.craftingCraft(craftingAsset.getRecipe(), stage);
-                        showResult(result);
-                        return true;
-                    }
-                    return false;
+                    Result result = controller.craftingCraft(craftingAsset.getRecipe(), stage);
+                    showResult(result);
+                    return true;
                 }
 
                 @Override

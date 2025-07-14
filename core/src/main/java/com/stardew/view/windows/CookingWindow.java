@@ -56,12 +56,9 @@ public class CookingWindow extends CloseableWindow {
             imageButton.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    if (!imageButton.isDisabled()) {
-                        Result result = controller.cookingPrepare(cookingAsset.getRecipe());
-                        showResult(result);
-                        return true;
-                    }
-                    return false;
+                    Result result = controller.cookingPrepare(cookingAsset.getRecipe());
+                    showResult(result);
+                    return true;
                 }
 
                 @Override

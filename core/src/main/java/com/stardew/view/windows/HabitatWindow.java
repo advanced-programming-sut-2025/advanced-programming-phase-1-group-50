@@ -5,7 +5,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.stardew.controller.AnimalsControllers.AnimalsController;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.Result;
 import com.stardew.models.animals.Animal;
 import com.stardew.models.animals.Habitat;
 
@@ -25,7 +29,17 @@ public class HabitatWindow extends CloseableWindow {
 
         ArrayList<Animal> animals = habitat.getAnimals();
 
-        setSize(150, 45 + 65 * animals.size());// change dynamically
+        setSize(180, 120 + 65 * animals.size());// change dynamically
+
+        TextButton showAnimalsProductsButton = new TextButton("Animals_Products", GamePictureManager.skin);
+        showAnimalsProductsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Result result = controller.animalProduces(habitat);
+                showResult(result);
+            }
+        });
+        add(showAnimalsProductsButton).row();
 
         for (Animal animal : animals) {
             Image animalImage = new Image(animal.getType().getNormalTexture());

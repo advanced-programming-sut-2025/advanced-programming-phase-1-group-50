@@ -53,6 +53,6 @@ public class ArtisanGood implements Ingredient, Sellable {
 
     @Override
     public TextureRegion getInventoryTexture() {
-        return null;
+        return type.getTexture();
     }
 }

@@ -120,7 +120,7 @@ public class GameMenuInputAdapter extends InputAdapter {
         }
 
         if (justPressedKeys.contains(Input.Keys.I)) {
-            System.out.println(new AnimalsController().buyAnimal("Goat", "amir2"));
+            System.out.println(new AnimalsController().buyAnimal("Chicken", "amir3"));
         }
 
         if(justPressedKeys.contains(Input.Keys.ESCAPE)){

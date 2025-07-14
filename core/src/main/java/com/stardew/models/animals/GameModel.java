@@ -50,7 +50,7 @@ public class GameModel {
         float viewHalfWidth = camera.viewportWidth / 2;
         float viewHalfHeight = camera.viewportHeight / 2;
 
-        float border = GamePictureManager.TILE_SIZE * 2;
+        float border = GamePictureManager.TILE_SIZE * 5;
 
         if(playerX < cameraX - viewHalfWidth + border){
             cameraX = playerX + viewHalfWidth - border;
