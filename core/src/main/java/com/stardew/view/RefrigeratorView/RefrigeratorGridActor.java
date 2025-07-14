@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
-import com.stardew.models.cooking.Food;
+import com.stardew.models.cooking.Eatable;
 import com.stardew.models.cooking.Refrigerator;
 import com.stardew.view.windows.SmartTooltip;
 
@@ -64,7 +64,7 @@ public class RefrigeratorGridActor extends Actor {
                     String info = "";
                     if (cellX >= 0 && cellX < cols && cellY >= 0 && cellY < rows) {
                         if (items[cellX][cellY].occupied) {
-                            info = items[cellX][cellY].eatableItem.name();
+                            info = items[cellX][cellY].eatableItem.toString();
                         }
                     }
                     if (!info.isEmpty())
@@ -78,8 +78,8 @@ public class RefrigeratorGridActor extends Actor {
 
     private void initializeGrid() {
         Refrigerator refrigerator = App.getGame().getCurrentPlayingPlayer().getBackpack().getRefrigerator();
-        HashMap<Food, Integer> itemQuantity = refrigerator.getFoodQuantity();
-        ArrayList<Food> itemsInRefrigerator = new ArrayList<>(itemQuantity.keySet());
+        HashMap<Eatable, Integer> itemQuantity = refrigerator.getItemsQuantity();
+        ArrayList<Eatable> itemsInRefrigerator = new ArrayList<>(itemQuantity.keySet());
         int size = itemsInRefrigerator.size();
         int index = 0;
 
@@ -100,8 +100,8 @@ public class RefrigeratorGridActor extends Actor {
 
     public void update() {
         Refrigerator refrigerator = App.getGame().getCurrentPlayingPlayer().getBackpack().getRefrigerator();
-        HashMap<Food, Integer> itemQuantity = refrigerator.getFoodQuantity();
-        ArrayList<Food> itemsInRefrigerator = new ArrayList<>(itemQuantity.keySet());
+        HashMap<Eatable, Integer> itemQuantity = refrigerator.getItemsQuantity();
+        ArrayList<Eatable> itemsInRefrigerator = new ArrayList<>(itemQuantity.keySet());
         int index = 0;
         int size = itemsInRefrigerator.size();
 

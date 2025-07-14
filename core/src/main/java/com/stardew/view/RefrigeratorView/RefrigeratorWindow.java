@@ -7,8 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.stardew.controller.CookingAndCraftingControllers.CookingController;
 import com.stardew.controller.CookingAndCraftingControllers.RefrigeratorGridController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.InventoryItem;
 import com.stardew.models.Result;
-import com.stardew.models.cooking.Food;
+import com.stardew.models.cooking.Eatable;
 import com.stardew.view.InventoryWindows.BackpackGridActor;
 import com.stardew.view.windows.CloseableWindow;
 
@@ -17,8 +18,8 @@ public class RefrigeratorWindow extends CloseableWindow {
     private final BackpackGridActor backpackGridActor;
     private final TextButton deliverToBackpackButton;
     private final TextButton deliverToRefrigeratorButton;
+    private final TextButton eatButton;
     private final RefrigeratorGridController refrigeratorGridController;
-    //TODO put BackpackGridController here and initialize with its own actor in constructor
     private final CookingController cookingController;
 
 
@@ -37,12 +38,14 @@ public class RefrigeratorWindow extends CloseableWindow {
         backpackGridActor = new BackpackGridActor();
         deliverToBackpackButton = new TextButton("DeliverToBackpack", GamePictureManager.skin);
         deliverToRefrigeratorButton = new TextButton("DeliverToRefrigerator", GamePictureManager.skin);
+        eatButton = new TextButton("Eat Item", GamePictureManager.skin);
         refrigeratorGridController = new RefrigeratorGridController(refrigeratorGridActor);
-        //TODO initialize controller for backpack
         cookingController = new CookingController();
 
         add(refrigeratorGridActor).expand().fill().pad(60, 40, 20, 20);
         add(deliverToBackpackButton).pad(60, 20, 20, 20);
+        eatButton.setPosition(685, 350);
+        addActor(eatButton);
         row();
 
         add(backpackGridActor).expand().fill().pad(20, 20, 20, 20);
@@ -52,13 +55,13 @@ public class RefrigeratorWindow extends CloseableWindow {
         deliverToBackpackButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Food selectedFood = refrigeratorGridController.getSelectedItem();
-                if (selectedFood == null)
-                    showResult(new Result(false, "Please select a food"));
+                Eatable selectedItem = refrigeratorGridController.getSelectedItem();
+                if (selectedItem == null)
+                    showResult(new Result(false, "Please select an item!!"));
                 else {
-                    showResult(cookingController.cookingRefrigeratorPutPick("pick", selectedFood.name()));
+                    showResult(cookingController.pickFromRefrigerator(selectedItem));
                     refrigeratorGridActor.update();
-                    //TODO update backpackGridActor
+                    backpackGridActor.update();
                 }
             }
         });
@@ -66,11 +69,28 @@ public class RefrigeratorWindow extends CloseableWindow {
         deliverToRefrigeratorButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //TODO get selected by backpack controller
-                //TODO check to be not null
-                //TODO check to be eatable
-                //TODO call cookingController
-                //TODO update 2 grid
+                InventoryItem selectedItem = backpackGridActor.getInventoryItemByXAndY(
+                    backpackGridActor.getSelectedX(), backpackGridActor.getSelectedY());
+                if (selectedItem == null)
+                    showResult(new Result(false, "Please select a food"));
+                else {
+                    showResult(cookingController.putInRefrigerator(selectedItem));
+                    refrigeratorGridActor.update();
+                    backpackGridActor.update();
+                }
+            }
+        });
+
+        eatButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Eatable selectedItem = refrigeratorGridController.getSelectedItem();
+                if (selectedItem == null)
+                    showResult(new Result(false, "Please select an item!!"));
+                else {
+                    showResult(cookingController.eat(selectedItem));
+                    refrigeratorGridActor.update();
+                }
             }
         });
 

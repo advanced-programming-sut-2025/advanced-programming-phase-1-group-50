@@ -71,6 +71,8 @@ public class BackpackGridActor extends Actor {
         int cols = 10;
         int rows = (total + cols - 1) / cols;
 
+        setSize(cols * cellSize, rows * cellSize);
+
         InventoryItem[][] items1 = new InventoryItem[rows][cols];
 
         for (int index = 0; index < items.size(); index++) {
@@ -111,6 +113,7 @@ public class BackpackGridActor extends Actor {
     }
 
     public InventoryItem getInventoryItemByXAndY(int x, int y) {
+        if (x == -1 || y == -1) return null;
         InventoryItem[][] items = getInventoryItems();
         return items[y][x];
     }

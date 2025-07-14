@@ -1,12 +1,13 @@
 package com.stardew.models.animals;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stardew.models.cooking.Eatable;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.stores.Sellable;
 
 import java.util.Objects;
 
-public class AnimalGood implements Ingredient, Sellable {
+public class AnimalGood implements Ingredient, Sellable, Eatable {
     private final AnimalGoodType type;
     private final Quality quality;
     private final int sellPrice;
@@ -27,6 +28,10 @@ public class AnimalGood implements Ingredient, Sellable {
 
     public int getSellPrice() {
         return sellPrice;
+    }
+
+    public int getEnergy() {
+        return type.getEnergy();
     }
 
     @Override

@@ -2,12 +2,13 @@ package com.stardew.models.foraging;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.cooking.Eatable;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.stores.Sellable;
 
 import java.util.HashMap;
 
-public enum Fruit implements Ingredient, Sellable {
+public enum Fruit implements Ingredient, Sellable, Eatable {
     Apricot(38, 59, GamePictureManager.apricotTexture),
     Cherry(38, 80, GamePictureManager.cherryTexture),
     Banana(75, 150, GamePictureManager.bananaTexture),

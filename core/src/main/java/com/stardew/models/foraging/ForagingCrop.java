@@ -2,13 +2,14 @@ package com.stardew.models.foraging;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.cooking.Eatable;
 import com.stardew.models.date.Season;
 import com.stardew.models.manuFactor.Ingredient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public enum ForagingCrop implements Ingredient {
+public enum ForagingCrop implements Ingredient, Eatable {
     CommonMushroom(Season.Special, 40, 38, GamePictureManager.commonMushroom),
     Daffodil(Season.Spring, 30, 0, GamePictureManager.daffodil),
     Dandelion(Season.Spring, 40, 25, GamePictureManager.dandelion),

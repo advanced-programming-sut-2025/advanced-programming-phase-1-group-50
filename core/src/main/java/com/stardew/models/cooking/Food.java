@@ -7,7 +7,7 @@ import com.stardew.models.stores.Sellable;
 
 import java.util.HashMap;
 
-public enum Food implements Ingredient, Sellable {
+public enum Food implements Ingredient, Sellable, Eatable {
     FriedEgg(50, 35, GamePictureManager.friedEggNormal.getRegion()),
     BakedFish(75, 100, GamePictureManager.friedEggNormal.getRegion()),
     Salad(113, 110, GamePictureManager.saladNormal.getRegion()),
