@@ -79,13 +79,11 @@ public class SmartTooltip extends Container<Label> {
     public void hide() {
         clearActions();
 
-        if (showing) {
-            showing = false;
-            this.addAction(Actions.sequence(
-                Actions.delay(0.1f),
-                Actions.fadeOut(0.2f),
-                Actions.visible(false)
-            ));
-        }
+        showing = false;
+        this.addAction(Actions.sequence(
+            Actions.delay(0.1f),
+            Actions.fadeOut(0.2f),
+            Actions.visible(false)
+        ));
     }
 }

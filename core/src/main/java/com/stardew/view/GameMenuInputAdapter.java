@@ -12,6 +12,8 @@ import com.stardew.models.userInfo.Player;
 import com.stardew.view.GridMap.TileSelectionWindow;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.InventoryWindows.InventoryWindow;
+import com.stardew.view.RefrigeratorView.RefrigeratorGridActor;
+import com.stardew.view.RefrigeratorView.RefrigeratorWindow;
 import com.stardew.view.cheatConsole.CheatWindow;
 import com.stardew.view.windows.CookingWindow;
 import com.stardew.view.windows.CraftingWindow;
@@ -125,6 +127,10 @@ public class GameMenuInputAdapter extends InputAdapter {
 
         if(justPressedKeys.contains(Input.Keys.ESCAPE)){
             stage.addActor(new InventoryWindow(stage));
+        }
+
+        if (justPressedKeys.contains(Input.Keys.R)) {
+            stage.addActor(new RefrigeratorWindow(stage));
         }
 
 
