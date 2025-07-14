@@ -1,4 +1,4 @@
-package com.stardew.view.windows;
+package com.stardew.view.StoreWindows;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -10,13 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.stores.ShopItem;
 import com.stardew.models.stores.Store;
+import com.stardew.view.windows.CloseableWindow;
 
 import java.util.List;
 
 public class StoreWindow extends CloseableWindow {
     private final Store store;
     private final Table productTable;
-    private final CheckBox availableOnlyCheckbox;
+    private final SelectBox<String> filterBox;
 
     public StoreWindow(Stage stage, Store store) {
         super(store.getShopAssistantName() + "'s store", stage);
@@ -25,9 +26,10 @@ public class StoreWindow extends CloseableWindow {
         pad(40);
         defaults().space(15);
 
-        availableOnlyCheckbox = new CheckBox("Only Available", GamePictureManager.skin);
-        availableOnlyCheckbox.setChecked(true);
-        availableOnlyCheckbox.addListener(new ChangeListener() {
+        filterBox = new SelectBox<>(GamePictureManager.skin);
+        filterBox.setItems("All products" , "Only available products");
+        filterBox.setSelected("All products");
+        filterBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 refreshProducts();
@@ -41,7 +43,7 @@ public class StoreWindow extends CloseableWindow {
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
 
-        add(availableOnlyCheckbox).left().row();
+        add(filterBox).left().row();
 
         Table headerTable = new Table();
         headerTable.add(new Label("Name", GamePictureManager.skin)).width(200);
@@ -60,10 +62,10 @@ public class StoreWindow extends CloseableWindow {
         );
     }
 
-    private void refreshProducts() {
+    protected void refreshProducts() {
         productTable.clear();
 
-        List<ShopItem> items = availableOnlyCheckbox.isChecked()
+        List<ShopItem> items = filterBox.getSelected().equals("Only available products")
             ? store.showAvailableProducts()
             : store.showAllProducts();
 
@@ -105,7 +107,7 @@ public class StoreWindow extends CloseableWindow {
     }
 
     private void openPurchaseWindow(String productName, int quantity, int price) {
-        PurchaseWindow purchaseWindow = new PurchaseWindow(stage, store, productName, quantity, price);
+        PurchaseWindow purchaseWindow = new PurchaseWindow(stage, store,this,productName, quantity, price);
         stage.addActor(purchaseWindow);
     }
 }
