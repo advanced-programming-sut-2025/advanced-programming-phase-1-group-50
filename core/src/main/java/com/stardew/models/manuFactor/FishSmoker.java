@@ -4,8 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.animals.Fish;
-import com.stardew.models.animals.FishType;
 import com.stardew.models.app.App;
+import com.stardew.models.foraging.ForagingMineral;
 import com.stardew.models.manuFactor.artisanGoods.ArtisanGood;
 import com.stardew.models.manuFactor.artisanGoods.ArtisanGoodType;
 import com.stardew.models.userInfo.Player;
@@ -45,7 +45,8 @@ public class FishSmoker extends ArtisanMachine {
 
                 if (ingredient instanceof Fish fish) {
                     for (Ingredient ingredient1 : player.getBackpack().getIngredientQuantity().keySet()) {
-                        if (ingredient1.equals(new ArtisanGood(ArtisanGoodType.Coal))) {
+                        if (ingredient1.equals(new ArtisanGood(ArtisanGoodType.Coal)) ||
+                            ingredient1.equals(ForagingMineral.Coal)) {
 
                             player.getBackpack().removeIngredients(ingredient, 1);
                             player.getBackpack().removeIngredients(ingredient1, 1);

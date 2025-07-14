@@ -220,9 +220,11 @@ public class AnimalsController {
         return new Result(true, "You feed animal <" + animal.getName() + "> successfully!");
     }
 
-    public Result animalProduces() {
-        Player player = App.getGame().getCurrentPlayingPlayer();
-        ArrayList<Animal> animals = player.getBackpack().getAllAnimals();
+    public Result animalProduces(Habitat habitat) {
+        if (habitat == null)
+            return new Result(false, "Habitat not found!");
+
+        ArrayList<Animal> animals = habitat.getAnimals();
 
         if (animals.isEmpty())
             return new Result(false, "No animals found!");
@@ -290,6 +292,9 @@ public class AnimalsController {
 
         if (animal.isOutOfHabitat())
             return new Result(false, "Animal must be in habitat!");
+
+        if (!animal.getHabitat().getAnimals().contains(animal))
+            return new Result(false, "You don't have this animal now!!\nPlease refresh window");
 
         double price = animal.getType().getPrice() * (((double)(animal.getFriendShip()) / 1000) + 0.3);
 

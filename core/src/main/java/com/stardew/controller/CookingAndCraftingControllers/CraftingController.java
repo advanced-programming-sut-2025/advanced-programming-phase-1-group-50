@@ -138,6 +138,10 @@ public class CraftingController {
         Fruit fruit = Fruit.getFruitByName(itemName);
         if (fruit != null) {
             player.getBackpack().addIngredients(fruit, quantity);
+            //CommonMushroom is also in this category
+            ForagingCrop foragingCrop = ForagingCrop.getForagingCropByName(itemName);
+            if (foragingCrop != null)
+                player.getBackpack().addIngredients(foragingCrop, quantity);
             return new Result(true, "You add <" + itemName + "> successfully!");
         }
 
@@ -148,6 +152,12 @@ public class CraftingController {
             ArtisanGoodType artisanGoodType = ArtisanGoodType.getArtisanGoodTypeByName(itemName);
             if (artisanGoodType != null)
                 player.getBackpack().addIngredients(new ArtisanGood(artisanGoodType), quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        ForagingCrop foragingCrop = ForagingCrop.getForagingCropByName(itemName);
+        if (foragingCrop != null) {
+            player.getBackpack().addIngredients(foragingCrop, quantity);
             return new Result(true, "You add <" + itemName + "> successfully!");
         }
 
