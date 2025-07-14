@@ -101,4 +101,21 @@ public class BackpackGridActor extends Actor {
             }
         }
     }
+
+    public int getSelectedX() {
+        return selectedX;
+    }
+
+    public int getSelectedY(){
+        return selectedY;
+    }
+
+    public InventoryItem getInventoryItemByXAndY(int x, int y) {
+        InventoryItem[][] items = getInventoryItems();
+        return items[y][x];
+    }
+
+    public void update(){
+        initializeGrid();
+    }
 }

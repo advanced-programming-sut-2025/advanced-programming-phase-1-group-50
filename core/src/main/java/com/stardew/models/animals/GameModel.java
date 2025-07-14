@@ -4,11 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.stardew.Main;
 import com.stardew.controller.PlayerController;
+import com.stardew.controller.ToolManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
 import com.stardew.models.mapInfo.Map;
 import com.stardew.models.mapInfo.Pair;
 import com.stardew.models.userInfo.Player;
+import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.modelsManager.AnimalsManager;
 import com.stardew.view.modelsManager.ArtisanMachinesManager;
 
@@ -20,8 +22,10 @@ public class GameModel {
     private PlayerController playerController;
     private final AnimalsManager animalsManager;
     private final ArtisanMachinesManager artisanMachinesManager;
+    private final HotBarActor hotBarActor;
+    private final ToolManager toolManager;
 
-    public GameModel(Map map  , int mapWidth , int mapHeight) {
+    public GameModel(Map map  , int mapWidth , int mapHeight, HotBarActor hotBarActor) {
         this.map = map;
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
@@ -32,8 +36,12 @@ public class GameModel {
 
         animalsManager = new AnimalsManager();
         artisanMachinesManager = new ArtisanMachinesManager();
+        this.hotBarActor = hotBarActor;
+        toolManager = new ToolManager();
 
     }
+
+
 
     public void setPlayerController(PlayerController playerController) {
         this.playerController = playerController;
@@ -72,6 +80,7 @@ public class GameModel {
 
         animalsManager.update(delta);
         artisanMachinesManager.update();
+        hotBarActor.update();
 
 
     }
@@ -98,5 +107,9 @@ public class GameModel {
 
     public AnimalsManager getAnimalsManager() {
         return animalsManager;
+    }
+
+    public ToolManager getToolManager() {
+        return toolManager;
     }
 }

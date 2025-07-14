@@ -6,6 +6,7 @@ import com.stardew.models.Result;
 import com.stardew.models.app.App;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public abstract class Store implements Placeable {
 
@@ -27,14 +28,6 @@ public abstract class Store implements Placeable {
         return shopAssistantName;
     }
 
-    public int getEndHour() {
-        return endHour;
-    }
-
-    public int getStartHour() {
-        return startHour;
-    }
-
     public Rectangle getBounds() {
         return bounds;
     }
@@ -46,8 +39,8 @@ public abstract class Store implements Placeable {
 
     public abstract char getSymbol();
     public void loadInventory() {}
-    public abstract String showAllProducts();
-    public abstract String showAvailableProducts();
+    public abstract ArrayList<ShopItem> showAllProducts();
+    public abstract ArrayList<ShopItem> showAvailableProducts();
     public abstract Result purchaseProduct(int value, String productName);
     public abstract void ResetQuantityEveryNight();
     public abstract TextureRegion[][] getRegions();

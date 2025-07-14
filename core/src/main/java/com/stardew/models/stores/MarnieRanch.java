@@ -53,29 +53,37 @@ public class MarnieRanch extends Store {
     }
 
     @Override
-    public String showAllProducts() {
-        StringBuilder message = new StringBuilder("MarnieRanch products:");
-        for (ShopItem item : inventory) {
-            message.append("\n" + "Name: ").append(item.name).append("  Price: ").append(item.price);
-        }
-        return message.toString();
+    public ArrayList<ShopItem> showAllProducts() {
+        return (ArrayList<ShopItem>) inventory.clone();
+//        StringBuilder message = new StringBuilder("MarnieRanch products:");
+//        for (ShopItem item : inventory) {
+//            message.append("\n" + "Name: ").append(item.name).append("  Price: ").append(item.getPrice());
+//        }
+//        return message.toString();
     }
 
     @Override
-    public String showAvailableProducts() {
-        StringBuilder message = new StringBuilder("MarnieRanch Available Products:");
+    public ArrayList<ShopItem> showAvailableProducts() {
+        ArrayList<ShopItem> availableProducts = new ArrayList<>();
         for (ShopItem item : inventory) {
             if (item.remainingQuantity > 0) {
-                message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   " +
-                        "Remaining: ");
-                if (item.remainingQuantity > 10000) {
-                    message.append("infinity");
-                } else {
-                    message.append(item.remainingQuantity);
-                }
+                availableProducts.add(item);
             }
         }
-        return message.toString();
+        return availableProducts;
+//        StringBuilder message = new StringBuilder("MarnieRanch Available Products:");
+//        for (ShopItem item : inventory) {
+//            if (item.remainingQuantity > 0) {
+//                message.append("\nName: ").append(item.name).append("   Price: ").append(item.getPrice()).append("   " +
+//                        "Remaining: ");
+//                if (item.remainingQuantity > 10000) {
+//                    message.append("infinity");
+//                } else {
+//                    message.append(item.remainingQuantity);
+//                }
+//            }
+//        }
+//        return message.toString();
     }
 
     public Result PurchaseAnimal(AnimalType type) {
@@ -98,7 +106,7 @@ public class MarnieRanch extends Store {
             return new Result(false, "No such animal");
         }
 
-        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Coin(),0) < item.price) {
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Coin(),0) < item.getPrice()) {
             return new Result(false, "You don't have enough money to purchase");
         }
 
@@ -107,7 +115,7 @@ public class MarnieRanch extends Store {
         }
 
         item.decreaseRemainingQuantity(1);
-        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Coin(), item.price);
+        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Coin(), item.getPrice());
 
         return new Result(true , "you purchased a" + item.name + "successfully");
     }

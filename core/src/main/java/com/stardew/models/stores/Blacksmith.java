@@ -1,7 +1,6 @@
 package com.stardew.models.stores;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.ColorPrinter;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
@@ -44,29 +43,37 @@ public class Blacksmith extends Store {
     }
 
     @Override
-    public String showAllProducts() {
-        StringBuilder message = new StringBuilder("Blacksmith products:");
-        for (ShopItem item : inventory) {
-            message.append("\n" + "Name: ").append(item.name).append("  Price: ").append(item.price);
-        }
-        return message.toString();
+    public ArrayList<ShopItem> showAllProducts() {
+        return (ArrayList<ShopItem>) inventory.clone();
+//        StringBuilder message = new StringBuilder("Blacksmith products:");
+//        for (ShopItem item : inventory) {
+//            message.append("\n" + "Name: ").append(item.name).append("  Price: ").append(item.getPrice);
+//        }
+//        return message.toString();
     }
 
     @Override
-    public String showAvailableProducts() {
-        StringBuilder message = new StringBuilder("Blacksmith Available Products:");
+    public ArrayList<ShopItem> showAvailableProducts() {
+        ArrayList<ShopItem> availableProducts = new ArrayList<>();
         for (ShopItem item : inventory) {
             if (item.remainingQuantity > 0) {
-                message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   " +
-                        "Remaining: ");
-                if (item.remainingQuantity > 10000) {
-                    message.append("infinity");
-                } else {
-                    message.append(item.remainingQuantity);
-                }
+                availableProducts.add(item);
             }
         }
-        return message.toString();
+        return availableProducts;
+//        StringBuilder message = new StringBuilder("Blacksmith Available Products:");
+//        for (ShopItem item : inventory) {
+//            if (item.remainingQuantity > 0) {
+//                message.append("\nName: ").append(item.name).append("   Price: ").append(item.getPrice).append("   " +
+//                        "Remaining: ");
+//                if (item.remainingQuantity > 10000) {
+//                    message.append("infinity");
+//                } else {
+//                    message.append(item.remainingQuantity);
+//                }
+//            }
+//        }
+//        return message.toString();
     }
 
 

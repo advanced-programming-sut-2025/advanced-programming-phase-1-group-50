@@ -6,14 +6,14 @@ import com.stardew.models.app.App;
 public class StardopSaloonController extends StoreController {
     @Override
     public Result showAllProducts() {
-        String message = App.getGame().getMap().getNpcVillage().getStardopSaloon().showAllProducts();
-        return new Result(true, message);
+        //String message = App.getGame().getMap().getNpcVillage().getStardopSaloon().showAllProducts();
+        return new Result(true, "");
     }
 
     @Override
     public Result showAvailableProducts() {
-        String message = App.getGame().getMap().getNpcVillage().getStardopSaloon().showAvailableProducts();
-        return new Result(true, message);
+        //String message = App.getGame().getMap().getNpcVillage().getStardopSaloon().showAvailableProducts();
+        return new Result(true, "");
     }
 
     @Override

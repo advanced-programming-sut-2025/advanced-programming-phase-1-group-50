@@ -1,7 +1,6 @@
 package com.stardew.models.stores;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
@@ -52,29 +51,38 @@ public class CarpenterShop extends Store {
     }
 
     @Override
-    public String showAllProducts() {
-        StringBuilder message = new StringBuilder("CarpenterShop products:");
-        for (ShopItem item : inventory) {
-            message.append("\n" + "Name: ").append(item.name).append("  Price: ").append(item.price);
-        }
-        return message.toString();
+    public ArrayList<ShopItem> showAllProducts() {
+        return (ArrayList<ShopItem>) inventory.clone();
+//        StringBuilder message = new StringBuilder("CarpenterShop products:");
+//        for (ShopItem item : inventory) {
+//            message.append("\n" + "Name: ").append(item.name).append("  Price: ").append(item.getPrice());
+//        }
+//        return message.toString();
     }
 
     @Override
-    public String showAvailableProducts() {
-        StringBuilder message = new StringBuilder("CarpenterShop Available Products:");
+    public ArrayList<ShopItem> showAvailableProducts() {
+        ArrayList<ShopItem> availableProducts = new ArrayList<>();
         for (ShopItem item : inventory) {
             if (item.remainingQuantity > 0) {
-                message.append("\nName: ").append(item.name).append("   Price: ").append(item.price).append("   " +
-                        "Remaining: ");
-                if (item.remainingQuantity > 10000) {
-                    message.append("infinity");
-                } else {
-                    message.append(item.remainingQuantity);
-                }
+                availableProducts.add(item);
             }
         }
-        return message.toString();
+        return availableProducts;
+
+//        StringBuilder message = new StringBuilder("CarpenterShop Available Products:");
+//        for (ShopItem item : inventory) {
+//            if (item.remainingQuantity > 0) {
+//                message.append("\nName: ").append(item.name).append("   Price: ").append(item.getPrice()).append("   " +
+//                        "Remaining: ");
+//                if (item.remainingQuantity > 10000) {
+//                    message.append("infinity");
+//                } else {
+//                    message.append(item.remainingQuantity);
+//                }
+//            }
+//        }
+//        return message.toString();
     }
 
     public Result purchaseBuilding(HabitatType type, HabitatSize size) {
@@ -103,7 +111,7 @@ public class CarpenterShop extends Store {
             return new Result(false , "No such product");
         }
 
-        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Coin(),0) < item.price) {
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Coin(),0) < item.getPrice()) {
             return new Result(false , "You don't have enough money");
         }
 
@@ -120,7 +128,7 @@ public class CarpenterShop extends Store {
         }
 
         item.decreaseRemainingQuantity(1);
-        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Coin(), item.price);
+        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Coin(), item.getPrice());
         App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Stone(),
                 ((CarpenterShopFarmBuildingsItem) item).getStoneCost());
         App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Wood(),

@@ -32,6 +32,7 @@ public class Backpack {
     private final ArrayList<Animal> animals = new ArrayList<>();
     private final Refrigerator refrigerator = new Refrigerator();
     private final TrashCan trashCan = new TrashCan();
+    private  Player player;
 
 
     private final HashMap<Ingredient, Integer> ingredientQuantity = new HashMap<>();
@@ -50,6 +51,14 @@ public class Backpack {
         cookingRecipes.add(CookingRecipe.FriedEgg);
         cookingRecipes.add(CookingRecipe.BakedFish);
         cookingRecipes.add(CookingRecipe.Salad);
+    }
+
+    public void setPlayer(Player player){
+        this.player = player;
+    }
+
+    public Player getPlayer(){
+        return player;
     }
 
     public void changeType(BackpackType type) {
@@ -106,6 +115,8 @@ public class Backpack {
 
         }
 
+        player.updateInventoryItems();
+
     }
 
     public void removeIngredients(Ingredient ingredient, int quantity) {
@@ -115,6 +126,7 @@ public class Backpack {
         } else {
             ingredientQuantity.put(ingredient, value - quantity);
         }
+        player.updateInventoryItems();
     }
     public void inventoryTrash(Ingredient ingredient , int quantity)
     {
