@@ -10,11 +10,13 @@ public class Fish implements Ingredient, Sellable {
     private final FishType type;
     private final int sellPrice;
     private final Quality quality;
+    private final TextureRegion texture;
 
     public Fish(FishType type, Quality quality) {
         this.type = type;
         this.quality = quality;
         this.sellPrice = (int) (type.getPrice() * quality.getRatio());
+        texture = type.getInventoryTexture();
     }
 
     public FishType getType() {
@@ -54,6 +56,6 @@ public class Fish implements Ingredient, Sellable {
 
     @Override
     public TextureRegion getInventoryTexture() {
-        return null;
+        return texture;
     }
 }

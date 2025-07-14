@@ -1,31 +1,33 @@
 package com.stardew.models.foraging;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.stores.Sellable;
 
 import java.util.HashMap;
 
 public enum ForagingMineral implements Ingredient, Sellable {
-    Quartz(25),
-    EarthCrystal(50),
-    FrozenTear(75),
-    FireQuartz(100),
-    Emerald(250),
-    Aquamarine(180),
-    Ruby(250),
-    Amethyst(100),
-    Topaz(80),
-    Jade(200),
-    Diamond(750),
-    PrismaticShard(2000),
-    Copper(5),
-    Iron(10),
-    Gold(25),
-    Iridium(100),
-    Coal(15);
+    Quartz(25, GamePictureManager.quartz),
+    EarthCrystal(50, GamePictureManager.earthCrystal),
+    FrozenTear(75, GamePictureManager.frozenTear),
+    FireQuartz(100, GamePictureManager.fireQuartz),
+    Emerald(250, GamePictureManager.emerald),
+    Aquamarine(180, GamePictureManager.aquamarine),
+    Ruby(250, GamePictureManager.ruby),
+    Amethyst(100, GamePictureManager.amethyst),
+    Topaz(80, GamePictureManager.topaz),
+    Jade(200, GamePictureManager.jade),
+    Diamond(750, GamePictureManager.diamond),
+    PrismaticShard(2000, GamePictureManager.prismaticShard),
+    Copper(5, GamePictureManager.copperOre),
+    Iron(10, GamePictureManager.ironOre),
+    Gold(25, GamePictureManager.goldOre),
+    Iridium(100, GamePictureManager.iridiumOre),
+    Coal(15, GamePictureManager.coalMineral);
 
     private final int sellPrice;
+    private final TextureRegion texture;
     private final static HashMap<String, ForagingMineral> stringToForagingMineral = new HashMap<>();
 
     static {
@@ -35,8 +37,9 @@ public enum ForagingMineral implements Ingredient, Sellable {
     }
 
 
-    ForagingMineral(int sellPrice) {
+    ForagingMineral(int sellPrice, TextureRegion texture) {
         this.sellPrice = sellPrice;
+        this.texture = texture;
     }
 
     public String getName() {
