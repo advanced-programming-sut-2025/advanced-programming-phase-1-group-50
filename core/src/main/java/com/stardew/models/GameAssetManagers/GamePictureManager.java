@@ -226,7 +226,9 @@ public class GamePictureManager {
 
         public static TextureRegion honeyTexture = new TextureRegion(new Texture("Artisan_good/Honey.png"));
         public static TextureRegion cheeseTexture = new TextureRegion(new Texture("Artisan_good/Cheese.png"));
+        public static TextureRegion cheeseByLargeMilkTexture = new TextureRegion(new Texture("Artisan_good/CheeseByLargeMilk.png"));
         public static TextureRegion goatCheeseTexture = new TextureRegion(new Texture("Artisan_good/Goat_Cheese.png"));
+        public static TextureRegion goatCheeseByLargeMilkTexture = new TextureRegion(new Texture("Artisan_good/Goat_CheeseByLargeMilk.png"));
         public static TextureRegion beerTexture = new TextureRegion(new Texture("Artisan_good/Beer.png"));
         public static TextureRegion vinegarTexture = new TextureRegion(new Texture("Artisan_good/Vinegar.png"));
         public static TextureRegion coffeeTexture = new TextureRegion(new Texture("Artisan_good/Coffee.png"));

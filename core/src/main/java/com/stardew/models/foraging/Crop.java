@@ -8,6 +8,7 @@ import com.stardew.models.ColorPrinter;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
 import com.stardew.models.app.App;
+import com.stardew.models.cooking.Eatable;
 import com.stardew.models.date.Time;
 import com.stardew.models.date.Weather;
 import com.stardew.models.manuFactor.Ingredient;
@@ -17,7 +18,7 @@ import com.stardew.models.stores.Sellable;
 import java.awt.*;
 import java.util.Objects;
 
-public class Crop implements Ingredient, Growable , Placeable, Sellable {
+public class Crop implements Ingredient, Growable , Placeable, Sellable, Eatable {
     private final String colorCode = ColorPrinter.BRIGHT_GREEN;
     private final String backgroundCode = ColorPrinter.BRIGHT_YELLOW;
     private final CropType type;
@@ -216,6 +217,11 @@ public class Crop implements Ingredient, Growable , Placeable, Sellable {
     @Override
     public Color getMiniMapColor() {
         return Color.GREEN;
+    }
+
+    @Override
+    public int getEnergy() {
+        return type.getEnergy();
     }
 
     public boolean isGeneratedRandomly() {

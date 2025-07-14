@@ -56,6 +56,6 @@ public enum ForagingMineral implements Ingredient, Sellable {
 
     @Override
     public TextureRegion getInventoryTexture() {
-        return null;
+        return texture;
     }
 }
