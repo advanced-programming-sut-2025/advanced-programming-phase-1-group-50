@@ -35,4 +35,9 @@ public class Shear extends Tool {
     public TextureRegion getInventoryTexture() {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "Shear";
+    }
 }

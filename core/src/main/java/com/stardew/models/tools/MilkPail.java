@@ -35,4 +35,8 @@ public class MilkPail extends Tool {
     public TextureRegion getInventoryTexture() {
         return null;
     }
+
+    public String toString(){
+        return "Milk Pail";
+    }
 }

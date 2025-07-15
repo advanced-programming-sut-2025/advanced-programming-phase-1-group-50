@@ -71,4 +71,8 @@ public class FishingPole extends Tool {
     public TextureRegion getInventoryTexture() {
         return null;
     }
+
+    public String toString(){
+        return "Fishing Pole " + type.name();
+    }
 }

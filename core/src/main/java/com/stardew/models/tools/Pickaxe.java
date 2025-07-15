@@ -80,4 +80,9 @@ public class Pickaxe extends Tool {
     public TextureRegion getInventoryTexture() {
         return texture;
     }
+
+    @Override
+    public String toString() {
+        return "Pickaxe " + type.name();
+    }
 }

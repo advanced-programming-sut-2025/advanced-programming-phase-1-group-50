@@ -1,6 +1,8 @@
 package com.stardew.view.InventoryWindows;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -11,8 +13,10 @@ import com.stardew.models.app.App;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.tools.Tool;
 import com.stardew.models.userInfo.Player;
+import com.stardew.view.windows.SmartTooltip;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class BackpackGridActor extends Actor {
@@ -22,6 +26,11 @@ public class BackpackGridActor extends Actor {
     private int selectedY = -1;
     private TextureRegion normalTexture = GamePictureManager.emptyTile;
     private TextureRegion selectedTexture = GamePictureManager.selectedTile;
+    private final BitmapFont smallFont = GamePictureManager.smallFont;
+    private final GlyphLayout layout = new GlyphLayout();
+
+    private int lastVisitedCellX = -1;
+    private int lastVisitedCellY = -1;
 
     public BackpackGridActor() {
         initializeGrid();
@@ -37,11 +46,46 @@ public class BackpackGridActor extends Actor {
                 }
                 return true;
             }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                SmartTooltip.getInstance().hide();
+                lastVisitedCellX = -1;
+                lastVisitedCellY = -1;
+            }
+
+            @Override
+            public boolean mouseMoved(InputEvent event, float x, float y) {
+                int cellX = (int)(x / cellSize);
+                int cellY = (int)(y / cellSize);
+                if (cellX != lastVisitedCellX || cellY != lastVisitedCellY) {
+                    lastVisitedCellX = cellX;
+                    lastVisitedCellY = cellY;
+                    SmartTooltip.getInstance().hide();
+
+                    String info = "";
+                    if(cellX >=0 && cellX < cells.length && cellY >=0 && cellY < cells[0].length) {
+                        if (cells[cellX][cellY].textureRegion != null) {
+                            info = cells[cellX][cellY].inventoryItem.toString();
+                        }
+                    }
+
+                    if (!info.isEmpty())
+                        SmartTooltip.getInstance().show(info);
+
+                }
+                return true;
+            }
         });
     }
 
     public void initializeGrid() {
         InventoryItem[][] it = getInventoryItems();
+
+        ArrayList<InventoryItem> inventoryItems = App.getGame().getCurrentPlayingPlayer().getInventoryItems();
+        int size = inventoryItems.size();
+        int index = 0;
+
         if (it.length == 0 || it[0].length == 0) return;
 
         cells = new ItemCell[it.length][it[0].length];
@@ -49,11 +93,17 @@ public class BackpackGridActor extends Actor {
         for (int i = 0; i < it.length; i++) {
             for (int j = 0; j < it[i].length; j++) {
                 cells[i][j] = new ItemCell();
-                if (it[i][j] != null && it[i][j].getInventoryTexture() != null) {
-                    cells[i][j].textureRegion = it[i][j].getInventoryTexture();
-                } else {
-                    cells[i][j].textureRegion = null;
+                if(index >= 0 && index < size) {
+                    cells[i][j].textureRegion = inventoryItems.get(index).getInventoryTexture();
+                    cells[i][j].inventoryItem = inventoryItems.get(index);
+                    cells[i][j].quantity = App.getGame().getCurrentPlayingPlayer().getQuantityOfIngredient(inventoryItems.get(index));
                 }
+                else{
+                    cells[i][j].textureRegion = null;
+                    cells[i][j].inventoryItem = null;
+                    cells[i][j].quantity = 0;
+                }
+                index++;
             }
         }
     }
@@ -99,6 +149,11 @@ public class BackpackGridActor extends Actor {
                 ItemCell item = cells[i][j];
                 if (item.textureRegion != null) {
                     batch.draw(item.textureRegion, getX() + drawX, getY() + drawY, cellSize, cellSize);
+                    String quantity = String.valueOf(item.quantity);
+                    layout.setText(smallFont, quantity);
+                    float textX = getX() + drawX + cellSize - layout.width;
+                    float textY = getY() + drawY + layout.height - 2;
+                    smallFont.draw(batch, layout, textX, textY);
                 }
             }
         }

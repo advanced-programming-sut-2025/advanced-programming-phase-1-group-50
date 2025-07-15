@@ -3,9 +3,7 @@ package com.stardew.view.InventoryWindows;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -17,7 +15,6 @@ import com.stardew.models.tools.Tool;
 import com.stardew.models.userInfo.Player;
 import com.stardew.view.windows.CloseableWindow;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +29,7 @@ public class InventoryWindow extends CloseableWindow {
     private final ImageButton mapButton;
     private final ImageButton exitButton;
     private final ImageButton trashButton;
+    private final TextButton shuffleButton;
     private final HotBarActor hotBar;
 
 
@@ -113,14 +111,13 @@ public class InventoryWindow extends CloseableWindow {
                 InventoryItem item = backpackGrid.getInventoryItemByXAndY(xx , yy);
                 if(item != null) {
                     if(item instanceof Tool t){
-                        p.getBackpack().getTools().remove(findTool(t , p.getBackpack().getTools()));
+                        p.getBackpack().removeTool(t);
                     }
 
                     else if(item instanceof Ingredient ing){
-                        p.getBackpack().getIngredientQuantity().remove(findIngredient(ing , p.getBackpack().getIngredientQuantity()));
+                        p.getBackpack().removeIngredients(ing , p.getBackpack().getIngredientQuantity().get(ing));
                     }
                 }
-                p.updateInventoryItems();
                 hotBar.update();
                 backpackGrid.update();
                 return true;
@@ -169,6 +166,14 @@ public class InventoryWindow extends CloseableWindow {
 
         });
 
+        shuffleButton = new TextButton("shuffle" , GamePictureManager.skin);
+        shuffleButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                App.getGame().getCurrentPlayingPlayer().shuffleInventoryItems();
+            }
+        });
+
 
         Table buttonRowTable = new Table();
         buttonRowTable.add(trashButton).width(50).height(70).padRight(10);
@@ -176,6 +181,7 @@ public class InventoryWindow extends CloseableWindow {
         buttonRowTable.add(skillsButton).width(50).height(70).padRight(10);
         buttonRowTable.add(mapButton).width(50).height(70).padRight(10);
         buttonRowTable.add(exitButton).width(50).height(70);
+        buttonRowTable.add(shuffleButton).width(120).height(70);
 
         row();
         add(buttonRowTable).padTop(10).left();

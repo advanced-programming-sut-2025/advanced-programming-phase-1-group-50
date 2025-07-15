@@ -16,6 +16,7 @@ import com.stardew.models.tools.*;
 import com.stardew.models.app.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -398,6 +399,9 @@ public class Player {
     }
 
     public void addInventoryItem(InventoryItem item){
+        if(inventoryItems.contains(item)){
+            return;
+        }
         this.inventoryItems.add(item);
     }
 
@@ -432,6 +436,25 @@ public class Player {
     }
 
 
+    public int getQuantityOfIngredient(InventoryItem ingredient) {
+        if(ingredient instanceof Tool) {
+            return 1;
+        }
+        else if(ingredient instanceof Ingredient){
+            return backpack.getIngredientQuantity().getOrDefault(ingredient, 0);
+        }
+        return 0;
+    }
+
+
+
+    public void shuffleInventoryItems() {
+        Collections.shuffle(inventoryItems);
+    }
+
+    public void removeInventoryItem(InventoryItem item) {
+        inventoryItems.remove(item);
+    }
 
 
 

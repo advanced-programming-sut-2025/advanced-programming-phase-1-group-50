@@ -64,4 +64,9 @@ public class Hoe extends Tool {
     public TextureRegion getInventoryTexture() {
         return hoeTexture;
     }
+
+    @Override
+    public String toString() {
+        return "Hoe " + type.name();
+    }
 }

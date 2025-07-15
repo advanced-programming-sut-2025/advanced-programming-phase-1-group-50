@@ -38,4 +38,9 @@ public class Scythe extends Tool {
     public TextureRegion getInventoryTexture() {
         return GamePictureManager.scytheTexture;
     }
+
+    @Override
+    public String toString() {
+        return "Scythe";
+    }
 }

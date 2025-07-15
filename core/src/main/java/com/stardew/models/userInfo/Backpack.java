@@ -88,6 +88,7 @@ public class Backpack {
 
     public void addTool(Tool tool) {
         tools.add(tool);
+        player.addInventoryItem(tool);
 
     }
 
@@ -97,6 +98,7 @@ public class Backpack {
 
     public void removeTool(Tool tool) {
         tools.remove(tool);
+        player.removeInventoryItem(tool);
 
     }
 
@@ -114,8 +116,9 @@ public class Backpack {
             }
 
         }
+        player.addInventoryItem(ingredient);
 
-        player.updateInventoryItems();
+
 
     }
 
@@ -123,10 +126,12 @@ public class Backpack {
         int value = ingredientQuantity.getOrDefault(ingredient , 0);
         if(value == quantity){
             ingredientQuantity.remove(ingredient);
+            player.removeInventoryItem(ingredient);
         } else {
             ingredientQuantity.put(ingredient, value - quantity);
         }
-        player.updateInventoryItems();
+
+
     }
     public void inventoryTrash(Ingredient ingredient , int quantity)
     {
