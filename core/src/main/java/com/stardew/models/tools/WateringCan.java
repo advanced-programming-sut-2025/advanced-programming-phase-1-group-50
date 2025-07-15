@@ -92,4 +92,9 @@ public class WateringCan extends Tool {
     public TextureRegion getInventoryTexture() {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "WateringCan [type=" + type + ", capacity=" + capacity ;
+    }
 }

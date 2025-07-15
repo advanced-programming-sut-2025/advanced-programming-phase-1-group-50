@@ -82,4 +82,8 @@ public class Axe extends Tool {
         //type.getTextureRegion : Todo
         return texture;
     }
+
+    public String toString(){
+        return "Axe " + type.name();
+    }
 }

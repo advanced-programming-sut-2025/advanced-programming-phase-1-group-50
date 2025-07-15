@@ -34,6 +34,7 @@ import com.stardew.models.app.Menus;
 import com.stardew.models.enums.GameMenuCommands;
 import com.stardew.models.enums.NPCsCommands;
 import com.stardew.models.mapInfo.Position;
+import com.stardew.models.stores.Blacksmith;
 import com.stardew.models.userInfo.*;
 import com.stardew.models.Result;
 import com.stardew.controller.GameMenuController;
@@ -228,7 +229,7 @@ public class GameMenu implements AppMenu , Screen {
         else if (GameMenuCommands.ToolUpgrade.getMatcher(input) != null) {
             matcher = com.stardew.models.enums.GameMenuCommands.ToolUpgrade.getMatcher(input);
             String toolName = matcher.group(1);
-            System.out.println(toolController.upgradeTool(toolName));
+            System.out.println(App.getGame().getMap().getNpcVillage().getBlacksmith().upgradeTool(toolName));
         }
 //        else if (GameMenuCommands.ToolUse.getMatcher(input) != null) {
 //            matcher = com.stardew.models.enums.GameMenuCommands.ToolUse.getMatcher(input);

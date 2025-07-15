@@ -2,6 +2,8 @@ package com.stardew.view.InventoryWindows;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -10,6 +12,9 @@ import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.InventoryItem;
 import com.stardew.models.app.App;
 import com.stardew.models.userInfo.Player;
+import com.stardew.view.windows.SmartTooltip;
+
+import java.util.ArrayList;
 
 public class HotBarActor extends Actor {
     private Player currentPlayer = App.getGame().getCurrentPlayingPlayer();
@@ -19,6 +24,13 @@ public class HotBarActor extends Actor {
     private TextureRegion normalTexture = GamePictureManager.emptyTile;
     private TextureRegion selectedTexture = GamePictureManager.selectedTile;
     private int selectedIndex = -1;
+
+
+    private final BitmapFont smallFont = GamePictureManager.smallFont;
+    private final GlyphLayout layout = new GlyphLayout();
+
+    private int lastVisitedCellX = -1;
+
 
     public HotBarActor() {
         initialize();
@@ -47,8 +59,12 @@ public class HotBarActor extends Actor {
 
             if (items[i] != null && items[i].getInventoryTexture() != null) {
                 cells[i].textureRegion = items[i].getInventoryTexture();
+                cells[i].inventoryItem = items[i];
+                cells[i].quantity = App.getGame().getCurrentPlayingPlayer().getQuantityOfIngredient(items[i]);
             } else {
                 cells[i].textureRegion = GamePictureManager.emptyTile;
+                cells[i].inventoryItem = null;
+                cells[i].quantity = 0;
             }
         }
     }
@@ -69,6 +85,12 @@ public class HotBarActor extends Actor {
             ItemCell item = cells[i];
             if (item.textureRegion != null) {
                 batch.draw(item.textureRegion, getX() + drawX, getY() + drawY , itemSize , itemSize);
+
+                String quantity = String.valueOf(item.quantity);
+                layout.setText(smallFont, quantity);
+                float textX = getX() + drawX + itemSize - layout.width;
+                float textY = getY() + drawY + layout.height - 2;
+                smallFont.draw(batch, layout, textX, textY);
             }
         }
     }

@@ -102,9 +102,9 @@ public class JojaMart extends Store {
     @Override
     public Result purchaseProduct(int value, String productName) {
 
-        if (!this.isOpen()) {
-            return new Result(false, "this store is currently closed");
-        }
+//        if (!this.isOpen()) {
+//            return new Result(false, "this store is currently closed");
+//        }
 
         ShopItem item = null;
 
@@ -112,10 +112,6 @@ public class JojaMart extends Store {
             if (i.name.equals(productName)) {
                 item = i;
             }
-        }
-
-        if (item == null) {
-            return new Result(false, "No such product");
         }
 
         int totalPrice = item.getPrice() * value;

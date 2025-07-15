@@ -103,9 +103,9 @@ public class MarnieRanch extends Store {
     @Override
     public Result purchaseProduct(int value, String productName) {
 
-        if (!this.isOpen()) {
-            return new Result(false, "this store is currently closed");
-        }
+//        if (!this.isOpen()) {
+//            return new Result(false, "this store is currently closed");
+//        }
 
         ShopItem item = null;
 
@@ -113,10 +113,6 @@ public class MarnieRanch extends Store {
             if (i.name.equals(productName)) {
                 item = i;
             }
-        }
-
-        if (item == null) {
-            return new Result(false, "No such product");
         }
 
         if (item instanceof MarnieRanchLiveStockItem) {
@@ -150,7 +146,7 @@ public class MarnieRanch extends Store {
         App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), (-1) * totalPrice);
         item.decreaseRemainingQuantity(value);
 
-        return new Result(true, "");
+        return new Result(true, "Successfully purchased");
 
     }
 
