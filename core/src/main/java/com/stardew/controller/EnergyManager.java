@@ -25,6 +25,7 @@ public class EnergyManager {
         Player player = App.getGame().getCurrentPlayingPlayer();
         Skin skin = GamePictureManager.skin;
         progressBar = new ProgressBar(0, player.getMaxEnergy(), 1, true, skin);
+        progressBar.setAnimateDuration(0.5f);
         progressBar.setValue(player.getEnergy());
         progressBar.setSize(20, 200);
         progressBar.setPosition(20 , Gdx.graphics.getHeight() - 210);

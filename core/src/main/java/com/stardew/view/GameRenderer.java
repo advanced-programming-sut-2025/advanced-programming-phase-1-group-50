@@ -13,6 +13,7 @@ import com.stardew.models.foraging.Crop;
 import com.stardew.models.foraging.Tree;
 import com.stardew.models.mapInfo.*;
 import com.stardew.models.stores.Store;
+import com.stardew.models.waterBodies.Lake;
 
 
 public class GameRenderer {
@@ -154,6 +155,14 @@ public class GameRenderer {
                                 batch.draw(region, drawX, drawY, tileSize, tileSize);
                             }
 
+                        }
+
+                        else if (tile.getPlaceable() instanceof Lake) {
+                            batch.draw(tex, drawX, drawY, tileSize, tileSize);
+                        }
+
+                        else if (tile.getPlaceable() instanceof Quarry) {
+                            //TODO complete here
                         }
 
 //                        else if (tile.getPlaceable() instanceof Animal animal) {
