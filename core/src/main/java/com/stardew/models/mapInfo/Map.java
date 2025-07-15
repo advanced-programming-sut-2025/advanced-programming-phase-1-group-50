@@ -99,9 +99,8 @@ public class Map {
 
                 for (int i = placeable.getBounds().x; i < placeable.getBounds().x + placeable.getBounds().width; i++) {
                     for (int j = placeable.getBounds().y; j < placeable.getBounds().y + placeable.getBounds().height; j++) {
-                        if (!(placeable instanceof Cottage)) {
-                            tiles[i][j].setWalkable(false);
-                        }
+
+                        tiles[i][j].setWalkable(false);
                         tiles[i][j].setSymbol(placeable.getSymbol());
                         tiles[i][j].setPlaceable(placeable);
 

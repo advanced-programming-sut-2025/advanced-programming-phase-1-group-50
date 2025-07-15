@@ -12,8 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.stardew.controller.GameDateAndWeatherController.DateController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
+import com.stardew.models.date.Season;
 import com.stardew.models.date.Time;
+import com.stardew.models.mapInfo.Tile;
 import com.stardew.models.userInfo.Coin;
 
 public class TimeManager {
@@ -26,10 +29,14 @@ public class TimeManager {
     private final Stage uiStage ;
     private final Image clockImage = new Image(GamePictureManager.clockTexture);
     private int previousDigitsOfGold = 0;
+    private boolean changeTileTextureInWinter = false;
+    private boolean changeTileTextureInSpring = false;
+    private boolean firstTimeChangeInSpring = true;
+    private GameModel gameModel;
 
 
 
-    public TimeManager(Stage uiStage) {
+    public TimeManager(Stage uiStage ) {
         this.uiStage = uiStage;
         initializeTime();
         initializeFadeImage();
@@ -37,6 +44,10 @@ public class TimeManager {
 
 
 
+    }
+
+    public void setGameModel(GameModel gameModel) {
+        this.gameModel = gameModel;
     }
 
     public void initializeFadeImage(){
@@ -181,6 +192,40 @@ public class TimeManager {
         if (digitsOfGold != previousDigitsOfGold) {
             previousDigitsOfGold = digitsOfGold;
             playerGoldLabel.setPosition(clockImage.getX() + 280 - digitsOfGold * 17, clockImage.getY() + 55);
+        }
+    }
+
+    public void changeTileTextureInWinter(){
+
+        if(!changeTileTextureInWinter) {
+            if (App.getGame().getTime().getSeason().equals(Season.Winter)) {
+                firstTimeChangeInSpring = false;
+                Tile[][] tiles = gameModel.getMap().getTiles();
+                for (Tile[] tile : tiles) {
+                    for (Tile value : tile) {
+                        value.checkSeasonIsWinter();
+                    }
+                }
+                changeTileTextureInWinter = true;
+            }
+        }
+    }
+
+    public void changeTileTextureInSpring(){
+        if(firstTimeChangeInSpring){
+
+            return;
+        }
+        if(!changeTileTextureInSpring) {
+            if (App.getGame().getTime().getSeason().equals(Season.Spring)) {
+                Tile[][] tiles = gameModel.getMap().getTiles();
+                for (Tile[] tile : tiles) {
+                    for (Tile value : tile) {
+                        value.checkIsSeasonSpring();
+                    }
+                }
+                changeTileTextureInSpring = true;
+            }
         }
     }
 }

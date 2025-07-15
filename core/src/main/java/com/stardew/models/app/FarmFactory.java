@@ -21,14 +21,14 @@ public class FarmFactory {
 
     private static final Random rand = new Random();
     public static Farm makeFarm1(int x  ,int y) {
-        markUsedArea(10 + x , 10 + y , 4 ,4 );
+        markUsedArea(10 + x , 10 + y , 6 ,6 );
         markUsedArea(3 + x , 3 + y , 6 ,6 );
         markUsedArea(60 + x , 15 + y , 3 , 12);
         markUsedArea(60 +x ,45+y , 3 , 14);
         markUsedArea(50 + x , 65 + y , 5 , 7);
 
         return new Farm(
-                new Cottage(10 + x, 10 + y, 4, 4),
+                new Cottage(10 + x, 10 + y, 6, 6),
                 new GreenHouse(3 + x, 3 + y, 6, 6),
                 new ArrayList<>(Arrays.asList(
                         new Lake(60 + x, 15 + y, 3, 12),
@@ -47,8 +47,8 @@ public class FarmFactory {
     }
 
     public static Farm makeFarm2(int x  ,int y) {
-        Cottage cottage = new Cottage(5 + x, 10 + y, 4, 4);
-        markUsedArea(5+ x, 10 + y, 4, 4);
+        Cottage cottage = new Cottage(5 + x, 10 + y, 6, 6);
+        markUsedArea(5+ x, 10 + y, 6, 6);
         GreenHouse greenHouse = new GreenHouse(30 + x, 15 + y, 6, 6);
         markUsedArea(30 + x, 15 + y, 6, 6);
         ArrayList<Lake> lakes = new ArrayList<>();
@@ -76,8 +76,8 @@ public class FarmFactory {
     }
 
     public static Farm makeFarm3(int x , int y) {
-        Cottage c = new Cottage(10 + x, 5 + y, 4, 4);
-        markUsedArea(10 + x, 5 + y, 4, 4);
+        Cottage c = new Cottage(10 + x, 5 + y, 6, 6);
+        markUsedArea(10 + x, 5 + y, 6, 6);
         GreenHouse g = new GreenHouse(70 + x, 5 + y, 6, 6);
         markUsedArea(70 + x, 5 + y, 6, 6);
         ArrayList<Lake> lakes = new ArrayList<>();
@@ -109,8 +109,8 @@ public class FarmFactory {
     }
 
     public static Farm makeFarm4(int x  ,int y) {
-        Cottage cottage = new Cottage(5 + x, 10 + y, 4, 4);
-        markUsedArea(10 + x, 10 + y, 4, 4);
+        Cottage cottage = new Cottage(5 + x, 10 + y, 6, 6);
+        markUsedArea(10 + x, 10 + y, 6, 6);
         ArrayList<Lake> lakes = new ArrayList<>();
         Lake l1 = new Lake(20 + x, 35 + y, 3, 20);
         lakes.add(l1);

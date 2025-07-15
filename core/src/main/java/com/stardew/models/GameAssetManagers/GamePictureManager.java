@@ -1552,7 +1552,7 @@ public class GamePictureManager {
     public static TextureRegion[][] cottageRegions ;
     static {
         Texture cottageTexture2 = new Texture("Cottage.png");
-        cottageRegions = TextureRegion.split(cottageTexture2 , cottageTexture.getRegionWidth() / 4 , cottageTexture.getRegionHeight() / 4);
+        cottageRegions = TextureRegion.split(cottageTexture2 , cottageTexture.getRegionWidth() / 6 , cottageTexture.getRegionHeight() / 6);
     }
 
 
@@ -1699,7 +1699,7 @@ public class GamePictureManager {
 
 
     public static TextureRegion snowyTile = new TextureRegion(new Texture("Tile/snowy.png"));
-    public static TextureRegion snowyTile2 = new TextureRegion(new Texture("Tile/Flooring_38.png"));
+    public static TextureRegion snowyTile2 = new TextureRegion(new Texture("Tile/snowy2.png"));
 
 
 
