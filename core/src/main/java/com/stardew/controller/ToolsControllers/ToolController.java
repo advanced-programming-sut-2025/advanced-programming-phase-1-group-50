@@ -7,34 +7,16 @@ import com.stardew.models.app.App;
 import com.stardew.models.foraging.ForagingMineral;
 import com.stardew.models.foraging.Growable;
 import com.stardew.models.foraging.Tree;
-import com.stardew.models.manuFactor.Ingredient;
-import com.stardew.models.manuFactor.artisanGoods.ArtisanGood;
-import com.stardew.models.manuFactor.artisanGoods.ArtisanGoodType;
 import com.stardew.models.mapInfo.*;
 import com.stardew.models.tools.*;
-import com.stardew.models.userInfo.Coin;
 import com.stardew.models.userInfo.Player;
-import com.stardew.models.userInfo.TrashCan;
 import com.stardew.models.waterBodies.Lake;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 public class ToolController {
     private final AnimalsController animalsController = new AnimalsController();
     private final ForagingController foragingController = new ForagingController();
-
-    public boolean haveEnoughCoins(int price, Player player) {
-        int coinValue = player.getBackpack().getIngredientQuantity().getOrDefault(new Coin(), 0);
-        return coinValue >= price;
-    }
-
-    public void minusCoinForUpgradeTool(int price, Player player) {
-        Coin coin = new Coin();
-        int value = player.getBackpack().getIngredientQuantity().getOrDefault(coin, 0);
-        player.getBackpack().getIngredientQuantity().put(coin, value - price);
-    }
 
     public Result ToolsEquip(String input) {
         for (Tool t : App.getGame().getCurrentPlayingPlayer().getBackpack().getTools()) {
@@ -59,176 +41,6 @@ public class ToolController {
 
         }
         return new Result(true, "Available Tools : \n" + sb);
-    }
-
-    public Result upgradeTool(String input) {
-
-        Player player = App.getGame().getCurrentPlayingPlayer();
-        ArrayList<Tool> tools = player.getBackpack().getTools();
-        HashMap<Ingredient, Integer> ingredients = player.getBackpack().getIngredientQuantity();
-        Map map = App.getGame().getMap();
-        int price;
-
-        if (input.equals("TrashCan")) {
-
-            if (!map.isAroundPlaceable(player, map.getNpcVillage().getBlacksmith())) {
-                return new Result(false, "you should be near blacksmith");
-            }
-
-            if (!map.getNpcVillage().getBlacksmith().isOpen()) {
-                return new Result(false, "this store is currently closed");
-            }
-
-            TrashCan trashCan = player.getBackpack().getTrashCan();
-            price = trashCan.getPriceForUpgrade();
-
-
-            if (!haveEnoughCoins(price, player)) {
-                return new Result(false, "you don't have enough coins");
-            }
-
-            switch (price) {
-                case 0: {
-                    return new Result(false, "This tool is at the highest level");
-                }
-                case 1000: {
-                    if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.CopperBar), 0) < 5) {
-                        return new Result(false, "you don't have enough Copper bar");
-                    }
-                    if (!map.getNpcVillage().getBlacksmith().canUpgradeTool("Copper Trash Can")) {
-                        return new Result(false, "Insufficient remaining upgrades for today");
-                    }
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.CopperBar), -5);
-
-                    break;
-                }
-                case 2500: {
-                    if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.IronBar), 0) < 5) {
-                        return new Result(false, "you don't have enough Iron bar");
-                    }
-                    if (!map.getNpcVillage().getBlacksmith().canUpgradeTool("Steel Trash Can")) {
-                        return new Result(false, "Insufficient remaining upgrades for today");
-                    }
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.IronBar), -5);
-                    break;
-                }
-                case 5000: {
-                    if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.GoldBar), 0) < 5) {
-                        return new Result(false, "you don't have enough Gold bar");
-                    }
-                    if (!map.getNpcVillage().getBlacksmith().canUpgradeTool("Gold Trash Can")) {
-                        return new Result(false, "Insufficient remaining upgrades for today");
-                    }
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.GoldBar), -5);
-                    break;
-                }
-                case 12500: {
-                    if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.IridiumBar), 0) < 5) {
-                        return new Result(false, "you don't have enough Iridium bar");
-                    }
-                    if (!map.getNpcVillage().getBlacksmith().canUpgradeTool("Iridium Trash Can")) {
-                        return new Result(false, "Insufficient remaining upgrades for today");
-                    }
-                    App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.IridiumBar), -5);
-                    break;
-                }
-
-            }
-
-            trashCan.upgradeTool();
-            minusCoinForUpgradeTool(price, player);
-            return new Result(true, "Tool upgraded");
-
-        }
-
-        for (Tool t : tools) {
-
-            if (t.getClass().getSimpleName().equals(input)) {
-
-                if (t instanceof FishingPole) {
-
-                    return new Result(false, "you can't upgrade fishing pole");
-
-                } else {
-
-                    if (!map.isAroundPlaceable(player, map.getNpcVillage().getBlacksmith())) {
-                        return new Result(false, "you should be near blacksmith");
-                    }
-
-                    if (!map.getNpcVillage().getBlacksmith().isOpen()) {
-                        return new Result(false, "this store is currently closed");
-                    }
-
-                    if (t.getToolType() == null) {
-                        return new Result(false, "you can't upgrade this tool");
-                    }
-
-                    price = t.getToolType().getPriceForUpgrade();
-                    if (!haveEnoughCoins(price, player)) {
-                        return new Result(false, "you don't have enough coins");
-                    }
-
-                    switch (price) {
-                        case 0: {
-                            return new Result(false, "This tool is at the highest level");
-                        }
-                        case 2000: {
-                            if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.CopperBar), 0) < 5) {
-                                return new Result(false, "you don't have enough Copper bar");
-                            }
-                            if (!map.getNpcVillage().getBlacksmith().canUpgradeTool("Copper Tool")) {
-                                return new Result(false, "Insufficient remaining upgrades for today");
-                            }
-                            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.CopperBar), -5);
-
-                            break;
-                        }
-                        case 5000: {
-                            if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.IronBar), 0) < 5) {
-                                return new Result(false, "you don't have enough Iron bar");
-                            }
-                            if (!map.getNpcVillage().getBlacksmith().canUpgradeTool("Steel Tool")) {
-                                return new Result(false, "Insufficient remaining upgrades for today");
-                            }
-                            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.IronBar), -5);
-                            break;
-                        }
-                        case 10000: {
-                            if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.GoldBar), 0) < 5) {
-                                return new Result(false, "you don't have enough Gold bar");
-                            }
-                            if (!map.getNpcVillage().getBlacksmith().canUpgradeTool("Gold Tool")) {
-                                return new Result(false, "Insufficient remaining upgrades for today");
-                            }
-                            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.GoldBar), -5);
-                            break;
-                        }
-                        case 25000: {
-                            if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.IridiumBar), 0) < 5) {
-                                return new Result(false, "you don't have enough Iridium bar");
-                            }
-                            if (!map.getNpcVillage().getBlacksmith().canUpgradeTool("Iridium Tool")) {
-                                return new Result(false, "Insufficient remaining upgrades for today");
-                            }
-                            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.IridiumBar), -5);
-                            break;
-                        }
-
-                    }
-
-                    t.upgradeTool();
-                    minusCoinForUpgradeTool(price, player);
-                    return new Result(true, "Tool upgraded");
-
-                }
-            }
-
-
-        }
-
-        return new Result(false, "Tool not found");
-
-
     }
 
     public Result useTool(Tile targetTile) {
