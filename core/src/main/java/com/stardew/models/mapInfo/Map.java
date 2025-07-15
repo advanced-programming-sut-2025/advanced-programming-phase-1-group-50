@@ -36,6 +36,8 @@ public class Map {
     }
 
     public Tile findTile(int x, int y) {
+        if (x < 0 || y < 0 || x >= tiles.length || y >= tiles[0].length)
+            return null;
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
                 if (x == i && y == j) {

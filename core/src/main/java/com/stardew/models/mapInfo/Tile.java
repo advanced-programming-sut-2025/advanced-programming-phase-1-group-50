@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
+import com.stardew.models.app.App;
 import com.stardew.models.foraging.Fertilizer;
 
 import java.util.ArrayList;
@@ -74,7 +75,6 @@ public class Tile {
     public void setPlowed(boolean plowed) {
         isPlowed = plowed;
         if(plowed){
-
             this.backgroundTexture = GamePictureManager.plowedTile;
         }
         else {
@@ -88,6 +88,13 @@ public class Tile {
 
     public void setFertilizer(Fertilizer fertilizer) {
         this.fertilizer = fertilizer;
+        if (fertilizer != null) {
+            this.backgroundTexture = (fertilizer == Fertilizer.WaterFertilizer) ?
+                GamePictureManager.waterFertilizedTile : GamePictureManager.growthFertilizedTile;
+        }
+        else {
+            this.backgroundTexture = pastTexture;
+        }
     }
 
     public TextureRegion getTexture() {
@@ -96,6 +103,16 @@ public class Tile {
 
     public void setTexture(TextureRegion texture) {
         this.texture = texture;
+    }
+
+    public boolean isAroundMe(Tile tile) {
+        for (Direction direction : Direction.values()) {
+            Tile inDirectionTile = App.getGame().getMap().getTileByDirection(this, direction);
+            if (inDirectionTile != null && inDirectionTile.getPosition().equals(tile.getPosition())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
