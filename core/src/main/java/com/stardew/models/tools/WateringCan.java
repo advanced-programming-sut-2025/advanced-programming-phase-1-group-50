@@ -1,8 +1,10 @@
 package com.stardew.models.tools;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
+import com.stardew.models.app.Game;
 import com.stardew.models.date.Weather;
 import com.stardew.models.userInfo.Ability;
 
@@ -10,20 +12,25 @@ public class WateringCan extends Tool {
     private ToolType type = ToolType.Primary;
     private int capacity = 40;
     private int waterCapacity = capacity;
+    private TextureRegion textureRegion = GamePictureManager.wateringCanTexture;
 
     public void upgradeTool() {
         if (this.type == ToolType.Primary) {
             this.type = ToolType.Coppery;
             this.capacity = 55;
+            this.textureRegion = GamePictureManager.copperWateringCanTexture;
         } else if (this.type == ToolType.Coppery) {
             this.type = ToolType.Metal;
             this.capacity = 70;
+            this.textureRegion = GamePictureManager.steelWateringCanTexture;
         } else if (this.type == ToolType.Metal) {
             this.type = ToolType.Golden;
             this.capacity = 85;
+            this.textureRegion = GamePictureManager.goldWateringCanTexture;
         } else if (this.type == ToolType.Golden) {
             this.type = ToolType.Iridium;
             this.capacity = 100;
+            this.textureRegion = GamePictureManager.iridiumWateringCanTexture;
         }
     }
 
@@ -90,7 +97,7 @@ public class WateringCan extends Tool {
 
     @Override
     public TextureRegion getInventoryTexture() {
-        return null;
+        return textureRegion;
     }
 
     @Override

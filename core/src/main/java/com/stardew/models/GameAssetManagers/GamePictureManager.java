@@ -1698,6 +1698,10 @@ public class GamePictureManager {
     public static TextureRegion growthFertilizedTile = new TextureRegion(new Texture("Tile/Hyper_Speed-Gro_tile.png"));
 
 
+    public static TextureRegion snowyTile = new TextureRegion(new Texture("Tile/snowy.png"));
+    public static TextureRegion snowyTile2 = new TextureRegion(new Texture("Tile/Flooring_38.png"));
+
+
 
 
 }
