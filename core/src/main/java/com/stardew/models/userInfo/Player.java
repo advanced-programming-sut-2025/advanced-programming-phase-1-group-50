@@ -69,11 +69,13 @@ public class Player {
         Hoe hoe = new Hoe();
         Pickaxe pickaxe = new Pickaxe();
         Scythe scythe = new Scythe();
+        WateringCan wateringCan = new WateringCan();
         this.backpack.setPlayer(this);
         this.backpack.getTools().add(hoe);
         this.backpack.getTools().add(scythe);
         this.backpack.getTools().add(pickaxe);
         this.backpack.getTools().add(axe);
+        this.backpack.getTools().add(wateringCan);
         for(Tool tool : backpack.getTools()) {
             if(tool instanceof Hoe) {
                 this.currentTool = tool;

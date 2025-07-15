@@ -1,10 +1,12 @@
 package com.stardew.models.mapInfo;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
 import com.stardew.models.app.App;
+import com.stardew.models.date.Season;
 import com.stardew.models.foraging.Fertilizer;
 
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ public class Tile {
     private Fertilizer fertilizer = null;
     private TextureRegion texture ;
     private TextureRegion backgroundTexture ;
-    private final TextureRegion pastTexture;
+    private TextureRegion pastTexture;
     public Tile(Position position) {
         this.position = position;
         this.gotThunder = false;
@@ -132,5 +134,27 @@ public class Tile {
 
         Random rand = new Random();
         return textures.get(rand.nextInt(textures.size()));
+    }
+
+    public void checkSeasonIsWinter() {
+
+        backgroundTexture = getRandomSnowyTexture();
+        pastTexture = backgroundTexture;
+
+    }
+
+    public TextureRegion getRandomSnowyTexture(){
+        ArrayList<TextureRegion> textures = new ArrayList<>();
+        textures.add(GamePictureManager.snowyTile);
+        textures.add(GamePictureManager.snowyTile2);
+
+        Random rand = new Random();
+
+        return textures.get(rand.nextInt(textures.size()));
+    }
+
+    public void checkIsSeasonSpring(){
+        backgroundTexture = new TextureRegion(getRandomDefaultTexture());
+        pastTexture = backgroundTexture;
     }
 }

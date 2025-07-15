@@ -3,18 +3,9 @@ package com.stardew.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.Main;
 import com.stardew.controller.EnergyManager;
@@ -23,8 +14,6 @@ import com.stardew.controller.TimeManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
-import com.stardew.models.date.Time;
-import com.stardew.models.userInfo.Coin;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.windows.SmartTooltip;
 
@@ -54,6 +43,7 @@ public class GameScreenMenu implements Screen {
     public void initializeGame(){
 
         gameModel = new GameModel(App.getGame().getMap() , 250 , 200 , hotBarActor);
+        timeManager.setGameModel(gameModel);
         gameModel.setPlayerController(new PlayerController(App.getGame().getCurrentPlayingPlayer(), gameModel));
         gameMenuInputAdapter = new GameMenuInputAdapter(gameModel);
         gameMenuInputAdapter.setHotBar(hotBarActor);
@@ -108,6 +98,8 @@ public class GameScreenMenu implements Screen {
 
         timeManager.checkForDayTransition();
         timeManager.updateNightOverlay();
+        timeManager.changeTileTextureInWinter();
+        timeManager.changeTileTextureInSpring();
     }
 
     @Override
