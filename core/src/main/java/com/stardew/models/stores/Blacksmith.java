@@ -140,7 +140,7 @@ public class Blacksmith extends Store {
 
             switch (totalPrice) {
                 case 0: {
-                    return new Result(false, "This trashCan is at the highest level");
+                    return new Result(false, "The trashCan is at the highest level");
                 }
                 case 1000: {
                     if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.CopperBar), 0) < 5) {

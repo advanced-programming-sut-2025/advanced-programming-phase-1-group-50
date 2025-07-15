@@ -121,9 +121,9 @@ public class CarpenterShop extends Store {
     @Override
     public Result purchaseProduct(int value, String productName) {
 
-        if (!this.isOpen()) {
-            return new Result(false, "this store is currently closed");
-        }
+//        if (!this.isOpen()) {
+//            return new Result(false, "this store is currently closed");
+//        }
 
         ShopItem item = null;
         for (ShopItem i : inventory) {
@@ -131,10 +131,6 @@ public class CarpenterShop extends Store {
                 item = i;
                 break;
             }
-        }
-
-        if (item == null) {
-            return new Result(false, "No such product");
         }
 
         if (item instanceof CarpenterShopFarmBuildingsItem && (!item.name.equals("Shipping Bin"))) {
