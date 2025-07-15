@@ -1,5 +1,6 @@
 package com.stardew.controller.ForagingControllers;
 
+import com.stardew.models.InventoryItem;
 import com.stardew.models.Placeable;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
@@ -139,19 +140,17 @@ public class ForagingController {
         }
     }
 
-    public Result plant(String seedName, String directionName) {
-        Direction direction = Direction.getDirectionByInput(directionName);
+    public Result plant(InventoryItem itemSeed, Tile targetTile) {
+        if (targetTile == null)
+            return new Result(false, "Selected tile is null!");
+
         Player player = App.getGame().getCurrentPlayingPlayer();
-
-        if (direction == null) {
-            return new Result(false, "Direction <" + directionName + "> not found");
-        }
         Tile myTile = App.getGame().getMap().findTile(player.getPosition());
-        Tile targetTile = App.getGame().getMap().getTileByDirection(myTile, direction);
 
-        if (targetTile == null) {
-            return new Result(false, "Tile in direction <" + directionName + "> not found!");
-        }
+        if (!myTile.isAroundMe(targetTile))
+            return new Result(false, "Selected Tile is not near you! ");
+
+
         if (targetTile.getPlaceable() != null) {
             return new Result(false, "You cannot plant in this tile! it isn't free.");
         }
@@ -159,10 +158,8 @@ public class ForagingController {
             return new Result(false, "Tile is not plowed!");
         }
 
-        Seeds seed = Seeds.getSeedByName(seedName);
-        TreeSource treeSource = TreeSource.getTreeSourceByName(seedName);
 
-        if (seed != null) {
+        if (itemSeed instanceof Seeds seed) {
 
             if (!player.getBackpack().getIngredientQuantity().containsKey(seed))
                 return new Result(false, "You don't have this seed!");
@@ -184,7 +181,7 @@ public class ForagingController {
             return new Result(true, "You plant <" + crop.getType() + "> successfully!");
 
         }
-        else if (treeSource != null) {
+        else if (itemSeed instanceof TreeSource treeSource) {
 
             if (!player.getBackpack().getIngredientQuantity().containsKey(treeSource))
                 return new Result(false, "You don't have this seed!");
@@ -224,18 +221,16 @@ public class ForagingController {
         return new Result(true, "You water this plant successfully!");
     }
 
-    public Result fertilize(String fertilizerName, String directionName) {
-        Direction direction = Direction.getDirectionByInput(directionName);
-        Fertilizer fertilizer = Fertilizer.getFertilizerByName(fertilizerName);
-        Player player = App.getGame().getCurrentPlayingPlayer();
-
-        if (direction == null)
-            return new Result(false, "Direction <" + directionName + "> not found");
-
-        Tile myTile = App.getGame().getMap().findTile(player.getPosition());
-        Tile targetTile = App.getGame().getMap().getTileByDirection(myTile, direction);
+    public Result fertilize(Fertilizer fertilizer, Tile targetTile) {
         if (targetTile == null)
-            return new Result(false, "Tile in direction <" + directionName + "> not found!");
+            return new Result(false, "Selected tile is null!");
+
+        Player player = App.getGame().getCurrentPlayingPlayer();
+        Tile myTile = App.getGame().getMap().findTile(player.getPosition());
+
+        if (!myTile.isAroundMe(targetTile))
+            return new Result(false, "Selected Tile is not near you! ");
+
         if (targetTile.getPlaceable() != null)
             return new Result(false, "You cannot fertilize this tile! it isn't free.");
         if (!targetTile.isPlowed())

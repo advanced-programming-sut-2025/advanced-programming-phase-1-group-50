@@ -231,25 +231,26 @@ public class ToolController {
 
     }
 
-    public Result useTool(String direction) {
-        Direction d = Direction.getDirectionByInput(direction);
-        Player p = App.getGame().getCurrentPlayingPlayer();
-        Tile tile = App.getGame().getMap().findTile(p.getPosition());
-        Tool tool = p.getCurrentTool();
+    public Result useTool(Tile targetTile) {
+        if (targetTile == null)
+            return new Result(false, "Selected tile is null!");
 
-        if (d == null) {
-            return new Result(false, "Invalid direction");
+        Player p = App.getGame().getCurrentPlayingPlayer();
+        Tile myTile = App.getGame().getMap().findTile(p.getPosition());
+
+        if (!myTile.isAroundMe(targetTile)) {
+            return new Result(false, "Selected Tile is not near you!");
         }
-        Tile targetTile = App.getGame().getMap().getTileByDirection(tile, d);
+
+        Tool tool = p.getCurrentTool();
 
 
         if (tool instanceof Hoe hoe) {
-            if (App.getGame().getMap().getTileByDirection(tile, d) != null &&
-                    App.getGame().getMap().getTileByDirection(tile, d).getPlaceable() == null) {
+            if (targetTile.getPlaceable() == null) {
                 Result energyConsumptionResult = hoe.useTool();
                 if (!energyConsumptionResult.getSuccessful())
                     return energyConsumptionResult;
-                App.getGame().getMap().getTileByDirection(tile, d).setPlowed(true);
+                targetTile.setPlowed(true);
                 return new Result(true, "tile plowed successfully!");
             } else
                 return new Result(false, "You can't plow this tile with Hoe!");

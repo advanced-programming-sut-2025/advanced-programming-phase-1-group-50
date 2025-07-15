@@ -230,11 +230,11 @@ public class GameMenu implements AppMenu , Screen {
             String toolName = matcher.group(1);
             System.out.println(toolController.upgradeTool(toolName));
         }
-        else if (GameMenuCommands.ToolUse.getMatcher(input) != null) {
-            matcher = com.stardew.models.enums.GameMenuCommands.ToolUse.getMatcher(input);
-            String direction = matcher.group(1);
-            System.out.println(toolController.useTool(direction));
-        }
+//        else if (GameMenuCommands.ToolUse.getMatcher(input) != null) {
+//            matcher = com.stardew.models.enums.GameMenuCommands.ToolUse.getMatcher(input);
+//            String direction = matcher.group(1);
+//            System.out.println(toolController.useTool(direction));
+//        }
 
 
         else if ((matcher = GameMenuCommands.CraftInfo.getMatcher(input)) != null) {
@@ -252,12 +252,12 @@ public class GameMenu implements AppMenu , Screen {
         else if ((matcher = GameMenuCommands.ForagingTreeInfo.getMatcher(input)) != null) {
             System.out.println(foragingController.foragingTreeInfo(matcher.group("treeName")));
         }
-        else if ((matcher = GameMenuCommands.Plant.getMatcher(input)) != null) {
-            System.out.println(foragingController.plant(matcher.group("seed"), matcher.group("direction")));
-        }
-        else if ((matcher = GameMenuCommands.Fertilize.getMatcher(input)) != null) {
-            System.out.println(foragingController.fertilize(matcher.group("fertilizer"), matcher.group("direction")));
-        }
+//        else if ((matcher = GameMenuCommands.Plant.getMatcher(input)) != null) {
+//            System.out.println(foragingController.plant(matcher.group("seed"), matcher.group("direction")));
+//        }
+//        else if ((matcher = GameMenuCommands.Fertilize.getMatcher(input)) != null) {
+//            System.out.println(foragingController.fertilize(matcher.group("fertilizer"), matcher.group("direction")));
+//        }
         else if ((matcher = GameMenuCommands.ShowPlant.getMatcher(input)) != null) {
             System.out.println(foragingController.showPlant(
                     Integer.parseInt(matcher.group("X")), Integer.parseInt(matcher.group("Y"))));

@@ -161,7 +161,10 @@ public class Player {
         this.farm = map;
     }
     public Position getPosition(){
-        return currentPosition;
+        float x = playerPosition.getFirst();
+        float y = playerPosition.getSecond();
+        return new Position(((int)x), ((int)y));
+//        return currentPosition;
     }
     public void setPosition(Position position){
         this.currentPosition = position;
@@ -383,6 +386,11 @@ public class Player {
 
     public void setCurrentInventoryItem(InventoryItem item){
         this.currentInventoryItem = item;
+
+        if (item instanceof Tool tool)
+            setCurrentTool(tool);
+        else
+            setCurrentTool(null);
     }
 
     public InventoryItem getCurrentInventoryItem(){

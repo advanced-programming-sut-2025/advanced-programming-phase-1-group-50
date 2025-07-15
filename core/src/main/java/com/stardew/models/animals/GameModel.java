@@ -2,13 +2,19 @@ package com.stardew.models.animals;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.stardew.Main;
+import com.stardew.controller.ForagingControllers.ForagingController;
 import com.stardew.controller.PlayerController;
-import com.stardew.controller.ToolManager;
+import com.stardew.controller.ToolsControllers.ToolController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.InventoryItem;
 import com.stardew.models.app.App;
+import com.stardew.models.foraging.Fertilizer;
+import com.stardew.models.foraging.Seeds;
+import com.stardew.models.foraging.TreeSource;
 import com.stardew.models.mapInfo.Map;
 import com.stardew.models.mapInfo.Pair;
+import com.stardew.models.mapInfo.Tile;
+import com.stardew.models.tools.Tool;
 import com.stardew.models.userInfo.Player;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.modelsManager.AnimalsManager;
@@ -23,7 +29,9 @@ public class GameModel {
     private final AnimalsManager animalsManager;
     private final ArtisanMachinesManager artisanMachinesManager;
     private final HotBarActor hotBarActor;
-    private final ToolManager toolManager;
+    private final ToolController toolController;
+    private final ForagingController foragingController;
+
 
     public GameModel(Map map  , int mapWidth , int mapHeight, HotBarActor hotBarActor) {
         this.map = map;
@@ -37,7 +45,8 @@ public class GameModel {
         animalsManager = new AnimalsManager();
         artisanMachinesManager = new ArtisanMachinesManager();
         this.hotBarActor = hotBarActor;
-        toolManager = new ToolManager();
+        toolController = new ToolController();
+        foragingController = new ForagingController();
 
     }
 
@@ -85,6 +94,26 @@ public class GameModel {
 
     }
 
+    public void handleClickTile(int indexTileX, int indexTileY) {
+        Tile[][] tiles = map.getTiles();
+        if (indexTileX < 0 || indexTileX >= tiles.length || indexTileY < 0 || indexTileY >= tiles[0].length)
+            return;
+
+        Tile selectedTile = tiles[indexTileX][indexTileY];
+        InventoryItem currentItem = App.getGame().getCurrentPlayingPlayer().getCurrentInventoryItem();
+
+        if (currentItem instanceof Tool) {
+            System.out.println(toolController.useTool(selectedTile));
+        }
+        else if (currentItem instanceof Fertilizer fertilizer) {
+            System.out.println(foragingController.fertilize(fertilizer, selectedTile));
+        }
+        else if (currentItem instanceof Seeds || currentItem instanceof TreeSource) {
+            System.out.println(foragingController.plant(currentItem, selectedTile));
+        }
+    }
+
+
     public OrthographicCamera getCamera() {
         return camera;
     }
@@ -109,7 +138,4 @@ public class GameModel {
         return animalsManager;
     }
 
-    public ToolManager getToolManager() {
-        return toolManager;
-    }
 }

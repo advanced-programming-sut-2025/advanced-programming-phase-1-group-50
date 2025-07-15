@@ -1694,6 +1694,8 @@ public class GamePictureManager {
         (new TextureRegion(new Texture("Inventory/Dandelion.png")));
 
     public static TextureRegion plowedTile = new TextureRegion(new Texture("PlowedTile.png"));
+    public static TextureRegion waterFertilizedTile = new TextureRegion(new Texture("Tile/Basic-Retaining-Soil_tile.png"));
+    public static TextureRegion growthFertilizedTile = new TextureRegion(new Texture("Tile/Hyper_Speed-Gro_tile.png"));
 
 
 
