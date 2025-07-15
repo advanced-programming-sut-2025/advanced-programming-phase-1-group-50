@@ -51,14 +51,20 @@ public class Blacksmith extends Store {
 
     @Override
     public ArrayList<ShopItem> showAllProducts() {
-        return (ArrayList<ShopItem>) inventory.clone();
+        ArrayList<ShopItem> items = new ArrayList<>();
+        for (ShopItem item : inventory) {
+            if (item instanceof BlackSmithStocksItem) {
+                items.add(item);
+            }
+        }
+        return items;
     }
 
     @Override
     public ArrayList<ShopItem> showAvailableProducts() {
         ArrayList<ShopItem> availableProducts = new ArrayList<>();
         for (ShopItem item : inventory) {
-            if (item.remainingQuantity > 0) {
+            if (item.remainingQuantity > 0 && item instanceof BlackSmithStocksItem) {
                 availableProducts.add(item);
             }
         }
@@ -118,16 +124,12 @@ public class Blacksmith extends Store {
     }
 
     public Result upgradeTool(String toolName) {
-        //fishingPole upgrade nemishe
-        //milkPail upgrade nemishe
-        //scythe upgrade nemishe
-        //shear upgrade nemishe
         Player player = App.getGame().getCurrentPlayingPlayer();
         ArrayList<Tool> tools = player.getBackpack().getTools();
         HashMap<Ingredient, Integer> ingredients = player.getBackpack().getIngredientQuantity();
         int totalPrice;
 
-        if (toolName.equals("TrashCan")) {
+        if (toolName.equalsIgnoreCase("TrashCan")) {
 
             TrashCan trashCan = player.getBackpack().getTrashCan();
             totalPrice = trashCan.getPriceForUpgrade();
@@ -138,11 +140,14 @@ public class Blacksmith extends Store {
 
             switch (totalPrice) {
                 case 0: {
-                    return new Result(false, "This trashCan is at the highest level");
+                    return new Result(false, "The trashCan is at the highest level");
                 }
                 case 1000: {
                     if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.CopperBar), 0) < 5) {
                         return new Result(false, "you don't have enough Copper bar");
+                    }
+                    if (!canUpgradeTool("Copper Trash Can")) {
+                        return new Result(false, "Insufficient remaining upgrades for today");
                     }
                     player.getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.CopperBar), -5);
                     inventory.get(8).decreaseRemainingQuantity(1);
@@ -152,6 +157,9 @@ public class Blacksmith extends Store {
                     if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.IronBar), 0) < 5) {
                         return new Result(false, "you don't have enough Iron bar");
                     }
+                    if (!canUpgradeTool("Steel Trash Can")) {
+                        return new Result(false, "Insufficient remaining upgrades for today");
+                    }
                     player.getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.IronBar), -5);
                     inventory.get(9).decreaseRemainingQuantity(1);
                     break;
@@ -160,6 +168,9 @@ public class Blacksmith extends Store {
                     if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.GoldBar), 0) < 5) {
                         return new Result(false, "you don't have enough Gold bar");
                     }
+                    if (!canUpgradeTool("Gold Trash Can")) {
+                        return new Result(false, "Insufficient remaining upgrades for today");
+                    }
                     player.getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.GoldBar), -5);
                     inventory.get(10).decreaseRemainingQuantity(1);
                     break;
@@ -167,6 +178,9 @@ public class Blacksmith extends Store {
                 case 12500: {
                     if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.IridiumBar), 0) < 5) {
                         return new Result(false, "you don't have enough Iridium bar");
+                    }
+                    if (!canUpgradeTool("Iridium Trash Can")) {
+                        return new Result(false, "Insufficient remaining upgrades for today");
                     }
                     player.getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.IridiumBar), -5);
                     inventory.get(11).decreaseRemainingQuantity(1);
@@ -183,7 +197,7 @@ public class Blacksmith extends Store {
 
         for (Tool t : tools) {
 
-            if (t.getClass().getSimpleName().equals(toolName)) {
+            if (t.getClass().getSimpleName().equalsIgnoreCase(toolName)) {
 
                 totalPrice = t.getToolType().getPriceForUpgrade();
 
@@ -199,6 +213,9 @@ public class Blacksmith extends Store {
                         if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.CopperBar), 0) < 5) {
                             return new Result(false, "you don't have enough Copper bar");
                         }
+                        if (!canUpgradeTool("Copper Tool")) {
+                            return new Result(false, "Insufficient remaining upgrades for today");
+                        }
                         player.getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.CopperBar), -5);
                         inventory.get(4).decreaseRemainingQuantity(1);
                         break;
@@ -206,6 +223,9 @@ public class Blacksmith extends Store {
                     case 5000: {
                         if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.IronBar), 0) < 5) {
                             return new Result(false, "you don't have enough Iron bar");
+                        }
+                        if (!canUpgradeTool("Steel Tool")) {
+                            return new Result(false, "Insufficient remaining upgrades for today");
                         }
                         player.getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.IronBar), -5);
                         inventory.get(5).decreaseRemainingQuantity(1);
@@ -215,6 +235,9 @@ public class Blacksmith extends Store {
                         if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.GoldBar), 0) < 5) {
                             return new Result(false, "you don't have enough Gold bar");
                         }
+                        if (!canUpgradeTool("Gold Tool")) {
+                            return new Result(false, "Insufficient remaining upgrades for today");
+                        }
                         player.getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.GoldBar), -5);
                         inventory.get(6).decreaseRemainingQuantity(1);
                         break;
@@ -222,6 +245,9 @@ public class Blacksmith extends Store {
                     case 25000: {
                         if (ingredients.getOrDefault(new ArtisanGood(ArtisanGoodType.IridiumBar), 0) < 5) {
                             return new Result(false, "you don't have enough Iridium bar");
+                        }
+                        if (!canUpgradeTool("Iridium Tool")) {
+                            return new Result(false, "Insufficient remaining upgrades for today");
                         }
                         player.getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.IridiumBar), -5);
                         inventory.get(7).decreaseRemainingQuantity(1);
@@ -239,18 +265,18 @@ public class Blacksmith extends Store {
         return new Result(false, "You don't have this tool");
     }
 
-//    public boolean canUpgradeTool(String toolName) {
-//
-//        for (ShopItem item : inventory) {
-//            if (item.name.equals(toolName)) {
-//                if (item.remainingQuantity > 0) {
-//                    return true;
-//                }
-//            }
-//        }
-//
-//        return false;
-//    }
+    private boolean canUpgradeTool(String toolName) {
+
+        for (ShopItem item : inventory) {
+            if (item.name.equals(toolName)) {
+                if (item.remainingQuantity > 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 
     @Override
     public char getSymbol() {

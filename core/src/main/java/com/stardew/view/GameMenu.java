@@ -259,10 +259,10 @@ public class GameMenu implements AppMenu , Screen {
 //        else if ((matcher = GameMenuCommands.Fertilize.getMatcher(input)) != null) {
 //            System.out.println(foragingController.fertilize(matcher.group("fertilizer"), matcher.group("direction")));
 //        }
-        else if ((matcher = GameMenuCommands.ShowPlant.getMatcher(input)) != null) {
-            System.out.println(foragingController.showPlant(
-                    Integer.parseInt(matcher.group("X")), Integer.parseInt(matcher.group("Y"))));
-        }
+//        else if ((matcher = GameMenuCommands.ShowPlant.getMatcher(input)) != null) {
+//            System.out.println(foragingController.showPlant(
+//                    Integer.parseInt(matcher.group("X")), Integer.parseInt(matcher.group("Y"))));
+//        }
 
 
 //        else if (GameMenuCommands.CraftingShowRecipes.getMatcher(input) != null) {

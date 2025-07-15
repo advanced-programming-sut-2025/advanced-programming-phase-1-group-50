@@ -8,6 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.Result;
+import com.stardew.models.app.App;
+import com.stardew.models.stores.Blacksmith;
 import com.stardew.models.stores.ShopItem;
 import com.stardew.models.stores.Store;
 import com.stardew.view.windows.CloseableWindow;
@@ -27,7 +30,7 @@ public class StoreWindow extends CloseableWindow {
         defaults().space(15);
 
         filterBox = new SelectBox<>(GamePictureManager.skin);
-        filterBox.setItems("All products" , "Only available products");
+        filterBox.setItems("All products", "Only available products");
         filterBox.setSelected("All products");
         filterBox.addListener(new ChangeListener() {
             @Override
@@ -92,7 +95,7 @@ public class StoreWindow extends CloseableWindow {
             }
 
             Label priceLabel = new Label("$" + price, GamePictureManager.skin);
-            Label qtyLabel = new Label("x" + (item.getRemainingQuantity()>10000 ? " infinity" : quantity ), GamePictureManager.skin);
+            Label qtyLabel = new Label("x" + (quantity > 10000 ? "infinity" : quantity), GamePictureManager.skin);
 
             if (quantity == 0) {
                 priceLabel.setColor(Color.DARK_GRAY);
@@ -104,10 +107,41 @@ public class StoreWindow extends CloseableWindow {
             productTable.add(qtyLabel).width(80);
             productTable.row();
         }
+
+        if (store.getShopAssistantName().equalsIgnoreCase("Clint")) {
+            TextButton upgradeToolButton = new TextButton("Upgrade Tool", GamePictureManager.skin);
+            upgradeToolButton.pad(5);
+            upgradeToolButton.getLabel().setFontScale(0.9f);
+            upgradeToolButton.getLabelCell().padLeft(10);
+            upgradeToolButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    ToolUpgradeWindow toolWindow = new ToolUpgradeWindow(stage);
+                    stage.addActor(toolWindow);
+                }
+            });
+
+            TextButton upgradeTrashButton = new TextButton("Upgrade Trash Can", GamePictureManager.skin);
+            upgradeTrashButton.pad(5);
+            upgradeTrashButton.getLabel().setFontScale(0.9f);
+            upgradeTrashButton.getLabelCell().padLeft(10);
+            upgradeTrashButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    Result result = ((Blacksmith) store).upgradeTool("TrashCan");
+                    TrashCanUpgradeWindow trashWindow = new TrashCanUpgradeWindow( result, stage);
+                    stage.addActor(trashWindow);
+                }
+            });
+
+            productTable.add(upgradeToolButton).colspan(3).width(380).height(50).row();
+            productTable.add(upgradeTrashButton).colspan(3).width(380).height(50).row();
+        }
     }
 
+
     private void openPurchaseWindow(String productName, int quantity, int price) {
-        PurchaseWindow purchaseWindow = new PurchaseWindow(stage, store,this,productName, quantity, price);
+        PurchaseWindow purchaseWindow = new PurchaseWindow(stage, store, this, productName, quantity, price);
         stage.addActor(purchaseWindow);
     }
 }

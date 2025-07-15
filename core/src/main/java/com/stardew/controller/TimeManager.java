@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.stardew.controller.GameDateAndWeatherController.DateController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
 import com.stardew.models.date.Time;
@@ -20,7 +21,6 @@ public class TimeManager {
     private Label seasonAndDayLabel;
     private Label playerGoldLabel;
     private Image blackFadeImage;
-    private boolean isFaded = false;
     private Image nightOverlay;
     private float start = 0f;
     private final Stage uiStage ;
@@ -56,8 +56,7 @@ public class TimeManager {
     public void checkForDayTransition(){
         Time time = App.getGame().getTime();
         int hour = time.getHour();
-        if(hour == 22 && !isFaded){
-            isFaded = true;
+        if(hour == 22){
             blackFadeImage.getColor().a = 0f;
             blackFadeImage.addAction(Actions.sequence(
                 Actions.fadeIn(1f),
@@ -65,9 +64,8 @@ public class TimeManager {
                 Actions.fadeOut(1f)
             ));
 
+            new DateController().advancedTimeCheatCode(1);
         }
-
-        isFaded = false;
     }
 
 

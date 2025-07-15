@@ -2,13 +2,16 @@ package com.stardew.models.animals;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.Timer;
 import com.stardew.controller.ForagingControllers.ForagingController;
 import com.stardew.controller.PlayerController;
 import com.stardew.controller.ToolsControllers.ToolController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.InventoryItem;
+import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.foraging.Fertilizer;
+import com.stardew.models.foraging.Growable;
 import com.stardew.models.foraging.Seeds;
 import com.stardew.models.foraging.TreeSource;
 import com.stardew.models.mapInfo.Map;
@@ -19,6 +22,7 @@ import com.stardew.models.userInfo.Player;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.modelsManager.AnimalsManager;
 import com.stardew.view.modelsManager.ArtisanMachinesManager;
+import com.stardew.view.windows.SmartTooltip;
 
 
 public class GameModel {
@@ -102,14 +106,26 @@ public class GameModel {
         Tile selectedTile = tiles[indexTileX][indexTileY];
         InventoryItem currentItem = App.getGame().getCurrentPlayingPlayer().getCurrentInventoryItem();
 
+        Result result = null;
+
         if (currentItem instanceof Tool) {
-            System.out.println(toolController.useTool(selectedTile));
+            result = toolController.useTool(selectedTile);
         }
         else if (currentItem instanceof Fertilizer fertilizer) {
-            System.out.println(foragingController.fertilize(fertilizer, selectedTile));
+            result = foragingController.fertilize(fertilizer, selectedTile);
         }
         else if (currentItem instanceof Seeds || currentItem instanceof TreeSource) {
-            System.out.println(foragingController.plant(currentItem, selectedTile));
+            result = foragingController.plant(currentItem, selectedTile);
+        }
+
+        if (result != null) {
+            SmartTooltip.getInstance().show("  " + result.getMessage() + "  ");
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    SmartTooltip.getInstance().hide();
+                }
+            }, 3f);
         }
     }
 
