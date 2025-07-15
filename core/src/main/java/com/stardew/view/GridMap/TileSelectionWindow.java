@@ -52,6 +52,8 @@ public class TileSelectionWindow extends CloseableWindow {
 
         add(scrollPane).expand().fill().pad(20, 20, 20, 20);
         row();
+        scrollPane.layout();
+        scrollPane.setScrollPercentY(1f);
 
         ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
         style.imageUp = GamePictureManager.OKButtonUp;

@@ -11,12 +11,10 @@ import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.InventoryItem;
 import com.stardew.models.app.App;
 import com.stardew.models.manuFactor.Ingredient;
-import com.stardew.models.tools.Tool;
 import com.stardew.models.userInfo.Player;
 import com.stardew.view.windows.SmartTooltip;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class BackpackGridActor extends Actor {
@@ -119,7 +117,7 @@ public class BackpackGridActor extends Actor {
 
         int total = items.size();
         int cols = 10;
-        int rows = (total + cols - 1) / cols;
+        int rows = Math.max(5, (int)Math.ceil((double) total / cols));
 
         setSize(cols * cellSize, rows * cellSize);
 
