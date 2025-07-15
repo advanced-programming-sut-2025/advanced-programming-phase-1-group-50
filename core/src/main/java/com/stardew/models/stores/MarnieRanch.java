@@ -19,11 +19,9 @@ public class MarnieRanch extends Store {
     private final String backgroundCode = BackgroundColors.RED;
     private final String colorCode = ColorPrinter.PINK;
     private ArrayList<ShopItem> inventory;
-    private final TextureRegion[][] regions = GamePictureManager.marnieRanchRegions;
-    private final TextureRegion texture = new TextureRegion(GamePictureManager.marnieRanchTexture);
 
     public MarnieRanch(int x, int y, int width, int height) {
-        super(new Rectangle(x, y, width, height), "Marnie", 9, 16);
+        super(GamePictureManager.marnieRanchRegions,new TextureRegion(GamePictureManager.marnieRanchTexture),new Rectangle(x, y, width, height), "Marnie", 9, 16);
     }
 
 
@@ -158,11 +156,6 @@ public class MarnieRanch extends Store {
     }
 
     @Override
-    public TextureRegion[][] getRegions() {
-        return regions;
-    }
-
-    @Override
     public String getColor(){
         return colorCode;
     }
@@ -170,11 +163,6 @@ public class MarnieRanch extends Store {
     @Override
     public String getBackground(){
         return backgroundCode;
-    }
-
-    @Override
-    public TextureRegion getTexture() {
-        return texture;
     }
 
     @Override

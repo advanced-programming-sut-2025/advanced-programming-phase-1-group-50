@@ -25,10 +25,9 @@ public class PierreGeneralStore extends Store {
     private final String backgroundCode = BackgroundColors.YELLOW;
     private final String colorCode = ColorPrinter.BRIGHT_RED;
     private ArrayList<ShopItem> inventory;
-    private final TextureRegion[][] regions = GamePictureManager.pierresShopRegions;
-    private final TextureRegion texture = new TextureRegion(GamePictureManager.pierresShopTexture);
+
     public PierreGeneralStore(int x, int y, int width, int height) {
-        super(new Rectangle(x, y, width, height), "Pierre", 9, 23);
+        super(GamePictureManager.pierresShopRegions,new TextureRegion(GamePictureManager.pierresShopTexture),new Rectangle(x, y, width, height), "Pierre", 9, 23);
     }
 
     @Override
@@ -226,11 +225,6 @@ public class PierreGeneralStore extends Store {
     }
 
     @Override
-    public TextureRegion[][] getRegions() {
-        return regions;
-    }
-
-    @Override
     public char getSymbol() {
         return '⚙';
     }
@@ -243,11 +237,6 @@ public class PierreGeneralStore extends Store {
     @Override
     public String getBackground(){
         return backgroundCode;
-    }
-
-    @Override
-    public TextureRegion getTexture() {
-        return texture;
     }
 
     @Override

@@ -21,11 +21,9 @@ public class CarpenterShop extends Store {
     private final String backgroundCode = BackgroundColors.BRIGHT_RED;
     private final String colorCode = ColorPrinter.BRIGHT_CYAN;
     private ArrayList<ShopItem> inventory;
-    private final TextureRegion[][] region = GamePictureManager.carpenterShopRegions;
-    private final TextureRegion texture = new TextureRegion(GamePictureManager.carpenterShopTexture);
 
     public CarpenterShop(int x, int y, int width, int height) {
-        super(new Rectangle(x, y, width, height), "Robin", 9, 20);
+        super( GamePictureManager.carpenterShopRegions,new TextureRegion(GamePictureManager.carpenterShopTexture),new Rectangle(x, y, width, height), "Robin", 9, 20);
     }
 
     @Override
@@ -197,11 +195,6 @@ public class CarpenterShop extends Store {
     }
 
     @Override
-    public TextureRegion[][] getRegions() {
-        return region;
-    }
-
-    @Override
     public char getSymbol() {
         return 'w';
     }
@@ -214,11 +207,6 @@ public class CarpenterShop extends Store {
     @Override
     public String getBackground(){
         return backgroundCode;
-    }
-
-    @Override
-    public TextureRegion getTexture() {
-        return texture;
     }
 
     @Override

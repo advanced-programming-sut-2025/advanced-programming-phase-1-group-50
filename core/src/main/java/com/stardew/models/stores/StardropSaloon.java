@@ -20,11 +20,9 @@ public class StardropSaloon extends Store {
     private final String backgroundCode = BackgroundColors.BRIGHT_BLUE;
     private final String colorCode= ColorPrinter.PURPLE;
     private ArrayList<ShopItem> inventory;
-    private final TextureRegion[][] regions = GamePictureManager.stardopSaloonRegions;
-    private final TextureRegion texture = new TextureRegion(GamePictureManager.stardopSaloonTexture);
 
     public StardropSaloon(int x, int y, int width, int height) {
-        super(new Rectangle(x, y, width, height), "Gus", 12, 24);
+        super(GamePictureManager.stardopSaloonRegions,new TextureRegion(GamePictureManager.stardopSaloonTexture),new Rectangle(x, y, width, height), "Gus", 12, 24);
     }
 
     @Override
@@ -126,11 +124,6 @@ public class StardropSaloon extends Store {
     }
 
     @Override
-    public TextureRegion[][] getRegions() {
-        return regions;
-    }
-
-    @Override
     public char getSymbol() {
         return '0';
     }
@@ -143,11 +136,6 @@ public class StardropSaloon extends Store {
     @Override
     public String getBackground(){
         return backgroundCode;
-    }
-
-    @Override
-    public TextureRegion getTexture() {
-        return texture;
     }
 
     @Override

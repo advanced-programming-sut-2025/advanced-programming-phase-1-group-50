@@ -8,12 +8,14 @@ import com.stardew.controller.AnimalsControllers.AnimalsController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
+import com.stardew.models.stores.Store;
 import com.stardew.models.userInfo.Player;
 import com.stardew.view.GridMap.TileSelectionWindow;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.InventoryWindows.InventoryWindow;
 import com.stardew.view.RefrigeratorView.RefrigeratorGridActor;
 import com.stardew.view.RefrigeratorView.RefrigeratorWindow;
+import com.stardew.view.StoreWindows.StoreWindow;
 import com.stardew.view.cheatConsole.CheatWindow;
 import com.stardew.view.windows.CookingWindow;
 import com.stardew.view.windows.CraftingWindow;
@@ -156,6 +158,10 @@ public class GameMenuInputAdapter extends InputAdapter {
         model.getPlayerController().update(delta);
 
 
+    }
+
+    public void createStoreWindow(Store store) {
+        stage.addActor(new StoreWindow(stage , store));
     }
 
     public boolean isShowingMap() {

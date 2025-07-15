@@ -59,6 +59,7 @@ public class GameScreenMenu implements Screen {
         Gdx.input.setInputProcessor(inputMultiplexer);
 
         SmartTooltip.initialize(stage, GamePictureManager.skin);
+        addStoresImages();
 
         gameMenuInputAdapter.setStage(stage);
         //stage.addActor(timeManager.getNightOverlay());
@@ -100,6 +101,20 @@ public class GameScreenMenu implements Screen {
         timeManager.updateNightOverlay();
         timeManager.changeTileTextureInWinter();
         timeManager.changeTileTextureInSpring();
+    }
+
+    private void addStoresImages() {
+        stage.addActor(App.getGame().getMap().getNpcVillage().getBlacksmith().getStoreImage());
+        stage.addActor(App.getGame().getMap().getNpcVillage().getCarpenterShop().getStoreImage());
+        stage.addActor(App.getGame().getMap().getNpcVillage().getFishShop().getStoreImage());
+        stage.addActor(App.getGame().getMap().getNpcVillage().getJojaMart().getStoreImage());
+        stage.addActor(App.getGame().getMap().getNpcVillage().getMarnieRanch().getStoreImage());
+        stage.addActor(App.getGame().getMap().getNpcVillage().getPierreGeneralStore().getStoreImage());
+        stage.addActor(App.getGame().getMap().getNpcVillage().getStardopSaloon().getStoreImage());
+    }
+
+    public GameMenuInputAdapter getGameMenuInputAdapter() {
+        return gameMenuInputAdapter;
     }
 
     @Override

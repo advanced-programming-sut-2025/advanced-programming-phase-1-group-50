@@ -19,11 +19,9 @@ public class JojaMart extends Store {
     private final String backgroundCode = BackgroundColors.BRIGHT_YELLOW;
     private final String colorCode = ColorPrinter.ORANGE;
     private ArrayList<ShopItem> inventory;
-    private final TextureRegion texture = new TextureRegion(GamePictureManager.jojaMartTexture);
-    private final TextureRegion[][] regions = GamePictureManager.jojaMartRegions;
 
     public JojaMart(int x, int y, int width, int height) {
-        super(new Rectangle(x, y, width, height), "Morris", 9, 23);
+        super( GamePictureManager.jojaMartRegions,new TextureRegion(GamePictureManager.jojaMartTexture),new Rectangle(x, y, width, height), "Morris", 9, 23);
     }
 
     @Override
@@ -158,11 +156,6 @@ public class JojaMart extends Store {
     }
 
     @Override
-    public TextureRegion[][] getRegions() {
-        return regions;
-    }
-
-    @Override
     public char getSymbol() {
         return 'J';
     }
@@ -175,11 +168,6 @@ public class JojaMart extends Store {
     @Override
     public String getBackground(){
         return backgroundCode;
-    }
-
-    @Override
-    public TextureRegion getTexture() {
-        return texture;
     }
 
     @Override

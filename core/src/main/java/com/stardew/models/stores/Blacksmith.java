@@ -23,11 +23,9 @@ public class Blacksmith extends Store {
     private final String colorCode = ColorPrinter.GRAY;
     private final String backgroundCode = ColorPrinter.WHITE;
     private ArrayList<ShopItem> inventory;
-    private final TextureRegion texture = new TextureRegion(GamePictureManager.blacksmithTexture);
-    private final TextureRegion[][] regions = GamePictureManager.blacksmithRegions;
 
     public Blacksmith(int x, int y, int width, int height) {
-        super(new Rectangle(x, y, width, height), "Clint", 9, 16);
+        super(GamePictureManager.blacksmithRegions ,new TextureRegion(GamePictureManager.blacksmithTexture),new Rectangle(x, y, width, height), "Clint", 9, 16);
     }
 
     @Override
@@ -77,11 +75,6 @@ public class Blacksmith extends Store {
         for (ShopItem item : inventory) {
             item.resetQuantityEveryNight();
         }
-    }
-
-    @Override
-    public TextureRegion[][] getRegions() {
-        return regions;
     }
 
     @Override
@@ -291,11 +284,6 @@ public class Blacksmith extends Store {
     @Override
     public String getBackground() {
         return backgroundCode;
-    }
-
-    @Override
-    public TextureRegion getTexture() {
-        return texture;
     }
 
     @Override

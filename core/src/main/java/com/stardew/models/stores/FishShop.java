@@ -20,11 +20,9 @@ public class FishShop extends Store {
     private final  String backgroundCode = BackgroundColors.BRIGHT_CYAN;
     private final String colorCode = ColorPrinter.BRIGHT_BLUE;
     private ArrayList<ShopItem> inventory;
-    private final TextureRegion texture = new TextureRegion(GamePictureManager.fishShopTexture);
-    private final TextureRegion[][] regions = GamePictureManager.fishShopRegions;
 
     public FishShop(int x, int y, int width, int height) {
-        super(new Rectangle(x, y, width, height), "willy", 9, 17);
+        super(GamePictureManager.fishShopRegions,new TextureRegion(GamePictureManager.fishShopTexture),new Rectangle(x, y, width, height), "willy", 9, 17);
     }
 
     @Override
@@ -120,11 +118,6 @@ public class FishShop extends Store {
     }
 
     @Override
-    public TextureRegion[][] getRegions() {
-        return regions;
-    }
-
-    @Override
     public char getSymbol() {
         return '≈';
     }
@@ -137,11 +130,6 @@ public class FishShop extends Store {
     @Override
     public String getBackground(){
         return backgroundCode;
-    }
-
-    @Override
-    public TextureRegion getTexture() {
-        return texture;
     }
 
     @Override
