@@ -263,6 +263,9 @@ public class ToolController {
             if (targetTile.getPlaceable() != null) {
                 if (targetTile.getPlaceable() instanceof Stone stone) {
                     targetTile.setPlaceable(null);
+                    targetTile.setPlowed(false);
+                    targetTile.setFertilizer(null);
+                    targetTile.setWalkable(true);
                     p.getFarm().getStones().remove(stone);
                     p.getFarm().getPlaceables().remove(stone);
                     targetTile.setSymbol('.');
@@ -285,6 +288,8 @@ public class ToolController {
 
                     }
                     return new Result(false, "this quarry is empty");
+                } else {
+                    return new Result(false, "You can't use this tool on this tile!");
                 }
 
             } else {

@@ -6,7 +6,6 @@ import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.date.Season;
 import com.stardew.models.foraging.*;
-import com.stardew.models.mapInfo.Direction;
 import com.stardew.models.mapInfo.Tile;
 import com.stardew.models.userInfo.Player;
 
@@ -160,7 +159,6 @@ public class ForagingController {
 
 
         if (itemSeed instanceof Seeds seed) {
-
             if (!player.getBackpack().getIngredientQuantity().containsKey(seed))
                 return new Result(false, "You don't have this seed!");
 
@@ -182,7 +180,6 @@ public class ForagingController {
 
         }
         else if (itemSeed instanceof TreeSource treeSource) {
-
             if (!player.getBackpack().getIngredientQuantity().containsKey(treeSource))
                 return new Result(false, "You don't have this seed!");
 
@@ -245,19 +242,13 @@ public class ForagingController {
         return new Result(true, "You fertilize this tile successfully!");
     }
 
-    public Result showPlant(int x, int y) {
-        Tile tile = App.getGame().getMap().findTile(x, y);
-
+    public Result showPlant(Tile tile) {
         if (tile == null)
             return new Result(false, "Tile not found!");
 
         Placeable content = tile.getPlaceable();
-        Growable plant;
-        if (!(content instanceof Crop || content instanceof Tree)) {
+        if (!(content instanceof Growable plant))
             return new Result(false, "Here is no Plant!");
-        }
-        else
-            plant = ((Growable) content);
 
         return new Result(true,
                         String.format("Name:              %s\n", plant.getName()) +
