@@ -1,6 +1,8 @@
 package com.stardew.view.RefrigeratorView;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -23,6 +25,8 @@ public class RefrigeratorGridActor extends Actor {
     private int selectedY = -1;
     private final TextureRegion normalTexture = GamePictureManager.emptyTile;
     private final TextureRegion selectedTexture = GamePictureManager.selectedTile;
+    private final BitmapFont smallFont = GamePictureManager.smallFont;
+    private final GlyphLayout layout = new GlyphLayout();
 
     private int lastVisitedCellX = -1;
     private int lastVisitedCellY = -1;
@@ -140,6 +144,12 @@ public class RefrigeratorGridActor extends Actor {
                 RefrigeratorItem cell = items[x][y];
                 if (cell.occupied && cell.itemTexture != null) {
                     batch.draw(cell.itemTexture, getX() + drawX, getY() + drawY, cellSize, cellSize);
+
+                    String quantity = String.valueOf(cell.quantity);
+                    layout.setText(smallFont, quantity);
+                    float textX = getX() + drawX + cellSize - layout.width;
+                    float textY = getY() + drawY + layout.height - 2;
+                    smallFont.draw(batch, layout, textX, textY);
                 }
             }
         }

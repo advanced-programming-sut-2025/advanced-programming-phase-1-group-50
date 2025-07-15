@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -36,6 +38,16 @@ public class GamePictureManager {
         new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Window/OK_Button_up.png"))));
     public static TextureRegionDrawable OKButtonDown =
         new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Window/OK_Button_down.png"))));
+
+
+    public static BitmapFont smallFont;
+    static {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/ChevyRay - Express.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 16;
+        smallFont = generator.generateFont(parameter);
+        generator.dispose();
+    }
 
 
     //Tools :
