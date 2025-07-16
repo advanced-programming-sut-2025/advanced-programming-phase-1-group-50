@@ -15,6 +15,7 @@ import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.InventoryWindows.InventoryWindow;
 import com.stardew.view.RefrigeratorView.RefrigeratorGridActor;
 import com.stardew.view.RefrigeratorView.RefrigeratorWindow;
+import com.stardew.view.StoreWindows.StoreClosedMessageWindow;
 import com.stardew.view.StoreWindows.StoreWindow;
 import com.stardew.view.cheatConsole.CheatWindow;
 import com.stardew.view.windows.CookingWindow;
@@ -162,6 +163,10 @@ public class GameMenuInputAdapter extends InputAdapter {
 
     public void createStoreWindow(Store store) {
         stage.addActor(new StoreWindow(stage , store));
+    }
+
+    public void showClosedStoreMessage() {
+        stage.addActor(new StoreClosedMessageWindow(stage));
     }
 
     public boolean isShowingMap() {

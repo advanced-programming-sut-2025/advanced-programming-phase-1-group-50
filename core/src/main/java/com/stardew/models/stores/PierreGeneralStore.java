@@ -121,15 +121,10 @@ public class PierreGeneralStore extends Store {
 
     @Override
     public Result purchaseProduct(int value, String productName) {
-
-//        if (!this.isOpen()) {
-//            return new Result(false, "this store is currently closed");
-//        }
-
         ShopItem item = null;
 
         for (ShopItem i : inventory) {
-            if (i.name.equals(productName)) {
+            if (i.getName().equals(productName)) {
                 item = i;
             }
         }

@@ -9,10 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
-import com.stardew.models.app.App;
-import com.stardew.models.stores.Blacksmith;
-import com.stardew.models.stores.ShopItem;
-import com.stardew.models.stores.Store;
+import com.stardew.models.stores.*;
 import com.stardew.view.windows.CloseableWindow;
 
 import java.util.List;
@@ -89,7 +86,11 @@ public class StoreWindow extends CloseableWindow {
                 nameButton.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        openPurchaseWindow(productName, quantity, price);
+                        if (item instanceof MarnieRanchLiveStockItem) {
+                            openAnimalPurchaseWindow(productName , price);
+                        } else {
+                            openPurchaseWindow(productName, quantity, price);
+                        }
                     }
                 });
             }
@@ -141,7 +142,12 @@ public class StoreWindow extends CloseableWindow {
 
 
     private void openPurchaseWindow(String productName, int quantity, int price) {
-        PurchaseWindow purchaseWindow = new PurchaseWindow(stage, store, this, productName, quantity, price);
+        PurchaseWindow purchaseWindow = new PurchaseWindow(stage,this ,store, productName, quantity, price);
+        stage.addActor(purchaseWindow);
+    }
+
+    private void openAnimalPurchaseWindow(String productName, int price) {
+        PurchaseAnimalWindow purchaseWindow = new PurchaseAnimalWindow(stage,this ,store, productName, price);
         stage.addActor(purchaseWindow);
     }
 }
