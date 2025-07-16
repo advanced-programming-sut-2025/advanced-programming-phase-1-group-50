@@ -45,7 +45,7 @@ public abstract class Store implements Placeable {
 
 
     public boolean isOpen() {
-        return App.getGame().getTime().getHour() >= startHour && App.getGame().getTime().getHour() <= endHour;
+        return App.getGame().getTime().getHour() >= startHour && App.getGame().getTime().getHour() < endHour;
     }
 
     public Image getStoreImage() {
