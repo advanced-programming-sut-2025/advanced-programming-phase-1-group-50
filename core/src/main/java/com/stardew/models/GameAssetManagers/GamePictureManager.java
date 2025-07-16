@@ -1172,6 +1172,7 @@ public class GamePictureManager {
         public static Texture eggplantStage4Texture = new Texture("Crops/Eggplant_Stage_4.png");
         public static Texture eggplantStage5Texture = new Texture("Crops/Eggplant_Stage_5.png");
         public static Texture eggplantStage6Texture = new Texture("Crops/Eggplant_Stage_6.png");
+        public static Texture eggplantStage7Texture = new Texture("Crops/Eggplant_Stage_7.png");
         public static Texture[] eggplantTextures = new Texture[]{
             eggplantStage1Texture,
             eggplantStage2Texture,
@@ -1179,6 +1180,7 @@ public class GamePictureManager {
             eggplantStage4Texture,
             eggplantStage5Texture,
             eggplantStage6Texture,
+            eggplantStage7Texture
         };
 
         //fairyRose:
