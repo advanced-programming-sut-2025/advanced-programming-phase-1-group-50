@@ -90,7 +90,7 @@ public class StoreWindow extends CloseableWindow {
                         if (item instanceof MarnieRanchLiveStockItem) {
                             openAnimalPurchaseWindow(productName, price);
                         } else if (item instanceof CarpenterShopFarmBuildingsItem && !item.getName().equalsIgnoreCase("Shipping Bin")) {
-                            showResult(openPurchaseBuildingMenu(productName , store));
+                            openPurchaseBuildingMenu(productName , store);
                         } else {
                             openPurchaseWindow(productName, quantity, price);
                         }
@@ -155,40 +155,34 @@ public class StoreWindow extends CloseableWindow {
         stage.addActor(purchaseAnimalWindowWindow);
     }
 
-    private Result openPurchaseBuildingMenu(String productName , Store store) {
+    private void openPurchaseBuildingMenu(String productName , Store store) {
         Result result1 = ((CarpenterShop)store).canPurchaseBuilding(productName);
 
         if (!result1.getSuccessful()) {
-            return result1;
+            showResult(result1);
+            return;
         }
 
         AnimalsController controller = new AnimalsController();
-        Result result2 = null;
+        Result result2 = switch (productName) {
+            case "Barn" -> controller.build(stage, "barn");
+            case "Big Barn" -> controller.build(stage, "big_barn");
+            case "Deluxe Barn" -> controller.build(stage, "deluxe_barn");
+            case "Coop" -> controller.build(stage, "coop");
+            case "Big Coop" -> controller.build(stage, "big_coop");
+            case "Deluxe Coop" -> controller.build(stage, "deluxe_coop");
+            default -> null;
+        };
 
-        switch (productName) {
-            case "Barn":
-                result2 = controller.build(stage, "barn");
-                break;
-            case "Big Barn":
-                result2 = controller.build(stage, "big_barn");
-                break;
-            case "Deluxe Barn":
-                result2 = controller.build(stage, "deluxe_barn");
-                break;
-            case "Coop":
-                result2 = controller.build(stage, "coop");
-                break;
-            case "Big Coop":
-                result2 = controller.build(stage, "big_coop");
-                break;
-            case "Deluxe Coop":
-                result2 = controller.build(stage, "deluxe_coop");
-                break;
+        if (result2 == null) {
+            return;
         }
+
         if (result2.getSuccessful()) {
             ((CarpenterShop)store).purchaseBuilding(productName);
         }
+
         refreshProducts();
-        return result2;
+        showResult(result2);
     }
 }
