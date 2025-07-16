@@ -62,9 +62,9 @@ public class BackpackGridActor extends Actor {
                     SmartTooltip.getInstance().hide();
 
                     String info = "";
-                    if(cellX >=0 && cellX < cells.length && cellY >=0 && cellY < cells[0].length) {
-                        if (cells[cellX][cellY].textureRegion != null) {
-                            info = cells[cellX][cellY].inventoryItem.toString();
+                    if (cellY >= 0 && cellY < cells.length && cellX >= 0 && cellX < cells[0].length) {
+                        if (cells[cellY][cellX].textureRegion != null) {
+                            info = "  " + cells[cellY][cellX].inventoryItem.toString() + "  ";
                         }
                     }
 
@@ -167,8 +167,7 @@ public class BackpackGridActor extends Actor {
 
     public InventoryItem getInventoryItemByXAndY(int x, int y) {
         if (x == -1 || y == -1) return null;
-        InventoryItem[][] items = getInventoryItems();
-        return items[y][x];
+        return cells[y][x].inventoryItem;
     }
 
     public void update(){
