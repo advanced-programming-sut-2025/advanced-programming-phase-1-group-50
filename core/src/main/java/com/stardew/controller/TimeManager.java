@@ -33,6 +33,8 @@ public class TimeManager {
     private boolean changeTileTextureInSpring = false;
     private boolean firstTimeChangeInSpring = true;
     private GameModel gameModel;
+    private float timeTileWatered;
+
 
 
 
@@ -76,6 +78,7 @@ public class TimeManager {
             ));
 
             new DateController().advancedTimeCheatCode(1);
+
         }
     }
 
@@ -225,6 +228,20 @@ public class TimeManager {
                     }
                 }
                 changeTileTextureInSpring = true;
+            }
+        }
+    }
+
+    public void setWateredTile(float delta){
+        for(Tile[] tile : gameModel.getMap().getTiles()){
+            for (Tile value : tile) {
+                if(value.isWatered()){
+                    value.setWateredTimeTexture(value.getWateredTimeTexture() + delta);
+                    if(value.getWateredTimeTexture() > 100){
+                        value.setWatered(false);
+                        value.setWateredTimeTexture(0);
+                    }
+                }
             }
         }
     }

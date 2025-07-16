@@ -14,6 +14,7 @@ import com.stardew.controller.TimeManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
+import com.stardew.models.date.Weather;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.windows.SmartTooltip;
 
@@ -32,6 +33,8 @@ public class GameScreenMenu implements Screen {
     private final TimeManager timeManager = new TimeManager(uiStage);
     private final EnergyManager energyManager = new EnergyManager(uiStage);
 
+    private final WeatherManager weatherManager = new WeatherManager();
+
 
 
     public GameScreenMenu(){
@@ -44,6 +47,7 @@ public class GameScreenMenu implements Screen {
 
         gameModel = new GameModel(App.getGame().getMap() , 250 , 200 , hotBarActor);
         timeManager.setGameModel(gameModel);
+        weatherManager.setGameModel(gameModel);
         gameModel.setPlayerController(new PlayerController(App.getGame().getCurrentPlayingPlayer(), gameModel));
         gameMenuInputAdapter = new GameMenuInputAdapter(gameModel);
         gameMenuInputAdapter.setHotBar(hotBarActor);
@@ -80,6 +84,9 @@ public class GameScreenMenu implements Screen {
 
 
         batch.setProjectionMatrix(gameModel.getCamera().combined);
+        if(App.getGame().getTime().getWeather().equals(Weather.Rainy)) {
+            weatherManager.render(v);
+        }
         batch.begin();
 
         timeManager.updateTime(v);
@@ -87,6 +94,10 @@ public class GameScreenMenu implements Screen {
         gameModel.update(v);
         gameRenderer.render();
         gameMenuInputAdapter.update(v);
+        if(App.getGame().getTime().getWeather().equals(Weather.Rainy)){
+            weatherManager.draw(batch);
+        }
+
 
         batch.end();
 
@@ -101,6 +112,7 @@ public class GameScreenMenu implements Screen {
         timeManager.updateNightOverlay();
         timeManager.changeTileTextureInWinter();
         timeManager.changeTileTextureInSpring();
+        timeManager.setWateredTile(v);
     }
 
     private void addStoresImages() {

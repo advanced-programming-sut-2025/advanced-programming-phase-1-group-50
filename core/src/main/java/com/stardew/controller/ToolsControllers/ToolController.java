@@ -167,6 +167,7 @@ public class ToolController {
                 Result energyConsumptionResult = wateringCan.useTool();
                 if (!energyConsumptionResult.getSuccessful())
                     return energyConsumptionResult;
+                targetTile.setWatered(true);
                 return foragingController.waterPlantWithUseTool(plant);
             }
             else if (targetTile.getPlaceable() instanceof Lake) {

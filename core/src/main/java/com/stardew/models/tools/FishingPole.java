@@ -1,6 +1,7 @@
 package com.stardew.models.tools;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.date.Weather;
@@ -69,7 +70,12 @@ public class FishingPole extends Tool {
 
     @Override
     public TextureRegion getInventoryTexture() {
-        return null;
+        return switch (type) {
+            case Training -> GamePictureManager.trainingFishingPole;
+            case Bamboo -> GamePictureManager.bambooFishingPole;
+            case Iridium -> GamePictureManager.iridiumFishingPole;
+            case Fiberglass -> GamePictureManager.fiberglassFishingPole;
+        };
     }
 
     public String toString(){

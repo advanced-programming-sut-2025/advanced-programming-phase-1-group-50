@@ -20,9 +20,12 @@ public class Tile {
     private Placeable placeable;
     private boolean isPlowed = false;
     private Fertilizer fertilizer = null;
+    private boolean watered = false;
     private TextureRegion texture ;
     private TextureRegion backgroundTexture ;
     private TextureRegion pastTexture;
+    private TileTypeTextureRegion typeTextureRegion;
+    private float wateredTimeTexture = 0.0f;
     public Tile(Position position) {
         this.position = position;
         this.gotThunder = false;
@@ -30,6 +33,7 @@ public class Tile {
         texture = new TextureRegion(getRandomDefaultTexture());
         backgroundTexture = new TextureRegion(getRandomDefaultTexture());
         pastTexture = backgroundTexture;
+        typeTextureRegion = TileTypeTextureRegion.Normal;
 
     }
     public void setPosition(Position position) {
@@ -52,6 +56,21 @@ public class Tile {
     }
     public void setGotThunder(boolean gotThunder) {
         this.gotThunder = gotThunder;
+    }
+    public void setWatered(boolean watered) {
+        this.watered = watered;
+        if (watered) {
+            backgroundTexture = GamePictureManager.wateredTileTexture;
+            typeTextureRegion = TileTypeTextureRegion.Watered;
+        }
+        else {
+            backgroundTexture = GamePictureManager.plowedTile;
+            typeTextureRegion = TileTypeTextureRegion.Normal;
+        }
+    }
+
+    public boolean isWatered(){
+        return watered;
     }
 
     public boolean isWalkable() {
@@ -78,9 +97,11 @@ public class Tile {
         isPlowed = plowed;
         if(plowed){
             this.backgroundTexture = GamePictureManager.plowedTile;
+            typeTextureRegion = TileTypeTextureRegion.Plowed;
         }
         else {
             this.backgroundTexture = pastTexture;
+            typeTextureRegion = TileTypeTextureRegion.Normal;
         }
     }
 
@@ -93,9 +114,11 @@ public class Tile {
         if (fertilizer != null) {
             this.backgroundTexture = (fertilizer == Fertilizer.WaterFertilizer) ?
                 GamePictureManager.waterFertilizedTile : GamePictureManager.growthFertilizedTile;
+            typeTextureRegion = TileTypeTextureRegion.Fertilizer;
         }
         else {
             this.backgroundTexture = pastTexture;
+            typeTextureRegion = TileTypeTextureRegion.Normal;
         }
     }
 
@@ -156,5 +179,13 @@ public class Tile {
     public void checkIsSeasonSpring(){
         backgroundTexture = new TextureRegion(getRandomDefaultTexture());
         pastTexture = backgroundTexture;
+    }
+
+    public void setWateredTimeTexture(float wateredTimeTexture) {
+        this.wateredTimeTexture = wateredTimeTexture;
+    }
+
+    public float getWateredTimeTexture() {
+        return wateredTimeTexture;
     }
 }
