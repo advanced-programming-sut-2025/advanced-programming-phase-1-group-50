@@ -122,7 +122,7 @@ public class GameMenuInputAdapter extends InputAdapter {
         }
 
         if (justPressedKeys.contains(Input.Keys.Q)) {
-            new AnimalsController().build(stage, "big_coop");
+            //new AnimalsController().build(stage, "big_coop");
         }
 
         if (justPressedKeys.contains(Input.Keys.I)) {

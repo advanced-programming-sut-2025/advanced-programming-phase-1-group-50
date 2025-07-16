@@ -21,63 +21,31 @@ import java.util.Random;
 
 public class AnimalsController {
 
-    public Result build(Stage stage, String buildingName) {
+
+
+    public Result build(Stage stage, Tile tile,String buildingName) {
         Player player = App.getGame().getCurrentPlayingPlayer();
         Map map = App.getGame().getMap();
         HabitatType habitatType = Habitat.getHabitatTypeByInput(buildingName);
         HabitatSize habitatSize = Habitat.getHabitatSizeByInput(buildingName);
 
-        if (habitatType == null || habitatSize == null)
-            return new Result(false, "Invalid building name or type");
-//        if (!map.isAroundPlaceable(player, map.getNpcVillage().getCarpenterShop()))
-//            return new Result(false, "You should be near CarpenterShop");
-
-        TileSelectionWindow tileSelectionWindow = new TileSelectionWindow(stage,
-            habitatType.getLengthX(), habitatType.getLengthY());
-        stage.addActor(tileSelectionWindow);
-        tileSelectionWindow.setOnCloseCallback(tile -> {
-            if (tile == null)
-                tileSelectionWindow.showResult(new Result(false, "You did not select a tile!"));
-            else {
-                //TODO according to store
-                int x = tile.getPosition().getX();
-                int y = tile.getPosition().getY();
-                Habitat habitat = new Habitat(habitatType, habitatSize, x, y);
-                habitat.prepareWindow(stage);
-                Tile[][] tiles = map.getTiles();
-                for (int i = x; i < x + habitatType.getLengthX(); i++) {
-                    for (int j = y; j < y + habitatType.getLengthY(); j++) {
-                        tiles[i][j].setPlaceable(habitat);
-                        tiles[i][j].setWalkable(false);
-                        tiles[i][j].setSymbol(habitat.getSymbol());
-                    }
-                }
-
-                player.getFarm().addHabitat(habitat);
-                player.getFarm().getPlaceables().add(habitat);
-
+        int x = tile.getPosition().getX();
+        int y = tile.getPosition().getY();
+        Habitat habitat = new Habitat(habitatType, habitatSize, x, y);
+        habitat.prepareWindow(stage);
+        Tile[][] tiles = map.getTiles();
+        for (int i = x; i < x + habitatType.getLengthX(); i++) {
+            for (int j = y; j < y + habitatType.getLengthY(); j++) {
+                tiles[i][j].setPlaceable(habitat);
+                tiles[i][j].setWalkable(false);
+                tiles[i][j].setSymbol(habitat.getSymbol());
             }
-        });
+        }
 
-//        Result storeResult = map.getNpcVillage().getCarpenterShop().purchaseBuilding(habitatType, habitatSize);
-//        if (!storeResult.getSuccessful())
-//            return storeResult;
-//
-//        Habitat habitat = new Habitat(habitatType, habitatSize, x, y);
-//
-//        for (int i = x; i < x + habitatType.getLengthX(); i++) {
-//            for (int j = y; j < y + habitatType.getLengthY(); j++) {
-//                Tile tile = map.findTile(i, j);
-//                tile.setPlaceable(habitat);
-//                tile.setWalkable(false);
-//                tile.setSymbol(habitat.getSymbol());
-//            }
-//        }
-//
-//        player.getFarm().addHabitat(habitat);
-//        player.getFarm().getPlaceables().add(habitat);
+        player.getFarm().addHabitat(habitat);
+        player.getFarm().getPlaceables().add(habitat);
 
-        return new Result(true, "Please select a tile to place the machine!");
+        return new Result(true, "You purchased the building successfully.");
     }
 
     public Result buyAnimal(String animalT, String name) {

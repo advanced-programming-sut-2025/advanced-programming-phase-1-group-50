@@ -11,6 +11,7 @@ import com.stardew.controller.AnimalsControllers.AnimalsController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.stores.*;
+import com.stardew.view.GridMap.TileSelectionWindow;
 import com.stardew.view.windows.CloseableWindow;
 
 import java.util.List;
@@ -163,26 +164,25 @@ public class StoreWindow extends CloseableWindow {
             return;
         }
 
-        AnimalsController controller = new AnimalsController();
-        Result result2 = switch (productName) {
-            case "Barn" -> controller.build(stage, "barn");
-            case "Big Barn" -> controller.build(stage, "big_barn");
-            case "Deluxe Barn" -> controller.build(stage, "deluxe_barn");
-            case "Coop" -> controller.build(stage, "coop");
-            case "Big Coop" -> controller.build(stage, "big_coop");
-            case "Deluxe Coop" -> controller.build(stage, "deluxe_coop");
-            default -> null;
-        };
-
-        if (result2 == null) {
-            return;
+        switch (productName) {
+            case "Barn" :
+                stage.addActor(new SelectTileForHabitatWindow(stage,this,"barn",7,4));
+                break;
+            case "Big Barn" :
+                stage.addActor(new SelectTileForHabitatWindow(stage,this,"big_barn",7,4));
+                break;
+            case "Deluxe Barn" :
+                stage.addActor(new SelectTileForHabitatWindow(stage,this,"deluxe_barn",7,4));
+                break;
+            case "Coop" :
+                stage.addActor(new SelectTileForHabitatWindow(stage,this,"coop",6,3));
+                break;
+            case "Big Coop" :
+                stage.addActor(new SelectTileForHabitatWindow(stage,this,"big_coop",6,3));
+                break;
+            case "Deluxe Coop" :
+                stage.addActor(new SelectTileForHabitatWindow(stage,this,"deluxe_coop",6,3));
+                break;
         }
-
-        if (result2.getSuccessful()) {
-            ((CarpenterShop)store).purchaseBuilding(productName);
-        }
-
-        refreshProducts();
-        showResult(result2);
     }
 }
