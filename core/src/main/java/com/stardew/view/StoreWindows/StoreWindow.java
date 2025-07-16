@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.stardew.controller.AnimalsControllers.AnimalsController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.stores.*;
@@ -87,7 +88,9 @@ public class StoreWindow extends CloseableWindow {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         if (item instanceof MarnieRanchLiveStockItem) {
-                            openAnimalPurchaseWindow(productName , price);
+                            openAnimalPurchaseWindow(productName, price);
+                        } else if (item instanceof CarpenterShopFarmBuildingsItem && !item.getName().equalsIgnoreCase("Shipping Bin")) {
+                            showResult(openPurchaseBuildingMenu(productName , store));
                         } else {
                             openPurchaseWindow(productName, quantity, price);
                         }
@@ -130,7 +133,7 @@ public class StoreWindow extends CloseableWindow {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     Result result = ((Blacksmith) store).upgradeTool("TrashCan");
-                    TrashCanUpgradeWindow trashWindow = new TrashCanUpgradeWindow( result, stage);
+                    TrashCanUpgradeWindow trashWindow = new TrashCanUpgradeWindow(result, stage);
                     stage.addActor(trashWindow);
                 }
             });
@@ -142,12 +145,50 @@ public class StoreWindow extends CloseableWindow {
 
 
     private void openPurchaseWindow(String productName, int quantity, int price) {
-        PurchaseWindow purchaseWindow = new PurchaseWindow(stage,this ,store, productName, quantity, price);
+        PurchaseWindow purchaseWindow = new PurchaseWindow(stage, this, store, productName, quantity, price);
         stage.addActor(purchaseWindow);
     }
 
     private void openAnimalPurchaseWindow(String productName, int price) {
-        PurchaseAnimalWindow purchaseAnimalWindowWindow = new PurchaseAnimalWindow(stage,this ,store, productName, price);
+        PurchaseAnimalWindow purchaseAnimalWindowWindow = new PurchaseAnimalWindow(stage, this, store, productName,
+            price);
         stage.addActor(purchaseAnimalWindowWindow);
+    }
+
+    private Result openPurchaseBuildingMenu(String productName , Store store) {
+        Result result1 = ((CarpenterShop)store).canPurchaseBuilding(productName);
+
+        if (!result1.getSuccessful()) {
+            return result1;
+        }
+
+        AnimalsController controller = new AnimalsController();
+        Result result2 = null;
+
+        switch (productName) {
+            case "Barn":
+                result2 = controller.build(stage, "barn");
+                break;
+            case "Big Barn":
+                result2 = controller.build(stage, "big_barn");
+                break;
+            case "Deluxe Barn":
+                result2 = controller.build(stage, "deluxe_barn");
+                break;
+            case "Coop":
+                result2 = controller.build(stage, "coop");
+                break;
+            case "Big Coop":
+                result2 = controller.build(stage, "big_coop");
+                break;
+            case "Deluxe Coop":
+                result2 = controller.build(stage, "deluxe_coop");
+                break;
+        }
+        if (result2.getSuccessful()) {
+            ((CarpenterShop)store).purchaseBuilding(productName);
+        }
+        refreshProducts();
+        return result2;
     }
 }
