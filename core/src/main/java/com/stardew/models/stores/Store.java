@@ -45,7 +45,7 @@ public abstract class Store implements Placeable {
 
 
     public boolean isOpen() {
-        return App.getGame().getTime().getHour() >= startHour && App.getGame().getTime().getHour() <= endHour;
+        return App.getGame().getTime().getHour() >= startHour && App.getGame().getTime().getHour() < endHour;
     }
 
     public Image getStoreImage() {
@@ -64,8 +64,13 @@ public abstract class Store implements Placeable {
     }
 
     private void createStoreWindow() {
-        ((GameScreenMenu)Main.getMain().getScreen()).getGameMenuInputAdapter().createStoreWindow(this);
+        if (isOpen()) {
+            ((GameScreenMenu) Main.getMain().getScreen()).getGameMenuInputAdapter().createStoreWindow(this);
+        } else {
+            ((GameScreenMenu) Main.getMain().getScreen()).getGameMenuInputAdapter().showClosedStoreMessage();
+        }
     }
+
 
 
     @Override

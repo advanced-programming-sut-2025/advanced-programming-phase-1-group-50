@@ -2,6 +2,7 @@ package com.stardew.models.stores;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stardew.controller.AnimalsControllers.AnimalsController;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
@@ -64,57 +65,39 @@ public class MarnieRanch extends Store {
         return availableProducts;
     }
 
-    public Result PurchaseAnimal(AnimalType type) {
-
-        if (!this.isOpen()) {
-            return new Result(false, "this store is currently closed");
-        }
-
+    public Result purchaseAnimal(String productName , String animalName) {
         ShopItem item = null;
 
         for (ShopItem i : inventory) {
-            if (i instanceof MarnieRanchLiveStockItem) {
-                if (((MarnieRanchLiveStockItem) i).getType().equals(type)) {
-                    item = i;
-                }
+            if (i.getName().equals(productName)) {
+                item = i;
+                break;
             }
-        }
-
-        if (item == null) {
-            return new Result(false, "No such animal");
         }
 
         if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Coin(),0) < item.getPrice()) {
             return new Result(false, "You don't have enough money to purchase");
         }
 
-        if (item.remainingQuantity == 0) {
-            return new Result(false, "Not enough stock");
+        AnimalsController animalsController = new AnimalsController();
+        Result result = animalsController.buyAnimal(productName, animalName);
+
+        if (result.getSuccessful()) {
+            item.decreaseRemainingQuantity(1);
+            App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Coin(), item.getPrice());
         }
-
-        item.decreaseRemainingQuantity(1);
-        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Coin(), item.getPrice());
-
-        return new Result(true , "you purchased a" + item.name + "successfully");
+        return result;
     }
 
     @Override
     public Result purchaseProduct(int value, String productName) {
-
-//        if (!this.isOpen()) {
-//            return new Result(false, "this store is currently closed");
-//        }
-
         ShopItem item = null;
 
         for (ShopItem i : inventory) {
-            if (i.name.equals(productName)) {
+            if (i.getName().equals(productName)) {
                 item = i;
+                break;
             }
-        }
-
-        if (item instanceof MarnieRanchLiveStockItem) {
-            return new Result(false, "You must use buy animal command in game menu");
         }
 
         int totalPrice = item.getPrice() * value;
@@ -127,18 +110,10 @@ public class MarnieRanch extends Store {
             return new Result(false, "Not enough stock");
         }
 
-        if (item.name.equals("Hay")) {
-
-            App.getGame().getCurrentPlayingPlayer().getBackpack().increaseHay(value);
-
-        } else if (item.name.equals("Milk Pail")) {
-
-            App.getGame().getCurrentPlayingPlayer().getBackpack().addTool(new MilkPail());
-
-        } else if (item.name.equals("Shears")) {
-
-            App.getGame().getCurrentPlayingPlayer().getBackpack().addTool(new Shear());
-
+        switch (item.name) {
+            case "Hay" -> App.getGame().getCurrentPlayingPlayer().getBackpack().increaseHay(value);
+            case "Milk Pail" -> App.getGame().getCurrentPlayingPlayer().getBackpack().addTool(new MilkPail());
+            case "Shears" -> App.getGame().getCurrentPlayingPlayer().getBackpack().addTool(new Shear());
         }
 
         App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), (-1) * totalPrice);

@@ -1,13 +1,11 @@
 package com.stardew.view.StoreWindows;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.stores.Store;
@@ -21,8 +19,7 @@ public class PurchaseWindow extends CloseableWindow {
     private final Label quantityLabel;
     private int selectedQuantity = 1;
 
-    public PurchaseWindow(Stage stage, Store store, StoreWindow storeWindow, String productName, int quantity,
-                          int price) {
+    public PurchaseWindow(Stage stage,StoreWindow storeWindow ,Store store, String productName, int quantity, int price) {
         super("Purchase " + productName, stage);
         this.unitPrice = price;
         this.maxQuantity = quantity;
@@ -66,42 +63,9 @@ public class PurchaseWindow extends CloseableWindow {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Result result = store.purchaseProduct(selectedQuantity, productName);
-
-                Dialog resultDialog = getDialog();
-
-                Label messageLabel = new Label(result.getMessage(), GamePictureManager.skin);
-                messageLabel.setColor(result.getSuccessful() ? Color.GREEN : Color.RED);
-                messageLabel.setWrap(true);
-                messageLabel.setAlignment(Align.center);
-
-                resultDialog.getContentTable().add(messageLabel)
-                    .pad(20)
-                    .width(300)
-                    .center()
-                    .row();
-
-                resultDialog.button("OK");
-                resultDialog.pack();
-                resultDialog.setPosition(
-                    stage.getCamera().position.x - resultDialog.getWidth() / 2,
-                    stage.getCamera().position.y - resultDialog.getHeight() / 2
-                );
-                stage.addActor(resultDialog);
-            }
-
-
-            private Dialog getDialog() {
-                Dialog resultDialog = new Dialog("Result", GamePictureManager.skin) {
-                    @Override
-                    protected void result(Object object) {
-                        remove();
-                        closeWindow();
-                        storeWindow.refreshProducts();
-                    }
-                };
-                resultDialog.setMovable(false);
-                resultDialog.setResizable(false);
-                return resultDialog;
+                storeWindow.refreshProducts();
+                closeWindow();
+                showResult(result);
             }
         });
 
