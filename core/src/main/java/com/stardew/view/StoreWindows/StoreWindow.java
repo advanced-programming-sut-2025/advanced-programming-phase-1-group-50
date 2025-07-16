@@ -147,7 +147,7 @@ public class StoreWindow extends CloseableWindow {
     }
 
     private void openAnimalPurchaseWindow(String productName, int price) {
-        PurchaseAnimalWindow purchaseWindow = new PurchaseAnimalWindow(stage,this ,store, productName, price);
-        stage.addActor(purchaseWindow);
+        PurchaseAnimalWindow purchaseAnimalWindowWindow = new PurchaseAnimalWindow(stage,this ,store, productName, price);
+        stage.addActor(purchaseAnimalWindowWindow);
     }
 }

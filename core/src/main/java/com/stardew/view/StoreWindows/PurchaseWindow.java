@@ -64,6 +64,7 @@ public class PurchaseWindow extends CloseableWindow {
             public void clicked(InputEvent event, float x, float y) {
                 Result result = store.purchaseProduct(selectedQuantity, productName);
                 storeWindow.refreshProducts();
+                closeWindow();
                 showResult(result);
             }
         });

@@ -30,7 +30,6 @@ public class PurchaseAnimalWindow extends CloseableWindow {
     }
 
     private void buildUI() {
-        clear();
         pad(60);
         defaults().space(20);
 
@@ -47,6 +46,7 @@ public class PurchaseAnimalWindow extends CloseableWindow {
                 if (!animalName.isEmpty()) {
                     Result result = ((MarnieRanch)store).purchaseAnimal(productName, animalName);
                     storeWindow.refreshProducts();
+                    closeWindow();
                     showResult(result);
                 }
             }
