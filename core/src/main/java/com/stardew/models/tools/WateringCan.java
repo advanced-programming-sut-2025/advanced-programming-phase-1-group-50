@@ -91,6 +91,10 @@ public class WateringCan extends Tool {
         return waterCapacity;
     }
 
+    public boolean isFull() {
+        return waterCapacity == capacity;
+    }
+
     public void makeFull() {
         waterCapacity = capacity;
     }
@@ -102,6 +106,6 @@ public class WateringCan extends Tool {
 
     @Override
     public String toString() {
-        return "WateringCan [type=" + type + ", capacity=" + capacity ;
+        return String.format("WateringCan \n   type: %s, capacity: %d/%d   ", type, waterCapacity, capacity);
     }
 }

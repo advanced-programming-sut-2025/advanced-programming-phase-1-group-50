@@ -169,11 +169,14 @@ public class ToolController {
                     return energyConsumptionResult;
                 return foragingController.waterPlantWithUseTool(plant);
             }
-            if (targetTile.getPlaceable() instanceof Lake) {
+            else if (targetTile.getPlaceable() instanceof Lake) {
+                if (wateringCan.isFull())
+                    return new Result(false, "your wateringCan is Full!");
                 Result energyConsumptionResult = wateringCan.useTool();
                 if (!energyConsumptionResult.getSuccessful())
                     return energyConsumptionResult;
                 wateringCan.makeFull();
+                return new Result(true, "You made full wateringCan.");
             }
 
             return new Result(false, "there is no plant or lake!");
