@@ -178,7 +178,7 @@ public enum CropType implements Ingredient {
             new ArrayList<>(List.of(Season.Fall)), false,
             GamePictureManager.cranberriesTextures, GamePictureManager.cranberriesTexture),
     Eggplant(Seeds.EggplantSeeds,
-            new ArrayList<>(Arrays.asList(1, 1, 1, 1)),
+            new ArrayList<>(Arrays.asList(1, 1, 1, 1, 1)),
             5, false, 5, 60, true, 20,
             new ArrayList<>(List.of(Season.Fall)), false,
             GamePictureManager.eggplantTextures, GamePictureManager.eggplantTexture),
