@@ -1,7 +1,6 @@
 package com.stardew.models.foraging;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.ColorPrinter;
@@ -12,7 +11,6 @@ import com.stardew.models.cooking.Eatable;
 import com.stardew.models.date.Time;
 import com.stardew.models.date.Weather;
 import com.stardew.models.manuFactor.Ingredient;
-import com.stardew.models.mapInfo.Position;
 import com.stardew.models.stores.Sellable;
 
 import java.awt.*;
@@ -209,9 +207,9 @@ public class Crop implements Ingredient, Growable , Placeable, Sellable, Eatable
     @Override
     public TextureRegion getTexture() {
         if(isGeneratedRandomly){
-            return new TextureRegion(type.getLevelsTextures()[type.getNumberOfStages()]);
+            return type.getLevelsTextures()[type.getNumberOfStages()];
         }
-        return new TextureRegion(type.getLevelsTextures()[levelOfGrowth]);
+        return type.getLevelsTextures()[levelOfGrowth];
     }
 
     @Override
@@ -238,6 +236,6 @@ public class Crop implements Ingredient, Growable , Placeable, Sellable, Eatable
 
     @Override
     public TextureRegion getInventoryTexture() {
-        return new TextureRegion(type.getMainTexture());
+        return type.getMainTexture();
     }
 }
