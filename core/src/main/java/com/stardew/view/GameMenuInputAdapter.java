@@ -4,7 +4,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.stardew.controller.AnimalsControllers.AnimalsController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
@@ -13,7 +12,6 @@ import com.stardew.models.userInfo.Player;
 import com.stardew.view.GridMap.TileSelectionWindow;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.InventoryWindows.InventoryWindow;
-import com.stardew.view.RefrigeratorView.RefrigeratorGridActor;
 import com.stardew.view.RefrigeratorView.RefrigeratorWindow;
 import com.stardew.view.StoreWindows.StoreClosedMessageWindow;
 import com.stardew.view.StoreWindows.StoreWindow;
@@ -119,14 +117,6 @@ public class GameMenuInputAdapter extends InputAdapter {
 
         if (justPressedKeys.contains(Input.Keys.E)) {
             stage.addActor(new CookingWindow(stage));
-        }
-
-        if (justPressedKeys.contains(Input.Keys.Q)) {
-            //new AnimalsController().build(stage, "big_coop");
-        }
-
-        if (justPressedKeys.contains(Input.Keys.I)) {
-            System.out.println(new AnimalsController().buyAnimal("Chicken", "amir3"));
         }
 
         if(justPressedKeys.contains(Input.Keys.ESCAPE)){
