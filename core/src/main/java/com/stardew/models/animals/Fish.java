@@ -1,6 +1,7 @@
 package com.stardew.models.animals;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.stardew.models.animals.FishBehavior.FishBehavior;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.stores.Sellable;
@@ -13,6 +14,7 @@ public class Fish implements Ingredient, Sellable {
     private final Quality quality;
     private final TextureRegion texture;
     private final FishBehavior behavior;
+    private final Vector2 position;
 
     public Fish(FishType type, Quality quality) {
         this.type = type;
@@ -20,6 +22,7 @@ public class Fish implements Ingredient, Sellable {
         this.sellPrice = (int) (type.getPrice() * quality.getRatio());
         texture = type.getInventoryTexture();
         behavior = this.type.createBehavior();
+        position = new Vector2(0, 0);
     }
 
     public FishType getType() {
@@ -38,6 +41,10 @@ public class Fish implements Ingredient, Sellable {
         return "Fish -> " +
                 "type: " + type +
                 ", quality: " + quality;
+    }
+
+    public Vector2 getPosition() {
+        return position;
     }
 
     public void update(float delta) {
