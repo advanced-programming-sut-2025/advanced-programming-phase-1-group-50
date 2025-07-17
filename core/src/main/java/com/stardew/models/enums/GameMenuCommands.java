@@ -38,7 +38,6 @@ public enum GameMenuCommands implements Command {
     UseGreenHouseForHarvesting("use\\s+greenhouse\\s+for\\s+harvesting\\s*"),
     AddPlantToGreenHouse("\\s*add\\s+plant\\s+to\\s+greenhouse\\s*"),
     StoreMenu("\\s*store\\s+menu\\s*"),
-    SellProduct("\\s*sell\\s+(?<productName>.+?)(\\s+-n\\s+(?<amount>\\d+))?\\s*"),
     FriendShips("\\s*friendships\\s*"),
     TalkToPlayer("\\s*talk\\s+-u\\s+(?<username>.+?)\\s+-m\\s+(?<message>.+?)\\s*"),
     TalkHistory("\\s*talk\\s+history\\s+-u\\s+(?<username>.+?)\\s*"),

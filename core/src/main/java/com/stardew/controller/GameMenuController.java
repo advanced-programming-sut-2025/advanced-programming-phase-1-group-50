@@ -10,12 +10,10 @@ import com.stardew.controller.GameDateAndWeatherController.DateController;
 import com.stardew.models.ColorPrinter;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
-import com.stardew.models.ShippingBin;
 import com.stardew.models.Trade;
 import com.stardew.models.app.*;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.mapInfo.Map;
-import com.stardew.models.stores.Sellable;
 import com.stardew.models.userInfo.*;
 import com.stardew.models.mapInfo.*;
 import com.stardew.view.CreateNewGameMenu;
@@ -434,45 +432,6 @@ public class GameMenuController {
             return new Result(false, "you must be near a store");
 
         }
-    }
-    public Result sellProduct(Matcher  matcher) {
-
-        int amount = 1;
-        if (matcher.group("amount") != null) {
-            amount = Integer.parseInt(matcher.group("amount"));
-        }
-
-        ShippingBin temp = null;
-
-        for (ShippingBin bin : App.getGame().getMap().getShippingBins()) {
-            if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), bin)) {
-                temp = bin;
-                break;
-            }
-        }
-
-        if (temp == null) {
-            return new Result(false, "you must be near a shipping bin");
-        }
-
-        if (!Sellable.isSellable(matcher.group("productName"))) {
-            return new Result(false, "you can't sell this product");
-        }
-
-        if (Sellable.getSellableByName(matcher.group("productName")) == null) {
-            return new Result(false, "Not enough stock");
-        }
-
-        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault((Ingredient) Sellable.getSellableByName(matcher.group("productName")), 0) < amount ) {
-            return new Result(false, "Not enough stock");
-        }
-
-        int price = amount * Sellable.getSellableByName(matcher.group("productName")).getSellPrice();
-
-        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(matcher.group("productName")), amount);
-        temp.increaseRevenue(App.getGame().getCurrentPlayingPlayer(),price);
-
-        return new Result(true, "you have sold this product successfully");
     }
 
     public Result startTrade() {
