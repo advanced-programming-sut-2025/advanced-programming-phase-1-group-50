@@ -22,12 +22,14 @@ import java.util.Random;
 public class AnimalsController {
 
 
-
     public Result build(Stage stage, Tile tile,String buildingName) {
         Player player = App.getGame().getCurrentPlayingPlayer();
         Map map = App.getGame().getMap();
         HabitatType habitatType = Habitat.getHabitatTypeByInput(buildingName);
         HabitatSize habitatSize = Habitat.getHabitatSizeByInput(buildingName);
+
+        if (habitatSize == null || habitatType == null)
+            return new Result(false, "Size or Type not valid");
 
         int x = tile.getPosition().getX();
         int y = tile.getPosition().getY();
@@ -57,8 +59,6 @@ public class AnimalsController {
             return new Result(false, "Animal with this name already exists! Please choose another name");
         if (animalType == null)
             return new Result(false, "Invalid animal type!");
-//        if(!map.isAroundPlaceable(player, map.getNpcVillage().getMarnieRanch()))
-//            return new Result(false, "You should be near Marnie Ranch Shop");
 
         Habitat habitat = null;
         for (Habitat habitat1 : player.getFarm().getHabitats()) {
@@ -73,9 +73,6 @@ public class AnimalsController {
             return new Result(false, "You don't have any enough habitat to buy this animal!\n" +
                 "Or type or size of habitats isn't compatible with animals!");
 
-//        Result storeResult = map.getNpcVillage().getMarnieRanch().PurchaseAnimal(animalType);
-//        if (!storeResult.getSuccessful())
-//            return storeResult;
 
         Animal animal = new Animal(animalType, name, habitat);
         player.getBackpack().addAnimal(animal);
