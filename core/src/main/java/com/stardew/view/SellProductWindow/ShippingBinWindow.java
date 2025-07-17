@@ -1,12 +1,8 @@
 package com.stardew.view.SellProductWindow;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.ShippingBin;
@@ -54,11 +50,10 @@ public class ShippingBinWindow extends CloseableWindow {
     }
 
     protected void refreshProducts() {
-
         productTable.clear();
         List<Sellable> items = new ArrayList<>();
 
-        HashMap<Ingredient,Integer> ingredientQuantity = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity();
+        HashMap<Ingredient, Integer> ingredientQuantity = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity();
 
         for (Ingredient ingredient : ingredientQuantity.keySet()) {
             if (Sellable.isSellable(ingredient.toString()) && ingredientQuantity.get(ingredient) > 0) {
@@ -66,37 +61,31 @@ public class ShippingBinWindow extends CloseableWindow {
             }
         }
 
-        for (Sellable item : items) {
+        if (items.isEmpty()) {
+            Label emptyLabel = new Label("You don't have any sellable items in your backpack.", GamePictureManager.skin);
+            productTable.add(emptyLabel).colspan(3).padTop(20);
+            return;
+        }
 
+        for (Sellable item : items) {
             final String productName = Sellable.getNameInString(item);
             final int price = item.getSellPrice();
-            final int quantity =
-                App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault((Ingredient) item, 0);
+            final int quantity = ingredientQuantity.getOrDefault((Ingredient) item, 0);
 
             TextButton nameButton = new TextButton(productName, GamePictureManager.skin);
             nameButton.pad(5);
             nameButton.getLabel().setFontScale(0.9f);
             nameButton.getLabelCell().padLeft(10);
 
-            if (quantity == 0) {
-                nameButton.setColor(Color.DARK_GRAY);
-                nameButton.setDisabled(true);
-            } else {
-                nameButton.addListener(new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        openSellWindow(productName, quantity, price);
-                    }
-                });
-            }
+            nameButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    openSellWindow(productName, quantity, price);
+                }
+            });
 
             Label priceLabel = new Label("$" + price, GamePictureManager.skin);
             Label qtyLabel = new Label("x" + quantity, GamePictureManager.skin);
-
-            if (quantity == 0) {
-                priceLabel.setColor(Color.DARK_GRAY);
-                qtyLabel.setColor(Color.DARK_GRAY);
-            }
 
             productTable.add(nameButton).width(200).height(50);
             productTable.add(priceLabel).width(100);
@@ -106,7 +95,6 @@ public class ShippingBinWindow extends CloseableWindow {
     }
 
     private void openSellWindow(String productName, int quantity, int price) {
-        stage.addActor(new SellProductWindow(stage,this,shippingBin, productName, quantity, price));
+        stage.addActor(new SellProductWindow(stage, this, shippingBin, productName, quantity, price));
     }
-
 }
