@@ -7,11 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.stardew.controller.AnimalsControllers.AnimalsController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.stores.*;
-import com.stardew.view.GridMap.TileSelectionWindow;
 import com.stardew.view.windows.CloseableWindow;
 
 import java.util.List;
@@ -90,8 +88,10 @@ public class StoreWindow extends CloseableWindow {
                     public void clicked(InputEvent event, float x, float y) {
                         if (item instanceof MarnieRanchLiveStockItem) {
                             openAnimalPurchaseWindow(productName, price);
-                        } else if (item instanceof CarpenterShopFarmBuildingsItem && !item.getName().equalsIgnoreCase("Shipping Bin")) {
-                            openPurchaseBuildingMenu(productName , store);
+                        } else if (item instanceof  CarpenterShopFarmBuildingsItem && item.getName().equalsIgnoreCase("Shipping Bin")) {
+                            openPurchaseShippingBinWindow(store);
+                        } else if (item instanceof CarpenterShopFarmBuildingsItem) {
+                            openPurchaseBuildingWindow(productName , store);
                         } else {
                             openPurchaseWindow(productName, quantity, price);
                         }
@@ -156,11 +156,11 @@ public class StoreWindow extends CloseableWindow {
         stage.addActor(purchaseAnimalWindowWindow);
     }
 
-    private void openPurchaseBuildingMenu(String productName , Store store) {
-        Result result1 = ((CarpenterShop)store).canPurchaseBuilding(productName);
+    private void openPurchaseBuildingWindow(String productName , Store store) {
+        Result result = ((CarpenterShop)store).canPurchaseBuilding(productName);
 
-        if (!result1.getSuccessful()) {
-            showResult(result1);
+        if (!result.getSuccessful()) {
+            showResult(result);
             return;
         }
 
@@ -184,5 +184,16 @@ public class StoreWindow extends CloseableWindow {
                 stage.addActor(new SelectTileForHabitatWindow(stage,this,"deluxe_coop",6,3));
                 break;
         }
+    }
+
+    private void openPurchaseShippingBinWindow(Store store) {
+        Result result = ((CarpenterShop)store).canPurchaseShippingBin();
+
+        if (!result.getSuccessful()) {
+            showResult(result);
+            return;
+        }
+
+        stage.addActor(new SelectTileForShippingBinWindow(stage,this,1,1));
     }
 }

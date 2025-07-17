@@ -92,6 +92,32 @@ public class CarpenterShop extends Store {
         return new Result(true, "");
     }
 
+    public Result canPurchaseShippingBin() {
+
+        ShopItem item = inventory.getLast();
+
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Coin(), 0) < item.getPrice()) {
+            return new Result(false, "You don't have enough money");
+        }
+
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Wood(), 0) < ((CarpenterShopFarmBuildingsItem) item).getWoodCost()) {
+            return new Result(false, "You don't have enough woods");
+        }
+
+        return new Result(true, "");
+    }
+
+    public Result purchaseShippingBin(int x, int y) {
+        if (!App.getGame().getCurrentPlayingPlayer().getFarm().getRectangle().contains(x,y)) {
+            return new Result(false, "You don't own this area");
+        }
+        App.getGame().getMap().addShippingBin(x, y);
+        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), (-1) * inventory.getLast().getPrice());
+        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Wood(),
+            ((CarpenterShopFarmBuildingsItem)inventory.getLast()).getWoodCost());
+        return new Result(true, "You successfully purchased a shipping bin");
+    }
+
     public void purchaseBuilding(String productName) {
         ShopItem item = null;
 
@@ -131,24 +157,7 @@ public class CarpenterShop extends Store {
             return new Result(false, "Not enough stock");
         }
 
-        if (item.name.equals("Shipping Bin")) {
-
-            Random rand = new Random();
-
-            while (true) {
-
-                int randomX = rand.nextInt(250);
-                int randomY = rand.nextInt(200);
-
-                if (App.getGame().getCurrentPlayingPlayer().getFarm().getRectangle().contains(randomX, randomY)) {
-                    if (App.getGame().getMap().addShippingBin(randomX, randomY)) {
-                        break;
-                    }
-                }
-
-            }
-
-        } else if (item.name.equals("Wood")) {
+        if (item.name.equals("Wood")) {
 
             if (!App.getGame().getCurrentPlayingPlayer().getBackpack().hasCapacity()) {
                 return new Result(false, "Not enough capacity in your inventory");
