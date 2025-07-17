@@ -371,9 +371,6 @@ public class GameMenu implements AppMenu , Screen {
             int sizeX = Integer.parseInt(matcher.group("size"));
             System.out.println(controller.printMap(startX, startY, sizeX));
         }
-        else if ((matcher = GameMenuCommands.SellProduct.getMatcher(input)) != null) {
-            System.out.println(controller.sellProduct(matcher));
-        }
         else if (GameMenuCommands.FriendShips.getMatcher(input) != null) {
             System.out.println(relationController.friendships());
         }
