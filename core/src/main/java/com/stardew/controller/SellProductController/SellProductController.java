@@ -8,18 +8,10 @@ import com.stardew.models.stores.Sellable;
 
 public class SellProductController {
 
-    public static Result sellProduct(int amount, String productName, ShippingBin shippingBin) {
+    public static Result sellProduct( String productName, ShippingBin shippingBin, int amount) {
 
         if (!Sellable.isSellable(productName)) {
             return new Result(false, "you can't sell this product");
-        }
-
-        if (Sellable.getSellableByName(productName) == null) {
-            return new Result(false, "Not enough stock");
-        }
-
-        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault((Ingredient) Sellable.getSellableByName(productName), 0) < amount ) {
-            return new Result(false, "Not enough stock");
         }
 
         int price = amount * Sellable.getSellableByName(productName).getSellPrice();

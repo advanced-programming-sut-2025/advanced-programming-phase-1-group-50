@@ -16,6 +16,7 @@ import com.stardew.models.stores.Sellable;
 import com.stardew.view.windows.CloseableWindow;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ShippingBinWindow extends CloseableWindow {
@@ -23,7 +24,7 @@ public class ShippingBinWindow extends CloseableWindow {
     private final Table productTable;
 
     public ShippingBinWindow(Stage stage, ShippingBin shippingBin) {
-        super("Sell Product Window", stage);
+        super("Shipping bin window", stage);
         this.shippingBin = shippingBin;
 
         pad(40);
@@ -53,9 +54,18 @@ public class ShippingBinWindow extends CloseableWindow {
     }
 
     protected void refreshProducts() {
+
         productTable.clear();
         List<Sellable> items = new ArrayList<>();
-        //TODO : completing items
+
+        HashMap<Ingredient,Integer> ingredientQuantity = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity();
+
+        for (Ingredient ingredient : ingredientQuantity.keySet()) {
+            if (Sellable.isSellable(ingredient.toString()) && ingredientQuantity.get(ingredient) > 0) {
+                items.add((Sellable) ingredient);
+            }
+        }
+
         for (Sellable item : items) {
 
             final String productName = Sellable.getNameInString(item);
@@ -96,8 +106,7 @@ public class ShippingBinWindow extends CloseableWindow {
     }
 
     private void openSellWindow(String productName, int quantity, int price) {
-        stage.addActor(new SellProductWindow(stage, shippingBin, productName, quantity, price));
+        stage.addActor(new SellProductWindow(stage,this,shippingBin, productName, quantity, price));
     }
-
 
 }
