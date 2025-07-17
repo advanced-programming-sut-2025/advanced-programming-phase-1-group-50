@@ -68,7 +68,7 @@ public class RefrigeratorGridActor extends Actor {
                     String info = "";
                     if (cellX >= 0 && cellX < cols && cellY >= 0 && cellY < rows) {
                         if (items[cellX][cellY].occupied) {
-                            info = items[cellX][cellY].eatableItem.toString();
+                            info = "  " + items[cellX][cellY].eatableItem.toString() + "  ";
                         }
                     }
                     if (!info.isEmpty())
