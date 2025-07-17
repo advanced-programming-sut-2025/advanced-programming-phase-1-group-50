@@ -1385,6 +1385,12 @@ public class GamePictureManager {
         public static TextureRegion angler = new TextureRegion(new Texture("Fish/Angler.png"));
         public static TextureRegion crimsonfish = new TextureRegion(new Texture("Fish/Crimsonfish.png"));
 
+    //Mini_Game:
+        public static TextureRegionDrawable fishingSystem = new TextureRegionDrawable(new TextureRegion(new Texture("MiniGame/FishingSystem.png")));
+        public static TextureRegionDrawable greenBar = new TextureRegionDrawable(new TextureRegion(new Texture("MiniGame/Green_Bar.png")));
+        public static TextureRegionDrawable normalFish = new TextureRegionDrawable(new TextureRegion(new Texture("MiniGame/Normal_Fish.png")));
+        public static TextureRegionDrawable legendFish = new TextureRegionDrawable(new TextureRegion(new Texture("MiniGame/Legend_Fish.png")));
+
 
     // Animals :
 
