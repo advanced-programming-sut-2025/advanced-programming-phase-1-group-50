@@ -128,19 +128,19 @@ public class GameRenderer {
                             }
 
                         }
-                        else if(tile.getPlaceable() instanceof Store store){
-                            int baseX = store.getBounds().x;
-                            int baseY = store.getBounds().y;
-                            int localX = x - baseX;
-                            int localY = y - baseY;
-                            if (localX >= 0 && localY >= 0 &&
-                                localX < store.getRegions().length && localY < store.getRegions()[0].length) {
-                                int flippedY = store.getRegions().length - 1 - localY;
-                                TextureRegion region = store.getRegions()[flippedY][localX];
-                                batch.draw(region, drawX, drawY, tileSize, tileSize);
-                            }
-
-                        }
+//                        else if(tile.getPlaceable() instanceof Store store){
+//                            int baseX = store.getBounds().x;
+//                            int baseY = store.getBounds().y;
+//                            int localX = x - baseX;
+//                            int localY = y - baseY;
+//                            if (localX >= 0 && localY >= 0 &&
+//                                localX < store.getRegions().length && localY < store.getRegions()[0].length) {
+//                                int flippedY = store.getRegions().length - 1 - localY;
+//                                TextureRegion region = store.getRegions()[flippedY][localX];
+//                                batch.draw(region, drawX, drawY, tileSize, tileSize);
+//                            }
+//
+//                        }
 
                         else if(tile.getPlaceable() instanceof NpcHome npcHome){
                             int baseX = npcHome.getBounds().x;
