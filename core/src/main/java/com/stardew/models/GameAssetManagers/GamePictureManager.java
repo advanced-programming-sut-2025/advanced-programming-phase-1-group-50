@@ -1724,9 +1724,29 @@ public class GamePictureManager {
 
     public static Animation<TextureRegion> rainAnimation = new Animation<>(0.1f , frames , Animation.PlayMode.LOOP);
 
+    public static Texture snowTexture = new Texture("Snow.png");
+    public static TextureRegion[][] snowTextureArray = TextureRegion.split(snowTexture , 25 , 30);
+    static Array<TextureRegion> frames2 = new Array<>();
+    static {
+        for(int i=0 ; i<1 ; i++){
+            for(int j=0 ; j<6 ; j++){
+                frames2.add(snowTextureArray[i][j]);
+            }
+        }
+    }
 
-
-
+    public static Animation<TextureRegion> snowAnimation = new Animation<>(0.1f , frames2 , Animation.PlayMode.LOOP);
+    public static Texture windTexture = new Texture("Wind.png");
+    public static TextureRegion[][] windTextureArray = TextureRegion.split(windTexture , 40 , 21);
+    static Array<TextureRegion> frames3 = new Array<>();
+    static {
+        for(int i=0 ; i<1 ; i++){
+            for(int j=0 ; j<6 ; j++){
+                frames3.add(windTextureArray[i][j]);
+            }
+        }
+    }
+    public static Animation<TextureRegion> windAnimation = new Animation<>(0.1f , frames3 , Animation.PlayMode.LOOP);
 
 
 }

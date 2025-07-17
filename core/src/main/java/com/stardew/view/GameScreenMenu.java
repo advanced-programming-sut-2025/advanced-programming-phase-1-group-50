@@ -84,9 +84,7 @@ public class GameScreenMenu implements Screen {
 
 
         batch.setProjectionMatrix(gameModel.getCamera().combined);
-        if(App.getGame().getTime().getWeather().equals(Weather.Rainy)) {
-            weatherManager.render(v);
-        }
+        weatherManager.render(v);
         batch.begin();
 
         timeManager.updateTime(v);
@@ -94,9 +92,7 @@ public class GameScreenMenu implements Screen {
         gameModel.update(v);
         gameRenderer.render();
         gameMenuInputAdapter.update(v);
-        if(App.getGame().getTime().getWeather().equals(Weather.Rainy)){
-            weatherManager.draw(batch);
-        }
+        weatherManager.draw(batch);
 
 
         batch.end();
