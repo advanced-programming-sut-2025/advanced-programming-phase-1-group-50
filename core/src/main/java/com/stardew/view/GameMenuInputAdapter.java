@@ -5,7 +5,10 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.animals.Fish;
+import com.stardew.models.animals.FishType;
 import com.stardew.models.animals.GameModel;
+import com.stardew.models.animals.Quality;
 import com.stardew.models.app.App;
 import com.stardew.models.stores.Store;
 import com.stardew.models.userInfo.Player;
@@ -16,6 +19,7 @@ import com.stardew.view.RefrigeratorView.RefrigeratorWindow;
 import com.stardew.view.StoreWindows.StoreClosedMessageWindow;
 import com.stardew.view.StoreWindows.StoreWindow;
 import com.stardew.view.cheatConsole.CheatWindow;
+import com.stardew.view.miniGame.MiniGameWindow;
 import com.stardew.view.windows.CookingWindow;
 import com.stardew.view.windows.CraftingWindow;
 
@@ -125,6 +129,17 @@ public class GameMenuInputAdapter extends InputAdapter {
 
         if (justPressedKeys.contains(Input.Keys.R)) {
             stage.addActor(new RefrigeratorWindow(stage));
+        }
+
+        if (justPressedKeys.contains(Input.Keys.O)) {
+            stage.addActor(new MiniGameWindow(stage, new Fish[]{
+                new Fish(FishType.Salmon, Quality.Regular),
+                new Fish(FishType.Legend, Quality.Regular),
+                new Fish(FishType.Legend, Quality.Regular),
+                new Fish(FishType.Salmon, Quality.Regular),
+                new Fish(FishType.Salmon, Quality.Regular),
+                new Fish(FishType.Salmon, Quality.Regular),
+            }));
         }
 
 
