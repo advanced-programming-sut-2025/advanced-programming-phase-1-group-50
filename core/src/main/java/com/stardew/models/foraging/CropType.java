@@ -1,6 +1,5 @@
 package com.stardew.models.foraging;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.date.Season;
@@ -228,8 +227,8 @@ public enum CropType implements Ingredient {
     private final int energy;
     private final ArrayList<Season> Seasons;
     private final boolean canBecomeGiant;
-    private final Texture[] levelsTextures;
-    private final Texture mainTexture;
+    private final TextureRegion[] levelsTextures;
+    private final TextureRegion mainTexture;
     private final static HashMap<String, CropType> stringToCropType = new HashMap<>();
 
     static {
@@ -240,7 +239,7 @@ public enum CropType implements Ingredient {
 
     CropType(Seeds source, ArrayList<Integer> stages, int totalHarvestTime, boolean oneTime, int regrowthTime,
              int baseSellPrice, boolean isEdible, int energy, ArrayList<Season> seasons, boolean canBecomeGiant,
-             Texture[] levelsTextures, Texture mainTexture) {
+             TextureRegion[] levelsTextures, TextureRegion mainTexture) {
         this.source = source;
         this.stages = stages;
         this.totalHarvestTime = totalHarvestTime;
@@ -307,7 +306,7 @@ public enum CropType implements Ingredient {
         return canBecomeGiant;
     }
 
-    public Texture[] getLevelsTextures() {
+    public TextureRegion[] getLevelsTextures() {
         return levelsTextures;
     }
 
@@ -317,11 +316,11 @@ public enum CropType implements Ingredient {
         return stringToCropType.getOrDefault(name.toLowerCase(), null);
     }
 
-    public Texture getMainTexture(){
+    public TextureRegion getMainTexture(){
         return mainTexture;
     }
 
     public TextureRegion getInventoryTexture() {
-        return new TextureRegion(mainTexture);
+        return mainTexture;
     }
 }

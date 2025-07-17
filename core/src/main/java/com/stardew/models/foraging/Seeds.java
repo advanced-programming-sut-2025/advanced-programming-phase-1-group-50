@@ -1,6 +1,5 @@
 package com.stardew.models.foraging;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.date.Season;
@@ -54,7 +53,7 @@ public enum Seeds implements Ingredient {
 
     private final Season season;
     private CropType crop;
-    private final Texture texture;
+    private final TextureRegion texture;
     private final static HashMap<String, Seeds> stringToSeeds = new HashMap<>();
     private static boolean firstInitialize = true;
 
@@ -109,7 +108,7 @@ public enum Seeds implements Ingredient {
 
     }
 
-    Seeds(Season season, CropType crop, Texture texture) {
+    Seeds(Season season, CropType crop, TextureRegion texture) {
         this.season = season;
         this.crop = crop;
         this.texture = texture;
@@ -139,7 +138,7 @@ public enum Seeds implements Ingredient {
 
     @Override
     public TextureRegion getInventoryTexture() {
-        return new TextureRegion(texture);
+        return texture;
     }
 }
 

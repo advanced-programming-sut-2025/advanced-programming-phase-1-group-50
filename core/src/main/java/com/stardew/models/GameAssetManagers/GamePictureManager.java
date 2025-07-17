@@ -583,14 +583,14 @@ public class GamePictureManager {
     //Crops :
 
         //BlueJazz:
-        public static Texture blueJazzTexture = new Texture("Crops/Blue_Jazz.png");
-        public static Texture jazzSeedsTexture = new Texture("Crops/Jazz_Seeds.png");
-        public static Texture blueJazzStage1Texture = new Texture("Crops/Blue_Jazz_Stage_1.png");
-        public static Texture blueJazzStage2Texture = new Texture("Crops/Blue_Jazz_Stage_2.png");
-        public static Texture blueJazzStage3Texture = new Texture("Crops/Blue_Jazz_Stage_3.png");
-        public static Texture blueJazzStage4Texture = new Texture("Crops/Blue_Jazz_Stage_4.png");
-        public static Texture blueJazzStage5Texture = new Texture("Crops/Blue_Jazz_Stage_5.png");
-        public static Texture[] blueJazzTextures = new Texture[]{
+        public static TextureRegion blueJazzTexture = new TextureRegion(new Texture("Crops/Blue_Jazz.png"));
+        public static TextureRegion jazzSeedsTexture = new TextureRegion(new Texture("Crops/Jazz_Seeds.png"));
+        public static TextureRegion blueJazzStage1Texture = new TextureRegion(new Texture("Crops/Blue_Jazz_Stage_1.png"));
+        public static TextureRegion blueJazzStage2Texture = new TextureRegion(new Texture("Crops/Blue_Jazz_Stage_2.png"));
+        public static TextureRegion blueJazzStage3Texture = new TextureRegion(new Texture("Crops/Blue_Jazz_Stage_3.png"));
+        public static TextureRegion blueJazzStage4Texture = new TextureRegion(new Texture("Crops/Blue_Jazz_Stage_4.png"));
+        public static TextureRegion blueJazzStage5Texture = new TextureRegion(new Texture("Crops/Blue_Jazz_Stage_5.png"));
+        public static TextureRegion[] blueJazzTextures = new TextureRegion[]{
             blueJazzStage1Texture,
             blueJazzStage2Texture,
             blueJazzStage3Texture,
@@ -599,13 +599,13 @@ public class GamePictureManager {
         };
 
         //Carrot:
-        public static Texture carrotTexture = new Texture("Crops/Carrot.png");
-        public static Texture carrotSeedsTexture = new Texture("Crops/Carrot_Seeds.png");
-        public static Texture carrotStage1Texture = new Texture("Crops/Carrot_Stage_1.png");
-        public static Texture carrotStage2Texture = new Texture("Crops/Carrot_Stage_2.png");
-        public static Texture carrotStage3Texture = new Texture("Crops/Carrot_Stage_3.png");
-        public static Texture carrotStage4Texture = new Texture("Crops/Carrot_Stage_4.png");
-        public static Texture[] carrotTextures = new Texture[]{
+        public static TextureRegion carrotTexture = new TextureRegion(new Texture("Crops/Carrot.png"));
+        public static TextureRegion carrotSeedsTexture = new TextureRegion(new Texture("Crops/Carrot_Seeds.png"));
+        public static TextureRegion carrotStage1Texture = new TextureRegion(new Texture("Crops/Carrot_Stage_1.png"));
+        public static TextureRegion carrotStage2Texture = new TextureRegion(new Texture("Crops/Carrot_Stage_2.png"));
+        public static TextureRegion carrotStage3Texture = new TextureRegion(new Texture("Crops/Carrot_Stage_3.png"));
+        public static TextureRegion carrotStage4Texture = new TextureRegion(new Texture("Crops/Carrot_Stage_4.png"));
+        public static TextureRegion[] carrotTextures = new TextureRegion[]{
             carrotStage1Texture,
             carrotStage2Texture,
             carrotStage3Texture,
@@ -613,15 +613,15 @@ public class GamePictureManager {
         };
 
         //Cauliflower:
-        public static Texture cauliflowerTexture = new Texture("Crops/Cauliflower.png");
-        public static Texture cauliflowerSeedsTexture = new Texture("Crops/Cauliflower_Seeds.png");
-        public static Texture cauliflowerStage1Texture = new Texture("Crops/Cauliflower_Stage_1.png");
-        public static Texture cauliflowerStage2Texture = new Texture("Crops/Cauliflower_Stage_2.png");
-        public static Texture cauliflowerStage3Texture = new Texture("Crops/Cauliflower_Stage_3.png");
-        public static Texture cauliflowerStage4Texture = new Texture("Crops/Cauliflower_Stage_4.png");
-        public static Texture cauliflowerStage5Texture = new Texture("Crops/Cauliflower_Stage_5.png");
-        public static Texture cauliflowerStage6Texture = new Texture("Crops/Cauliflower_Stage_6.png");
-        public static Texture[] cauliflowerTextures = new Texture[]{
+        public static TextureRegion cauliflowerTexture = new TextureRegion(new Texture("Crops/Cauliflower.png"));
+        public static TextureRegion cauliflowerSeedsTexture = new TextureRegion(new Texture("Crops/Cauliflower_Seeds.png"));
+        public static TextureRegion cauliflowerStage1Texture = new TextureRegion(new Texture("Crops/Cauliflower_Stage_1.png"));
+        public static TextureRegion cauliflowerStage2Texture = new TextureRegion(new Texture("Crops/Cauliflower_Stage_2.png"));
+        public static TextureRegion cauliflowerStage3Texture = new TextureRegion(new Texture("Crops/Cauliflower_Stage_3.png"));
+        public static TextureRegion cauliflowerStage4Texture = new TextureRegion(new Texture("Crops/Cauliflower_Stage_4.png"));
+        public static TextureRegion cauliflowerStage5Texture = new TextureRegion(new Texture("Crops/Cauliflower_Stage_5.png"));
+        public static TextureRegion cauliflowerStage6Texture = new TextureRegion(new Texture("Crops/Cauliflower_Stage_6.png"));
+        public static TextureRegion[] cauliflowerTextures = new TextureRegion[]{
             cauliflowerStage1Texture,
             cauliflowerStage2Texture,
             cauliflowerStage3Texture,
@@ -631,15 +631,15 @@ public class GamePictureManager {
         };
 
         //CoffeeBean:
-        public static Texture coffeeBeanTexture = new Texture("Crops/Coffee_Bean.png");
-        public static Texture coffeeStage1Texture = new Texture("Crops/Coffee_Stage_1.png");
-        public static Texture coffeeStage2Texture = new Texture("Crops/Coffee_Stage_2.png");
-        public static Texture coffeeStage3Texture = new Texture("Crops/Coffee_Stage_3.png");
-        public static Texture coffeeStage4Texture = new Texture("Crops/Coffee_Stage_4.png");
-        public static Texture coffeeStage5Texture = new Texture("Crops/Coffee_Stage_5.png");
-        public static Texture coffeeStage6Texture = new Texture("Crops/Coffee_Stage_6.png");
-        public static Texture coffeeStage7Texture = new Texture("Crops/Coffee_Stage_7.png");
-        public static Texture[] coffeeTextures = new Texture[]{
+        public static TextureRegion coffeeBeanTexture = new TextureRegion(new Texture("Crops/Coffee_Bean.png"));
+        public static TextureRegion coffeeStage1Texture = new TextureRegion(new Texture("Crops/Coffee_Stage_1.png"));
+        public static TextureRegion coffeeStage2Texture = new TextureRegion(new Texture("Crops/Coffee_Stage_2.png"));
+        public static TextureRegion coffeeStage3Texture = new TextureRegion(new Texture("Crops/Coffee_Stage_3.png"));
+        public static TextureRegion coffeeStage4Texture = new TextureRegion(new Texture("Crops/Coffee_Stage_4.png"));
+        public static TextureRegion coffeeStage5Texture = new TextureRegion(new Texture("Crops/Coffee_Stage_5.png"));
+        public static TextureRegion coffeeStage6Texture = new TextureRegion(new Texture("Crops/Coffee_Stage_6.png"));
+        public static TextureRegion coffeeStage7Texture = new TextureRegion(new Texture("Crops/Coffee_Stage_7.png"));
+        public static TextureRegion[] coffeeTextures = new TextureRegion[]{
             coffeeStage1Texture,
             coffeeStage2Texture,
             coffeeStage3Texture,
@@ -650,14 +650,14 @@ public class GamePictureManager {
         };
 
         //Garlic:
-        public static Texture garlicTexture = new Texture("Crops/Garlic.png");
-        public static Texture garlicSeedsTexture = new Texture("Crops/Garlic_Seeds.png");
-        public static Texture garlicStage1Texture = new Texture("Crops/Garlic_Stage_1.png");
-        public static Texture garlicStage2Texture = new Texture("Crops/Garlic_Stage_2.png");
-        public static Texture garlicStage3Texture = new Texture("Crops/Garlic_Stage_3.png");
-        public static Texture garlicStage4Texture = new Texture("Crops/Garlic_Stage_4.png");
-        public static Texture garlicStage5Texture = new Texture("Crops/Garlic_Stage_5.png");
-        public static Texture[] garlicTextures = new Texture[]{
+        public static TextureRegion garlicTexture = new TextureRegion(new Texture("Crops/Garlic.png"));
+        public static TextureRegion garlicSeedsTexture = new TextureRegion(new Texture("Crops/Garlic_Seeds.png"));
+        public static TextureRegion garlicStage1Texture = new TextureRegion(new Texture("Crops/Garlic_Stage_1.png"));
+        public static TextureRegion garlicStage2Texture = new TextureRegion(new Texture("Crops/Garlic_Stage_2.png"));
+        public static TextureRegion garlicStage3Texture = new TextureRegion(new Texture("Crops/Garlic_Stage_3.png"));
+        public static TextureRegion garlicStage4Texture = new TextureRegion(new Texture("Crops/Garlic_Stage_4.png"));
+        public static TextureRegion garlicStage5Texture = new TextureRegion(new Texture("Crops/Garlic_Stage_5.png"));
+        public static TextureRegion[] garlicTextures = new TextureRegion[]{
             garlicStage1Texture,
             garlicStage2Texture,
             garlicStage3Texture,
@@ -666,16 +666,16 @@ public class GamePictureManager {
         };
 
         //GreenBean:
-        public static Texture greenBeanTexture = new Texture("Crops/Green_Bean.png");
-        public static Texture beanStarterTexture = new Texture("Crops/Bean_Starter.png");
-        public static Texture greenBeanStage1Texture = new Texture("Crops/Green_Bean_Stage_2.png");
-        public static Texture greenBeanStage2Texture = new Texture("Crops/Green_Bean_Stage_3.png");
-        public static Texture greenBeanStage3Texture = new Texture("Crops/Green_Bean_Stage_4.png");
-        public static Texture greenBeanStage4Texture = new Texture("Crops/Green_Bean_Stage_5.png");
-        public static Texture greenBeanStage5Texture = new Texture("Crops/Green_Bean_Stage_6.png");
-        public static Texture greenBeanStage6Texture = new Texture("Crops/Green_Bean_Stage_7.png");
-        public static Texture greenBeanStage7Texture = new Texture("Crops/Green_Bean_Stage_8.png");
-        public static Texture[] greenBeanTextures = new Texture[]{
+        public static TextureRegion greenBeanTexture = new TextureRegion(new Texture("Crops/Green_Bean.png"));
+        public static TextureRegion beanStarterTexture = new TextureRegion(new Texture("Crops/Bean_Starter.png"));
+        public static TextureRegion greenBeanStage1Texture = new TextureRegion(new Texture("Crops/Green_Bean_Stage_2.png"));
+        public static TextureRegion greenBeanStage2Texture = new TextureRegion(new Texture("Crops/Green_Bean_Stage_3.png"));
+        public static TextureRegion greenBeanStage3Texture = new TextureRegion(new Texture("Crops/Green_Bean_Stage_4.png"));
+        public static TextureRegion greenBeanStage4Texture = new TextureRegion(new Texture("Crops/Green_Bean_Stage_5.png"));
+        public static TextureRegion greenBeanStage5Texture = new TextureRegion(new Texture("Crops/Green_Bean_Stage_6.png"));
+        public static TextureRegion greenBeanStage6Texture = new TextureRegion(new Texture("Crops/Green_Bean_Stage_7.png"));
+        public static TextureRegion greenBeanStage7Texture = new TextureRegion(new Texture("Crops/Green_Bean_Stage_8.png"));
+        public static TextureRegion[] greenBeanTextures = new TextureRegion[]{
             greenBeanStage1Texture,
             greenBeanStage2Texture,
             greenBeanStage3Texture,
@@ -686,14 +686,14 @@ public class GamePictureManager {
         };
 
         //Kale:
-        public static Texture kaleTexture = new Texture("Crops/Kale.png");
-        public static Texture kaleSeedsTexture = new Texture("Crops/Kale_Seeds.png");
-        public static Texture kaleStage1Texture = new Texture("Crops/Kale_Stage_1.png");
-        public static Texture kaleStage2Texture = new Texture("Crops/Kale_Stage_2.png");
-        public static Texture kaleStage3Texture = new Texture("Crops/Kale_Stage_3.png");
-        public static Texture kaleStage4Texture = new Texture("Crops/Kale_Stage_4.png");
-        public static Texture kaleStage5Texture = new Texture("Crops/Kale_Stage_5.png");
-        public static Texture[] kaleTextures = new Texture[]{
+        public static TextureRegion kaleTexture = new TextureRegion(new Texture("Crops/Kale.png"));
+        public static TextureRegion kaleSeedsTexture = new TextureRegion(new Texture("Crops/Kale_Seeds.png"));
+        public static TextureRegion kaleStage1Texture = new TextureRegion(new Texture("Crops/Kale_Stage_1.png"));
+        public static TextureRegion kaleStage2Texture = new TextureRegion(new Texture("Crops/Kale_Stage_2.png"));
+        public static TextureRegion kaleStage3Texture = new TextureRegion(new Texture("Crops/Kale_Stage_3.png"));
+        public static TextureRegion kaleStage4Texture = new TextureRegion(new Texture("Crops/Kale_Stage_4.png"));
+        public static TextureRegion kaleStage5Texture = new TextureRegion(new Texture("Crops/Kale_Stage_5.png"));
+        public static TextureRegion[] kaleTextures = new TextureRegion[]{
             kaleStage1Texture,
             kaleStage2Texture,
             kaleStage3Texture,
@@ -702,14 +702,14 @@ public class GamePictureManager {
         };
 
         //Parsnip:
-        public static Texture parsnipTexture = new Texture("Crops/Parsnip.png");
-        public static Texture parsnipSeedsTexture = new Texture("Crops/Parsnip_Seeds.png");
-        public static Texture parsnipStage1Texture = new Texture("Crops/Parsnip_Stage_1.png");
-        public static Texture parsnipStage2Texture = new Texture("Crops/Parsnip_Stage_2.png");
-        public static Texture parsnipStage3Texture = new Texture("Crops/Parsnip_Stage_3.png");
-        public static Texture parsnipStage4Texture = new Texture("Crops/Parsnip_Stage_4.png");
-        public static Texture parsnipStage5Texture = new Texture("Crops/Parsnip_Stage_5.png");
-        public static Texture[] parsnipTextures = new Texture[]{
+        public static TextureRegion parsnipTexture = new TextureRegion(new Texture("Crops/Parsnip.png"));
+        public static TextureRegion parsnipSeedsTexture = new TextureRegion(new Texture("Crops/Parsnip_Seeds.png"));
+        public static TextureRegion parsnipStage1Texture = new TextureRegion(new Texture("Crops/Parsnip_Stage_1.png"));
+        public static TextureRegion parsnipStage2Texture = new TextureRegion(new Texture("Crops/Parsnip_Stage_2.png"));
+        public static TextureRegion parsnipStage3Texture = new TextureRegion(new Texture("Crops/Parsnip_Stage_3.png"));
+        public static TextureRegion parsnipStage4Texture = new TextureRegion(new Texture("Crops/Parsnip_Stage_4.png"));
+        public static TextureRegion parsnipStage5Texture = new TextureRegion(new Texture("Crops/Parsnip_Stage_5.png"));
+        public static TextureRegion[] parsnipTextures = new TextureRegion[]{
             parsnipStage1Texture,
             parsnipStage2Texture,
             parsnipStage3Texture,
@@ -718,15 +718,15 @@ public class GamePictureManager {
         };
 
         //Potato:
-        public static Texture potatoTexture = new Texture("Crops/Potato.png");
-        public static Texture potatoSeedsTexture = new Texture("Crops/Potato_Seeds.png");
-        public static Texture potatoStage1Texture = new Texture("Crops/Potato_Stage_1.png");
-        public static Texture potatoStage2Texture = new Texture("Crops/Potato_Stage_2.png");
-        public static Texture potatoStage3Texture = new Texture("Crops/Potato_Stage_3.png");
-        public static Texture potatoStage4Texture = new Texture("Crops/Potato_Stage_4.png");
-        public static Texture potatoStage5Texture = new Texture("Crops/Potato_Stage_5.png");
-        public static Texture potatoStage6Texture = new Texture("Crops/Potato_Stage_6.png");
-        public static Texture[] potatoTextures = new Texture[]{
+        public static TextureRegion potatoTexture = new TextureRegion(new Texture("Crops/Potato.png"));
+        public static TextureRegion potatoSeedsTexture = new TextureRegion(new Texture("Crops/Potato_Seeds.png"));
+        public static TextureRegion potatoStage1Texture = new TextureRegion(new Texture("Crops/Potato_Stage_1.png"));
+        public static TextureRegion potatoStage2Texture = new TextureRegion(new Texture("Crops/Potato_Stage_2.png"));
+        public static TextureRegion potatoStage3Texture = new TextureRegion(new Texture("Crops/Potato_Stage_3.png"));
+        public static TextureRegion potatoStage4Texture = new TextureRegion(new Texture("Crops/Potato_Stage_4.png"));
+        public static TextureRegion potatoStage5Texture = new TextureRegion(new Texture("Crops/Potato_Stage_5.png"));
+        public static TextureRegion potatoStage6Texture = new TextureRegion(new Texture("Crops/Potato_Stage_6.png"));
+        public static TextureRegion[] potatoTextures = new TextureRegion[]{
             potatoStage1Texture,
             potatoStage2Texture,
             potatoStage3Texture,
@@ -736,15 +736,15 @@ public class GamePictureManager {
         };
 
         //Rhubarb:
-        public static Texture rhubarbTexture = new Texture("Crops/Rhubarb.png");
-        public static Texture rhubarbSeedsTexture = new Texture("Crops/Rhubarb_Seeds.png");
-        public static Texture rhubarbStage1Texture = new Texture("Crops/Rhubarb_Stage_1.png");
-        public static Texture rhubarbStage2Texture = new Texture("Crops/Rhubarb_Stage_2.png");
-        public static Texture rhubarbStage3Texture = new Texture("Crops/Rhubarb_Stage_3.png");
-        public static Texture rhubarbStage4Texture = new Texture("Crops/Rhubarb_Stage_4.png");
-        public static Texture rhubarbStage5Texture = new Texture("Crops/Rhubarb_Stage_5.png");
-        public static Texture rhubarbStage6Texture = new Texture("Crops/Rhubarb_Stage_6.png");
-        public static Texture[] rhubarbTextures = new Texture[]{
+        public static TextureRegion rhubarbTexture = new TextureRegion(new Texture("Crops/Rhubarb.png"));
+        public static TextureRegion rhubarbSeedsTexture = new TextureRegion(new Texture("Crops/Rhubarb_Seeds.png"));
+        public static TextureRegion rhubarbStage1Texture = new TextureRegion(new Texture("Crops/Rhubarb_Stage_1.png"));
+        public static TextureRegion rhubarbStage2Texture = new TextureRegion(new Texture("Crops/Rhubarb_Stage_2.png"));
+        public static TextureRegion rhubarbStage3Texture = new TextureRegion(new Texture("Crops/Rhubarb_Stage_3.png"));
+        public static TextureRegion rhubarbStage4Texture = new TextureRegion(new Texture("Crops/Rhubarb_Stage_4.png"));
+        public static TextureRegion rhubarbStage5Texture = new TextureRegion(new Texture("Crops/Rhubarb_Stage_5.png"));
+        public static TextureRegion rhubarbStage6Texture = new TextureRegion(new Texture("Crops/Rhubarb_Stage_6.png"));
+        public static TextureRegion[] rhubarbTextures = new TextureRegion[]{
             rhubarbStage1Texture,
             rhubarbStage2Texture,
             rhubarbStage3Texture,
@@ -754,16 +754,16 @@ public class GamePictureManager {
         };
 
         //Strawberry:
-        public static Texture strawberryTexture = new Texture("Crops/Strawberry.png");
-        public static Texture strawberrySeedsTexture = new Texture("Crops/Strawberry_Seeds.png");
-        public static Texture strawberryStage1Texture = new Texture("Crops/Strawberry_Stage_1.png");
-        public static Texture strawberryStage2Texture = new Texture("Crops/Strawberry_Stage_2.png");
-        public static Texture strawberryStage3Texture = new Texture("Crops/Strawberry_Stage_3.png");
-        public static Texture strawberryStage4Texture = new Texture("Crops/Strawberry_Stage_4.png");
-        public static Texture strawberryStage5Texture = new Texture("Crops/Strawberry_Stage_5.png");
-        public static Texture strawberryStage6Texture = new Texture("Crops/Strawberry_Stage_6.png");
-        public static Texture strawberryStage7Texture = new Texture("Crops/Strawberry_Stage_7.png");
-        public static Texture[] strawberryTextures = new Texture[]{
+        public static TextureRegion strawberryTexture = new TextureRegion(new Texture("Crops/Strawberry.png"));
+        public static TextureRegion strawberrySeedsTexture = new TextureRegion(new Texture("Crops/Strawberry_Seeds.png"));
+        public static TextureRegion strawberryStage1Texture = new TextureRegion(new Texture("Crops/Strawberry_Stage_1.png"));
+        public static TextureRegion strawberryStage2Texture = new TextureRegion(new Texture("Crops/Strawberry_Stage_2.png"));
+        public static TextureRegion strawberryStage3Texture = new TextureRegion(new Texture("Crops/Strawberry_Stage_3.png"));
+        public static TextureRegion strawberryStage4Texture = new TextureRegion(new Texture("Crops/Strawberry_Stage_4.png"));
+        public static TextureRegion strawberryStage5Texture = new TextureRegion(new Texture("Crops/Strawberry_Stage_5.png"));
+        public static TextureRegion strawberryStage6Texture = new TextureRegion(new Texture("Crops/Strawberry_Stage_6.png"));
+        public static TextureRegion strawberryStage7Texture = new TextureRegion(new Texture("Crops/Strawberry_Stage_7.png"));
+        public static TextureRegion[] strawberryTextures = new TextureRegion[]{
             strawberryStage1Texture,
             strawberryStage2Texture,
             strawberryStage3Texture,
@@ -774,14 +774,14 @@ public class GamePictureManager {
         };
 
         //Tulip:
-        public static Texture tulipTexture = new Texture("Crops/Tulip.png");
-        public static Texture tulipBulbTexture = new Texture("Crops/Tulip_Bulb.png");
-        public static Texture tulipStage1Texture = new Texture("Crops/Tulip_Stage_1.png");
-        public static Texture tulipStage2Texture = new Texture("Crops/Tulip_Stage_2.png");
-        public static Texture tulipStage3Texture = new Texture("Crops/Tulip_Stage_3.png");
-        public static Texture tulipStage4Texture = new Texture("Crops/Tulip_Stage_4.png");
-        public static Texture tulipStage5Texture = new Texture("Crops/Tulip_Stage_5.png");
-        public static Texture[] tulipTextures = new Texture[]{
+        public static TextureRegion tulipTexture = new TextureRegion(new Texture("Crops/Tulip.png"));
+        public static TextureRegion tulipBulbTexture = new TextureRegion(new Texture("Crops/Tulip_Bulb.png"));
+        public static TextureRegion tulipStage1Texture = new TextureRegion(new Texture("Crops/Tulip_Stage_1.png"));
+        public static TextureRegion tulipStage2Texture = new TextureRegion(new Texture("Crops/Tulip_Stage_2.png"));
+        public static TextureRegion tulipStage3Texture = new TextureRegion(new Texture("Crops/Tulip_Stage_3.png"));
+        public static TextureRegion tulipStage4Texture = new TextureRegion(new Texture("Crops/Tulip_Stage_4.png"));
+        public static TextureRegion tulipStage5Texture = new TextureRegion(new Texture("Crops/Tulip_Stage_5.png"));
+        public static TextureRegion[] tulipTextures = new TextureRegion[]{
             tulipStage1Texture,
             tulipStage2Texture,
             tulipStage3Texture,
@@ -790,14 +790,14 @@ public class GamePictureManager {
         };
 
         //UnMilledRice:
-        public static Texture unMilledRiceTexture = new Texture("Crops/Unmilled_Rice.png");
-        public static Texture riceShootTexture = new Texture("Crops/Rice_Shoot.png");
-        public static Texture unMilledRiceStage1Texture = new Texture("Crops/Unmilled_Rice_Stage_1.png");
-        public static Texture unMilledRiceStage2Texture = new Texture("Crops/Unmilled_Rice_Stage_2.png");
-        public static Texture unMilledRiceStage3Texture = new Texture("Crops/Unmilled_Rice_Stage_3.png");
-        public static Texture unMilledRiceStage4Texture = new Texture("Crops/Unmilled_Rice_Stage_4.png");
-        public static Texture unMilledRiceStage5Texture = new Texture("Crops/Unmilled_Rice_Stage_5.png");
-        public static Texture[] unMilledRiceTextures = new Texture[]{
+        public static TextureRegion unMilledRiceTexture = new TextureRegion(new Texture("Crops/Unmilled_Rice.png"));
+        public static TextureRegion riceShootTexture = new TextureRegion(new Texture("Crops/Rice_Shoot.png"));
+        public static TextureRegion unMilledRiceStage1Texture = new TextureRegion(new Texture("Crops/Unmilled_Rice_Stage_1.png"));
+        public static TextureRegion unMilledRiceStage2Texture = new TextureRegion(new Texture("Crops/Unmilled_Rice_Stage_2.png"));
+        public static TextureRegion unMilledRiceStage3Texture = new TextureRegion(new Texture("Crops/Unmilled_Rice_Stage_3.png"));
+        public static TextureRegion unMilledRiceStage4Texture = new TextureRegion(new Texture("Crops/Unmilled_Rice_Stage_4.png"));
+        public static TextureRegion unMilledRiceStage5Texture = new TextureRegion(new Texture("Crops/Unmilled_Rice_Stage_5.png"));
+        public static TextureRegion[] unMilledRiceTextures = new TextureRegion[]{
             unMilledRiceStage1Texture,
             unMilledRiceStage2Texture,
             unMilledRiceStage3Texture,
@@ -806,16 +806,16 @@ public class GamePictureManager {
         };
 
         //Blueberry:
-        public static Texture blueberryTexture = new Texture("Crops/Blueberry.png");
-        public static Texture blueberrySeedsTexture = new Texture("Crops/Blueberry_Seeds.png");
-        public static Texture blueberryStage1Texture = new Texture("Crops/Blueberry_Stage_1.png");
-        public static Texture blueberryStage2Texture = new Texture("Crops/Blueberry_Stage_2.png");
-        public static Texture blueberryStage3Texture = new Texture("Crops/Blueberry_Stage_3.png");
-        public static Texture blueberryStage4Texture = new Texture("Crops/Blueberry_Stage_4.png");
-        public static Texture blueberryStage5Texture = new Texture("Crops/Blueberry_Stage_5.png");
-        public static Texture blueberryStage6Texture = new Texture("Crops/Blueberry_Stage_6.png");
-        public static Texture blueberryStage7Texture = new Texture("Crops/Blueberry_Stage_7.png");
-        public static Texture[] blueberryTextures = new Texture[]{
+        public static TextureRegion blueberryTexture = new TextureRegion(new Texture("Crops/Blueberry.png"));
+        public static TextureRegion blueberrySeedsTexture = new TextureRegion(new Texture("Crops/Blueberry_Seeds.png"));
+        public static TextureRegion blueberryStage1Texture = new TextureRegion(new Texture("Crops/Blueberry_Stage_1.png"));
+        public static TextureRegion blueberryStage2Texture = new TextureRegion(new Texture("Crops/Blueberry_Stage_2.png"));
+        public static TextureRegion blueberryStage3Texture = new TextureRegion(new Texture("Crops/Blueberry_Stage_3.png"));
+        public static TextureRegion blueberryStage4Texture = new TextureRegion(new Texture("Crops/Blueberry_Stage_4.png"));
+        public static TextureRegion blueberryStage5Texture = new TextureRegion(new Texture("Crops/Blueberry_Stage_5.png"));
+        public static TextureRegion blueberryStage6Texture = new TextureRegion(new Texture("Crops/Blueberry_Stage_6.png"));
+        public static TextureRegion blueberryStage7Texture = new TextureRegion(new Texture("Crops/Blueberry_Stage_7.png"));
+        public static TextureRegion[] blueberryTextures = new TextureRegion[]{
             blueberryStage1Texture,
             blueberryStage2Texture,
             blueberryStage3Texture,
@@ -826,16 +826,16 @@ public class GamePictureManager {
         };
 
         //Corn
-        public static Texture cornTexture = new Texture("Crops/Corn.png");
-        public static Texture cornSeedsTexture = new Texture("Crops/Corn_Seeds.png");
-        public static Texture cornStage1Texture = new Texture("Crops/Corn_Stage_1.png");
-        public static Texture cornStage2Texture = new Texture("Crops/Corn_Stage_2.png");
-        public static Texture cornStage3Texture = new Texture("Crops/Corn_Stage_3.png");
-        public static Texture cornStage4Texture = new Texture("Crops/Corn_Stage_4.png");
-        public static Texture cornStage5Texture = new Texture("Crops/Corn_Stage_5.png");
-        public static Texture cornStage6Texture = new Texture("Crops/Corn_Stage_6.png");
-        public static Texture cornStage7Texture = new Texture("Crops/Corn_Stage_7.png");
-        public static Texture[] cornTextures = new Texture[]{
+        public static TextureRegion cornTexture = new TextureRegion(new Texture("Crops/Corn.png"));
+        public static TextureRegion cornSeedsTexture = new TextureRegion(new Texture("Crops/Corn_Seeds.png"));
+        public static TextureRegion cornStage1Texture = new TextureRegion(new Texture("Crops/Corn_Stage_1.png"));
+        public static TextureRegion cornStage2Texture = new TextureRegion(new Texture("Crops/Corn_Stage_2.png"));
+        public static TextureRegion cornStage3Texture = new TextureRegion(new Texture("Crops/Corn_Stage_3.png"));
+        public static TextureRegion cornStage4Texture = new TextureRegion(new Texture("Crops/Corn_Stage_4.png"));
+        public static TextureRegion cornStage5Texture = new TextureRegion(new Texture("Crops/Corn_Stage_5.png"));
+        public static TextureRegion cornStage6Texture = new TextureRegion(new Texture("Crops/Corn_Stage_6.png"));
+        public static TextureRegion cornStage7Texture = new TextureRegion(new Texture("Crops/Corn_Stage_7.png"));
+        public static TextureRegion[] cornTextures = new TextureRegion[]{
             cornStage1Texture,
             cornStage2Texture,
             cornStage3Texture,
@@ -846,16 +846,16 @@ public class GamePictureManager {
         };
 
         //Hops:
-        public static Texture hopsTexture = new Texture("Crops/Hops.png");
-        public static Texture hopsStarterTexture = new Texture("Crops/Hops_Starter.png");
-        public static Texture hopsStage1Texture = new Texture("Crops/Hops_Stage_1.png");
-        public static Texture hopsStage2Texture = new Texture("Crops/Hops_Stage_2.png");
-        public static Texture hopsStage3Texture = new Texture("Crops/Hops_Stage_3.png");
-        public static Texture hopsStage4Texture = new Texture("Crops/Hops_Stage_4.png");
-        public static Texture hopsStage5Texture = new Texture("Crops/Hops_Stage_5.png");
-        public static Texture hopsStage6Texture = new Texture("Crops/Hops_Stage_6.png");
-        public static Texture hopsStage7Texture = new Texture("Crops/Hops_Stage_7.png");
-        public static Texture[] hopsTextures = new Texture[]{
+        public static TextureRegion hopsTexture = new TextureRegion(new Texture("Crops/Hops.png"));
+        public static TextureRegion hopsStarterTexture = new TextureRegion(new Texture("Crops/Hops_Starter.png"));
+        public static TextureRegion hopsStage1Texture = new TextureRegion(new Texture("Crops/Hops_Stage_1.png"));
+        public static TextureRegion hopsStage2Texture = new TextureRegion(new Texture("Crops/Hops_Stage_2.png"));
+        public static TextureRegion hopsStage3Texture = new TextureRegion(new Texture("Crops/Hops_Stage_3.png"));
+        public static TextureRegion hopsStage4Texture = new TextureRegion(new Texture("Crops/Hops_Stage_4.png"));
+        public static TextureRegion hopsStage5Texture = new TextureRegion(new Texture("Crops/Hops_Stage_5.png"));
+        public static TextureRegion hopsStage6Texture = new TextureRegion(new Texture("Crops/Hops_Stage_6.png"));
+        public static TextureRegion hopsStage7Texture = new TextureRegion(new Texture("Crops/Hops_Stage_7.png"));
+        public static TextureRegion[] hopsTextures = new TextureRegion[]{
             hopsStage1Texture,
             hopsStage2Texture,
             hopsStage3Texture,
@@ -866,16 +866,16 @@ public class GamePictureManager {
         };
 
         //HotPepper:
-        public static Texture hotPepperTexture = new Texture("Crops/Hot_Pepper.png");
-        public static Texture pepperSeedsTexture = new Texture("Crops/Pepper_Seeds.png");
-        public static Texture hotPepperStage1Texture = new Texture("Crops/Hot_Pepper_Stage_1.png");
-        public static Texture hotPepperStage2Texture = new Texture("Crops/Hot_Pepper_Stage_2.png");
-        public static Texture hotPepperStage3Texture = new Texture("Crops/Hot_Pepper_Stage_3.png");
-        public static Texture hotPepperStage4Texture = new Texture("Crops/Hot_Pepper_Stage_4.png");
-        public static Texture hotPepperStage5Texture = new Texture("Crops/Hot_Pepper_Stage_5.png");
-        public static Texture hotPepperStage6Texture = new Texture("Crops/Hot_Pepper_Stage_6.png");
-        public static Texture hotPepperStage7Texture = new Texture("Crops/Hot_Pepper_Stage_7.png");
-        public static Texture[] hotPepperTextures = new Texture[]{
+        public static TextureRegion hotPepperTexture = new TextureRegion(new Texture("Crops/Hot_Pepper.png"));
+        public static TextureRegion pepperSeedsTexture = new TextureRegion(new Texture("Crops/Pepper_Seeds.png"));
+        public static TextureRegion hotPepperStage1Texture = new TextureRegion(new Texture("Crops/Hot_Pepper_Stage_1.png"));
+        public static TextureRegion hotPepperStage2Texture = new TextureRegion(new Texture("Crops/Hot_Pepper_Stage_2.png"));
+        public static TextureRegion hotPepperStage3Texture = new TextureRegion(new Texture("Crops/Hot_Pepper_Stage_3.png"));
+        public static TextureRegion hotPepperStage4Texture = new TextureRegion(new Texture("Crops/Hot_Pepper_Stage_4.png"));
+        public static TextureRegion hotPepperStage5Texture = new TextureRegion(new Texture("Crops/Hot_Pepper_Stage_5.png"));
+        public static TextureRegion hotPepperStage6Texture = new TextureRegion(new Texture("Crops/Hot_Pepper_Stage_6.png"));
+        public static TextureRegion hotPepperStage7Texture = new TextureRegion(new Texture("Crops/Hot_Pepper_Stage_7.png"));
+        public static TextureRegion[] hotPepperTextures = new TextureRegion[]{
             hotPepperStage1Texture,
             hotPepperStage2Texture,
             hotPepperStage3Texture,
@@ -886,15 +886,15 @@ public class GamePictureManager {
         };
 
         //Melon:
-        public static Texture melonTexture = new Texture("Crops/Melon.png");
-        public static Texture melonSeedsTexture = new Texture("Crops/Melon_Seeds.png");
-        public static Texture melonStage1Texture = new Texture("Crops/Melon_Stage_1.png");
-        public static Texture melonStage2Texture = new Texture("Crops/Melon_Stage_2.png");
-        public static Texture melonStage3Texture = new Texture("Crops/Melon_Stage_3.png");
-        public static Texture melonStage4Texture = new Texture("Crops/Melon_Stage_4.png");
-        public static Texture melonStage5Texture = new Texture("Crops/Melon_Stage_5.png");
-        public static Texture melonStage6Texture = new Texture("Crops/Melon_Stage_6.png");
-        public static Texture[] melonTextures = new Texture[]{
+        public static TextureRegion melonTexture = new TextureRegion(new Texture("Crops/Melon.png"));
+        public static TextureRegion melonSeedsTexture = new TextureRegion(new Texture("Crops/Melon_Seeds.png"));
+        public static TextureRegion melonStage1Texture = new TextureRegion(new Texture("Crops/Melon_Stage_1.png"));
+        public static TextureRegion melonStage2Texture = new TextureRegion(new Texture("Crops/Melon_Stage_2.png"));
+        public static TextureRegion melonStage3Texture = new TextureRegion(new Texture("Crops/Melon_Stage_3.png"));
+        public static TextureRegion melonStage4Texture = new TextureRegion(new Texture("Crops/Melon_Stage_4.png"));
+        public static TextureRegion melonStage5Texture = new TextureRegion(new Texture("Crops/Melon_Stage_5.png"));
+        public static TextureRegion melonStage6Texture = new TextureRegion(new Texture("Crops/Melon_Stage_6.png"));
+        public static TextureRegion[] melonTextures = new TextureRegion[]{
             melonStage1Texture,
             melonStage2Texture,
             melonStage3Texture,
@@ -904,14 +904,14 @@ public class GamePictureManager {
         };
 
         //Poppy:
-        public static Texture poppyTexture = new Texture("Crops/Poppy.png");
-        public static Texture poppySeedsTexture = new Texture("Crops/Poppy_Seeds.png");
-        public static Texture poppyStage1Texture = new Texture("Crops/Poppy_Stage_1.png");
-        public static Texture poppyStage2Texture = new Texture("Crops/Poppy_Stage_2.png");
-        public static Texture poppyStage3Texture = new Texture("Crops/Poppy_Stage_3.png");
-        public static Texture poppyStage4Texture = new Texture("Crops/Poppy_Stage_4.png");
-        public static Texture poppyStage5Texture = new Texture("Crops/Poppy_Stage_5.png");
-        public static Texture[] poppyTextures = new Texture[]{
+        public static TextureRegion poppyTexture = new TextureRegion(new Texture("Crops/Poppy.png"));
+        public static TextureRegion poppySeedsTexture = new TextureRegion(new Texture("Crops/Poppy_Seeds.png"));
+        public static TextureRegion poppyStage1Texture = new TextureRegion(new Texture("Crops/Poppy_Stage_1.png"));
+        public static TextureRegion poppyStage2Texture = new TextureRegion(new Texture("Crops/Poppy_Stage_2.png"));
+        public static TextureRegion poppyStage3Texture = new TextureRegion(new Texture("Crops/Poppy_Stage_3.png"));
+        public static TextureRegion poppyStage4Texture = new TextureRegion(new Texture("Crops/Poppy_Stage_4.png"));
+        public static TextureRegion poppyStage5Texture = new TextureRegion(new Texture("Crops/Poppy_Stage_5.png"));
+        public static TextureRegion[] poppyTextures = new TextureRegion[]{
             poppyStage1Texture,
             poppyStage2Texture,
             poppyStage3Texture,
@@ -920,14 +920,14 @@ public class GamePictureManager {
         };
 
         //Radish:
-        public static Texture radishTexture = new Texture("Crops/Radish.png");
-        public static Texture radishSeedsTexture = new Texture("Crops/Radish_Seeds.png");
-        public static Texture radishStage1Texture = new Texture("Crops/Radish_Stage_1.png");
-        public static Texture radishStage2Texture = new Texture("Crops/Radish_Stage_2.png");
-        public static Texture radishStage3Texture = new Texture("Crops/Radish_Stage_3.png");
-        public static Texture radishStage4Texture = new Texture("Crops/Radish_Stage_4.png");
-        public static Texture radishStage5Texture = new Texture("Crops/Radish_Stage_5.png");
-        public static Texture[] radishTextures = new Texture[]{
+        public static TextureRegion radishTexture = new TextureRegion(new Texture("Crops/Radish.png"));
+        public static TextureRegion radishSeedsTexture = new TextureRegion(new Texture("Crops/Radish_Seeds.png"));
+        public static TextureRegion radishStage1Texture = new TextureRegion(new Texture("Crops/Radish_Stage_1.png"));
+        public static TextureRegion radishStage2Texture = new TextureRegion(new Texture("Crops/Radish_Stage_2.png"));
+        public static TextureRegion radishStage3Texture = new TextureRegion(new Texture("Crops/Radish_Stage_3.png"));
+        public static TextureRegion radishStage4Texture = new TextureRegion(new Texture("Crops/Radish_Stage_4.png"));
+        public static TextureRegion radishStage5Texture = new TextureRegion(new Texture("Crops/Radish_Stage_5.png"));
+        public static TextureRegion[] radishTextures = new TextureRegion[]{
             radishStage1Texture,
             radishStage2Texture,
             radishStage3Texture,
@@ -936,15 +936,15 @@ public class GamePictureManager {
         };
 
         //RedCabbage:
-        public static Texture redCabbageTexture = new Texture("Crops/Red_Cabbage.png");
-        public static Texture redCabbageSeedsTexture = new Texture("Crops/Red_Cabbage_Seeds.png");
-        public static Texture redCabbageStage1Texture = new Texture("Crops/Red_Cabbage_Stage_1.png");
-        public static Texture redCabbageStage2Texture = new Texture("Crops/Red_Cabbage_Stage_2.png");
-        public static Texture redCabbageStage3Texture = new Texture("Crops/Red_Cabbage_Stage_3.png");
-        public static Texture redCabbageStage4Texture = new Texture("Crops/Red_Cabbage_Stage_4.png");
-        public static Texture redCabbageStage5Texture = new Texture("Crops/Red_Cabbage_Stage_5.png");
-        public static Texture redCabbageStage6Texture = new Texture("Crops/Red_Cabbage_Stage_6.png");
-        public static Texture[] redCabbageTextures = new Texture[]{
+        public static TextureRegion redCabbageTexture = new TextureRegion(new Texture("Crops/Red_Cabbage.png"));
+        public static TextureRegion redCabbageSeedsTexture = new TextureRegion(new Texture("Crops/Red_Cabbage_Seeds.png"));
+        public static TextureRegion redCabbageStage1Texture = new TextureRegion(new Texture("Crops/Red_Cabbage_Stage_1.png"));
+        public static TextureRegion redCabbageStage2Texture = new TextureRegion(new Texture("Crops/Red_Cabbage_Stage_2.png"));
+        public static TextureRegion redCabbageStage3Texture = new TextureRegion(new Texture("Crops/Red_Cabbage_Stage_3.png"));
+        public static TextureRegion redCabbageStage4Texture = new TextureRegion(new Texture("Crops/Red_Cabbage_Stage_4.png"));
+        public static TextureRegion redCabbageStage5Texture = new TextureRegion(new Texture("Crops/Red_Cabbage_Stage_5.png"));
+        public static TextureRegion redCabbageStage6Texture = new TextureRegion(new Texture("Crops/Red_Cabbage_Stage_6.png"));
+        public static TextureRegion[] redCabbageTextures = new TextureRegion[]{
             redCabbageStage1Texture,
             redCabbageStage2Texture,
             redCabbageStage3Texture,
@@ -954,15 +954,15 @@ public class GamePictureManager {
         };
 
         //Starfruit:
-        public static Texture starfruitTexture = new Texture("Crops/Starfruit.png");
-        public static Texture starfruitSeedsTexture = new Texture("Crops/Starfruit_Seeds.png");
-        public static Texture starfruitStage1Texture = new Texture("Crops/Starfruit_Stage_1.png");
-        public static Texture starfruitStage2Texture = new Texture("Crops/Starfruit_Stage_2.png");
-        public static Texture starfruitStage3Texture = new Texture("Crops/Starfruit_Stage_3.png");
-        public static Texture starfruitStage4Texture = new Texture("Crops/Starfruit_Stage_4.png");
-        public static Texture starfruitStage5Texture = new Texture("Crops/Starfruit_Stage_5.png");
-        public static Texture starfruitStage6Texture = new Texture("Crops/Starfruit_Stage_6.png");
-        public static Texture[] starfruitTextures = new Texture[]{
+        public static TextureRegion starfruitTexture = new TextureRegion(new Texture("Crops/Starfruit.png"));
+        public static TextureRegion starfruitSeedsTexture = new TextureRegion(new Texture("Crops/Starfruit_Seeds.png"));
+        public static TextureRegion starfruitStage1Texture = new TextureRegion(new Texture("Crops/Starfruit_Stage_1.png"));
+        public static TextureRegion starfruitStage2Texture = new TextureRegion(new Texture("Crops/Starfruit_Stage_2.png"));
+        public static TextureRegion starfruitStage3Texture = new TextureRegion(new Texture("Crops/Starfruit_Stage_3.png"));
+        public static TextureRegion starfruitStage4Texture = new TextureRegion(new Texture("Crops/Starfruit_Stage_4.png"));
+        public static TextureRegion starfruitStage5Texture = new TextureRegion(new Texture("Crops/Starfruit_Stage_5.png"));
+        public static TextureRegion starfruitStage6Texture = new TextureRegion(new Texture("Crops/Starfruit_Stage_6.png"));
+        public static TextureRegion[] starfruitTextures = new TextureRegion[]{
             starfruitStage1Texture,
             starfruitStage2Texture,
             starfruitStage3Texture,
@@ -972,14 +972,14 @@ public class GamePictureManager {
         };
 
         //SummerSpangle:
-        public static Texture summerSpangleTexture = new Texture("Crops/Summer_Spangle.png");
-        public static Texture spangleSeedsTexture = new Texture("Crops/Spangle_Seeds.png");
-        public static Texture summerSpangleStage1Texture = new Texture("Crops/Summer_Spangle_Stage_1.png");
-        public static Texture summerSpangleStage2Texture = new Texture("Crops/Summer_Spangle_Stage_2.png");
-        public static Texture summerSpangleStage3Texture = new Texture("Crops/Summer_Spangle_Stage_3.png");
-        public static Texture summerSpangleStage4Texture = new Texture("Crops/Summer_Spangle_Stage_4.png");
-        public static Texture summerSpangleStage5Texture = new Texture("Crops/Summer_Spangle_Stage_5.png");
-        public static Texture[] summerSpangleTextures = new Texture[]{
+        public static TextureRegion summerSpangleTexture = new TextureRegion(new Texture("Crops/Summer_Spangle.png"));
+        public static TextureRegion spangleSeedsTexture = new TextureRegion(new Texture("Crops/Spangle_Seeds.png"));
+        public static TextureRegion summerSpangleStage1Texture = new TextureRegion(new Texture("Crops/Summer_Spangle_Stage_1.png"));
+        public static TextureRegion summerSpangleStage2Texture = new TextureRegion(new Texture("Crops/Summer_Spangle_Stage_2.png"));
+        public static TextureRegion summerSpangleStage3Texture = new TextureRegion(new Texture("Crops/Summer_Spangle_Stage_3.png"));
+        public static TextureRegion summerSpangleStage4Texture = new TextureRegion(new Texture("Crops/Summer_Spangle_Stage_4.png"));
+        public static TextureRegion summerSpangleStage5Texture = new TextureRegion(new Texture("Crops/Summer_Spangle_Stage_5.png"));
+        public static TextureRegion[] summerSpangleTextures = new TextureRegion[]{
             summerSpangleStage1Texture,
             summerSpangleStage2Texture,
             summerSpangleStage3Texture,
@@ -988,16 +988,16 @@ public class GamePictureManager {
         };
 
         //SummerSquash:
-        public static Texture summerSquashTexture = new Texture("Crops/Summer_Squash.png");
-        public static Texture summerSquashSeedsTexture = new Texture("Crops/Summer_Squash_Seeds.png");
-        public static Texture summerSquashStage1Texture = new Texture("Crops/Summer_Squash_Stage_1.png");
-        public static Texture summerSquashStage2Texture = new Texture("Crops/Summer_Squash_Stage_2.png");
-        public static Texture summerSquashStage3Texture = new Texture("Crops/Summer_Squash_Stage_3.png");
-        public static Texture summerSquashStage4Texture = new Texture("Crops/Summer_Squash_Stage_4.png");
-        public static Texture summerSquashStage5Texture = new Texture("Crops/Summer_Squash_Stage_5.png");
-        public static Texture summerSquashStage6Texture = new Texture("Crops/Summer_Squash_Stage_6.png");
-        public static Texture summerSquashStage7Texture = new Texture("Crops/Summer_Squash_Stage_7.png");
-        public static Texture[] summerSquashTextures = new Texture[]{
+        public static TextureRegion summerSquashTexture = new TextureRegion(new Texture("Crops/Summer_Squash.png"));
+        public static TextureRegion summerSquashSeedsTexture = new TextureRegion(new Texture("Crops/Summer_Squash_Seeds.png"));
+        public static TextureRegion summerSquashStage1Texture = new TextureRegion(new Texture("Crops/Summer_Squash_Stage_1.png"));
+        public static TextureRegion summerSquashStage2Texture = new TextureRegion(new Texture("Crops/Summer_Squash_Stage_2.png"));
+        public static TextureRegion summerSquashStage3Texture = new TextureRegion(new Texture("Crops/Summer_Squash_Stage_3.png"));
+        public static TextureRegion summerSquashStage4Texture = new TextureRegion(new Texture("Crops/Summer_Squash_Stage_4.png"));
+        public static TextureRegion summerSquashStage5Texture = new TextureRegion(new Texture("Crops/Summer_Squash_Stage_5.png"));
+        public static TextureRegion summerSquashStage6Texture = new TextureRegion(new Texture("Crops/Summer_Squash_Stage_6.png"));
+        public static TextureRegion summerSquashStage7Texture = new TextureRegion(new Texture("Crops/Summer_Squash_Stage_7.png"));
+        public static TextureRegion[] summerSquashTextures = new TextureRegion[]{
             summerSquashStage1Texture,
             summerSquashStage2Texture,
             summerSquashStage3Texture,
@@ -1008,14 +1008,14 @@ public class GamePictureManager {
         };
 
         //sunflower:
-        public static Texture sunflowerTexture = new Texture("Crops/Sunflower.png");
-        public static Texture sunflowerSeedsTexture = new Texture("Crops/Sunflower_Seeds.png");
-        public static Texture sunflowerStage1Texture = new Texture("Crops/Sunflower_Stage_1.png");
-        public static Texture sunflowerStage2Texture = new Texture("Crops/Sunflower_Stage_2.png");
-        public static Texture sunflowerStage3Texture = new Texture("Crops/Sunflower_Stage_3.png");
-        public static Texture sunflowerStage4Texture = new Texture("Crops/Sunflower_Stage_4.png");
-        public static Texture sunflowerStage5Texture = new Texture("Crops/Sunflower_Stage_5.png");
-        public static Texture[] sunflowerTextures = new Texture[]{
+        public static TextureRegion sunflowerTexture = new TextureRegion(new Texture("Crops/Sunflower.png"));
+        public static TextureRegion sunflowerSeedsTexture = new TextureRegion(new Texture("Crops/Sunflower_Seeds.png"));
+        public static TextureRegion sunflowerStage1Texture = new TextureRegion(new Texture("Crops/Sunflower_Stage_1.png"));
+        public static TextureRegion sunflowerStage2Texture = new TextureRegion(new Texture("Crops/Sunflower_Stage_2.png"));
+        public static TextureRegion sunflowerStage3Texture = new TextureRegion(new Texture("Crops/Sunflower_Stage_3.png"));
+        public static TextureRegion sunflowerStage4Texture = new TextureRegion(new Texture("Crops/Sunflower_Stage_4.png"));
+        public static TextureRegion sunflowerStage5Texture = new TextureRegion(new Texture("Crops/Sunflower_Stage_5.png"));
+        public static TextureRegion[] sunflowerTextures = new TextureRegion[]{
             sunflowerStage1Texture,
             sunflowerStage2Texture,
             sunflowerStage3Texture,
@@ -1024,16 +1024,16 @@ public class GamePictureManager {
         };
 
         //tomato:
-        public static Texture tomatoTexture = new Texture("Crops/Tomato.png");
-        public static Texture tomatoSeedsTexture = new Texture("Crops/Tomato_Seeds.png");
-        public static Texture tomatoStage1Texture = new Texture("Crops/Tomato_Stage_1.png");
-        public static Texture tomatoStage2Texture = new Texture("Crops/Tomato_Stage_2.png");
-        public static Texture tomatoStage3Texture = new Texture("Crops/Tomato_Stage_3.png");
-        public static Texture tomatoStage4Texture = new Texture("Crops/Tomato_Stage_4.png");
-        public static Texture tomatoStage5Texture = new Texture("Crops/Tomato_Stage_5.png");
-        public static Texture tomatoStage6Texture = new Texture("Crops/Tomato_Stage_6.png");
-        public static Texture tomatoStage7Texture = new Texture("Crops/Tomato_Stage_7.png");
-        public static Texture[] tomatoTextures = new Texture[]{
+        public static TextureRegion tomatoTexture = new TextureRegion(new Texture("Crops/Tomato.png"));
+        public static TextureRegion tomatoSeedsTexture = new TextureRegion(new Texture("Crops/Tomato_Seeds.png"));
+        public static TextureRegion tomatoStage1Texture = new TextureRegion(new Texture("Crops/Tomato_Stage_1.png"));
+        public static TextureRegion tomatoStage2Texture = new TextureRegion(new Texture("Crops/Tomato_Stage_2.png"));
+        public static TextureRegion tomatoStage3Texture = new TextureRegion(new Texture("Crops/Tomato_Stage_3.png"));
+        public static TextureRegion tomatoStage4Texture = new TextureRegion(new Texture("Crops/Tomato_Stage_4.png"));
+        public static TextureRegion tomatoStage5Texture = new TextureRegion(new Texture("Crops/Tomato_Stage_5.png"));
+        public static TextureRegion tomatoStage6Texture = new TextureRegion(new Texture("Crops/Tomato_Stage_6.png"));
+        public static TextureRegion tomatoStage7Texture = new TextureRegion(new Texture("Crops/Tomato_Stage_7.png"));
+        public static TextureRegion[] tomatoTextures = new TextureRegion[]{
             tomatoStage1Texture,
             tomatoStage2Texture,
             tomatoStage3Texture,
@@ -1044,14 +1044,14 @@ public class GamePictureManager {
         };
 
         //wheat:
-        public static Texture wheatTexture = new Texture("Crops/Wheat.png");
-        public static Texture wheatSeedsTexture = new Texture("Crops/Wheat_Seeds.png");
-        public static Texture wheatStage1Texture = new Texture("Crops/Wheat_Stage_1.png");
-        public static Texture wheatStage2Texture = new Texture("Crops/Wheat_Stage_2.png");
-        public static Texture wheatStage3Texture = new Texture("Crops/Wheat_Stage_3.png");
-        public static Texture wheatStage4Texture = new Texture("Crops/Wheat_Stage_4.png");
-        public static Texture wheatStage5Texture = new Texture("Crops/Wheat_Stage_5.png");
-        public static Texture[] wheatTextures = new Texture[]{
+        public static TextureRegion wheatTexture = new TextureRegion(new Texture("Crops/Wheat.png"));
+        public static TextureRegion wheatSeedsTexture = new TextureRegion(new Texture("Crops/Wheat_Seeds.png"));
+        public static TextureRegion wheatStage1Texture = new TextureRegion(new Texture("Crops/Wheat_Stage_1.png"));
+        public static TextureRegion wheatStage2Texture = new TextureRegion(new Texture("Crops/Wheat_Stage_2.png"));
+        public static TextureRegion wheatStage3Texture = new TextureRegion(new Texture("Crops/Wheat_Stage_3.png"));
+        public static TextureRegion wheatStage4Texture = new TextureRegion(new Texture("Crops/Wheat_Stage_4.png"));
+        public static TextureRegion wheatStage5Texture = new TextureRegion(new Texture("Crops/Wheat_Stage_5.png"));
+        public static TextureRegion[] wheatTextures = new TextureRegion[]{
             wheatStage1Texture,
             wheatStage2Texture,
             wheatStage3Texture,
@@ -1060,14 +1060,14 @@ public class GamePictureManager {
         };
 
         //amaranth:
-        public static Texture amaranthTexture = new Texture("Crops/Amaranth.png");
-        public static Texture amaranthSeedsTexture = new Texture("Crops/Amaranth_Seeds.png");
-        public static Texture amaranthStage1Texture = new Texture("Crops/Amaranth_Stage_1.png");
-        public static Texture amaranthStage2Texture = new Texture("Crops/Amaranth_Stage_2.png");
-        public static Texture amaranthStage3Texture = new Texture("Crops/Amaranth_Stage_3.png");
-        public static Texture amaranthStage4Texture = new Texture("Crops/Amaranth_Stage_4.png");
-        public static Texture amaranthStage5Texture = new Texture("Crops/Amaranth_Stage_5.png");
-        public static Texture[] amaranthTextures = new Texture[]{
+        public static TextureRegion amaranthTexture = new TextureRegion(new Texture("Crops/Amaranth.png"));
+        public static TextureRegion amaranthSeedsTexture = new TextureRegion(new Texture("Crops/Amaranth_Seeds.png"));
+        public static TextureRegion amaranthStage1Texture = new TextureRegion(new Texture("Crops/Amaranth_Stage_1.png"));
+        public static TextureRegion amaranthStage2Texture = new TextureRegion(new Texture("Crops/Amaranth_Stage_2.png"));
+        public static TextureRegion amaranthStage3Texture = new TextureRegion(new Texture("Crops/Amaranth_Stage_3.png"));
+        public static TextureRegion amaranthStage4Texture = new TextureRegion(new Texture("Crops/Amaranth_Stage_4.png"));
+        public static TextureRegion amaranthStage5Texture = new TextureRegion(new Texture("Crops/Amaranth_Stage_5.png"));
+        public static TextureRegion[] amaranthTextures = new TextureRegion[]{
             amaranthStage1Texture,
             amaranthStage2Texture,
             amaranthStage3Texture,
@@ -1076,15 +1076,15 @@ public class GamePictureManager {
         };
 
         //artichoke:
-        public static Texture artichokeTexture = new Texture("Crops/Artichoke.png");
-        public static Texture artichokeSeedsTexture = new Texture("Crops/Artichoke_Seeds.png");
-        public static Texture artichokeStage1Texture = new Texture("Crops/Artichoke_Stage_1.png");
-        public static Texture artichokeStage2Texture = new Texture("Crops/Artichoke_Stage_2.png");
-        public static Texture artichokeStage3Texture = new Texture("Crops/Artichoke_Stage_3.png");
-        public static Texture artichokeStage4Texture = new Texture("Crops/Artichoke_Stage_4.png");
-        public static Texture artichokeStage5Texture = new Texture("Crops/Artichoke_Stage_5.png");
-        public static Texture artichokeStage6Texture = new Texture("Crops/Artichoke_Stage_6.png");
-        public static Texture[] artichokeTextures = new Texture[]{
+        public static TextureRegion artichokeTexture = new TextureRegion(new Texture("Crops/Artichoke.png"));
+        public static TextureRegion artichokeSeedsTexture = new TextureRegion(new Texture("Crops/Artichoke_Seeds.png"));
+        public static TextureRegion artichokeStage1Texture = new TextureRegion(new Texture("Crops/Artichoke_Stage_1.png"));
+        public static TextureRegion artichokeStage2Texture = new TextureRegion(new Texture("Crops/Artichoke_Stage_2.png"));
+        public static TextureRegion artichokeStage3Texture = new TextureRegion(new Texture("Crops/Artichoke_Stage_3.png"));
+        public static TextureRegion artichokeStage4Texture = new TextureRegion(new Texture("Crops/Artichoke_Stage_4.png"));
+        public static TextureRegion artichokeStage5Texture = new TextureRegion(new Texture("Crops/Artichoke_Stage_5.png"));
+        public static TextureRegion artichokeStage6Texture = new TextureRegion(new Texture("Crops/Artichoke_Stage_6.png"));
+        public static TextureRegion[] artichokeTextures = new TextureRegion[]{
             artichokeStage1Texture,
             artichokeStage2Texture,
             artichokeStage3Texture,
@@ -1094,14 +1094,14 @@ public class GamePictureManager {
         };
 
         //beet:
-        public static Texture beetTexture = new Texture("Crops/Beet.png");
-        public static Texture beetSeedsTexture = new Texture("Crops/Beet_Seeds.png");
-        public static Texture beetStage1Texture = new Texture("Crops/Beet_Stage_1.png");
-        public static Texture beetStage2Texture = new Texture("Crops/Beet_Stage_2.png");
-        public static Texture beetStage3Texture = new Texture("Crops/Beet_Stage_3.png");
-        public static Texture beetStage4Texture = new Texture("Crops/Beet_Stage_4.png");
-        public static Texture beetStage5Texture = new Texture("Crops/Beet_Stage_5.png");
-        public static Texture[] beetTextures = new Texture[]{
+        public static TextureRegion beetTexture = new TextureRegion(new Texture("Crops/Beet.png"));
+        public static TextureRegion beetSeedsTexture = new TextureRegion(new Texture("Crops/Beet_Seeds.png"));
+        public static TextureRegion beetStage1Texture = new TextureRegion(new Texture("Crops/Beet_Stage_1.png"));
+        public static TextureRegion beetStage2Texture = new TextureRegion(new Texture("Crops/Beet_Stage_2.png"));
+        public static TextureRegion beetStage3Texture = new TextureRegion(new Texture("Crops/Beet_Stage_3.png"));
+        public static TextureRegion beetStage4Texture = new TextureRegion(new Texture("Crops/Beet_Stage_4.png"));
+        public static TextureRegion beetStage5Texture = new TextureRegion(new Texture("Crops/Beet_Stage_5.png"));
+        public static TextureRegion[] beetTextures = new TextureRegion[]{
             beetStage1Texture,
             beetStage2Texture,
             beetStage3Texture,
@@ -1110,14 +1110,14 @@ public class GamePictureManager {
         };
 
         //bokChoy:
-        public static Texture bokChoyTexture = new Texture("Crops/Bok_Choy.png");
-        public static Texture bokChoySeedsTexture = new Texture("Crops/Bok_Choy_Seeds.png");
-        public static Texture bokChoyStage1Texture = new Texture("Crops/Bok_Choy_Stage_1.png");
-        public static Texture bokChoyStage2Texture = new Texture("Crops/Bok_Choy_Stage_2.png");
-        public static Texture bokChoyStage3Texture = new Texture("Crops/Bok_Choy_Stage_3.png");
-        public static Texture bokChoyStage4Texture = new Texture("Crops/Bok_Choy_Stage_4.png");
-        public static Texture bokChoyStage5Texture = new Texture("Crops/Bok_Choy_Stage_5.png");
-        public static Texture[] bokChoyTextures = new Texture[]{
+        public static TextureRegion bokChoyTexture = new TextureRegion(new Texture("Crops/Bok_Choy.png"));
+        public static TextureRegion bokChoySeedsTexture = new TextureRegion(new Texture("Crops/Bok_Choy_Seeds.png"));
+        public static TextureRegion bokChoyStage1Texture = new TextureRegion(new Texture("Crops/Bok_Choy_Stage_1.png"));
+        public static TextureRegion bokChoyStage2Texture = new TextureRegion(new Texture("Crops/Bok_Choy_Stage_2.png"));
+        public static TextureRegion bokChoyStage3Texture = new TextureRegion(new Texture("Crops/Bok_Choy_Stage_3.png"));
+        public static TextureRegion bokChoyStage4Texture = new TextureRegion(new Texture("Crops/Bok_Choy_Stage_4.png"));
+        public static TextureRegion bokChoyStage5Texture = new TextureRegion(new Texture("Crops/Bok_Choy_Stage_5.png"));
+        public static TextureRegion[] bokChoyTextures = new TextureRegion[]{
             bokChoyStage1Texture,
             bokChoyStage2Texture,
             bokChoyStage3Texture,
@@ -1126,15 +1126,15 @@ public class GamePictureManager {
         };
 
         //broccoli:
-        public static Texture broccoliTexture = new Texture("Crops/Broccoli.png");
-        public static Texture broccoliSeedsTexture = new Texture("Crops/Broccoli_Seeds.png");
-        public static Texture broccoliStage1Texture = new Texture("Crops/Broccoli_Stage_1.png");
-        public static Texture broccoliStage2Texture = new Texture("Crops/Broccoli_Stage_2.png");
-        public static Texture broccoliStage3Texture = new Texture("Crops/Broccoli_Stage_3.png");
-        public static Texture broccoliStage4Texture = new Texture("Crops/Broccoli_Stage_4.png");
-        public static Texture broccoliStage5Texture = new Texture("Crops/Broccoli_Stage_5.png");
-        public static Texture broccoliStage6Texture = new Texture("Crops/Broccoli_Stage_4.png");
-        public static Texture[] broccoliTextures = new Texture[]{
+        public static TextureRegion broccoliTexture = new TextureRegion(new Texture("Crops/Broccoli.png"));
+        public static TextureRegion broccoliSeedsTexture = new TextureRegion(new Texture("Crops/Broccoli_Seeds.png"));
+        public static TextureRegion broccoliStage1Texture = new TextureRegion(new Texture("Crops/Broccoli_Stage_1.png"));
+        public static TextureRegion broccoliStage2Texture = new TextureRegion(new Texture("Crops/Broccoli_Stage_2.png"));
+        public static TextureRegion broccoliStage3Texture = new TextureRegion(new Texture("Crops/Broccoli_Stage_3.png"));
+        public static TextureRegion broccoliStage4Texture = new TextureRegion(new Texture("Crops/Broccoli_Stage_4.png"));
+        public static TextureRegion broccoliStage5Texture = new TextureRegion(new Texture("Crops/Broccoli_Stage_5.png"));
+        public static TextureRegion broccoliStage6Texture = new TextureRegion(new Texture("Crops/Broccoli_Stage_4.png"));
+        public static TextureRegion[] broccoliTextures = new TextureRegion[]{
             broccoliStage1Texture,
             broccoliStage2Texture,
             broccoliStage3Texture,
@@ -1144,16 +1144,16 @@ public class GamePictureManager {
         };
 
         //cranberries:
-        public static Texture cranberriesTexture = new Texture("Crops/Cranberries.png");
-        public static Texture cranberrySeedsTexture = new Texture("Crops/Cranberry_Seeds.png");
-        public static Texture cranberriesStage1Texture = new Texture("Crops/Cranberry_Stage_1.png");
-        public static Texture cranberriesStage2Texture = new Texture("Crops/Cranberry_Stage_2.png");
-        public static Texture cranberriesStage3Texture = new Texture("Crops/Cranberry_Stage_3.png");
-        public static Texture cranberriesStage4Texture = new Texture("Crops/Cranberry_Stage_4.png");
-        public static Texture cranberriesStage5Texture = new Texture("Crops/Cranberry_Stage_5.png");
-        public static Texture cranberriesStage6Texture = new Texture("Crops/Cranberry_Stage_6.png");
-        public static Texture cranberriesStage7Texture = new Texture("Crops/Cranberry_Stage_7.png");
-        public static Texture[] cranberriesTextures = new Texture[]{
+        public static TextureRegion cranberriesTexture = new TextureRegion(new Texture("Crops/Cranberries.png"));
+        public static TextureRegion cranberrySeedsTexture = new TextureRegion(new Texture("Crops/Cranberry_Seeds.png"));
+        public static TextureRegion cranberriesStage1Texture = new TextureRegion(new Texture("Crops/Cranberry_Stage_1.png"));
+        public static TextureRegion cranberriesStage2Texture = new TextureRegion(new Texture("Crops/Cranberry_Stage_2.png"));
+        public static TextureRegion cranberriesStage3Texture = new TextureRegion(new Texture("Crops/Cranberry_Stage_3.png"));
+        public static TextureRegion cranberriesStage4Texture = new TextureRegion(new Texture("Crops/Cranberry_Stage_4.png"));
+        public static TextureRegion cranberriesStage5Texture = new TextureRegion(new Texture("Crops/Cranberry_Stage_5.png"));
+        public static TextureRegion cranberriesStage6Texture = new TextureRegion(new Texture("Crops/Cranberry_Stage_6.png"));
+        public static TextureRegion cranberriesStage7Texture = new TextureRegion(new Texture("Crops/Cranberry_Stage_7.png"));
+        public static TextureRegion[] cranberriesTextures = new TextureRegion[]{
             cranberriesStage1Texture,
             cranberriesStage2Texture,
             cranberriesStage3Texture,
@@ -1164,16 +1164,16 @@ public class GamePictureManager {
         };
 
         //eggplant:
-        public static Texture eggplantTexture = new Texture("Crops/Eggplant.png");
-        public static Texture eggplantSeedsTexture = new Texture("Crops/Eggplant_Seeds.png");
-        public static Texture eggplantStage1Texture = new Texture("Crops/Eggplant_Stage_1.png");
-        public static Texture eggplantStage2Texture = new Texture("Crops/Eggplant_Stage_2.png");
-        public static Texture eggplantStage3Texture = new Texture("Crops/Eggplant_Stage_3.png");
-        public static Texture eggplantStage4Texture = new Texture("Crops/Eggplant_Stage_4.png");
-        public static Texture eggplantStage5Texture = new Texture("Crops/Eggplant_Stage_5.png");
-        public static Texture eggplantStage6Texture = new Texture("Crops/Eggplant_Stage_6.png");
-        public static Texture eggplantStage7Texture = new Texture("Crops/Eggplant_Stage_7.png");
-        public static Texture[] eggplantTextures = new Texture[]{
+        public static TextureRegion eggplantTexture = new TextureRegion(new Texture("Crops/Eggplant.png"));
+        public static TextureRegion eggplantSeedsTexture = new TextureRegion(new Texture("Crops/Eggplant_Seeds.png"));
+        public static TextureRegion eggplantStage1Texture = new TextureRegion(new Texture("Crops/Eggplant_Stage_1.png"));
+        public static TextureRegion eggplantStage2Texture = new TextureRegion(new Texture("Crops/Eggplant_Stage_2.png"));
+        public static TextureRegion eggplantStage3Texture = new TextureRegion(new Texture("Crops/Eggplant_Stage_3.png"));
+        public static TextureRegion eggplantStage4Texture = new TextureRegion(new Texture("Crops/Eggplant_Stage_4.png"));
+        public static TextureRegion eggplantStage5Texture = new TextureRegion(new Texture("Crops/Eggplant_Stage_5.png"));
+        public static TextureRegion eggplantStage6Texture = new TextureRegion(new Texture("Crops/Eggplant_Stage_6.png"));
+        public static TextureRegion eggplantStage7Texture = new TextureRegion(new Texture("Crops/Eggplant_Stage_7.png"));
+        public static TextureRegion[] eggplantTextures = new TextureRegion[]{
             eggplantStage1Texture,
             eggplantStage2Texture,
             eggplantStage3Texture,
@@ -1184,14 +1184,14 @@ public class GamePictureManager {
         };
 
         //fairyRose:
-        public static Texture fairyRoseTexture = new Texture("Crops/Fairy_Rose.png");
-        public static Texture fairySeedsTexture = new Texture("Crops/Fairy_Seeds.png");
-        public static Texture fairyRoseStage1Texture = new Texture("Crops/Fairy_Rose_Stage_1.png");
-        public static Texture fairyRoseStage2Texture = new Texture("Crops/Fairy_Rose_Stage_2.png");
-        public static Texture fairyRoseStage3Texture = new Texture("Crops/Fairy_Rose_Stage_3.png");
-        public static Texture fairyRoseStage4Texture = new Texture("Crops/Fairy_Rose_Stage_4.png");
-        public static Texture fairyRoseStage5Texture = new Texture("Crops/Fairy_Rose_Stage_5.png");
-        public static Texture[] fairyRoseTextures = new Texture[]{
+        public static TextureRegion fairyRoseTexture = new TextureRegion(new Texture("Crops/Fairy_Rose.png"));
+        public static TextureRegion fairySeedsTexture = new TextureRegion(new Texture("Crops/Fairy_Seeds.png"));
+        public static TextureRegion fairyRoseStage1Texture = new TextureRegion(new Texture("Crops/Fairy_Rose_Stage_1.png"));
+        public static TextureRegion fairyRoseStage2Texture = new TextureRegion(new Texture("Crops/Fairy_Rose_Stage_2.png"));
+        public static TextureRegion fairyRoseStage3Texture = new TextureRegion(new Texture("Crops/Fairy_Rose_Stage_3.png"));
+        public static TextureRegion fairyRoseStage4Texture = new TextureRegion(new Texture("Crops/Fairy_Rose_Stage_4.png"));
+        public static TextureRegion fairyRoseStage5Texture = new TextureRegion(new Texture("Crops/Fairy_Rose_Stage_5.png"));
+        public static TextureRegion[] fairyRoseTextures = new TextureRegion[]{
             fairyRoseStage1Texture,
             fairyRoseStage2Texture,
             fairyRoseStage3Texture,
@@ -1200,16 +1200,16 @@ public class GamePictureManager {
         };
 
         //grape:
-        public static Texture grapeTexture = new Texture("Crops/Grape.png");
-        public static Texture grapeStarterTexture = new Texture("Crops/Grape_Starter.png");
-        public static Texture grapeStage1Texture = new Texture("Crops/Grape_Stage_1.png");
-        public static Texture grapeStage2Texture = new Texture("Crops/Grape_Stage_2.png");
-        public static Texture grapeStage3Texture = new Texture("Crops/Grape_Stage_3.png");
-        public static Texture grapeStage4Texture = new Texture("Crops/Grape_Stage_4.png");
-        public static Texture grapeStage5Texture = new Texture("Crops/Grape_Stage_5.png");
-        public static Texture grapeStage6Texture = new Texture("Crops/Grape_Stage_6.png");
-        public static Texture grapeStage7Texture = new Texture("Crops/Grape_Stage_7.png");
-        public static Texture[] grapeTextures = new Texture[]{
+        public static TextureRegion grapeTexture = new TextureRegion(new Texture("Crops/Grape.png"));
+        public static TextureRegion grapeStarterTexture = new TextureRegion(new Texture("Crops/Grape_Starter.png"));
+        public static TextureRegion grapeStage1Texture = new TextureRegion(new Texture("Crops/Grape_Stage_1.png"));
+        public static TextureRegion grapeStage2Texture = new TextureRegion(new Texture("Crops/Grape_Stage_2.png"));
+        public static TextureRegion grapeStage3Texture = new TextureRegion(new Texture("Crops/Grape_Stage_3.png"));
+        public static TextureRegion grapeStage4Texture = new TextureRegion(new Texture("Crops/Grape_Stage_4.png"));
+        public static TextureRegion grapeStage5Texture = new TextureRegion(new Texture("Crops/Grape_Stage_5.png"));
+        public static TextureRegion grapeStage6Texture = new TextureRegion(new Texture("Crops/Grape_Stage_6.png"));
+        public static TextureRegion grapeStage7Texture = new TextureRegion(new Texture("Crops/Grape_Stage_7.png"));
+        public static TextureRegion[] grapeTextures = new TextureRegion[]{
             grapeStage1Texture,
             grapeStage2Texture,
             grapeStage3Texture,
@@ -1220,15 +1220,15 @@ public class GamePictureManager {
         };
 
         //pumpkin:
-        public static Texture pumpkinTexture = new Texture("Crops/Pumpkin.png");
-        public static Texture pumpkinSeedsTexture = new Texture("Crops/Pumpkin_Seeds.png");
-        public static Texture pumpkinStage1Texture = new Texture("Crops/Pumpkin_Stage_1.png");
-        public static Texture pumpkinStage2Texture = new Texture("Crops/Pumpkin_Stage_2.png");
-        public static Texture pumpkinStage3Texture = new Texture("Crops/Pumpkin_Stage_3.png");
-        public static Texture pumpkinStage4Texture = new Texture("Crops/Pumpkin_Stage_4.png");
-        public static Texture pumpkinStage5Texture = new Texture("Crops/Pumpkin_Stage_5.png");
-        public static Texture pumpkinStage6Texture = new Texture("Crops/Pumpkin_Stage_6.png");
-        public static Texture[] pumpkinTextures = new Texture[]{
+        public static TextureRegion pumpkinTexture = new TextureRegion(new Texture("Crops/Pumpkin.png"));
+        public static TextureRegion pumpkinSeedsTexture = new TextureRegion(new Texture("Crops/Pumpkin_Seeds.png"));
+        public static TextureRegion pumpkinStage1Texture = new TextureRegion(new Texture("Crops/Pumpkin_Stage_1.png"));
+        public static TextureRegion pumpkinStage2Texture = new TextureRegion(new Texture("Crops/Pumpkin_Stage_2.png"));
+        public static TextureRegion pumpkinStage3Texture = new TextureRegion(new Texture("Crops/Pumpkin_Stage_3.png"));
+        public static TextureRegion pumpkinStage4Texture = new TextureRegion(new Texture("Crops/Pumpkin_Stage_4.png"));
+        public static TextureRegion pumpkinStage5Texture = new TextureRegion(new Texture("Crops/Pumpkin_Stage_5.png"));
+        public static TextureRegion pumpkinStage6Texture = new TextureRegion(new Texture("Crops/Pumpkin_Stage_6.png"));
+        public static TextureRegion[] pumpkinTextures = new TextureRegion[]{
             pumpkinStage1Texture,
             pumpkinStage2Texture,
             pumpkinStage3Texture,
@@ -1238,14 +1238,14 @@ public class GamePictureManager {
         };
 
         //yam:
-        public static Texture yamTexture = new Texture("Crops/Yam.png");
-        public static Texture yamSeedsTexture = new Texture("Crops/Yam_Seeds.png");
-        public static Texture yamStage1Texture = new Texture("Crops/Yam_Stage_1.png");
-        public static Texture yamStage2Texture = new Texture("Crops/Yam_Stage_2.png");
-        public static Texture yamStage3Texture = new Texture("Crops/Yam_Stage_3.png");
-        public static Texture yamStage4Texture = new Texture("Crops/Yam_Stage_4.png");
-        public static Texture yamStage5Texture = new Texture("Crops/Yam_Stage_5.png");
-        public static Texture[] yamTextures = new Texture[]{
+        public static TextureRegion yamTexture = new TextureRegion(new Texture("Crops/Yam.png"));
+        public static TextureRegion yamSeedsTexture = new TextureRegion(new Texture("Crops/Yam_Seeds.png"));
+        public static TextureRegion yamStage1Texture = new TextureRegion(new Texture("Crops/Yam_Stage_1.png"));
+        public static TextureRegion yamStage2Texture = new TextureRegion(new Texture("Crops/Yam_Stage_2.png"));
+        public static TextureRegion yamStage3Texture = new TextureRegion(new Texture("Crops/Yam_Stage_3.png"));
+        public static TextureRegion yamStage4Texture = new TextureRegion(new Texture("Crops/Yam_Stage_4.png"));
+        public static TextureRegion yamStage5Texture = new TextureRegion(new Texture("Crops/Yam_Stage_5.png"));
+        public static TextureRegion[] yamTextures = new TextureRegion[]{
             yamStage1Texture,
             yamStage2Texture,
             yamStage3Texture,
@@ -1254,15 +1254,15 @@ public class GamePictureManager {
         };
 
         //sweetGemBerry:
-        public static Texture sweetGemBerryTexture = new Texture("Crops/Sweet_Gem_Berry.png");
-        public static Texture rareSeedTexture = new Texture("Crops/Rare_Seed.png");
-        public static Texture sweetGemBerryStage1Texture = new Texture("Crops/Sweet_Gem_Berry_Stage_1.png");
-        public static Texture sweetGemBerryStage2Texture = new Texture("Crops/Sweet_Gem_Berry_Stage_2.png");
-        public static Texture sweetGemBerryStage3Texture = new Texture("Crops/Sweet_Gem_Berry_Stage_3.png");
-        public static Texture sweetGemBerryStage4Texture = new Texture("Crops/Sweet_Gem_Berry_Stage_4.png");
-        public static Texture sweetGemBerryStage5Texture = new Texture("Crops/Sweet_Gem_Berry_Stage_5.png");
-        public static Texture sweetGemBerryStage6Texture = new Texture("Crops/Sweet_Gem_Berry_Stage_6.png");
-        public static Texture[] sweetGemBerryTextures = new Texture[]{
+        public static TextureRegion sweetGemBerryTexture = new TextureRegion(new Texture("Crops/Sweet_Gem_Berry.png"));
+        public static TextureRegion rareSeedTexture = new TextureRegion(new Texture("Crops/Rare_Seed.png"));
+        public static TextureRegion sweetGemBerryStage1Texture = new TextureRegion(new Texture("Crops/Sweet_Gem_Berry_Stage_1.png"));
+        public static TextureRegion sweetGemBerryStage2Texture = new TextureRegion(new Texture("Crops/Sweet_Gem_Berry_Stage_2.png"));
+        public static TextureRegion sweetGemBerryStage3Texture = new TextureRegion(new Texture("Crops/Sweet_Gem_Berry_Stage_3.png"));
+        public static TextureRegion sweetGemBerryStage4Texture = new TextureRegion(new Texture("Crops/Sweet_Gem_Berry_Stage_4.png"));
+        public static TextureRegion sweetGemBerryStage5Texture = new TextureRegion(new Texture("Crops/Sweet_Gem_Berry_Stage_5.png"));
+        public static TextureRegion sweetGemBerryStage6Texture = new TextureRegion(new Texture("Crops/Sweet_Gem_Berry_Stage_6.png"));
+        public static TextureRegion[] sweetGemBerryTextures = new TextureRegion[]{
             sweetGemBerryStage1Texture,
             sweetGemBerryStage2Texture,
             sweetGemBerryStage3Texture,
@@ -1272,15 +1272,15 @@ public class GamePictureManager {
         };
 
         //powdermelon:
-        public static Texture powdermelonTexture = new Texture("Crops/Powdermelon.png");
-        public static Texture powdermelonSeedsTexture = new Texture("Crops/Powdermelon_Seeds.png");
-        public static Texture powdermelonStage1Texture = new Texture("Crops/Powdermelon_Stage_1.png");
-        public static Texture powdermelonStage2Texture = new Texture("Crops/Powdermelon_Stage_2.png");
-        public static Texture powdermelonStage3Texture = new Texture("Crops/Powdermelon_Stage_3.png");
-        public static Texture powdermelonStage4Texture = new Texture("Crops/Powdermelon_Stage_4.png");
-        public static Texture powdermelonStage5Texture = new Texture("Crops/Powdermelon_Stage_5.png");
-        public static Texture powdermelonStage6Texture = new Texture("Crops/Powdermelon_Stage_6.png");
-        public static Texture[] powdermelonTextures = new Texture[]{
+        public static TextureRegion powdermelonTexture = new TextureRegion(new Texture("Crops/Powdermelon.png"));
+        public static TextureRegion powdermelonSeedsTexture = new TextureRegion(new Texture("Crops/Powdermelon_Seeds.png"));
+        public static TextureRegion powdermelonStage1Texture = new TextureRegion(new Texture("Crops/Powdermelon_Stage_1.png"));
+        public static TextureRegion powdermelonStage2Texture = new TextureRegion(new Texture("Crops/Powdermelon_Stage_2.png"));
+        public static TextureRegion powdermelonStage3Texture = new TextureRegion(new Texture("Crops/Powdermelon_Stage_3.png"));
+        public static TextureRegion powdermelonStage4Texture = new TextureRegion(new Texture("Crops/Powdermelon_Stage_4.png"));
+        public static TextureRegion powdermelonStage5Texture = new TextureRegion(new Texture("Crops/Powdermelon_Stage_5.png"));
+        public static TextureRegion powdermelonStage6Texture = new TextureRegion(new Texture("Crops/Powdermelon_Stage_6.png"));
+        public static TextureRegion[] powdermelonTextures = new TextureRegion[]{
             powdermelonStage1Texture,
             powdermelonStage2Texture,
             powdermelonStage3Texture,
@@ -1290,16 +1290,16 @@ public class GamePictureManager {
         };
 
         //ancientFruit:
-        public static Texture ancientFruitTexture = new Texture("Crops/Ancient_Fruit.png");
-        public static Texture ancientSeedsTexture = new Texture("Crops/Ancient_Seeds.png");
-        public static Texture ancientFruitStage1Texture = new Texture("Crops/Ancient_Fruit_Stage_1.png");
-        public static Texture ancientFruitStage2Texture = new Texture("Crops/Ancient_Fruit_Stage_2.png");
-        public static Texture ancientFruitStage3Texture = new Texture("Crops/Ancient_Fruit_Stage_3.png");
-        public static Texture ancientFruitStage4Texture = new Texture("Crops/Ancient_Fruit_Stage_4.png");
-        public static Texture ancientFruitStage5Texture = new Texture("Crops/Ancient_Fruit_Stage_5.png");
-        public static Texture ancientFruitStage6Texture = new Texture("Crops/Ancient_Fruit_Stage_6.png");
-        public static Texture ancientFruitStage7Texture = new Texture("Crops/Ancient_Fruit_Stage_7.png");
-        public static Texture[] ancientFruitTextures = new Texture[]{
+        public static TextureRegion ancientFruitTexture = new TextureRegion(new Texture("Crops/Ancient_Fruit.png"));
+        public static TextureRegion ancientSeedsTexture = new TextureRegion(new Texture("Crops/Ancient_Seeds.png"));
+        public static TextureRegion ancientFruitStage1Texture = new TextureRegion(new Texture("Crops/Ancient_Fruit_Stage_1.png"));
+        public static TextureRegion ancientFruitStage2Texture = new TextureRegion(new Texture("Crops/Ancient_Fruit_Stage_2.png"));
+        public static TextureRegion ancientFruitStage3Texture = new TextureRegion(new Texture("Crops/Ancient_Fruit_Stage_3.png"));
+        public static TextureRegion ancientFruitStage4Texture = new TextureRegion(new Texture("Crops/Ancient_Fruit_Stage_4.png"));
+        public static TextureRegion ancientFruitStage5Texture = new TextureRegion(new Texture("Crops/Ancient_Fruit_Stage_5.png"));
+        public static TextureRegion ancientFruitStage6Texture = new TextureRegion(new Texture("Crops/Ancient_Fruit_Stage_6.png"));
+        public static TextureRegion ancientFruitStage7Texture = new TextureRegion(new Texture("Crops/Ancient_Fruit_Stage_7.png"));
+        public static TextureRegion[] ancientFruitTextures = new TextureRegion[]{
             ancientFruitStage1Texture,
             ancientFruitStage2Texture,
             ancientFruitStage3Texture,
@@ -1310,7 +1310,7 @@ public class GamePictureManager {
         };
 
         //MixedSeeds:
-        public static Texture mixedSeedsTexture = new Texture("Crops/Mixed_Seeds.png");
+        public static TextureRegion mixedSeedsTexture = new TextureRegion(new Texture("Crops/Mixed_Seeds.png"));
 
 
     //ForagingCrops:
@@ -1453,7 +1453,7 @@ public class GamePictureManager {
         public static TextureRegion milkTexture = new TextureRegion(new Texture("Animal_product/Milk.png"));
         public static TextureRegion largeMilkTexture = new TextureRegion(new Texture("Animal_product/Large_Milk.png"));
         public static Map<AnimalState, Animation<TextureRegion>> cowAnimations = new HashMap<>();
-        static { //TODO
+        static {
             TextureRegion[][] cow = TextureRegion.split(new Texture("Animals_animation/Cow_White.png"), 32, 32);
             cowAnimations.put(AnimalState.MOVING_RIGHT, new Animation<>(0.15f, cow[1]));
             cowAnimations.put(AnimalState.MOVING_LEFT, new Animation<>(0.15f, cow[0])); //dont have
