@@ -15,6 +15,7 @@ import com.stardew.models.userInfo.Player;
 import com.stardew.view.GridMap.TileSelectionWindow;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.InventoryWindows.InventoryWindow;
+import com.stardew.view.InventoryWindows.MapWindow;
 import com.stardew.view.RefrigeratorView.RefrigeratorWindow;
 import com.stardew.view.StoreWindows.StoreClosedMessageWindow;
 import com.stardew.view.StoreWindows.StoreWindow;
@@ -30,7 +31,7 @@ public class GameMenuInputAdapter extends InputAdapter {
     private final GameModel model;
     private final Set<Integer> keys = new HashSet<>();
     private final Set<Integer> justPressedKeys = new HashSet<>();
-    private boolean showingMap = false;
+
     private Stage stage;
     private HotBarActor hotBar;
 
@@ -104,7 +105,7 @@ public class GameMenuInputAdapter extends InputAdapter {
             dir = 2;
         }
 
-        showingMap = keys.contains(Input.Keys.M);
+
 
         if ((keys.contains(Input.Keys.SHIFT_LEFT) || keys.contains(Input.Keys.SHIFT_RIGHT)) &&
             justPressedKeys.contains(Input.Keys.L)) {
@@ -113,6 +114,10 @@ public class GameMenuInputAdapter extends InputAdapter {
 
         if (justPressedKeys.contains(Input.Keys.SPACE)) {
             stage.addActor(new TileSelectionWindow(stage, 5, 3));
+        }
+
+        if(justPressedKeys.contains(Input.Keys.M)){
+            stage.addActor(new MapWindow(stage));
         }
 
         if (justPressedKeys.contains(Input.Keys.B)) {
@@ -171,9 +176,7 @@ public class GameMenuInputAdapter extends InputAdapter {
         stage.addActor(new StoreClosedMessageWindow(stage));
     }
 
-    public boolean isShowingMap() {
-        return showingMap;
-    }
+
 
     public void setStage(Stage stage) {
         this.stage = stage;

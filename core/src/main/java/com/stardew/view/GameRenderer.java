@@ -42,16 +42,7 @@ public class GameRenderer {
 
 
 
-        if(gameMenuInputAdapter.isShowingMap()){
-            Texture miniMap = miniMapRenderer.getMiniMapTexture();
 
-            float windowWidth = 700;
-            float windowHeight = 600;
-            float windowX = (gameModel.getCamera().viewportWidth - windowWidth) / 2 + gameModel.getCamera().position.x - gameModel.getCamera().viewportWidth / 2;
-            float windowY = (gameModel.getCamera().viewportHeight - windowHeight) / 2 + gameModel.getCamera().position.y - gameModel.getCamera().viewportHeight / 2;
-            batch.draw(GamePictureManager.whiteBox , windowX + 10 , windowY + 10 , windowWidth , windowHeight);
-            batch.draw(miniMap, windowX, windowY, windowWidth, windowHeight);
-        }
 
         //System.out.println(App.getGame().getCurrentPlayingPlayer().getPlayerPosition().getFirst() + " " + App.getGame().getCurrentPlayingPlayer().getPlayerPosition().getSecond());
     }
