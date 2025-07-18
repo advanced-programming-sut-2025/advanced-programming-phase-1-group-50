@@ -270,6 +270,14 @@ public class MiniGameWindow extends CloseableWindow {
 
 
     private void finishAndCloseGame() {
+
+        if (!shownResult) {     //end game (just one time do it)
+            Player player = App.getGame().getCurrentPlayingPlayer();
+            for (Fish fish : caughtFishes) {
+                player.getBackpack().addIngredients(fish, 1);
+            }
+        }
+
         if (isClosedGame && !shownResult) {
             showResult(prepareResult());
             shownResult = true;

@@ -1,5 +1,6 @@
 package com.stardew.controller.ToolsControllers;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.controller.AnimalsControllers.AnimalsController;
 import com.stardew.controller.ForagingControllers.ForagingController;
 import com.stardew.models.Result;
@@ -43,7 +44,7 @@ public class ToolController {
         return new Result(true, "Available Tools : \n" + sb);
     }
 
-    public Result useTool(Tile targetTile) {
+    public Result useTool(Tile targetTile, Stage stage) {
         if (targetTile == null)
             return new Result(false, "Selected tile is null!");
 
@@ -141,7 +142,7 @@ public class ToolController {
                 Result energyConsumptionResult = fishingPole.useTool();
                 if (!energyConsumptionResult.getSuccessful())
                     return energyConsumptionResult;
-                return animalsController.fishing(fishingPole);
+                return animalsController.fishing(fishingPole, stage);
             }
 
             return new Result(false, "there is no lake for fishing!");
@@ -184,7 +185,7 @@ public class ToolController {
 
         }
         if (tool instanceof MilkPail || tool instanceof Shear) {
-            return new Result(false, "please use command : collect produce -n <nameOfAnimal>");
+            return new Result(false, "please use this Tool for <collect produce>");
         }
 
         return new Result(false, "you don't have a tool , please set your current tool");

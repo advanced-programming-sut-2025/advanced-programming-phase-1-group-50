@@ -66,6 +66,7 @@ public class GameScreenMenu implements Screen {
         addStoresImages();
 
         gameMenuInputAdapter.setStage(stage);
+        gameModel.setStage(stage);
         //stage.addActor(timeManager.getNightOverlay());
 
 
