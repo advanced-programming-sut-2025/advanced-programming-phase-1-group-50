@@ -26,6 +26,7 @@ public class InventoryWindow extends CloseableWindow {
     private final ImageButton mapButton;
     private final ImageButton exitButton;
     private final ImageButton trashButton;
+    private final TextButton journalButton;
     private final TextButton shuffleButton;
     private final HotBarActor hotBar;
     private final BackpackGridActor backpackGrid;
@@ -150,6 +151,14 @@ public class InventoryWindow extends CloseableWindow {
             }
         });
 
+        journalButton = new TextButton("journal" , GamePictureManager.skin);
+        journalButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                stage.addActor(new JournalWindow(stage));
+            }
+        });
+
 
         Table buttonRowTable = new Table();
         buttonRowTable.add(trashButton).width(50).height(70).padRight(10);
@@ -158,6 +167,7 @@ public class InventoryWindow extends CloseableWindow {
         buttonRowTable.add(mapButton).width(50).height(70).padRight(10);
         buttonRowTable.add(exitButton).width(50).height(70).padRight(10);
         buttonRowTable.add(shuffleButton).width(120).height(70);
+        buttonRowTable.add(journalButton).width(120).height(70);
 
         row();
         add(buttonRowTable).padTop(10).center();

@@ -36,6 +36,7 @@ public class LoginAndRegisterMenu implements AppMenu , Screen {
     private  TextField passwordInputTextField;
     private  TextButton loginButton;
     private  TextButton forgetPasswordButton;
+    private  CheckBox stayLoggedIn;
 
     public LoginAndRegisterMenu() {
 
@@ -94,6 +95,8 @@ public class LoginAndRegisterMenu implements AppMenu , Screen {
                 controller.handleForgetPassword();
             }
         });
+
+        stayLoggedIn = new CheckBox("", skin);
 
         controller.setView(this);
     }
@@ -154,6 +157,8 @@ public class LoginAndRegisterMenu implements AppMenu , Screen {
         loginTable.add(passwordInputTextField).row();
         loginTable.add(loginButton).colspan(2).center().row();
         loginTable.add(forgetPasswordButton).colspan(2).center().row();
+        loginTable.add("stayLoggedIn:");
+        loginTable.add(stayLoggedIn).row();
 
 
         root.add(registerTable).expand().fill();
