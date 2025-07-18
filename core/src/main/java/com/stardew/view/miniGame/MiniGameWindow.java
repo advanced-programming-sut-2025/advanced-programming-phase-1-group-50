@@ -4,23 +4,34 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Timer;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.Result;
 import com.stardew.models.animals.Fish;
 import com.stardew.models.animals.FishType;
+import com.stardew.models.animals.Quality;
+import com.stardew.models.app.App;
+import com.stardew.models.userInfo.Player;
 import com.stardew.view.windows.CloseableWindow;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class MiniGameWindow extends CloseableWindow {
-    private final Image fishingSystem = new Image(GamePictureManager.fishingSystem);//TODO
-    private final Image greenBar = new Image(GamePictureManager.greenBar);//TODO
-    private final Image fishImage = new Image(GamePictureManager.normalFish);//TODO
+    private final Image fishingSystem = new Image(GamePictureManager.fishingSystem);
+    private final Image greenBar = new Image(GamePictureManager.greenBar);
+    private final Image fishImage = new Image(GamePictureManager.normalFish);
     private ProgressBar successBar;
+    private final Table rightPanel = new Table();
+    private final Label.LabelStyle labelStyle = new Label.LabelStyle();
+    private final Label perfectCatchLabel;
     private final Fish[] fishes;
     private final ArrayList<Fish> caughtFishes = new ArrayList<>();
     private Fish currentFish;
@@ -28,6 +39,9 @@ public class MiniGameWindow extends CloseableWindow {
     private float collisionAmount;
     private float restTime;
     private final float greenBarSpeed = 300f;
+    private boolean isInGreenBarAllTime = true;
+    private boolean isClosedGame = false;
+    private boolean shownResult = false;
 
 
     public MiniGameWindow(Stage stage, Fish[] fishes) {
@@ -45,27 +59,44 @@ public class MiniGameWindow extends CloseableWindow {
         setPosition(
             stage.getCamera().position.x - getWidth() / 2,
             stage.getCamera().position.y - getHeight() / 2);
-        setColor(Color.BLUE);//TODO
+        setColor(Color.BLUE);
+
+        Table mainContent = new Table();
+        mainContent.setFillParent(true);
+        add(mainContent).expand().fill();
+
+        rightPanel.top().left().pad(10);
+
+        mainContent.add().width(600);
+        mainContent.add(rightPanel).width(300).top().left();
+
+        //initialize labelStyle:
+        labelStyle.font = GamePictureManager.smallFont;
+
+        //perfect_label
+        perfectCatchLabel = new Label("", labelStyle);
+        perfectCatchLabel.setPosition(35, 600);
+        addActor(perfectCatchLabel);
 
         initializeGame();
     }
 
     private void initializeGame() {
         for (Fish fish : fishes) {
-            fish.getPosition().set(430, new Random().nextFloat(600) + 90); //TODO
+            fish.getPosition().set(430, new Random().nextFloat(600) + 90);
         }
         currentFish = fishes[0];
 
         fishingSystem.setSize(300, 750);
         fishingSystem.setPosition(getWidth() / 2 - fishingSystem.getWidth() / 2, getHeight() / 2 - fishingSystem.getHeight() / 2);
-        greenBar.setPosition(fishingSystem.getX() + 128, 100); //TODO
+        greenBar.setPosition(fishingSystem.getX() + 128, 100);
         greenBar.setSize(55, 150);
         fishImage.setPosition(currentFish.getPosition().x, currentFish.getPosition().y);
         fishImage.setVisible(false);
         successBar = new ProgressBar(0, 50, 0.1f, true, GamePictureManager.skin);
         successBar.setAnimateDuration(0.1f);
         successBar.setHeight(680);
-        successBar.setPosition(530, 70); //TODO
+        successBar.setPosition(530, 70);
         addActor(fishingSystem);
         addActor(greenBar);
         addActor(fishImage);
@@ -78,27 +109,28 @@ public class MiniGameWindow extends CloseableWindow {
         fishImage.setVisible(false);
         successBar.setValue(0);
         if (numberOfPlayedFish < fishes.length) {
+            isInGreenBarAllTime = true;
             restTime = new Random().nextFloat(4f) + 4;
             currentFish = fishes[numberOfPlayedFish];
             if (FishType.isLegendary(currentFish.getType())) fishImage.setDrawable(GamePictureManager.legendFish);
+            collisionAmount = successBar.getMaxValue() / 6f;
         }
-        collisionAmount = successBar.getMaxValue() / 6f;
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
 
+        if (isFinished()) {
+            finishAndCloseGame();
+            return;
+        }
+
         if (restTime > 0) {
             restTime -= delta;
             updateGreenBarMovement(delta);
             return;
         }
-
-//        if (isFinished()) {
-//            TODO
-//            return;
-//        }
 
         fishImage.setVisible(true);
         updateGreenBarMovement(delta);
@@ -110,7 +142,7 @@ public class MiniGameWindow extends CloseableWindow {
     }
 
     private boolean isFinished() {
-        return numberOfPlayedFish == fishes.length; // || closed window
+        return numberOfPlayedFish == fishes.length || isClosedGame;
     }
 
     private void updateSuccessBar(float delta) {
@@ -132,13 +164,20 @@ public class MiniGameWindow extends CloseableWindow {
     private boolean isFishInGreenBar() {
         Rectangle fishRectangle = new Rectangle(fishImage.getX(), fishImage.getY(), fishImage.getImageWidth(), fishImage.getImageHeight());  //TODO
         Rectangle greenBarRectangle = new Rectangle(greenBar.getX(), greenBar.getY(), greenBar.getImageWidth(), greenBar.getImageHeight()); //TODO
-        return greenBarRectangle.contains(fishRectangle);
+        if (!isInGreenBarAllTime)
+            return greenBarRectangle.contains(fishRectangle);
+        else {
+            isInGreenBarAllTime = greenBarRectangle.contains(fishRectangle);
+            return isInGreenBarAllTime;
+        }
     }
 
     private void checkCatchFish() {
         if (successBar.getValue() == successBar.getMaxValue()) {
             numberOfPlayedFish++;
             caughtFishes.add(currentFish);
+            checkToBePerfect(currentFish);
+            showCaughtFish(currentFish);
             startNewRound();
         }
         else if (successBar.getValue() == successBar.getMinValue()) {
@@ -169,4 +208,91 @@ public class MiniGameWindow extends CloseableWindow {
     private void updateFishPosition() {
         fishImage.setPosition(currentFish.getPosition().x, currentFish.getPosition().y);
     }
+
+    private void showCaughtFish(Fish fish) {
+        Image image = new Image(fish.getInventoryTexture());
+        Label label = new Label(fish.toString(), labelStyle);
+        Table table = new Table();
+        table.add(image).size(32);
+        table.add(label).padLeft(10).left().expandX().fillX();
+        rightPanel.add(table).padBottom(10).left().row();
+    }
+
+    private void checkToBePerfect(Fish fish) {
+        if (isInGreenBarAllTime) {
+            Quality previousQuality = fish.getQuality();
+            if (previousQuality != Quality.Regular) fish.developQuality();
+            Quality newQuality = fish.getQuality();
+
+            Player player = App.getGame().getCurrentPlayingPlayer();
+            int previousFishingRate = player.getAbility().getFishingRate();
+            player.getAbility().increaseFishingRate(((int) (previousFishingRate * 1.4)));
+            int newFishingRate = player.getAbility().getFishingRate();
+
+            perfectCatchLabel.setText(
+                "You catch this fish PERFECTLY!\n\n\n" +
+                "    Previous Quality:  " + previousQuality + "\n\n" +
+                "    New Quality:       " + newQuality + "\n\n\n" +
+                "    Previous Fishing Skill:  " + previousFishingRate + "\n\n" +
+                "    new Fishing Skill:       " + newFishingRate + "\n\n"
+            );
+
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    perfectCatchLabel.setText("");
+                }
+            }, 5f);
+        }
+    }
+
+
+
+    private void finishAndCloseGame() {
+        if (isClosedGame && !shownResult) {
+            showResult(prepareResult());
+            shownResult = true;
+        }
+        if (!isClosedGame && !shownResult) {
+            shownResult = true;
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    showResult(prepareResult());
+                    closeWindow();
+                }
+            }, 5f);  //timer is for showing last result
+        }
+    }
+
+    private Result prepareResult() {
+        if (caughtFishes.isEmpty())
+            return new Result(false, "NO Fish was caught");
+
+        StringBuilder result = new StringBuilder();
+        result.append("Caught Fish: \n");
+        for (Fish fish : caughtFishes) {
+            result.append(fish.getInfo()).append("\n");
+        }
+        return new Result(true, result.toString());
+    }
+
+
+
+    @Override
+    protected void closeWindow() {
+        isClosedGame = true;
+
+        getChildren().forEach(Actor::clearListeners);
+
+        addAction(Actions.sequence(
+            Actions.parallel(
+                Actions.fadeOut(0.3f),
+                Actions.scaleTo(0.7f, 0.7f, 0.3f)
+            ),
+            Actions.removeActor()
+        ));
+
+    }
+
 }
