@@ -1757,4 +1757,7 @@ public class GamePictureManager {
     public static TextureRegion shippingBinTexture = new TextureRegion(new Texture("shipp.png"));
 
 
+    public static Texture playerPicture = new Texture("Characters/player.png");
+    public static TextureRegion[][] faintedPlayerTextureArray = TextureRegion.split(playerPicture , 16 , 32);
+    public static Animation<TextureRegion> faintAnimation = new Animation<>(0.15f , faintedPlayerTextureArray[6] );
 }
