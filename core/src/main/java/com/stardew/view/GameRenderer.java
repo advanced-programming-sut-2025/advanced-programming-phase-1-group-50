@@ -45,7 +45,7 @@ public class GameRenderer {
 
 
 
-        System.out.println(App.getGame().getCurrentPlayingPlayer().getPlayerPosition().getFirst() + " " + App.getGame().getCurrentPlayingPlayer().getPlayerPosition().getSecond());
+        //System.out.println(App.getGame().getCurrentPlayingPlayer().getPlayerPosition().getFirst() + " " + App.getGame().getCurrentPlayingPlayer().getPlayerPosition().getSecond());
     }
 
     public void renderMapTilesAndPlayer() {
