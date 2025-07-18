@@ -162,6 +162,7 @@ public class Player {
     }
     public void setFarm(Farm map){
         this.farm = map;
+        this.playerPosition = new Pair<>((float)farm.getRectangle().x , (float)farm.getRectangle().y );
     }
     public Position getPosition(){
         float x = playerPosition.getFirst();
