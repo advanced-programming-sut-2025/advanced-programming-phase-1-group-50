@@ -70,7 +70,7 @@ public class Map {
 
         this.npcVillage = new NpcVillage(new Rectangle(100, 75, 49, 49),
                 new Blacksmith(102, 77, 6, 4),
-                new CarpenterShop(20, 20, 16, 12),
+                new CarpenterShop(101, 83, 16, 12),
                 new FishShop(110, 97, 4, 4),
                 new JojaMart(138, 89, 4, 4),
                 new MarnieRanch(118, 116, 18, 8),
