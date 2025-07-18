@@ -15,6 +15,8 @@ public class Fish implements Ingredient, Sellable {
     private final TextureRegion texture;
     private final FishBehavior behavior;
     private final Vector2 position;
+    private static final float MAX_Y = 690;
+    private static final float MIN_Y = 60;
 
     public Fish(FishType type, Quality quality) {
         this.type = type;
@@ -78,5 +80,9 @@ public class Fish implements Ingredient, Sellable {
     @Override
     public TextureRegion getInventoryTexture() {
         return texture;
+    }
+
+    public void moveY(float deltaY) {
+        position.y = Math.max(MIN_Y, Math.min(MAX_Y, position.y + deltaY));
     }
 }
