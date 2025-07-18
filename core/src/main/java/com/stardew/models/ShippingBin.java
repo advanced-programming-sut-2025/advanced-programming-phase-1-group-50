@@ -3,11 +3,17 @@ package com.stardew.models;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.stardew.Main;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.userInfo.Coin;
 import com.stardew.models.userInfo.Player;
+import com.stardew.view.GameScreenMenu;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -19,6 +25,7 @@ public class ShippingBin implements Placeable{
     private final char symbol = 'ø';
     private final Rectangle bounds;
     private final TextureRegion texture = GamePictureManager.shippingBinTexture;
+    private com.badlogic.gdx.scenes.scene2d.ui.Image shippingBinImage;
 
     public ShippingBin(int x, int y) {
 
@@ -50,6 +57,24 @@ public class ShippingBin implements Placeable{
             dailyRevenue.put(player,0);
         }
 
+    }
+
+    public Image getShippingBinImage() {
+        if (shippingBinImage == null) {
+            shippingBinImage = new com.badlogic.gdx.scenes.scene2d.ui.Image(new TextureRegionDrawable(getTexture()));
+            shippingBinImage.addListener(new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    createShippingBinWindow();
+                    return true;
+                }
+            });
+        }
+        return shippingBinImage;
+    }
+
+    private void createShippingBinWindow() {
+        ((GameScreenMenu) Main.getMain().getScreen()).getGameMenuInputAdapter().createShippingBinWindow(this);
     }
 
     public void increaseRevenue(Player player,int revenue) {

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.ShippingBin;
 import com.stardew.models.animals.GameModel;
 import com.stardew.models.foraging.Crop;
 import com.stardew.models.foraging.Tree;
@@ -154,6 +155,10 @@ public class GameRenderer {
 
                         else if (tile.getPlaceable() instanceof Quarry) {
                             //TODO complete here
+                        }
+
+                        else if (tile.getPlaceable() instanceof ShippingBin) {
+                            batch.draw(GamePictureManager.shippingBinTexture, drawX, drawY, tileSize, tileSize);
                         }
 
 //                        else if (tile.getPlaceable() instanceof Animal animal) {
