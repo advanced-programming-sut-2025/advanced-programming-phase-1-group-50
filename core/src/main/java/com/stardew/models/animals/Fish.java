@@ -16,7 +16,7 @@ public class Fish implements Ingredient, Sellable {
     private final FishBehavior behavior;
     private final Vector2 position;
     private static final float MAX_Y = 690;
-    private static final float MIN_Y = 60;
+    private static final float MIN_Y = 90;
 
     public Fish(FishType type, Quality quality) {
         this.type = type;

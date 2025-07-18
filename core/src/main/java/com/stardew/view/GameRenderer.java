@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.ShippingBin;
 import com.stardew.models.animals.GameModel;
+import com.stardew.models.app.App;
 import com.stardew.models.foraging.Crop;
 import com.stardew.models.foraging.Tree;
 import com.stardew.models.mapInfo.*;
@@ -186,6 +187,10 @@ public class GameRenderer {
         stateTime += Gdx.graphics.getDeltaTime();
 
         Animation<TextureRegion> currentAnimation = GamePictureManager.playerAnimations.get(moveDirection);
+        if(gameModel.getPlayerController().getPlayer().getEnergy() <= 0){
+            currentAnimation = GamePictureManager.faintAnimation;
+        }
+
         TextureRegion currentFrame = currentAnimation.getKeyFrame(stateTime, true);
 
         batch.draw(currentFrame, pos.getFirst() * GamePictureManager.TILE_SIZE, pos.getSecond() * GamePictureManager.TILE_SIZE, currentFrame.getRegionWidth() * 3, currentFrame.getRegionHeight() * 3);

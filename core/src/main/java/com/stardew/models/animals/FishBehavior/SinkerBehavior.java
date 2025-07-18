@@ -3,24 +3,24 @@ package com.stardew.models.animals.FishBehavior;
 import com.stardew.models.animals.Fish;
 
 public class SinkerBehavior extends FishBehavior {
-    private int state = 0; // 0: still, 1: down
+    private int state = 0;   // 0: still, 1: up 2: down
 
     public SinkerBehavior() {
-        this.speedUp = 15f;
-        this.speedDown = 35f;
+        this.speedUp = 150f;
+        this.speedDown = 350f;
     }
 
     @Override
     public void update(Fish fish, float delta) {
         elapsedTime += delta;
-
         if (elapsedTime >= 1f) {
             elapsedTime = 0;
-            state = (int) (Math.random() * 2); // 0: still, 1: down
+            state = (int) (Math.random() * 3);  // 0: still, 1: up 2: down
         }
 
-        if (state == 1) {
-            fish.moveY(-speedDown * delta);
+        switch (state) {
+            case 1 -> fish.moveY(speedUp * delta);
+            case 2 -> fish.moveY(-speedDown * delta);
         }
     }
 }

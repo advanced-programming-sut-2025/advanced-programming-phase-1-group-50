@@ -4,7 +4,7 @@ import com.stardew.models.animals.Fish;
 
 public class SmoothBehavior extends FishBehavior {
     private int direction = 1;
-    private float speedUp = 25f;
+    private float speedUp = 125f;
 
 
     @Override
