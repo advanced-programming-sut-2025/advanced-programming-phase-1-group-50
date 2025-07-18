@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Fish implements Ingredient, Sellable {
     private final FishType type;
     private final int sellPrice;
-    private final Quality quality;
+    private Quality quality;
     private final TextureRegion texture;
     private final FishBehavior behavior;
     private final Vector2 position;
@@ -37,10 +37,17 @@ public class Fish implements Ingredient, Sellable {
         return quality;
     }
 
+    public void developQuality() {
+        if (quality == Quality.Regular)
+            quality = Quality.Silver;
+        else if (quality == Quality.Silver)
+            quality = Quality.Gold;
+        else if (quality == Quality.Gold)
+            quality = Quality.Iridium;
+    }
+
     public String getInfo() {
-        return "Fish -> " +
-                "type: " + type +
-                ", quality: " + quality;
+        return String.format("Fish  ->  type: %-22s quality: %-10s", type, quality);
     }
 
     public Vector2 getPosition() {
