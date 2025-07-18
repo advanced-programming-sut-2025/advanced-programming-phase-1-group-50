@@ -3,6 +3,7 @@ package com.stardew.models;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.userInfo.Coin;
@@ -17,6 +18,7 @@ public class ShippingBin implements Placeable{
     private HashMap<Player,Integer> dailyRevenue = new HashMap<>();
     private final char symbol = 'ø';
     private final Rectangle bounds;
+    private final TextureRegion texture = GamePictureManager.shippingBinTexture;
 
     public ShippingBin(int x, int y) {
 
@@ -66,7 +68,7 @@ public class ShippingBin implements Placeable{
 
     @Override
     public TextureRegion getTexture() {
-        return null;
+        return texture;
     }
 
     @Override

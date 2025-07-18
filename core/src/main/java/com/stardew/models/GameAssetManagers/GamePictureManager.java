@@ -1754,5 +1754,7 @@ public class GamePictureManager {
     }
     public static Animation<TextureRegion> windAnimation = new Animation<>(0.1f , frames3 , Animation.PlayMode.LOOP);
 
+    public static TextureRegion shippingBinTexture = new TextureRegion(new Texture("shipp.png"));
+
 
 }
