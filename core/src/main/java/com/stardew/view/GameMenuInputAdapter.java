@@ -133,12 +133,9 @@ public class GameMenuInputAdapter extends InputAdapter {
 
         if (justPressedKeys.contains(Input.Keys.O)) {
             stage.addActor(new MiniGameWindow(stage, new Fish[]{
-                new Fish(FishType.Salmon, Quality.Regular),
-                new Fish(FishType.Legend, Quality.Regular),
-                new Fish(FishType.Legend, Quality.Regular),
-                new Fish(FishType.Salmon, Quality.Regular),
-                new Fish(FishType.Salmon, Quality.Regular),
-                new Fish(FishType.Salmon, Quality.Regular),
+                new Fish(FishType.BlueDiscus, Quality.Silver),
+                new Fish(FishType.Legend, Quality.Gold),
+                new Fish(FishType.Dorado, Quality.Silver),
             }));
         }
 

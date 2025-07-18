@@ -2,6 +2,7 @@ package com.stardew.models.animals;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.stardew.controller.ForagingControllers.ForagingController;
 import com.stardew.controller.PlayerController;
@@ -30,6 +31,7 @@ public class GameModel {
     private final Map map;
     private final int mapWidth, mapHeight;
     private PlayerController playerController;
+    private Stage stage;
     private final AnimalsManager animalsManager;
     private final ArtisanMachinesManager artisanMachinesManager;
     private final HotBarActor hotBarActor;
@@ -109,7 +111,7 @@ public class GameModel {
         Result result = null;
 
         if (currentItem instanceof Tool) {
-            result = toolController.useTool(selectedTile);
+            result = toolController.useTool(selectedTile, stage);
         }
         else if (currentItem instanceof Fertilizer fertilizer) {
             result = foragingController.fertilize(fertilizer, selectedTile);
@@ -136,6 +138,10 @@ public class GameModel {
 
     public Map getMap() {
         return map;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     public int getMapWidth() {

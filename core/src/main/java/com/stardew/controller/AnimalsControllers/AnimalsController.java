@@ -14,7 +14,7 @@ import com.stardew.models.tools.Shear;
 import com.stardew.models.tools.Tool;
 import com.stardew.models.userInfo.Coin;
 import com.stardew.models.userInfo.Player;
-import com.stardew.view.GridMap.TileSelectionWindow;
+import com.stardew.view.miniGame.MiniGameWindow;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -270,7 +270,7 @@ public class AnimalsController {
         return new Result(true, "You sell Animal <" + animal.getName() + "> $" + price + "!");
     }
 
-    public Result fishing(FishingPole fishingPole) {
+    public Result fishing(FishingPole fishingPole, Stage stage) {
         Player player = App.getGame().getCurrentPlayingPlayer();
         int fishingLevel = player.getAbility().getFishingLevel();
         Weather weather = App.getGame().getTime().getWeather();
@@ -279,7 +279,7 @@ public class AnimalsController {
         int numberOfFish = (int) Math.ceil(Math.random() * weather.getEffectivenessOnFishing() * (fishingLevel + 2));
         numberOfFish = Math.min(numberOfFish, 6);
 
-        ArrayList<Fish> caughtFish = new ArrayList<>();
+        ArrayList<Fish> candidateFish = new ArrayList<>();
         ArrayList<FishType> availableFishType = FishType.getFishesBySeason(season, fishingLevel);
 
         for (int i = 0; i < numberOfFish; i++) {
@@ -287,21 +287,13 @@ public class AnimalsController {
             double qualityValue = (Math.random() * (fishingLevel + 2) * fishingPole.getType().getEffectiveness()) /
                     (7 - weather.getEffectivenessOnFishing());
             Quality quality = Quality.getQualityByValue(qualityValue);
-            caughtFish.add(new Fish(fishType, quality));
-        }
-
-        StringBuilder output = new StringBuilder();
-        output.append(String.format("Number of Fishes: %d\n" ,numberOfFish));
-        for (Fish fish : caughtFish) {
-            output.append("\t").append(fish.getInfo()).append("\n");
+            candidateFish.add(new Fish(fishType, quality));
         }
 
         player.getAbility().increaseFishingRate(5);
 
-        for (Fish fish : caughtFish) {
-            player.getBackpack().addIngredients(fish, 1);
-        }
+        stage.addActor(new MiniGameWindow(stage, candidateFish.toArray(new Fish[0])));
 
-        return new Result(true, output.toString());
+        return new Result(true, "MiniGame Started");
     }
 }
