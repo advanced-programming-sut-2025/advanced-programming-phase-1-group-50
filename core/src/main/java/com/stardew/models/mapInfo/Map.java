@@ -1,5 +1,6 @@
 package com.stardew.models.mapInfo;
 
+import com.stardew.Main;
 import com.stardew.models.NPCs.NPC;
 import com.stardew.models.NPCs.NPCType;
 import com.stardew.models.Placeable;
@@ -13,6 +14,7 @@ import com.stardew.models.foraging.ForagingMineral;
 import com.stardew.models.foraging.Tree;
 import com.stardew.models.stores.*;
 import com.stardew.models.userInfo.Player;
+import com.stardew.view.GameScreenMenu;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -68,7 +70,7 @@ public class Map {
 
         this.npcVillage = new NpcVillage(new Rectangle(100, 75, 49, 49),
                 new Blacksmith(102, 77, 6, 4),
-                new CarpenterShop(101, 83, 16, 12),
+                new CarpenterShop(20, 20, 16, 12),
                 new FishShop(110, 97, 4, 4),
                 new JojaMart(138, 89, 4, 4),
                 new MarnieRanch(118, 116, 18, 8),
@@ -291,6 +293,8 @@ public class Map {
         tiles[x][y].setWalkable(false);
         tiles[x][y].setSymbol(temp.getSymbol());
         tiles[x][y].setFertilizer(null);
+
+        ((GameScreenMenu) Main.getMain().getScreen()).addShippingBinImage(temp);
 
         return true;
     }

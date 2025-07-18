@@ -12,6 +12,7 @@ import com.stardew.controller.EnergyManager;
 import com.stardew.controller.PlayerController;
 import com.stardew.controller.TimeManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.ShippingBin;
 import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.view.InventoryWindows.HotBarActor;
@@ -121,6 +122,10 @@ public class GameScreenMenu implements Screen {
         stage.addActor(App.getGame().getMap().getNpcVillage().getStardopSaloon().getStoreImage());
     }
 
+    public void addShippingBinImage(ShippingBin bin) {
+        stage.addActor(bin.getShippingBinImage());
+    }
+
     public GameMenuInputAdapter getGameMenuInputAdapter() {
         return gameMenuInputAdapter;
     }
@@ -149,7 +154,4 @@ public class GameScreenMenu implements Screen {
     public void dispose() {
 
     }
-
-
-
 }
