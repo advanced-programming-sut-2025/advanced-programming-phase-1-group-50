@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
@@ -28,6 +29,8 @@ public class MiniGameWindow extends CloseableWindow {
     private final Image fishingSystem = new Image(GamePictureManager.fishingSystem);
     private final Image greenBar = new Image(GamePictureManager.greenBar);
     private final Image fishImage = new Image(GamePictureManager.normalFish);
+    private final Image mainFishImage = new Image(GamePictureManager.normalFish);
+    private final Label nameOfFish;
     private ProgressBar successBar;
     private final Table rightPanel = new Table();
     private final Label.LabelStyle labelStyle = new Label.LabelStyle();
@@ -40,6 +43,7 @@ public class MiniGameWindow extends CloseableWindow {
     private float restTime;
     private final float greenBarSpeed = 300f;
     private boolean isInGreenBarAllTime = true;
+    private final boolean hasSonarBobber;
     private boolean isClosedGame = false;
     private boolean shownResult = false;
 
@@ -48,11 +52,21 @@ public class MiniGameWindow extends CloseableWindow {
         super(" Mini Game", stage);
         this.fishes = fishes;
 
+        //initialize labelStyle:
+        labelStyle.font = GamePictureManager.smallFont;
+
+        //TODO check for having  < SonarBobber >
+        hasSonarBobber = false;
+        nameOfFish = new Label("", labelStyle);
+        mainFishImage.setPosition(40, 200);
+        nameOfFish.setPosition(100, 220);
+        addActor(mainFishImage);
+        addActor(nameOfFish);
+
         Label titleLabel = getTitleLabel();
         Label.LabelStyle titleLabelStyle = titleLabel.getStyle();
         titleLabelStyle.fontColor = Color.YELLOW;
         getTitleLabel().setStyle(titleLabelStyle);
-
         pad(25, 5, 20, 0);
         pack();
         setSize(900, 800);
@@ -70,8 +84,6 @@ public class MiniGameWindow extends CloseableWindow {
         mainContent.add().width(600);
         mainContent.add(rightPanel).width(300).top().left();
 
-        //initialize labelStyle:
-        labelStyle.font = GamePictureManager.smallFont;
 
         //perfect_label
         perfectCatchLabel = new Label("", labelStyle);
@@ -108,12 +120,18 @@ public class MiniGameWindow extends CloseableWindow {
     private void startNewRound() {
         fishImage.setVisible(false);
         successBar.setValue(0);
+        mainFishImage.setVisible(false);
+        nameOfFish.setVisible(false);
         if (numberOfPlayedFish < fishes.length) {
             isInGreenBarAllTime = true;
             restTime = new Random().nextFloat(4f) + 4;
             currentFish = fishes[numberOfPlayedFish];
             if (FishType.isLegendary(currentFish.getType())) fishImage.setDrawable(GamePictureManager.legendFish);
             collisionAmount = successBar.getMaxValue() / 6f;
+            if (hasSonarBobber) {
+                mainFishImage.setDrawable(new TextureRegionDrawable(currentFish.getInventoryTexture()));
+                nameOfFish.setText(currentFish.toString());
+            }
         }
     }
 
@@ -122,6 +140,7 @@ public class MiniGameWindow extends CloseableWindow {
         super.act(delta);
 
         if (isFinished()) {
+            updateGreenBarMovement(delta);
             finishAndCloseGame();
             return;
         }
@@ -133,6 +152,8 @@ public class MiniGameWindow extends CloseableWindow {
         }
 
         fishImage.setVisible(true);
+        mainFishImage.setVisible(hasSonarBobber);
+        nameOfFish.setVisible(hasSonarBobber);
         updateGreenBarMovement(delta);
         currentFish.update(delta);
         updateFishPosition();
@@ -162,8 +183,8 @@ public class MiniGameWindow extends CloseableWindow {
     }
 
     private boolean isFishInGreenBar() {
-        Rectangle fishRectangle = new Rectangle(fishImage.getX(), fishImage.getY(), fishImage.getImageWidth(), fishImage.getImageHeight());  //TODO
-        Rectangle greenBarRectangle = new Rectangle(greenBar.getX(), greenBar.getY(), greenBar.getImageWidth(), greenBar.getImageHeight()); //TODO
+        Rectangle fishRectangle = new Rectangle(fishImage.getX(), fishImage.getY(), fishImage.getImageWidth(), fishImage.getImageHeight());
+        Rectangle greenBarRectangle = new Rectangle(greenBar.getX(), greenBar.getY(), greenBar.getImageWidth(), greenBar.getImageHeight());
         if (!isInGreenBarAllTime)
             return greenBarRectangle.contains(fishRectangle);
         else {
@@ -270,9 +291,9 @@ public class MiniGameWindow extends CloseableWindow {
             return new Result(false, "NO Fish was caught");
 
         StringBuilder result = new StringBuilder();
-        result.append("Caught Fish: \n");
+        result.append("Caught Fish: \n\n\n");
         for (Fish fish : caughtFishes) {
-            result.append(fish.getInfo()).append("\n");
+            result.append(fish.getInfo()).append("\n\n");
         }
         return new Result(true, result.toString());
     }
