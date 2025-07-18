@@ -14,7 +14,6 @@ import com.stardew.controller.TimeManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
-import com.stardew.models.date.Weather;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.windows.SmartTooltip;
 
