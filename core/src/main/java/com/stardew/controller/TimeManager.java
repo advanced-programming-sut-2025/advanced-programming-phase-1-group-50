@@ -203,6 +203,7 @@ public class TimeManager {
         if(!changeTileTextureInWinter) {
             if (App.getGame().getTime().getSeason().equals(Season.Winter)) {
                 firstTimeChangeInSpring = false;
+                changeTileTextureInSpring = false;
                 Tile[][] tiles = gameModel.getMap().getTiles();
                 for (Tile[] tile : tiles) {
                     for (Tile value : tile) {
@@ -221,6 +222,7 @@ public class TimeManager {
         }
         if(!changeTileTextureInSpring) {
             if (App.getGame().getTime().getSeason().equals(Season.Spring)) {
+                changeTileTextureInWinter = false;
                 Tile[][] tiles = gameModel.getMap().getTiles();
                 for (Tile[] tile : tiles) {
                     for (Tile value : tile) {
