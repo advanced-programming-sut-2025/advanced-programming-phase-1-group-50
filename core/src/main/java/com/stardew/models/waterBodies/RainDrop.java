@@ -19,8 +19,8 @@ public class RainDrop {
     }
 
     public void update(float delta){
-        x += speedX * delta;
-        y += speedY * delta;
+        x += speedX * delta * 4;
+        y += speedY * delta * 2;
         stateTime += delta;
     }
 

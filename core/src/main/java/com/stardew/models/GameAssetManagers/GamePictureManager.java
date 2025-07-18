@@ -1717,11 +1717,11 @@ public class GamePictureManager {
 
     public static TextureRegion wateredTileTexture = new TextureRegion(new Texture("Flooring/Flooring_57.png"));
     public static Texture rainTexture = new Texture("Rain.png");
-    public static TextureRegion[][] rainTextureArray = TextureRegion.split(rainTexture,16 , 16);
+    public static TextureRegion[][] rainTextureArray = TextureRegion.split(rainTexture,32 , 32);
     static Array<TextureRegion> frames = new Array<>();
     static {
         for(int i=0 ; i<1 ; i++){
-            for(int j=0 ; j<4 ; j++){
+            for(int j=0 ; j<1 ; j++){
                 frames.add(rainTextureArray[i][j]);
             }
         }
@@ -1730,7 +1730,7 @@ public class GamePictureManager {
 
     public static Animation<TextureRegion> rainAnimation = new Animation<>(0.1f , frames , Animation.PlayMode.LOOP);
 
-    public static Texture snowTexture = new Texture("Snow.png");
+    public static Texture snowTexture = new Texture("snow.png");
     public static TextureRegion[][] snowTextureArray = TextureRegion.split(snowTexture , 25 , 30);
     static Array<TextureRegion> frames2 = new Array<>();
     static {
