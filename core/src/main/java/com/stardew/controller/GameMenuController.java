@@ -308,9 +308,20 @@ public class GameMenuController {
     }
 
     public Result cheatAddDollars(Matcher matcher) {
-        int value = Integer.parseInt((matcher.group("amount")));
-        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), value);
-        return new Result(true, value + "g added");
+        try {
+
+            int value = Integer.parseInt((matcher.group("amount")));
+
+            if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Coin(),0) + value < 0) {
+                return new Result(false , "Invalid amount");
+            }
+
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), value);
+            return new Result(true, value + "g added");
+
+        } catch (Exception e) {
+            return new Result(false , "Invalid amount");
+        }
     }
 
     public Result inventoryTrash(String name, int number, boolean hasNumber) {
