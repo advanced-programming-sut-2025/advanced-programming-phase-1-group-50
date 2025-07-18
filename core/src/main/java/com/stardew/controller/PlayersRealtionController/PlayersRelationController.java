@@ -38,6 +38,21 @@ public class PlayersRelationController {
 
     }
 
+    public static RelationWithPlayers getFriendshipLevelsWithPlayers(Player player) {
+
+        if (player == null || App.getGame().getCurrentPlayingPlayer().equals(player)) {
+            return null;
+        }
+
+        for (Set<Player> key : App.getGame().getRelationsBetweenPlayers().relationNetwork.keySet()) {
+            if (key.contains(player) && key.contains(App.getGame().getCurrentPlayingPlayer())) {
+                return App.getGame().getRelationsBetweenPlayers().relationNetwork.get(key);
+            }
+        }
+
+        return null;
+    }
+
     public Result TalkToPlayer(Matcher matcher) {
 
         Player receiver = null;

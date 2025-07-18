@@ -197,9 +197,13 @@ public class RelationWithPlayers {
         return talkHistory.toString();
     }
 
-    @Override
+    public boolean canGift() {
+        return !friendshipLevel.equals(FriendshipLevelsWithPlayers.LevelZero);
+    }
+
+    @Override   
     public String toString() {
-        return  friendshipLevel.toString() + "      xp: " + this.xp ;
+        return  friendshipLevel.toString() + "  xp: " + this.xp ;
     }
 
 }
