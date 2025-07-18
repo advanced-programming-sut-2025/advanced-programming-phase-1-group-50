@@ -292,7 +292,7 @@ public class AnimalsController {
 
         player.getAbility().increaseFishingRate(10);
 
-        stage.addActor(new MiniGameWindow(stage, candidateFish.toArray(new Fish[0])));
+        stage.addActor(new MiniGameWindow(stage, candidateFish.toArray(new Fish[0]), fishingPole.getPoleType()));
 
         return new Result(true, "MiniGame Started");
     }

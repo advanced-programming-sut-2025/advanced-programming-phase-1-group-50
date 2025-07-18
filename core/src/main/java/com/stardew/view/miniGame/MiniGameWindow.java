@@ -19,6 +19,7 @@ import com.stardew.models.animals.Fish;
 import com.stardew.models.animals.FishType;
 import com.stardew.models.animals.Quality;
 import com.stardew.models.app.App;
+import com.stardew.models.tools.PoleType;
 import com.stardew.models.userInfo.Player;
 import com.stardew.view.windows.CloseableWindow;
 
@@ -48,15 +49,14 @@ public class MiniGameWindow extends CloseableWindow {
     private boolean shownResult = false;
 
 
-    public MiniGameWindow(Stage stage, Fish[] fishes) {
+    public MiniGameWindow(Stage stage, Fish[] fishes, PoleType poleType) {
         super(" Mini Game", stage);
         this.fishes = fishes;
 
         //initialize labelStyle:
         labelStyle.font = GamePictureManager.smallFont;
 
-        //TODO check for having  < SonarBobber >
-        hasSonarBobber = false;
+        hasSonarBobber = poleType == PoleType.Bamboo || poleType == PoleType.Fiberglass || poleType == PoleType.Iridium;
         nameOfFish = new Label("", labelStyle);
         mainFishImage.setPosition(40, 200);
         nameOfFish.setPosition(100, 220);
