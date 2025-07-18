@@ -290,7 +290,7 @@ public class AnimalsController {
             candidateFish.add(new Fish(fishType, quality));
         }
 
-        player.getAbility().increaseFishingRate(5);
+        player.getAbility().increaseFishingRate(10);
 
         stage.addActor(new MiniGameWindow(stage, candidateFish.toArray(new Fish[0])));
 

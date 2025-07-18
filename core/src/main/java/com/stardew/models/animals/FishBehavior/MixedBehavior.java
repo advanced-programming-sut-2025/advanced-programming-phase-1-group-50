@@ -6,8 +6,8 @@ public class MixedBehavior extends FishBehavior {
     private int state = 0;
 
     public MixedBehavior() {
-        this.speedUp = 120f;
-        this.speedDown = 100f;
+        this.speedUp = 250f;
+        this.speedDown = 250f;
     }
 
     @Override
