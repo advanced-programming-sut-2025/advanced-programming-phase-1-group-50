@@ -67,7 +67,7 @@ public class SelectGiftToSendWindow extends CloseableWindow {
             Label emptyLabel = new Label("You don't have any items to gift.", GamePictureManager.skin);
             emptyLabel.setWrap(true);
             productTable.add(emptyLabel)
-                .colspan(3)
+                .colspan(2)
                 .width(380)
                 .padTop(20)
                 .padLeft(10)
