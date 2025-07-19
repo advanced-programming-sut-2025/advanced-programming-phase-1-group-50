@@ -10,7 +10,6 @@ import com.stardew.models.userInfo.Player;
 import com.stardew.models.userInfo.RelationWithPlayers;
 import com.stardew.view.windows.CloseableWindow;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.view.windows.SmartTooltip;
 
 import java.util.HashMap;
 
@@ -42,42 +41,25 @@ public class FriendshipWindow extends CloseableWindow {
             RelationWithPlayers relation = relations.get(player);
 
             Label nameLabel = new Label(player.getUsername(), GamePictureManager.skin);
+            nameLabel.setFontScale(1.5f);
+            nameLabel.setColor(Color.BLACK);
             Label levelLabel = new Label(relation.toString(), GamePictureManager.skin);
+            levelLabel.setFontScale(1.5f);
+            levelLabel.setColor(Color.BLACK);
 
             TextButton giftButton = new TextButton("Gift", GamePictureManager.skin);
-            giftButton.setDisabled(!relation.canGift());
-
-            if (!relation.canGift()) {
-                giftButton.setColor(Color.GRAY);
-
-                SmartTooltip tooltip = SmartTooltip.getInstance();
-
-                giftButton.addListener(new InputListener() {
-                    @Override
-                    public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                        tooltip.show("      Friendship level too low to gift      ");
-                    }
-
-                    @Override
-                    public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                        tooltip.hide();
-                    }
-                });
-            }
 
             giftButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if (relation.canGift()) {
-                        openGiftMenu(player);
-                    }
+                        openGiftMenu(player , relation);
                 }
             });
 
             Table row = new Table();
-            row.add(nameLabel).left().padRight(80);
-            row.add(levelLabel).left().padRight(80);
-            row.add(giftButton).left();
+            row.add(nameLabel).left().padRight(80).width(200);
+            row.add(levelLabel).left().padRight(80).width(200);
+            row.add(giftButton).left().width(100);
 
             mainTable.add(row).left().row();
         }
@@ -93,8 +75,8 @@ public class FriendshipWindow extends CloseableWindow {
         );
     }
 
-    private void openGiftMenu(Player player) {
-        GiftMenuWindow giftMenuWindow = new GiftMenuWindow(stage,this ,player);
+    private void openGiftMenu(Player player, RelationWithPlayers relation) {
+        GiftMenuWindow giftMenuWindow = new GiftMenuWindow(stage,this ,player,relation);
         stage.addActor(giftMenuWindow);
     }
 }

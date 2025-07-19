@@ -1,5 +1,6 @@
 package com.stardew.view.PlayersRelationsWindows;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -37,8 +38,16 @@ public class SelectGiftToSendWindow extends CloseableWindow {
         scrollPane.setScrollingDisabled(true, false);
 
         Table headerTable = new Table();
-        headerTable.add(new Label("Name", GamePictureManager.skin)).width(200);
-        headerTable.add(new Label("Qty", GamePictureManager.skin)).width(80);
+
+        Label nameLabel = new Label("Name:", GamePictureManager.skin);
+        nameLabel.setFontScale(1.2f);
+        nameLabel.setColor(Color.BLACK);
+        Label quantityLabel = new Label("Qty:", GamePictureManager.skin);
+        quantityLabel.setFontScale(1.2f);
+        quantityLabel.setColor(Color.BLACK);
+
+        headerTable.add(nameLabel).width(200);
+        headerTable.add(quantityLabel).width(80);
         add(headerTable).row();
 
         add(scrollPane).width(400).height(400).row();
@@ -68,6 +77,8 @@ public class SelectGiftToSendWindow extends CloseableWindow {
         if (items.isEmpty()) {
 
             Label emptyLabel = new Label("You don't have any items to gift.", GamePictureManager.skin);
+            emptyLabel.setFontScale(1.2f);
+            emptyLabel.setColor(Color.BLACK);
             emptyLabel.setWrap(true);
             emptyLabel.setAlignment(Align.center);
 
@@ -100,6 +111,8 @@ public class SelectGiftToSendWindow extends CloseableWindow {
             });
 
             Label qtyLabel = new Label("x" + quantity, GamePictureManager.skin);
+            qtyLabel.setFontScale(1.2f);
+            qtyLabel.setColor(Color.BLACK);
 
             productTable.add(nameButton).width(200).height(50);
             productTable.add(qtyLabel).width(80);

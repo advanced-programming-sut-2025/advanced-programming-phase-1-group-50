@@ -1,5 +1,6 @@
 package com.stardew.view.PlayersRelationsWindows;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -24,6 +25,8 @@ public class RateGiftWindow extends CloseableWindow {
         defaults().space(20);
 
         Label instructionLabel = new Label("Click on stars to rate:", GamePictureManager.skin);
+        instructionLabel.setFontScale(1.2f);
+        instructionLabel.setColor(Color.BLACK);
         add(instructionLabel).colspan(5).row();
 
         Table starTable = new Table();

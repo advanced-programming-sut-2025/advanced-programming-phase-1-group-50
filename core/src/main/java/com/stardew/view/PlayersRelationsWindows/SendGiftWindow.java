@@ -1,5 +1,6 @@
 package com.stardew.view.PlayersRelationsWindows;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -28,8 +29,14 @@ public class SendGiftWindow extends CloseableWindow {
         defaults().space(20);
 
         Label productLabel = new Label("Product: " + productName, GamePictureManager.skin);
+        productLabel.setFontScale(1.2f);
+        productLabel.setColor(Color.BLACK);
         Label availableLabel = new Label("Available: " + maxQuantity, GamePictureManager.skin);
+        availableLabel.setFontScale(1.2f);
+        availableLabel.setColor(Color.BLACK);
         quantityLabel = new Label(String.valueOf(selectedQuantity), GamePictureManager.skin);
+        quantityLabel.setFontScale(1.2f);
+        quantityLabel.setColor(Color.BLACK);
 
         TextButton minusButton = new TextButton("-", GamePictureManager.skin);
         TextButton plusButton = new TextButton("+", GamePictureManager.skin);

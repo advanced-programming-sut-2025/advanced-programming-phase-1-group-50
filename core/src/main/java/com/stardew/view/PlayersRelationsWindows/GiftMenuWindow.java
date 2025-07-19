@@ -1,5 +1,8 @@
 package com.stardew.view.PlayersRelationsWindows;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -7,10 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.userInfo.Player;
+import com.stardew.models.userInfo.RelationWithPlayers;
 import com.stardew.view.windows.CloseableWindow;
+import com.stardew.view.windows.SmartTooltip;
 
 public class GiftMenuWindow extends CloseableWindow {
-    public GiftMenuWindow(Stage stage, FriendshipWindow friendshipWindow,Player player) {
+    public GiftMenuWindow(Stage stage, FriendshipWindow friendshipWindow, Player player, RelationWithPlayers relation) {
         super("Gift menu", stage);
 
         Table table = new Table();
@@ -18,11 +23,33 @@ public class GiftMenuWindow extends CloseableWindow {
         table.defaults().width(200).height(50).space(20);
 
         TextButton sendGiftButton = new TextButton("Send Gift", GamePictureManager.skin);
+        sendGiftButton.setDisabled(!relation.canGift());
+
+        if (!relation.canGift()) {
+            sendGiftButton.setColor(Color.GRAY);
+
+            SmartTooltip tooltip = SmartTooltip.getInstance();
+
+            sendGiftButton.addListener(new InputListener() {
+                @Override
+                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                    tooltip.show("      Friendship level too low to gift      ");
+                }
+
+                @Override
+                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                    tooltip.hide();
+                }
+            });
+        }
+
         sendGiftButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                stage.addActor(new SelectGiftToSendWindow(stage, player));
-                remove();
+                if (relation.canGift()) {
+                    stage.addActor(new SelectGiftToSendWindow(stage, player));
+                    remove();
+                }
             }
         });
 

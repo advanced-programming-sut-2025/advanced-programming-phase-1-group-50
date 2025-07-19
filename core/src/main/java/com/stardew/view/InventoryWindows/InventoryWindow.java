@@ -11,6 +11,7 @@ import com.stardew.models.app.App;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.tools.Tool;
 import com.stardew.models.userInfo.Player;
+import com.stardew.view.PlayersRelationsWindows.FriendshipWindow;
 import com.stardew.view.windows.CloseableWindow;
 import com.badlogic.gdx.graphics.Color;
 
@@ -28,6 +29,7 @@ public class InventoryWindow extends CloseableWindow {
     private final ImageButton trashButton;
     private final TextButton journalButton;
     private final TextButton shuffleButton;
+    private final TextButton friendshipButton;
     private final HotBarActor hotBar;
     private final BackpackGridActor backpackGrid;
     private final ScrollPane backpackScrollPane;
@@ -38,7 +40,7 @@ public class InventoryWindow extends CloseableWindow {
         this.hotBar = hotBar;
 
 
-        setSize(700, 500);
+        setSize(820, 500);
         setPosition(
             stage.getCamera().position.x - getWidth() / 2,
             stage.getCamera().position.y - getHeight() / 2);
@@ -159,6 +161,14 @@ public class InventoryWindow extends CloseableWindow {
             }
         });
 
+        friendshipButton = new TextButton("friendship" , GamePictureManager.skin);
+        friendshipButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                stage.addActor(new FriendshipWindow(stage));
+            }
+        });
+
 
         Table buttonRowTable = new Table();
         buttonRowTable.add(trashButton).width(50).height(70).padRight(10);
@@ -168,6 +178,7 @@ public class InventoryWindow extends CloseableWindow {
         buttonRowTable.add(exitButton).width(50).height(70).padRight(10);
         buttonRowTable.add(shuffleButton).width(120).height(70);
         buttonRowTable.add(journalButton).width(120).height(70);
+        buttonRowTable.add(friendshipButton).width(120).height(70);
 
         row();
         add(buttonRowTable).padTop(10).center();

@@ -35,12 +35,32 @@ public class GiftHistoryWindow extends CloseableWindow {
 
         Table headerTable = new Table();
         headerTable.defaults().space(10);
-        headerTable.add(new Label("Product", GamePictureManager.skin)).width(120);
-        headerTable.add(new Label("ID", GamePictureManager.skin)).width(60);
-        headerTable.add(new Label("Sender", GamePictureManager.skin)).width(100);
-        headerTable.add(new Label("Receiver", GamePictureManager.skin)).width(100);
-        headerTable.add(new Label("Rate", GamePictureManager.skin)).width(60);
-        headerTable.add(new Label("Action", GamePictureManager.skin)).width(100);
+
+        Label productLabel = new Label("Product", GamePictureManager.skin);
+        productLabel.setFontScale(1.2f);
+        productLabel.setColor(Color.BLACK);
+        Label idLabel = new Label("ID", GamePictureManager.skin);
+        idLabel.setFontScale(1.2f);
+        idLabel.setColor(Color.BLACK);
+        Label senderLabel = new Label("Sender", GamePictureManager.skin);
+        senderLabel.setFontScale(1.2f);
+        senderLabel.setColor(Color.BLACK);
+        Label receiverLabel = new Label("Receiver", GamePictureManager.skin);
+        receiverLabel.setFontScale(1.2f);
+        receiverLabel.setColor(Color.BLACK);
+        Label rateLabel = new Label("Rate", GamePictureManager.skin);
+        rateLabel.setFontScale(1.2f);
+        rateLabel.setColor(Color.BLACK);
+        Label actionLabel = new Label("Action", GamePictureManager.skin);
+        actionLabel.setFontScale(1.2f);
+        actionLabel.setColor(Color.BLACK);
+
+        headerTable.add(productLabel).width(120);
+        headerTable.add(idLabel).width(60);
+        headerTable.add(senderLabel).width(100);
+        headerTable.add(receiverLabel).width(100);
+        headerTable.add(rateLabel).width(60);
+        headerTable.add(actionLabel).width(100);
 
         add(headerTable).row();
         add(scrollPane).width(600).height(400).row();
@@ -70,10 +90,20 @@ public class GiftHistoryWindow extends CloseableWindow {
             counter++;
 
             Label productLabel = new Label(gift.getProduct().toString(), GamePictureManager.skin);
+            productLabel.setFontScale(1.2f);
+            productLabel.setColor(Color.BROWN);
             Label idLabel = new Label(String.valueOf(gift.getId()), GamePictureManager.skin);
+            idLabel.setFontScale(1.2f);
+            idLabel.setColor(Color.BROWN);
             Label senderLabel = new Label(gift.getSender().getUsername(), GamePictureManager.skin);
+            senderLabel.setFontScale(1.2f);
+            senderLabel.setColor(Color.BROWN);
             Label receiverLabel = new Label(gift.getReceiver().getUsername(), GamePictureManager.skin);
+            receiverLabel.setFontScale(1.2f);
+            receiverLabel.setColor(Color.BROWN);
             Label rateLabel = new Label(String.valueOf(gift.getRate()), GamePictureManager.skin);
+            rateLabel.setFontScale(1.2f);
+            rateLabel.setColor(Color.BROWN);
 
             TextButton rateButton = new TextButton("Rate", GamePictureManager.skin);
             boolean canRate = PlayersRelationController.canRateGift(gift);
@@ -102,6 +132,8 @@ public class GiftHistoryWindow extends CloseableWindow {
 
         if (counter == 0) {
             Label emptyLabel = new Label("History is empty.", GamePictureManager.skin);
+            emptyLabel.setFontScale(1.2f);
+            emptyLabel.setColor(Color.BLACK);
             emptyLabel.setWrap(true);
             emptyLabel.setAlignment(Align.center);
 
