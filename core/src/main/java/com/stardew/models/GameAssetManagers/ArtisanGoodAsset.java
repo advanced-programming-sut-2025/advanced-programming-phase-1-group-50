@@ -76,7 +76,7 @@ public enum ArtisanGoodAsset {
         "OilMaker"),
 
     Jelly(new Image(GamePictureManager.jellyTexture),
-        "Jelly\n----------\n 1 Fruit\n----------\n 2 Days\n----------\n 2 * Ingredient_Energy",
+        "Jelly\n----------\n 1 Fruit\n----------\n 3 Days\n----------\n 2 * Ingredient_Energy",
         "PreservesJar"),
     Pickles(new Image(GamePictureManager.picklesTexture),
         "Pickles\n----------\n 1 Any Vegetable\n----------\n 6 Hours\n----------\n 1.75 * Ingredient_Energy",

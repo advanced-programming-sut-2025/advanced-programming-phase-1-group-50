@@ -22,7 +22,7 @@ public class Keg extends ArtisanMachine {
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Juice), new TimeInterval(4, 0));
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Mead), new TimeInterval(0, 10));
         processingTimes.put(new ArtisanGood(ArtisanGoodType.PaleAle), new TimeInterval(3, 0));
-        processingTimes.put(new ArtisanGood(ArtisanGoodType.Wine) , new TimeInterval(3, 0));
+        processingTimes.put(new ArtisanGood(ArtisanGoodType.Wine) , new TimeInterval(7, 0));
     }
 
     @Override
