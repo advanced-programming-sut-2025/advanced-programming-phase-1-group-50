@@ -1,3 +1,4 @@
+
 package com.stardew.view;
 
 import com.badlogic.gdx.Input;
@@ -5,6 +6,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.ShippingBin;
 import com.stardew.models.animals.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.models.stores.Store;
@@ -14,6 +16,7 @@ import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.InventoryWindows.InventoryWindow;
 import com.stardew.view.InventoryWindows.MapWindow;
 import com.stardew.view.RefrigeratorView.RefrigeratorWindow;
+import com.stardew.view.SellProductWindow.ShippingBinWindow;
 import com.stardew.view.StoreWindows.StoreClosedMessageWindow;
 import com.stardew.view.StoreWindows.StoreWindow;
 import com.stardew.view.cheatConsole.CheatWindow;
@@ -162,6 +165,10 @@ public class GameMenuInputAdapter extends InputAdapter {
 
     public void showClosedStoreMessage() {
         stage.addActor(new StoreClosedMessageWindow(stage));
+    }
+
+    public void createShippingBinWindow(ShippingBin bin) {
+        stage.addActor(new ShippingBinWindow(stage , bin));
     }
 
 

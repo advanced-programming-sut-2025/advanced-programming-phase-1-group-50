@@ -63,9 +63,17 @@ public class ShippingBinWindow extends CloseableWindow {
 
         if (items.isEmpty()) {
             Label emptyLabel = new Label("You don't have any sellable items in your backpack.", GamePictureManager.skin);
-            productTable.add(emptyLabel).colspan(3).padTop(20);
+            emptyLabel.setWrap(true);
+            productTable.add(emptyLabel)
+                .colspan(3)
+                .width(380)
+                .padTop(20)
+                .padLeft(10)
+                .padRight(10);
+            productTable.row();
             return;
         }
+
 
         for (Sellable item : items) {
             final String productName = Sellable.getNameInString(item);
