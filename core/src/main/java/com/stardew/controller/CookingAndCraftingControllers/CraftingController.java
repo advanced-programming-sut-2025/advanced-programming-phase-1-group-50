@@ -105,8 +105,6 @@ public class CraftingController {
 
         CookingRecipe cookingRecipe = CookingRecipe.getRecipeByName(itemName);
         if (cookingRecipe != null) {
-            Food food = Food.getFoodByName(itemName);
-            player.getBackpack().addIngredients(food, quantity);
             player.getBackpack().addRecipe(cookingRecipe);
             return new Result(true, "You add <" + itemName + "> successfully!");
         }
@@ -169,7 +167,7 @@ public class CraftingController {
 
         Tool tool = Tool.getToolByName(itemName);
         if (tool != null) {
-            for (int i = 0; i < quantity; i++) player.getBackpack().addTool(tool);
+            player.getBackpack().addTool(tool);
             return new Result(true, "You add <" + itemName + "> successfully!");
         }
 
