@@ -36,8 +36,8 @@ public class RateGiftWindow extends CloseableWindow {
         for (int i = 0; i < 5; i++) {
             final int starValue = i + 1;
             ImageButton.ImageButtonStyle starStyle = new ImageButton.ImageButtonStyle();
-            starStyle.imageUp = emptyDrawable;
-            starStyle.imageChecked = filledDrawable;
+            starStyle.imageUp = filledDrawable;
+            starStyle.imageChecked = emptyDrawable;
 
             ImageButton starButton = new ImageButton(starStyle);
 
@@ -62,7 +62,7 @@ public class RateGiftWindow extends CloseableWindow {
                 if (selectedRate > 0) {
                     PlayersRelationController.rateGift(gift, selectedRate);
                     giftHistoryWindow.fillGiftTable();
-                    friendshipWindow.initializeRelations();
+                    friendshipWindow.createUI();
                     closeWindow();
                 }
             }

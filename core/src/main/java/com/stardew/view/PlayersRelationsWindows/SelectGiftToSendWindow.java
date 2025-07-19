@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
 import com.stardew.models.manuFactor.Ingredient;
@@ -65,16 +66,19 @@ public class SelectGiftToSendWindow extends CloseableWindow {
         }
 
         if (items.isEmpty()) {
+
             Label emptyLabel = new Label("You don't have any items to gift.", GamePictureManager.skin);
             emptyLabel.setWrap(true);
+            emptyLabel.setAlignment(Align.center);
+
             productTable.add(emptyLabel)
                 .colspan(2)
-                .width(380)
+                .width(600)
+                .expandX()
                 .padTop(20)
-                .padLeft(10)
-                .padRight(10)
                 .center();
             productTable.row();
+
             return;
         }
 

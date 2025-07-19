@@ -16,15 +16,15 @@ import java.util.HashMap;
 
 public class FriendshipWindow extends CloseableWindow {
     private final HashMap<Player, RelationWithPlayers> relations = new HashMap<>();
+    private final Table mainTable;
 
     public FriendshipWindow(Stage stage) {
         super("Friendships", stage);
-        initializeRelations();
+        mainTable = new Table();
         createUI();
     }
 
-    protected void initializeRelations() {
-        relations.clear();
+    private void initializeRelations() {
         for (Player player : App.getGame().getPlayers()) {
             if (!player.equals(App.getGame().getCurrentPlayingPlayer())) {
                 relations.put(player, PlayersRelationController.getFriendshipLevelsWithPlayers(player));
@@ -32,8 +32,10 @@ public class FriendshipWindow extends CloseableWindow {
         }
     }
 
-    private void createUI() {
-        Table mainTable = new Table();
+    protected void createUI() {
+        relations.clear();
+        mainTable.clear();
+        initializeRelations();
         mainTable.top().pad(10).defaults().pad(10);
 
         for (Player player : relations.keySet()) {

@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.stardew.controller.PlayersRealtionController.PlayersRelationController;
 import com.stardew.models.BetweenPlayersGift;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
@@ -102,14 +103,16 @@ public class GiftHistoryWindow extends CloseableWindow {
         if (counter == 0) {
             Label emptyLabel = new Label("History is empty.", GamePictureManager.skin);
             emptyLabel.setWrap(true);
+            emptyLabel.setAlignment(Align.center);
+
             giftTable.add(emptyLabel)
                 .colspan(6)
-                .width(380)
+                .width(600)
+                .expandX()
                 .padTop(20)
-                .padLeft(10)
-                .padRight(10)
                 .center();
             giftTable.row();
+
         }
     }
 

@@ -201,7 +201,7 @@ public class RelationWithPlayers {
         return !friendshipLevel.equals(FriendshipLevelsWithPlayers.LevelZero);
     }
 
-    @Override   
+    @Override
     public String toString() {
         return  friendshipLevel.toString() + "  xp: " + this.xp ;
     }
