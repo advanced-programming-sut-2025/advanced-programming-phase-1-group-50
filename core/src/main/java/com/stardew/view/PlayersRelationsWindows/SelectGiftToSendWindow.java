@@ -23,7 +23,7 @@ public class SelectGiftToSendWindow extends CloseableWindow {
     private final Player receiver;
 
     public SelectGiftToSendWindow(Stage stage, Player receiver) {
-        super("Gift Selection",stage);
+        super("Gift Selection", stage);
         this.receiver = receiver;
 
         pad(40);
@@ -55,7 +55,8 @@ public class SelectGiftToSendWindow extends CloseableWindow {
         productTable.clear();
         List<Sellable> items = new ArrayList<>();
 
-        HashMap<Ingredient, Integer> ingredientQuantity = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity();
+        HashMap<Ingredient, Integer> ingredientQuantity =
+            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity();
 
         for (Ingredient ingredient : ingredientQuantity.keySet()) {
             if (Sellable.isSellable(ingredient.toString()) && ingredientQuantity.get(ingredient) > 0) {
@@ -71,7 +72,8 @@ public class SelectGiftToSendWindow extends CloseableWindow {
                 .width(380)
                 .padTop(20)
                 .padLeft(10)
-                .padRight(10);
+                .padRight(10)
+                .center();
             productTable.row();
             return;
         }
@@ -102,6 +104,6 @@ public class SelectGiftToSendWindow extends CloseableWindow {
     }
 
     private void openSendGiftWindow(String productName, int quantity) {
-        stage.addActor(new SendGiftWindow(stage,this,receiver,productName,quantity));
+        stage.addActor(new SendGiftWindow(stage, this, receiver, productName, quantity));
     }
 }

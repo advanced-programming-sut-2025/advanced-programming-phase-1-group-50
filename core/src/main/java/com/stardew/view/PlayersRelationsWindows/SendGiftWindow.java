@@ -21,7 +21,7 @@ public class SendGiftWindow extends CloseableWindow {
 
     public SendGiftWindow(Stage stage, SelectGiftToSendWindow selectGiftToSendWindow, Player receiver,
                           String productName, int quantity) {
-        super("Sending a gift to" + receiver.getUsername(), stage);
+        super("Sending a gift to " + receiver.getUsername(), stage);
         this.maxQuantity = quantity;
 
         pad(60);

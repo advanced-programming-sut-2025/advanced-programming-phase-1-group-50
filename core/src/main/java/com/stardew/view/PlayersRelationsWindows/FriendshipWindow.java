@@ -23,7 +23,8 @@ public class FriendshipWindow extends CloseableWindow {
         createUI();
     }
 
-    private void initializeRelations() {
+    protected void initializeRelations() {
+        relations.clear();
         for (Player player : App.getGame().getPlayers()) {
             if (!player.equals(App.getGame().getCurrentPlayingPlayer())) {
                 relations.put(player, PlayersRelationController.getFriendshipLevelsWithPlayers(player));
@@ -66,8 +67,7 @@ public class FriendshipWindow extends CloseableWindow {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     if (relation.canGift()) {
-                        GiftMenuWindow giftMenuWindow = new GiftMenuWindow(stage, player);
-                        stage.addActor(giftMenuWindow);
+                        openGiftMenu(player);
                     }
                 }
             });
@@ -89,5 +89,10 @@ public class FriendshipWindow extends CloseableWindow {
             stage.getCamera().position.x - getWidth() / 2,
             stage.getCamera().position.y - getHeight() / 2
         );
+    }
+
+    private void openGiftMenu(Player player) {
+        GiftMenuWindow giftMenuWindow = new GiftMenuWindow(stage,this ,player);
+        stage.addActor(giftMenuWindow);
     }
 }

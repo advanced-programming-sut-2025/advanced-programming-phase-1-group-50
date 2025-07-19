@@ -15,10 +15,12 @@ import com.stardew.view.windows.CloseableWindow;
 public class GiftHistoryWindow extends CloseableWindow {
     private final Player otherPlayer;
     private final Table giftTable;
+    private final FriendshipWindow friendshipWindow;
 
-    public GiftHistoryWindow(Stage stage, Player otherPlayer) {
+    public GiftHistoryWindow(Stage stage, FriendshipWindow friendshipWindow, Player otherPlayer) {
         super("Gifts' History", stage);
         this.otherPlayer = otherPlayer;
+        this.friendshipWindow = friendshipWindow;
 
         pad(40);
         defaults().space(15);
@@ -52,13 +54,19 @@ public class GiftHistoryWindow extends CloseableWindow {
     }
 
     protected void fillGiftTable() {
+        giftTable.clear();
+        int counter = 0;
+
         for (BetweenPlayersGift gift : App.getGame().getGifts()) {
             boolean isInvolved =
                 (gift.getReceiver().equals(App.getGame().getCurrentPlayingPlayer()) && gift.getSender().equals(otherPlayer)) ||
                     (gift.getSender().equals(App.getGame().getCurrentPlayingPlayer()) && gift.getReceiver().equals(otherPlayer));
 
-            if (!isInvolved)
+            if (!isInvolved) {
                 continue;
+            }
+
+            counter++;
 
             Label productLabel = new Label(gift.getProduct().toString(), GamePictureManager.skin);
             Label idLabel = new Label(String.valueOf(gift.getId()), GamePictureManager.skin);
@@ -90,9 +98,22 @@ public class GiftHistoryWindow extends CloseableWindow {
             giftTable.add(rateLabel).width(60);
             giftTable.add(rateButton).width(100).row();
         }
+
+        if (counter == 0) {
+            Label emptyLabel = new Label("History is empty.", GamePictureManager.skin);
+            emptyLabel.setWrap(true);
+            giftTable.add(emptyLabel)
+                .colspan(6)
+                .width(380)
+                .padTop(20)
+                .padLeft(10)
+                .padRight(10)
+                .center();
+            giftTable.row();
+        }
     }
 
     private void openRateGiftWindow(BetweenPlayersGift gift) {
-        stage.addActor(new RateGiftWindow(stage,this,gift));
+        stage.addActor(new RateGiftWindow(stage, friendshipWindow, this, gift));
     }
 }

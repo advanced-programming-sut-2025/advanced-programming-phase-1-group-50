@@ -10,7 +10,7 @@ import com.stardew.models.userInfo.Player;
 import com.stardew.view.windows.CloseableWindow;
 
 public class GiftMenuWindow extends CloseableWindow {
-    public GiftMenuWindow(Stage stage, Player player) {
+    public GiftMenuWindow(Stage stage, FriendshipWindow friendshipWindow,Player player) {
         super("Gift menu", stage);
 
         Table table = new Table();
@@ -30,7 +30,7 @@ public class GiftMenuWindow extends CloseableWindow {
         giftHistoryButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                stage.addActor(new GiftHistoryWindow(stage, player));
+                stage.addActor(new GiftHistoryWindow(stage, friendshipWindow,player));
                 remove();
             }
         });

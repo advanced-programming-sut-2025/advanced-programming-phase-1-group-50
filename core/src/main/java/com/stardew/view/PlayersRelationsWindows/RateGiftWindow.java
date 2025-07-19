@@ -1,24 +1,23 @@
 package com.stardew.view.PlayersRelationsWindows;
 
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.controller.PlayersRealtionController.PlayersRelationController;
 import com.stardew.models.BetweenPlayersGift;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.view.windows.CloseableWindow;
 
 public class RateGiftWindow extends CloseableWindow {
-    private final Label[] starLabels = new Label[5];
+    private final ImageButton[] starButtons = new ImageButton[5];
     private int selectedRate = 0;
 
-    public RateGiftWindow(Stage stage, GiftHistoryWindow giftHistoryWindow, BetweenPlayersGift gift) {
+    public RateGiftWindow(Stage stage, FriendshipWindow friendshipWindow, GiftHistoryWindow giftHistoryWindow, BetweenPlayersGift gift) {
         super("Rating the gift", stage);
 
         pad(60);
@@ -28,13 +27,21 @@ public class RateGiftWindow extends CloseableWindow {
         add(instructionLabel).colspan(5).row();
 
         Table starTable = new Table();
+
+        Texture filledStar = GamePictureManager.filledStar;
+        Texture emptyStar = GamePictureManager.emptyStar;
+        TextureRegionDrawable filledDrawable = new TextureRegionDrawable(filledStar);
+        TextureRegionDrawable emptyDrawable = new TextureRegionDrawable(emptyStar);
+
         for (int i = 0; i < 5; i++) {
             final int starValue = i + 1;
-            Label starLabel = new Label("☆", GamePictureManager.skin);
-            starLabel.setFontScale(2.5f);
-            starLabel.setColor(Color.GOLD);
+            ImageButton.ImageButtonStyle starStyle = new ImageButton.ImageButtonStyle();
+            starStyle.imageUp = emptyDrawable;
+            starStyle.imageChecked = filledDrawable;
 
-            starLabel.addListener(new ClickListener() {
+            ImageButton starButton = new ImageButton(starStyle);
+
+            starButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     selectedRate = starValue;
@@ -42,8 +49,8 @@ public class RateGiftWindow extends CloseableWindow {
                 }
             });
 
-            starLabels[i] = starLabel;
-            starTable.add(starLabel).pad(10);
+            starButtons[i] = starButton;
+            starTable.add(starButton).size(48).pad(10);
         }
 
         add(starTable).colspan(5).row();
@@ -55,6 +62,7 @@ public class RateGiftWindow extends CloseableWindow {
                 if (selectedRate > 0) {
                     PlayersRelationController.rateGift(gift, selectedRate);
                     giftHistoryWindow.fillGiftTable();
+                    friendshipWindow.initializeRelations();
                     closeWindow();
                 }
             }
@@ -71,11 +79,7 @@ public class RateGiftWindow extends CloseableWindow {
 
     private void refreshStars() {
         for (int i = 0; i < 5; i++) {
-            if (i < selectedRate) {
-                starLabels[i].setText("★");
-            } else {
-                starLabels[i].setText("☆");
-            }
+            starButtons[i].setChecked(i < selectedRate);
         }
     }
 
