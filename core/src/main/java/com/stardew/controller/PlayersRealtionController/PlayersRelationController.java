@@ -439,33 +439,7 @@ public class PlayersRelationController {
 
     }
 
-    public Result GiftToPLayer(Matcher matcher) {
-
-        Player receiver = null;
-
-        for (Player p : App.getGame().getPlayers()) {
-            if (p.getUsername().equals(matcher.group("username"))) {
-                receiver = p;
-                break;
-            }
-        }
-
-        if (receiver == null) {
-            return new Result(false, "Player not found");
-        }
-
-        if (receiver.equals(App.getGame().getCurrentPlayingPlayer())) {
-            return new Result(false, "you can't choose yourself");
-        }
-
-        int distanceSquare = (App.getGame().getCurrentPlayingPlayer().getPosition().getX() -receiver.getPosition().getX()) *
-                (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - receiver.getPosition().getX()) +
-                (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY()) *
-                        (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY());
-
-        if (distanceSquare > 2) {
-            return new Result(false, "You are too far away");
-        }
+    public static Result sendGiftToPlayer(String productName, int quantity, Player receiver) {
 
         RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
         Set<Player> lookUpKey = new HashSet<>();
@@ -474,30 +448,12 @@ public class PlayersRelationController {
 
         RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
 
-        if (tempRelation.getFriendshipLevel().equals(FriendshipLevelsWithPlayers.LevelZero)) {
-            return new Result(false, "you can't gift this player at this friendship level");
-        }
-
-        if (!Sellable.isSellable(matcher.group("item"))) {
-            return new Result(false, "you can't gift this item");
-        }
-
-        if (Sellable.getSellableByName(matcher.group("item")) == null) {
-            return new Result(false, "Not enough stock");
-        }
-
-        int amount = Integer.parseInt(matcher.group("amount"));
-
-        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault((Ingredient) Sellable.getSellableByName(matcher.group("item")),0) < amount) {
-            return new Result(false, "Not enough stock");
-        }
-
         App.getGame().addGiftsIndex();
-        BetweenPlayersGift tempGift = new BetweenPlayersGift(Sellable.getSellableByName(matcher.group("item")),App.getGame().getCurrentPlayingPlayer(),receiver,App.getGame().getGiftIndex());
+        BetweenPlayersGift tempGift = new BetweenPlayersGift(Sellable.getSellableByName(productName),App.getGame().getCurrentPlayingPlayer(),receiver,App.getGame().getGiftIndex());
         App.getGame().addToGifts(tempGift);
 
-        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(matcher.group("item")),amount);
-        receiver.getBackpack().addIngredients((Ingredient) Sellable.getSellableByName(matcher.group("item")),amount);
+        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(productName),quantity);
+        receiver.getBackpack().addIngredients((Ingredient) Sellable.getSellableByName(productName),quantity);
 
         receiver.addNotification(new Notification("you have received a gift", App.getGame().getCurrentPlayingPlayer()));
 
@@ -508,7 +464,5 @@ public class PlayersRelationController {
         }
 
         return new Result(true, "He/She received your gift with id " + App.getGame().getGiftIndex());
-
     }
-
 }

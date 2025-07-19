@@ -66,7 +66,7 @@ public class FriendshipWindow extends CloseableWindow {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     if (relation.canGift()) {
-                        GiftMenuWindow giftMenuWindow = new GiftMenuWindow(stage, player, relation);
+                        GiftMenuWindow giftMenuWindow = new GiftMenuWindow(stage, player);
                         stage.addActor(giftMenuWindow);
                     }
                 }

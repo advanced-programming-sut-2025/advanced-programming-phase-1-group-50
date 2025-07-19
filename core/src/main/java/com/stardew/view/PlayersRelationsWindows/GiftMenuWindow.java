@@ -7,11 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.userInfo.Player;
-import com.stardew.models.userInfo.RelationWithPlayers;
 import com.stardew.view.windows.CloseableWindow;
 
 public class GiftMenuWindow extends CloseableWindow {
-    public GiftMenuWindow(Stage stage, Player player, RelationWithPlayers relation) {
+    public GiftMenuWindow(Stage stage, Player player) {
         super("Gift menu", stage);
 
         Table table = new Table();
@@ -22,7 +21,7 @@ public class GiftMenuWindow extends CloseableWindow {
         sendGiftButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                stage.addActor(new SendGiftWindow(stage, player, relation));
+                stage.addActor(new SelectGiftToSendWindow(stage, player));
                 remove();
             }
         });
