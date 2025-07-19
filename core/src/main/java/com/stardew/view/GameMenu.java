@@ -381,16 +381,16 @@ public class GameMenu implements AppMenu , Screen {
             System.out.println(relationController.talkHistory(matcher));
         }
         else if ((matcher = GameMenuCommands.GiftToPLayer.getMatcher(input)) != null) {
-                     System.out.println(relationController.GiftToPLayer(matcher));
+                     //System.out.println(relationController.GiftToPLayer(matcher));
                 }
         else if (GameMenuCommands.GiftList.getMatcher(input) != null) {
                     System.out.println(relationController.GiftList());
                 }
         else if ((matcher = GameMenuCommands.GiftRate.getMatcher(input)) != null) {
-                        System.out.println(relationController.giftRate(matcher));
+                        //System.out.println(relationController.giftRate(matcher));
                 }
         else if ((matcher = GameMenuCommands.GiftHistory.getMatcher(input)) != null) {
-                        System.out.println(relationController.GiftHistory(matcher));
+                        //System.out.println(relationController.GiftHistory(matcher));
                 }
         else if ((matcher = GameMenuCommands.Hug.getMatcher(input)) != null) {
                         System.out.println(relationController.hug(matcher));

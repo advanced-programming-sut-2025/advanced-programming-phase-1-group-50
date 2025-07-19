@@ -152,42 +152,18 @@ public class PlayersRelationController {
         return new Result(true, message.toString());
     }
 
-    public Result giftRate(Matcher matcher) {
+    public static boolean canRateGift(BetweenPlayersGift gift) {
+        return (gift.getReceiver().equals(App.getGame().getCurrentPlayingPlayer())) && (!gift.isRated());
+    }
 
-        int rate = Integer.parseInt(matcher.group("rate"));
-        int id = Integer.parseInt(matcher.group("id"));
-        BetweenPlayersGift tempGift = null;
-
-        if (rate <= 0 || rate >= 6) {
-            return new Result(false, "Invalid gift rate");
-        }
-
-        for (BetweenPlayersGift gift : App.getGame().getGifts()) {
-            if (gift.getId() == id) {
-                tempGift = gift;
-                break;
-            }
-        }
-
-        if (tempGift == null) {
-            return new Result(false, "Gift not found");
-        }
-
-        if (!tempGift.getReceiver().equals(App.getGame().getCurrentPlayingPlayer())) {
-            return new Result(false, "you can't rate this gift");
-        }
-
-        if (tempGift.isRated()) {
-            return new Result(false, "you have already rated this gift");
-        }
-
-        tempGift.setRate(rate);
-        tempGift.setRated();
+    public static void rateGift(BetweenPlayersGift gift , int rate) {
+        gift.setRate(rate);
+        gift.setRated();
 
         RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
         Set<Player> lookUpKey = new HashSet<>();
-        lookUpKey.add(tempGift.getReceiver());
-        lookUpKey.add(tempGift.getSender());
+        lookUpKey.add(gift.getReceiver());
+        lookUpKey.add(gift.getSender());
 
         RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
         if (!tempRelation.HaveGaveGiftToday()) {
@@ -196,39 +172,6 @@ public class PlayersRelationController {
         tempRelation.setHaveGaveGiftToday(true);
         tempNetwork.relationNetwork.put(lookUpKey, tempRelation);
 
-        return new Result(true, "you rated this gift successfully");
-    }
-
-    public Result GiftHistory(Matcher matcher) {
-
-        Player temp = null;
-
-        for (Player p : App.getGame().getPlayers()) {
-            if (p.getUsername().equals(matcher.group("username"))) {
-                temp = p;
-                break;
-            }
-        }
-
-        if (temp == null) {
-            return new Result(false, "Player not found");
-        }
-
-        if (temp.equals(App.getGame().getCurrentPlayingPlayer())) {
-            return new Result(false, "you can't choose yourself");
-        }
-
-        StringBuilder message = new StringBuilder("GiftHistory:");
-
-        for (BetweenPlayersGift gift : App.getGame().getGifts()) {
-            if (gift.getReceiver().equals(App.getGame().getCurrentPlayingPlayer()) && gift.getSender().equals(temp) ||
-                    gift.getSender().equals(App.getGame().getCurrentPlayingPlayer()) && gift.getReceiver().equals(temp)) {
-                message.append("\n");
-                message.append(gift.toStringWithReceiver());
-            }
-        }
-
-        return new Result(true, message.toString());
     }
 
     public Result hug(Matcher matcher) {

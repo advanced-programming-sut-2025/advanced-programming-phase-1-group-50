@@ -55,8 +55,4 @@ public class BetweenPlayersGift {
     public String toString() {
         return "id:" + id + "   sender:" +  sender.getUsername() + "    rate:" + rate + "   " + Sellable.getNameInString(product);
     }
-
-    public String toStringWithReceiver() {
-        return "id:" + id + "   sender:" +  sender.getUsername() + "    receiver:" + receiver.getUsername() + "    rate:" + rate + "   " + Sellable.getNameInString(product);
-    }
 }
