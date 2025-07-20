@@ -384,7 +384,7 @@ public class GameMenu implements AppMenu , Screen {
             System.out.println(controller.printMap(startX, startY, sizeX));
         }
         else if (GameMenuCommands.FriendShips.getMatcher(input) != null) {
-            System.out.println(relationController.friendships());
+            //System.out.println(relationController.friendships());
         }
         else if ((matcher = GameMenuCommands.TalkToPlayer.getMatcher(input)) != null) {
             System.out.println(relationController.TalkToPlayer(matcher));
@@ -405,16 +405,16 @@ public class GameMenu implements AppMenu , Screen {
                         //System.out.println(relationController.GiftHistory(matcher));
                 }
         else if ((matcher = GameMenuCommands.Hug.getMatcher(input)) != null) {
-                        System.out.println(relationController.hug(matcher));
+                        //System.out.println(relationController.hug(matcher));
                 }
         else if ((matcher = GameMenuCommands.FlowerTOPlayer.getMatcher(input)) != null) {
-                        System.out.println(relationController.giveFlower(matcher));
+                        //System.out.println(relationController.giveFlower(matcher));
                 }
         else if ((matcher = GameMenuCommands.AskMarriage.getMatcher(input)) != null) {
-                        System.out.println(relationController.askMarriage(matcher));
+                        //System.out.println(relationController.askMarriage(matcher));
                 }
         else if ((matcher = GameMenuCommands.RespondMarriageRequest.getMatcher(input)) != null) {
-                        System.out.println(relationController.respondMarriage(matcher));
+                        //System.out.println(relationController.respondMarriage(matcher));
                 }
         else if ((matcher = GameMenuCommands.StartTrade.getMatcher(input)) != null ) {
                         System.out.println(controller.startTrade());

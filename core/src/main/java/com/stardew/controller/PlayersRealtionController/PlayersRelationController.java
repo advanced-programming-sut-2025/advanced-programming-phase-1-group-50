@@ -1,5 +1,6 @@
 package com.stardew.controller.PlayersRealtionController;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.models.BetweenPlayersGift;
 import com.stardew.models.Bouquet;
 import com.stardew.models.Notification.MarriageRequest;
@@ -9,34 +10,13 @@ import com.stardew.models.app.App;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.stores.Sellable;
 import com.stardew.models.userInfo.*;
+import com.stardew.view.InPersonPlayersRelationsWindows.RespondMarriageWindow;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 import java.util.regex.Matcher;
 
 public class PlayersRelationController {
-
-    public Result friendships() {
-
-        StringBuilder message = new StringBuilder("FriendShips:");
-
-        for (Set<Player> key : App.getGame().getRelationsBetweenPlayers().relationNetwork.keySet()) {
-
-            message.append("\n");
-
-            Iterator<Player> iterator = key.iterator();
-            Player p1 = iterator.next();
-            Player p2 = iterator.next();
-
-            message.append(p1.getUsername()).append(" and ").append(p2.getUsername()).append(": ");
-            message.append(App.getGame().getRelationsBetweenPlayers().relationNetwork.get(key).toString());
-
-        }
-
-        return new Result(true, message.toString());
-
-    }
 
     public static RelationWithPlayers getFriendshipLevelsWithPlayers(Player player) {
 
@@ -72,10 +52,11 @@ public class PlayersRelationController {
             return new Result(false, "you can't choose yourself");
         }
 
-        int distanceSquare = (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - receiver.getPosition().getX()) *
-                (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - receiver.getPosition().getX()) +
-                (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY()) *
-                        (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY());
+        int distanceSquare =
+            (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - receiver.getPosition().getX()) *
+            (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - receiver.getPosition().getX()) +
+            (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY()) *
+                (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY());
 
         if (distanceSquare > 2) {
             return new Result(false, "You are too far away");
@@ -98,7 +79,7 @@ public class PlayersRelationController {
         }
 
         tempRelation.addDialogue(new DialoguesBetweenPlayers(App.getGame().getCurrentPlayingPlayer(), receiver,
-                matcher.group("message")));
+            matcher.group("message")));
         tempNetwork.relationNetwork.put(lookUpKey, tempRelation);
         receiver.addNotification(new Notification(matcher.group("message"), App.getGame().getCurrentPlayingPlayer()));
 
@@ -156,7 +137,7 @@ public class PlayersRelationController {
         return (gift.getReceiver().equals(App.getGame().getCurrentPlayingPlayer())) && (!gift.isRated());
     }
 
-    public static void rateGift(BetweenPlayersGift gift , int rate) {
+    public static void rateGift(BetweenPlayersGift gift, int rate) {
         gift.setRate(rate);
         gift.setRated();
 
@@ -174,37 +155,32 @@ public class PlayersRelationController {
 
     }
 
-    public Result hug(Matcher matcher) {
-        Player temp = null;
-
-        for (Player p : App.getGame().getPlayers()) {
-            if (p.getUsername().equals(matcher.group("username"))) {
-                temp = p;
-                break;
-            }
-        }
-
-        if (temp == null) {
-            return new Result(false, "Player not found");
-        }
-
-        if (temp.equals(App.getGame().getCurrentPlayingPlayer())) {
-            return new Result(false, "you can't choose yourself");
-        }
-
-        int distanceSquare = (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX()) *
-                (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX()) +
-                (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY()) *
-                        (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
-
-        if (distanceSquare > 2) {
-            return new Result(false, "You are too far away");
+    public static Result canHug(Player otherPlayer) {
+        if (otherPlayer == null || App.getGame().getCurrentPlayingPlayer().equals(otherPlayer)) {
+            return new Result(false, "Invalid player");
         }
 
         RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
         Set<Player> lookUpKey = new HashSet<>();
         lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
-        lookUpKey.add(temp);
+        lookUpKey.add(otherPlayer);
+
+        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+
+        if (!tempRelation.canHug()) {
+            return new Result(false, "your friendship level must be at least two");
+        }
+
+        return new Result(true, "");
+
+    }
+
+    public static void hug(Player otherPlayer) {
+
+        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
+        lookUpKey.add(otherPlayer);
 
         RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
 
@@ -216,133 +192,114 @@ public class PlayersRelationController {
 
             if (tempRelation.isMarriage()) {
                 App.getGame().getCurrentPlayingPlayer().addEnergy(50);
-                temp.addEnergy(50);
+                otherPlayer.addEnergy(50);
             }
-
-            return new Result(true, "masadigh mohtavaye mojremane");
         }
-
-        return new Result(false, "your friendship level must be at least two");
-
     }
 
-    public Result giveFlower(Matcher matcher) {
-        Player temp = null;
-
-        for (Player p : App.getGame().getPlayers()) {
-            if (p.getUsername().equals(matcher.group("username"))) {
-                temp = p;
-                break;
-            }
+    public static Result canGiveFlower(Player otherPlayer) {
+        if (otherPlayer == null || App.getGame().getCurrentPlayingPlayer().equals(otherPlayer)) {
+            return new Result(false, "Invalid player!");
         }
 
-        if (temp == null) {
-            return new Result(false, "Player not found");
-        }
-
-        if (temp.equals(App.getGame().getCurrentPlayingPlayer())) {
-            return new Result(false, "you can't choose yourself");
-        }
-
-        int distanceSquare = (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX()) *
-                            (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX()) +
-                            (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY()) *
-                            (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
-
-
-        if (distanceSquare > 2) {
-            return new Result(false, "You are too far away");
-
-        }
-
-        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Bouquet(),0) == 0) {
-            return new Result(false, "You don't have Bouquet");
+        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Bouquet(),
+            0) == 0) {
+            return new Result(false, "You don't have any bouquet!");
         }
 
         RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
         Set<Player> lookUpKey = new HashSet<>();
         lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
-        lookUpKey.add(temp);
+        lookUpKey.add(otherPlayer);
 
         RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
 
-        if (tempRelation.canGiveFlower()) {
-            tempRelation.setGaveFlower();
-            tempRelation.setHaveGaveFlowerToday(true);
-            App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Bouquet(), 1);
-            temp.getBackpack().addIngredients(new Bouquet(), 1);
-            if (tempRelation.isMarriage()) {
-                App.getGame().getCurrentPlayingPlayer().addEnergy(50);
-                temp.addEnergy(50);
-            }
-            tempRelation.changeXp(0);
-            return new Result(true, "che romantic");
+        if (!tempRelation.canGiveFlower()) {
+            return new Result(false, "you can't give flower at this friendship level");
         }
 
-        return new Result(false, "you can't flower this player");
+        return new Result(true, "");
 
     }
 
-    public Result askMarriage(Matcher matcher) {
+    public static void giveFlower(Player otherPlayer) {
 
-        Player temp = null;
+        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
+        lookUpKey.add(otherPlayer);
 
-        for (Player p : App.getGame().getPlayers()) {
-            if (p.getUsername().equals(matcher.group("username"))) {
-                temp = p;
-                break;
-            }
+        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+
+        tempRelation.setGaveFlower();
+        tempRelation.setHaveGaveFlowerToday(true);
+        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Bouquet(), 1);
+        otherPlayer.getBackpack().addIngredients(new Bouquet(), 1);
+        if (tempRelation.isMarriage()) {
+            App.getGame().getCurrentPlayingPlayer().addEnergy(50);
+            otherPlayer.addEnergy(50);
+        }
+        tempRelation.changeXp(0);
+
+    }
+
+    public static Result canAskMarriage(Player otherPlayer) {
+        if (otherPlayer == null || App.getGame().getCurrentPlayingPlayer().equals(otherPlayer)) {
+            return new Result(false, "Invalid player!");
         }
 
-        if (temp == null) {
-            return new Result(false, "Player not found");
-        }
-
-        if (temp.equals(App.getGame().getCurrentPlayingPlayer())) {
-            return new Result(false, "you can't choose yourself");
-        }
-
-        int distanceSquare = (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX()) *
-                (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - temp.getPosition().getX()) +
-                (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY()) *
-                        (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - temp.getPosition().getY());
-
-        if (distanceSquare > 2) {
-            return new Result(false, "You are too far away");
-        }
-
-        if (App.getGame().getCurrentPlayingPlayer().getCurrentUser().getGender().equals(Gender.Female) || temp.getCurrentUser().getGender().equals(Gender.Male)) {
-            return new Result(false, "Gender conflict");
-        }
-
-        if (temp.isMarried()) {
-            return new Result(false, "Married and Committed");
+        if (App.getGame().getCurrentPlayingPlayer().getCurrentUser().getGender().equals(Gender.Female) || otherPlayer.getCurrentUser().getGender().equals(Gender.Male)) {
+            return new Result(false , "Gender conflict!");
         }
 
         RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
         Set<Player> lookUpKey = new HashSet<>();
         lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
-        lookUpKey.add(temp);
+        lookUpKey.add(otherPlayer);
 
         RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+
+        if (tempRelation.isMarriage()) {
+            return new Result(false , "She's your wife!!!");
+        }
+
         if (!tempRelation.canRequestMarriage()) {
-            return new Result(false, "you can't request marriage in this friendship level");
+            return new Result(false, "You can't request marriage at this friendship level!");
         }
 
-        temp.addNotification(new MarriageRequest("aroos nanam mishi?", App.getGame().getCurrentPlayingPlayer()));
+        if (otherPlayer.isMarried()) {
+            return new Result(false , "She's married!");
+        }
 
-        return new Result(true, "Marriage requested");
+        for (Player player : App.getGame().getPlayers()) {
+            for (Notification notification : player.getNotifications()) {
+                if (notification instanceof MarriageRequest) {
+                    if (!notification.isChecked() && notification.getSender().equals(App.getGame().getCurrentPlayingPlayer())) {
+                        return new Result(false , "Del ke nist, karvansarast!");
+                    }
+                }
+            }
+        }
 
+        for (Notification notification : otherPlayer.getNotifications()) {
+            if (notification instanceof MarriageRequest && !notification.isChecked()) {
+                return new Result(false , "Vaisa to saf");
+            }
+        }
+
+        return new Result(true,"");
     }
 
-    public Result respondMarriage(Matcher matcher) {
+    public static void askMarriage(Player otherPlayer) {
+        otherPlayer.addNotification(new MarriageRequest("You are my soulmate. Every day with you feels like a dream. Will you stay by my side forever?", App.getGame().getCurrentPlayingPlayer()));
+    }
 
+    public static void checkForMarriageRequest(Stage stage) {
         MarriageRequest temp = null;
 
         for (Notification n : App.getGame().getCurrentPlayingPlayer().getNotifications()) {
-
             if (n instanceof MarriageRequest) {
-                if (!n.isChecked() && n.getSender().getUsername().equals(matcher.group("username"))) {
+                if (!n.isChecked()) {
                     temp = (MarriageRequest) n;
                     break;
                 }
@@ -350,9 +307,13 @@ public class PlayersRelationController {
         }
 
         if (temp == null) {
-            return new Result(false, "No such marriage request");
+            return;
         }
 
+        stage.addActor(new RespondMarriageWindow(stage, temp));
+    }
+
+    public static void respondMarriage(MarriageRequest temp,boolean accepted) {
         temp.setChecked(true);
 
         RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
@@ -362,7 +323,7 @@ public class PlayersRelationController {
 
         RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
 
-        if (matcher.group("state").equals("accept")) {
+        if (accepted) {
 
             App.getGame().getCurrentPlayingPlayer().setMarried(true);
             temp.getSender().setMarried(true);
@@ -370,16 +331,11 @@ public class PlayersRelationController {
             tempRelation.setMarriage();
             tempRelation.setFriendshipLevel(FriendshipLevelsWithPlayers.LevelFour);
 
-            return new Result(true, "You accepted the marriage request");
-
         } else {
 
             tempRelation.setFriendshipLevel(FriendshipLevelsWithPlayers.LevelZero);
-
             temp.getSender().setRemainingNumsAfterMarriageRequestDenied(7);
-            return new Result(true, "You rejected the marriage request");
         }
-
     }
 
     public static Result sendGiftToPlayer(String productName, int quantity, Player receiver) {
@@ -392,11 +348,12 @@ public class PlayersRelationController {
         RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
 
         App.getGame().addGiftsIndex();
-        BetweenPlayersGift tempGift = new BetweenPlayersGift(Sellable.getSellableByName(productName),App.getGame().getCurrentPlayingPlayer(),receiver,App.getGame().getGiftIndex());
+        BetweenPlayersGift tempGift = new BetweenPlayersGift(Sellable.getSellableByName(productName),
+            App.getGame().getCurrentPlayingPlayer(), receiver, App.getGame().getGiftIndex());
         App.getGame().addToGifts(tempGift);
 
-        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(productName),quantity);
-        receiver.getBackpack().addIngredients((Ingredient) Sellable.getSellableByName(productName),quantity);
+        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(productName), quantity);
+        receiver.getBackpack().addIngredients((Ingredient) Sellable.getSellableByName(productName), quantity);
 
         receiver.addNotification(new Notification("you have received a gift", App.getGame().getCurrentPlayingPlayer()));
 
