@@ -29,7 +29,7 @@ public class InventoryWindow extends CloseableWindow {
     private final ImageButton trashButton;
     private final TextButton journalButton;
     private final TextButton shuffleButton;
-    private final TextButton friendshipButton;
+    private final ImageButton friendshipButton;
     private final HotBarActor hotBar;
     private final BackpackGridActor backpackGrid;
     private final ScrollPane backpackScrollPane;
@@ -40,7 +40,7 @@ public class InventoryWindow extends CloseableWindow {
         this.hotBar = hotBar;
 
 
-        setSize(820, 500);
+        setSize(750, 500);
         setPosition(
             stage.getCamera().position.x - getWidth() / 2,
             stage.getCamera().position.y - getHeight() / 2);
@@ -161,11 +161,12 @@ public class InventoryWindow extends CloseableWindow {
             }
         });
 
-        friendshipButton = new TextButton("friendship" , GamePictureManager.skin);
+        friendshipButton = new ImageButton(GamePictureManager.friendshipTextureDrawable);
         friendshipButton.addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 stage.addActor(new FriendshipWindow(stage));
+                return true;
             }
         });
 
@@ -176,9 +177,9 @@ public class InventoryWindow extends CloseableWindow {
         buttonRowTable.add(skillsButton).width(50).height(70).padRight(10);
         buttonRowTable.add(mapButton).width(50).height(70).padRight(10);
         buttonRowTable.add(exitButton).width(50).height(70).padRight(10);
+        buttonRowTable.add(friendshipButton).width(50).height(70).padRight(10);
         buttonRowTable.add(shuffleButton).width(120).height(70);
         buttonRowTable.add(journalButton).width(120).height(70);
-        buttonRowTable.add(friendshipButton).width(120).height(70);
 
         row();
         add(buttonRowTable).padTop(10).center();

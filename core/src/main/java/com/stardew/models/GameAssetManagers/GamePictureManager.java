@@ -1694,6 +1694,9 @@ public class GamePictureManager {
     public static TextureRegionDrawable exitTextureDrawable = new TextureRegionDrawable
         (new TextureRegion(new Texture("Inventory/Exit.png")));
 
+    public static TextureRegionDrawable friendshipTextureDrawable = new TextureRegionDrawable
+        (new TextureRegion(new Texture("Inventory/Friendship.png")));
+
 
     public static TextureRegionDrawable fishingTextureDrawable = new TextureRegionDrawable
         (new TextureRegion(new Texture("Inventory/Carp.png")));
