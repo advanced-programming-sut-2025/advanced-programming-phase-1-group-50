@@ -1773,5 +1773,16 @@ public class GamePictureManager {
     public static TextureRegionDrawable journalTextureDrawable = new TextureRegionDrawable
         (new TextureRegion(new Texture("Inventory/journal.png")));
 
+    public static Texture stormTexture = new Texture("Storm.png");
+    public static TextureRegion[][] stormTextureArray = TextureRegion.split(stormTexture , 132 , 284);
+    static Array<TextureRegion> frames4 = new Array<>();
+    static {
+        for(int i=0 ; i<1 ; i++){
+            for(int j=0 ; j<5 ; j++){
+                frames4.add(stormTextureArray[i][j]);
+            }
+        }
+    }
+    public static Animation<TextureRegion> stormAnimation = new Animation<>(0.15f , frames4 , Animation.PlayMode.LOOP);
 
 }

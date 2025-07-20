@@ -110,6 +110,7 @@ public class GameScreenMenu implements Screen {
         timeManager.changeTileTextureInWinter();
         timeManager.changeTileTextureInSpring();
         timeManager.setWateredTile(v);
+        weatherManager.thunder(v , stage);
     }
 
     private void addStoresImages() {
