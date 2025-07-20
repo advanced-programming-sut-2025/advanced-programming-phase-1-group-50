@@ -58,6 +58,7 @@ public class GameMenu implements AppMenu , Screen {
     private final TextButton loadGame;
     private final TextButton showCurrentGame;
     private final TextButton exitGame;
+    private final TextButton back;
 
 
     public GameMenu() {
@@ -88,6 +89,17 @@ public class GameMenu implements AppMenu , Screen {
         exitGame.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+
+            }
+        });
+        back = new TextButton("back" , GamePictureManager.skin);
+        back.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Screen screen = Main.getMain().getScreen();
+                MainMenu mainMenu = new MainMenu();
+                Main.getMain().setScreen(mainMenu);
+                screen.dispose();
 
             }
         });
@@ -509,15 +521,20 @@ public class GameMenu implements AppMenu , Screen {
         exitGame.setSize(200, 40);
         exitGame.setPosition(centerX - 100, centerY - 120);
 
+        back.setSize(200, 40);
+        back.setPosition(centerX - 100, centerY - 180);
+
         stage.addActor(createNewGame);
         stage.addActor(loadGame);
         stage.addActor(showCurrentGame);
         stage.addActor(exitGame);
+        stage.addActor(back);
 
 
         MenuAnimationController.addHoverAnimation(createNewGame);
         MenuAnimationController.addHoverAnimation(loadGame);
         MenuAnimationController.addHoverAnimation(exitGame);
+        MenuAnimationController.addHoverAnimation(back);
     }
 
     @Override

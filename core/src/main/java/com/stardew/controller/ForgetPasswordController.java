@@ -42,6 +42,7 @@ public class ForgetPasswordController {
 
             usernameFindError.button("OK");
             usernameFindError.show(menu.getStage());
+            return;
 
         }
         User u = findUserByUsername(username);
@@ -54,6 +55,7 @@ public class ForgetPasswordController {
 
             answerError.button("OK");
             answerError.show(menu.getStage());
+            return;
         }
 
         String password = menu.getEnterNewPasswordTextField().getText();
@@ -78,11 +80,12 @@ public class ForgetPasswordController {
 
         if(!success){
             Dialog loginError = new Dialog("error" , GamePictureManager.skin);
-            loginError.getContentTable().add(new Label("error", GamePictureManager.skin));
+            loginError.getContentTable().add(new Label(message, GamePictureManager.skin));
             loginError.getContentTable().getCell(loginError.getContentTable().getChildren().first()).getActor().setColor(Color.RED);
             loginError.text(message);
             loginError.button("OK");
             loginError.show(menu.getStage());
+            return;
         }
 
         findUserByUsername(username).setPassword(password);

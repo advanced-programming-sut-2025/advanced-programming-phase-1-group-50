@@ -66,8 +66,8 @@ public class GameMenuInputAdapter extends InputAdapter {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Player currentPlayer = App.getGame().getCurrentPlayingPlayer();
 
-        int startX = App.getGame().getMap().getFarmStartX(currentPlayer);
-        int startY = App.getGame().getMap().getFarmStartY(currentPlayer);
+        int startX = App.getGame().getMap().getFarmStartX(currentPlayer , App.getGame());
+        int startY = App.getGame().getMap().getFarmStartY(currentPlayer , App.getGame());
 
         Vector2 stageCoords = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
         int indexTileX = ((int)(stageCoords.x / GamePictureManager.TILE_SIZE)) + startX;

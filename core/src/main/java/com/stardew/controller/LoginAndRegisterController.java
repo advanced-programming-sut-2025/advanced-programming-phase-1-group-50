@@ -15,6 +15,7 @@ import com.stardew.models.app.App;
 import com.stardew.models.app.Menus;
 import com.stardew.models.app.SecurityQuestion;
 import com.stardew.models.enums.LoginMenuCommands;
+import com.stardew.models.userInfo.Avatar;
 import com.stardew.models.userInfo.Gender;
 import com.stardew.models.userInfo.User;
 import com.stardew.view.*;
@@ -197,7 +198,7 @@ public class LoginAndRegisterController {
         if (counter > App.securityQuestions.size()) return new Result(false, "please select a valid security question");
         SecurityQuestion question = App.securityQuestions.get(counter);
         SecurityQuestion s = new SecurityQuestion(question.getQuestion(), answer);
-        App.users.add(new User(username, password, nickname, email, Gender.valueOf(gender), s));
+        App.users.add(new User(username, password, nickname, email, Gender.valueOf(gender), s , Avatar.abigail));
         return new Result(true, "user registered successfully");
 
 
@@ -337,6 +338,7 @@ public class LoginAndRegisterController {
 
     public void handleForgetPassword(){
         String username = loginAndRegisterMenu.getUsernameInputTextField().getText();
+        if(username.isEmpty()) return;
         Screen currentScreen = Main.getMain().getScreen();
         ForgetPasswordController forgetPasswordController = new ForgetPasswordController();
         ForgetPasswordMenu forgetPasswordMenu = new ForgetPasswordMenu(forgetPasswordController , username);

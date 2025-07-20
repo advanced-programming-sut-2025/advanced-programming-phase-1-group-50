@@ -77,30 +77,37 @@ public class ForgetPasswordMenu implements Screen {
         background.setFillParent(true);
         stage.addActor(background);
 
+        Table table = new Table();
+        table.setFillParent(true);
+        table.center();
+        stage.addActor(table);
 
-        forgetPasswordLabel.setPosition(300, 400);
-        usernameTextField.setPosition(300, 350);
         usernameTextField.setMessageText("Username");
-
-        showSecurityQuestionLabel.setPosition(300, 300);
-        answerTextField.setPosition(300, 250);
         answerTextField.setMessageText("Answer");
+        enterNewPasswordTextField.setMessageText("Enter New Password");
 
-        forgetPasswordButton.setPosition(300, 200);
-        forgetPasswordButton.setSize(200, 40);
-
-        enterNewPasswordTextField.setPosition(300, 250);
-        enterNewPasswordTextField.setSize(200, 40);
-        enterNewPasswordTextField.setMessageText("enter new password");
+        forgetPasswordLabel.setFontScale(2);
 
 
-        stage.addActor(forgetPasswordLabel);
-        stage.addActor(enterNewPasswordTextField);
-        stage.addActor(usernameTextField);
-        stage.addActor(showSecurityQuestionLabel);
-        stage.addActor(answerTextField);
-        stage.addActor(forgetPasswordButton);
+        table.add(forgetPasswordLabel).padBottom(40).colspan(2).row();
+
+        table.add(new Label("Username:", skin)).left().pad(10);
+        table.add(usernameTextField).width(250).height(40).pad(10).row();
+
+        table.add(new Label("Security Question:", skin)).left().pad(10);
+        table.add(showSecurityQuestionLabel).left().pad(10).row();
+
+        table.add(new Label("Answer:", skin)).left().pad(10);
+        table.add(answerTextField).width(250).height(40).pad(10).row();
+
+        table.add(new Label("New Password:", skin)).left().pad(10);
+        table.add(enterNewPasswordTextField).width(250).height(40).pad(10).row();
+
+        table.add().colspan(2).height(20).row(); // فاصلهٔ عمودی
+
+        table.add(forgetPasswordButton).width(200).height(50).colspan(2).padTop(20).center();
     }
+
 
 
     @Override
@@ -164,4 +171,6 @@ public class ForgetPasswordMenu implements Screen {
     public TextField getEnterNewPasswordTextField() {
         return enterNewPasswordTextField;
     }
+
+
 }

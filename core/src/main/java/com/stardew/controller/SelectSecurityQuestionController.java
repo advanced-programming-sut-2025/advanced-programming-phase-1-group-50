@@ -11,6 +11,7 @@ import com.stardew.Main;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
 import com.stardew.models.app.SecurityQuestion;
+import com.stardew.models.userInfo.Avatar;
 import com.stardew.models.userInfo.Gender;
 import com.stardew.models.userInfo.User;
 import com.stardew.view.LoginAndRegisterMenu;
@@ -42,7 +43,7 @@ public class SelectSecurityQuestionController {
 
         SecurityQuestion sq = new SecurityQuestion(question , answer);
 
-        User user = new User(username , password , nickname , email , gender , sq);
+        User user = new User(username , password , nickname , email , gender , sq , Avatar.abigail);
         App.users.add(user);
 
         Dialog successfullyRegisterWithSq = new Dialog("", GamePictureManager.skin);

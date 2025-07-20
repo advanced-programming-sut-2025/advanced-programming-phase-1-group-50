@@ -1766,4 +1766,12 @@ public class GamePictureManager {
 
     public static Texture filledStar = new Texture("Star/emptyStar.png");
     public static Texture emptyStar = new Texture("Star/filledStar.png");
+
+    public static TextureRegionDrawable shuffleButtonDrawable = new TextureRegionDrawable(
+        new TextureRegion(new Texture("Inventory/shuffle.png")));
+
+    public static TextureRegionDrawable journalTextureDrawable = new TextureRegionDrawable
+        (new TextureRegion(new Texture("Inventory/journal.png")));
+
+
 }
