@@ -8,11 +8,21 @@ import com.stardew.Main;
 public class Lwjgl3Launcher {
     public static void main(String[] args) {
         if (StartupHelper.startNewJvmIfRequired()) return; // This handles macOS support and helps on Windows.
-        createApplication();
+        if (args.length < 2) {
+            System.err.println("Usage: java client <ip> <port>");
+            return;
+        }
+        if (!args[1].matches("\\d+")) {
+            System.err.println("Usage: <port> must be an integer");
+            return;
+        }
+        String host = args[0];
+        int port = Integer.parseInt(args[1]);
+        createApplication(host, port);
     }
 
-    private static Lwjgl3Application createApplication() {
-        return new Lwjgl3Application(new Main(), getDefaultConfiguration());
+    private static Lwjgl3Application createApplication(String host, int port) {
+        return new Lwjgl3Application(new Main(host, port), getDefaultConfiguration());
     }
 
     private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {
