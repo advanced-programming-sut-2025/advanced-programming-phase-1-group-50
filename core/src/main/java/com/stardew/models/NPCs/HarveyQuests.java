@@ -1,5 +1,6 @@
 package com.stardew.models.NPCs;
 
+import com.stardew.models.Result;
 import com.stardew.models.animals.Fish;
 import com.stardew.models.animals.FishType;
 import com.stardew.models.app.App;
@@ -25,7 +26,7 @@ public class HarveyQuests {
         return questsNames;
     }
 
-    public static boolean doFirstQuest(boolean isRewardTwice) {
+    public static Result doFirstQuest(boolean isRewardTwice) {
 
         boolean are12PlantAvailable = false;
         for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
@@ -40,7 +41,7 @@ public class HarveyQuests {
         }
 
         if (!are12PlantAvailable) {
-            return false;
+            return new Result(false,"You don't have enough stock for this quest.\n(You need at least 12 plants)");
         }
 
         if (isRewardTwice) {
@@ -55,10 +56,10 @@ public class HarveyQuests {
             }
         }
 
-        return true;
+        return new Result(true,"Quest done.");
     }
 
-    public static boolean doSecondQuest(boolean isRewardTwice) {
+    public static Result doSecondQuest(boolean isRewardTwice) {
 
         boolean isSalmonAvailable = false;
 
@@ -76,7 +77,7 @@ public class HarveyQuests {
         }
 
         if (!isSalmonAvailable) {
-            return false;
+            return new Result(false,"You don't have enough stock for this quest.\n(You need at least a salmon)");
         }
 
         App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().increaseFriendshipLevel();
@@ -90,10 +91,10 @@ public class HarveyQuests {
                 break;
             }
         }
-        return true;
+        return new Result(true,"Quest done.");
     }
 
-    public static boolean doThirdQuest(boolean isRewardTwice) {
+    public static Result doThirdQuest(boolean isRewardTwice) {
 
         boolean isWineAvailable = false;
 
@@ -113,7 +114,7 @@ public class HarveyQuests {
         }
 
         if (!isWineAvailable) {
-            return false;
+            return new Result(false,"You don't have enough stock for this quest.\n(You need at least a bottle of wine)");
         }
 
         if (isRewardTwice) {
@@ -128,7 +129,7 @@ public class HarveyQuests {
             }
         }
 
-        return true;
+        return new Result(true,"Quest done.");
     }
 
 }

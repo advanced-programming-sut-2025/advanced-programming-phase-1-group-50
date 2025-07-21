@@ -105,6 +105,8 @@ public class CraftingController {
 
         CookingRecipe cookingRecipe = CookingRecipe.getRecipeByName(itemName);
         if (cookingRecipe != null) {
+            Food food = Food.getFoodByName(itemName);
+            player.getBackpack().addIngredients(food,quantity);
             player.getBackpack().addRecipe(cookingRecipe);
             return new Result(true, "You add <" + itemName + "> successfully!");
         }

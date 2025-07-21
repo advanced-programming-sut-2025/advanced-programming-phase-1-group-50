@@ -192,30 +192,12 @@ public class NPCController {
         boolean isRewardTwice = relation.getNpcFriendshipLevel().equals(NPCFriendshipLevel.LevelTwo);
 
         if (index == 1) {
-
-            if (npc.doFirstQuest(isRewardTwice)) {
-                return new Result(true, "Quest done");
-            } else {
-                return new Result(false, "You don't have enough stock for this quest");
-            }
-
+            return npc.doFirstQuest(isRewardTwice);
         } else if (index == 2) {
-
-            if (npc.doSecondQuest(isRewardTwice)) {
-                return new Result(true, "Quest done");
-            } else {
-                return new Result(false, "You don't have enough stock for this quest");
-            }
-
-        } else if (index == 3) {
-            if (npc.doThirdQuest(isRewardTwice)) {
-                return new Result(true, "Quest done");
-            } else {
-                return new Result(false, "You don't have enough stock for this quest");
-            }
+            return npc.doSecondQuest(isRewardTwice);
+        } else {
+            return npc.doThirdQuest(isRewardTwice);
         }
-
-        return new Result(false, "Not such quest");
 
     }
 

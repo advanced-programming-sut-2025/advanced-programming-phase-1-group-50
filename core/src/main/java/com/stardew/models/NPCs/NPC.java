@@ -3,9 +3,11 @@ package com.stardew.models.NPCs;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.Result;
 import com.stardew.models.animals.AnimalGood;
 import com.stardew.models.animals.AnimalGoodType;
 import com.stardew.models.app.App;
+import com.stardew.models.cooking.Food;
 import com.stardew.models.date.Season;
 import com.stardew.models.date.Weather;
 import com.stardew.models.foraging.ForagingCrop;
@@ -16,11 +18,9 @@ import com.stardew.models.manuFactor.artisanGoods.ArtisanGood;
 import com.stardew.models.manuFactor.artisanGoods.ArtisanGoodType;
 import com.stardew.models.mapInfo.Stone;
 import com.stardew.models.mapInfo.Wood;
-import com.stardew.models.recipes.CookingRecipe;
 import com.stardew.models.userInfo.Coin;
 import com.stardew.models.userInfo.Player;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class NPC {
@@ -62,7 +62,7 @@ public class NPC {
         isThirdQuestDone = thirdQuestDone;
     }
 
-    public boolean doFirstQuest(boolean isRewardTwice) {
+    public Result doFirstQuest(boolean isRewardTwice) {
 
         if (this.type.equals(NPCType.Abigail)) {
 
@@ -86,10 +86,10 @@ public class NPC {
 
         }
 
-        return false;
+        return new Result(false,"Invalid NPC type.");
     }
 
-    public boolean doSecondQuest(boolean isRewardTwice) {
+    public Result doSecondQuest(boolean isRewardTwice) {
 
         if (this.type.equals(NPCType.Abigail)) {
 
@@ -113,11 +113,11 @@ public class NPC {
 
         }
 
-        return false;
+        return new Result(false,"Invalid NPC type.");
 
     }
 
-    public boolean doThirdQuest(boolean isRewardTwice) {
+    public Result doThirdQuest(boolean isRewardTwice) {
 
         if (this.type.equals(NPCType.Abigail)) {
 
@@ -140,7 +140,7 @@ public class NPC {
             return RobinQuests.doThirdQuest(isRewardTwice);
 
         }
-        return false;
+        return new Result(false,"Invalid NPC type.");
 
     }
 
@@ -164,10 +164,10 @@ public class NPC {
                     return true;
                 }
             }
-            if (gift.equals(CookingRecipe.PumpkinPie)) {
+            if (gift.equals(Food.PumpkinPie)) {
                 return true;
             }
-            return gift.equals(CookingRecipe.Pizza);
+            return gift.equals(Food.Pizza);
 
         } else if (this.type.equals(NPCType.Harvey)) {
 
@@ -187,7 +187,7 @@ public class NPC {
 
         } else if (this.type.equals(NPCType.Leah)) {
 
-            if (gift.equals(CookingRecipe.Salad)) {
+            if (gift.equals(Food.Salad)) {
                 return true;
             }
             if (gift.equals(ForagingCrop.Grape)) {
@@ -199,7 +199,7 @@ public class NPC {
 
         } else if (this.type.equals(NPCType.Robin)) {
 
-            if (gift.equals(CookingRecipe.Spaghetti)) {
+            if (gift.equals(Food.Spaghetti)) {
                 return true;
             }
             if (gift instanceof Wood) {
@@ -307,104 +307,25 @@ public class NPC {
 
     }
 
-    public String showQuestLists () {
-
-        String message = "Quests List";
-        RelationWithNPC relation = null;
-        ArrayList<String> quests = new ArrayList<>();
-
-        if (this.type.equals(NPCType.Abigail)) {
-
-            relation = App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail();
-            quests = AbigailQuests.getQuestsNames();
-
-        } else if (this.type.equals(NPCType.Leah)) {
-
-            relation = App.getGame().getCurrentPlayingPlayer().getRelationWithLeah();
-            quests = LeahQuests.getQuestsNames();
-
-        } else if (this.type.equals(NPCType.Robin)) {
-
-            relation = App.getGame().getCurrentPlayingPlayer().getRelationWithRobin();
-            quests = RobinQuests.getQuestsNames();
-
-        } else if (this.type.equals(NPCType.Harvey)) {
-
-            relation = App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey();
-            quests = HarveyQuests.getQuestsNames();
-
-        } else if (this.type.equals(NPCType.Sebastian)) {
-
-            relation = App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian();
-            quests = SebastianQuests.getQuestsNames();
-
-        }
-
-        if (relation == null) {
-            return message;
-        }
-
-        message += "(" + relation.getType().getName() + "):\n";
-
-        message += quests.get(0);
-
-        if (this.isFirstQuestDone) {
-            message += "    (already completed)";
-        }
-
-
-        if (!relation.isSecondQuestLocked()) {
-            message += "\n";
-            message += quests.get(1);
-        }
-
-        if (this.isSecondQuestDone) {
-            message += "    (already completed)";
-        }
-
-        if (!relation.isThirdQuestLocked()) {
-            message += "\n";
-            message += quests.get(2);
-        }
-
-        if (this.isThirdQuestDone) {
-            message += "    (already completed)";
-        }
-
-        return message;
-    }
-
     public TextureRegion[][] getHomeRegions (NPCType type) {
-       switch (type) {
-           case Leah:
-               return GamePictureManager.npcHome1Regions;
-           case Robin:
-               return GamePictureManager.npcHome2Regions;
-           case Harvey:
-               return GamePictureManager.npcHome3Regions;
-           case Sebastian:
-               return GamePictureManager.npcHome4Regions;
-           case Abigail:
-               return GamePictureManager.npcHome5Regions;
-       }
-       return null;
+        return switch (type) {
+            case Leah -> GamePictureManager.npcHome1Regions;
+            case Robin -> GamePictureManager.npcHome2Regions;
+            case Harvey -> GamePictureManager.npcHome3Regions;
+            case Sebastian -> GamePictureManager.npcHome4Regions;
+            case Abigail -> GamePictureManager.npcHome5Regions;
+        };
     }
 
     public Texture getHomeTextureByType(NPCType type){
 
-        switch (type){
-            case Leah:
-                return GamePictureManager.npcHome1Texture;
-            case Robin:
-                return GamePictureManager.npcHome2Texture;
-            case Harvey:
-                return GamePictureManager.npcHome3Texture;
-            case Sebastian:
-                return GamePictureManager.npcHome4Texture;
-            case Abigail:
-                return GamePictureManager.npcHome5Texture;
-        }
-        return null;
+        return switch (type) {
+            case Leah -> GamePictureManager.npcHome1Texture;
+            case Robin -> GamePictureManager.npcHome2Texture;
+            case Harvey -> GamePictureManager.npcHome3Texture;
+            case Sebastian -> GamePictureManager.npcHome4Texture;
+            case Abigail -> GamePictureManager.npcHome5Texture;
+        };
     }
 
 }

@@ -1,5 +1,6 @@
 package com.stardew.models.NPCs;
 
+import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.manuFactor.BeeHouse;
 import com.stardew.models.manuFactor.Ingredient;
@@ -20,7 +21,7 @@ public class RobinQuests{
         return questsNames;
     }
 
-    public static boolean doFirstQuest(boolean isRewardTwice) {
+    public static Result doFirstQuest(boolean isRewardTwice) {
 
         boolean are80WoodAvailable = false;
 
@@ -38,7 +39,7 @@ public class RobinQuests{
         }
 
         if (!are80WoodAvailable) {
-            return false;
+            return new Result(false , "You don't have enough stock for this quest.\n(You need at least 80 pieces of wood)");
         }
 
         if (isRewardTwice) {
@@ -53,10 +54,10 @@ public class RobinQuests{
             }
         }
 
-        return true;
+        return new Result(true,"Quest done.");
     }
 
-    public static boolean doSecondQuest(boolean isRewardTwice) {
+    public static Result doSecondQuest(boolean isRewardTwice) {
 
         boolean are10IronBarAvailable = false;
 
@@ -74,7 +75,7 @@ public class RobinQuests{
         }
 
         if (!are10IronBarAvailable) {
-            return false;
+            return new Result(false, "You don't have enough stock for this quest.\n(You need at least 10 Iron bar)");
         }
 
         int numberOfRepetitions = (isRewardTwice ? 3 : 6);
@@ -91,10 +92,10 @@ public class RobinQuests{
             }
         }
 
-        return true;
+        return new Result(true,"Quest done.");
     }
 
-    public static boolean doThirdQuest(boolean isRewardTwice) {
+    public static Result doThirdQuest(boolean isRewardTwice) {
 
         boolean are1000WoodAvailable = false;
 
@@ -112,7 +113,7 @@ public class RobinQuests{
         }
 
         if (!are1000WoodAvailable) {
-            return false;
+            return new Result(false , "You don't have enough stock for this quest.\n(You need at least 1000 pieces of wood)");
         }
 
         if (isRewardTwice) {
@@ -127,7 +128,7 @@ public class RobinQuests{
             }
         }
 
-        return true;
+        return new Result(true,"Quest done.");
     }
 
 }

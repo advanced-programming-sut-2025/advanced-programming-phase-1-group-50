@@ -1,5 +1,6 @@
 package com.stardew.models.NPCs;
 
+import com.stardew.models.Result;
 import com.stardew.models.animals.Fish;
 import com.stardew.models.animals.FishType;
 import com.stardew.models.app.App;
@@ -22,7 +23,7 @@ public class LeahQuests {
         return questsNames;
     }
 
-    public static boolean doFirstQuest(boolean isRewardTwice) {
+    public static Result doFirstQuest(boolean isRewardTwice) {
 
         boolean isGoldBarAvailable = false;
 
@@ -42,7 +43,7 @@ public class LeahQuests {
         }
 
         if (!isGoldBarAvailable) {
-            return false;
+            return new Result(false,"You don't have enough stock for this quest.\n(You need at least a gold bar)");
         }
 
         if (isRewardTwice) {
@@ -57,10 +58,10 @@ public class LeahQuests {
             }
         }
 
-        return true;
+        return new Result(true,"Quest done.");
     }
 
-    public static boolean doSecondQuest(boolean isRewardTwice) {
+    public static Result doSecondQuest(boolean isRewardTwice) {
 
         boolean isSalmonAvailable = false;
 
@@ -78,7 +79,7 @@ public class LeahQuests {
         }
 
         if (!isSalmonAvailable) {
-            return false;
+            return new Result(false,"You don't have enough stock for this quest.\n(You need at least a salmon)");
         }
 
         App.getGame().getCurrentPlayingPlayer().getBackpack().getCookingRecipes().add(CookingRecipe.SalmonDinner);
@@ -90,11 +91,11 @@ public class LeahQuests {
             }
         }
 
-        return true;
+        return new Result(true,"Quest done.");
     }
 
 
-    public static boolean doThirdQuest(boolean isRewardTwice) {
+    public static Result doThirdQuest(boolean isRewardTwice) {
 
         boolean are200WoodAvailable = false;
 
@@ -112,7 +113,7 @@ public class LeahQuests {
         }
 
         if (!are200WoodAvailable) {
-            return false;
+            return new Result(false,"You don't have enough stock for this quest.\n(You need at least 200 pieces of wood)");
         }
 
         // we don't need the reward in our app, so we don't add it to player inventory
@@ -124,7 +125,7 @@ public class LeahQuests {
             }
         }
 
-        return true;
+        return new Result(true,"Quest done.");
     }
 
 }

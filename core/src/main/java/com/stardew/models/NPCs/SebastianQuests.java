@@ -1,5 +1,6 @@
 package com.stardew.models.NPCs;
 
+import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.cooking.Food;
 import com.stardew.models.foraging.ForagingMineral;
@@ -19,7 +20,7 @@ public class SebastianQuests {
         return questsNames;
     }
 
-    public static boolean doFirstQuest(boolean isRewardTwice) {
+    public static Result doFirstQuest(boolean isRewardTwice) {
 
         boolean are50IronsAvailable = false;
 
@@ -37,7 +38,7 @@ public class SebastianQuests {
         }
 
         if (!are50IronsAvailable) {
-            return false;
+            return new Result(false,"You don't have enough stock for this quest.\n(You need at least 50 Irons)");
         }
 
         if (isRewardTwice) {
@@ -52,10 +53,10 @@ public class SebastianQuests {
             }
         }
 
-        return true;
+        return new Result(true, "Quest done.");
     }
 
-    public static boolean doSecondQuest(boolean isRewardTwice) {
+    public static Result doSecondQuest(boolean isRewardTwice) {
 
         boolean isPumpkinPieAvailable = false;
 
@@ -71,7 +72,7 @@ public class SebastianQuests {
         }
 
         if (!isPumpkinPieAvailable) {
-            return false;
+            return new Result(false,"You don't have enough stock for this quest.\n(You need at least a pumpkin pie");
         }
 
         if (isRewardTwice) {
@@ -86,10 +87,10 @@ public class SebastianQuests {
             }
         }
 
-        return true;
+        return new Result(true, "Quest done.");
     }
 
-    public static boolean doThirdQuest(boolean isRewardTwice) {
+    public static Result doThirdQuest(boolean isRewardTwice) {
 
         boolean are150StonesAvailable = false;
 
@@ -105,7 +106,7 @@ public class SebastianQuests {
         }
 
         if (!are150StonesAvailable) {
-            return false;
+            return new Result(false, "You don't have enough stock for this quest.\n(You need at least 150 Stones)");
         }
 
         if (isRewardTwice) {
@@ -120,7 +121,7 @@ public class SebastianQuests {
             }
         }
 
-        return true;
+        return new Result(true, "Quest done.");
     }
 
 }
