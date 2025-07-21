@@ -2,6 +2,7 @@ package com.stardew.models.animals;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.stardew.controller.ForagingControllers.ForagingController;
@@ -17,9 +18,11 @@ import com.stardew.models.foraging.Seeds;
 import com.stardew.models.foraging.TreeSource;
 import com.stardew.models.mapInfo.Map;
 import com.stardew.models.mapInfo.Pair;
+import com.stardew.models.mapInfo.Position;
 import com.stardew.models.mapInfo.Tile;
 import com.stardew.models.tools.Tool;
 import com.stardew.models.userInfo.Player;
+import com.stardew.view.InPersonPlayersRelationsWindows.InPersonFriendshipWindow;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.modelsManager.AnimalsManager;
 import com.stardew.view.modelsManager.ArtisanMachinesManager;
@@ -106,6 +109,11 @@ public class GameModel {
             return;
 
         Tile selectedTile = tiles[indexTileX][indexTileY];
+
+        if (openInPersonFriendshipMenu(indexTileX,indexTileY)) {
+            return;
+        }
+
         InventoryItem currentItem = App.getGame().getCurrentPlayingPlayer().getCurrentInventoryItem();
 
         Result result = null;
@@ -129,6 +137,27 @@ public class GameModel {
                 }
             }, 3f);
         }
+    }
+
+    private boolean openInPersonFriendshipMenu(int indexTileX, int indexTileY) {
+
+        for (Player player : App.getGame().getPlayers()) {
+
+            if (player.equals(App.getGame().getCurrentPlayingPlayer())) {
+                continue;
+            }
+
+            float deltaX = (player.getPlayerPosition().getFirst()) - indexTileX;
+            float deltaY = (player.getPlayerPosition().getSecond()) - indexTileY;
+
+            if ((-0.5 < deltaX && 0.8 > deltaX) && (-0.7 < deltaY && 0.7 > deltaY)) {
+                stage.addActor(new InPersonFriendshipWindow(stage,player));
+                return true;
+            }
+
+        }
+
+        return false;
     }
 
 
