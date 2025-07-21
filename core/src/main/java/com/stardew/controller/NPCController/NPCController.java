@@ -1,5 +1,6 @@
 package com.stardew.controller.NPCController;
 
+import com.stardew.models.NPCs.NPC;
 import com.stardew.models.NPCs.NPCFriendshipLevel;
 import com.stardew.models.NPCs.NPCType;
 import com.stardew.models.NPCs.RelationWithNPC;
@@ -25,7 +26,7 @@ public class NPCController {
                 if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
 
                     NPCFriendshipLevel temp =
-                            App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().getNpcFriendshipLevel();
+                        App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().getNpcFriendshipLevel();
 
                     if (App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().isFirstTimeToSpeakWithNPC()) {
                         App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().setFirstTimeToSpeakWithNPC(false);
@@ -47,7 +48,7 @@ public class NPCController {
                 if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
 
                     NPCFriendshipLevel temp =
-                            App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().getNpcFriendshipLevel();
+                        App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().getNpcFriendshipLevel();
 
                     if (App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().isFirstTimeToSpeakWithNPC()) {
                         App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().setFirstTimeToSpeakWithNPC(false);
@@ -69,7 +70,7 @@ public class NPCController {
                 if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
 
                     NPCFriendshipLevel temp =
-                            App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().getNpcFriendshipLevel();
+                        App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().getNpcFriendshipLevel();
 
                     if (App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().isFirstTimeToSpeakWithNPC()) {
                         App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().setFirstTimeToSpeakWithNPC(false);
@@ -91,7 +92,7 @@ public class NPCController {
                 if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
 
                     NPCFriendshipLevel temp =
-                            App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().getNpcFriendshipLevel();
+                        App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().getNpcFriendshipLevel();
 
                     if (App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().isFirstTimeToSpeakWithNPC()) {
                         App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().setFirstTimeToSpeakWithNPC(false);
@@ -113,7 +114,7 @@ public class NPCController {
                 if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
 
                     NPCFriendshipLevel temp =
-                            App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().getNpcFriendshipLevel();
+                        App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().getNpcFriendshipLevel();
 
                     if (App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().isFirstTimeToSpeakWithNPC()) {
                         App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().setFirstTimeToSpeakWithNPC(false);
@@ -134,226 +135,42 @@ public class NPCController {
 
     }
 
-    public Result giftToNPC(Matcher matcher) {
-        NpcHome home = null;
+    public static Result giftToNPC(String productName, NPC npc) {
+        RelationWithNPC relation = switch (npc.getType()) {
+            case NPCType.Abigail -> App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail();
+            case NPCType.Harvey -> App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey();
+            case NPCType.Robin -> App.getGame().getCurrentPlayingPlayer().getRelationWithRobin();
+            case NPCType.Leah -> App.getGame().getCurrentPlayingPlayer().getRelationWithLeah();
+            case Sebastian -> App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian();
+        };
 
-        switch (matcher.group("NPCname")) {
-            case "Abigail" -> {
-
-                home = App.getGame().getMap().getNpcHomes().get(0);
-
-                if (!App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
-                    return new Result(false, "You must be near the NPCHome");
-                }
-
-                if (!Sellable.isSellable(matcher.group("item"))) {
-                    return new Result(false, "You can't gift this item");
-                }
-
-                if (Sellable.getSellableByName(matcher.group("item")) == null) {
-                    return new Result(false, "Not enough stock");
-                }
-
-                if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault((Ingredient) Sellable.getSellableByName(matcher.group("item")),0) == 0) {
-                    return new Result(false, "Not enough stock");
-                }
-
-                App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(matcher.group("item")),1);
-
-                if (home.getNpc().isFavoriteGift((Ingredient) Sellable.getSellableByName(matcher.group("item")))) {
-                    App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().increaseNumericalFriendShipLevel(200);
-                }
-
-                if (App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().isFirstTimeGiftToNPC()) {
-                    App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().increaseNumericalFriendShipLevel(50);
-                    App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().setFirstTimeGiftToNPC(false);
-                }
-
-                return new Result(true, "your gift has been received");
-
-            }
-            case "Sebastian" -> {
-
-                home = App.getGame().getMap().getNpcHomes().get(1);
-
-                if (!App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
-                    return new Result(false, "You must be near the NPCHome");
-                }
-
-                if (!Sellable.isSellable(matcher.group("item"))) {
-                    return new Result(false, "You can't gift this item");
-                }
-
-                if (Sellable.getSellableByName(matcher.group("item")) == null) {
-                    return new Result(false, "Not enough stock");
-                }
-
-                if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault((Ingredient) Sellable.getSellableByName(matcher.group("item")),0) == 0) {
-                    return new Result(false, "Not enough stock");
-                }
-
-                App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(matcher.group("item")),1);
-
-                if (home.getNpc().isFavoriteGift((Ingredient) Sellable.getSellableByName(matcher.group("item")))) {
-                    App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().increaseNumericalFriendShipLevel(200);
-                }
-
-                if (App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().isFirstTimeGiftToNPC()) {
-                    App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().increaseNumericalFriendShipLevel(50);
-                }
-
-                return new Result(true, "your gift has been received");
-
-            }
-            case "Leah" -> {
-
-                home = App.getGame().getMap().getNpcHomes().get(2);
-
-                if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
-                    return new Result(false, "You must be near the NPCHome");
-                }
-
-                if (!App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
-                    return new Result(false, "You must be near the NPCHome");
-                }
-
-                if (!Sellable.isSellable(matcher.group("item"))) {
-                    return new Result(false, "You can't gift this item");
-                }
-
-                if (Sellable.getSellableByName(matcher.group("item")) == null) {
-                    return new Result(false, "Not enough stock");
-                }
-
-                if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault((Ingredient) Sellable.getSellableByName(matcher.group("item")),0) == 0) {
-                    return new Result(false, "Not enough stock");
-                }
-
-                App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(matcher.group("item")),1);
-
-                if (home.getNpc().isFavoriteGift((Ingredient) Sellable.getSellableByName(matcher.group("item")))) {
-                    App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().increaseNumericalFriendShipLevel(200);
-                }
-
-                if (App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().isFirstTimeGiftToNPC()) {
-                    App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().increaseNumericalFriendShipLevel(50);
-                }
-
-                return new Result(true, "your gift has been received");
-
-            }
-            case "Robin" -> {
-
-                home = App.getGame().getMap().getNpcHomes().get(3);
-
-                if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
-                    return new Result(false, "You must be near the NPCHome");
-                }
-
-                if (!App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
-                    return new Result(false, "You must be near the NPCHome");
-                }
-
-                if (!Sellable.isSellable(matcher.group("item"))) {
-                    return new Result(false, "You can't gift this item");
-                }
-
-                if (Sellable.getSellableByName(matcher.group("item")) == null) {
-                    return new Result(false, "Not enough stock");
-                }
-
-                if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault((Ingredient) Sellable.getSellableByName(matcher.group("item")),0) == 0) {
-                    return new Result(false, "Not enough stock");
-                }
-
-                App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(matcher.group("item")),1);
-
-                if (home.getNpc().isFavoriteGift((Ingredient) Sellable.getSellableByName(matcher.group("item")))) {
-                    App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().increaseNumericalFriendShipLevel(200);
-                }
-
-                if (App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().isFirstTimeGiftToNPC()) {
-                    App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().increaseNumericalFriendShipLevel(50);
-                }
-
-                return new Result(true, "your gift has been received");
-
-            }
-            case "Harvey" -> {
-
-                home = App.getGame().getMap().getNpcHomes().get(4);
-
-                if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
-                    return new Result(false, "You must be near the NPCHome");
-                }
-
-                if (!App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
-                    return new Result(false, "You must be near the NPCHome");
-                }
-
-                if (!Sellable.isSellable(matcher.group("item"))) {
-                    return new Result(false, "You can't gift this item");
-                }
-
-                if (Sellable.getSellableByName(matcher.group("item")) == null) {
-                    return new Result(false, "Not enough stock");
-                }
-
-                if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault((Ingredient) Sellable.getSellableByName(matcher.group("item")),0) == 0) {
-                    return new Result(false, "Not enough stock");
-                }
-
-                App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(matcher.group("item")),1);
-
-                if (home.getNpc().isFavoriteGift((Ingredient) Sellable.getSellableByName(matcher.group("item")))) {
-                    App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().increaseNumericalFriendShipLevel(200);
-                }
-
-                if (App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().isFirstTimeGiftToNPC()) {
-                    App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().increaseNumericalFriendShipLevel(50);
-                }
-
-                return new Result(true, "your gift has been received");
-
-            }
-
+        if (relation == null) {
+            return new Result(false, "Not such NPC");
         }
 
-        return new Result(false, "Not such NPC");
+        if (npc.isFavoriteGift((Ingredient) Sellable.getSellableByName(productName))) {
+            relation.increaseNumericalFriendShipLevel(200);
+        }
+
+        if (relation.isFirstTimeGiftToNPC()) {
+            relation.increaseNumericalFriendShipLevel(50);
+            relation.setFirstTimeGiftToNPC(false);
+        }
+
+        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(productName), 1);
+
+        return new Result(true, "Your gift has been received");
     }
 
-    public Result friendShipNPCList() {
+    public static RelationWithNPC getRelationWithNPC(NPC npc) {
 
-        String message = "Abigail: ";
-        message += App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().getNpcFriendshipLevel().toString();
-        message += "    ";
-        message += App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().getNumericalFriendShipLevel();
-        message += "\n";
-
-        message += "Sebastian: ";
-        message += App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().getNpcFriendshipLevel().toString();
-        message += "    ";
-        message += App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().getNumericalFriendShipLevel();
-        message += "\n";
-
-        message += "Leah: ";
-        message += App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().getNpcFriendshipLevel().toString();
-        message += "    ";
-        message += App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().getNumericalFriendShipLevel();
-        message += "\n";
-
-        message += "Robin: ";
-        message += App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().getNpcFriendshipLevel().toString();
-        message += "    ";
-        message += App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().getNumericalFriendShipLevel();
-        message += "\n";
-
-        message += "Harvey: ";
-        message += App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().getNpcFriendshipLevel().toString();
-        message += "    ";
-        message += App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().getNumericalFriendShipLevel();
-
-        return new Result(true, message);
+        return switch (npc.getType()) {
+            case NPCType.Abigail -> App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail();
+            case NPCType.Harvey -> App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey();
+            case NPCType.Robin -> App.getGame().getCurrentPlayingPlayer().getRelationWithRobin();
+            case NPCType.Leah -> App.getGame().getCurrentPlayingPlayer().getRelationWithLeah();
+            case Sebastian -> App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian();
+        };
 
     }
 

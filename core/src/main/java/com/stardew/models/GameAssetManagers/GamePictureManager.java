@@ -1767,6 +1767,12 @@ public class GamePictureManager {
     public static Texture filledStar = new Texture("Star/emptyStar.png");
     public static Texture emptyStar = new Texture("Star/filledStar.png");
 
+    public static Texture lockedIcon = new Texture("lock/lockedIcon.png");
+    public static Texture unlockedIcon = new Texture("lock/unlockedIcon.png");
+
+    public static Texture yesIcon = new Texture("Emoji/Emojis139.png");
+    public static Texture noIcon = new Texture("Emoji/Emojis131.png");
+
     public static TextureRegionDrawable shuffleButtonDrawable = new TextureRegionDrawable(
         new TextureRegion(new Texture("Inventory/shuffle.png")));
 

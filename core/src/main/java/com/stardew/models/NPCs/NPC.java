@@ -374,7 +374,7 @@ public class NPC {
         return message;
     }
 
-    public TextureRegion[][] getRegions (NPCType type) {
+    public TextureRegion[][] getHomeRegions (NPCType type) {
        switch (type) {
            case Leah:
                return GamePictureManager.npcHome1Regions;
