@@ -3,7 +3,7 @@
 gradle-app.setting
 /build/
 /android/build/
-/core/build/
+/client/build/
 /lwjgl2/build/
 /lwjgl3/build/
 /html/build/
@@ -13,6 +13,7 @@ gradle-app.setting
 /headless/build/
 /server/build/
 /shared/build/
+/common/build/
 
 ## Java:
 *.class
@@ -67,7 +68,7 @@ www-test/
 .project
 .metadata/
 /android/bin/
-/core/bin/
+/client/bin/
 /lwjgl2/bin/
 /lwjgl3/bin/
 /html/bin/
@@ -77,6 +78,7 @@ www-test/
 /headless/bin/
 /server/bin/
 /shared/bin/
+/common/bin/
 *.tmp
 *.bak
 *.swp
@@ -91,7 +93,7 @@ www-test/
 
 /nbproject/private/
 /android/nbproject/private/
-/core/nbproject/private/
+/client/nbproject/private/
 /lwjgl2/nbproject/private/
 /lwjgl3/nbproject/private/
 /html/nbproject/private/
@@ -101,10 +103,11 @@ www-test/
 /headless/nbproject/private/
 /server/nbproject/private/
 /shared/nbproject/private/
+/common/nbproject/private/
 
 /nbbuild/
 /android/nbbuild/
-/core/nbbuild/
+/client/nbbuild/
 /lwjgl2/nbbuild/
 /lwjgl3/nbbuild/
 /html/nbbuild/
@@ -114,10 +117,11 @@ www-test/
 /headless/nbbuild/
 /server/nbbuild/
 /shared/nbbuild/
+/common/nbbuild/
 
 /dist/
 /android/dist/
-/core/dist/
+/client/dist/
 /lwjgl2/dist/
 /lwjgl3/dist/
 /html/dist/
@@ -127,10 +131,11 @@ www-test/
 /headless/dist/
 /server/dist/
 /shared/dist/
+/common/dist/
 
 /nbdist/
 /android/nbdist/
-/core/nbdist/
+/client/nbdist/
 /lwjgl2/nbdist/
 /lwjgl3/nbdist/
 /html/nbdist/
@@ -140,6 +145,7 @@ www-test/
 /headless/nbdist/
 /server/nbdist/
 /shared/nbdist/
+/common/nbdist/
 
 nbactions.xml
 nb-configuration.xml
