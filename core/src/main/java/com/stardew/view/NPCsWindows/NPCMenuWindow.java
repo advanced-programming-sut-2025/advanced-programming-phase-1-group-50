@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.NPCs.NPC;
-import com.stardew.models.Result;
 import com.stardew.view.windows.CloseableWindow;
 
 public class NPCMenuWindow extends CloseableWindow {
@@ -18,7 +17,6 @@ public class NPCMenuWindow extends CloseableWindow {
     public NPCMenuWindow(Stage stage, NPC npc) {
         super("NPC menu",stage);
 
-        setColor(Color.BROWN);
         padTop(20);
         padBottom(20);
         padLeft(30);
@@ -43,14 +41,7 @@ public class NPCMenuWindow extends CloseableWindow {
         questButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Result temp = null;
-                if (temp.getSuccessful()) {
-//                    hug(otherPlayer);
-//                    showResult(new Result(true, "A heartfelt hug was shared."));
-//                    closeWindow();
-                } else {
-                    showResult(temp);
-                }
+                stage.addActor(new QuestsListWindow(stage,npc));
             }
         });
 

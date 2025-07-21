@@ -17,7 +17,6 @@ public class InPersonFriendshipWindow extends CloseableWindow {
     public InPersonFriendshipWindow(Stage stage, Player otherPlayer) {
         super("In-person friendship", stage);
 
-        setColor(Color.BROWN);
         padTop(20);
         padBottom(20);
         padLeft(30);

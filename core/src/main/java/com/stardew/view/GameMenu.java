@@ -372,10 +372,10 @@ public class GameMenu implements AppMenu , Screen {
             //System.out.println(npcController.friendShipNPCList());
         }
         else if (NPCsCommands.QuestsList.getMatcher(input) != null) {
-            System.out.println(npcController.questsList());
+            //System.out.println(npcController.questsList());
         }
         else if ((matcher = NPCsCommands.FinishingQuest.getMatcher(input)) != null) {
-            System.out.println(npcController.finishingQuest(matcher));
+            //System.out.println(npcController.finishingQuest(matcher));
         }
         else if((matcher = GameMenuCommands.PrintMapWithSize.getMatcher(input)) !=null) {
             int startX = Integer.parseInt(matcher.group("X"));

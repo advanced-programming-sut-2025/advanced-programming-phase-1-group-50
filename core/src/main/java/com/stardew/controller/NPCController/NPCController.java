@@ -1,15 +1,13 @@
 package com.stardew.controller.NPCController;
 
-import com.stardew.models.NPCs.NPC;
-import com.stardew.models.NPCs.NPCFriendshipLevel;
-import com.stardew.models.NPCs.NPCType;
-import com.stardew.models.NPCs.RelationWithNPC;
+import com.stardew.models.NPCs.*;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.mapInfo.NpcHome;
 import com.stardew.models.stores.Sellable;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class NPCController {
@@ -174,99 +172,50 @@ public class NPCController {
 
     }
 
-    public Result questsList() {
-
-        for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
-            if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
-                return new Result(true, home.getNpc().showQuestLists());
-            }
-        }
-
-        return new Result(false, "you must be near the NPCHome");
-
+    public static ArrayList<String> getQuestsList (NPC npc) {
+        return switch (npc.getType()) {
+            case NPCType.Abigail -> AbigailQuests.getQuestsNames();
+            case NPCType.Harvey -> HarveyQuests.getQuestsNames();
+            case NPCType.Robin -> RobinQuests.getQuestsNames();
+            case NPCType.Leah -> LeahQuests.getQuestsNames();
+            case Sebastian -> SebastianQuests.getQuestsNames();
+        };
     }
 
-    public Result finishingQuest(Matcher matcher) {
-
-        int index = Integer.parseInt(matcher.group("index"));
+    public static Result doQuest(NPC npc , int index) {
 
         if (index <= 0 || index >= 4) {
             return new Result(false, "Invalid index");
         }
 
-        for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
+        RelationWithNPC relation = getRelationWithNPC(npc);
+        boolean isRewardTwice = relation.getNpcFriendshipLevel().equals(NPCFriendshipLevel.LevelTwo);
 
-            if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
+        if (index == 1) {
 
-                RelationWithNPC relation = null;
-
-                if (home.getNpc().getType().equals(NPCType.Abigail)) {
-
-                    relation = App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail();
-
-
-                } else if (home.getNpc().getType().equals(NPCType.Sebastian)) {
-
-                    relation = App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian();
-
-                } else if (home.getNpc().getType().equals(NPCType.Leah)) {
-
-                    relation = App.getGame().getCurrentPlayingPlayer().getRelationWithLeah();
-
-                } else if (home.getNpc().getType().equals(NPCType.Robin)) {
-
-                    relation = App.getGame().getCurrentPlayingPlayer().getRelationWithRobin();
-
-                } else if (home.getNpc().getType().equals(NPCType.Harvey)) {
-
-                    relation = App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey();
-
-                }
-
-                boolean isRewardTwice = relation.getNpcFriendshipLevel().equals(NPCFriendshipLevel.LevelTwo);
-
-                if (index == 1) {
-                    if (home.getNpc().isFirstQuestDone()) {
-                        return new Result(false, "this quest is already done");
-                    }
-                    if (home.getNpc().doFirstQuest(isRewardTwice)) {
-                        return new Result(true, "Quest done");
-                    } else {
-                        return new Result(false, "You don't have enough stock for this quest");
-                    }
-
-                } else if (index == 2) {
-                    if (home.getNpc().isSecondQuestDone()) {
-                        return new Result(false, "this quest is already done");
-                    }
-                    if (relation.isSecondQuestLocked()) {
-                        return new Result(false, "This quest is locked");
-                    }
-                    if (home.getNpc().doSecondQuest(isRewardTwice)) {
-                        return new Result(true, "Quest done");
-                    } else {
-                        return new Result(false, "You don't have enough stock for this quest");
-                    }
-
-                } else if (index == 3) {
-                    if (home.getNpc().isThirdQuestDone()) {
-                        return new Result(false, "this quest is already done");
-                    }
-                    if (relation.isThirdQuestLocked()) {
-                        return new Result(false, "This quest is locked");
-                    }
-                    if (home.getNpc().doThirdQuest(isRewardTwice)) {
-                        return new Result(true, "Quest done");
-                    } else {
-                        return new Result(false, "You don't have enough stock for this quest");
-                    }
-                }
-
+            if (npc.doFirstQuest(isRewardTwice)) {
+                return new Result(true, "Quest done");
+            } else {
+                return new Result(false, "You don't have enough stock for this quest");
             }
 
+        } else if (index == 2) {
+
+            if (npc.doSecondQuest(isRewardTwice)) {
+                return new Result(true, "Quest done");
+            } else {
+                return new Result(false, "You don't have enough stock for this quest");
+            }
+
+        } else if (index == 3) {
+            if (npc.doThirdQuest(isRewardTwice)) {
+                return new Result(true, "Quest done");
+            } else {
+                return new Result(false, "You don't have enough stock for this quest");
+            }
         }
 
-        return new Result(false, "You must be near the NPCHome");
+        return new Result(false, "Not such quest");
 
     }
 
