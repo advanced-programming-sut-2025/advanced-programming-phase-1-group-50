@@ -41,29 +41,39 @@ public class FriendshipWindow extends CloseableWindow {
             RelationWithPlayers relation = relations.get(player);
 
             Label nameLabel = new Label(player.getUsername(), GamePictureManager.skin);
-            nameLabel.setFontScale(1.5f);
+            nameLabel.setFontScale(1.3f);
             nameLabel.setColor(Color.BLACK);
+
             Label levelLabel = new Label(relation.toString(), GamePictureManager.skin);
-            levelLabel.setFontScale(1.5f);
-            levelLabel.setColor(Color.BLACK);
+            levelLabel.setFontScale(1.3f);
+            levelLabel.setColor(Color.OLIVE);
 
             TextButton giftButton = new TextButton("Gift", GamePictureManager.skin);
+            giftButton.setColor(Color.ROYAL);
+
+            Image giftIcon = new Image(GamePictureManager.giftIcon);
+            giftIcon.setSize(32, 32);
+
+            Table giftRow = new Table();
+            giftRow.add(giftButton).width(100).height(45).padRight(5);
+            giftRow.add(giftIcon).size(32, 32);
 
             giftButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                        openGiftMenu(player , relation);
+                    openGiftMenu(player, relation);
                 }
             });
 
             Table row = new Table();
-            row.add(nameLabel).left().padRight(80).width(200);
-            row.add(levelLabel).left().padRight(80).width(200);
-            row.add(giftButton).left().width(100);
+            row.add(nameLabel).left().padRight(30).width(150);
+            row.add(levelLabel).left().padRight(60).width(200);
+            row.add(giftRow).left();
 
             mainTable.add(row).left().row();
         }
 
+        mainTable.center();
         ScrollPane scrollPane = new ScrollPane(mainTable, GamePictureManager.skin);
         scrollPane.setFadeScrollBars(false);
         add(scrollPane).expand().fill().pad(20);
@@ -76,7 +86,7 @@ public class FriendshipWindow extends CloseableWindow {
     }
 
     private void openGiftMenu(Player player, RelationWithPlayers relation) {
-        GiftMenuWindow giftMenuWindow = new GiftMenuWindow(stage,this ,player,relation);
+        GiftMenuWindow giftMenuWindow = new GiftMenuWindow(stage, this, player, relation);
         stage.addActor(giftMenuWindow);
     }
 }
