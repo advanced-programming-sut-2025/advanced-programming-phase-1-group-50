@@ -1,7 +1,5 @@
 package com.stardew.network;
 
-import com.stardew.model.Message;
-
 import java.io.IOException;
 import java.net.Socket;
 

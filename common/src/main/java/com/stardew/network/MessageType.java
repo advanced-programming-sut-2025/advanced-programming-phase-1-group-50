@@ -1,4 +1,4 @@
-package com.stardew.model;
+package com.stardew.network;
 
 public enum MessageType {
 }

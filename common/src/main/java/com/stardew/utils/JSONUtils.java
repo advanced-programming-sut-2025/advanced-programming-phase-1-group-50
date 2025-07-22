@@ -2,7 +2,7 @@ package com.stardew.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.stardew.model.Message;
+import com.stardew.network.Message;
 
 public class JSONUtils {
     private static final GsonBuilder gsonBuilder = new GsonBuilder();
