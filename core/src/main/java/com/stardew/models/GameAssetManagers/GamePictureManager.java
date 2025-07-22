@@ -1777,6 +1777,11 @@ public class GamePictureManager {
     public static Texture hugIcon = new Texture("hug.png");
     public static Texture ringIcon = new Texture("ring.png");
 
+    public static Texture heartFullIcon = new Texture("heartEmoji/full.png");
+    public static Texture heartBrokenIcon = new Texture("heartEmoji/broken.png");
+    public static Texture heartRightIcon = new Texture("heartEmoji/right.png");
+    public static Texture heartLeftIcon = new Texture("heartEmoji/left.png");
+
     public static TextureRegionDrawable shuffleButtonDrawable = new TextureRegionDrawable(
         new TextureRegion(new Texture("Inventory/shuffle.png")));
 

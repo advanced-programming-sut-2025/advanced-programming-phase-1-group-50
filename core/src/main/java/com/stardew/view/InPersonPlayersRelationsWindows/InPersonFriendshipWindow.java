@@ -80,7 +80,7 @@ public class InPersonFriendshipWindow extends CloseableWindow {
             }
         });
 
-        TextButton marryButton = new TextButton("Marry", GamePictureManager.skin);
+        TextButton marryButton = new TextButton("Marriage request", GamePictureManager.skin);
         marryButton.getLabel().setColor(Color.WHITE);
         marryButton.getStyle().fontColor = Color.WHITE;
         marryButton.setColor(Color.GOLD);
@@ -112,7 +112,7 @@ public class InPersonFriendshipWindow extends CloseableWindow {
         add(contentTable);
         pack();
 
-        setWidth(330);
+        setWidth(350);
         invalidate();
         layout();
 
