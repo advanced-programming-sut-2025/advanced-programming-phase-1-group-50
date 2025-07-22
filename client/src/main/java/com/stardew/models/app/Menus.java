@@ -26,10 +26,6 @@ public enum Menus {
         this.menu = menu;
     }
 
-    public void CheckCommand(Scanner scanner) {
-        this.menu.check(scanner);
-    }
-
     public AppMenu getMenu() {
         return menu;
     }

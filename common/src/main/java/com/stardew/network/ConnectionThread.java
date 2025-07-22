@@ -58,7 +58,8 @@ public abstract class ConnectionThread extends Thread {
             try {
                 String receivedStr = dataInputStream.readUTF();
                 Message message = JSONUtils.fromJson(receivedStr);
-                boolean handled = handleMessage(message); //TODO
+                System.out.println("Received: " + message);  //TODO
+                boolean handled = handleMessage(message);    //TODO
                 if (!handled) try {
                     receivedMessagesQueue.put(message);
                 } catch (InterruptedException e) {}

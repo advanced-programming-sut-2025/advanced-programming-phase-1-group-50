@@ -1,4 +1,4 @@
-package com.stardew.models;
+package com.stardew.model;
 
 public class Result {
     private boolean isSuccessful;

@@ -11,7 +11,6 @@ public class TradeMenu implements AppMenu{
 
     private final TradeController controller = new TradeController();
 
-    @Override
     public void check(Scanner scanner) {
 
         Matcher matcher = null;

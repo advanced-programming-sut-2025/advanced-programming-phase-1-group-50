@@ -2,47 +2,41 @@ package com.stardew.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.Main;
-import com.stardew.controller.SelectSecurityQuestionController;
+import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.App;
-import com.stardew.models.app.SecurityQuestion;
-import com.stardew.models.userInfo.Gender;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 
-public class SelectSecurityQuestionMenu implements Screen {
+import java.util.HashMap;
+
+public class SelectSecurityQuestionMenu implements AppMenu, Screen {
     private Stage stage;
-    private final SelectSecurityQuestionController controller;
     private final SelectBox<String> securityQuestionSelectBox;
     private final Label inputYourAnswerHereLabel;
     private final TextField answerTextField;
     private final TextButton applyAnswer;
+    private final String[] securityQuestions = new String[] {
+        "what is your favorite color?",
+        "what is your favorite animal?",
+        "what is your favorite football club?",
+        "what is your favorite food?"
+    };
 
-    private String username;
-    private String password;
-    private String nickname;
-    private String email;
-    private Gender gender;
 
-    public SelectSecurityQuestionMenu(SelectSecurityQuestionController controller , String username, String password,
-                                      String nickname, String email, Gender gender) {
-        this.controller = controller;
-        stage = new Stage();
+    public SelectSecurityQuestionMenu(String username, String password, String nickname,
+                                      String email,    String gender) {
+
         securityQuestionSelectBox = new SelectBox<>(GamePictureManager.skin);
-        Array<String> securityQuestions = new Array<String>();
-        for(SecurityQuestion sq : App.securityQuestions){
-            securityQuestions.add(sq.getQuestion());
-        }
         securityQuestionSelectBox.setItems(securityQuestions);
         inputYourAnswerHereLabel = new Label("input your answer here", GamePictureManager.skin);
         answerTextField = new TextField("", GamePictureManager.skin);
@@ -50,16 +44,45 @@ public class SelectSecurityQuestionMenu implements Screen {
         applyAnswer.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                controller.handleRegister(username, password, nickname, email, gender);
+                if (answerTextField.getText().isEmpty()) {
+                    showResult(new Result(false, "Please enter a valid answer"));
+                    return;
+                }
+
+                Message message = prepareMessage(username, password, nickname, email, gender);
+                Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+                if (response == null || response.getType() != MessageType.REGISTER_RESULT) {
+                    showResult(new Result(false, "Connection failed or timed out!"));
+                    return;
+                }
+                Result result = response.getFromBody("result", Result.class);
+                showResult(result);
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        Screen currentScreen = Main.getMain().getScreen();
+                        LoginAndRegisterMenu loginRegister = new LoginAndRegisterMenu(GamePictureManager.skin);
+                        Main.getMain().setScreen(loginRegister);
+                        currentScreen.dispose();
+                    }
+                }, 2f);
             }
         });
 
-        controller.setView(this);
+
+    }
 
 
-
-
-
+    private Message prepareMessage(String username, String password, String nickname, String email, String gender) {
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("question", securityQuestionSelectBox.getSelected());
+        body.put("answer", answerTextField.getText());
+        body.put("username", username);
+        body.put("password", password);
+        body.put("nickname", nickname);
+        body.put("email", email);
+        body.put("gender", gender);
+        return new Message(body, MessageType.REGISTER_FINALLY);
     }
 
     @Override
@@ -93,8 +116,6 @@ public class SelectSecurityQuestionMenu implements Screen {
     @Override
     public void render(float v) {
         ScreenUtils.clear(0 , 0  , 0 , 1);
-        Main.getBatch().begin();
-        Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
@@ -127,25 +148,5 @@ public class SelectSecurityQuestionMenu implements Screen {
 
     public Stage getStage() {
         return stage;
-    }
-
-    public SelectSecurityQuestionController getController() {
-        return controller;
-    }
-
-    public SelectBox<String> getSecurityQuestionSelectBox() {
-        return securityQuestionSelectBox;
-    }
-
-    public TextField getAnswerTextField() {
-        return answerTextField;
-    }
-
-    public Label getInputYourAnswerHereLabel() {
-        return inputYourAnswerHereLabel;
-    }
-
-    public TextButton getApplyAnswer() {
-        return applyAnswer;
     }
 }
