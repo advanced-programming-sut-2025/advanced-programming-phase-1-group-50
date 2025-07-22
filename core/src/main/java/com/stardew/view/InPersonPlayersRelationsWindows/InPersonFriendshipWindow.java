@@ -31,6 +31,16 @@ public class InPersonFriendshipWindow extends CloseableWindow {
         contentTable.add(nameLabel).padBottom(20).center().row();
 
         TextButton hugButton = new TextButton("Hug", GamePictureManager.skin);
+        hugButton.getLabel().setColor(Color.WHITE);
+        hugButton.getStyle().fontColor = Color.WHITE;
+        hugButton.setColor(Color.FOREST);
+
+        Image hugIcon = new Image(GamePictureManager.hugIcon);
+        hugIcon.setSize(28, 28);
+        HorizontalGroup hugGroup = new HorizontalGroup().space(10);
+        hugGroup.addActor(hugIcon);
+        hugGroup.addActor(hugButton);
+
         hugButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -45,8 +55,18 @@ public class InPersonFriendshipWindow extends CloseableWindow {
             }
         });
 
-        TextButton buyFlowersButton = new TextButton("Give Flowers", GamePictureManager.skin);
-        buyFlowersButton.addListener(new ClickListener() {
+        TextButton flowerButton = new TextButton("Give Flowers", GamePictureManager.skin);
+        flowerButton.getLabel().setColor(Color.WHITE);
+        flowerButton.getStyle().fontColor = Color.WHITE;
+        flowerButton.setColor(Color.PINK);
+
+        Image flowerIcon = new Image(GamePictureManager.roseIcon);
+        flowerIcon.setSize(28, 28);
+        HorizontalGroup flowerGroup = new HorizontalGroup().space(10);
+        flowerGroup.addActor(flowerIcon);
+        flowerGroup.addActor(flowerButton);
+
+        flowerButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Result temp = canGiveFlowers(otherPlayer);
@@ -61,6 +81,16 @@ public class InPersonFriendshipWindow extends CloseableWindow {
         });
 
         TextButton marryButton = new TextButton("Marry", GamePictureManager.skin);
+        marryButton.getLabel().setColor(Color.WHITE);
+        marryButton.getStyle().fontColor = Color.WHITE;
+        marryButton.setColor(Color.GOLD);
+
+        Image ringIcon = new Image(GamePictureManager.ringIcon);
+        ringIcon.setSize(28, 28);
+        HorizontalGroup marryGroup = new HorizontalGroup().space(10);
+        marryGroup.addActor(ringIcon);
+        marryGroup.addActor(marryButton);
+
         marryButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -75,15 +105,15 @@ public class InPersonFriendshipWindow extends CloseableWindow {
             }
         });
 
-        contentTable.defaults().width(200).height(55).pad(8);
-        contentTable.add(hugButton).row();
-        contentTable.add(buyFlowersButton).row();
-        contentTable.add(marryButton).row();
+        contentTable.defaults().pad(10);
+        contentTable.add(hugGroup).left().row();
+        contentTable.add(flowerGroup).left().row();
+        contentTable.add(marryGroup).left().row();
 
         add(contentTable);
         pack();
 
-        setWidth(300);
+        setWidth(330);
         invalidate();
         layout();
 

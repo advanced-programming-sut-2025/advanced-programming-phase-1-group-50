@@ -1773,6 +1773,10 @@ public class GamePictureManager {
     public static Texture yesIcon = new Texture("Emoji/Emojis139.png");
     public static Texture noIcon = new Texture("Emoji/Emojis131.png");
 
+    public static Texture roseIcon = new Texture("rose.png");
+    public static Texture hugIcon = new Texture("hug.png");
+    public static Texture ringIcon = new Texture("ring.png");
+
     public static TextureRegionDrawable shuffleButtonDrawable = new TextureRegionDrawable(
         new TextureRegion(new Texture("Inventory/shuffle.png")));
 
