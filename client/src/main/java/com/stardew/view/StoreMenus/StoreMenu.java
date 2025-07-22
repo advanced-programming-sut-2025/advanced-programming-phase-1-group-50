@@ -11,7 +11,6 @@ public abstract class StoreMenu implements AppMenu {
 
     protected StoreController controller;
 
-    @Override
     public void check(Scanner scanner) {
         String input = scanner.nextLine();
 

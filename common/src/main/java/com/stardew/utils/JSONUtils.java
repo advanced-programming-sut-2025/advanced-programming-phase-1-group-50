@@ -13,6 +13,9 @@ public class JSONUtils {
         gson = gsonBuilder.create();
     }
 
+    public static Gson getGson() {
+        return gson;
+    }
 
     public synchronized static String toJson(Message message) {
         return gson.toJson(message);
@@ -20,6 +23,10 @@ public class JSONUtils {
 
     public synchronized static Message fromJson(String json) {
         return gson.fromJson(json, Message.class);
+    }
+
+    public synchronized static <T> T fromJson(String json, Class<T> clazz) {
+        return gson.fromJson(json, clazz);
     }
 
 }

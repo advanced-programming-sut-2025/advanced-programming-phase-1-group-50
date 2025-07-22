@@ -24,8 +24,6 @@ public class ForgetPasswordMenu implements Screen {
     private final TextField answerTextField;
     private final TextButton forgetPasswordButton;
     private final TextField enterNewPasswordTextField;
-    private final ForgetPasswordController controller;
-    private String usernameForShowSecurityQuestion;
 
     private User findUser(String username){
         for(User u : App.users){
@@ -38,9 +36,6 @@ public class ForgetPasswordMenu implements Screen {
 
 
     public ForgetPasswordMenu(ForgetPasswordController controller , String usernameForShowSecurityQuestion) {
-        this.controller = controller;
-        this.usernameForShowSecurityQuestion = usernameForShowSecurityQuestion;
-        stage = new Stage();
         skin = GamePictureManager.skin;
         forgetPasswordLabel = new Label("Forget Password", skin);
         usernameTextField = new TextField("", skin);
@@ -141,24 +136,12 @@ public class ForgetPasswordMenu implements Screen {
         return stage;
     }
 
-    public Label getForgetPasswordLabel() {
-        return forgetPasswordLabel;
-    }
-
     public TextField getUsernameTextField() {
         return usernameTextField;
     }
 
-    public Label getShowSecurityQuestionLabel() {
-        return showSecurityQuestionLabel;
-    }
-
     public TextField getAnswerTextField() {
         return answerTextField;
-    }
-
-    public TextButton getForgetPasswordButton() {
-        return forgetPasswordButton;
     }
 
     public TextField getEnterNewPasswordTextField() {

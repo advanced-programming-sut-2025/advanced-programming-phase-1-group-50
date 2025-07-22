@@ -26,9 +26,7 @@ public class App {
     static {
         securityQuestions.add(new SecurityQuestion("what is your favorite color?", "default"));
         securityQuestions.add(new SecurityQuestion("what is your favorite animal?", "default"));
-        securityQuestions.add(new SecurityQuestion("what  is your favorite football club?", "Inter Milan" +
-                " , Forza Inter!"));
-
+        securityQuestions.add(new SecurityQuestion("what is your favorite football club?", "Inter Milan"));
         securityQuestions.add(new SecurityQuestion("what is your favorite food?", "default"));
     }
 

@@ -1,49 +1,22 @@
 package com.stardew.controller;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Timer;
-import com.stardew.Main;
-import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.PasswordUtil;
-import com.stardew.models.Result;
-import com.stardew.models.app.App;
-import com.stardew.models.app.Menus;
-import com.stardew.models.app.SecurityQuestion;
-import com.stardew.models.enums.LoginMenuCommands;
-import com.stardew.models.userInfo.Gender;
-import com.stardew.models.userInfo.User;
+import com.stardew.model.Result;
+import com.stardew.model.gameApp.App;
+import com.stardew.model.userInfo.Gender;
+import com.stardew.model.userInfo.PasswordUtil;
+import com.stardew.model.userInfo.User;
+import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
-import com.stardew.view.*;
 
-import java.security.SecureRandom;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginAndRegisterController {
     private final PasswordUtil passwordUtil = new PasswordUtil();
-    private LoginAndRegisterMenu loginAndRegisterMenu;
 
 
-    public void setView(LoginAndRegisterMenu loginAndRegisterMenu) {
-        this.loginAndRegisterMenu = loginAndRegisterMenu;
-    }
-
-    public User findUser(String username) {
-        for (User user : App.users) {
-            if (user.getUsername().equals(username)) {
-                return user;
-            }
-        }
-        return null;
-    }
 
     public boolean checkRepeatedUsername(String username) {
         for (User u : App.users) {
@@ -111,7 +84,6 @@ public class LoginAndRegisterController {
 
     public Result register(String username, String password, String passwordConfirm, String nickname, String email,
                            String gender) {
-
         Matcher matcher;
         if (checkRepeatedUsername(username)) {
             return new Result(false, "Username is already taken");
@@ -162,20 +134,23 @@ public class LoginAndRegisterController {
 
     }
 
-    public Result login(String username, String password) {
-        if (findUser(username) == null) {
+    public Result login(String username, String password, ClientConnectionThread connection) {
+        User user = App.getUserByUsername(username);
+
+        if (user == null) {
             return new Result(false, "user not found");
         }
-        if (!findUser(username).getPassword().equals(passwordUtil.hashPassword(password))) {
+        if (!user.getPassword().equals(passwordUtil.hashPassword(password))) {
             return new Result(false, "wrong password");
 
         }
-        App.setLoggedInUser(findUser(username));
-        App.setMenu(Menus.MainMenu);
+
+        connection.setUser(user);
         return new Result(true, "user logged in");
     }
 
-    public void handleRegister(Message message) {
+
+    public void handleRegister(Message message, ClientConnectionThread connection) {
         String username = message.getFromBody("username");
         String password = message.getFromBody("password");
         String confirmPassword = message.getFromBody("confirmPassword");
@@ -183,68 +158,24 @@ public class LoginAndRegisterController {
         String email = message.getFromBody("email");
         String gender = message.getFromBody("gender");
 
-        Gender genderEnum;
-        try{
-             genderEnum = Gender.valueOf(gender);
-        }
-        catch(IllegalArgumentException e){
-            return;
-        }
-
-
         Result registerResult = register(username , password , confirmPassword , nickname , email , gender);
 
-        if(registerResult.getSuccessful()){
-//            Screen currentScreen = Main.getMain().getScreen();
-//            SelectSecurityQuestionController selectSecurityQuestionController = new SelectSecurityQuestionController();
-//            SelectSecurityQuestionMenu sqMenu = new SelectSecurityQuestionMenu(selectSecurityQuestionController , username , password , nickname , email , genderEnum);
-//            Main.getMain().setScreen(sqMenu);
-//            currentScreen.dispose();
-        }
-        else{
-            Dialog dialog = new Dialog("error" , GamePictureManager.skin);
-            dialog.getContentTable().add(new Label(registerResult.getMessage(), GamePictureManager.skin));
-            dialog.getContentTable().getCell(dialog.getContentTable().getChildren().first())
-                .getActor().setColor(Color.RED);
-            dialog.setColor(1, 234 , 54 , 70);
-
-            dialog.button("OK");
-            dialog.show(loginAndRegisterMenu.getStage());
-        }
-
-
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", registerResult);
+        Message responseMessage = new Message(body, MessageType.REGISTER_RESULT);
+        connection.sendMessage(responseMessage);
 
     }
 
+    public void handleLogin(Message message, ClientConnectionThread connection){
+        String username = message.getFromBody("username");
+        String password = message.getFromBody("password");
+        Result loginResult = login(username , password, connection);
 
-    public void handleLogin(){
-        String username = loginAndRegisterMenu.getUsernameInputTextField().getText();
-        String password = loginAndRegisterMenu.getPasswordInputTextField().getText();
-        Result loginResult = login(username , password);
-        if(loginResult.getSuccessful()){
-            Screen currentScreen = Main.getMain().getScreen();
-            MainMenu mainMenu = new MainMenu();
-            Main.getMain().setScreen(mainMenu);
-            currentScreen.dispose();
-            //TODO : enter main menu , first we should create main menu
-        }
-        else {
-            Dialog loginError = new Dialog("error" , GamePictureManager.skin);
-            loginError.getContentTable().add(new Label(loginResult.getMessage(), GamePictureManager.skin));
-            loginError.getContentTable().getCell(loginError.getContentTable().getChildren().first()).getActor().setColor(Color.RED);
-            loginError.button("OK");
-            loginError.show(loginAndRegisterMenu.getStage());
-        }
-    }
-
-    public void handleForgetPassword(){
-        String username = loginAndRegisterMenu.getUsernameInputTextField().getText();
-        Screen currentScreen = Main.getMain().getScreen();
-        ForgetPasswordController forgetPasswordController = new ForgetPasswordController();
-        ForgetPasswordMenu forgetPasswordMenu = new ForgetPasswordMenu(forgetPasswordController , username);
-        Main.getMain().setScreen(forgetPasswordMenu);
-        currentScreen.dispose();
-
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", loginResult);
+        Message responseMessage =  new Message(body, MessageType.LOGIN_RESULT);
+        connection.sendMessage(responseMessage);
     }
 
 }
