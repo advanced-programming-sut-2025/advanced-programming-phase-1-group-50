@@ -1,7 +1,9 @@
 package com.stardew.view.InPersonPlayersRelationsWindows;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -47,7 +49,6 @@ public class InPersonFriendshipWindow extends CloseableWindow {
                 Result temp = canHug(otherPlayer);
                 if (temp.getSuccessful()) {
                     hug(otherPlayer);
-                    showResult(new Result(true, "A heartfelt hug was shared."));
                     closeWindow();
                 } else {
                     showResult(temp);
@@ -72,7 +73,6 @@ public class InPersonFriendshipWindow extends CloseableWindow {
                 Result temp = canGiveFlowers(otherPlayer);
                 if (temp.getSuccessful()) {
                     giveFlowers(otherPlayer);
-                    showResult(new Result(true, "You handed them a beautiful flower."));
                     closeWindow();
                 } else {
                     showResult(temp);
@@ -97,7 +97,6 @@ public class InPersonFriendshipWindow extends CloseableWindow {
                 Result temp = canMarry(otherPlayer);
                 if (temp.getSuccessful()) {
                     marry(otherPlayer);
-                    showResult(new Result(true, "You’ve proposed. Now you wait and hope..."));
                     closeWindow();
                 } else {
                     showResult(temp);
@@ -137,13 +136,88 @@ public class InPersonFriendshipWindow extends CloseableWindow {
 
     private void hug(Player otherPlayer) {
         PlayersRelationController.hug(otherPlayer);
+        // player should walk together
+        spawnHugEmojis(stage, getX() + getWidth() / 2, getY() + 20);
     }
 
     private void giveFlowers(Player otherPlayer) {
         PlayersRelationController.giveFlower(otherPlayer);
+        // player should walk together
+        spawnRoseEmojis(stage, getX() + getWidth() / 2, getY() + 20);
     }
 
     private void marry(Player otherPlayer) {
         PlayersRelationController.askMarriage(otherPlayer);
+        spawnRingEmojis(stage, getX() + getWidth() / 2, getY() + 20);
     }
+
+    private void spawnHugEmojis(Stage stage, float x, float y) {
+        Texture emojiTexture = GamePictureManager.hugIcon;
+
+        for (int i = 0; i < 10; i++) {
+            int direction = (i % 2 == 0) ? 1 : -1;
+            final Image emoji = new Image(emojiTexture);
+            emoji.setSize(64, 64);
+            emoji.setPosition(
+                x + (float) (Math.random() * 800 * direction),
+                y
+            );
+            stage.addActor(emoji);
+
+            emoji.addAction(Actions.sequence(
+                Actions.parallel(
+                    Actions.moveBy(0, 100 + (float)Math.random() * 500, 2f),
+                    Actions.fadeOut(2f)
+                ),
+                Actions.removeActor()
+            ));
+        }
+    }
+
+    private void spawnRoseEmojis(Stage stage, float x, float y) {
+        Texture emojiTexture = GamePictureManager.roseIcon;
+
+        for (int i = 0; i < 10; i++) {
+            int direction = (i % 2 == 0) ? 1 : -1;
+            final Image emoji = new Image(emojiTexture);
+            emoji.setSize(64, 64);
+            emoji.setPosition(
+                x + (float) (Math.random() * 800 * direction),
+                y
+            );
+            stage.addActor(emoji);
+
+            emoji.addAction(Actions.sequence(
+                Actions.parallel(
+                    Actions.moveBy(0, 100 + (float)Math.random() * 500, 2f),
+                    Actions.fadeOut(2f)
+                ),
+                Actions.removeActor()
+            ));
+        }
+    }
+
+    private void spawnRingEmojis(Stage stage, float x, float y) {
+        Texture emojiTexture = GamePictureManager.ringIcon;
+
+        for (int i = 0; i < 10; i++) {
+            int direction = (i % 2 == 0) ? 1 : -1;
+            final Image emoji = new Image(emojiTexture);
+            emoji.setSize(64, 64);
+            emoji.setPosition(
+                x + (float) (Math.random() * 800 * direction),
+                y
+            );
+            stage.addActor(emoji);
+
+            emoji.addAction(Actions.sequence(
+                Actions.parallel(
+                    Actions.moveBy(0, 100 + (float)Math.random() * 500, 2f),
+                    Actions.fadeOut(2f)
+                ),
+                Actions.removeActor()
+            ));
+        }
+    }
+
 }
