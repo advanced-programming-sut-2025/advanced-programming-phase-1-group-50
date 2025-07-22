@@ -1776,6 +1776,9 @@ public class GamePictureManager {
     public static Texture roseIcon = new Texture("rose.png");
     public static Texture hugIcon = new Texture("hug.png");
     public static Texture ringIcon = new Texture("ring.png");
+    public static Texture questIcon = new Texture("quest.png");
+    public static Texture giftIcon = new Texture("gift.png");
+    public static Texture friendshipIcon = new Texture("Inventory/Friendship.png");
 
     public static Texture heartFullIcon = new Texture("heartEmoji/full.png");
     public static Texture heartBrokenIcon = new Texture("heartEmoji/broken.png");
