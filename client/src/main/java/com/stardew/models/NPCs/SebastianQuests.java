@@ -1,5 +1,6 @@
 package com.stardew.models.NPCs;
 
+import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.cooking.Food;
 import com.stardew.models.foraging.ForagingMineral;
@@ -13,21 +14,21 @@ import java.util.Arrays;
 
 public class SebastianQuests {
     private static final ArrayList<String> questsNames = new ArrayList<>(Arrays.asList("Delivery of 50 irons", "Delivery of " +
-            "a pumpkin", "Delivery of 150 stones"));
+        "a pumpkin", "Delivery of 150 stones"));
 
     public static ArrayList<String> getQuestsNames() {
         return questsNames;
     }
 
-    public static boolean doFirstQuest(boolean isRewardTwice) {
+    public static Result doFirstQuest(boolean isRewardTwice) {
 
         boolean are50IronsAvailable = false;
 
         for (Ingredient ingredient :
-                App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
+            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient.equals(ForagingMineral.Iron)) {
                 int value =
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
                 if (value >= 50) {
                     App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 50);
                     are50IronsAvailable = true;
@@ -37,7 +38,7 @@ public class SebastianQuests {
         }
 
         if (!are50IronsAvailable) {
-            return false;
+            return new Result(false,"You don't have enough stock for this quest.\n(You need at least 50 Irons)");
         }
 
         if (isRewardTwice) {
@@ -52,10 +53,10 @@ public class SebastianQuests {
             }
         }
 
-        return true;
+        return new Result(true, "Quest done.");
     }
 
-    public static boolean doSecondQuest(boolean isRewardTwice) {
+    public static Result doSecondQuest(boolean isRewardTwice) {
 
         boolean isPumpkinPieAvailable = false;
 
@@ -71,7 +72,7 @@ public class SebastianQuests {
         }
 
         if (!isPumpkinPieAvailable) {
-            return false;
+            return new Result(false,"You don't have enough stock for this quest.\n(You need at least a pumpkin pie");
         }
 
         if (isRewardTwice) {
@@ -86,10 +87,10 @@ public class SebastianQuests {
             }
         }
 
-        return true;
+        return new Result(true, "Quest done.");
     }
 
-    public static boolean doThirdQuest(boolean isRewardTwice) {
+    public static Result doThirdQuest(boolean isRewardTwice) {
 
         boolean are150StonesAvailable = false;
 
@@ -105,7 +106,7 @@ public class SebastianQuests {
         }
 
         if (!are150StonesAvailable) {
-            return false;
+            return new Result(false, "You don't have enough stock for this quest.\n(You need at least 150 Stones)");
         }
 
         if (isRewardTwice) {
@@ -120,7 +121,7 @@ public class SebastianQuests {
             }
         }
 
-        return true;
+        return new Result(true, "Quest done.");
     }
 
 }

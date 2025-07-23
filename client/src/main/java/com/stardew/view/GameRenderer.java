@@ -1,7 +1,6 @@
 package com.stardew.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,12 +8,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.ShippingBin;
-import com.stardew.models.animals.GameModel;
-import com.stardew.models.app.App;
+import com.stardew.models.GameModel;
 import com.stardew.models.foraging.Crop;
 import com.stardew.models.foraging.Tree;
 import com.stardew.models.mapInfo.*;
-import com.stardew.models.stores.Store;
 import com.stardew.models.waterBodies.Lake;
 
 

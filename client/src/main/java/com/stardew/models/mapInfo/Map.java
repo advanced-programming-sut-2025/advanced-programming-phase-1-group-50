@@ -7,6 +7,7 @@ import com.stardew.models.Placeable;
 
 import com.stardew.models.ShippingBin;
 import com.stardew.models.app.App;
+import com.stardew.models.app.Game;
 import com.stardew.models.date.Weather;
 import com.stardew.models.foraging.Crop;
 import com.stardew.models.foraging.CropType;
@@ -336,23 +337,23 @@ public class Map {
         return false;
     }
 
-    public int getFarmStartX(Player player) {
+    public int getFarmStartX(Player player , Game game) {
         int[] startXForMap = {0, 150, 0, 150};
 
         int playerIndex;
-        for (playerIndex = 0; playerIndex < App.getGame().getPlayers().size(); playerIndex++) {
-            if (App.getGame().getPlayers().get(playerIndex).getUsername().equals(player.getUsername())) break;
+        for (playerIndex = 0; playerIndex < game.getPlayers().size(); playerIndex++) {
+            if (game.getPlayers().get(playerIndex).getUsername().equals(player.getUsername())) break;
         }
 
         return startXForMap[playerIndex];
     }
 
-    public int getFarmStartY(Player player) {
+    public int getFarmStartY(Player player , Game game) {
         int[] startYForMap = {0, 0, 125, 125};
 
         int playerIndex;
-        for (playerIndex = 0; playerIndex < App.getGame().getPlayers().size(); playerIndex++) {
-            if (App.getGame().getPlayers().get(playerIndex).getUsername().equals(player.getUsername())) break;
+        for (playerIndex = 0; playerIndex < game.getPlayers().size(); playerIndex++) {
+            if (game.getPlayers().get(playerIndex).getUsername().equals(player.getUsername())) break;
         }
 
         return startYForMap[playerIndex];

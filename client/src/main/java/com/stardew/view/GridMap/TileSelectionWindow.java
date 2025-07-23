@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.controller.CookingAndCraftingControllers.TileSelectionController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
+import com.stardew.models.app.App;
 import com.stardew.models.mapInfo.Tile;
 import com.stardew.view.windows.CloseableWindow;
 
@@ -44,7 +45,7 @@ public class TileSelectionWindow extends CloseableWindow {
 
 
         controller = new TileSelectionController(selectionWidth, selectionHeight);
-        gridMap = new GridMapActor(selectionWidth, selectionHeight);
+        gridMap = new GridMapActor(selectionWidth, selectionHeight , App.getGame());
         scrollPane = new ScrollPane(gridMap, GamePictureManager.skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(false, false);

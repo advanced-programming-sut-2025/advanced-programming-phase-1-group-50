@@ -13,14 +13,17 @@ public class User {
     private SecurityQuestion securityQuestion;
     private int highestScore;
     private final PasswordUtil passwordUtil = new PasswordUtil();
+    private Avatar avatar ;
 
-    public User(String username, String password, String nickname, String email, Gender gender , SecurityQuestion securityQuestion) {
+
+    public User(String username, String password, String nickname, String email, Gender gender , SecurityQuestion securityQuestion , Avatar avatar) {
         this.username = username;
         this.password = passwordUtil.hashPassword(password);
         this.nickname = nickname;
         this.email = email;
         this.gender = gender;
         this.securityQuestion = securityQuestion;
+        this.avatar = avatar;
     }
 
     public String getUsername() {
@@ -76,5 +79,13 @@ public class User {
     public void setEmail(String email){
         this.email = email;
     }
+    public void setAvatar(Avatar avatar){
+        this.avatar = avatar;
+    }
+
+    public Avatar getAvatar(){
+        return avatar;
+    }
+
 
 }

@@ -14,8 +14,8 @@ public class SelectSecurityQuestionController {
 
         SecurityQuestion sq = new SecurityQuestion(question , answer);
 
-        User user = new User(username , password , nickname , email , gender , sq);
-        App.users.add(user);
+//        User user = new User(username , password , nickname , email , gender , sq);
+//        App.users.add(user);
 
 
     }

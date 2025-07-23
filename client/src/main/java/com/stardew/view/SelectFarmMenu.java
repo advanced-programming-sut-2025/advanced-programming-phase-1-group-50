@@ -16,7 +16,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.stardew.Main;
 import com.stardew.controller.SelectFarmMenuController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.app.App;
 import com.stardew.models.userInfo.Player;
+import com.stardew.view.GridMap.GridMapActor;
+import com.stardew.view.GridMap.TileSelectionWindow;
 
 import java.util.ArrayList;
 
@@ -27,6 +30,10 @@ public class SelectFarmMenu implements Screen {
     private final SelectBox<String> selectFarmPlayer2;
     private final SelectBox<String> selectFarmPlayer3;
     private final SelectBox<String> selectFarmPlayer4;
+    private final TextButton farm1;
+    private final TextButton farm2;
+    private final TextButton farm3;
+    private final TextButton farm4;
 
     private ArrayList<Player> players = new ArrayList<>();
     private final TextButton start;
@@ -57,6 +64,38 @@ public class SelectFarmMenu implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 controller.handleSelectFarm(players);
+            }
+        });
+        farm1 = new TextButton("Farm 1", GamePictureManager.skin);
+        farm1.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                App.gameSample.setCurrentPlayingPlayer(players.get(0));
+                stage.addActor(new ShowFarmsWindow(stage , 1 , App.gameSample));
+            }
+        });
+        farm2 = new TextButton("Farm 2", GamePictureManager.skin);
+        farm2.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                App.gameSample.setCurrentPlayingPlayer(players.get(1));
+                stage.addActor(new ShowFarmsWindow(stage , 2 , App.gameSample));
+            }
+        });
+        farm3 = new TextButton("Farm 3", GamePictureManager.skin);
+        farm3.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                App.gameSample.setCurrentPlayingPlayer(players.get(2));
+                stage.addActor(new ShowFarmsWindow(stage , 3 , App.gameSample));
+            }
+        });
+        farm4 = new TextButton("Farm 4", GamePictureManager.skin);
+        farm4.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                App.gameSample.setCurrentPlayingPlayer(players.get(3));
+                stage.addActor(new ShowFarmsWindow(stage , 4 , App.gameSample));
             }
         });
 
@@ -92,6 +131,10 @@ public class SelectFarmMenu implements Screen {
         table.add(selectFarmPlayer4).width(200).row();
 
         table.add(start).colspan(2).padTop(20).row();
+        table.add(farm1).colspan(2).padTop(20).width(200).row();
+        table.add(farm2).colspan(2).padTop(20).width(200).row();
+        table.add(farm3).colspan(2).padTop(20).width(200).row();
+        table.add(farm4).colspan(2).padTop(20).width(200).row();
 
         stage.addActor(table);
     }

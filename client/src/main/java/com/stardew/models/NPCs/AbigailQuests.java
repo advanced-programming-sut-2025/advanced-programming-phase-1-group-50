@@ -1,5 +1,6 @@
 package com.stardew.models.NPCs;
 
+import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.foraging.Crop;
 import com.stardew.models.foraging.CropType;
@@ -14,7 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AbigailQuests {
-    private static final ArrayList<String> questsNames = new ArrayList<>(Arrays.asList("Delivery of a gold bar", "Delivery " +
+    private static final ArrayList<String> questsNames = new ArrayList<>(Arrays.asList("Delivery of a gold bar",
+        "Delivery " +
             "of a pumpkin", "Delivery of 50 pieces of wheat"));
 
     public static ArrayList<String> getQuestsNames() {
@@ -22,15 +24,17 @@ public class AbigailQuests {
     }
 
 
-    public static boolean doFirstQuest(boolean isRewardTwice) {
+    public static Result doFirstQuest(boolean isRewardTwice) {
 
         boolean isGoldBarAvailable = false;
 
-        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
+        for (Ingredient ingredient :
+            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient instanceof ArtisanGood) {
                 if (((ArtisanGood) ingredient).getType().equals(ArtisanGoodType.GoldBar)) {
-                    int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
-                    if ( value > 0) {
+                    int value =
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient, 0);
+                    if (value > 0) {
                         App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 1);
                         isGoldBarAvailable = true;
                         break;
@@ -40,7 +44,7 @@ public class AbigailQuests {
         }
 
         if (!isGoldBarAvailable) {
-            return false;
+            return new Result(false, "You don't have enough stock for this quest.\n(You need at least 1 gold bar)");
         }
 
         App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().increaseFriendshipLevel();
@@ -55,20 +59,22 @@ public class AbigailQuests {
             }
         }
 
-        return true;
+        return new Result(true, "Quest done.");
     }
 
-    public static boolean doSecondQuest(boolean isRewardTwice) {
+    public static Result doSecondQuest(boolean isRewardTwice) {
 
         boolean isPumpkinAvailable = false;
 
-        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
+        for (Ingredient ingredient :
+            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient instanceof Crop) {
                 if (((Crop) ingredient).getType().equals(CropType.Pumpkin)) {
-                    int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
-                    if ( value > 0) {
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient,1);
-                        isPumpkinAvailable= true;
+                    int value =
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient, 0);
+                    if (value > 0) {
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 1);
+                        isPumpkinAvailable = true;
                         break;
                     }
                 }
@@ -76,13 +82,13 @@ public class AbigailQuests {
         }
 
         if (!isPumpkinAvailable) {
-            return false;
+            return new Result(false, "You don't have enough stock for this quest.\n(You need at least 1 pumpkin)");
         }
 
         if (isRewardTwice) {
-            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(),500);
+            App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), 500);
         }
-        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(),500);
+        App.getGame().getCurrentPlayingPlayer().getBackpack().addIngredients(new Coin(), 500);
 
         for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
             if (home.getNpc().getType().equals(NPCType.Abigail)) {
@@ -91,18 +97,20 @@ public class AbigailQuests {
             }
         }
 
-        return true;
+        return new Result(true, "Quest done.");
     }
 
-    public static boolean doThirdQuest(boolean isRewardTwice) {
+    public static Result doThirdQuest(boolean isRewardTwice) {
 
         boolean are50WheatAvailable = false;
 
-        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
+        for (Ingredient ingredient :
+            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient instanceof Crop) {
                 if (((Crop) ingredient).getType().equals(CropType.Wheat)) {
-                    int value = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
-                    if ( value >= 50) {
+                    int value =
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient, 0);
+                    if (value >= 50) {
                         App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 50);
                         are50WheatAvailable = true;
                         break;
@@ -112,7 +120,8 @@ public class AbigailQuests {
         }
 
         if (!are50WheatAvailable) {
-            return false;
+            return new Result(false, "You don't have enough stock for this quest.\n(You need at least 50 pieces of " +
+                "wheat)");
         }
 
         for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
@@ -122,9 +131,7 @@ public class AbigailQuests {
             }
         }
 
-        return true;
-
+        return new Result(true, "Quest done.");
 
     }
-
 }

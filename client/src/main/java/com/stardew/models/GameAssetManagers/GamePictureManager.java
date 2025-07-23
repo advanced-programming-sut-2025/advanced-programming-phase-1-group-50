@@ -1766,4 +1766,41 @@ public class GamePictureManager {
 
     public static Texture filledStar = new Texture("Star/emptyStar.png");
     public static Texture emptyStar = new Texture("Star/filledStar.png");
+
+    public static Texture lockedIcon = new Texture("lock/lockedIcon.png");
+    public static Texture unlockedIcon = new Texture("lock/unlockedIcon.png");
+
+    public static Texture yesIcon = new Texture("Emoji/Emojis139.png");
+    public static Texture noIcon = new Texture("Emoji/Emojis131.png");
+
+    public static Texture roseIcon = new Texture("rose.png");
+    public static Texture hugIcon = new Texture("hug.png");
+    public static Texture ringIcon = new Texture("ring.png");
+    public static Texture questIcon = new Texture("quest.png");
+    public static Texture giftIcon = new Texture("gift.png");
+    public static Texture friendshipIcon = new Texture("Inventory/Friendship.png");
+
+    public static Texture heartFullIcon = new Texture("heartEmoji/full.png");
+    public static Texture heartBrokenIcon = new Texture("heartEmoji/broken.png");
+    public static Texture heartRightIcon = new Texture("heartEmoji/right.png");
+    public static Texture heartLeftIcon = new Texture("heartEmoji/left.png");
+
+    public static TextureRegionDrawable shuffleButtonDrawable = new TextureRegionDrawable(
+        new TextureRegion(new Texture("Inventory/shuffle.png")));
+
+    public static TextureRegionDrawable journalTextureDrawable = new TextureRegionDrawable
+        (new TextureRegion(new Texture("Inventory/journal.png")));
+
+    public static Texture stormTexture = new Texture("Storm.png");
+    public static TextureRegion[][] stormTextureArray = TextureRegion.split(stormTexture , 132 , 284);
+    static Array<TextureRegion> frames4 = new Array<>();
+    static {
+        for(int i=0 ; i<1 ; i++){
+            for(int j=0 ; j<5 ; j++){
+                frames4.add(stormTextureArray[i][j]);
+            }
+        }
+    }
+    public static Animation<TextureRegion> stormAnimation = new Animation<>(0.15f , frames4 , Animation.PlayMode.LOOP);
+
 }

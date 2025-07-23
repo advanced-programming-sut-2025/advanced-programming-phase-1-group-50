@@ -2,9 +2,11 @@ package com.stardew.view;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.stardew.models.Thunder;
 import com.stardew.models.Wind;
-import com.stardew.models.animals.GameModel;
+import com.stardew.models.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.models.date.Weather;
 import com.stardew.models.waterBodies.RainDrop;
@@ -16,6 +18,7 @@ public class WeatherManager {
     private final Array<Wind> winds = new Array<>();
     private float spawnTimer;
     private GameModel gameModel;
+    private float thunderTimer;
 
 
 
@@ -110,6 +113,24 @@ public class WeatherManager {
 
     public void setGameModel(GameModel gameModel){
         this.gameModel = gameModel;
+    }
+
+    public void thunder(float delta , Stage stage) {
+        if(App.getGame().getTime().getWeather().equals(Weather.Stormy)) {
+            thunderTimer += delta;
+            if(thunderTimer >= 10f) {
+                thunderTimer = 0;
+                Thunder thunder = new Thunder();
+                float x = MathUtils.random(gameModel.getCamera().position.x - gameModel.getCamera().viewportWidth / 2,
+                    gameModel.getCamera().position.x + gameModel.getCamera().viewportWidth / 2);
+                float y = MathUtils.random(gameModel.getCamera().position.y - gameModel.getCamera().viewportHeight / 2,
+                    gameModel.getCamera().position.y + gameModel.getCamera().viewportHeight / 2);
+
+                thunder.setPosition(x, y);
+                stage.addActor(thunder);
+
+            }
+        }
     }
 
 

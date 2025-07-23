@@ -5,8 +5,8 @@ import com.stardew.Main;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.app.Menus;
+import com.stardew.view.GameMenu;
 import com.stardew.view.MainMenu;
-import com.stardew.view.LobbyMenus.PreLobbyMenu;
 import com.stardew.view.ProfileMenu;
 
 public class MainMenuController {
@@ -53,6 +53,15 @@ public class MainMenuController {
         Main.getMain().setScreen(preLobbyMenu);
         screen.dispose();
 
+    }
+
+    public void handleLogout(){
+        logout();
+        Screen screen = Main.getMain().getScreen();
+
+        LoginAndRegisterMenu loginAndRegisterMenu = new LoginAndRegisterMenu(GamePictureManager.skin);
+        Main.getMain().setScreen(loginAndRegisterMenu);
+        screen.dispose();
     }
 
 

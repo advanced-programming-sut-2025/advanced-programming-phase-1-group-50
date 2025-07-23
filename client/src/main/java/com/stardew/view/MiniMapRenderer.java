@@ -3,8 +3,7 @@ package com.stardew.view;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.stardew.models.animals.GameModel;
+import com.stardew.models.GameModel;
 import com.stardew.models.mapInfo.Tile;
 
 public class MiniMapRenderer {
