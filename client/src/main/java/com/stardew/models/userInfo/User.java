@@ -12,9 +12,9 @@ public class User {
     private int numberOfGames = 0;
     private SecurityQuestion securityQuestion;
     private int highestScore;
+    private final PasswordUtil passwordUtil = new PasswordUtil();
 
     public User(String username, String password, String nickname, String email, Gender gender , SecurityQuestion securityQuestion) {
-        PasswordUtil passwordUtil = new PasswordUtil();
         this.username = username;
         this.password = passwordUtil.hashPassword(password);
         this.nickname = nickname;
@@ -65,7 +65,7 @@ public class User {
         this.securityQuestion = securityQuestion;
     }
     public void setPassword(String password){
-        this.password = password;
+        this.password = passwordUtil.hashPassword(password);
     }
     public void setUsername(String username){
         this.username = username;

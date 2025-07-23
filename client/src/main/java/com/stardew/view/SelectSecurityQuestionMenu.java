@@ -49,10 +49,12 @@ public class SelectSecurityQuestionMenu implements AppMenu, Screen {
                     return;
                 }
 
+                applyAnswer.setDisabled(true);
                 Message message = prepareMessage(username, password, nickname, email, gender);
                 Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
                 if (response == null || response.getType() != MessageType.REGISTER_RESULT) {
                     showResult(new Result(false, "Connection failed or timed out!"));
+                    applyAnswer.setDisabled(false);
                     return;
                 }
                 Result result = response.getFromBody("result", Result.class);

@@ -2,66 +2,148 @@ package com.stardew.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.Main;
 import com.stardew.controller.ForgetPasswordController;
+import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.App;
-import com.stardew.models.userInfo.User;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 
-public class ForgetPasswordMenu implements Screen {
+import java.util.HashMap;
+
+public class ForgetPasswordMenu implements AppMenu, Screen {
     private Stage stage;
     private Skin skin;
     private final Label forgetPasswordLabel;
     private final TextField usernameTextField;
+    private final TextButton findSecurityQuestionButton;
     private final Label showSecurityQuestionLabel;
     private final TextField answerTextField;
-    private final TextButton forgetPasswordButton;
     private final TextField enterNewPasswordTextField;
-
-    private User findUser(String username){
-        for(User u : App.users){
-            if(u.getUsername().equals(username)){
-                return u;
-            }
-        }
-        return null;
-    }
+    private final TextButton setNewPasswordButton;
+    private final TextButton backButton;
 
 
     public ForgetPasswordMenu(ForgetPasswordController controller , String usernameForShowSecurityQuestion) {
         skin = GamePictureManager.skin;
         forgetPasswordLabel = new Label("Forget Password", skin);
+        findSecurityQuestionButton = new TextButton("Find Security Question", skin);
         usernameTextField = new TextField("", skin);
-        String show = null;
-        if(findUser(usernameForShowSecurityQuestion) != null){
-            try {
-                show = findUser(usernameForShowSecurityQuestion).getSecurityQuestion().getQuestion();
-            }catch(NullPointerException e){
-                e.printStackTrace();
-            }
-        }
-        showSecurityQuestionLabel = new Label(show, skin);
+        showSecurityQuestionLabel = new Label("No Security Question", skin);
         answerTextField = new TextField("", skin);
         enterNewPasswordTextField = new TextField("", skin);
-        forgetPasswordButton = new TextButton("Forget Password", skin);
+        setNewPasswordButton = new TextButton("set New Password", skin);
+        backButton = new TextButton("Back", skin);
 
-        forgetPasswordButton.addListener(new ClickListener() {
+        findSecurityQuestionButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                controller.handleForgetPassword();
+                if (usernameTextField.getText().isEmpty()) {
+                    showResult(new Result(false, "Please enter your username"));
+                    return;
+                }
+
+                usernameTextField.setDisabled(true);
+                findSecurityQuestionButton.setDisabled(true);
+
+                Message message = prepareGetSecurityQuestionMessage();
+                Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+                if (response == null || response.getType() != MessageType.GET_SECURITY_QUESTION_RESULT) {
+                    showResult(new Result(false, "Connection failed or timed out!"));
+                    usernameTextField.setDisabled(false);
+                    findSecurityQuestionButton.setDisabled(false);
+                    return;
+                }
+                Boolean success = response.getFromBody("success");
+                if (!success) {
+                    showResult(new Result(false, response.getFromBody("message")));
+                    usernameTextField.setDisabled(false);
+                    findSecurityQuestionButton.setDisabled(false);
+                    return;
+                }
+                String securityQuestion = response.getFromBody("securityQuestion");
+                showSecurityQuestionLabel.setText(securityQuestion);
             }
         });
 
-        controller.setView(this);
+        setNewPasswordButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (answerTextField.getText().isEmpty() || enterNewPasswordTextField.getText().isEmpty()) {
+                    showResult(new Result(false, "Please fill all fields"));
+                    return;
+                }
+                if (!usernameTextField.isDisabled() || !findSecurityQuestionButton.isDisabled()) {
+                    showResult(new Result(false, "Please enter username and get security question"));
+                    return;
+                }
+
+                setNewPasswordButton.setDisabled(true);
+                Message message = prepareSetNewPasswordMessage();
+                Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+                if (response == null || response.getType() != MessageType.FORGET_PASSWORD_RESULT) {
+                    showResult(new Result(false, "Connection failed or timed out!"));
+                    setNewPasswordButton.setDisabled(false);
+                    return;
+                }
+
+                Result result = response.getFromBody("result", Result.class);
+                showResult(result);
+                setNewPasswordButton.setDisabled(false);
+                if (result.getSuccessful()) {
+                    Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            Screen currentScreen = Main.getMain().getScreen();
+                            LoginAndRegisterMenu loginRegister = new LoginAndRegisterMenu(GamePictureManager.skin);
+                            Main.getMain().setScreen(loginRegister);
+                            currentScreen.dispose();
+                        }
+                    }, 2f);
+                }
+
+            }
+        });
+
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Screen currentScreen = Main.getMain().getScreen();
+                LoginAndRegisterMenu loginRegister = new LoginAndRegisterMenu(GamePictureManager.skin);
+                Main.getMain().setScreen(loginRegister);
+                currentScreen.dispose();
+            }
+        });
 
     }
+
+
+    private Message prepareGetSecurityQuestionMessage() {
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("username", usernameTextField.getText());
+        return new Message(body, MessageType.GET_SECURITY_QUESTION);
+    }
+
+    private Message prepareSetNewPasswordMessage() {
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("username", usernameTextField.getText());
+        body.put("answer", answerTextField.getText());
+        body.put("newPassword", enterNewPasswordTextField.getText());
+        return new Message(body, MessageType.FORGET_PASSWORD);
+    }
+
+
     @Override
     public void show() {
         stage = new Stage(new ScreenViewport());
@@ -72,37 +154,36 @@ public class ForgetPasswordMenu implements Screen {
         background.setFillParent(true);
         stage.addActor(background);
 
-
-        forgetPasswordLabel.setPosition(300, 400);
-        usernameTextField.setPosition(300, 350);
         usernameTextField.setMessageText("Username");
-
-        showSecurityQuestionLabel.setPosition(300, 300);
-        answerTextField.setPosition(300, 250);
         answerTextField.setMessageText("Answer");
-
-        forgetPasswordButton.setPosition(300, 200);
-        forgetPasswordButton.setSize(200, 40);
-
-        enterNewPasswordTextField.setPosition(300, 250);
-        enterNewPasswordTextField.setSize(200, 40);
         enterNewPasswordTextField.setMessageText("enter new password");
 
+        forgetPasswordLabel.setAlignment(Align.center);
+        forgetPasswordLabel.setColor(Color.BLACK);
+        showSecurityQuestionLabel.setAlignment(Align.center);
+        showSecurityQuestionLabel.setColor(Color.BLACK);
 
-        stage.addActor(forgetPasswordLabel);
-        stage.addActor(enterNewPasswordTextField);
-        stage.addActor(usernameTextField);
-        stage.addActor(showSecurityQuestionLabel);
-        stage.addActor(answerTextField);
-        stage.addActor(forgetPasswordButton);
+        Table table = new Table();
+        table.setFillParent(true);
+        table.defaults().pad(30);
+        table.pad(400, 700, 400, 700);
+
+        table.add(forgetPasswordLabel).expandX().fillX().colspan(2).row();
+        table.add(usernameTextField).left().expandX().fillX().padRight(10);
+        table.add(findSecurityQuestionButton).right().row();
+        table.add(showSecurityQuestionLabel).expandX().fillX().colspan(2).row();
+        table.add(answerTextField).expandX().fillX().padRight(1).row();
+        table.add(enterNewPasswordTextField).expandX().fillX().padRight(1).row();
+        table.add(setNewPasswordButton).left();
+        table.add(backButton).right();
+
+        stage.addActor(table);
     }
 
 
     @Override
     public void render(float v) {
         ScreenUtils.clear(0 , 0  , 0 , 1);
-        Main.getBatch().begin();
-        Main.getBatch().end();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }

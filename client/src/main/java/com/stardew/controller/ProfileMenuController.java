@@ -49,7 +49,7 @@ public class ProfileMenuController {
         if (!controller.hasSpecialCharacters(newPas)) {
             return new Result(false, "please use Special Characters");
         }
-        App.getLoggedInUser().setPassword(passwordUtil.hashPassword(newPas));
+        App.getLoggedInUser().setPassword(newPas);
         return new Result(true, "password cahnged succsessfuly");
 
     }
