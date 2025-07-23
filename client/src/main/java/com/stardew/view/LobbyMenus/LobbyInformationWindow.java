@@ -52,7 +52,7 @@ public class LobbyInformationWindow extends CloseableWindow implements AppMenu {
         lobbyName = new TextField("", skin);
         content.add(lobbyName).colspan(2).row();
 
-        content.add(new Label("if you want to create a private lobby ," + "\n" + "enter password here", skin)).left();
+        content.add(new Label("if you want to create a private lobby" + "\n" + "enter password here", skin)).left();
         password = new TextField("", skin);
         content.add(password).colspan(2).row();
 
@@ -76,8 +76,15 @@ public class LobbyInformationWindow extends CloseableWindow implements AppMenu {
         createLobby.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y){
-                if(lobbyName.getText().isEmpty() && !generate ){
+                if(lobbyName.getText().isEmpty() || !generate ){
                     showResult(new Result(false , "Please fill all fields!"));
+                    return;
+                }
+                if(privateOrPublic.isChecked() ){
+                    if(password.getText().isEmpty()) {
+                        showResult(new Result(false, "choose a password for your private lobby!"));
+                        return;
+                    }
                 }
                 createLobby.setDisabled(false);
 
@@ -136,6 +143,7 @@ public class LobbyInformationWindow extends CloseableWindow implements AppMenu {
         body.put("name" , name);
         body.put("privacy" , privateLobby);
         body.put("visible" , isVisible);
+        body.put("password" , password.getText());
         body.put("id" , id);
         return new Message(body , MessageType.CREATE_LOBBY);
 

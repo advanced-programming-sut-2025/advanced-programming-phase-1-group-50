@@ -13,7 +13,7 @@ public class App {
     static {
         User u = new User("ali", "wwwwww", "fkmd", "emua@dfjk.com", Gender.Male, new SecurityQuestion("what is your favorite color?", "answer"));
         users.add(u);
-        User u2 = new User("mamad","ksdfkklf", "fkmd", "emua@dfjk.com", Gender.Male, new SecurityQuestion("what is your favorite color?", "answer"));
+        User u2 = new User("mamad","wwwwww", "fkmd", "emua@dfjk.com", Gender.Male, new SecurityQuestion("what is your favorite color?", "answer"));
         users.add(u2);
         User u3 = new User("hossein","ksdfkklf", "fkmd", "emua@dfjk.com", Gender.Male, new SecurityQuestion("what is your favorite color?", "answer"));
         users.add(u3);

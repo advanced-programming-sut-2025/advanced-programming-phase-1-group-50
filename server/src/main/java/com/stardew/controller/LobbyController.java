@@ -72,8 +72,15 @@ public class LobbyController {
         int id = message.getIntFromBody("id");
         boolean isPrivate = message.getFromBody("privacy");
         boolean isVisible = message.getFromBody("visible");
+
         User user = connection.getUser();
-        createLobby(isPrivate , name , "", id , user , isVisible);
+        if(!isPrivate) {
+            createLobby(isPrivate , name , "", id , user , isVisible);
+        }
+        else {
+            String password = message.getFromBody("password");
+            createLobby(isPrivate , name , password, id , user , isVisible);
+        }
         Lobby l = lobbies.getLast();
         LobbyDTO ltd = l.toDTO();
         Result res = showMessageOfCreatingLobby();
