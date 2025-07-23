@@ -26,6 +26,7 @@ public class CreateNewGameMenu implements Screen {
     private final TextField username3;
     private final TextField username4;
     private final TextButton startGame;
+    private final TextButton back;
     private CreateNewGameController controller = new CreateNewGameController();
     public Table table;
 
@@ -46,6 +47,14 @@ public class CreateNewGameMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 ArrayList<Player> players = new ArrayList<>();
                 controller.handleStartNewGame(players);
+            }
+        });
+
+        back = new TextButton("Back", GamePictureManager.skin);
+        back.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                controller.handleBack();
             }
         });
 
@@ -77,6 +86,7 @@ public class CreateNewGameMenu implements Screen {
         table.add(username4).width(200).row();
 
         table.add(startGame).colspan(2).padTop(20).row();
+        table.add(back).colspan(2).padTop(20).row();
 
         stage.addActor(table);
     }

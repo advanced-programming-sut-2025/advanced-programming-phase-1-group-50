@@ -27,8 +27,8 @@ public class InventoryWindow extends CloseableWindow {
     private final ImageButton mapButton;
     private final ImageButton exitButton;
     private final ImageButton trashButton;
-    private final TextButton journalButton;
-    private final TextButton shuffleButton;
+    private final ImageButton journalButton;
+    private final ImageButton shuffleButton;
     private final ImageButton friendshipButton;
     private final HotBarActor hotBar;
     private final BackpackGridActor backpackGrid;
@@ -145,7 +145,7 @@ public class InventoryWindow extends CloseableWindow {
 
         });
 
-        shuffleButton = new TextButton("shuffle" , GamePictureManager.skin);
+        shuffleButton = new ImageButton(GamePictureManager.shuffleButtonDrawable);
         shuffleButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -153,7 +153,7 @@ public class InventoryWindow extends CloseableWindow {
             }
         });
 
-        journalButton = new TextButton("journal" , GamePictureManager.skin);
+        journalButton = new ImageButton(GamePictureManager.journalTextureDrawable);
         journalButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -178,8 +178,8 @@ public class InventoryWindow extends CloseableWindow {
         buttonRowTable.add(mapButton).width(50).height(70).padRight(10);
         buttonRowTable.add(exitButton).width(50).height(70).padRight(10);
         buttonRowTable.add(friendshipButton).width(50).height(70).padRight(10);
-        buttonRowTable.add(shuffleButton).width(120).height(70);
-        buttonRowTable.add(journalButton).width(120).height(70);
+        buttonRowTable.add(shuffleButton).width(50).height(70);
+        buttonRowTable.add(journalButton).width(50).height(70);
 
         row();
         add(buttonRowTable).padTop(10).center();

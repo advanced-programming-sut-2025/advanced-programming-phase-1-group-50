@@ -39,7 +39,7 @@ public class SelectTileForShippingBinWindow extends CloseableWindow {
 
 
         controller = new TileSelectionController(selectionWidth, selectionHeight);
-        gridMap = new GridMapActor(selectionWidth, selectionHeight);
+        gridMap = new GridMapActor(selectionWidth, selectionHeight , App.getGame());
         ScrollPane scrollPane = new ScrollPane(gridMap, GamePictureManager.skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(false, false);

@@ -1,5 +1,6 @@
 package com.stardew.models.NPCs;
 
+import com.stardew.models.Result;
 import com.stardew.models.animals.Fish;
 import com.stardew.models.animals.FishType;
 import com.stardew.models.app.App;
@@ -19,13 +20,13 @@ import java.util.Arrays;
 public class HarveyQuests {
 
     private static final ArrayList<String> questsNames = new ArrayList<>(Arrays.asList("Delivery of 12 desired plants",
-            "Delivery of a salmon", "Delivery of a bottle of wine"));
+        "Delivery of a salmon", "Delivery of a bottle of wine"));
 
     public static ArrayList<String> getQuestsNames() {
         return questsNames;
     }
 
-    public static boolean doFirstQuest(boolean isRewardTwice) {
+    public static Result doFirstQuest(boolean isRewardTwice) {
 
         boolean are12PlantAvailable = false;
         for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
@@ -40,7 +41,7 @@ public class HarveyQuests {
         }
 
         if (!are12PlantAvailable) {
-            return false;
+            return new Result(false,"You don't have enough stock for this quest.\n(You need at least 12 plants)");
         }
 
         if (isRewardTwice) {
@@ -55,10 +56,10 @@ public class HarveyQuests {
             }
         }
 
-        return true;
+        return new Result(true,"Quest done.");
     }
 
-    public static boolean doSecondQuest(boolean isRewardTwice) {
+    public static Result doSecondQuest(boolean isRewardTwice) {
 
         boolean isSalmonAvailable = false;
 
@@ -76,7 +77,7 @@ public class HarveyQuests {
         }
 
         if (!isSalmonAvailable) {
-            return false;
+            return new Result(false,"You don't have enough stock for this quest.\n(You need at least a salmon)");
         }
 
         App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().increaseFriendshipLevel();
@@ -90,19 +91,19 @@ public class HarveyQuests {
                 break;
             }
         }
-        return true;
+        return new Result(true,"Quest done.");
     }
 
-    public static boolean doThirdQuest(boolean isRewardTwice) {
+    public static Result doThirdQuest(boolean isRewardTwice) {
 
         boolean isWineAvailable = false;
 
         for (Ingredient ingredient :
-                App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
+            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient instanceof ArtisanGood) {
                 if (((ArtisanGood) ingredient).getType().equals(ArtisanGoodType.Wine)) {
                     int value =
-                            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
+                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
                     if (value > 0) {
                         App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 1);
                         isWineAvailable = true;
@@ -113,7 +114,7 @@ public class HarveyQuests {
         }
 
         if (!isWineAvailable) {
-            return false;
+            return new Result(false,"You don't have enough stock for this quest.\n(You need at least a bottle of wine)");
         }
 
         if (isRewardTwice) {
@@ -128,7 +129,7 @@ public class HarveyQuests {
             }
         }
 
-        return true;
+        return new Result(true,"Quest done.");
     }
 
 }

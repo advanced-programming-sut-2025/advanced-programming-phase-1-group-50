@@ -8,6 +8,7 @@ import com.stardew.models.app.App;
 import com.stardew.models.userInfo.Player;
 import com.stardew.models.userInfo.User;
 import com.stardew.view.CreateNewGameMenu;
+import com.stardew.view.GameMenu;
 import com.stardew.view.SelectFarmMenu;
 
 import java.util.ArrayList;
@@ -91,5 +92,12 @@ public class CreateNewGameController {
 
 
 
+    }
+
+    public void handleBack(){
+        Screen screen = Main.getMain().getScreen();
+        GameMenu gameMenu = new GameMenu();
+        Main.getMain().setScreen(gameMenu);
+        screen.dispose();
     }
 }

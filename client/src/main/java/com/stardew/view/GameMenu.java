@@ -58,6 +58,7 @@ public class GameMenu implements AppMenu , Screen {
     private final TextButton loadGame;
     private final TextButton showCurrentGame;
     private final TextButton exitGame;
+    private final TextButton back;
 
 
     public GameMenu() {
@@ -88,6 +89,17 @@ public class GameMenu implements AppMenu , Screen {
         exitGame.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+
+            }
+        });
+        back = new TextButton("back" , GamePictureManager.skin);
+        back.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Screen screen = Main.getMain().getScreen();
+                MainMenu mainMenu = new MainMenu();
+                Main.getMain().setScreen(mainMenu);
+                screen.dispose();
 
             }
         });
@@ -354,16 +366,16 @@ public class GameMenu implements AppMenu , Screen {
             System.out.println(npcController.meetNPC(matcher));
         }
         else if ((matcher = NPCsCommands.GiftToNPC.getMatcher(input)) != null) {
-            System.out.println(npcController.giftToNPC(matcher));
+            //System.out.println(npcController.giftToNPC(matcher));
         }
         else if (NPCsCommands.FriendShipNPCList.getMatcher(input) != null) {
-            System.out.println(npcController.friendShipNPCList());
+            //System.out.println(npcController.friendShipNPCList());
         }
         else if (NPCsCommands.QuestsList.getMatcher(input) != null) {
-            System.out.println(npcController.questsList());
+            //System.out.println(npcController.questsList());
         }
         else if ((matcher = NPCsCommands.FinishingQuest.getMatcher(input)) != null) {
-            System.out.println(npcController.finishingQuest(matcher));
+            //System.out.println(npcController.finishingQuest(matcher));
         }
         else if((matcher = GameMenuCommands.PrintMapWithSize.getMatcher(input)) !=null) {
             int startX = Integer.parseInt(matcher.group("X"));
@@ -372,7 +384,7 @@ public class GameMenu implements AppMenu , Screen {
             System.out.println(controller.printMap(startX, startY, sizeX));
         }
         else if (GameMenuCommands.FriendShips.getMatcher(input) != null) {
-            System.out.println(relationController.friendships());
+            //System.out.println(relationController.friendships());
         }
         else if ((matcher = GameMenuCommands.TalkToPlayer.getMatcher(input)) != null) {
             System.out.println(relationController.TalkToPlayer(matcher));
@@ -381,53 +393,53 @@ public class GameMenu implements AppMenu , Screen {
             System.out.println(relationController.talkHistory(matcher));
         }
         else if ((matcher = GameMenuCommands.GiftToPLayer.getMatcher(input)) != null) {
-                     //System.out.println(relationController.GiftToPLayer(matcher));
-                }
+            //System.out.println(relationController.GiftToPLayer(matcher));
+        }
         else if (GameMenuCommands.GiftList.getMatcher(input) != null) {
-                    System.out.println(relationController.GiftList());
-                }
+            System.out.println(relationController.GiftList());
+        }
         else if ((matcher = GameMenuCommands.GiftRate.getMatcher(input)) != null) {
-                        //System.out.println(relationController.giftRate(matcher));
-                }
+            //System.out.println(relationController.giftRate(matcher));
+        }
         else if ((matcher = GameMenuCommands.GiftHistory.getMatcher(input)) != null) {
-                        //System.out.println(relationController.GiftHistory(matcher));
-                }
+            //System.out.println(relationController.GiftHistory(matcher));
+        }
         else if ((matcher = GameMenuCommands.Hug.getMatcher(input)) != null) {
-                        System.out.println(relationController.hug(matcher));
-                }
+            //System.out.println(relationController.hug(matcher));
+        }
         else if ((matcher = GameMenuCommands.FlowerTOPlayer.getMatcher(input)) != null) {
-                        System.out.println(relationController.giveFlower(matcher));
-                }
+            //System.out.println(relationController.giveFlower(matcher));
+        }
         else if ((matcher = GameMenuCommands.AskMarriage.getMatcher(input)) != null) {
-                        System.out.println(relationController.askMarriage(matcher));
-                }
+            //System.out.println(relationController.askMarriage(matcher));
+        }
         else if ((matcher = GameMenuCommands.RespondMarriageRequest.getMatcher(input)) != null) {
-                        System.out.println(relationController.respondMarriage(matcher));
-                }
+            //System.out.println(relationController.respondMarriage(matcher));
+        }
         else if ((matcher = GameMenuCommands.StartTrade.getMatcher(input)) != null ) {
-                        System.out.println(controller.startTrade());
-                }
+            System.out.println(controller.startTrade());
+        }
 
         else if(GameMenuCommands.ShowFishingAbility.getMatcher(input) != null) {
-                    System.out.println(abilityController.showFishingAbility());
-                }
+            System.out.println(abilityController.showFishingAbility());
+        }
 
         else if(GameMenuCommands.ShowForagingAbility.getMatcher(input) != null) {
-                    System.out.println(abilityController.showForagingAbility());
-                }
+            System.out.println(abilityController.showForagingAbility());
+        }
 
         else if(GameMenuCommands.ShowMiningAbility.getMatcher(input) != null) {
-                    System.out.println(abilityController.showMiningAbility());
-                }
+            System.out.println(abilityController.showMiningAbility());
+        }
 
         else if(GameMenuCommands.ShowFarmingAbility.getMatcher(input) != null) {
-                    System.out.println(abilityController.showFarmingAbility());
-                }
+            System.out.println(abilityController.showFarmingAbility());
+        }
 
         else if (com.stardew.models.enums.GameMenuCommands.NewGame.getMatcher(input) != null) {
             ArrayList<Player> players = new ArrayList<>();
             Player currentPlayer = new Player(App.getLoggedInUser().getUsername(),
-                    App.getLoggedInUser().getNickname(), App.getLoggedInUser());
+                App.getLoggedInUser().getNickname(), App.getLoggedInUser());
             players.add(currentPlayer);
 
             Result result1 = controller.createNewGamePlayers(input, players);
@@ -449,7 +461,7 @@ public class GameMenu implements AppMenu , Screen {
                             String Map = matcher.group(1);
                             int mapNumber = Integer.parseInt(matcher.group(1));
                             Result result = controller.selectMapForCreateNewGame(mapNumber, players.get(i),
-                                    startXForMap[i], startYForMap[i]);
+                                startXForMap[i], startYForMap[i]);
                             System.out.println(result);
                             if (result.getSuccessful()) {
 
@@ -509,15 +521,20 @@ public class GameMenu implements AppMenu , Screen {
         exitGame.setSize(200, 40);
         exitGame.setPosition(centerX - 100, centerY - 120);
 
+        back.setSize(200, 40);
+        back.setPosition(centerX - 100, centerY - 180);
+
         stage.addActor(createNewGame);
         stage.addActor(loadGame);
         stage.addActor(showCurrentGame);
         stage.addActor(exitGame);
+        stage.addActor(back);
 
 
         MenuAnimationController.addHoverAnimation(createNewGame);
         MenuAnimationController.addHoverAnimation(loadGame);
         MenuAnimationController.addHoverAnimation(exitGame);
+        MenuAnimationController.addHoverAnimation(back);
     }
 
     @Override

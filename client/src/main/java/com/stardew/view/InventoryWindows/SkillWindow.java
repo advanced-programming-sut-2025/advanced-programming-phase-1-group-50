@@ -116,10 +116,18 @@ public class SkillWindow extends CloseableWindow {
         foragingBar.setValue(p.getAbility().getForagingRate());
 
 
-        miningLevelLabel = new Label(String.format("%d/%d" , p.getAbility().getMiningRate() , p.getAbility().getRequiredPointsForLevel(p.getAbility().getMiningLevel())), GamePictureManager.skin);
-        farmingLevelLabel = new Label(String.format("%d/%d" , p.getAbility().getFarmingRate() , p.getAbility().getRequiredPointsForLevel(p.getAbility().getFarmingLevel())), GamePictureManager.skin);
-        fishingLevelLabel = new Label(String.format("%d/%d" , p.getAbility().getFishingRate() , p.getAbility().getRequiredPointsForLevel(p.getAbility().getFishingLevel())), GamePictureManager.skin);
-        foragingLevelLabel = new Label(String.format("%d/%d" , p.getAbility().getForagingRate() , p.getAbility().getRequiredPointsForLevel(p.getAbility().getForagingLevel())), GamePictureManager.skin);
+        miningLevelLabel = new Label(String.format("%d/%d   %d" , p.getAbility().getMiningRate()
+            , p.getAbility().getRequiredPointsForLevel(p.getAbility().getMiningLevel())
+            , p.getAbility().getMiningLevel()) , GamePictureManager.skin);
+        farmingLevelLabel = new Label(String.format("%d/%d   %d" , p.getAbility().getFarmingRate()
+            , p.getAbility().getRequiredPointsForLevel(p.getAbility().getFarmingLevel())
+            , p.getAbility().getFarmingLevel()), GamePictureManager.skin);
+        fishingLevelLabel = new Label(String.format("%d/%d   %d" , p.getAbility().getFishingRate()
+            , p.getAbility().getRequiredPointsForLevel(p.getAbility().getFishingLevel())
+            , p.getAbility().getFishingLevel()), GamePictureManager.skin);
+        foragingLevelLabel = new Label(String.format("%d/%d   %d" , p.getAbility().getForagingRate()
+            , p.getAbility().getRequiredPointsForLevel(p.getAbility().getForagingLevel())
+            , p.getAbility().getForagingLevel()), GamePictureManager.skin);
 
 
         Table content = new Table();

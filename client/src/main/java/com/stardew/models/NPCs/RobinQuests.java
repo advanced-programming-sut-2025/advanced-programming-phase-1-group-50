@@ -1,5 +1,6 @@
 package com.stardew.models.NPCs;
 
+import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.manuFactor.BeeHouse;
 import com.stardew.models.manuFactor.Ingredient;
@@ -14,21 +15,21 @@ import java.util.Arrays;
 
 public class RobinQuests{
     private static final ArrayList<String> questsNames = new ArrayList<>(Arrays.asList("Delivery of 80 pieces of wood",
-            "Delivery of 10 iron bar", "Delivery of 1000 pieces of wood"));
+        "Delivery of 10 iron bar", "Delivery of 1000 pieces of wood"));
 
     public static ArrayList<String> getQuestsNames() {
         return questsNames;
     }
 
-    public static boolean doFirstQuest(boolean isRewardTwice) {
+    public static Result doFirstQuest(boolean isRewardTwice) {
 
         boolean are80WoodAvailable = false;
 
         for (Ingredient ingredient :
-                App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
+            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient instanceof Wood) {
                 int value =
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
                 if (value >= 80) {
                     App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 80);
                     are80WoodAvailable = true;
@@ -38,7 +39,7 @@ public class RobinQuests{
         }
 
         if (!are80WoodAvailable) {
-            return false;
+            return new Result(false , "You don't have enough stock for this quest.\n(You need at least 80 pieces of wood)");
         }
 
         if (isRewardTwice) {
@@ -53,10 +54,10 @@ public class RobinQuests{
             }
         }
 
-        return true;
+        return new Result(true,"Quest done.");
     }
 
-    public static boolean doSecondQuest(boolean isRewardTwice) {
+    public static Result doSecondQuest(boolean isRewardTwice) {
 
         boolean are10IronBarAvailable = false;
 
@@ -74,7 +75,7 @@ public class RobinQuests{
         }
 
         if (!are10IronBarAvailable) {
-            return false;
+            return new Result(false, "You don't have enough stock for this quest.\n(You need at least 10 Iron bar)");
         }
 
         int numberOfRepetitions = (isRewardTwice ? 3 : 6);
@@ -91,18 +92,18 @@ public class RobinQuests{
             }
         }
 
-        return true;
+        return new Result(true,"Quest done.");
     }
 
-    public static boolean doThirdQuest(boolean isRewardTwice) {
+    public static Result doThirdQuest(boolean isRewardTwice) {
 
         boolean are1000WoodAvailable = false;
 
         for (Ingredient ingredient :
-                App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
+            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
             if (ingredient instanceof Wood) {
                 int value =
-                        App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
+                    App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(ingredient,0);
                 if (value >= 1000) {
                     App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(ingredient, 1000);
                     are1000WoodAvailable = true;
@@ -112,7 +113,7 @@ public class RobinQuests{
         }
 
         if (!are1000WoodAvailable) {
-            return false;
+            return new Result(false , "You don't have enough stock for this quest.\n(You need at least 1000 pieces of wood)");
         }
 
         if (isRewardTwice) {
@@ -127,7 +128,7 @@ public class RobinQuests{
             }
         }
 
-        return true;
+        return new Result(true,"Quest done.");
     }
 
 }

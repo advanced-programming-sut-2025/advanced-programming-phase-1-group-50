@@ -5,14 +5,14 @@ import java.util.regex.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.stardew.Main;
 import com.stardew.controller.ProfileMenuController;
@@ -20,6 +20,7 @@ import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
 import com.stardew.models.app.Menus;
 import com.stardew.models.enums.ProfileMenuCommands;
+import com.stardew.models.userInfo.Avatar;
 
 
 public class ProfileMenu implements AppMenu , Screen {
@@ -32,6 +33,8 @@ public class ProfileMenu implements AppMenu , Screen {
     private final TextButton changeEmail;
     private final TextButton showUserInfo;
     private final TextButton back;
+    private final SelectBox<String> avatar;
+    private Image avatarImage;
     public void check(Scanner scanner) {
         String input = scanner.nextLine();
         input = input.trim();
@@ -65,7 +68,7 @@ public class ProfileMenu implements AppMenu , Screen {
 
         }
         else if(com.stardew.models.enums.ProfileMenuCommands.UserInfo.getMatcher(input)!=null){
-          System.out.println(controller.showUserInfo());
+            System.out.println(controller.showUserInfo());
         }
         else if(com.stardew.models.enums.ProfileMenuCommands.ExitMenu.getMatcher(input)!=null){
             App.setMenu(Menus.MainMenu);
@@ -79,6 +82,8 @@ public class ProfileMenu implements AppMenu , Screen {
     public ProfileMenu() {
         stage = new Stage();
         profileMenu = new Label("Profile Menu" , GamePictureManager.skin);
+
+
 
         changePassword = new TextButton("Change Password", GamePictureManager.skin);
         changePassword.addListener(new ClickListener() {
@@ -128,6 +133,36 @@ public class ProfileMenu implements AppMenu , Screen {
 
             }
         });
+        Array<String> avatars = new Array<>();
+        avatars.add("Abigail");
+        avatars.add("Robin");
+        avatars.add("Leah");
+        avatars.add("Sebastian");
+        avatars.add("Harvey");
+
+
+
+        avatar = new SelectBox<>(GamePictureManager.skin);
+        avatar.setItems(avatars);
+
+        if(App.getLoggedInUser()!=null){
+            avatarImage = new Image(App.getLoggedInUser().getAvatar().getAvatar());
+        }
+        else {
+            avatarImage = new Image(Avatar.abigail.getAvatar());
+        }
+
+
+
+        avatar.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                String result = avatar.getSelected();
+                App.getLoggedInUser().setAvatar(getAvatarByName(result));
+
+                avatarImage.setDrawable(new TextureRegionDrawable(getAvatarByName(result).getAvatar()));
+
+            }
+        });
 
         controller.setView(this);
 
@@ -161,6 +196,8 @@ public class ProfileMenu implements AppMenu , Screen {
         table.add(changeEmail).width(250).height(50).pad(10).row();
         table.add(showUserInfo).width(250).height(50).pad(10).row();
         table.add(back).width(250).height(50).pad(10).row();
+        table.add(avatar).width(250).height(50).pad(10).row();
+        table.add(avatarImage).width(250).height(250).pad(10).row();
 
         stage.addActor(table);
     }
@@ -199,5 +236,16 @@ public class ProfileMenu implements AppMenu , Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public Avatar getAvatarByName(String name) {
+        return switch (name) {
+            case "Abigail" -> Avatar.abigail;
+            case "Robin" -> Avatar.robin;
+            case "Leah" -> Avatar.leah;
+            case "Sebastian" -> Avatar.sebastian;
+            case "Harvey" -> Avatar.harvey;
+            default -> null;
+        };
     }
 }

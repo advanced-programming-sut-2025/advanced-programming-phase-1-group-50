@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.stardew.controller.GameDateAndWeatherController.DateController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.animals.GameModel;
+import com.stardew.models.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.models.date.Season;
 import com.stardew.models.date.Time;
