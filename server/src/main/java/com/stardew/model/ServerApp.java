@@ -19,13 +19,13 @@ public class ServerApp {
         listenerThread.start();
     }
 
-    public static void addClientConnection(ClientConnectionThread clientConnectionThread) {
+    public static synchronized void addClientConnection(ClientConnectionThread clientConnectionThread) {
         if (clientConnectionThread != null && !clientConnection.contains(clientConnectionThread)) {
             clientConnection.add(clientConnectionThread);
         }
     }
 
-    public static void removeClientConnection(ClientConnectionThread clientConnectionThread) {
+    public static synchronized void removeClientConnection(ClientConnectionThread clientConnectionThread) {
         if (clientConnectionThread != null) {
             clientConnection.remove(clientConnectionThread);
             clientConnectionThread.end();

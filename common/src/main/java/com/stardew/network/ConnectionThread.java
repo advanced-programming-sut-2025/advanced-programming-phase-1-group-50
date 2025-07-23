@@ -4,8 +4,10 @@ import com.stardew.utils.JSONUtils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -60,11 +62,26 @@ public abstract class ConnectionThread extends Thread {
                 Message message = JSONUtils.fromJson(receivedStr);
                 System.out.println("Received: " + message);  //TODO
                 boolean handled = handleMessage(message);    //TODO
-                if (!handled) try {
+                if (!handled) {
                     receivedMessagesQueue.put(message);
-                } catch (InterruptedException e) {}
-            } catch (Exception e) {
-                e.printStackTrace();
+                }
+            } catch (SocketException se) {
+                if (!end.get()) {
+                    System.out.println("Socket Closed.");
+                }
+                break;
+            } catch (EOFException eof) {
+                if (!end.get()) {
+                    System.out.println("Remote closed connection.");
+                }
+                break;
+            } catch (IOException ioe) {
+                if (!end.get()) {
+                    System.out.println("IO Error.");
+                }
+                break;
+            } catch (InterruptedException ie) {
+                System.out.println("couldn't put message in Queue.");
                 break;
             }
         }

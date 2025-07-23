@@ -47,6 +47,14 @@ public class Main extends Game {
     public void dispose() {
         batch.dispose();
 
+        if (NetworkManager.getConnection() != null) {
+            NetworkManager.getConnection().end();
+            try {
+                NetworkManager.getConnection().join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static Main getMain() {
