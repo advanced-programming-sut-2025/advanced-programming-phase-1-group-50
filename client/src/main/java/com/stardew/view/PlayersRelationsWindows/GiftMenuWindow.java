@@ -23,13 +23,12 @@ public class GiftMenuWindow extends CloseableWindow {
         table.defaults().width(200).height(50).space(20);
 
         TextButton sendGiftButton = new TextButton("Send Gift", GamePictureManager.skin);
-        sendGiftButton.setDisabled(!relation.canGift());
 
         if (!relation.canGift()) {
-            sendGiftButton.setColor(Color.GRAY);
+            sendGiftButton.setDisabled(true);
+            sendGiftButton.setColor(Color.DARK_GRAY);
 
             SmartTooltip tooltip = SmartTooltip.getInstance();
-
             sendGiftButton.addListener(new InputListener() {
                 @Override
                 public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
@@ -41,6 +40,8 @@ public class GiftMenuWindow extends CloseableWindow {
                     tooltip.hide();
                 }
             });
+        } else {
+            sendGiftButton.setColor(Color.ROYAL);
         }
 
         sendGiftButton.addListener(new ClickListener() {
@@ -54,10 +55,12 @@ public class GiftMenuWindow extends CloseableWindow {
         });
 
         TextButton giftHistoryButton = new TextButton("Gift History", GamePictureManager.skin);
+        giftHistoryButton.setColor(Color.GOLDENROD);
+
         giftHistoryButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                stage.addActor(new GiftHistoryWindow(stage, friendshipWindow,player));
+                stage.addActor(new GiftHistoryWindow(stage, friendshipWindow, player));
                 remove();
             }
         });

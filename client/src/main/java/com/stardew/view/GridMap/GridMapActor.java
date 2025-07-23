@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.App;
+import com.stardew.models.app.Game;
 import com.stardew.models.mapInfo.Tile;
 import com.stardew.models.userInfo.Player;
 
@@ -16,6 +16,7 @@ public class GridMapActor extends Actor {
     private final float cellSize = 24; //TODO
     private CellInfo[][] grid;
     private Tile[][] tiles;
+    private Game game;
     private int selectedX = -1;  //selected index X in cells in this Actor
     private int selectedY = -1;  //selected index Y in cells in this Actor
     private final int selectionWidth;
@@ -25,9 +26,11 @@ public class GridMapActor extends Actor {
     private int startX;  //the X index of tiles in map for current player
     private int startY;  //the Y index of tiles in map for current player
 
-    public GridMapActor(int selectionWidth, int selectionHeight) {
+    public GridMapActor(int selectionWidth, int selectionHeight , Game game) {
         this.selectionWidth = selectionWidth;
         this.selectionHeight = selectionHeight;
+        this.game = game;
+        this.tiles = game.getMap().getTiles();
 
         initializeGrid();
 
@@ -49,12 +52,11 @@ public class GridMapActor extends Actor {
     }
 
     public void initializeGrid() {
-        tiles = App.getGame().getMap().getTiles();
 
-        Player currentPlayer = App.getGame().getCurrentPlayingPlayer();
+        Player currentPlayer = game.getCurrentPlayingPlayer();
 
-        startX = App.getGame().getMap().getFarmStartX(currentPlayer);
-        startY = App.getGame().getMap().getFarmStartY(currentPlayer);
+        startX = game.getMap().getFarmStartX(currentPlayer , game);
+        startY = game.getMap().getFarmStartY(currentPlayer , game);
 
         grid = new CellInfo[cols][rows];
         for (int x = 0; x < cols; x++) {

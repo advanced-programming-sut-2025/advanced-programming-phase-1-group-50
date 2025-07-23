@@ -13,7 +13,7 @@ import com.stardew.controller.PlayerController;
 import com.stardew.controller.TimeManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.ShippingBin;
-import com.stardew.models.animals.GameModel;
+import com.stardew.models.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.windows.SmartTooltip;
@@ -110,6 +110,7 @@ public class GameScreenMenu implements Screen {
         timeManager.changeTileTextureInWinter();
         timeManager.changeTileTextureInSpring();
         timeManager.setWateredTile(v);
+        weatherManager.thunder(v , stage);
     }
 
     private void addStoresImages() {

@@ -20,15 +20,15 @@ public class MapWindowActor extends Actor {
     private final TextureRegion selectedTexture = GamePictureManager.selectedTile;
 
 
-    public MapWindowActor() {
-
+    public MapWindowActor(Tile[][] tiles) {
+        this.tiles = tiles;
         init();
         setSize(cols * cellSize, rows * cellSize);
 
     }
 
     public void init() {
-        tiles = App.getGame().getMap().getTiles();
+
         Player p = App.getGame().getCurrentPlayingPlayer();
         int x = (int) Math.floor(p.getPlayerPosition().getFirst());
         int y =(int) Math.floor(p.getPlayerPosition().getSecond());

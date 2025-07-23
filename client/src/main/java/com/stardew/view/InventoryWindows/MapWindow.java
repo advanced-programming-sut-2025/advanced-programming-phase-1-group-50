@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.app.App;
 import com.stardew.view.GridMap.GridMapActor;
 import com.stardew.view.windows.CloseableWindow;
 
@@ -30,7 +31,7 @@ public class MapWindow extends CloseableWindow {
             stage.getCamera().position.y - getHeight() / 2);
         setColor(Color.BROWN);
 
-        mapWindowActor = new MapWindowActor();
+        mapWindowActor = new MapWindowActor(App.getGame().getMap().getTiles());
         scrollPane = new ScrollPane(mapWindowActor, GamePictureManager.skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(false, false);

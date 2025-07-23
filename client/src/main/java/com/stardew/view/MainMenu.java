@@ -72,7 +72,7 @@ public class MainMenu implements AppMenu , Screen {
         logoutButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                controller.handleLogout();
             }
         });
 

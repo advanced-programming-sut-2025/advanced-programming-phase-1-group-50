@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.ShippingBin;
-import com.stardew.models.animals.GameModel;
+import com.stardew.models.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.models.stores.Store;
 import com.stardew.models.userInfo.Player;
@@ -66,8 +66,8 @@ public class GameMenuInputAdapter extends InputAdapter {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Player currentPlayer = App.getGame().getCurrentPlayingPlayer();
 
-        int startX = App.getGame().getMap().getFarmStartX(currentPlayer);
-        int startY = App.getGame().getMap().getFarmStartY(currentPlayer);
+        int startX = App.getGame().getMap().getFarmStartX(currentPlayer , App.getGame());
+        int startY = App.getGame().getMap().getFarmStartY(currentPlayer , App.getGame());
 
         Vector2 stageCoords = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
         int indexTileX = ((int)(stageCoords.x / GamePictureManager.TILE_SIZE)) + startX;

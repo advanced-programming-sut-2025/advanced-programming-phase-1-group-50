@@ -2,10 +2,12 @@ package com.stardew.controller;
 
 import com.badlogic.gdx.Screen;
 import com.stardew.Main;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.app.Menus;
 import com.stardew.view.GameMenu;
+import com.stardew.view.LoginAndRegisterMenu;
 import com.stardew.view.MainMenu;
 import com.stardew.view.ProfileMenu;
 
@@ -53,6 +55,15 @@ public class MainMenuController {
         Main.getMain().setScreen(gameMenu);
         screen.dispose();
 
+    }
+
+    public void handleLogout(){
+        logout();
+        Screen screen = Main.getMain().getScreen();
+
+        LoginAndRegisterMenu loginAndRegisterMenu = new LoginAndRegisterMenu(GamePictureManager.skin);
+        Main.getMain().setScreen(loginAndRegisterMenu);
+        screen.dispose();
     }
 
 
