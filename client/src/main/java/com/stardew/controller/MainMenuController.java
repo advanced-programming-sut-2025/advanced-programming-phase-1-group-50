@@ -5,8 +5,8 @@ import com.stardew.Main;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.app.Menus;
-import com.stardew.view.GameMenu;
 import com.stardew.view.MainMenu;
+import com.stardew.view.LobbyMenus.PreLobbyMenu;
 import com.stardew.view.ProfileMenu;
 
 public class MainMenuController {
@@ -49,8 +49,8 @@ public class MainMenuController {
     public void goToGameMenu(){
 
         Screen screen = Main.getMain().getScreen();
-        GameMenu gameMenu = new GameMenu();
-        Main.getMain().setScreen(gameMenu);
+        PreLobbyMenu preLobbyMenu = new PreLobbyMenu();
+        Main.getMain().setScreen(preLobbyMenu);
         screen.dispose();
 
     }

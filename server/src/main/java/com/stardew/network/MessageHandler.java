@@ -1,6 +1,7 @@
 package com.stardew.network;
 
 import com.stardew.controller.ForgetPasswordController;
+import com.stardew.controller.LobbyController;
 import com.stardew.controller.LoginAndRegisterController;
 import com.stardew.controller.SelectSecurityQuestionController;
 
@@ -9,11 +10,13 @@ public class MessageHandler {
     private final LoginAndRegisterController loginAndRegisterController;
     private final SelectSecurityQuestionController selectSecurityQuestionController;
     private final ForgetPasswordController forgetPasswordController;
+    private final LobbyController lobbyController;
 
     private MessageHandler() {
         loginAndRegisterController = new LoginAndRegisterController();
         selectSecurityQuestionController = new SelectSecurityQuestionController();
         forgetPasswordController = new ForgetPasswordController();
+        lobbyController = LobbyController.getInstance();
         //TODO Other controllers
     }
 
@@ -46,6 +49,14 @@ public class MessageHandler {
             }
             case FORGET_PASSWORD -> {
                 forgetPasswordController.handleForgetPassword(message, connection);
+                return true;
+            }
+            case CREATE_LOBBY -> {
+                lobbyController.handleCreateLobby(message, connection);
+                return true;
+            }
+            case SEND_LOBBIES -> {
+                lobbyController.sendLobbies(connection);
                 return true;
             }
             default -> {

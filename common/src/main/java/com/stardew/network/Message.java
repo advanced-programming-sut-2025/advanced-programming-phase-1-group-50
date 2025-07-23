@@ -2,6 +2,7 @@ package com.stardew.network;
 
 import com.stardew.utils.JSONUtils;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 
 public class Message {
@@ -37,6 +38,14 @@ public class Message {
     public float getFloatFromBody(String fieldName) {
         return  (float) ((Float) body.get(fieldName));
     }
+
+    public <T> T getFromBody(String fieldName, Type type) {
+        Object rawValue = body.get(fieldName);
+        if (rawValue == null) return null;
+        String json = JSONUtils.getGson().toJson(rawValue);
+        return JSONUtils.getGson().fromJson(json, type);
+    }
+
 
     @Override
     public String toString() {
