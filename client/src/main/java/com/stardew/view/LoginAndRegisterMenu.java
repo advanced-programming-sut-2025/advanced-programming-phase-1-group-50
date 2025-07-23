@@ -91,6 +91,7 @@ public class LoginAndRegisterMenu implements AppMenu , Screen {
 
                 if (response == null || response.getType() != MessageType.REGISTER_RESULT) {
                     showResult(new Result(false, "Connection failed or timed out!"));
+                    registerButton.setDisabled(false);
                     return;
                 }
                 Result result = response.getFromBody("result", Result.class);
@@ -126,6 +127,7 @@ public class LoginAndRegisterMenu implements AppMenu , Screen {
                 Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
                 if (response == null || response.getType() != MessageType.LOGIN_RESULT) {
                     showResult(new Result(false, "Connection failed or timed out!"));
+                    loginButton.setDisabled(false);
                     return;
                 }
                 Result result = response.getFromBody("result", Result.class);
