@@ -160,26 +160,26 @@ public class GameMenuController {
         return new Result(true, "map selected successfully");
     }
 
-    public Result createNewGame(ArrayList<Player> players) {
-        ArrayList<Farm> maps = new ArrayList<>();
-        for (Player p : players) {
-            maps.add(p.getFarm());
-
-        }
-
-        Map m = new Map(maps);
-        m.buildMap(players);
-        Game x = new Game(players, maps, App.getLoggedInUser(), m);
-
-        for (Player p : players) {
-            p.getPosition().setX(p.getFarm().getRectangle().x);
-            p.getPosition().setY(p.getFarm().getRectangle().y);
-        }
-        App.games.add(x);
-        App.setGame(x);
-        App.getGame().setCurrentPlayingPlayer(players.getFirst());
-        return new Result(true, "new game created successfully");
-    }
+//    public Result createNewGame(ArrayList<Player> players) {
+//        ArrayList<Farm> maps = new ArrayList<>();
+//        for (Player p : players) {
+//            maps.add(p.getFarm());
+//
+//        }
+//
+//        Map m = new Map(maps);
+//        m.buildMap(players);
+//        Game x = new Game(players, maps, App.getLoggedInUser(), m);
+//
+//        for (Player p : players) {
+//            p.getPosition().setX(p.getFarm().getRectangle().x);
+//            p.getPosition().setY(p.getFarm().getRectangle().y);
+//        }
+//        App.games.add(x);
+//        App.setGame(x);
+//        App.getGame().setCurrentPlayingPlayer(players.getFirst());
+//        return new Result(true, "new game created successfully");
+//    }
 
     public Result loadGame() {
         return new Result(true, "load game successful");
