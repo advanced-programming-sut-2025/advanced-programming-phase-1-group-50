@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.stardew.Main;
 import com.stardew.model.LobbyDTO;
-import com.stardew.models.Result;
+import com.stardew.model.Result;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 import com.stardew.network.NetworkManager;
@@ -91,7 +91,7 @@ public class LobbyInformationWindow extends CloseableWindow implements AppMenu {
                 Message message = prepareCreateLobbyMessage();
                 Message response = NetworkManager.getConnection().sendAndWaitForResponse(message , 500);
                 if ( response == null ||response.getType() != MessageType.CREATE_LOBBY_RESULT) {
-                    showResult(new com.stardew.model.Result(false, "Connection failed or timed out!"));
+                    showResult(new Result(false, "Connection failed or timed out!"));
                     createLobby.setDisabled(false);
                     return;
                 }

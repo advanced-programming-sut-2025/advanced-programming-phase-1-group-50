@@ -12,6 +12,8 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.Main;
 import com.stardew.model.Result;
+import com.stardew.model.UserDTO;
+import com.stardew.models.ClientInfo.LoggedInUser;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
@@ -58,6 +60,7 @@ public class SelectSecurityQuestionMenu implements AppMenu, Screen {
                     return;
                 }
                 Result result = response.getFromBody("result", Result.class);
+                LoggedInUser.setUser(new UserDTO(username, nickname));
                 showResult(result);
                 Timer.schedule(new Timer.Task() {
                     @Override
