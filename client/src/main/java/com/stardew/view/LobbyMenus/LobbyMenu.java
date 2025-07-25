@@ -29,6 +29,8 @@ public class LobbyMenu implements Screen, AppMenu {
     private Stage stage;
     private final Skin skin = GamePictureManager.skin;
     private final LobbyDTO lobby;
+    private Table root;
+    private ScrollPane playerScrollPane;
 
 
     public LobbyMenu(LobbyDTO lobby) {
@@ -48,10 +50,17 @@ public class LobbyMenu implements Screen, AppMenu {
         stage.addActor(background);
 
 
-        Table root = new Table();
+        root = new Table();
         root.setFillParent(true);
         root.top().pad(20);
         stage.addActor(root);
+
+        root = new Table(); // به جای Table لوکال قبلی
+        root.setFillParent(true);
+        root.top().pad(20);
+        stage.addActor(root);
+
+
 
         Label lobbyNameLabel = new Label("Lobby: " + lobby.name, skin);
         lobbyNameLabel.setAlignment(Align.center);
@@ -66,9 +75,9 @@ public class LobbyMenu implements Screen, AppMenu {
         }
 
 
-        ScrollPane scrollPane = new ScrollPane(playersTable, skin);
-        scrollPane.setFadeScrollBars(false);
-        root.add(scrollPane).height(250).width(400).colspan(2).padBottom(30).row();
+        playerScrollPane = new ScrollPane(playersTable, skin);
+        playerScrollPane.setFadeScrollBars(false);
+        root.add(playerScrollPane).height(250).width(400).colspan(2).padBottom(30).row();
 
 
         TextButton startGameBtn = new TextButton("Start Game", skin);
@@ -147,4 +156,32 @@ public class LobbyMenu implements Screen, AppMenu {
     public LobbyDTO getLobby() {
         return lobby;
     }
+
+    public void updatePlayerList(List<String> newPlayers) {
+
+        if (playerScrollPane != null) {
+            root.removeActor(playerScrollPane);
+        }
+
+
+        Table newPlayersTable = new Table();
+        for (String player : newPlayers) {
+            Label label = new Label(player, skin);
+            label.setAlignment(Align.center);
+            newPlayersTable.add(label).center().padBottom(10).row();
+        }
+
+
+        playerScrollPane = new ScrollPane(newPlayersTable, skin);
+        playerScrollPane.setFadeScrollBars(false);
+
+
+        root.add(playerScrollPane).height(250).width(400).colspan(2).padBottom(30).row();
+
+
+        lobby.players.clear();
+        lobby.players.addAll(newPlayers);
+    }
+
+
 }

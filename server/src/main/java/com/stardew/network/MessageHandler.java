@@ -1,9 +1,6 @@
 package com.stardew.network;
 
-import com.stardew.controller.ForgetPasswordController;
-import com.stardew.controller.LobbyController;
-import com.stardew.controller.LoginAndRegisterController;
-import com.stardew.controller.SelectSecurityQuestionController;
+import com.stardew.controller.*;
 
 public class MessageHandler {
     private static MessageHandler instance;
@@ -77,6 +74,7 @@ public class MessageHandler {
                 lobbyController.handleJoinLobby(message, connection);
                 return true;
             }
+
             default -> {
                 return false;
             }

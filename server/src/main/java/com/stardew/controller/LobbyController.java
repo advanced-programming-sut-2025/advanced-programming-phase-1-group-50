@@ -1,5 +1,6 @@
 package com.stardew.controller;
 
+import com.google.gson.reflect.TypeToken;
 import com.stardew.model.LobbyDTO;
 import com.stardew.model.Result;
 import com.stardew.model.ServerApp;
@@ -128,21 +129,45 @@ public class LobbyController {
     }
 
     public void handleJoinLobby(Message message, ClientConnectionThread connection){
-        LobbyDTO lobbyDTO = message.getFromBody("lobbyDTO");
+        LobbyDTO lobbyDTO = message.getFromBody("lobbyDTO", new TypeToken<LobbyDTO>() {}.getType());
+
         int id = lobbyDTO.id;
         Lobby lobby = findLobby(id);
         if(lobby != null) {
-            lobby.addUser(connection.getUser());
+
             HashMap<String , Object> body = new HashMap<>();
-            body.put("result" , new Result(true , "you are joined"));
+            if(lobby instanceof PrivateLobby privateLobby) {
+                String password = message.getFromBody("password");
+                if(!privateLobby.getPassword().equals(password)) {
+                    body.put("result" , new Result(false, "password does not match"));
+                }
+                else {
+                    body.put("result" , new Result(true, "password matched , you joined the lobby"));
+                    lobby.addUser(connection.getUser());
+                }
+            }
+            else {
+                body.put("result" , new Result(true , "you are joined"));
+                lobby.addUser(connection.getUser());
+            }
+
+            body.put("lobbyDTO" , lobby.toDTO());
             Message response = new Message(body , MessageType.JOIN_LOBBY_RESULT);
             connection.sendMessage(response);
 
             HashMap<String , Object> body2 = new HashMap<>();
             body2.put("lobbyID" , lobbyDTO.id);
-            body2.put("player" , lobby.getUsernameOfUsers());
+            body2.put("players" , lobby.getUsernameOfUsers());
             Message response2 = new Message(body2 , MessageType.LOBBY_PLAYERS_LIST_UPDATED);
-            connection.sendMessage(response2);
+            for(User u : lobby.getUsers()) {
+                ClientConnectionThread clientConnectionThread = ServerApp.findConnection(u.getUsername());
+                if(clientConnectionThread == null) {
+                    System.out.println("Connection to " + u.getUsername() + " failed");
+                }
+                else {
+                    clientConnectionThread.sendMessage(response2);
+                }
+            }
         }
     }
 

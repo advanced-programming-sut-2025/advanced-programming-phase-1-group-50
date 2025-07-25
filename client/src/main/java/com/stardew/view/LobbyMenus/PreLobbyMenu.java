@@ -13,15 +13,17 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.google.gson.reflect.TypeToken;
 import com.stardew.model.LobbyDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.Result;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 import com.stardew.network.NetworkManager;
+import com.stardew.view.AppMenu;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PreLobbyMenu implements Screen {
+public class PreLobbyMenu implements Screen , AppMenu {
     private Stage stage;
     private final TextButton createLobby;
     private final TextButton refresh;
@@ -148,11 +150,14 @@ public class PreLobbyMenu implements Screen {
             joinBtn.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    HashMap<String , Object> body = new HashMap<>();
-                    body.put("lobbyDTO", lobbyDTO);
-                    Message message = new Message(body , MessageType.JOIN_LOBBY);
-                    Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
-                    if(response != null && response.getType() == MessageType.JOIN_LOBBY_RESULT) {
+                    if(lobby.isPrivate){
+                        stage.addActor(new AskPrivateLobbyPasswordWindow(stage , lobbyDTO));
+                    }
+                    else{
+                        HashMap<String , Object> body = new HashMap<>();
+                        body.put("lobbyDTO", lobbyDTO);
+                        Message message = new Message(body , MessageType.JOIN_LOBBY);
+                        NetworkManager.getConnection().sendMessage(message);
 
                     }
                 }
@@ -172,5 +177,10 @@ public class PreLobbyMenu implements Screen {
             }
         }
         return visibleLobbies;
+    }
+
+    @Override
+    public Stage getStage() {
+        return stage;
     }
 }
