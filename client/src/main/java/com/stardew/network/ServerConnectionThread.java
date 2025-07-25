@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class ServerConnectionThread extends ConnectionThread {
+    private final MessageHandler messageHandler = MessageHandler.getInstance();
 
 
     public ServerConnectionThread(Socket socket) throws IOException {
@@ -12,7 +13,6 @@ public class ServerConnectionThread extends ConnectionThread {
 
     @Override
     protected boolean handleMessage(Message message) {
-        //TODO
-        return false;
+        return messageHandler.handleMessage(message);
     }
 }

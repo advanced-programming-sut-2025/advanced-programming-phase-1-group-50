@@ -11,12 +11,14 @@ public class MessageHandler {
     private final SelectSecurityQuestionController selectSecurityQuestionController;
     private final ForgetPasswordController forgetPasswordController;
     private final LobbyController lobbyController;
+    private final PreGameController preGameController;
 
     private MessageHandler() {
         loginAndRegisterController = new LoginAndRegisterController();
         selectSecurityQuestionController = new SelectSecurityQuestionController();
         forgetPasswordController = new ForgetPasswordController();
         lobbyController = LobbyController.getInstance();
+        preGameController = PreGameController.getInstance();
         //TODO Other controllers
     }
 
@@ -57,6 +59,14 @@ public class MessageHandler {
             }
             case SEND_LOBBIES -> {
                 lobbyController.sendLobbies(connection);
+                return true;
+            }
+            case START_GAME -> {
+                lobbyController.handleStartGame(message, connection);
+                return true;
+            }
+            case READY_STATUS -> {
+                preGameController.handlePlayerReady(message, connection);
                 return true;
             }
             case SEARCH_LOBBY ->{

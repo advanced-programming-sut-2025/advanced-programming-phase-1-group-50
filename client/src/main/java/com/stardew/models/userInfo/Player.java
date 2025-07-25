@@ -31,7 +31,6 @@ public class Player {
         return maxEnergy;
     }
 
-    private Animal currentAnimal = null;
     private final Ability ability = new Ability(this);
     private Tool currentTool;
     private  final Backpack backpack = new Backpack(BackpackType.Primary);
@@ -250,14 +249,6 @@ public class Player {
 
     public void setFaintedToday(boolean faintedToday) {
         isFaintedToday = faintedToday;
-    }
-
-    public Animal getCurrentAnimal() {
-        return currentAnimal;
-    }
-
-    public void setCurrentAnimal(Animal currentAnimal) {
-        this.currentAnimal = currentAnimal;
     }
 
     public int getConsumedEnergyInTurn() {

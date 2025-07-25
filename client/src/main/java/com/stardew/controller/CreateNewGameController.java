@@ -75,10 +75,10 @@ public class CreateNewGameController {
 
 
 
-            Screen screen = Main.getMain().getScreen();
-            SelectFarmMenu selectFarmMenu = new SelectFarmMenu(players);
-            Main.getMain().setScreen(selectFarmMenu);
-            screen.dispose();
+//            Screen screen = Main.getMain().getScreen();
+//            SelectFarmMenu selectFarmMenu = new SelectFarmMenu(players);
+//            Main.getMain().setScreen(selectFarmMenu);
+//            screen.dispose();
 
 
         }
