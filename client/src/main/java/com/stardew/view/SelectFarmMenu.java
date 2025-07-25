@@ -2,70 +2,84 @@ package com.stardew.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.stardew.Main;
-import com.stardew.controller.SelectFarmMenuController;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
 import com.stardew.models.userInfo.Player;
-import com.stardew.view.GridMap.GridMapActor;
-import com.stardew.view.GridMap.TileSelectionWindow;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class SelectFarmMenu implements Screen {
-    private Stage stage;
-    private final SelectFarmMenuController controller = new SelectFarmMenuController();
-    private final SelectBox<String> selectFarmPlayer1;
-    private final SelectBox<String> selectFarmPlayer2;
-    private final SelectBox<String> selectFarmPlayer3;
-    private final SelectBox<String> selectFarmPlayer4;
+public class SelectFarmMenu implements Screen, AppMenu {
+    private final Stage stage;
+    private final SelectBox<String> selectFarm;
     private final TextButton farm1;
     private final TextButton farm2;
     private final TextButton farm3;
     private final TextButton farm4;
-
-    private ArrayList<Player> players = new ArrayList<>();
-    private final TextButton start;
-
-    public SelectFarmMenu(ArrayList<Player> players) {
-        stage = new Stage();
-        Array<String> farmNames = new Array<>();
-        farmNames.add("Farm 1");
-        farmNames.add("Farm 2");
-        farmNames.add("Farm 3");
-        farmNames.add("Farm 4");
-
-        this.players.addAll(players);
-
-        selectFarmPlayer1 = new SelectBox<>(GamePictureManager.skin);
-        selectFarmPlayer1.setItems(farmNames);
-        selectFarmPlayer2 = new SelectBox<>(GamePictureManager.skin);
-        selectFarmPlayer2.setItems(farmNames);
-        selectFarmPlayer3 = new SelectBox<>(GamePictureManager.skin);
-        selectFarmPlayer3.setItems(farmNames);
-        selectFarmPlayer4 = new SelectBox<>(GamePictureManager.skin);
-        selectFarmPlayer4.setItems(farmNames);
-
-        start = new TextButton("Start", GamePictureManager.skin);
+    private final TextButton ready;
+    private final Label timeLabel;
+    private final int id;
+    private final float SELECT_TIME = 30f;
+    private float remainingTime = SELECT_TIME;
+    private String farmSelected;
+    private boolean hasSentReadyMessage = false;
+    private final ArrayList<Player> players = new ArrayList<>();
 
 
-        start.addListener(new ClickListener() {
+    public SelectFarmMenu(int id) {
+        this.id = id;
+        stage = new Stage(new ScreenViewport());
+        String[] farmNames = new String[]{
+            "Farm 1",
+            "Farm 2",
+            "Farm 3",
+            "Farm 4",
+        };
+
+//        this.players.addAll(players);
+
+        selectFarm = new SelectBox<>(GamePictureManager.skin);
+        selectFarm.setItems(farmNames);
+        selectFarm.addListener(new ChangeListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y) {
-                controller.handleSelectFarm(players);
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                String currentSelected = selectFarm.getSelected();
+                if (farmSelected != null) {
+                    if (farmSelected.equals(currentSelected)) {
+                        selectFarm.setColor(Color.GREEN);
+                    } else {
+                        selectFarm.setColor(Color.WHITE);
+                    }
+                }
             }
         });
+
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = GamePictureManager.smallFont;
+        labelStyle.fontColor = Color.BLACK;
+        timeLabel = new Label("", labelStyle);
+
+        ready = new TextButton("Ready", GamePictureManager.skin);
+        ready.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                sendReadyMessage();
+            }
+        });
+
         farm1 = new TextButton("Farm 1", GamePictureManager.skin);
         farm1.addListener(new ClickListener() {
             @Override
@@ -98,11 +112,33 @@ public class SelectFarmMenu implements Screen {
                 stage.addActor(new ShowFarmsWindow(stage , 4 , App.gameSample));
             }
         });
-
-        controller.setView(this);
-
     }
 
+
+    private void sendReadyMessage() {
+        farmSelected = selectFarm.getSelected();
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("farmSelected", farmSelected);
+        body.put("isReady", true);
+        body.put("lobbyID", id);
+        Message message = new Message(body, MessageType.READY_STATUS);
+        NetworkManager.getConnection().sendMessage(message);
+        hasSentReadyMessage = true;
+        selectFarm.setColor(Color.GREEN);
+    }
+
+    private void updateTimer(float delta) {
+        remainingTime -= delta;
+        if (remainingTime <= 0) {
+            remainingTime = 0;
+            if (!hasSentReadyMessage)
+                sendReadyMessage();
+        }
+    }
+
+    private void updateTimeLabel() {
+        timeLabel.setText(((int) remainingTime) + " s");
+    }
 
 
 
@@ -118,19 +154,11 @@ public class SelectFarmMenu implements Screen {
         table.setFillParent(true);
         table.center();
 
-        table.add("Player 1 - Select Farm:").pad(10);
-        table.add(selectFarmPlayer1).width(200).row();
+        table.add(timeLabel).colspan(2).pad(20).row();
+        table.add("Select Farm: ").pad(10);
+        table.add(selectFarm).width(200).row();
 
-        table.add("Player 2 - Select Farm:").pad(10);
-        table.add(selectFarmPlayer2).width(200).row();
-
-        table.add("Player 3 - Select Farm:").pad(10);
-        table.add(selectFarmPlayer3).width(200).row();
-
-        table.add("Player 4 - Select Farm:").pad(10);
-        table.add(selectFarmPlayer4).width(200).row();
-
-        table.add(start).colspan(2).padTop(20).row();
+        table.add(ready).colspan(2).padTop(20).row();
         table.add(farm1).colspan(2).padTop(20).width(200).row();
         table.add(farm2).colspan(2).padTop(20).width(200).row();
         table.add(farm3).colspan(2).padTop(20).width(200).row();
@@ -139,16 +167,13 @@ public class SelectFarmMenu implements Screen {
         stage.addActor(table);
     }
 
-
     @Override
-    public void render(float v) {
-
+    public void render(float delta) {
         ScreenUtils.clear(0 , 0  , 0 , 1);
-        Main.getBatch().begin();
-        Main.getBatch().end();
+        updateTimer(delta);
+        updateTimeLabel();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-
     }
 
     @Override
@@ -180,27 +205,4 @@ public class SelectFarmMenu implements Screen {
         return stage;
     }
 
-    public SelectBox<String> getSelectFarmPlayer4() {
-        return selectFarmPlayer4;
-    }
-
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
-
-    public SelectBox<String> getSelectFarmPlayer2() {
-        return selectFarmPlayer2;
-    }
-
-    public SelectBox<String> getSelectFarmPlayer3() {
-        return selectFarmPlayer3;
-    }
-
-    public SelectBox<String> getSelectFarmPlayer1() {
-        return selectFarmPlayer1;
-    }
-
-    public SelectFarmMenuController getController() {
-        return controller;
-    }
 }

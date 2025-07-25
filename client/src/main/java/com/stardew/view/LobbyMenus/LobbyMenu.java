@@ -14,12 +14,18 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.model.LobbyDTO;
 
+import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
+import com.stardew.view.AppMenu;
 
 
+import java.util.HashMap;
 import java.util.List;
 
-public class LobbyMenu implements Screen {
+public class LobbyMenu implements Screen, AppMenu {
     private Stage stage;
     private final Skin skin = GamePictureManager.skin;
     private final LobbyDTO lobby;
@@ -78,7 +84,17 @@ public class LobbyMenu implements Screen {
         startGameBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
+                HashMap<String, Object> body = new HashMap<>();
+                body.put("lobbyID", lobby.id);
+                Message message = new Message(body, MessageType.START_GAME);
+                Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
 
+                if (response == null || !response.getType().equals(MessageType.START_GAME_RESULT)) {
+                    showResult(new Result(false, "Connection failed or timed out!"));
+                    return;
+                }
+                Result result = response.getFromBody("result", Result.class);
+                showResult(result);
             }
         });
 
@@ -121,6 +137,11 @@ public class LobbyMenu implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    @Override
+    public Stage getStage() {
+        return stage;
     }
 
     public LobbyDTO getLobby() {
