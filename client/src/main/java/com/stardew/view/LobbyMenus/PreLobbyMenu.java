@@ -4,9 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -26,8 +24,10 @@ import java.util.HashMap;
 public class PreLobbyMenu implements Screen {
     private Stage stage;
     private final TextButton createLobby;
-    private final TextButton joinLobby;
     private final TextButton refresh;
+    private final TextField searchLobby;
+    private final ImageButton searchButton;
+    private final Table lobbyTable;
 
     public PreLobbyMenu() {
         stage = new Stage(new ScreenViewport());
@@ -40,13 +40,7 @@ public class PreLobbyMenu implements Screen {
             }
         });
 
-        joinLobby = new TextButton("Join Lobby", GamePictureManager.skin);
-        joinLobby.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                // TODO: open lobby join window
-            }
-        });
+
         refresh = new TextButton("Refresh", GamePictureManager.skin);
         refresh.addListener(new ClickListener() {
             @Override
@@ -58,37 +52,76 @@ public class PreLobbyMenu implements Screen {
                     Type type = new TypeToken<ArrayList<LobbyDTO>>(){}.getType();
 
                     ArrayList<LobbyDTO> ltd = response.getFromBody("lobbyDTOS" , type);
-                    RefreshLobbiesWindow refreshLobbiesWindow = new RefreshLobbiesWindow(stage);
-                    refreshLobbiesWindow.updateLobbyList(ltd);
-                    stage.addActor(refreshLobbiesWindow);
+                    ArrayList<LobbyDTO> visibleLobbies = getVisibleLobbies(ltd);
+                    updateLobbyTable(visibleLobbies);
                 }
 
 
             }
         });
+        searchLobby = new TextField("Search Lobby", GamePictureManager.skin);
+        searchButton = new ImageButton(GamePictureManager.searchButtonDrawable);
+        searchButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                String search = searchLobby.getText();
+                if(search.isEmpty()) return;
+
+
+                HashMap<String , Object> body = new HashMap<>();
+                body.put("search", search);
+                Message message = new Message(body , MessageType.SEARCH_LOBBY);
+                Message response = NetworkManager.getConnection().sendAndWaitForResponse(message , 500);
+                if(response != null && response.getType() == MessageType.SEARCH_LOBBY_RESULT) {
+                    LobbyDTO result = response.getFromBody("lobbyDTOS" , LobbyDTO.class);
+                    ArrayList<LobbyDTO> ltd = new ArrayList<>();
+                    ltd.add(result);
+                    updateLobbyTable(ltd);
+                }
+            }
+        });
+
+        lobbyTable = new Table();
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
 
-        // پس‌زمینه
+
         TextureRegionDrawable bgTex = GamePictureManager.menuBackground;
         Image background = new Image(bgTex);
         background.setFillParent(true);
         stage.addActor(background);
 
-        // استفاده از Table برای چینش مرتب
-        Table table = new Table();
-        table.setFillParent(true);
-        table.center(); // وسط صفحه
 
-        table.add(createLobby).width(300).height(60).padBottom(20).row();
-        table.add(joinLobby).width(300).height(60);
-        table.add(refresh).width(300).height(60);
+        Table root = new Table();
+        root.setFillParent(true);
+        stage.addActor(root);
 
-        stage.addActor(table);
+
+        Table topBar = new Table();
+        topBar.add(createLobby).width(200).height(50).padRight(20);
+
+
+        Table searchBox = new Table();
+        searchBox.add(searchLobby).width(300).height(50);
+        searchBox.add(searchButton).width(50).height(50).padLeft(10);
+        topBar.add(searchBox).padRight(20);
+
+        topBar.add(refresh).width(200).height(50);
+
+
+        ScrollPane scrollPane = new ScrollPane(lobbyTable, GamePictureManager.skin);
+        scrollPane.setFadeScrollBars(false);
+        scrollPane.setScrollingDisabled(true, false);
+
+
+        root.top().padTop(30);
+        root.add(topBar).expandX().fillX().padBottom(20).row();
+        root.add(scrollPane).expand().fill().pad(20);
     }
+
 
     @Override
     public void render(float delta) {
@@ -102,4 +135,42 @@ public class PreLobbyMenu implements Screen {
     @Override public void resume() {}
     @Override public void hide() {}
     @Override public void dispose() {}
+
+    private void updateLobbyTable(ArrayList<LobbyDTO> lobbies) {
+        lobbyTable.clear();
+        for (LobbyDTO lobby : lobbies) {
+
+            Label lobbyName = new Label(lobby.name + "ID : " + lobby.id + "User : " + lobby.adminUsername, GamePictureManager.skin);
+            final LobbyDTO lobbyDTO = lobby;
+
+            TextButton joinBtn = new TextButton("Join", GamePictureManager.skin);
+
+            joinBtn.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    HashMap<String , Object> body = new HashMap<>();
+                    body.put("lobbyDTO", lobbyDTO);
+                    Message message = new Message(body , MessageType.JOIN_LOBBY);
+                    Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+                    if(response != null && response.getType() == MessageType.JOIN_LOBBY_RESULT) {
+
+                    }
+                }
+            });
+
+            lobbyTable.add(lobbyName).left().pad(10);
+            lobbyTable.add(joinBtn).right().pad(10);
+            lobbyTable.row();
+        }
+    }
+
+    private ArrayList<LobbyDTO> getVisibleLobbies(ArrayList<LobbyDTO> lobbies) {
+        ArrayList<LobbyDTO> visibleLobbies = new ArrayList<>();
+        for (LobbyDTO lobby : lobbies) {
+            if(lobby.isVisible){
+                visibleLobbies.add(lobby);
+            }
+        }
+        return visibleLobbies;
+    }
 }

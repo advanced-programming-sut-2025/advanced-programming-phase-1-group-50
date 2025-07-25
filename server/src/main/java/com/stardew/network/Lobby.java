@@ -49,4 +49,6 @@ public abstract class Lobby {
     }
 
     public abstract LobbyDTO toDTO();
+
+    public abstract ArrayList<String> getUsernameOfUsers();
 }

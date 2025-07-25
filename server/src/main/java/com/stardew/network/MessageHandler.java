@@ -59,6 +59,14 @@ public class MessageHandler {
                 lobbyController.sendLobbies(connection);
                 return true;
             }
+            case SEARCH_LOBBY ->{
+                lobbyController.sendSearchLobby(message, connection);
+                return true;
+            }
+            case JOIN_LOBBY ->{
+                lobbyController.handleJoinLobby(message, connection);
+                return true;
+            }
             default -> {
                 return false;
             }

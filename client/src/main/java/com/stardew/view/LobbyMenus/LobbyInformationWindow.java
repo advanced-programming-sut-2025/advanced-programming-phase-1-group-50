@@ -58,6 +58,7 @@ public class LobbyInformationWindow extends CloseableWindow implements AppMenu {
 
         // Private or Public
         privateOrPublic = new CheckBox(" Private Lobby", skin);
+        privateOrPublic.setChecked(true);
         content.add(privateOrPublic).left().colspan(3).row();
 
         // Visibility

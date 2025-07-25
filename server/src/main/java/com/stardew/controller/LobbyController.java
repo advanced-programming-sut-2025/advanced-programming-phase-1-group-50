@@ -111,5 +111,38 @@ public class LobbyController {
         connection.sendMessage(response);
     }
 
+    public void sendSearchLobby( Message message , ClientConnectionThread connection){
+        String search = message.getFromBody("search");
+        int id = Integer.parseInt(search);
+        Lobby lobby = findLobby(id);
+        if(lobby != null) {
+            LobbyDTO lobbyDTO = lobby.toDTO();
+            HashMap<String , Object> body = new HashMap<>();
+            body.put("lobbyDTOS" , lobbyDTO);
+            Message response = new Message(body , MessageType.SEARCH_LOBBY_RESULT);
+            connection.sendMessage(response);
+        }
+
+    }
+
+    public void handleJoinLobby(Message message, ClientConnectionThread connection){
+        LobbyDTO lobbyDTO = message.getFromBody("lobbyDTO");
+        int id = lobbyDTO.id;
+        Lobby lobby = findLobby(id);
+        if(lobby != null) {
+            lobby.addUser(connection.getUser());
+            HashMap<String , Object> body = new HashMap<>();
+            body.put("result" , new Result(true , "you are joined"));
+            Message response = new Message(body , MessageType.JOIN_LOBBY_RESULT);
+            connection.sendMessage(response);
+
+            HashMap<String , Object> body2 = new HashMap<>();
+            body2.put("lobbyID" , lobbyDTO.id);
+            body2.put("player" , lobby.getUsernameOfUsers());
+            Message response2 = new Message(body2 , MessageType.LOBBY_PLAYERS_LIST_UPDATED);
+            connection.sendMessage(response2);
+        }
+    }
+
 
 }

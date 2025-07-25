@@ -1802,5 +1802,7 @@ public class GamePictureManager {
         }
     }
     public static Animation<TextureRegion> stormAnimation = new Animation<>(0.15f , frames4 , Animation.PlayMode.LOOP);
+    public static TextureRegionDrawable searchButtonDrawable = new TextureRegionDrawable(new TextureRegion(new Texture("searchButton.png")));
+
 
 }

@@ -24,7 +24,7 @@ public class PrivateLobby extends Lobby {
         return new LobbyDTO(id , name , visible , true , admin.getUsername() ,getUsernameOfUsers() );
     }
 
-    private ArrayList<String > getUsernameOfUsers(){
+    public ArrayList<String > getUsernameOfUsers(){
         ArrayList<String> usernames = new ArrayList<>();
         for(User u : users){
             usernames.add(u.getUsername());
