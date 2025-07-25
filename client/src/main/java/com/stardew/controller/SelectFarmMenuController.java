@@ -41,10 +41,10 @@ public class SelectFarmMenuController {
     }
 
     public void handleSelectFarm(ArrayList<Player> players) {
-        String select1 = view.getSelectFarmPlayer1().getSelected();
-        String select2 = view.getSelectFarmPlayer2().getSelected();
-        String select3 = view.getSelectFarmPlayer3().getSelected();
-        String select4 = view.getSelectFarmPlayer4().getSelected();
+        String select1 = "view.getSelectFarmPlayer1().getSelected()";
+        String select2 = "view.getSelectFarmPlayer2().getSelected()";
+        String select3 = "view.getSelectFarmPlayer3().getSelected()";
+        String select4 = "view.getSelectFarmPlayer4().getSelected()";
         ArrayList<String> selected = new ArrayList<>();
         selected.add(select1);
         selected.add(select2);

@@ -2,6 +2,7 @@ package com.stardew.controller;
 
 import com.stardew.model.LobbyDTO;
 import com.stardew.model.Result;
+import com.stardew.model.ServerApp;
 import com.stardew.model.userInfo.User;
 import com.stardew.network.*;
 
@@ -9,10 +10,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LobbyController {
-    private ArrayList<Lobby> lobbies = new ArrayList<>();
-
-
     private static LobbyController instance ;
+    private final ArrayList<Lobby> lobbies = new ArrayList<>();
+    private final PreGameController preGameController = PreGameController.getInstance();
+
+
+    private LobbyController() {}
+
+    public static synchronized LobbyController getInstance() {
+        if(instance == null) {
+            instance = new LobbyController();
+        }
+        return instance;
+    }
 
 
     public Lobby findLobby(int id) {
@@ -57,14 +67,6 @@ public class LobbyController {
         if(lobby != null) {
             lobbies.remove(lobby);
         }
-    }
-
-
-    public static LobbyController getInstance() {
-        if(instance == null) {
-            instance = new LobbyController();
-        }
-        return instance;
     }
 
     public void handleCreateLobby(Message message, ClientConnectionThread connection){
@@ -112,4 +114,55 @@ public class LobbyController {
     }
 
 
+    public void handleStartGame(Message message, ClientConnectionThread connection) {
+        int lobbyID = message.getIntFromBody("lobbyID");
+        Lobby lobby = findLobby(lobbyID);
+
+        HashMap<String , Object> responseBody = new HashMap<>();
+        Result result;
+
+        if (lobby == null) {
+            result = new Result(false, "lobby not found");
+            responseBody.put("result", result);
+            Message response = new Message(responseBody, MessageType.START_GAME_RESULT);
+            connection.sendMessage(response);
+            return;
+        }
+
+        if (lobby.getUsers().size() < 2) {
+            result = new Result(false, "lobby members not enough");
+            responseBody.put("result", result);
+            Message response = new Message(responseBody, MessageType.START_GAME_RESULT);
+            connection.sendMessage(response);
+            return;
+        }
+
+        if (!lobby.getAdmin().getUsername().equals(connection.getUser().getUsername())) {
+            result = new Result(false, "You are not the admin");
+            responseBody.put("result", result);
+            Message response = new Message(responseBody, MessageType.START_GAME_RESULT);
+            connection.sendMessage(response);
+            return;
+        }
+
+        result = new Result(true, "Now You are ready to start the game. Please select a farm!");
+        responseBody.put("result", result);
+        Message response = new Message(responseBody, MessageType.START_GAME_RESULT);
+        connection.sendMessage(response);
+
+
+        HashMap<String , Object> orderBody = new HashMap<>();
+        orderBody.put("lobbyID" , lobbyID);
+        Message order = new Message(orderBody, MessageType.GO_TO_SELECT_FARM_MENU);
+
+        for (User lobbyUser : lobby.getUsers()) {
+            ClientConnectionThread clientConnection = ServerApp.findConnection(lobbyUser.getUsername());
+            if (clientConnection == null)
+                System.out.println("Connection lost with user <" + lobbyUser.getUsername() + ">");
+            else
+                clientConnection.sendMessage(order);
+        }
+
+        preGameController.addNewPreGame(lobby);
+    }
 }

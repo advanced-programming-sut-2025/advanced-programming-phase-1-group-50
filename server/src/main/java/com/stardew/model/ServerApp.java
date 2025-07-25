@@ -19,17 +19,31 @@ public class ServerApp {
         listenerThread.start();
     }
 
-    public static synchronized void addClientConnection(ClientConnectionThread clientConnectionThread) {
+    public static void addClientConnection(ClientConnectionThread clientConnectionThread) {
         if (clientConnectionThread != null && !clientConnection.contains(clientConnectionThread)) {
-            clientConnection.add(clientConnectionThread);
+            synchronized (clientConnection) {
+                clientConnection.add(clientConnectionThread);
+            }
         }
     }
 
-    public static synchronized void removeClientConnection(ClientConnectionThread clientConnectionThread) {
+    public static void removeClientConnection(ClientConnectionThread clientConnectionThread) {
         if (clientConnectionThread != null) {
-            clientConnection.remove(clientConnectionThread);
+            synchronized (clientConnection) {
+                clientConnection.remove(clientConnectionThread);
+            }
             clientConnectionThread.end();
         }
+    }
+
+    public static ClientConnectionThread findConnection(String username) {
+        synchronized (clientConnection) {
+            for (ClientConnectionThread connection : clientConnection) {
+                if (connection.getUser() != null && connection.getUser().getUsername().equals(username))
+                    return connection;
+            }
+        }
+        return null;
     }
 
     public static boolean isEnded() {
