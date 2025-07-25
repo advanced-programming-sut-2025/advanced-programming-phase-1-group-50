@@ -89,6 +89,7 @@ public class LobbyController {
         Result res = showMessageOfCreatingLobby();
         HashMap<String , Object> body = new HashMap<>();
         body.put("lobbyDTO" , ltd);
+        body.put("username" , user.getUsername());
         body.put("result" , res);
         Message response = new Message(body , MessageType.CREATE_LOBBY_RESULT);
         connection.sendMessage(response);
@@ -144,14 +145,17 @@ public class LobbyController {
                 else {
                     body.put("result" , new Result(true, "password matched , you joined the lobby"));
                     lobby.addUser(connection.getUser());
+                    lobby.setAddUserSecondTime(true);
                 }
             }
             else {
                 body.put("result" , new Result(true , "you are joined"));
                 lobby.addUser(connection.getUser());
+                lobby.setAddUserSecondTime(true);
             }
 
             body.put("lobbyDTO" , lobby.toDTO());
+            body.put("username" , connection.getUser().getUsername());
             Message response = new Message(body , MessageType.JOIN_LOBBY_RESULT);
             connection.sendMessage(response);
 
@@ -222,5 +226,53 @@ public class LobbyController {
         }
 
         preGameController.addNewPreGame(lobby);
+    }
+
+    public void leaveLobby(Message message, ClientConnectionThread connection) {
+        int lobbyID = message.getIntFromBody("lobbyID");
+        Lobby lobby = findLobby(lobbyID);
+        User user = connection.getUser();
+        if(lobby != null) {
+            lobby.removeUser(user);
+            if(lobby.getAdmin().getUsername().equals(user.getUsername())) {
+                if(!lobby.getUsers().isEmpty()) {
+                    lobby.setAdmin(lobby.getUsers().getFirst());
+                }
+                else {
+                    lobbies.remove(lobby);
+
+                }
+            }
+            HashMap<String , Object> responseBody = new HashMap<>();
+            responseBody.put("result" , new Result(true, "lobby successfully leaved"));
+            Message response = new Message(responseBody, MessageType.LEAVE_LOBBY_RESULT);
+            connection.sendMessage(response);
+
+
+            HashMap<String , Object> orderBody = new HashMap<>();
+            orderBody.put("lobbyID" , lobbyID);
+            orderBody.put("players" , lobby.getUsernameOfUsers());
+            Message order = new Message(orderBody, MessageType.LOBBY_PLAYERS_LIST_UPDATED);
+            for(User u : lobby.getUsers()) {
+                ClientConnectionThread clientConnection = ServerApp.findConnection(u.getUsername());
+                if(clientConnection == null)
+                    System.out.println("Connection lost with user <" + u.getUsername() + ">");
+                else
+                    clientConnection.sendMessage(order);
+            }
+
+        }
+    }
+
+    public void handleDestroyLobby(Message message, ClientConnectionThread connection) {
+        int lobbyID = message.getIntFromBody("lobbyID");
+        Lobby lobby = findLobby(lobbyID);
+        if(lobby != null) {
+            lobbies.remove(lobby);
+            HashMap<String , Object> responseBody = new HashMap<>();
+            responseBody.put("result" , new Result(true, "lobby successfully destroyed"));
+            Message response = new Message(responseBody, MessageType.DESTROY_LOBBY_RESULT);
+            connection.sendMessage(response);
+        }
     }
 }

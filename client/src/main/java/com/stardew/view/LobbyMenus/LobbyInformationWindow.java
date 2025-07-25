@@ -101,8 +101,9 @@ public class LobbyInformationWindow extends CloseableWindow implements AppMenu {
                 if(result.getSuccessful()){
                     System.out.println("Creating lobby");
                     LobbyDTO lobbyDTO = response.getFromBody("lobbyDTO", LobbyDTO.class);
+                    String username = response.getFromBody("username", String.class);
                     Screen screen = Main.getMain().getScreen();
-                    LobbyMenu lobbyMenu = new LobbyMenu(lobbyDTO);
+                    LobbyMenu lobbyMenu = new LobbyMenu(lobbyDTO , username);
                     Main.getMain().setScreen(lobbyMenu);
                     screen.dispose();
                     System.out.println("disposed");

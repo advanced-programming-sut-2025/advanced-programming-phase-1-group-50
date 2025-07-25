@@ -74,6 +74,14 @@ public class MessageHandler {
                 lobbyController.handleJoinLobby(message, connection);
                 return true;
             }
+            case LEAVE_LOBBY -> {
+                lobbyController.leaveLobby(message, connection);
+                return true;
+            }
+            case DESTROY_LOBBY -> {
+                lobbyController.handleDestroyLobby(message, connection);
+                return true;
+            }
 
             default -> {
                 return false;

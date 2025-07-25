@@ -10,9 +10,10 @@ public abstract class Lobby {
     protected final int id;
     protected final String name;
     protected ArrayList<User> users = new ArrayList<>();
-    protected final User admin;
+    protected User admin;
     protected final boolean visible;
     protected final static int maxSize = 4;
+    protected boolean addUserSecondTime = false;
 
     public Lobby(int id, String name, User admin, boolean visible) {
         this.id = id;
@@ -51,4 +52,21 @@ public abstract class Lobby {
     public abstract LobbyDTO toDTO();
 
     public abstract ArrayList<String> getUsernameOfUsers();
+
+    public void setAdmin(User admin) {
+        this.admin = admin;
+    }
+
+    public void removeUser(User user) {
+        users.remove(user);
+    }
+
+    public void setAddUserSecondTime(boolean addUserSecondTime) {
+        this.addUserSecondTime = addUserSecondTime;
+    }
+
+
+    public boolean getAddUserSecondTime() {
+        return addUserSecondTime;
+    }
 }
