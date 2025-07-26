@@ -1,6 +1,7 @@
 package com.stardew.controller;
 
 import com.stardew.model.Result;
+import com.stardew.model.ServerApp;
 import com.stardew.model.gameApp.App;
 import com.stardew.model.userInfo.Gender;
 import com.stardew.model.userInfo.PasswordUtil;
@@ -9,6 +10,7 @@ import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -175,6 +177,17 @@ public class LoginAndRegisterController {
 
         Message responseMessage =  new Message(body, MessageType.LOGIN_RESULT);
         connection.sendMessage(responseMessage);
+
+
+        ArrayList<String> onlineUsers = ServerApp.getOnlineUsernames();
+
+        HashMap<String, Object> body2 = new HashMap<>();
+        body2.put("onlineUsers", onlineUsers);
+        Message updateMsg = new Message(body2, MessageType.SEND_ONLINE_USERS_RESULT);
+
+        for (ClientConnectionThread c : ServerApp.getClientConnectionThreads()) {
+            c.sendMessage(updateMsg);
+        }
     }
 
 }

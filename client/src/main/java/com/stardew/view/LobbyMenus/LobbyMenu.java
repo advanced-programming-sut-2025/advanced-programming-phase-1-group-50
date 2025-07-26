@@ -157,8 +157,8 @@ public class LobbyMenu implements Screen, AppMenu {
     public void render(float delta) {
         ScreenUtils.clear(0 , 0  , 0 , 1);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        if(destroyLobby) root.removeActor(timeLabel);
-        if(!destroyLobby && username.equals(lobby.adminUsername)) {
+
+        if(username.equals(lobby.adminUsername)) {
             updateTimer(delta);
             updateTimeLabel();
         }
@@ -226,11 +226,11 @@ public class LobbyMenu implements Screen, AppMenu {
 
     private void updateTimer(float delta) {
         remainingTime -= delta;
-        if(!destroyLobby){
+
             if(remainingTime <= 0){
                 sendDestroyLobbyMessage();
             }
-        }
+
     }
 
     public void sendDestroyLobbyMessage(){
@@ -253,8 +253,10 @@ public class LobbyMenu implements Screen, AppMenu {
         timeLabel.setText(((int) remainingTime) + " s");
     }
 
-    public void setDestroyLobby(boolean destroyLobby) {
-        this.destroyLobby = destroyLobby;
+
+
+    public void setRemainingTime(int remainingTime) {
+        this.remainingTime = remainingTime;
     }
 
     public void setLobby(LobbyDTO lobby) {

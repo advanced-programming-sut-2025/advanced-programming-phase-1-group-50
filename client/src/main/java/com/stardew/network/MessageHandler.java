@@ -50,41 +50,19 @@ public class MessageHandler {
                         Gdx.app.postRunnable(() -> {
                             lobbyMenu.setLobby(lobbyDTO);
                             lobbyMenu.updatePlayerList(playerNames);
-                            lobbyMenu.setDestroyLobby(true);
+                            lobbyMenu.setRemainingTime(300);
                         });
                     }
                 }
                 return true;
             }
-//            case JOIN_LOBBY_RESULT -> {
-//                Result result = message.getFromBody("result", Result.class);
-//                LobbyDTO lobbyDTO = message.getFromBody("lobbyDTO", LobbyDTO.class);
-//                String username = message.getFromBody("username", String.class);
-//                if (result != null && result.getSuccessful()) {
-//                    Gdx.app.postRunnable(() -> {
-//                        Screen current = Main.getMain().getScreen();
-//                        Main.getMain().setScreen(new LobbyMenu(lobbyDTO ,username));
-//                        current.dispose();
-//                    });
-//                } else {
-//                    Gdx.app.postRunnable(() -> {
-//                        System.out.println(result.getMessage());
-//                    });
-//                }
-//                return true;
-//            }
-//            case LEAVE_LOBBY_RESULT, DESTROY_LOBBY_RESULT -> {
-//                Result result = message.getFromBody("result", Result.class);
-//
-//                if(result != null && result.getSuccessful()) {
-//                    Gdx.app.postRunnable(() -> {
-//                        Screen current = Main.getMain().getScreen();
-//                        Main.getMain().setScreen(new PreLobbyMenu());
-//                        current.dispose();
-//                    });
-//                }
-//                return true;
-//            }
+            case SEND_ONLINE_USERS_RESULT -> {
+                ArrayList<String> onlineUsers = message.getFromBody("onlineUsers", new TypeToken<ArrayList<String>>(){}.getType());
+                if(Main.getMain().getScreen() instanceof PreLobbyMenu preLobbyMenu){
+                    preLobbyMenu.updateOnlineUsers(onlineUsers);
+                }
+                return true;
+            }
 
             default -> {
                 return false;

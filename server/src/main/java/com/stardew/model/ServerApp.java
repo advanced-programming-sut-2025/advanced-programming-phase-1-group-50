@@ -61,4 +61,18 @@ public class ServerApp {
     public static ArrayList<ClientConnectionThread> getClientConnectionThreads() {
         return clientConnection;
     }
+
+    public static  ArrayList<String> getOnlineUsernames() {
+        ArrayList<String> usernames = new ArrayList<>();
+        synchronized (clientConnection) {
+            for (ClientConnectionThread c : clientConnection) {
+                if (c.isLoggedIn()) {
+                    usernames.add(c.getUser().getUsername());
+                    System.out.println(c.getUser().getUsername());
+                }
+            }
+        }
+        return usernames;
+    }
+
 }

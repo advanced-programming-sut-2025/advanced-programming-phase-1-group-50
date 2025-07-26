@@ -33,8 +33,7 @@ public class PreLobbyMenu implements Screen, AppMenu {
     private final ImageButton searchButton;
     private final Table lobbyTable;
     private final Table onlineUsersTable = new Table();
-    private float timeToSendOnline = 0;
-    private final float STATE_TIME = 3f;
+    private boolean requestedOnlineUsers = false;
 
 
     public PreLobbyMenu() {
@@ -157,16 +156,11 @@ public class PreLobbyMenu implements Screen, AppMenu {
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-//        timeToSendOnline += delta;
-//        if(timeToSendOnline >= STATE_TIME){
-//            timeToSendOnline = 0;
-//            Message message = new Message(new HashMap<>(), MessageType.SEND_ONLINE_USERS);
-//            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 300);
-//            if (response != null && response.getType() == MessageType.SEND_ONLINE_USERS_RESULT) {
-//                ArrayList<String> onlineUsers = response.getFromBody("onlineUsers", new TypeToken<ArrayList<String>>(){}.getType());
-//                updateOnlineUsers(onlineUsers);
-//            }
-//        }
+        if (!requestedOnlineUsers) {
+            requestedOnlineUsers = true;
+            Message message = new Message(new HashMap<>(), MessageType.SEND_ONLINE_USERS);
+            NetworkManager.getConnection().sendMessage(message);
+        }
         stage.draw();
     }
 
