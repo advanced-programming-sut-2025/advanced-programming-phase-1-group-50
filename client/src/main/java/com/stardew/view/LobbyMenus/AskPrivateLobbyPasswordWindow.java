@@ -1,12 +1,15 @@
 package com.stardew.view.LobbyMenus;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.stardew.Main;
 import com.stardew.model.LobbyDTO;
+import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
@@ -56,7 +59,17 @@ public class AskPrivateLobbyPasswordWindow extends CloseableWindow {
                 body2.put("lobbyDTO", lobby);
                 body2.put("password" , password.getText());
                 Message message = new Message(body2 , MessageType.JOIN_LOBBY);
-                NetworkManager.getConnection().sendMessage(message);
+                Message response = NetworkManager.getConnection().sendAndWaitForResponse(message , 500);
+                if(response != null && response.getType() == MessageType.JOIN_LOBBY_RESULT) {
+
+                    LobbyDTO lobbyDTO = response.getFromBody("lobbyDTO", LobbyDTO.class);
+                    String username = response.getFromBody("username", String.class);
+
+                    Screen screen = Main.getMain().getScreen();
+                    Main.getMain().setScreen(new LobbyMenu(lobbyDTO , username));
+                    screen.dispose();
+
+                }
             }
         });
         content.add(join).width(150).left();

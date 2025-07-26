@@ -43,10 +43,12 @@ public class MessageHandler {
             case LOBBY_PLAYERS_LIST_UPDATED -> {
                 int id = message.getIntFromBody("lobbyID");
                 ArrayList<String> playerNames = message.getFromBody("players", new TypeToken<ArrayList<String>>(){}.getType());
+                LobbyDTO lobbyDTO = message.getFromBody("lobbyDTO", LobbyDTO.class);
                 Screen currentScreen = Main.getMain().getScreen();
                 if(currentScreen instanceof LobbyMenu lobbyMenu) {
                     if(lobbyMenu.getLobby().id == id) {
                         Gdx.app.postRunnable(() -> {
+                            lobbyMenu.setLobby(lobbyDTO);
                             lobbyMenu.updatePlayerList(playerNames);
                             lobbyMenu.setDestroyLobby(true);
                         });
@@ -54,35 +56,35 @@ public class MessageHandler {
                 }
                 return true;
             }
-            case JOIN_LOBBY_RESULT -> {
-                Result result = message.getFromBody("result", Result.class);
-                LobbyDTO lobbyDTO = message.getFromBody("lobbyDTO", LobbyDTO.class);
-                String username = message.getFromBody("username", String.class);
-                if (result != null && result.getSuccessful()) {
-                    Gdx.app.postRunnable(() -> {
-                        Screen current = Main.getMain().getScreen();
-                        Main.getMain().setScreen(new LobbyMenu(lobbyDTO ,username));
-                        current.dispose();
-                    });
-                } else {
-                    Gdx.app.postRunnable(() -> {
-                        System.out.println(result.getMessage());
-                    });
-                }
-                return true;
-            }
-            case LEAVE_LOBBY_RESULT, DESTROY_LOBBY_RESULT -> {
-                Result result = message.getFromBody("result", Result.class);
-
-                if(result != null && result.getSuccessful()) {
-                    Gdx.app.postRunnable(() -> {
-                        Screen current = Main.getMain().getScreen();
-                        Main.getMain().setScreen(new PreLobbyMenu());
-                        current.dispose();
-                    });
-                }
-                return true;
-            }
+//            case JOIN_LOBBY_RESULT -> {
+//                Result result = message.getFromBody("result", Result.class);
+//                LobbyDTO lobbyDTO = message.getFromBody("lobbyDTO", LobbyDTO.class);
+//                String username = message.getFromBody("username", String.class);
+//                if (result != null && result.getSuccessful()) {
+//                    Gdx.app.postRunnable(() -> {
+//                        Screen current = Main.getMain().getScreen();
+//                        Main.getMain().setScreen(new LobbyMenu(lobbyDTO ,username));
+//                        current.dispose();
+//                    });
+//                } else {
+//                    Gdx.app.postRunnable(() -> {
+//                        System.out.println(result.getMessage());
+//                    });
+//                }
+//                return true;
+//            }
+//            case LEAVE_LOBBY_RESULT, DESTROY_LOBBY_RESULT -> {
+//                Result result = message.getFromBody("result", Result.class);
+//
+//                if(result != null && result.getSuccessful()) {
+//                    Gdx.app.postRunnable(() -> {
+//                        Screen current = Main.getMain().getScreen();
+//                        Main.getMain().setScreen(new PreLobbyMenu());
+//                        current.dispose();
+//                    });
+//                }
+//                return true;
+//            }
 
             default -> {
                 return false;

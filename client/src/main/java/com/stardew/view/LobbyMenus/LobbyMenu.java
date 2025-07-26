@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.stardew.Main;
 import com.stardew.model.LobbyDTO;
 
 import com.stardew.model.Result;
@@ -29,7 +30,7 @@ import java.util.List;
 public class LobbyMenu implements Screen, AppMenu {
     private Stage stage;
     private final Skin skin = GamePictureManager.skin;
-    private final LobbyDTO lobby;
+    private LobbyDTO lobby;
     private Table root;
     private final float JOIN_TIMER = 300f;
     private float remainingTime = JOIN_TIMER;
@@ -79,7 +80,10 @@ public class LobbyMenu implements Screen, AppMenu {
 
         Label lobbyNameLabel = new Label("Lobby: " + lobby.name, skin);
         lobbyNameLabel.setAlignment(Align.center);
+        Label idLabel = new Label("ID: " + lobby.id, skin);
+        idLabel.setAlignment(Align.center);
         root.add(lobbyNameLabel).colspan(2).center().padBottom(30).row();
+        root.add(idLabel).colspan(2).center().padBottom(30).row();
 
         List<String> members = lobby.players;
         playersTable = new Table();
@@ -134,7 +138,15 @@ public class LobbyMenu implements Screen, AppMenu {
                 HashMap<String, Object> body = new HashMap<>();
                 body.put("lobbyID", lobby.id);
                 Message message = new Message(body, MessageType.LEAVE_LOBBY);
-                NetworkManager.getConnection().sendMessage(message);
+                Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+                if (response != null && response.getType().equals(MessageType.LEAVE_LOBBY_RESULT)) {
+                    Result result = response.getFromBody("result", Result.class);
+                    if(result != null && result.getSuccessful()){
+                        Screen screen = Main.getMain().getScreen();
+                        Main.getMain().setScreen(new PreLobbyMenu());
+                        screen.dispose();
+                    }
+                }
 
             }
         });
@@ -145,6 +157,7 @@ public class LobbyMenu implements Screen, AppMenu {
     public void render(float delta) {
         ScreenUtils.clear(0 , 0  , 0 , 1);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        if(destroyLobby) root.removeActor(timeLabel);
         if(!destroyLobby && username.equals(lobby.adminUsername)) {
             updateTimer(delta);
             updateTimeLabel();
@@ -224,7 +237,15 @@ public class LobbyMenu implements Screen, AppMenu {
         HashMap<String, Object> body = new HashMap<>();
         body.put("lobbyID", lobby.id);
         Message message = new Message(body, MessageType.DESTROY_LOBBY);
-        NetworkManager.getConnection().sendMessage(message);
+        Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+        if (response != null && response.getType().equals(MessageType.DESTROY_LOBBY_RESULT)) {
+            Result result = response.getFromBody("result", Result.class);
+            if(result != null && result.getSuccessful()){
+                Screen screen = Main.getMain().getScreen();
+                Main.getMain().setScreen(new PreLobbyMenu());
+                screen.dispose();
+            }
+        }
         //TODO : destroy lobby and back to preLobby menu
     }
 
@@ -234,6 +255,10 @@ public class LobbyMenu implements Screen, AppMenu {
 
     public void setDestroyLobby(boolean destroyLobby) {
         this.destroyLobby = destroyLobby;
+    }
+
+    public void setLobby(LobbyDTO lobby) {
+        this.lobby = lobby;
     }
 
 

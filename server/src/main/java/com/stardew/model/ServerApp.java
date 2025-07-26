@@ -57,4 +57,8 @@ public class ServerApp {
         }
         listenerThread.end();
     }
+
+    public static ArrayList<ClientConnectionThread> getClientConnectionThreads() {
+        return clientConnection;
+    }
 }

@@ -14,11 +14,4 @@ public class PublicLobby extends Lobby {
         return new LobbyDTO(id , name , visible , false , admin.getUsername(), getUsernameOfUsers() , addUserSecondTime);
     }
 
-    public ArrayList<String > getUsernameOfUsers(){
-        ArrayList<String> usernames = new ArrayList<>();
-        for(User u : users){
-            usernames.add(u.getUsername());
-        }
-        return usernames;
-    }
 }
