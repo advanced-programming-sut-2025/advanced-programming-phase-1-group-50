@@ -51,7 +51,13 @@ public abstract class Lobby {
 
     public abstract LobbyDTO toDTO();
 
-    public abstract ArrayList<String> getUsernameOfUsers();
+    public ArrayList<String> getUsernameOfUsers(){
+        ArrayList<String> usernames = new ArrayList<>();
+        for(User u : users){
+            usernames.add(u.getUsername());
+        }
+        return usernames;
+    }
 
     public void setAdmin(User admin) {
         this.admin = admin;

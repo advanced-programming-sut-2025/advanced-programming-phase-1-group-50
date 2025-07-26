@@ -9,6 +9,7 @@ import com.stardew.network.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class LobbyController {
     private static LobbyController instance ;
@@ -72,7 +73,7 @@ public class LobbyController {
 
     public void handleCreateLobby(Message message, ClientConnectionThread connection){
         String name = message.getFromBody("name");
-        int id = message.getIntFromBody("id");
+        int id = generateUniqueId();
         boolean isPrivate = message.getFromBody("privacy");
         boolean isVisible = message.getFromBody("visible");
 
@@ -161,6 +162,7 @@ public class LobbyController {
 
             HashMap<String , Object> body2 = new HashMap<>();
             body2.put("lobbyID" , lobbyDTO.id);
+            body2.put("lobbyDTO" , lobby.toDTO());
             body2.put("players" , lobby.getUsernameOfUsers());
             Message response2 = new Message(body2 , MessageType.LOBBY_PLAYERS_LIST_UPDATED);
             for(User u : lobby.getUsers()) {
@@ -252,6 +254,7 @@ public class LobbyController {
             HashMap<String , Object> orderBody = new HashMap<>();
             orderBody.put("lobbyID" , lobbyID);
             orderBody.put("players" , lobby.getUsernameOfUsers());
+            orderBody.put("lobbyDTO" , lobby.toDTO());
             Message order = new Message(orderBody, MessageType.LOBBY_PLAYERS_LIST_UPDATED);
             for(User u : lobby.getUsers()) {
                 ClientConnectionThread clientConnection = ServerApp.findConnection(u.getUsername());
@@ -275,4 +278,25 @@ public class LobbyController {
             connection.sendMessage(response);
         }
     }
+
+    public void sendOnlineUsers( ClientConnectionThread connection) {
+        ArrayList<String> onlineUsers = new ArrayList<>();
+        for(ClientConnectionThread cl : ServerApp.getClientConnectionThreads()){
+            onlineUsers.add(cl.getUser().getUsername());
+        }
+        HashMap<String , Object> responseBody = new HashMap<>();
+        responseBody.put("onlineUsers", onlineUsers);
+        Message response = new Message(responseBody, MessageType.SEND_ONLINE_USERS_RESULT);
+        connection.sendMessage(response);
+    }
+
+    public int generateUniqueId() {
+        Random rand = new Random();
+        int id;
+        do {
+            id = rand.nextInt(9000) + 1000;
+        } while (findLobby(id) != null);
+        return id;
+    }
+
 }

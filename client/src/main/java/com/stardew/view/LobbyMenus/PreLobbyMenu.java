@@ -11,9 +11,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import com.google.gson.reflect.TypeToken;
+import com.stardew.Main;
 import com.stardew.model.LobbyDTO;
+import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Result;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 import com.stardew.network.NetworkManager;
@@ -30,6 +31,10 @@ public class PreLobbyMenu implements Screen , AppMenu {
     private final TextField searchLobby;
     private final ImageButton searchButton;
     private final Table lobbyTable;
+    private final Table onlineUsersTable = new Table();
+    private float timeToSendOnline = 0;
+    private final float STATE_TIME = 3f;
+
 
     public PreLobbyMenu() {
         stage = new Stage(new ScreenViewport());
@@ -83,6 +88,8 @@ public class PreLobbyMenu implements Screen , AppMenu {
             }
         });
 
+
+
         lobbyTable = new Table();
     }
 
@@ -100,6 +107,16 @@ public class PreLobbyMenu implements Screen , AppMenu {
         Table root = new Table();
         root.setFillParent(true);
         stage.addActor(root);
+
+
+        Table onlineContainer = new Table();
+        onlineContainer.setFillParent(false);
+        onlineContainer.top().left().pad(10);
+        onlineContainer.setPosition(10, stage.getHeight() - 10);
+        onlineContainer.add(onlineUsersTable).left().top();
+
+        stage.addActor(onlineContainer);
+
 
 
         Table topBar = new Table();
@@ -129,6 +146,16 @@ public class PreLobbyMenu implements Screen , AppMenu {
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+//        timeToSendOnline += delta;
+//        if(timeToSendOnline >= STATE_TIME){
+//            timeToSendOnline = 0;
+//            Message message = new Message(new HashMap<>(), MessageType.SEND_ONLINE_USERS);
+//            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 300);
+//            if (response != null && response.getType() == MessageType.SEND_ONLINE_USERS_RESULT) {
+//                ArrayList<String> onlineUsers = response.getFromBody("onlineUsers", new TypeToken<ArrayList<String>>(){}.getType());
+//                updateOnlineUsers(onlineUsers);
+//            }
+//        }
         stage.draw();
     }
 
@@ -157,7 +184,19 @@ public class PreLobbyMenu implements Screen , AppMenu {
                         HashMap<String , Object> body = new HashMap<>();
                         body.put("lobbyDTO", lobbyDTO);
                         Message message = new Message(body , MessageType.JOIN_LOBBY);
-                        NetworkManager.getConnection().sendMessage(message);
+                        Message response = NetworkManager.getConnection().sendAndWaitForResponse(message , 500);
+                        if(response != null && response.getType() == MessageType.JOIN_LOBBY_RESULT) {
+
+                            LobbyDTO lobbyDTO = response.getFromBody("lobbyDTO", LobbyDTO.class);
+                            String username = response.getFromBody("username");
+
+
+                            Screen screen = Main.getMain().getScreen();
+                            Main.getMain().setScreen(new LobbyMenu(lobbyDTO , username));
+                            screen.dispose();
+
+
+                        }
 
                     }
                 }
@@ -183,4 +222,15 @@ public class PreLobbyMenu implements Screen , AppMenu {
     public Stage getStage() {
         return stage;
     }
+
+    public void updateOnlineUsers(ArrayList<String> usernames) {
+
+
+        onlineUsersTable.clear();
+        onlineUsersTable.add(new Label("Online Users", GamePictureManager.skin)).padBottom(10).row();
+        for (String user : usernames) {
+            onlineUsersTable.add(new Label(user, GamePictureManager.skin)).padBottom(5).row();
+        }
+    }
+
 }

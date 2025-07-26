@@ -82,6 +82,10 @@ public class MessageHandler {
                 lobbyController.handleDestroyLobby(message, connection);
                 return true;
             }
+            case SEND_ONLINE_USERS -> {
+                lobbyController.sendOnlineUsers(connection);
+                return true;
+            }
 
             default -> {
                 return false;
