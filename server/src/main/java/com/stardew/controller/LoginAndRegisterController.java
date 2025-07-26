@@ -134,21 +134,6 @@ public class LoginAndRegisterController {
 
     }
 
-    public Result login(String username, String password, ClientConnectionThread connection) {
-        User user = App.getUserByUsername(username);
-
-        if (user == null) {
-            return new Result(false, "user not found");
-        }
-        if (!user.getPassword().equals(passwordUtil.hashPassword(password))) {
-            return new Result(false, "wrong password");
-
-        }
-
-        connection.setUser(user);
-        return new Result(true, "user logged in");
-    }
-
 
     public void handleRegister(Message message, ClientConnectionThread connection) {
         String username = message.getFromBody("username");
@@ -170,10 +155,24 @@ public class LoginAndRegisterController {
     public void handleLogin(Message message, ClientConnectionThread connection){
         String username = message.getFromBody("username");
         String password = message.getFromBody("password");
-        Result loginResult = login(username , password, connection);
 
+        User user = App.getUserByUsername(username);
         HashMap<String, Object> body = new HashMap<>();
-        body.put("result", loginResult);
+
+        if (user == null) {
+            body.put("result", new Result(false, "user not found"));
+        }
+        else if (!user.getPassword().equals(passwordUtil.hashPassword(password))) {
+            body.put("result", new Result(false, "wrong password"));
+
+        }
+        else {
+            body.put("result", new Result(true, "user logged in"));
+            body.put("username", user.getUsername());
+            body.put("nickname", user.getNickname());
+            connection.setUser(user);
+        }
+
         Message responseMessage =  new Message(body, MessageType.LOGIN_RESULT);
         connection.sendMessage(responseMessage);
     }

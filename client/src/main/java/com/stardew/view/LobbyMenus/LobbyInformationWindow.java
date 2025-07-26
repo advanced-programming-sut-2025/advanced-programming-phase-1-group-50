@@ -77,11 +77,15 @@ public class LobbyInformationWindow extends CloseableWindow implements AppMenu {
         createLobby.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y){
-                if(lobbyName.getText().isEmpty() || !generate ){
+                if (lobbyName.getText().isEmpty() || !generate) {
                     showResult(new Result(false , "Please fill all fields!"));
                     return;
                 }
-                if(privateOrPublic.isChecked() ){
+                if (lobbyName.getText().length() > 10) {
+                    showResult(new Result(false , "Lobby Name is too long!"));
+                    return;
+                }
+                if (privateOrPublic.isChecked() ) {
                     if(password.getText().isEmpty()) {
                         showResult(new Result(false, "choose a password for your private lobby!"));
                         return;

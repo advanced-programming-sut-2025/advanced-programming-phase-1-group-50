@@ -2,6 +2,7 @@ package com.stardew.view.LobbyMenus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -23,7 +24,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PreLobbyMenu implements Screen , AppMenu {
+public class PreLobbyMenu implements Screen, AppMenu {
     private final Stage stage;
     private final TextButton createLobby;
     private final TextButton refresh;
@@ -131,7 +132,7 @@ public class PreLobbyMenu implements Screen , AppMenu {
 
         root.top().padTop(30);
         root.add(topBar).expandX().fillX().padBottom(20).row();
-        root.add(scrollPane).expand().fill().pad(20);
+        root.add(scrollPane).height(700).pad(20);
     }
 
 
@@ -155,6 +156,7 @@ public class PreLobbyMenu implements Screen , AppMenu {
             Label lobbyName = new Label(String.format(
                 "%-25s  ID: %-10d  Admin: %-25s  N: %d", lobby.name, lobby.id, lobby.adminUsername, lobby.players.size()),
                 GamePictureManager.skin);
+            lobbyName.setColor(Color.BLACK);
             final LobbyDTO lobbyDTO = lobby;
 
             TextButton joinBtn = new TextButton("Join", GamePictureManager.skin);
