@@ -7,11 +7,12 @@ import com.stardew.network.Message;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PreGameController {
     private static PreGameController instance;
-    private final Map<Integer, Map<String, Boolean>> playersReadyStatusByID = new HashMap<>();
-    private final Map<Integer, Map<String, String>> playersFarmStatusByID = new HashMap<>();
+    private final Map<Integer, ConcurrentHashMap<String, Boolean>> playersReadyStatusByID = new ConcurrentHashMap<>();
+    private final Map<Integer, ConcurrentHashMap<String, String>> playersFarmStatusByID = new ConcurrentHashMap<>();
 
 
     private PreGameController() {}
@@ -27,11 +28,11 @@ public class PreGameController {
     public void addNewPreGame(Lobby lobby) {
         if (lobby == null) return;
         int id = lobby.getId();
-        Map<String, Boolean> playersReady = new HashMap<>();
-        Map<String, String> playersFarmSelected = new HashMap<>();
+        ConcurrentHashMap<String, Boolean> playersReady = new ConcurrentHashMap<>();
+        ConcurrentHashMap<String, String> playersFarmSelected = new ConcurrentHashMap<>();
         for (User user : lobby.getUsers()) {
             playersReady.put(user.getUsername(), false);
-            playersFarmSelected.put(user.getUsername(), null);
+            playersFarmSelected.put(user.getUsername(), "null");
         }
         playersReadyStatusByID.put(id, playersReady);
         playersFarmStatusByID.put(id, playersFarmSelected);
@@ -55,7 +56,7 @@ public class PreGameController {
 
         boolean isAllReady = true;
         for (String username1 : playersReadyStatusInLobby.keySet()) {
-            if (playersReadyStatusInLobby.get(username1) && playersFarmStatusInLobby.get(username1) != null) {
+            if (!playersReadyStatusInLobby.get(username1) || playersFarmStatusInLobby.get(username1).equals("null")) {
                 isAllReady = false;
                 break;
             }
