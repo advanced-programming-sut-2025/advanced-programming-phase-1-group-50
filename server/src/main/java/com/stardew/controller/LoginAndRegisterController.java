@@ -180,8 +180,10 @@ public class LoginAndRegisterController {
         body2.put("onlineUsers", onlineUsers);
         Message updateMsg = new Message(body2, MessageType.SEND_ONLINE_USERS_RESULT);
 
-        for (ClientConnectionThread c : ServerApp.getClientConnectionThreads()) {
-            c.sendMessage(updateMsg);
+        synchronized (ServerApp.getClientConnectionThreads()) {
+            for (ClientConnectionThread c : ServerApp.getClientConnectionThreads()) {
+                c.sendMessage(updateMsg);
+            }
         }
     }
 
