@@ -19,6 +19,8 @@ public class App {
         users.add(u3);
         User u4 = new User("sina","ksdfkklf", "fkmd", "emua@dfjk.com", Gender.Male, new SecurityQuestion("what is your favorite color?", "answer"));
         users.add(u4);
+        User u5 = new User("hasan","ksdfkklf", "fkmd", "emua@dfjk.com", Gender.Male, new SecurityQuestion("what is your favorite color?", "answer"));
+        users.add(u5);
     }
 
 

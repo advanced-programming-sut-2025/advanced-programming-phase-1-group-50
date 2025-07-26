@@ -137,41 +137,45 @@ public class LobbyController {
         Lobby lobby = findLobby(id);
         if(lobby != null) {
 
-            HashMap<String , Object> body = new HashMap<>();
-            if(lobby instanceof PrivateLobby privateLobby) {
-                String password = message.getFromBody("password");
-                if(!privateLobby.getPassword().equals(password)) {
-                    body.put("result" , new Result(false, "password does not match"));
-                }
-                else {
-                    body.put("result" , new Result(true, "password matched , you joined the lobby"));
+            HashMap<String, Object> body = new HashMap<>();
+            if (lobby.hasCapacity()) {
+                if (lobby instanceof PrivateLobby privateLobby) {
+                    String password = message.getFromBody("password");
+                    if (!privateLobby.getPassword().equals(password)) {
+                        body.put("result", new Result(false, "password does not match"));
+                    } else {
+                        body.put("result", new Result(true, "password matched , you joined the lobby"));
+                        lobby.addUser(connection.getUser());
+                        lobby.setAddUserSecondTime(true);
+                    }
+                } else {
+                    body.put("result", new Result(true, "you are joined"));
                     lobby.addUser(connection.getUser());
                     lobby.setAddUserSecondTime(true);
                 }
-            }
-            else {
-                body.put("result" , new Result(true , "you are joined"));
-                lobby.addUser(connection.getUser());
-                lobby.setAddUserSecondTime(true);
+            } else {
+                body.put("result", new Result(false, "lobby is full"));
             }
 
-            body.put("lobbyDTO" , lobby.toDTO());
-            body.put("username" , connection.getUser().getUsername());
-            Message response = new Message(body , MessageType.JOIN_LOBBY_RESULT);
+            body.put("lobbyDTO", lobby.toDTO());
+            body.put("username", connection.getUser().getUsername());
+            Message response = new Message(body, MessageType.JOIN_LOBBY_RESULT);
             connection.sendMessage(response);
 
-            HashMap<String , Object> body2 = new HashMap<>();
-            body2.put("lobbyID" , lobbyDTO.id);
-            body2.put("lobbyDTO" , lobby.toDTO());
-            body2.put("players" , lobby.getUsernameOfUsers());
-            Message response2 = new Message(body2 , MessageType.LOBBY_PLAYERS_LIST_UPDATED);
-            for(User u : lobby.getUsers()) {
-                ClientConnectionThread clientConnectionThread = ServerApp.findConnection(u.getUsername());
-                if(clientConnectionThread == null) {
-                    System.out.println("Connection to " + u.getUsername() + " failed");
-                }
-                else {
-                    clientConnectionThread.sendMessage(response2);
+            if (response.getFromBody("result", Result.class).getSuccessful()) {
+
+                HashMap<String, Object> body2 = new HashMap<>();
+                body2.put("lobbyID", lobbyDTO.id);
+                body2.put("lobbyDTO", lobby.toDTO());
+                body2.put("players", lobby.getUsernameOfUsers());
+                Message response2 = new Message(body2, MessageType.LOBBY_PLAYERS_LIST_UPDATED);
+                for (User u : lobby.getUsers()) {
+                    ClientConnectionThread clientConnectionThread = ServerApp.findConnection(u.getUsername());
+                    if (clientConnectionThread == null) {
+                        System.out.println("Connection to " + u.getUsername() + " failed");
+                    } else {
+                        clientConnectionThread.sendMessage(response2);
+                    }
                 }
             }
         }

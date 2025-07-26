@@ -64,10 +64,18 @@ public class AskPrivateLobbyPasswordWindow extends CloseableWindow {
 
                     LobbyDTO lobbyDTO = response.getFromBody("lobbyDTO", LobbyDTO.class);
                     String username = response.getFromBody("username", String.class);
+                    com.stardew.models.Result result = response.getFromBody("result", com.stardew.models.Result.class);
+                    if(result != null) {
+                        if(result.getSuccessful()){
+                            Screen screen = Main.getMain().getScreen();
+                            Main.getMain().setScreen(new LobbyMenu(lobbyDTO , username));
+                            screen.dispose();
 
-                    Screen screen = Main.getMain().getScreen();
-                    Main.getMain().setScreen(new LobbyMenu(lobbyDTO , username));
-                    screen.dispose();
+                        }
+                        else {
+                            showResult(result);
+                        }
+                    }
 
                 }
             }

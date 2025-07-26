@@ -75,4 +75,8 @@ public abstract class Lobby {
     public boolean getAddUserSecondTime() {
         return addUserSecondTime;
     }
+
+    public boolean hasCapacity(){
+        return users.size() < maxSize;
+    }
 }
