@@ -20,12 +20,11 @@ import java.util.HashMap;
 
 public class LobbyInformationWindow extends CloseableWindow implements AppMenu {
 
-    private TextField lobbyName;
-    private TextField password;
-    private CheckBox privateOrPublic;
-    private CheckBox visible;
-    private Label showID;
-    private TextButton createLobby;
+    private final TextField lobbyName;
+    private final TextField password;
+    private final CheckBox privateOrPublic;
+    private final CheckBox visible;
+    private final TextButton createLobby;
 ;
 
 
@@ -95,16 +94,12 @@ public class LobbyInformationWindow extends CloseableWindow implements AppMenu {
 
                 Result result = response.getFromBody("result", Result.class);
                 if(result.getSuccessful()){
-                    System.out.println("Creating lobby");
                     LobbyDTO lobbyDTO = response.getFromBody("lobbyDTO", LobbyDTO.class);
-                    String username = response.getFromBody("username", String.class);
                     Screen screen = Main.getMain().getScreen();
-                    LobbyMenu lobbyMenu = new LobbyMenu(lobbyDTO , username);
+                    LobbyMenu lobbyMenu = new LobbyMenu(lobbyDTO);
                     Main.getMain().setScreen(lobbyMenu);
                     screen.dispose();
-                    System.out.println("disposed");
                     return;
-                    //TODO : going to the lobby menu and wait for joining players
                 }
                 createLobby.setDisabled(false);
 

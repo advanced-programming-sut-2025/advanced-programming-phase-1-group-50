@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.google.gson.reflect.TypeToken;
 import com.stardew.Main;
 import com.stardew.model.LobbyDTO;
-import com.stardew.model.Result;
 import com.stardew.view.LobbyMenus.LobbyMenu;
 import com.stardew.view.LobbyMenus.PreLobbyMenu;
 import com.stardew.view.SelectFarmMenu;
@@ -42,15 +41,12 @@ public class MessageHandler {
             }
             case LOBBY_PLAYERS_LIST_UPDATED -> {
                 int id = message.getIntFromBody("lobbyID");
-                ArrayList<String> playerNames = message.getFromBody("players", new TypeToken<ArrayList<String>>(){}.getType());
                 LobbyDTO lobbyDTO = message.getFromBody("lobbyDTO", LobbyDTO.class);
                 Screen currentScreen = Main.getMain().getScreen();
                 if(currentScreen instanceof LobbyMenu lobbyMenu) {
                     if(lobbyMenu.getLobby().id == id) {
                         Gdx.app.postRunnable(() -> {
-                            lobbyMenu.setLobby(lobbyDTO);
-                            lobbyMenu.updatePlayerList(playerNames);
-                            lobbyMenu.setRemainingTime(300);
+                            lobbyMenu.updateLobbyInfo(lobbyDTO);
                         });
                     }
                 }

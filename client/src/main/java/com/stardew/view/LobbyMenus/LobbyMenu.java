@@ -3,11 +3,9 @@ package com.stardew.view.LobbyMenus;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -17,6 +15,7 @@ import com.stardew.Main;
 import com.stardew.model.LobbyDTO;
 
 import com.stardew.model.Result;
+import com.stardew.models.ClientInfo.LoggedInUser;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
@@ -31,23 +30,19 @@ public class LobbyMenu implements Screen, AppMenu {
     private Stage stage;
     private final Skin skin = GamePictureManager.skin;
     private LobbyDTO lobby;
-    private Table root;
     private final float JOIN_TIMER = 300f;
     private float remainingTime = JOIN_TIMER;
-    private boolean destroyLobby = false;
     private Label timeLabel;
     private Table playersTable;
-    private String username;
 
 
 
 
-    public LobbyMenu(LobbyDTO lobby , String username) {
+    public LobbyMenu(LobbyDTO lobby) {
         this.lobby = lobby;
-        this.username = username;
-
-
     }
+
+
     @Override
     public void show() {
         stage = new Stage(new ScreenViewport());
@@ -65,17 +60,10 @@ public class LobbyMenu implements Screen, AppMenu {
         labelStyle.fontColor = Color.BLACK;
         timeLabel = new Label("", labelStyle);
 
-
-        root = new Table();
+        Table root = new Table();
         root.setFillParent(true);
-        root.top().pad(20);
+        root.top().pad(30);
         stage.addActor(root);
-
-        root = new Table();
-        root.setFillParent(true);
-        root.top().pad(20);
-        stage.addActor(root);
-
 
 
         Label lobbyNameLabel = new Label("Lobby: " + lobby.name, skin);
@@ -83,36 +71,20 @@ public class LobbyMenu implements Screen, AppMenu {
         Label idLabel = new Label("ID: " + lobby.id, skin);
         idLabel.setAlignment(Align.center);
         root.add(lobbyNameLabel).colspan(2).center().padBottom(30).row();
-        root.add(idLabel).colspan(2).center().padBottom(30).row();
-
-        List<String> members = lobby.players;
-        playersTable = new Table();
-        for (String player : members) {
-            Label playerLabel;
-            if(player.equals(lobby.adminUsername)){
-                playerLabel = new Label( "Admin : " + player, skin);
-            }
-            else{
-                playerLabel = new Label(player, skin);
-            }
-            playerLabel.setAlignment(Align.center);
-            playersTable.add(playerLabel).center().padBottom(10).row();
-        }
-        root.add(playersTable).colspan(2).padBottom(30).row();
-
-
-
+        root.add(idLabel).colspan(2).center().padBottom(50).row();
 
         TextButton startGameBtn = new TextButton("Start Game", skin);
         TextButton leaveLobbyBtn = new TextButton("Leave Lobby", skin);
 
 
-
-
         root.add(startGameBtn).width(180).padRight(20);
-        root.add(leaveLobbyBtn).width(180);
+        root.add(leaveLobbyBtn).width(180).padRight(50);
 
         root.add(timeLabel).row();
+
+        playersTable = new Table();
+        updatePlayersList();
+        root.add(playersTable).colspan(2).padTop(100).row();
 
 
         startGameBtn.addListener(new ClickListener(){
@@ -158,7 +130,7 @@ public class LobbyMenu implements Screen, AppMenu {
         ScreenUtils.clear(0 , 0  , 0 , 1);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 
-        if(username.equals(lobby.adminUsername)) {
+        if(lobby.adminUsername.equals(LoggedInUser.getUser().getUsername())) {
             updateTimer(delta);
             updateTimeLabel();
         }
@@ -199,41 +171,22 @@ public class LobbyMenu implements Screen, AppMenu {
         return lobby;
     }
 
-    public void updatePlayerList(List<String> newPlayers) {
-        if (playersTable != null) {
-            root.removeActor(playersTable);
-        }
-
-        playersTable = new Table();
-        for (String player : newPlayers) {
-            Label label;
-            if (player.equals(lobby.adminUsername)) {
-                label = new Label("Admin: " + player, skin);
-            } else {
-                label = new Label(player, skin);
-            }
-            label.setAlignment(Align.center);
-            playersTable.add(label).center().padBottom(10).row();
-        }
-
-        root.add(playersTable).colspan(2).padBottom(30).row();
-
-        lobby.players.clear();
-        lobby.players.addAll(newPlayers);
-    }
-
 
 
     private void updateTimer(float delta) {
         remainingTime -= delta;
-
             if(remainingTime <= 0){
                 sendDestroyLobbyMessage();
             }
 
     }
 
-    public void sendDestroyLobbyMessage(){
+    private void updateTimeLabel() {
+        timeLabel.setText(((int) remainingTime) + " s");
+    }
+
+
+    private void sendDestroyLobbyMessage(){
         HashMap<String, Object> body = new HashMap<>();
         body.put("lobbyID", lobby.id);
         Message message = new Message(body, MessageType.DESTROY_LOBBY);
@@ -249,21 +202,35 @@ public class LobbyMenu implements Screen, AppMenu {
         //TODO : destroy lobby and back to preLobby menu
     }
 
-    private void updateTimeLabel() {
-        timeLabel.setText(((int) remainingTime) + " s");
+
+    private void updatePlayersList() {
+        if (playersTable == null) return;
+
+        playersTable.clearChildren();
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = GamePictureManager.smallFont;
+        labelStyle.fontColor = Color.BLACK;
+
+        for (String player : lobby.players) {
+            Label label = new Label(player, labelStyle);
+            if (player.equals(lobby.adminUsername)) {
+                label.setText(label.getText() + " (Admin) ");
+            }
+            if (player.equals(LoggedInUser.getUser().getUsername())) {
+                label.setText(label.getText() + " (You) ");
+            }
+
+            label.setAlignment(Align.left);
+            playersTable.add(label).center().padBottom(20).row();
+        }
+
     }
 
 
-
-    public void setRemainingTime(int remainingTime) {
-        this.remainingTime = remainingTime;
-    }
-
-    public void setLobby(LobbyDTO lobby) {
+    public void updateLobbyInfo(LobbyDTO lobby) {
         this.lobby = lobby;
+        updatePlayersList();
+        remainingTime = JOIN_TIMER;
     }
-
-
-
 
 }
