@@ -7,13 +7,11 @@ import com.stardew.model.ServerApp;
 import com.stardew.model.userInfo.User;
 import com.stardew.network.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 public class LobbyController {
     private static LobbyController instance ;
-    private final ArrayList<Lobby> lobbies = new ArrayList<>();
+    private final List<Lobby> lobbies = Collections.synchronizedList(new ArrayList<>());
     private final PreGameController preGameController = PreGameController.getInstance();
 
 
@@ -28,46 +26,26 @@ public class LobbyController {
 
 
     public Lobby findLobby(int id) {
-        for (Lobby lobby : lobbies) {
-            if (lobby.getId() == id) {
-                return lobby;
+        synchronized (lobbies) {
+            for (Lobby lobby : lobbies) {
+                if (lobby.getId() == id) {
+                    return lobby;
+                }
             }
         }
         return null;
     }
 
-    public void createLobby(boolean isPrivate , String name , String password , int id , User admin , boolean visible) {
+    public Lobby createLobby(boolean isPrivate , String name , String password , int id , User admin , boolean visible) {
         if(isPrivate) {
             PrivateLobby privateLobby = new PrivateLobby(id , name , admin , visible , password);
             lobbies.add(privateLobby);
+            return privateLobby;
         }
         else {
             PublicLobby publicLobby = new PublicLobby(id , name , admin , visible);
             lobbies.add(publicLobby);
-        }
-    }
-
-    public boolean joinLobby(int id , User user , String password ) {
-        Lobby lobby = findLobby(id);
-        if(lobby != null) {
-            if(lobby instanceof PrivateLobby privateLobby) {
-                if(privateLobby.getPassword().equals(password)) {
-                    privateLobby.addUser(user);
-                    return true;
-                }
-            }
-            else if(lobby instanceof PublicLobby publicLobby) {
-                publicLobby.addUser(user);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void removeLobby(int id) {
-        Lobby lobby = findLobby(id);
-        if(lobby != null) {
-            lobbies.remove(lobby);
+            return publicLobby;
         }
     }
 
@@ -78,15 +56,10 @@ public class LobbyController {
         boolean isVisible = message.getFromBody("visible");
 
         User user = connection.getUser();
-        if(!isPrivate) {
-            createLobby(isPrivate , name , "", id , user , isVisible);
-        }
-        else {
-            String password = message.getFromBody("password");
-            createLobby(isPrivate , name , password, id , user , isVisible);
-        }
-        Lobby l = lobbies.getLast();
-        LobbyDTO ltd = l.toDTO();
+        String password = isPrivate ? message.getFromBody("password") : "";
+        Lobby lobby = createLobby(isPrivate, name, password, id, user, isVisible);
+
+        LobbyDTO ltd = lobby.toDTO();
         Result res = new Result(true , "lobby created");
         HashMap<String , Object> body = new HashMap<>();
         body.put("lobbyDTO" , ltd);
@@ -98,9 +71,11 @@ public class LobbyController {
 
     public void sendLobbies(ClientConnectionThread connection){
         ArrayList<LobbyDTO> lobbyDTOS = new ArrayList<>();
-        for(Lobby lobby : lobbies) {
-            LobbyDTO lobbyDTO = lobby.toDTO();
-            lobbyDTOS.add(lobbyDTO);
+        synchronized (lobbies) {
+            for (Lobby lobby : lobbies) {
+                LobbyDTO lobbyDTO = lobby.toDTO();
+                lobbyDTOS.add(lobbyDTO);
+            }
         }
         HashMap<String , Object> body = new HashMap<>();
         body.put("lobbyDTOS" , lobbyDTOS);
@@ -235,7 +210,7 @@ public class LobbyController {
                 }
             }
             HashMap<String , Object> responseBody = new HashMap<>();
-            responseBody.put("result" , new Result(true, "lobby successfully leaved"));
+            responseBody.put("result" , new Result(true, "You left lobby successfully"));
             Message response = new Message(responseBody, MessageType.LEAVE_LOBBY_RESULT);
             connection.sendMessage(response);
 

@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class App {
-    public static List<User> users = Collections.synchronizedList(new ArrayList<>());
+    public static final List<User> users = Collections.synchronizedList(new ArrayList<>());
 
     static {
         User u = new User("ali", "wwwwww", "fkmd", "emua@dfjk.com", Gender.Male, new SecurityQuestion("what is your favorite color?", "answer"));
@@ -24,10 +24,12 @@ public class App {
     }
 
 
-    public synchronized static User getUserByUsername(String username) {
-        for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                return user;
+    public static User getUserByUsername(String username) {
+        synchronized (users) {
+            for (User user : users) {
+                if (user.getUsername().equals(username)) {
+                    return user;
+                }
             }
         }
         return null;

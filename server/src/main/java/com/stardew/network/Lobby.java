@@ -4,12 +4,13 @@ import com.stardew.model.LobbyDTO;
 import com.stardew.model.userInfo.User;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public abstract class Lobby {
     protected final int id;
     protected final String name;
-    protected ArrayList<User> users = new ArrayList<>();
+    protected final CopyOnWriteArrayList<User> users = new CopyOnWriteArrayList<>();
     protected User admin;
     protected final boolean visible;
     protected final static int maxSize = 4;
@@ -31,7 +32,7 @@ public abstract class Lobby {
         return name;
     }
 
-    public ArrayList<User> getUsers() {
+    public CopyOnWriteArrayList<User> getUsers() {
         return users;
     }
 
