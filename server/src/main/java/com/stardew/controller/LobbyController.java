@@ -114,12 +114,12 @@ public class LobbyController {
                     } else {
                         body.put("result", new Result(true, "password matched , you joined the lobby"));
                         lobby.addUser(connection.getUser());
-                        lobby.setAddUserSecondTime(true);
+
                     }
                 } else {
                     body.put("result", new Result(true, "you are joined"));
                     lobby.addUser(connection.getUser());
-                    lobby.setAddUserSecondTime(true);
+
                 }
 
 

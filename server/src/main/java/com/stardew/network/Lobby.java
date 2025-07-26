@@ -14,7 +14,7 @@ public abstract class Lobby {
     protected User admin;
     protected final boolean visible;
     protected final static int maxSize = 4;
-    protected boolean addUserSecondTime = false;
+
 
     public Lobby(int id, String name, User admin, boolean visible) {
         this.id = id;
@@ -68,14 +68,6 @@ public abstract class Lobby {
         users.remove(user);
     }
 
-    public void setAddUserSecondTime(boolean addUserSecondTime) {
-        this.addUserSecondTime = addUserSecondTime;
-    }
-
-
-    public boolean getAddUserSecondTime() {
-        return addUserSecondTime;
-    }
 
     public boolean hasCapacity(){
         return users.size() < maxSize;

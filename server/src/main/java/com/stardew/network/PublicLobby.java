@@ -11,7 +11,7 @@ public class PublicLobby extends Lobby {
     }
 
     public LobbyDTO toDTO(){
-        return new LobbyDTO(id , name , visible , false , admin.getUsername(), getUsernameOfUsers() , addUserSecondTime);
+        return new LobbyDTO(id , name , visible , false , admin.getUsername(), getUsernameOfUsers() );
     }
 
 }
