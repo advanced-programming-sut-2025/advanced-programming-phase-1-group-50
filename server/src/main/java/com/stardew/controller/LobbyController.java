@@ -47,30 +47,6 @@ public class LobbyController {
         }
     }
 
-    public boolean joinLobby(int id , User user , String password ) {
-        Lobby lobby = findLobby(id);
-        if(lobby != null) {
-            if(lobby instanceof PrivateLobby privateLobby) {
-                if(privateLobby.getPassword().equals(password)) {
-                    privateLobby.addUser(user);
-                    return true;
-                }
-            }
-            else if(lobby instanceof PublicLobby publicLobby) {
-                publicLobby.addUser(user);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void removeLobby(int id) {
-        Lobby lobby = findLobby(id);
-        if(lobby != null) {
-            lobbies.remove(lobby);
-        }
-    }
-
     public void handleCreateLobby(Message message, ClientConnectionThread connection){
         String name = message.getFromBody("name");
         int id = generateUniqueId();
@@ -139,12 +115,12 @@ public class LobbyController {
                     } else {
                         body.put("result", new Result(true, "password matched , you joined the lobby"));
                         lobby.addUser(connection.getUser());
-                        lobby.setAddUserSecondTime(true);
+
                     }
                 } else {
                     body.put("result", new Result(true, "you are joined"));
                     lobby.addUser(connection.getUser());
-                    lobby.setAddUserSecondTime(true);
+
                 }
 
 
