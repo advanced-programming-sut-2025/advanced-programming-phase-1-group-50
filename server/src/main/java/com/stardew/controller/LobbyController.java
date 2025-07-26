@@ -87,21 +87,13 @@ public class LobbyController {
         }
         Lobby l = lobbies.getLast();
         LobbyDTO ltd = l.toDTO();
-        Result res = showMessageOfCreatingLobby();
+        Result res = new Result(true , "lobby created");
         HashMap<String , Object> body = new HashMap<>();
         body.put("lobbyDTO" , ltd);
         body.put("username" , user.getUsername());
         body.put("result" , res);
         Message response = new Message(body , MessageType.CREATE_LOBBY_RESULT);
         connection.sendMessage(response);
-    }
-
-    public Result showMessageOfCreatingLobby(){
-        return new Result(true , "lobby created");
-    }
-
-    public ArrayList<Lobby> getLobbies() {
-        return lobbies;
     }
 
     public void sendLobbies(ClientConnectionThread connection){
@@ -116,7 +108,7 @@ public class LobbyController {
         connection.sendMessage(response);
     }
 
-    public void sendSearchLobby( Message message , ClientConnectionThread connection){
+    public void sendSearchLobby(Message message, ClientConnectionThread connection){
         String search = message.getFromBody("search");
         int id = Integer.parseInt(search);
         Lobby lobby = findLobby(id);
@@ -137,47 +129,31 @@ public class LobbyController {
         Lobby lobby = findLobby(id);
         if(lobby != null) {
 
-            HashMap<String, Object> body = new HashMap<>();
-            if (lobby.hasCapacity()) {
-                if (lobby instanceof PrivateLobby privateLobby) {
-                    String password = message.getFromBody("password");
-                    if (!privateLobby.getPassword().equals(password)) {
-                        body.put("result", new Result(false, "password does not match"));
-                    } else {
-                        body.put("result", new Result(true, "password matched , you joined the lobby"));
-                        lobby.addUser(connection.getUser());
-                        lobby.setAddUserSecondTime(true);
-                    }
-                } else {
-                    body.put("result", new Result(true, "you are joined"));
+            HashMap<String , Object> body = new HashMap<>();
+            if(lobby instanceof PrivateLobby privateLobby) {
+                String password = message.getFromBody("password");
+                if(!privateLobby.getPassword().equals(password)) {
+                    body.put("result" , new Result(false, "password does not match"));
+                }
+                else {
+                    body.put("result" , new Result(true, "password matched , you joined the lobby"));
                     lobby.addUser(connection.getUser());
                     lobby.setAddUserSecondTime(true);
                 }
-            } else {
-                body.put("result", new Result(false, "lobby is full"));
+            }
+            else {
+                body.put("result" , new Result(true , "you are joined"));
+                lobby.addUser(connection.getUser());
+                lobby.setAddUserSecondTime(true);
             }
 
-            body.put("lobbyDTO", lobby.toDTO());
-            body.put("username", connection.getUser().getUsername());
-            Message response = new Message(body, MessageType.JOIN_LOBBY_RESULT);
+            body.put("lobbyDTO" , lobby.toDTO());
+            Message response = new Message(body , MessageType.JOIN_LOBBY_RESULT);
             connection.sendMessage(response);
 
-            if (response.getFromBody("result", Result.class).getSuccessful()) {
 
-                HashMap<String, Object> body2 = new HashMap<>();
-                body2.put("lobbyID", lobbyDTO.id);
-                body2.put("lobbyDTO", lobby.toDTO());
-                body2.put("players", lobby.getUsernameOfUsers());
-                Message response2 = new Message(body2, MessageType.LOBBY_PLAYERS_LIST_UPDATED);
-                for (User u : lobby.getUsers()) {
-                    ClientConnectionThread clientConnectionThread = ServerApp.findConnection(u.getUsername());
-                    if (clientConnectionThread == null) {
-                        System.out.println("Connection to " + u.getUsername() + " failed");
-                    } else {
-                        clientConnectionThread.sendMessage(response2);
-                    }
-                }
-            }
+            sendLobbyUpdateMessageToAll(lobby);
+
         }
     }
 
@@ -255,18 +231,7 @@ public class LobbyController {
             connection.sendMessage(response);
 
 
-            HashMap<String , Object> orderBody = new HashMap<>();
-            orderBody.put("lobbyID" , lobbyID);
-            orderBody.put("players" , lobby.getUsernameOfUsers());
-            orderBody.put("lobbyDTO" , lobby.toDTO());
-            Message order = new Message(orderBody, MessageType.LOBBY_PLAYERS_LIST_UPDATED);
-            for(User u : lobby.getUsers()) {
-                ClientConnectionThread clientConnection = ServerApp.findConnection(u.getUsername());
-                if(clientConnection == null)
-                    System.out.println("Connection lost with user <" + u.getUsername() + ">");
-                else
-                    clientConnection.sendMessage(order);
-            }
+            sendLobbyUpdateMessageToAll(lobby);
 
         }
     }
@@ -283,10 +248,25 @@ public class LobbyController {
         }
     }
 
-    public void sendOnlineUsers( ClientConnectionThread connection) {
+    private void sendLobbyUpdateMessageToAll(Lobby lobby) {
+        HashMap<String , Object> orderBody = new HashMap<>();
+        orderBody.put("lobbyID" , lobby.getId());
+        orderBody.put("lobbyDTO" , lobby.toDTO());
+        Message order = new Message(orderBody, MessageType.LOBBY_PLAYERS_LIST_UPDATED);
+        for(User u : lobby.getUsers()) {
+            ClientConnectionThread clientConnection = ServerApp.findConnection(u.getUsername());
+            if(clientConnection == null)
+                System.out.println("Connection lost with user <" + u.getUsername() + ">");
+            else
+                clientConnection.sendMessage(order);
+        }
+    }
+
+    public void sendOnlineUsers(ClientConnectionThread connection) {
         ArrayList<String> onlineUsers = new ArrayList<>();
         for(ClientConnectionThread cl : ServerApp.getClientConnectionThreads()){
-            onlineUsers.add(cl.getUser().getUsername());
+            if (cl.getUser() != null)
+                onlineUsers.add(cl.getUser().getUsername());
         }
         HashMap<String , Object> responseBody = new HashMap<>();
         responseBody.put("onlineUsers", onlineUsers);
