@@ -63,10 +63,9 @@ public class AskPrivateLobbyPasswordWindow extends CloseableWindow {
                 if(response != null && response.getType() == MessageType.JOIN_LOBBY_RESULT) {
 
                     LobbyDTO lobbyDTO = response.getFromBody("lobbyDTO", LobbyDTO.class);
-                    String username = response.getFromBody("username", String.class);
 
                     Screen screen = Main.getMain().getScreen();
-                    Main.getMain().setScreen(new LobbyMenu(lobbyDTO , username));
+                    Main.getMain().setScreen(new LobbyMenu(lobbyDTO));
                     screen.dispose();
 
                 }
