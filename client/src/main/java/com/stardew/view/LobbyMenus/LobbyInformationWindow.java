@@ -17,7 +17,6 @@ import com.stardew.view.AppMenu;
 import com.stardew.view.windows.CloseableWindow;
 
 import java.util.HashMap;
-import java.util.Random;
 
 public class LobbyInformationWindow extends CloseableWindow implements AppMenu {
 
@@ -70,17 +69,21 @@ public class LobbyInformationWindow extends CloseableWindow implements AppMenu {
         createLobby.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y){
-                if(lobbyName.getText().isEmpty() ){
+                if (lobbyName.getText().isEmpty()) {
                     showResult(new Result(false , "Please fill all fields!"));
                     return;
                 }
-                if(privateOrPublic.isChecked() ){
+                if (lobbyName.getText().length() > 10) {
+                    showResult(new Result(false , "Lobby Name is too long!"));
+                    return;
+                }
+                if (privateOrPublic.isChecked() ) {
                     if(password.getText().isEmpty()) {
                         showResult(new Result(false, "choose a password for your private lobby!"));
                         return;
                     }
                 }
-                createLobby.setDisabled(false);
+                createLobby.setDisabled(true);
 
                 Message message = prepareCreateLobbyMessage();
                 Message response = NetworkManager.getConnection().sendAndWaitForResponse(message , 500);

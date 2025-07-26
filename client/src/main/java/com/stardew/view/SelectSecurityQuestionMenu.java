@@ -60,7 +60,6 @@ public class SelectSecurityQuestionMenu implements AppMenu, Screen {
                     return;
                 }
                 Result result = response.getFromBody("result", Result.class);
-                LoggedInUser.setUser(new UserDTO(username, nickname));
                 showResult(result);
                 Timer.schedule(new Timer.Task() {
                     @Override

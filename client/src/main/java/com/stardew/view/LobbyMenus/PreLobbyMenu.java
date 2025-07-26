@@ -2,6 +2,7 @@ package com.stardew.view.LobbyMenus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -24,11 +25,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PreLobbyMenu implements Screen , AppMenu {
-    private Stage stage;
+public class PreLobbyMenu implements Screen, AppMenu {
+    private final Stage stage;
     private final TextButton createLobby;
     private final TextButton refresh;
-    private final TextField searchLobby;
+    private final TextField searchBar;
     private final ImageButton searchButton;
     private final Table lobbyTable;
     private final Table onlineUsersTable = new Table();
@@ -52,6 +53,7 @@ public class PreLobbyMenu implements Screen , AppMenu {
         refresh.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                refresh.setDisabled(true);
                 HashMap<String , Object> body = new HashMap<>();
                 Message message = new Message(body , MessageType.SEND_LOBBIES);
                 Message response = NetworkManager.getConnection().sendAndWaitForResponse(message , 500);
@@ -62,19 +64,27 @@ public class PreLobbyMenu implements Screen , AppMenu {
                     ArrayList<LobbyDTO> visibleLobbies = getVisibleLobbies(ltd);
                     updateLobbyTable(visibleLobbies);
                 }
-
+                refresh.setDisabled(false);
 
             }
         });
-        searchLobby = new TextField("Search Lobby", GamePictureManager.skin);
-        searchButton = new ImageButton(GamePictureManager.searchButtonDrawable);
+        searchBar = new TextField("", GamePictureManager.skin);
+        searchBar.setMessageText("Enter ID to search");
+        ImageButton.ImageButtonStyle buttonStyle = new ImageButton.ImageButtonStyle();
+        buttonStyle.imageUp = GamePictureManager.searchButtonUp;
+        buttonStyle.imageDown = GamePictureManager.searchButtonDown;
+        buttonStyle.imageOver = GamePictureManager.searchButtonOver;
+        searchButton = new ImageButton(buttonStyle);
         searchButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                String search = searchLobby.getText();
-                if(search.isEmpty()) return;
+                String search = searchBar.getText();
+                if (search.isEmpty() || !search.matches("\\d+")) {
+                    showResult(new Result(false, "Please enter a number!!"));
+                    return;
+                }
 
-
+                searchButton.setDisabled(true);
                 HashMap<String , Object> body = new HashMap<>();
                 body.put("search", search);
                 Message message = new Message(body , MessageType.SEARCH_LOBBY);
@@ -85,6 +95,7 @@ public class PreLobbyMenu implements Screen , AppMenu {
                     ltd.add(result);
                     updateLobbyTable(ltd);
                 }
+                searchButton.setDisabled(false);
             }
         });
 
@@ -124,7 +135,7 @@ public class PreLobbyMenu implements Screen , AppMenu {
 
 
         Table searchBox = new Table();
-        searchBox.add(searchLobby).width(300).height(50);
+        searchBox.add(searchBar).width(300).height(50);
         searchBox.add(searchButton).width(50).height(50).padLeft(10);
         topBar.add(searchBox).padRight(20);
 
@@ -138,7 +149,7 @@ public class PreLobbyMenu implements Screen , AppMenu {
 
         root.top().padTop(30);
         root.add(topBar).expandX().fillX().padBottom(20).row();
-        root.add(scrollPane).expand().fill().pad(20);
+        root.add(scrollPane).height(700).pad(20);
     }
 
 
@@ -169,7 +180,10 @@ public class PreLobbyMenu implements Screen , AppMenu {
         lobbyTable.clear();
         for (LobbyDTO lobby : lobbies) {
 
-            Label lobbyName = new Label(lobby.name + "ID : " + lobby.id + "User : " + lobby.adminUsername, GamePictureManager.skin);
+            Label lobbyName = new Label(String.format(
+                "%-25s  ID: %-10d  Admin: %-25s  N: %d", lobby.name, lobby.id, lobby.adminUsername, lobby.players.size()),
+                GamePictureManager.skin);
+            lobbyName.setColor(Color.BLACK);
             final LobbyDTO lobbyDTO = lobby;
 
             TextButton joinBtn = new TextButton("Join", GamePictureManager.skin);

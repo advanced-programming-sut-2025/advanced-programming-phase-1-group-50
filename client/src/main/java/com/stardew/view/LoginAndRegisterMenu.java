@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.controller.LoginAndRegisterController;
+import com.stardew.model.UserDTO;
+import com.stardew.models.ClientInfo.LoggedInUser;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.Main;
 import com.stardew.model.Result;
@@ -136,6 +138,9 @@ public class LoginAndRegisterMenu implements AppMenu , Screen {
                     MainMenu mainMenu = new MainMenu();
                     Main.getMain().setScreen(mainMenu);
                     currentScreen.dispose();
+                    String username = response.getFromBody("username");
+                    String nickname = response.getFromBody("nickname");
+                    LoggedInUser.setUser(new UserDTO(username, nickname));
                     return;
                 }
                 showResult(result);
