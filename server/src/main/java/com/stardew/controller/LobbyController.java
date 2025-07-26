@@ -127,32 +127,41 @@ public class LobbyController {
 
         int id = lobbyDTO.id;
         Lobby lobby = findLobby(id);
+        HashMap<String, Object> body = new HashMap<>();
         if(lobby != null) {
+            if(lobby.hasCapacity()) {
 
-            HashMap<String , Object> body = new HashMap<>();
-            if(lobby instanceof PrivateLobby privateLobby) {
-                String password = message.getFromBody("password");
-                if(!privateLobby.getPassword().equals(password)) {
-                    body.put("result" , new Result(false, "password does not match"));
-                }
-                else {
-                    body.put("result" , new Result(true, "password matched , you joined the lobby"));
+
+                if (lobby instanceof PrivateLobby privateLobby) {
+                    String password = message.getFromBody("password");
+                    if (!privateLobby.getPassword().equals(password)) {
+                        body.put("result", new Result(false, "password does not match"));
+                    } else {
+                        body.put("result", new Result(true, "password matched , you joined the lobby"));
+                        lobby.addUser(connection.getUser());
+                        lobby.setAddUserSecondTime(true);
+                    }
+                } else {
+                    body.put("result", new Result(true, "you are joined"));
                     lobby.addUser(connection.getUser());
                     lobby.setAddUserSecondTime(true);
                 }
-            }
-            else {
-                body.put("result" , new Result(true , "you are joined"));
-                lobby.addUser(connection.getUser());
-                lobby.setAddUserSecondTime(true);
-            }
 
-            body.put("lobbyDTO" , lobby.toDTO());
-            Message response = new Message(body , MessageType.JOIN_LOBBY_RESULT);
+
+
+            }
+            else{
+                body.put("result", new Result(false, "lobby is full"));
+            }
+            body.put("lobbyDTO", lobby.toDTO());
+            Message response = new Message(body, MessageType.JOIN_LOBBY_RESULT);
             connection.sendMessage(response);
 
+            if(response.getFromBody("result" , Result.class).getSuccessful())
+                sendLobbyUpdateMessageToAll(lobby);
 
-            sendLobbyUpdateMessageToAll(lobby);
+
+
 
         }
     }

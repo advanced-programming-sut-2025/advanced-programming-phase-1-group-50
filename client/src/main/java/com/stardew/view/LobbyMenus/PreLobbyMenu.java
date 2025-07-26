@@ -196,12 +196,11 @@ public class PreLobbyMenu implements Screen, AppMenu {
                         if(response != null && response.getType() == MessageType.JOIN_LOBBY_RESULT) {
 
                             LobbyDTO lobbyDTO = response.getFromBody("lobbyDTO", LobbyDTO.class);
-                            String username = response.getFromBody("username");
                             Result result = response.getFromBody("result", Result.class);
                             if(result!=null && result.getSuccessful()) {
 
                                 Screen screen = Main.getMain().getScreen();
-                                Main.getMain().setScreen(new LobbyMenu(lobbyDTO, username));
+                                Main.getMain().setScreen(new LobbyMenu(lobbyDTO));
                                 screen.dispose();
                             }
                             else {
