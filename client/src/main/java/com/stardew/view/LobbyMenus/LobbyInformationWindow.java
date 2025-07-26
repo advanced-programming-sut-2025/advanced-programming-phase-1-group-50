@@ -87,7 +87,7 @@ public class LobbyInformationWindow extends CloseableWindow implements AppMenu {
                         return;
                     }
                 }
-                createLobby.setDisabled(false);
+                createLobby.setDisabled(true);
 
                 Message message = prepareCreateLobbyMessage();
                 Message response = NetworkManager.getConnection().sendAndWaitForResponse(message , 500);
