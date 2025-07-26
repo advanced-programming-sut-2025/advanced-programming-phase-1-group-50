@@ -2,9 +2,11 @@ package com.stardew.view.LobbyMenus;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.stardew.Main;
@@ -22,10 +24,11 @@ public class LobbyInformationWindow extends CloseableWindow implements AppMenu {
 
     private final TextField lobbyName;
     private final TextField password;
+    private final Label passwordLabel;
     private final CheckBox privateOrPublic;
     private final CheckBox visible;
     private final TextButton createLobby;
-;
+
 
 
     public LobbyInformationWindow(Stage stage, Skin skin) {
@@ -41,16 +44,13 @@ public class LobbyInformationWindow extends CloseableWindow implements AppMenu {
         align(Align.top);
 
         Table content = new Table(skin);
+        content.padTop(50);
         content.defaults().pad(10).fillX();
 
         // Lobby Name
         content.add(new Label("Lobby Name:", skin)).left();
         lobbyName = new TextField("", skin);
         content.add(lobbyName).colspan(2).row();
-
-        content.add(new Label("if you want to create a private lobby" + "\n" + "enter password here", skin)).left();
-        password = new TextField("", skin);
-        content.add(password).colspan(2).row();
 
         // Private or Public
         privateOrPublic = new CheckBox(" Private Lobby", skin);
@@ -61,6 +61,12 @@ public class LobbyInformationWindow extends CloseableWindow implements AppMenu {
         visible.setChecked(true);
         content.add(visible).left().colspan(3).row();
 
+        password = new TextField("", skin);
+        passwordLabel = new Label("Password:", skin);
+        password.setVisible(false);
+        passwordLabel.setVisible(false);
+        content.add(passwordLabel).left();
+        content.add(password).colspan(2).row();
 
 
         // Create Lobby Button
@@ -109,6 +115,13 @@ public class LobbyInformationWindow extends CloseableWindow implements AppMenu {
 
         add(content).expand().top();
 
+        privateOrPublic.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                passwordLabel.setVisible(privateOrPublic.isChecked());
+                password.setVisible(privateOrPublic.isChecked());
+            }
+        });
 
 
     }
