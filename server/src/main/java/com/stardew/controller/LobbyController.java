@@ -248,9 +248,11 @@ public class LobbyController {
 
     public void sendOnlineUsers(ClientConnectionThread connection) {
         ArrayList<String> onlineUsers = new ArrayList<>();
-        for(ClientConnectionThread cl : ServerApp.getClientConnectionThreads()){
-            if (cl.getUser() != null)
-                onlineUsers.add(cl.getUser().getUsername());
+        synchronized (ServerApp.getClientConnectionThreads()) {
+            for (ClientConnectionThread cl : ServerApp.getClientConnectionThreads()) {
+                if (cl.getUser() != null)
+                    onlineUsers.add(cl.getUser().getUsername());
+            }
         }
         HashMap<String , Object> responseBody = new HashMap<>();
         responseBody.put("onlineUsers", onlineUsers);
