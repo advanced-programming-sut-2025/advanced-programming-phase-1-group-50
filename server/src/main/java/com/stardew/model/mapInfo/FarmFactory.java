@@ -17,6 +17,17 @@ public class FarmFactory {
     private static final HashSet<Point> usedPositions = new HashSet<>();
 
     private static final Random rand = new Random();
+
+    public static Farm makeFarm(String type, int x, int y) {
+        return switch (type) {
+            case "Farm 1" -> makeFarm1(x, y);
+            case "Farm 2" -> makeFarm2(x, y);
+            case "Farm 3" -> makeFarm3(x, y);
+            case "Farm 4" -> makeFarm4(x, y);
+            default -> throw new IllegalStateException("Unexpected value: " + type);
+        };
+    }
+
     public static Farm makeFarm1(int x  ,int y) {
         markUsedArea(10 + x , 10 + y , 6 ,6 );
         markUsedArea(3 + x , 3 + y , 6 ,6 );

@@ -6,7 +6,6 @@ package com.stardew.model.mapInfo;
 //import com.stardew.model.Placeable;
 //import com.stardew.model.ShippingBin;
 //import com.stardew.model.app.App;
-import com.stardew.model.gameApp.Game;
 //import com.stardew.model.date.Weather;
 //import com.stardew.model.foraging.Crop;
 //import com.stardew.model.foraging.CropType;
@@ -15,7 +14,6 @@ import com.stardew.model.gameApp.Game;
 import com.stardew.model.userInfo.Player;
 //import com.stardew.view.GameScreenMenu;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -24,7 +22,7 @@ import java.util.Random;
 // doors are completed , but we need ways from each farm to npc village.
 
 
-public class Map {
+public class GameMap {
     private final static Random rand = new Random();
     private final Tile[][] tiles = new Tile[250][200];
     private final ArrayList<Farm> farms;
@@ -34,39 +32,26 @@ public class Map {
 
 
 
-    public Map(ArrayList<Farm> farms) {
+    public GameMap(ArrayList<Farm> farms) {
         this.farms = farms;
+        buildMap();
     }
 
     public Tile findTile(int x, int y) {
         if (x < 0 || y < 0 || x >= tiles.length || y >= tiles[0].length)
             return null;
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles[i].length; j++) {
-                if (x == i && y == j) {
-                    return tiles[i][j];
-                }
-            }
-        }
-        return null;
+        return tiles[x][y];
     }
 
     public Tile findTile(Position position) {
         return findTile(position.getX(), position.getY());
     }
 
-    public void buildMap(ArrayList<Player> players) {
+    private void buildMap() {
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
                 tiles[i][j] = new Tile(new Position(i, j));
             }
-        }
-
-        farms.clear();
-        for (Player player : players) {
-            System.out.println(player.getUsername());
-            player.getFarm().setTilesSymbol(tiles);
-            farms.add(player.getFarm());
         }
 
 //        this.npcVillage = new NpcVillage(new Rectangle(100, 75, 49, 49),
@@ -358,4 +343,14 @@ public class Map {
 //
 //        return startYForMap[playerIndex];
 //    }
+
+    public static int getFarmStartX(int indexOfRegion) {
+        int[] startXForMap = {0, 150, 0, 150};
+        return startXForMap[indexOfRegion];
+    }
+
+    public static int getFarmStartY(int indexOfRegion) {
+        int[] startYForMap = {0, 0, 125, 125};
+        return startYForMap[indexOfRegion];
+    }
 }

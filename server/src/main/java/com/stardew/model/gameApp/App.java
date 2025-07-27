@@ -6,9 +6,12 @@ import com.stardew.model.userInfo.User;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class App {
     public static final List<User> users = Collections.synchronizedList(new ArrayList<>());
+    private static final Map<Integer, Game> games = new ConcurrentHashMap<>();
 
     static {
         User u = new User("ali", "wwwwww", "fkmd", "emua@dfjk.com", Gender.Male, new SecurityQuestion("what is your favorite color?", "answer"));
@@ -33,6 +36,19 @@ public class App {
             }
         }
         return null;
+    }
+
+
+    public static Game getGame(int id) {
+        return games.get(id);
+    }
+
+    public static void addGame(int id, Game game) {
+        games.put(id, game);
+    }
+
+    public static void removeGame(int id) {
+        games.remove(id);
     }
 
 
