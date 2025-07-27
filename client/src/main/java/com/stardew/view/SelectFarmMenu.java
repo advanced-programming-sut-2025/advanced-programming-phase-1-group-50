@@ -128,11 +128,11 @@ public class SelectFarmMenu implements Screen, AppMenu {
     }
 
     private void updateTimer(float delta) {
-        remainingTime -= delta;
-        if (remainingTime <= 0) {
-            remainingTime = 0;
-            if (!hasSentReadyMessage)
+        if (remainingTime > 0) {
+            remainingTime -= delta;
+            if (remainingTime <= 3 && !hasSentReadyMessage) {
                 sendReadyMessage();
+            }
         }
     }
 
