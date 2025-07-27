@@ -13,6 +13,7 @@ public class LobbyController {
     private static LobbyController instance ;
     private final List<Lobby> lobbies = Collections.synchronizedList(new ArrayList<>());
     private final PreGameController preGameController = PreGameController.getInstance();
+    private final Set<Integer> IDs = Collections.synchronizedSet(new HashSet<>());
 
 
     private LobbyController() {}
@@ -206,7 +207,7 @@ public class LobbyController {
                 }
                 else {
                     lobbies.remove(lobby);
-
+                    removeId(lobby.getId());
                 }
             }
             HashMap<String , Object> responseBody = new HashMap<>();
@@ -225,6 +226,7 @@ public class LobbyController {
         Lobby lobby = findLobby(lobbyID);
         if(lobby != null) {
             lobbies.remove(lobby);
+            removeId(lobby.getId());
             HashMap<String , Object> responseBody = new HashMap<>();
             responseBody.put("result" , new Result(true, "lobby successfully destroyed"));
             Message response = new Message(responseBody, MessageType.DESTROY_LOBBY_RESULT);
@@ -265,8 +267,13 @@ public class LobbyController {
         int id;
         do {
             id = rand.nextInt(9000) + 1000;
-        } while (findLobby(id) != null);
+        } while (IDs.contains(id));
+        IDs.add(id);
         return id;
+    }
+
+    public void removeId(int id) {
+        IDs.remove(id);
     }
 
 }
