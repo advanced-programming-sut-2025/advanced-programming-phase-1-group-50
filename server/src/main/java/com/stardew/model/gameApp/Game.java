@@ -12,8 +12,7 @@ import com.stardew.model.Result;
 //import com.stardew.model.foraging.Tree;
 import com.stardew.model.mapInfo.Farm;
 //import com.stardew.model.mapInfo.GreenHouse;
-import com.stardew.model.mapInfo.Map;
-import com.stardew.model.mapInfo.Tile;
+import com.stardew.model.mapInfo.GameMap;
 import com.stardew.model.userInfo.Player;
 import com.stardew.model.userInfo.User;
 
@@ -23,7 +22,7 @@ public class Game {
     private final ArrayList<Player> players = new ArrayList<>();
     private final ArrayList<Farm> farms = new ArrayList<>();
 //    private Time time;
-    private Map map;
+    private GameMap map;
     private final User gameCreator;
     private Player currentPlayingPlayer;
 //    private RelationNetwork relationsBetweenPlayers;
@@ -33,12 +32,12 @@ public class Game {
 //    private final ArrayList<Trade> trades = new ArrayList<>();
 //    private final GameMenuController gameMenuController = new GameMenuController();
 
-    public Game(ArrayList<Player> players, ArrayList<Farm> farms, User u, Map x) {
+    public Game(ArrayList<Player> players, ArrayList<Farm> farms, User u, GameMap map) {
         this.farms.addAll(farms);
         this.players.addAll(players);
         this.gameCreator = u;
 //        this.time = new Time();
-        this.map = x;
+        this.map = map;
         relationInitializer(players);
     }
 
@@ -111,11 +110,11 @@ public class Game {
         return new Result(true, "Next player: " + currentPlayingPlayer.getUsername() + "\n\n" + currentPlayingPlayer.UncheckedNotifications());
     }
 
-    public Map getMap() {
+    public GameMap getMap() {
         return map;
     }
 
-    public void setMap(Map map) {
+    public void setMap(GameMap map) {
         this.map = map;
     }
 

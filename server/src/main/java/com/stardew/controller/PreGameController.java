@@ -1,11 +1,17 @@
 package com.stardew.controller;
 
+import com.stardew.model.gameApp.App;
+import com.stardew.model.gameApp.Game;
+import com.stardew.model.mapInfo.Farm;
+import com.stardew.model.mapInfo.FarmFactory;
+import com.stardew.model.mapInfo.GameMap;
+import com.stardew.model.userInfo.Player;
 import com.stardew.model.userInfo.User;
 import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Lobby;
 import com.stardew.network.Message;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -13,6 +19,7 @@ public class PreGameController {
     private static PreGameController instance;
     private final Map<Integer, ConcurrentHashMap<String, Boolean>> playersReadyStatusByID = new ConcurrentHashMap<>();
     private final Map<Integer, ConcurrentHashMap<String, String>> playersFarmStatusByID = new ConcurrentHashMap<>();
+    private final Map<Integer, Lobby> lobbyByID = new ConcurrentHashMap<>();
 
 
     private PreGameController() {}
@@ -36,6 +43,7 @@ public class PreGameController {
         }
         playersReadyStatusByID.put(id, playersReady);
         playersFarmStatusByID.put(id, playersFarmSelected);
+        lobbyByID.put(id, lobby);
     }
 
 
@@ -63,6 +71,31 @@ public class PreGameController {
         }
 
         if (isAllReady) {
+            int counter = 0;
+            Lobby lobby = lobbyByID.get(id);
+            ArrayList<Farm> farms = new ArrayList<>();
+            ArrayList<Player> players = new ArrayList<>();
+            for (User user : lobby.getUsers()) {
+                Player player = new Player(user);
+                Farm farm = FarmFactory.makeFarm(
+                    playersFarmStatusInLobby.get(user.getUsername()),
+                    GameMap.getFarmStartX(counter),
+                    GameMap.getFarmStartY(counter));
+                farms.add(farm);
+                players.add(player);
+                player.setFarm(farm);
+                counter++;
+            }
+            while (counter < 4) {
+                Farm farm = FarmFactory.makeFarm1(GameMap.getFarmStartX(counter), GameMap.getFarmStartY(counter));
+                farms.add(farm);
+                counter++;
+            }
+            GameMap map = new GameMap(farms);
+            Game game = new Game(players, farms, lobby.getAdmin(), map);
+            App.addGame(id, game);
+
+
             //TODO
             // handle go to start game here (build map and ...)
             // should find lobby and send message to all members
