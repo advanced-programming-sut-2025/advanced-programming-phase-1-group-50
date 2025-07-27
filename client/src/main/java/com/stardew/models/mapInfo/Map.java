@@ -28,8 +28,8 @@ import java.util.Random;
 
 public class Map {
     private final static Random rand = new Random();
-    private Tile[][] tiles = new Tile[250][200];
-    private ArrayList<Farm> farms = new ArrayList<>();
+    private final Tile[][] tiles = new Tile[250][200];
+    private final ArrayList<Farm> farms;
     private NpcVillage npcVillage;
     private final ArrayList<NpcHome> npcHomes = new ArrayList<>();
     private final ArrayList<ShippingBin> shippingBins = new ArrayList<>();

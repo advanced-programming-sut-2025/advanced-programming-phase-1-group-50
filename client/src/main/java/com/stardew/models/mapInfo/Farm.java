@@ -8,7 +8,6 @@ import com.stardew.models.foraging.Tree;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Random;
 
 public class Farm {
@@ -18,11 +17,11 @@ public class Farm {
     private final GreenHouse greenHouse;
     private final ArrayList<Lake> lakes;
     private final ArrayList<Quarry> quarries;
-    private ArrayList<Tree> trees;
+    private final ArrayList<Tree> trees;
     private final Rectangle rectangle;
     private final ArrayList<Stone> stones;
-    private ArrayList<Placeable> placeables = new ArrayList<>();
-    private ArrayList<Crop> crops = new ArrayList<>();
+    private final ArrayList<Placeable> placeables = new ArrayList<>();
+    private final ArrayList<Crop> crops;
     private final ArrayList<Habitat> habitats = new ArrayList<>();
     private Door door;
 
@@ -97,10 +96,6 @@ public class Farm {
     public void addRandomTree() {
         Random rand = new Random();
 
-    }
-
-    public void setTrees(ArrayList<Tree> trees) {
-        this.trees = trees;
     }
 
     public int getType() {
