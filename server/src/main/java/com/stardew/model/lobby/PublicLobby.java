@@ -1,9 +1,7 @@
-package com.stardew.network;
+package com.stardew.model.lobby;
 
 import com.stardew.model.LobbyDTO;
 import com.stardew.model.userInfo.User;
-
-import java.util.ArrayList;
 
 public class PublicLobby extends Lobby {
     public PublicLobby(int id, String name, User admin, boolean visible) {

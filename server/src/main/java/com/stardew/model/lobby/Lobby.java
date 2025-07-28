@@ -1,4 +1,4 @@
-package com.stardew.network;
+package com.stardew.model.lobby;
 
 import com.stardew.model.LobbyDTO;
 import com.stardew.model.userInfo.User;
