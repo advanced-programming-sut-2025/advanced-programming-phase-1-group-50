@@ -14,12 +14,12 @@ public class NpcVillage {
     private final  JojaMart jojaMart;
     private final MarnieRanch marnieRanch;
     private final PierreGeneralStore pierreGeneralStore;
-    private final StardropSaloon StardopSaloon;
+    private final com.stardew.models.stores.StardopSaloon StardopSaloon;
     private final ArrayList<Placeable> placeables = new ArrayList<>();
     private final ArrayList<Door> doors = new ArrayList<>();
     public NpcVillage(Rectangle rectangle , Blacksmith blacksmith , CarpenterShop carpenterShop , FishShop fishShop ,
                       JojaMart jojaMart , MarnieRanch marnieRanch , PierreGeneralStore pierreGeneralStore
-            , StardropSaloon StardopSaloon) {
+            , com.stardew.models.stores.StardopSaloon StardopSaloon) {
         this.rectangle = rectangle;
 
         this.blacksmith = blacksmith;
@@ -43,7 +43,7 @@ public class NpcVillage {
         return rectangle;
     }
 
-    public StardropSaloon getStardopSaloon() {
+    public com.stardew.models.stores.StardopSaloon getStardopSaloon() {
         return StardopSaloon;
     }
 

@@ -76,7 +76,7 @@ public class Map {
                 new JojaMart(138, 89, 4, 4),
                 new MarnieRanch(118, 116, 18, 8),
                 new PierreGeneralStore(138, 97, 4, 4),
-                new StardropSaloon(138, 110, 4, 4));
+                new StardopSaloon(138, 110, 4, 4));
 
         NPC abigailNpc = new NPC(NPCType.Abigail);
         NPC sebastianNpc = new NPC(NPCType.Sebastian);
