@@ -1,5 +1,6 @@
 package com.stardew.controller;
 
+import com.stardew.model.ServerApp;
 import com.stardew.model.gameApp.App;
 import com.stardew.model.gameApp.Game;
 import com.stardew.model.mapInfo.Farm;
@@ -10,8 +11,10 @@ import com.stardew.model.userInfo.User;
 import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Lobby;
 import com.stardew.network.Message;
+import com.stardew.network.MessageType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -71,35 +74,62 @@ public class PreGameController {
         }
 
         if (isAllReady) {
-            int counter = 0;
-            Lobby lobby = lobbyByID.get(id);
-            ArrayList<Farm> farms = new ArrayList<>();
-            ArrayList<Player> players = new ArrayList<>();
-            for (User user : lobby.getUsers()) {
-                Player player = new Player(user);
-                Farm farm = FarmFactory.makeFarm(
-                    playersFarmStatusInLobby.get(user.getUsername()),
-                    GameMap.getFarmStartX(counter),
-                    GameMap.getFarmStartY(counter));
-                farms.add(farm);
-                players.add(player);
-                player.setFarm(farm);
-                counter++;
-            }
-            while (counter < 4) {
-                Farm farm = FarmFactory.makeFarm1(GameMap.getFarmStartX(counter), GameMap.getFarmStartY(counter));
-                farms.add(farm);
-                counter++;
-            }
-            GameMap map = new GameMap(farms);
-            Game game = new Game(players, farms, lobby.getAdmin(), map);
-            App.addGame(id, game);
 
+            createMapAndGame(id);
 
-            //TODO
-            // handle go to start game here (build map and ...)
-            // should find lobby and send message to all members
-            // remove id from 2 maps
+            sendGoToGameScreenToAll(id);
+
+            playersReadyStatusByID.remove(id);
+            playersFarmStatusByID.remove(id);
+            lobbyByID.remove(id);
         }
+
+    }
+
+
+    private void createMapAndGame(int id) {
+        int counter = 0;
+        Lobby lobby = lobbyByID.get(id);
+        Map<String, String> playersFarmStatusInLobby = playersFarmStatusByID.get(id);
+        ArrayList<Farm> farms = new ArrayList<>();
+        ArrayList<Player> players = new ArrayList<>();
+        for (User user : lobby.getUsers()) {
+            Player player = new Player(user);
+            Farm farm = FarmFactory.makeFarm(
+                playersFarmStatusInLobby.get(user.getUsername()),
+                GameMap.getFarmStartX(counter),
+                GameMap.getFarmStartY(counter));
+            farms.add(farm);
+            players.add(player);
+            player.setFarm(farm);
+            counter++;
+        }
+        while (counter < 4) {
+            Farm farm = FarmFactory.makeFarm1(GameMap.getFarmStartX(counter), GameMap.getFarmStartY(counter));
+            farms.add(farm);
+            counter++;
+        }
+        GameMap map = new GameMap(farms);
+        Game game = new Game(players, farms, lobby.getAdmin(), map);
+        App.addGame(id, game);
+
+    }
+
+
+    private void sendGoToGameScreenToAll(int id) {
+        Lobby lobby = lobbyByID.get(id);
+
+        HashMap<String , Object> orderBody = new HashMap<>();
+        orderBody.put("id" , id);
+        Message order = new Message(orderBody, MessageType.GO_TO_GAME_SCREEN);
+
+        for (User lobbyUser : lobby.getUsers()) {
+            ClientConnectionThread clientConnection = ServerApp.findConnection(lobbyUser.getUsername());
+            if (clientConnection == null)
+                System.out.println("Connection lost with user <" + lobbyUser.getUsername() + ">");
+            else
+                clientConnection.sendMessage(order);
+        }
+
     }
 }

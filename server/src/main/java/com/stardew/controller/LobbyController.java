@@ -193,6 +193,7 @@ public class LobbyController {
         }
 
         preGameController.addNewPreGame(lobby);
+        lobbies.remove(lobby);
     }
 
     public void leaveLobby(Message message, ClientConnectionThread connection) {
