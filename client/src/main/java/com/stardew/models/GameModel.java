@@ -7,6 +7,8 @@ import com.badlogic.gdx.utils.Timer;
 import com.stardew.controller.ForagingControllers.ForagingController;
 import com.stardew.controller.PlayerController;
 import com.stardew.controller.ToolsControllers.ToolController;
+import com.stardew.model.PlayerDTO;
+import com.stardew.model.TileDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
 import com.stardew.models.foraging.Fertilizer;
@@ -23,47 +25,52 @@ import com.stardew.view.modelsManager.AnimalsManager;
 import com.stardew.view.modelsManager.ArtisanMachinesManager;
 import com.stardew.view.windows.SmartTooltip;
 
+import java.util.ArrayList;
+
 
 public class GameModel {
     private final OrthographicCamera camera;
-    private final Map map;
+    private ArrayList<TileDTO> tiles;
+    private PlayerDTO player;
     private final int mapWidth, mapHeight;
-    private PlayerController playerController;
-    private Stage stage;
-    private final AnimalsManager animalsManager;
-    private final ArtisanMachinesManager artisanMachinesManager;
-    private final HotBarActor hotBarActor;
-    private final ToolController toolController;
-    private final ForagingController foragingController;
+//    private final Map map;
+//    private PlayerController playerController;
+//    private Stage stage;
+//    private final AnimalsManager animalsManager;
+//    private final ArtisanMachinesManager artisanMachinesManager;
+//    private final HotBarActor hotBarActor;
+//    private final ToolController toolController;
+//    private final ForagingController foragingController;
 
 
-    public GameModel(Map map  , int mapWidth , int mapHeight, HotBarActor hotBarActor) {
-        this.map = map;
+//    public GameModel(Map map  , int mapWidth , int mapHeight, HotBarActor hotBarActor) {
+    public GameModel(int mapWidth , int mapHeight) {
+//        this.map = map;
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Player p = App.getGame().getCurrentPlayingPlayer();
-        camera.position.set(p.getPlayerPosition().getFirst() , p.getPlayerPosition().getSecond() , 0);
+        camera.position.set(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, 0);
+//        Player p = App.getGame().getCurrentPlayingPlayer();
+//        camera.position.set(p.getPlayerPosition().getFirst() , p.getPlayerPosition().getSecond() , 0);
 
-        animalsManager = new AnimalsManager();
-        artisanMachinesManager = new ArtisanMachinesManager();
-        this.hotBarActor = hotBarActor;
-        toolController = new ToolController();
-        foragingController = new ForagingController();
+//        animalsManager = new AnimalsManager();
+//        artisanMachinesManager = new ArtisanMachinesManager();
+//        this.hotBarActor = hotBarActor;
+//        toolController = new ToolController();
+//        foragingController = new ForagingController();
 
     }
 
 
 
-    public void setPlayerController(PlayerController playerController) {
-        this.playerController = playerController;
-    }
+//    public void setPlayerController(PlayerController playerController) {
+//        this.playerController = playerController;
+//    }
 
     public void update(float delta) {
-        Pair<Float , Float> playerPos = App.getGame().getCurrentPlayingPlayer().getPlayerPosition();
-        float playerX = playerPos.getFirst() * GamePictureManager.TILE_SIZE;
-        float playerY = playerPos.getSecond() * GamePictureManager.TILE_SIZE;
+        float playerX = player.getX() * GamePictureManager.TILE_SIZE;
+        float playerY = player.getY() * GamePictureManager.TILE_SIZE;
 
         float cameraX = camera.position.x;
         float cameraY = camera.position.y;
@@ -91,97 +98,97 @@ public class GameModel {
         camera.position.set(cameraX, cameraY, 0);
         camera.update();
 
-        animalsManager.update(delta);
-        artisanMachinesManager.update();
-        hotBarActor.update();
+//        animalsManager.update(delta);
+//        artisanMachinesManager.update();
+//        hotBarActor.update();
 
 
     }
 
     public void handleClickTile(int indexTileX, int indexTileY) {
-        Tile[][] tiles = map.getTiles();
-        if (indexTileX < 0 || indexTileX >= tiles.length || indexTileY < 0 || indexTileY >= tiles[0].length)
-            return;
-
-        Tile selectedTile = tiles[indexTileX][indexTileY];
-
-        if (openInPersonFriendshipMenu(indexTileX,indexTileY)) {
-            return;
-        }
-
-        InventoryItem currentItem = App.getGame().getCurrentPlayingPlayer().getCurrentInventoryItem();
-
-        Result result = null;
-
-        if (currentItem instanceof Tool) {
-            result = toolController.useTool(selectedTile, stage);
-        }
-        else if (currentItem instanceof Fertilizer fertilizer) {
-            result = foragingController.fertilize(fertilizer, selectedTile);
-        }
-        else if (currentItem instanceof Seeds || currentItem instanceof TreeSource) {
-            result = foragingController.plant(currentItem, selectedTile);
-        }
-
-        if (result != null) {
-            SmartTooltip.getInstance().show("  " + result.getMessage() + "  ");
-            Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    SmartTooltip.getInstance().hide();
-                }
-            }, 3f);
-        }
+//        Tile[][] tiles = map.getTiles();
+//        if (indexTileX < 0 || indexTileX >= tiles.length || indexTileY < 0 || indexTileY >= tiles[0].length)
+//            return;
+//
+//        Tile selectedTile = tiles[indexTileX][indexTileY];
+//
+//        if (openInPersonFriendshipMenu(indexTileX,indexTileY)) {
+//            return;
+//        }
+//
+//        InventoryItem currentItem = App.getGame().getCurrentPlayingPlayer().getCurrentInventoryItem();
+//
+//        Result result = null;
+//
+//        if (currentItem instanceof Tool) {
+//            result = toolController.useTool(selectedTile, stage);
+//        }
+//        else if (currentItem instanceof Fertilizer fertilizer) {
+//            result = foragingController.fertilize(fertilizer, selectedTile);
+//        }
+//        else if (currentItem instanceof Seeds || currentItem instanceof TreeSource) {
+//            result = foragingController.plant(currentItem, selectedTile);
+//        }
+//
+//        if (result != null) {
+//            SmartTooltip.getInstance().show("  " + result.getMessage() + "  ");
+//            Timer.schedule(new Timer.Task() {
+//                @Override
+//                public void run() {
+//                    SmartTooltip.getInstance().hide();
+//                }
+//            }, 3f);
+//        }
     }
 
-    private boolean openInPersonFriendshipMenu(int indexTileX, int indexTileY) {
-
-        for (Player player : App.getGame().getPlayers()) {
-
-            if (player.equals(App.getGame().getCurrentPlayingPlayer())) {
-                continue;
-            }
-
-            float deltaX = (player.getPlayerPosition().getFirst()) - indexTileX;
-            float deltaY = (player.getPlayerPosition().getSecond()) - indexTileY;
-
-            if ((-0.5 < deltaX && 0.8 > deltaX) && (-0.7 < deltaY && 0.7 > deltaY)) {
-                stage.addActor(new InPersonFriendshipWindow(stage,player));
-                return true;
-            }
-
-        }
-
-        return false;
-    }
+//    private boolean openInPersonFriendshipMenu(int indexTileX, int indexTileY) {
+//
+//        for (Player player : App.getGame().getPlayers()) {
+//
+//            if (player.equals(App.getGame().getCurrentPlayingPlayer())) {
+//                continue;
+//            }
+//
+//            float deltaX = (player.getPlayerPosition().getFirst()) - indexTileX;
+//            float deltaY = (player.getPlayerPosition().getSecond()) - indexTileY;
+//
+//            if ((-0.5 < deltaX && 0.8 > deltaX) && (-0.7 < deltaY && 0.7 > deltaY)) {
+//                stage.addActor(new InPersonFriendshipWindow(stage,player));
+//                return true;
+//            }
+//
+//        }
+//
+//        return false;
+//    }
 
 
     public OrthographicCamera getCamera() {
         return camera;
     }
 
-    public Map getMap() {
-        return map;
-    }
+//    public Map getMap() {
+//        return map;
+//    }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
+//    public void setStage(Stage stage) {
+//        this.stage = stage;
+//    }
 
-    public int getMapWidth() {
-        return mapWidth;
-    }
+//    public int getMapWidth() {
+//        return mapWidth;
+//    }
 
-    public int getMapHeight() {
-        return mapHeight;
-    }
+//    public int getMapHeight() {
+//        return mapHeight;
+//    }
 
-    public PlayerController getPlayerController() {
-        return playerController;
-    }
+//    public PlayerController getPlayerController() {
+//        return playerController;
+//    }
 
-    public AnimalsManager getAnimalsManager() {
-        return animalsManager;
-    }
+//    public AnimalsManager getAnimalsManager() {
+//        return animalsManager;
+//    }
 
 }
