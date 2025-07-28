@@ -2,28 +2,9 @@ package com.stardew.models;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Timer;
-import com.stardew.controller.ForagingControllers.ForagingController;
-import com.stardew.controller.PlayerController;
-import com.stardew.controller.ToolsControllers.ToolController;
 import com.stardew.model.PlayerDTO;
 import com.stardew.model.TileDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.App;
-import com.stardew.models.foraging.Fertilizer;
-import com.stardew.models.foraging.Seeds;
-import com.stardew.models.foraging.TreeSource;
-import com.stardew.models.mapInfo.Map;
-import com.stardew.models.mapInfo.Pair;
-import com.stardew.models.mapInfo.Tile;
-import com.stardew.models.tools.Tool;
-import com.stardew.models.userInfo.Player;
-import com.stardew.view.InPersonPlayersRelationsWindows.InPersonFriendshipWindow;
-import com.stardew.view.InventoryWindows.HotBarActor;
-import com.stardew.view.modelsManager.AnimalsManager;
-import com.stardew.view.modelsManager.ArtisanMachinesManager;
-import com.stardew.view.windows.SmartTooltip;
 
 import java.util.ArrayList;
 
@@ -33,6 +14,10 @@ public class GameModel {
     private ArrayList<TileDTO> tiles;
     private PlayerDTO player;
     private final int mapWidth, mapHeight;
+    private int startX;
+    private int startY;
+    private int endX;
+    private int endY;
 //    private final Map map;
 //    private PlayerController playerController;
 //    private Stage stage;
@@ -68,7 +53,7 @@ public class GameModel {
 //        this.playerController = playerController;
 //    }
 
-    public void update(float delta) {
+    public void updateCamera() {
         float playerX = player.getX() * GamePictureManager.TILE_SIZE;
         float playerY = player.getY() * GamePictureManager.TILE_SIZE;
 
@@ -104,6 +89,26 @@ public class GameModel {
 
 
     }
+
+
+    public void updateIndexes() {
+        float camX = camera.position.x;
+        float camY = camera.position.y;
+        float viewportWidth = camera.viewportWidth;
+        float viewportHeight = camera.viewportHeight;
+
+        int tileSize = GamePictureManager.TILE_SIZE;
+
+        float cameraLeft = camX - viewportWidth / 2;
+        float cameraBottom = camY - viewportHeight / 2;
+
+        startX = Math.max(0, (int) (cameraLeft / tileSize) - 3);
+        startY = Math.max(0, (int) (cameraBottom / tileSize) - 3);
+        endX = Math.min(mapWidth, (int) ((camX + viewportWidth / 2) / tileSize) + 4);
+        endY = Math.min(mapHeight, (int) ((camY + viewportHeight / 2) / tileSize) + 4);
+
+    }
+
 
     public void handleClickTile(int indexTileX, int indexTileY) {
 //        Tile[][] tiles = map.getTiles();
@@ -167,7 +172,39 @@ public class GameModel {
         return camera;
     }
 
-//    public Map getMap() {
+    public void updateTiles(ArrayList<TileDTO> tiles) {
+        this.tiles = tiles;
+    }
+
+    public void updatePlayer(PlayerDTO player) {
+        this.player = player;
+    }
+
+    public ArrayList<TileDTO> getTiles() {
+        return tiles;
+    }
+
+    public PlayerDTO getPlayer() {
+        return player;
+    }
+
+    public int getStartX() {
+        return startX;
+    }
+
+    public int getStartY() {
+        return startY;
+    }
+
+    public int getEndX() {
+        return endX;
+    }
+
+    public int getEndY() {
+        return endY;
+    }
+
+    //    public Map getMap() {
 //        return map;
 //    }
 
@@ -175,13 +212,13 @@ public class GameModel {
 //        this.stage = stage;
 //    }
 
-//    public int getMapWidth() {
-//        return mapWidth;
-//    }
+    public int getMapWidth() {
+        return mapWidth;
+    }
 
-//    public int getMapHeight() {
-//        return mapHeight;
-//    }
+    public int getMapHeight() {
+        return mapHeight;
+    }
 
 //    public PlayerController getPlayerController() {
 //        return playerController;

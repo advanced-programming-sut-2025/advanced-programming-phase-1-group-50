@@ -31,4 +31,5 @@ public enum MessageType {
     SEND_ONLINE_USERS_RESULT,
     GO_TO_GAME_SCREEN,
     UPDATE_GAME,
+    UPDATE_GAME_RESULT,
 }
