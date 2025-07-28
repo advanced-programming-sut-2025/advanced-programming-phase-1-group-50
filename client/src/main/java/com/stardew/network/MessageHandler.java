@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.google.gson.reflect.TypeToken;
 import com.stardew.Main;
 import com.stardew.model.LobbyDTO;
+import com.stardew.view.GameScreenMenu;
 import com.stardew.view.LobbyMenus.LobbyMenu;
 import com.stardew.view.LobbyMenus.PreLobbyMenu;
 import com.stardew.view.SelectFarmMenu;
@@ -59,7 +60,21 @@ public class MessageHandler {
                 }
                 return true;
             }
-
+            case GO_TO_GAME_SCREEN -> {
+                int id = message.getIntFromBody("id");
+                Gdx.app.postRunnable(() -> {
+                    //TODO
+                    // have a delay here
+                    // have a timer to start game
+                    GameUpdateRequestThread updateRequestThread = new GameUpdateRequestThread(id);
+                    updateRequestThread.start();
+                    Screen currentScreen = Main.getMain().getScreen();
+                    GameScreenMenu gameScreenMenu = new GameScreenMenu(updateRequestThread);
+                    Main.getMain().setScreen(gameScreenMenu);
+                    currentScreen.dispose();
+                });
+                return true;
+            }
             default -> {
                 return false;
             }

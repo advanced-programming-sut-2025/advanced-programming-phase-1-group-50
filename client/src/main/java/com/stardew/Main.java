@@ -1,12 +1,7 @@
 package com.stardew;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.network.NetworkManager;
 import com.stardew.view.LoginAndRegisterMenu;
@@ -46,6 +41,10 @@ public class Main extends Game {
     @Override
     public void dispose() {
         batch.dispose();
+
+        if (getScreen() != null) {
+            getScreen().dispose();
+        }
 
         if (NetworkManager.getConnection() != null) {
             NetworkManager.getConnection().end();
