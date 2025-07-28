@@ -16,12 +16,12 @@ import com.stardew.models.userInfo.Coin;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class StardropSaloon extends Store {
+public class StardopSaloon extends Store {
     private final String backgroundCode = BackgroundColors.BRIGHT_BLUE;
     private final String colorCode= ColorPrinter.PURPLE;
     private ArrayList<ShopItem> inventory;
 
-    public StardropSaloon(int x, int y, int width, int height) {
+    public StardopSaloon(int x, int y, int width, int height) {
         super(GamePictureManager.stardopSaloonRegions,new TextureRegion(GamePictureManager.stardopSaloonTexture),new Rectangle(x, y, width, height), "Gus", 12, 24);
     }
 
