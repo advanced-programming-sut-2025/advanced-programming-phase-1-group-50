@@ -76,10 +76,10 @@ public class SelectFarmMenuController {
         App.setGame(x);
         App.getGame().setCurrentPlayingPlayer(players.getFirst());
 
-        GameScreenMenu gameMenu = new GameScreenMenu();
-        Screen currentScreen = Main.getMain().getScreen();
-        Main.getMain().setScreen(gameMenu);
-        currentScreen.dispose();
+//        GameScreenMenu gameMenu = new GameScreenMenu();
+//        Screen currentScreen = Main.getMain().getScreen();
+//        Main.getMain().setScreen(gameMenu);
+//        currentScreen.dispose();
 
 
         System.out.println(gameMenuController.printMapAll());

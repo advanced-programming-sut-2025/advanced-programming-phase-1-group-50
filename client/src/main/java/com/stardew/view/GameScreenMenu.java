@@ -15,62 +15,64 @@ import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.ShippingBin;
 import com.stardew.models.GameModel;
 import com.stardew.models.app.App;
+import com.stardew.network.GameUpdateRequestThread;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.windows.SmartTooltip;
 
 public class GameScreenMenu implements Screen {
-
+    private final GameUpdateRequestThread updateRequestThread;
     private GameModel gameModel;
     private GameRenderer gameRenderer;
     private GameMenuInputAdapter gameMenuInputAdapter;
     private Stage stage;
 
-    private final HotBarActor hotBarActor= new HotBarActor();
+//    private final HotBarActor hotBarActor= new HotBarActor();
 
     private SpriteBatch batch;
     private final Stage uiStage = new Stage(new ScreenViewport());
 
-    private final TimeManager timeManager = new TimeManager(uiStage);
-    private final EnergyManager energyManager = new EnergyManager(uiStage);
+//    private final TimeManager timeManager = new TimeManager(uiStage);
+//    private final EnergyManager energyManager = new EnergyManager(uiStage);
 
-    private final WeatherManager weatherManager = new WeatherManager();
+//    private final WeatherManager weatherManager = new WeatherManager();
 
 
 
-    public GameScreenMenu(){
-        initializeGame();
-        uiStage.addActor(hotBarActor);
-
-    }
-
-    public void initializeGame(){
-
-        gameModel = new GameModel(App.getGame().getMap() , 250 , 200 , hotBarActor);
-        timeManager.setGameModel(gameModel);
-        weatherManager.setGameModel(gameModel);
-        gameModel.setPlayerController(new PlayerController(App.getGame().getCurrentPlayingPlayer(), gameModel));
-        gameMenuInputAdapter = new GameMenuInputAdapter(gameModel);
-        gameMenuInputAdapter.setHotBar(hotBarActor);
-        batch = Main.getBatch();
-        gameRenderer = new GameRenderer(gameModel, gameMenuInputAdapter, batch);
-
-        stage = new Stage(new ScreenViewport(gameModel.getCamera()));
-
-        InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(stage);
-        inputMultiplexer.addProcessor(uiStage);
-        inputMultiplexer.addProcessor(gameMenuInputAdapter);
-        Gdx.input.setInputProcessor(inputMultiplexer);
-
-        SmartTooltip.initialize(stage, GamePictureManager.skin);
-        addStoresImages();
-
-        gameMenuInputAdapter.setStage(stage);
-        gameModel.setStage(stage);
-        //stage.addActor(timeManager.getNightOverlay());
-
+    public GameScreenMenu(GameUpdateRequestThread updateRequestThread) {
+        this.updateRequestThread = updateRequestThread;
+//        initializeGame();
+//        uiStage.addActor(hotBarActor);
 
     }
+
+//    public void initializeGame(){
+//
+//        gameModel = new GameModel(App.getGame().getMap() , 250 , 200 , hotBarActor);
+//        timeManager.setGameModel(gameModel);
+//        weatherManager.setGameModel(gameModel);
+//        gameModel.setPlayerController(new PlayerController(App.getGame().getCurrentPlayingPlayer(), gameModel));
+//        gameMenuInputAdapter = new GameMenuInputAdapter(gameModel);
+//        gameMenuInputAdapter.setHotBar(hotBarActor);
+//        batch = Main.getBatch();
+//        gameRenderer = new GameRenderer(gameModel, gameMenuInputAdapter, batch);
+//
+//        stage = new Stage(new ScreenViewport(gameModel.getCamera()));
+//
+//        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+//        inputMultiplexer.addProcessor(stage);
+//        inputMultiplexer.addProcessor(uiStage);
+//        inputMultiplexer.addProcessor(gameMenuInputAdapter);
+//        Gdx.input.setInputProcessor(inputMultiplexer);
+//
+//        SmartTooltip.initialize(stage, GamePictureManager.skin);
+//        addStoresImages();
+//
+//        gameMenuInputAdapter.setStage(stage);
+//        gameModel.setStage(stage);
+//        //stage.addActor(timeManager.getNightOverlay());
+//
+//
+//    }
 
     @Override
     public void show() {
@@ -84,33 +86,34 @@ public class GameScreenMenu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-        batch.setProjectionMatrix(gameModel.getCamera().combined);
-        weatherManager.render(v);
-        batch.begin();
+//        batch.setProjectionMatrix(gameModel.getCamera().combined);
+//        weatherManager.render(v);
+//        batch.begin();
+//
+//        timeManager.updateTime(v);
+//        energyManager.update();
+//        gameModel.update(v);
+//        gameRenderer.render();
+//        gameMenuInputAdapter.update(v);
+//        weatherManager.draw(batch);
+//
+//
+//        batch.end();
+//
+//        stage.act(v);
+//        stage.draw();
+//
+//        uiStage.act(v);
+//        uiStage.draw();
+//
+//
+//        timeManager.checkForDayTransition();
+//        timeManager.updateNightOverlay();
+//        timeManager.changeTileTextureInWinter();
+//        timeManager.changeTileTextureInSpring();
+//        timeManager.setWateredTile(v);
+//        weatherManager.thunder(v , stage);
 
-        timeManager.updateTime(v);
-        energyManager.update();
-        gameModel.update(v);
-        gameRenderer.render();
-        gameMenuInputAdapter.update(v);
-        weatherManager.draw(batch);
-
-
-        batch.end();
-
-        stage.act(v);
-        stage.draw();
-
-        uiStage.act(v);
-        uiStage.draw();
-
-
-        timeManager.checkForDayTransition();
-        timeManager.updateNightOverlay();
-        timeManager.changeTileTextureInWinter();
-        timeManager.changeTileTextureInSpring();
-        timeManager.setWateredTile(v);
-        weatherManager.thunder(v , stage);
     }
 
     private void addStoresImages() {
@@ -153,6 +156,8 @@ public class GameScreenMenu implements Screen {
 
     @Override
     public void dispose() {
-
+        if (updateRequestThread != null) {
+            updateRequestThread.stopRequesting();
+        }
     }
 }
