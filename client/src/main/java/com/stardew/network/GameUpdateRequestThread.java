@@ -35,4 +35,11 @@ public class GameUpdateRequestThread extends Thread {
         body.put("id", id);
         return new Message(body, MessageType.UPDATE_GAME);
     }
+
+    public void requestMap(){
+        HashMap<String,Object> body = new HashMap<>();
+        body.put("id", id);
+        Message message = new Message(body, MessageType.MAP_REQUEST);
+        NetworkManager.getConnection().sendMessage(message);
+    }
 }

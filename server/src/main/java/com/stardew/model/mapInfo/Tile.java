@@ -4,6 +4,8 @@ package com.stardew.model.mapInfo;
 //import com.badlogic.gdx.graphics.g2d.TextureRegion;
 //import com.stardew.model.GameAssetManagers.GamePictureManager;
 //import com.stardew.model.Placeable;
+import com.stardew.model.TextureID;
+import com.stardew.model.TileDTO;
 import com.stardew.model.gameApp.App;
 //import com.stardew.model.foraging.Fertilizer;
 
@@ -19,9 +21,9 @@ public class Tile {
     private boolean isPlowed = false;
 //    private Fertilizer fertilizer = null;
     private boolean watered = false;
-//    private TextureID textureID ;
-//    private TextureID backgroundTextureID ;
-//    private TextureID pastTextureID;
+    private TextureID textureID ;
+    private TextureID backgroundTextureID ;
+    private TextureID pastTextureID;
 //    private TileTypeTextureRegion typeTextureRegion;
     private float wateredTimeTexture = 0.0f;
 
@@ -182,5 +184,9 @@ public class Tile {
 
     public float getWateredTimeTexture() {
         return wateredTimeTexture;
+    }
+
+    public TileDTO toDTO(){
+        return new TileDTO(position.getX(), position.getY(), backgroundTextureID , textureID );
     }
 }

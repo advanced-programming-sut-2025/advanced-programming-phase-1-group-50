@@ -26,4 +26,8 @@ public class GameAssetIDManager {
         }
     }
 
+    public static TextureRegion getTextureRegion(TextureID id) {
+        return ids.get(id);
+    }
+
 }
