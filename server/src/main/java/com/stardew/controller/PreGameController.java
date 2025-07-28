@@ -9,7 +9,7 @@ import com.stardew.model.mapInfo.GameMap;
 import com.stardew.model.userInfo.Player;
 import com.stardew.model.userInfo.User;
 import com.stardew.network.ClientConnectionThread;
-import com.stardew.network.Lobby;
+import com.stardew.model.lobby.Lobby;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 

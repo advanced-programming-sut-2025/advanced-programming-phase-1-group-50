@@ -4,6 +4,9 @@ import com.google.gson.reflect.TypeToken;
 import com.stardew.model.LobbyDTO;
 import com.stardew.model.Result;
 import com.stardew.model.ServerApp;
+import com.stardew.model.lobby.Lobby;
+import com.stardew.model.lobby.PrivateLobby;
+import com.stardew.model.lobby.PublicLobby;
 import com.stardew.model.userInfo.User;
 import com.stardew.network.*;
 
