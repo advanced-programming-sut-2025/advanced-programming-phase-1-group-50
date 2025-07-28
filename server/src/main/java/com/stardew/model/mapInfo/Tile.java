@@ -19,9 +19,9 @@ public class Tile {
     private boolean isPlowed = false;
 //    private Fertilizer fertilizer = null;
     private boolean watered = false;
-//    private TextureRegion texture ;
-//    private TextureRegion backgroundTexture ;
-//    private TextureRegion pastTexture;
+//    private TextureID textureID ;
+//    private TextureID backgroundTextureID ;
+//    private TextureID pastTextureID;
 //    private TileTypeTextureRegion typeTextureRegion;
     private float wateredTimeTexture = 0.0f;
 
@@ -30,9 +30,9 @@ public class Tile {
         this.position = position;
         this.gotThunder = false;
         this.walkable = true;
-//        texture = new TextureRegion(getRandomDefaultTexture());
-//        backgroundTexture = new TextureRegion(getRandomDefaultTexture());
-//        pastTexture = backgroundTexture;
+//        textureID = getRandomDefaultTexture();
+//        backgroundTextureID = getRandomDefaultTexture();
+//        pastTextureID = backgroundTextureID;
 //        typeTextureRegion = TileTypeTextureRegion.Normal;
 
     }
@@ -143,22 +143,17 @@ public class Tile {
 //    }
 
 
-//    public void setBackgroundTexture(TextureRegion backgroundTexture) {
-//        this.backgroundTexture = backgroundTexture;
-//    }
-
-//    public TextureRegion getBackgroundTexture() {
+//    public TextureID getBackgroundTexture() {
 //        return backgroundTexture;
 //    }
 
-//    public Texture getRandomDefaultTexture() {
-//        ArrayList<Texture> textures  = new ArrayList<>();
-//        textures.add(GamePictureManager.defaultTileTexture);
-//        textures.add(GamePictureManager.defaultTileTexture2);
-//        textures.add(GamePictureManager.defaultTileTexture3);
-//
-//        Random rand = new Random();
-//        return textures.get(rand.nextInt(textures.size()));
+//    public TextureID getRandomDefaultTexture() {
+//        TextureID[] defaultTiles = new TextureID[] {
+//            TextureID.Default_tile_1,
+//            TextureID.Default_tile_2,
+//            TextureID.Default_tile_3
+//        };
+//        return defaultTiles[new Random().nextInt(defaultTiles.length)];
 //    }
 
 //    public void checkSeasonIsWinter() {
@@ -177,7 +172,7 @@ public class Tile {
 //    }
 
 //    public void checkIsSeasonSpring(){
-//        backgroundTexture = new TextureRegion(getRandomDefaultTexture());
+//        backgroundTexture = getRandomDefaultTexture();
 //        pastTexture = backgroundTexture;
 //    }
 
