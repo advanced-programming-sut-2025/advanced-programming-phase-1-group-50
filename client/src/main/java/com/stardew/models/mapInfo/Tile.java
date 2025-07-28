@@ -1,12 +1,9 @@
 package com.stardew.models.mapInfo;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
 import com.stardew.models.app.App;
-import com.stardew.models.date.Season;
 import com.stardew.models.foraging.Fertilizer;
 
 import java.util.ArrayList;
@@ -30,8 +27,8 @@ public class Tile {
         this.position = position;
         this.gotThunder = false;
         this.walkable = true;
-        texture = new TextureRegion(getRandomDefaultTexture());
-        backgroundTexture = new TextureRegion(getRandomDefaultTexture());
+        texture = getRandomDefaultTexture();
+        backgroundTexture = getRandomDefaultTexture();
         pastTexture = backgroundTexture;
         typeTextureRegion = TileTypeTextureRegion.Normal;
 
@@ -149,8 +146,8 @@ public class Tile {
         return backgroundTexture;
     }
 
-    public Texture getRandomDefaultTexture() {
-        ArrayList<Texture> textures  = new ArrayList<>();
+    public TextureRegion getRandomDefaultTexture() {
+        ArrayList<TextureRegion> textures  = new ArrayList<>();
         textures.add(GamePictureManager.defaultTileTexture);
         textures.add(GamePictureManager.defaultTileTexture2);
         textures.add(GamePictureManager.defaultTileTexture3);
@@ -177,7 +174,7 @@ public class Tile {
     }
 
     public void checkIsSeasonSpring(){
-        backgroundTexture = new TextureRegion(getRandomDefaultTexture());
+        backgroundTexture = getRandomDefaultTexture();
         pastTexture = backgroundTexture;
     }
 
