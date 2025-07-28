@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.Main;
 import com.stardew.controller.EnergyManager;
+import com.stardew.controller.GameStateController;
 import com.stardew.controller.PlayerController;
 import com.stardew.controller.TimeManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
@@ -21,7 +22,7 @@ import com.stardew.view.windows.SmartTooltip;
 
 public class GameScreenMenu implements Screen {
     private final GameUpdateRequestThread updateRequestThread;
-    private GameModel gameModel;
+    private GameModel gameState;
     private GameRenderer gameRenderer;
     private GameMenuInputAdapter gameMenuInputAdapter;
     private Stage stage;
@@ -40,6 +41,9 @@ public class GameScreenMenu implements Screen {
 
     public GameScreenMenu(GameUpdateRequestThread updateRequestThread) {
         this.updateRequestThread = updateRequestThread;
+        this.batch = Main.getBatch();
+        this.gameState = GameStateController.getInstance().getGameState();
+        this.gameRenderer = new GameRenderer(this.batch);
 //        initializeGame();
 //        uiStage.addActor(hotBarActor);
 
@@ -86,19 +90,19 @@ public class GameScreenMenu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-//        batch.setProjectionMatrix(gameModel.getCamera().combined);
+        batch.setProjectionMatrix(gameState.getCamera().combined);
 //        weatherManager.render(v);
-//        batch.begin();
+        batch.begin();
 //
 //        timeManager.updateTime(v);
 //        energyManager.update();
 //        gameModel.update(v);
-//        gameRenderer.render();
+        gameRenderer.render();
 //        gameMenuInputAdapter.update(v);
 //        weatherManager.draw(batch);
 //
 //
-//        batch.end();
+        batch.end();
 //
 //        stage.act(v);
 //        stage.draw();
