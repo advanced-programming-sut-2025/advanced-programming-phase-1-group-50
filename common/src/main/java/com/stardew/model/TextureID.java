@@ -617,4 +617,7 @@ public enum TextureID {
     advancedIridiumFishingPole,
     wateredTileTexture,
     shippingBinTexture,
+    defaultTileTexture,
+    defaultTileTexture2,
+    defaultTileTexture3,
 }
