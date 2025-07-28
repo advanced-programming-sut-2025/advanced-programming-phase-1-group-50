@@ -32,4 +32,5 @@ public enum MessageType {
     GO_TO_GAME_SCREEN,
     UPDATE_GAME,
     MAP_REQUEST,
+    UPDATE_GAME_RESULT,
 }

@@ -1,5 +1,7 @@
 package com.stardew.network;
 
+import com.stardew.controller.GameStateController;
+
 import java.util.HashMap;
 
 public class GameUpdateRequestThread extends Thread {
@@ -33,6 +35,10 @@ public class GameUpdateRequestThread extends Thread {
     private Message updateMessage() {
         HashMap<String, Object> body = new HashMap<>();
         body.put("id", id);
+        body.put("startX", GameStateController.getInstance().getGameState().getStartX());
+        body.put("startY", GameStateController.getInstance().getGameState().getStartY());
+        body.put("endX", GameStateController.getInstance().getGameState().getEndX());
+        body.put("endY", GameStateController.getInstance().getGameState().getEndY());
         return new Message(body, MessageType.UPDATE_GAME);
     }
 

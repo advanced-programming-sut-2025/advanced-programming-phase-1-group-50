@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.google.gson.reflect.TypeToken;
 import com.stardew.Main;
+import com.stardew.controller.GameStateController;
 import com.stardew.model.LobbyDTO;
 import com.stardew.view.GameScreenMenu;
 import com.stardew.view.LobbyMenus.LobbyMenu;
@@ -14,10 +15,11 @@ import java.util.ArrayList;
 
 public class MessageHandler {
     private static MessageHandler instance;
+    private final GameStateController gameStateController;
 
 
     private MessageHandler() {
-
+        gameStateController = GameStateController.getInstance();
     }
 
     public static MessageHandler getInstance() {
@@ -62,17 +64,21 @@ public class MessageHandler {
             }
             case GO_TO_GAME_SCREEN -> {
                 int id = message.getIntFromBody("id");
+                GameUpdateRequestThread updateRequestThread = new GameUpdateRequestThread(id);
+                updateRequestThread.start();
                 Gdx.app.postRunnable(() -> {
                     //TODO
                     // have a delay here
                     // have a timer to start game
-                    GameUpdateRequestThread updateRequestThread = new GameUpdateRequestThread(id);
-                    updateRequestThread.start();
                     Screen currentScreen = Main.getMain().getScreen();
                     GameScreenMenu gameScreenMenu = new GameScreenMenu(updateRequestThread);
                     Main.getMain().setScreen(gameScreenMenu);
                     currentScreen.dispose();
                 });
+                return true;
+            }
+            case UPDATE_GAME_RESULT -> {
+                gameStateController.handleUpdate(message);
                 return true;
             }
             default -> {
