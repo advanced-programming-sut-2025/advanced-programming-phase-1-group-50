@@ -16,6 +16,7 @@ public abstract class ConnectionThread extends Thread {
     protected final DataInputStream dataInputStream;
     protected final DataOutputStream dataOutputStream;
     protected final BlockingQueue<Message> outgoingMessagesQueue;
+    protected final BlockingQueue<Message> incomingMessagesQueue;
     protected final AtomicBoolean running;
     protected Socket socket;
 
@@ -25,6 +26,7 @@ public abstract class ConnectionThread extends Thread {
         this.dataInputStream = new DataInputStream(socket.getInputStream());
         this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
         this.outgoingMessagesQueue = new LinkedBlockingQueue<>();
+        this.incomingMessagesQueue = new LinkedBlockingQueue<>();
         this.running = new AtomicBoolean(true);
     }
 
@@ -42,12 +44,16 @@ public abstract class ConnectionThread extends Thread {
         Thread sender = createSenderThread();
         sender.start();
 
+        Thread handler = createHandlerThread();
+        handler.start();
+
         while (running.get()) {
             try {
                 String receivedStr = dataInputStream.readUTF();
                 Message message = JSONUtils.fromJson(receivedStr);
+                boolean success = incomingMessagesQueue.offer(message);
                 System.out.println("Received: " + message);  //TODO
-                handleMessage(message);
+                if (!success) System.err.println("Could not put in incoming_messages_queue");
             } catch (SocketException se) {
                 if (running.get()) System.out.println("Socket Closed.");
                 break;
@@ -73,15 +79,32 @@ public abstract class ConnectionThread extends Thread {
                     dataOutputStream.writeUTF(json);
                     dataOutputStream.flush();
                 } catch (InterruptedException interruptedException) {
+                    System.err.println("Sender thread interrupted.");
                     running.set(false);
                 } catch (IOException ioException) {
-                    System.out.println("Sender thread interrupted.");
+                    System.err.println("IO Exception in sender thread: " + ioException.getMessage());
                     running.set(false);
                 }
             }
         }, "ConnectionThread-Sender");
         sender.setDaemon(true);
         return sender;
+    }
+
+    private Thread createHandlerThread() {
+        Thread handler = new Thread(() -> {
+            while (running.get()) {
+                try {
+                    Message msg = incomingMessagesQueue.take();
+                    handleMessage(msg);
+                } catch (InterruptedException interruptedException) {
+                    System.err.println("Handler thread interrupted.");
+                    running.set(false);
+                }
+            }
+        }, "ConnectionThread-Handler");
+        handler.setDaemon(true);
+        return handler;
     }
 
 
