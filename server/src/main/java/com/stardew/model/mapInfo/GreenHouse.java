@@ -78,10 +78,7 @@ public class GreenHouse implements Placeable{
 
 
 
-    @Override
-    public Color getMiniMapColor() {
-        return Color.MAGENTA;
-    }
+
 
 
 }

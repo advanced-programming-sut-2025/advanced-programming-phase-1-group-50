@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.date.Time;
 import com.stardew.model.mapInfo.Placeable;
+import com.stardew.model.gameApp.App;
 
 import java.awt.*;
 

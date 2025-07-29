@@ -179,10 +179,7 @@ public class Tree implements Placeable  , Growable {
 //        }
 //    }
 
-    @Override
-    public Color getMiniMapColor() {
-        return Color.GREEN;
-    }
+
 
     public void setGeneratedRandomly(boolean generatedRandomly) {
         this.isGeneratedRandomly = generatedRandomly;
