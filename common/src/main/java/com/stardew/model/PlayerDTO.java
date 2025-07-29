@@ -1,10 +1,12 @@
 package com.stardew.model;
 
 public class PlayerDTO {
-    private final float x;
-    private final float y;
-    private final int direction;
-    private final int energy;
+    private float x;
+    private float y;
+    private int direction;
+    private int energy;
+
+    public PlayerDTO() {}
 
     public PlayerDTO(float x, float y, int direction, int energy) {
         this.x = x;

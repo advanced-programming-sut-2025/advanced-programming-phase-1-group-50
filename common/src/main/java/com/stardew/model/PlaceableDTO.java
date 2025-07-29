@@ -1,18 +1,19 @@
 package com.stardew.model;
 
-public class TileDTO {
+public class PlaceableDTO {
     private int x;
     private int y;
-    private TextureID backgroundTextureID;
+    private int width;
+    private int height;
     private TextureID textureID;
-    //TODO another
 
-    public TileDTO() {}
+    public PlaceableDTO() {}
 
-    public TileDTO(int x, int y, TextureID backgroundTextureID , TextureID textureID) {
+    public PlaceableDTO(int x, int y, int width, int height, TextureID textureID) {
         this.x = x;
         this.y = y;
-        this.backgroundTextureID = backgroundTextureID;
+        this.width = width;
+        this.height = height;
         this.textureID = textureID;
     }
 
@@ -24,8 +25,12 @@ public class TileDTO {
         return y;
     }
 
-    public TextureID getBackgroundTextureID() {
-        return backgroundTextureID;
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public TextureID getTextureID() {
