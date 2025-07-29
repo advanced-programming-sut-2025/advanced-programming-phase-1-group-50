@@ -1,14 +1,13 @@
 package com.stardew.model.stores;
 
-import com.badlogic.gdx.graphics.Color;
 import com.stardew.model.Result;
+import com.stardew.model.Tools.PoleType;
+import com.stardew.model.recipes.CraftingRecipes;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class FishShop extends Store{
-//    private final  String backgroundCode = BackgroundColors.BRIGHT_CYAN;
-//    private final String colorCode = ColorPrinter.BRIGHT_BLUE;
     private ArrayList<ShopItem> inventory;
 
     public FishShop(int x, int y, int width, int height) {
@@ -21,12 +20,12 @@ public class FishShop extends Store{
 
         inventory = new ArrayList<>();
 
-//        inventory.add(new FishShopCraftingRecipe("Fish Smoker", CraftingRecipes.FishSmoker , 10000 , 1));
-//        inventory.add(new FishShopPoleItem("Training Rod", PoleType.Training , 0 , 25 , 1));
-//        inventory.add(new FishShopPoleItem("Bamboo Pole", PoleType.Bamboo , 0 , 500 , 1));
-//        inventory.add(new FishShopPoleItem("Fiberglass Rod", PoleType.Fiberglass , 2 , 1800 , 1));
-//        inventory.add(new FishShopPoleItem("Iridium Rod", PoleType.Iridium , 4 , 7500 , 1));
-//        inventory.add(new ShopItem("Trout Soup",250,1));
+        inventory.add(new FishShopCraftingRecipe("Fish Smoker", CraftingRecipes.FishSmoker , 10000 , 1));
+        inventory.add(new FishShopPoleItem("Training Rod", PoleType.Training , 0 , 25 , 1));
+        inventory.add(new FishShopPoleItem("Bamboo Pole", PoleType.Bamboo , 0 , 500 , 1));
+        inventory.add(new FishShopPoleItem("Fiberglass Rod", PoleType.Fiberglass , 2 , 1800 , 1));
+        inventory.add(new FishShopPoleItem("Iridium Rod", PoleType.Iridium , 4 , 7500 , 1));
+        inventory.add(new ShopItem("Trout Soup",250,1));
 
     }
 
@@ -63,20 +62,5 @@ public class FishShop extends Store{
     public char getSymbol() {
         return '≈';
     }
-
-//    @Override
-//    public String getColor(){
-//        return colorCode;
-//    }
-//
-//    @Override
-//    public String getBackground(){
-//        return backgroundCode;
-//    }
-//
-//    @Override
-//    public Color getMiniMapColor() {
-//        return Color.CYAN;
-//    }
 
 }

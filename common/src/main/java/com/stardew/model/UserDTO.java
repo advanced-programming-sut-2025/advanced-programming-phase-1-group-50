@@ -1,8 +1,10 @@
 package com.stardew.model;
 
 public class UserDTO {
-    private final String username;
-    private final String nickname;
+    private String username;
+    private String nickname;
+
+    public UserDTO() {}
 
     public UserDTO(String username, String nickname){
         this.username = username;

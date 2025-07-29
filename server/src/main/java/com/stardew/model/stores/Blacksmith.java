@@ -1,20 +1,17 @@
 package com.stardew.model.stores;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.model.Result;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Blacksmith extends Store {
-    //    private final String colorCode = ColorPrinter.GRAY;
-    //    private final String backgroundCode = ColorPrinter.WHITE;
     private ArrayList<ShopItem> inventory;
 
     public Blacksmith(int x, int y, int width, int height) {
-        //super(GamePictureManager.blacksmithRegions ,new TextureRegion(GamePictureManager.blacksmithTexture),new Rectangle(x, y, width, height), "Clint", 9, 16);
-        super(null,null,new Rectangle(x, y, width, height), "Clint", 9, 16);
+        //super(GamePictureManager.blacksmithRegions ,new TextureRegion(GamePictureManager.blacksmithTexture),new
+        // Rectangle(x, y, width, height), "Clint", 9, 16);
+        super(null, null, new Rectangle(x, y, width, height), "Clint", 9, 16);
     }
 
     @Override
@@ -40,9 +37,9 @@ public class Blacksmith extends Store {
     public ArrayList<ShopItem> showAllProducts() {
         ArrayList<ShopItem> items = new ArrayList<>();
         for (ShopItem item : inventory) {
-//            if (item instanceof BlackSmithStocksItem) {
-//                items.add(item);
-//            }
+            if (item instanceof BlackSmithStocksItem) {
+                items.add(item);
+            }
         }
         return items;
     }
@@ -51,9 +48,9 @@ public class Blacksmith extends Store {
     public ArrayList<ShopItem> showAvailableProducts() {
         ArrayList<ShopItem> availableProducts = new ArrayList<>();
         for (ShopItem item : inventory) {
-//            if (item.remainingQuantity > 0 && item instanceof BlackSmithStocksItem) {
-//                availableProducts.add(item);
-//            }
+            if (item.remainingQuantity > 0 && item instanceof BlackSmithStocksItem) {
+                availableProducts.add(item);
+            }
         }
         return availableProducts;
     }
@@ -94,24 +91,6 @@ public class Blacksmith extends Store {
     public char getSymbol() {
         return '⚒';
     }
-
-//    @Override
-//    public String getColor() {
-//        return colorCode;
-//    }
-//
-//    @Override
-//    public String getBackground() {
-//        return backgroundCode;
-//    }
-//
-//    @Override
-//    public Color getMiniMapColor() {
-//        return Color.BLACK;
-//    }
-
-
-
 
 
 }
