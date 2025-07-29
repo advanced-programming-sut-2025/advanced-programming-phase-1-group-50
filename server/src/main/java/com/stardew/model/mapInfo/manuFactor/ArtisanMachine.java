@@ -195,10 +195,7 @@ public abstract class ArtisanMachine implements Placeable {
 //        return ((TextureRegionDrawable)(image.getDrawable())).getRegion();
 //    }
 
-    @Override
-    public Color getMiniMapColor() {
-        return Color.BLUE;
-    }
+
 
 
 //    public static ArtisanMachine getArtisanMachineByRecipe(CraftingRecipes recipe) {

@@ -1,10 +1,18 @@
 package com.stardew.model.userInfo;
 
 import com.stardew.model.Tools.Tool;
+import com.stardew.model.animals.Animal;
+import com.stardew.model.animals.AnimalGood;
+import com.stardew.model.animals.Hay;
+import com.stardew.model.mapInfo.foraging.Crop;
+import com.stardew.model.mapInfo.foraging.ForagingMineral;
+import com.stardew.model.mapInfo.foraging.Fruit;
 import com.stardew.model.mapInfo.manuFactor.ArtisanMachine;
 import com.stardew.model.mapInfo.Ingredient;
 import com.stardew.model.recipes.CookingRecipe;
 import com.stardew.model.recipes.CraftingRecipes;
+import com.stardew.model.animals.Fish;
+import com.stardew.model.cooking.Refrigerator;
 
 import java.util.ArrayList;
 import java.util.HashMap;

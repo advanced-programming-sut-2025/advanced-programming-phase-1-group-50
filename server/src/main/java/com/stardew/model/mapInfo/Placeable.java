@@ -8,6 +8,6 @@ public interface Placeable {
     Rectangle getBounds();
     char getSymbol();
     TextureID getTexture();
-    Color getMiniMapColor();
+
 
 }

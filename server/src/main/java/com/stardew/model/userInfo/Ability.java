@@ -1,5 +1,8 @@
 package com.stardew.model.userInfo;
 
+import com.stardew.model.recipes.CookingRecipe;
+import com.stardew.model.recipes.CraftingRecipes;
+
 public class Ability {
     private int farmingLevel = 0;
     private int farmingRate = 0;

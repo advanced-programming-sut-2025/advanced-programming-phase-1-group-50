@@ -199,10 +199,7 @@ public class Crop implements Placeable , Ingredient , Sellable , Growable , Eata
         return type.getLevelsTextures()[levelOfGrowth];
     }
 
-    @Override
-    public Color getMiniMapColor() {
-        return Color.GREEN;
-    }
+
 
     @Override
     public int getEnergy() {

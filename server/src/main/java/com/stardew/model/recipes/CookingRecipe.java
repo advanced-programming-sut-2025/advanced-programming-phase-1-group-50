@@ -1,5 +1,7 @@
 package com.stardew.model.recipes;
 
+import com.stardew.model.animals.AnimalGoodType;
+import com.stardew.model.animals.FishType;
 import com.stardew.model.mapInfo.foraging.CropType;
 import com.stardew.model.mapInfo.Ingredient;
 import com.stardew.model.mapInfo.foraging.ForagingCrop;
