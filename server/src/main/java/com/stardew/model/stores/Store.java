@@ -3,11 +3,12 @@ package com.stardew.model.stores;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.stardew.model.Result;
+import com.stardew.model.mapInfo.Placeable;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-public abstract class Store {
+public abstract class Store implements Placeable {
     protected final Rectangle bounds;
     protected final String shopAssistantName;
     protected final int startHour;

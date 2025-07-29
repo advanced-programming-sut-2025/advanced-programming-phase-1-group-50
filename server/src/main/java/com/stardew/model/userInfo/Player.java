@@ -4,9 +4,15 @@ package com.stardew.model.userInfo;
 //import com.stardew.model.NPCs.NPCType;
 //import com.stardew.model.NPCs.RelationWithNPC;
 //import com.stardew.model.Notification.MarriageRequest;
+import com.stardew.model.PlayerDTO;
 import com.stardew.model.Result;
 //import com.stardew.model.Notification.Notification;
 //import com.stardew.model.manuFactor.Ingredient;
+import com.stardew.model.Tools.Axe;
+import com.stardew.model.Tools.Pickaxe;
+import com.stardew.model.Tools.Scythe;
+import com.stardew.model.Tools.Hoe;
+import com.stardew.model.Tools.WateringCan;
 import com.stardew.model.mapInfo.Farm;
 import com.stardew.model.mapInfo.Pair;
 import com.stardew.model.mapInfo.Position;
@@ -27,7 +33,7 @@ public class Player {
     private  final String nickname;
 //    private final Ability ability = new Ability(this);
 //    private Tool currentTool;
-//    private final Backpack backpack = new Backpack(BackpackType.Primary);
+    private final Backpack backpack = new Backpack(BackpackType.Primary);
 //    private final ArrayList<Notification> notifications = new ArrayList<>();
     private Farm farm;
     private boolean isFaintedToday = false;
@@ -41,7 +47,7 @@ public class Player {
 //    private RelationWithNPC relationWithHarvey;
 //    private RelationWithNPC relationWithLeah;
 //    private RelationWithNPC relationWithRobin;
-//    private int moveDirection = 0;
+    private int moveDirection = 0;
 //    private float speed = 5f;
 //    private float vx , vy = 0;
 //    private InventoryItem currentInventoryItem = null;
@@ -53,17 +59,17 @@ public class Player {
         this.nickname = currentUser.getNickname();
         this.currentUser = currentUser;
 //        this.currentPosition = new Position(0 , 0);
-//        Axe axe = new Axe();
-//        Hoe hoe = new Hoe();
-//        Pickaxe pickaxe = new Pickaxe();
-//        Scythe scythe = new Scythe();
-//        WateringCan wateringCan = new WateringCan();
-//        this.backpack.setPlayer(this);
-//        this.backpack.getTools().add(hoe);
-//        this.backpack.getTools().add(scythe);
-//        this.backpack.getTools().add(pickaxe);
-//        this.backpack.getTools().add(axe);
-//        this.backpack.getTools().add(wateringCan);
+        Axe axe = new Axe();
+        Hoe hoe = new Hoe();
+        Pickaxe pickaxe = new Pickaxe();
+        Scythe scythe = new Scythe();
+        WateringCan wateringCan = new WateringCan();
+        this.backpack.setPlayer(this);
+        this.backpack.getTools().add(hoe);
+        this.backpack.getTools().add(scythe);
+        this.backpack.getTools().add(pickaxe);
+        this.backpack.getTools().add(axe);
+        this.backpack.getTools().add(wateringCan);
 //        for(Tool tool : backpack.getTools()) {
 //            if(tool instanceof Hoe) {
 //                this.currentTool = tool;
@@ -178,9 +184,9 @@ public class Player {
 //    }
 
 
-//    public Backpack getBackpack() {
-//        return backpack;
-//    }
+    public Backpack getBackpack() {
+        return backpack;
+    }
 
     public int getEnergy() {
         if(isInfinite){
@@ -443,6 +449,9 @@ public class Player {
 //        inventoryItems.remove(item);
 //    }
 
+    public PlayerDTO toDTO(){
+        return new PlayerDTO(playerPosition.getFirst() , playerPosition.getSecond(), moveDirection , energy );
+    }
 
 
 }

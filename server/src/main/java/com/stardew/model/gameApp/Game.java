@@ -10,6 +10,7 @@ import com.stardew.model.Result;
 //import com.stardew.model.foraging.Crop;
 //import com.stardew.model.foraging.Growable;
 //import com.stardew.model.foraging.Tree;
+import com.stardew.model.gameApp.date.Time;
 import com.stardew.model.mapInfo.Farm;
 //import com.stardew.model.mapInfo.GreenHouse;
 import com.stardew.model.mapInfo.GameMap;
@@ -21,7 +22,7 @@ import java.util.*;
 public class Game {
     private final ArrayList<Player> players = new ArrayList<>();
     private final ArrayList<Farm> farms = new ArrayList<>();
-//    private Time time;
+    private Time time;
     private GameMap map;
     private final User gameCreator;
     private Player currentPlayingPlayer;
@@ -53,9 +54,9 @@ public class Game {
         return players;
     }
 
-//    public Time getTime() {
-//        return time;
-//    }
+    public Time getTime() {
+        return time;
+    }
 
     public ArrayList<Farm> etFarms() {
         return farms;
