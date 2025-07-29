@@ -1,28 +1,24 @@
 package com.stardew.view;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
 import com.stardew.controller.GameStateController;
+import com.stardew.model.PlayerDTO;
 import com.stardew.model.TileDTO;
 import com.stardew.models.GameAssetManagers.GameAssetIDManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.ShippingBin;
 import com.stardew.models.GameModel;
-import com.stardew.models.foraging.Crop;
-import com.stardew.models.foraging.Tree;
-import com.stardew.models.mapInfo.*;
-import com.stardew.models.waterBodies.Lake;
 
 
 public class GameRenderer {
     private final GameModel gameModel;
     private final SpriteBatch batch;
+    private final int tileSize;
+    private float stateTime = 0f;
 //    private int moveDirection;
-//    private float stateTime = 0f;
 //    private final GameMenuInputAdapter gameMenuInputAdapter;
 //    private final MiniMapRenderer miniMapRenderer ;
 
@@ -32,24 +28,49 @@ public class GameRenderer {
 //        this.gameModel = gameModel;
         this.batch = batch;
         this.gameModel = GameStateController.getInstance().getGameState();
+        this.tileSize = GamePictureManager.TILE_SIZE;
 //        this.gameMenuInputAdapter = gameMenuInputAdapter;
 //        miniMapRenderer = new MiniMapRenderer(gameModel , 250 , 200);
 
     }
 
-    public void render() {
-        //backgrounds:
-        for (TileDTO tile : gameModel.getTiles()) {
-            batch.draw(
-                GameAssetIDManager.ids.get(tile.getBackgroundTextureID()),
-                tile.getX(), tile.getY(), GamePictureManager.TILE_SIZE, GamePictureManager.TILE_SIZE
-            );
-        }
+    public void render(float delta) {
+        renderBackground();
+        renderPlayer(delta);
 
 
 
 //        renderMapTilesAndPlayer();
 //        gameModel.getAnimalsManager().render(batch);
+    }
+
+
+    private void renderBackground() {
+        for (TileDTO tile : gameModel.getTiles()) {
+            batch.draw(
+                GameAssetIDManager.ids.get(tile.getBackgroundTextureID()),
+                tile.getX() * tileSize, tile.getY() * tileSize, tileSize, tileSize
+            );
+        }
+    }
+
+    private void renderPlayer(float delta) {
+        stateTime += delta;
+        PlayerDTO player = gameModel.getPlayer();
+        int moveDirection = player.getDirection();
+        Animation<TextureRegion> currentAnimation = GamePictureManager.playerAnimations.get(moveDirection);
+        if(player.getEnergy() <= 0){
+            currentAnimation = GamePictureManager.faintAnimation;
+        }
+
+        TextureRegion currentFrame = currentAnimation.getKeyFrame(stateTime, true);
+
+        batch.draw(currentFrame,
+            player.getX() * tileSize,
+            player.getY() * tileSize,
+            currentFrame.getRegionWidth() * 3,
+            currentFrame.getRegionHeight() * 3
+        );
 
     }
 
