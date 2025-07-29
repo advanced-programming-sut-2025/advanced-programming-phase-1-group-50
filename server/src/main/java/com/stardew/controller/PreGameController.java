@@ -111,7 +111,7 @@ public class PreGameController {
         }
         GameMap map = new GameMap(farms);
         Game game = new Game(players, farms, lobby.getAdmin(), map);
-        App.addGame(id, game);
+        GameSessionController.getInstance().addGame(id, game);
 
     }
 

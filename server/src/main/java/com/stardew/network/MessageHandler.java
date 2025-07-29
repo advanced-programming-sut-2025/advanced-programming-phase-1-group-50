@@ -9,6 +9,7 @@ public class MessageHandler {
     private final ForgetPasswordController forgetPasswordController;
     private final LobbyController lobbyController;
     private final PreGameController preGameController;
+    private final GameSessionController gameSessionController;
 
     private MessageHandler() {
         loginAndRegisterController = new LoginAndRegisterController();
@@ -16,6 +17,7 @@ public class MessageHandler {
         forgetPasswordController = new ForgetPasswordController();
         lobbyController = LobbyController.getInstance();
         preGameController = PreGameController.getInstance();
+        gameSessionController = GameSessionController.getInstance();
         //TODO Other controllers
     }
 
@@ -86,9 +88,9 @@ public class MessageHandler {
                 lobbyController.sendOnlineUsers(connection);
                 return true;
             }
-
-            case MAP_REQUEST -> {
-
+            case UPDATE_GAME -> {
+                gameSessionController.sendUpdateGameState(message, connection);
+                return true;
             }
 
             default -> {
