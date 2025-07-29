@@ -3,7 +3,7 @@ package com.stardew.model.mapInfo.foraging;
 import com.stardew.model.TextureID;
 import com.stardew.model.mapInfo.Eatable;
 import com.stardew.model.mapInfo.Ingredient;
-import com.stardew.model.mapInfo.Sellable;
+import com.stardew.model.stores.Sellable;
 
 import java.util.HashMap;
 

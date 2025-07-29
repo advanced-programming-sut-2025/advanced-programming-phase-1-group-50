@@ -1,4 +1,4 @@
-package com.stardew.model.mapInfo;
+package com.stardew.model.mapInfo.foraging;
 
 import com.stardew.model.gameApp.date.Time;
 
