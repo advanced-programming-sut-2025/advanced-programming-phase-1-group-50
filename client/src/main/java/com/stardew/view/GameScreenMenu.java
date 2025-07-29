@@ -97,7 +97,7 @@ public class GameScreenMenu implements Screen {
 //        timeManager.updateTime(v);
 //        energyManager.update();
 //        gameModel.update(v);
-        gameRenderer.render();
+        gameRenderer.render(v);
 //        gameMenuInputAdapter.update(v);
 //        weatherManager.draw(batch);
 //

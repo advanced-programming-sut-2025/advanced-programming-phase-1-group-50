@@ -32,9 +32,9 @@ public class Tile {
         this.position = position;
         this.gotThunder = false;
         this.walkable = true;
-//        textureID = getRandomDefaultTexture();
-//        backgroundTextureID = getRandomDefaultTexture();
-//        pastTextureID = backgroundTextureID;
+        textureID = getRandomDefaultTexture();
+        backgroundTextureID = getRandomDefaultTexture();
+        pastTextureID = backgroundTextureID;
 //        typeTextureRegion = TileTypeTextureRegion.Normal;
 
     }
@@ -145,38 +145,36 @@ public class Tile {
 //    }
 
 
-//    public TextureID getBackgroundTexture() {
-//        return backgroundTexture;
-//    }
+    public TextureID getBackgroundTexture() {
+        return backgroundTextureID;
+    }
 
-//    public TextureID getRandomDefaultTexture() {
-//        TextureID[] defaultTiles = new TextureID[] {
-//            TextureID.Default_tile_1,
-//            TextureID.Default_tile_2,
-//            TextureID.Default_tile_3
-//        };
-//        return defaultTiles[new Random().nextInt(defaultTiles.length)];
-//    }
+    public TextureID getRandomDefaultTexture() {
+        TextureID[] defaultTiles = new TextureID[] {
+            TextureID.defaultTileTexture,
+            TextureID.defaultTileTexture2,
+            TextureID.defaultTileTexture3,
+        };
+        return defaultTiles[new Random().nextInt(defaultTiles.length)];
+    }
 
-//    public void checkSeasonIsWinter() {
-//        backgroundTexture = getRandomSnowyTexture();
-//        pastTexture = backgroundTexture;
-//    }
+    public void checkSeasonIsWinter() {
+        backgroundTextureID = getRandomSnowyTexture();
+        pastTextureID = backgroundTextureID;
+    }
 
-//    public TextureRegion getRandomSnowyTexture(){
-//        ArrayList<TextureRegion> textures = new ArrayList<>();
-//        textures.add(GamePictureManager.snowyTile);
-//        textures.add(GamePictureManager.snowyTile2);
-//
-//        Random rand = new Random();
-//
-//        return textures.get(rand.nextInt(textures.size()));
-//    }
+    public TextureID getRandomSnowyTexture(){
+        TextureID[] snowyTiles = new TextureID[] {
+            TextureID.snowyTile,
+            TextureID.snowyTile2,
+        };
+        return snowyTiles[new Random().nextInt(snowyTiles.length)];
+    }
 
-//    public void checkIsSeasonSpring(){
-//        backgroundTexture = getRandomDefaultTexture();
-//        pastTexture = backgroundTexture;
-//    }
+    public void checkIsSeasonSpring(){
+        backgroundTextureID = getRandomDefaultTexture();
+        pastTextureID = backgroundTextureID;
+    }
 
     public void setWateredTimeTexture(float wateredTimeTexture) {
         this.wateredTimeTexture = wateredTimeTexture;

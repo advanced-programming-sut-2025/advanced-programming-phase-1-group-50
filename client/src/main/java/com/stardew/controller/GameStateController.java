@@ -44,7 +44,7 @@ public class GameStateController {
         gameState.updateTiles(tileDTOs);
         gameState.updatePlayer(player);
         gameState.updateCamera();
-        gameState.updateIndexes();
+        gameState.updateVisibleTilesBounds();
     }
 
 

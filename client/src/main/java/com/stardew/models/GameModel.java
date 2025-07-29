@@ -91,7 +91,7 @@ public class GameModel {
     }
 
 
-    public void updateIndexes() {
+    public void updateVisibleTilesBounds() {
         float camX = camera.position.x;
         float camY = camera.position.y;
         float viewportWidth = camera.viewportWidth;
