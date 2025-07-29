@@ -55,7 +55,7 @@ public class MessageHandler {
                 return true;
             }
             case SEND_LOBBIES -> {
-                lobbyController.sendLobbies(connection);
+                lobbyController.sendLobbies(message, connection);
                 return true;
             }
             case START_GAME -> {

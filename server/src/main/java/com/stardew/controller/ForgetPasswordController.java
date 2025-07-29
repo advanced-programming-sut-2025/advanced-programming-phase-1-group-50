@@ -24,6 +24,7 @@ public class ForgetPasswordController {
             body.put("message", "No User found");
             body.put("securityQuestion", "");
             Message responseMessage = new Message(body, MessageType.GET_SECURITY_QUESTION_RESULT);
+            responseMessage.setRequestID(message.getRequestID());
             connection.sendMessage(responseMessage);
             return;
         }
@@ -32,6 +33,7 @@ public class ForgetPasswordController {
         body.put("message", "Security Question Found");
         body.put("securityQuestion", user.getSecurityQuestion().getQuestion());
         Message responseMessage = new Message(body, MessageType.GET_SECURITY_QUESTION_RESULT);
+        responseMessage.setRequestID(message.getRequestID());
         connection.sendMessage(responseMessage);
     }
 
@@ -46,6 +48,7 @@ public class ForgetPasswordController {
         if(user == null){
            body.put("result", new Result(false, "User not found"));
            Message responseMessage = new Message(body, MessageType.FORGET_PASSWORD_RESULT);
+            responseMessage.setRequestID(message.getRequestID());
            connection.sendMessage(responseMessage);
            return;
         }
@@ -53,6 +56,7 @@ public class ForgetPasswordController {
         if(!answer.equals(user.getSecurityQuestion().getAnswer())){
             body.put("result", new Result(false, "answer is incorrect"));
             Message responseMessage = new Message(body, MessageType.FORGET_PASSWORD_RESULT);
+            responseMessage.setRequestID(message.getRequestID());
             connection.sendMessage(responseMessage);
             return;
         }
@@ -79,6 +83,7 @@ public class ForgetPasswordController {
         if(!success){
             body.put("result", new Result(false, contentMessage));
             Message responseMessage = new Message(body, MessageType.FORGET_PASSWORD_RESULT);
+            responseMessage.setRequestID(message.getRequestID());
             connection.sendMessage(responseMessage);
             return;
         }
@@ -86,6 +91,7 @@ public class ForgetPasswordController {
         user.setPassword(newPassword);
         body.put("result", new Result(true, "Changed password"));
         Message responseMessage = new Message(body, MessageType.FORGET_PASSWORD_RESULT);
+        responseMessage.setRequestID(message.getRequestID());
         connection.sendMessage(responseMessage);
     }
 }

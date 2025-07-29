@@ -145,6 +145,7 @@ public class LoginAndRegisterController {
         HashMap<String, Object> body = new HashMap<>();
         body.put("result", registerResult);
         Message responseMessage = new Message(body, MessageType.REGISTER_RESULT);
+        responseMessage.setRequestID(message.getRequestID());
         connection.sendMessage(responseMessage);
 
     }
@@ -171,6 +172,7 @@ public class LoginAndRegisterController {
         }
 
         Message responseMessage =  new Message(body, MessageType.LOGIN_RESULT);
+        responseMessage.setRequestID(message.getRequestID());
         connection.sendMessage(responseMessage);
 
 

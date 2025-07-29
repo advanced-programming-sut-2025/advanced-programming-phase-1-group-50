@@ -24,8 +24,9 @@ public class ClientConnectionThread extends ConnectionThread {
 
 
     @Override
-    protected boolean handleMessage(Message message) {
-        return messageHandler.handleMessage(message, this);
+    protected void handleMessage(Message message) {
+        boolean success = messageHandler.handleMessage(message, this);
+        if (!success) System.err.println("Couldn't handle message");
     }
 
     public synchronized void setUser(User user) {
