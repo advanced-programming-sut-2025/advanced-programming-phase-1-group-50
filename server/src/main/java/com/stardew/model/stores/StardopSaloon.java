@@ -6,8 +6,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class StardopSaloon extends Store{
-//    private final String backgroundCode = BackgroundColors.BRIGHT_BLUE;
-//    private final String colorCode= ColorPrinter.PURPLE;
     private ArrayList<ShopItem> inventory;
 
     public StardopSaloon(int x, int y, int width, int height) {
@@ -71,18 +69,4 @@ public class StardopSaloon extends Store{
         return '0';
     }
 
-//    @Override
-//    public String getColor(){
-//        return colorCode;
-//    }
-//
-//    @Override
-//    public String getBackground(){
-//        return backgroundCode;
-//    }
-//
-//    @Override
-//    public Color getMiniMapColor() {
-//        return Color.PINK;
-//    }
 }
