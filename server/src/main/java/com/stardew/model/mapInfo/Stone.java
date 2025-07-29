@@ -4,7 +4,7 @@ import com.stardew.model.TextureID;
 
 import java.awt.*;
 
-public class Stone implements Placeable{
+public class Stone implements Placeable , Ingredient{
 
 
 
@@ -58,4 +58,8 @@ public class Stone implements Placeable{
     }
 
 
+    @Override
+    public TextureID getInventoryTexture() {
+        return texture;
+    }
 }

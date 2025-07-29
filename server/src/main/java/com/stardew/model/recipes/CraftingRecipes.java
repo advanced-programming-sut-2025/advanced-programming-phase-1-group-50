@@ -1,6 +1,7 @@
 package com.stardew.model.recipes;
 
 import com.stardew.model.mapInfo.Stone;
+import com.stardew.model.mapInfo.Wood;
 import com.stardew.model.mapInfo.foraging.ForagingMineral;
 import com.stardew.model.mapInfo.Ingredient;
 import com.stardew.model.mapInfo.foraging.TreeSource;
