@@ -70,10 +70,11 @@ public class LobbyController {
         body.put("username" , user.getUsername());
         body.put("result" , res);
         Message response = new Message(body , MessageType.CREATE_LOBBY_RESULT);
+        response.setRequestID(message.getRequestID());
         connection.sendMessage(response);
     }
 
-    public void sendLobbies(ClientConnectionThread connection){
+    public void sendLobbies(Message message, ClientConnectionThread connection){
         ArrayList<LobbyDTO> lobbyDTOS = new ArrayList<>();
         synchronized (lobbies) {
             for (Lobby lobby : lobbies) {
@@ -84,6 +85,7 @@ public class LobbyController {
         HashMap<String , Object> body = new HashMap<>();
         body.put("lobbyDTOS" , lobbyDTOS);
         Message response = new Message(body , MessageType.SEND_LOBBIES_RESULT);
+        response.setRequestID(message.getRequestID());
         connection.sendMessage(response);
     }
 
@@ -96,6 +98,7 @@ public class LobbyController {
             HashMap<String , Object> body = new HashMap<>();
             body.put("lobbyDTOS" , lobbyDTO);
             Message response = new Message(body , MessageType.SEARCH_LOBBY_RESULT);
+            response.setRequestID(message.getRequestID());
             connection.sendMessage(response);
         }
 
@@ -134,6 +137,7 @@ public class LobbyController {
             }
             body.put("lobbyDTO", lobby.toDTO());
             Message response = new Message(body, MessageType.JOIN_LOBBY_RESULT);
+            response.setRequestID(message.getRequestID());
             connection.sendMessage(response);
 
             if(response.getFromBody("result" , Result.class).getSuccessful())
@@ -157,6 +161,7 @@ public class LobbyController {
             result = new Result(false, "lobby not found");
             responseBody.put("result", result);
             Message response = new Message(responseBody, MessageType.START_GAME_RESULT);
+            response.setRequestID(message.getRequestID());
             connection.sendMessage(response);
             return;
         }
@@ -165,6 +170,7 @@ public class LobbyController {
             result = new Result(false, "lobby members not enough");
             responseBody.put("result", result);
             Message response = new Message(responseBody, MessageType.START_GAME_RESULT);
+            response.setRequestID(message.getRequestID());
             connection.sendMessage(response);
             return;
         }
@@ -173,6 +179,7 @@ public class LobbyController {
             result = new Result(false, "You are not the admin");
             responseBody.put("result", result);
             Message response = new Message(responseBody, MessageType.START_GAME_RESULT);
+            response.setRequestID(message.getRequestID());
             connection.sendMessage(response);
             return;
         }
@@ -180,6 +187,7 @@ public class LobbyController {
         result = new Result(true, "Now You are ready to start the game. Please select a farm!");
         responseBody.put("result", result);
         Message response = new Message(responseBody, MessageType.START_GAME_RESULT);
+        response.setRequestID(message.getRequestID());
         connection.sendMessage(response);
 
 
@@ -217,6 +225,7 @@ public class LobbyController {
             HashMap<String , Object> responseBody = new HashMap<>();
             responseBody.put("result" , new Result(true, "You left lobby successfully"));
             Message response = new Message(responseBody, MessageType.LEAVE_LOBBY_RESULT);
+            response.setRequestID(message.getRequestID());
             connection.sendMessage(response);
 
 
@@ -234,6 +243,7 @@ public class LobbyController {
             HashMap<String , Object> responseBody = new HashMap<>();
             responseBody.put("result" , new Result(true, "lobby successfully destroyed"));
             Message response = new Message(responseBody, MessageType.DESTROY_LOBBY_RESULT);
+            response.setRequestID(message.getRequestID());
             connection.sendMessage(response);
         }
     }

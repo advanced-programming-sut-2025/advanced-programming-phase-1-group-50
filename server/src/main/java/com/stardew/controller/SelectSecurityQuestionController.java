@@ -30,7 +30,9 @@ public class SelectSecurityQuestionController {
 
         HashMap<String, Object> body = new HashMap<>();
         body.put("result", new Result(true, "Registered Successfully"));
-        connection.sendMessage(new Message(body, MessageType.REGISTER_RESULT));
+        Message responseMessage = new Message(body, MessageType.REGISTER_RESULT);
+        responseMessage.setRequestID(message.getRequestID());
+        connection.sendMessage(responseMessage);
 
     }
 }

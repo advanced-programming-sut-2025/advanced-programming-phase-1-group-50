@@ -10,78 +10,52 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public abstract class ConnectionThread extends Thread {
     protected final DataInputStream dataInputStream;
     protected final DataOutputStream dataOutputStream;
-    protected final BlockingQueue<Message> receivedMessagesQueue;
+    protected final BlockingQueue<Message> outgoingMessagesQueue;
+    protected final AtomicBoolean running;
     protected Socket socket;
-    protected AtomicBoolean end;
 
 
     public ConnectionThread(Socket socket) throws IOException {
         this.socket = socket;
         this.dataInputStream = new DataInputStream(socket.getInputStream());
         this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
-        this.receivedMessagesQueue = new LinkedBlockingQueue<>();
-        this.end = new AtomicBoolean(false);
+        this.outgoingMessagesQueue = new LinkedBlockingQueue<>();
+        this.running = new AtomicBoolean(true);
     }
 
-    public Message sendAndWaitForResponse(Message message, int timeoutMilli) {
-        sendMessage(message);
-        try {
-            return receivedMessagesQueue.poll(timeoutMilli, TimeUnit.MILLISECONDS);
-        } catch (Exception e) {
-            System.err.println("Request Timed out.");
-            end();
-            return null;
-        }
+    public void sendMessage(Message message) {
+        boolean success = outgoingMessagesQueue.offer(message);
+        if (!success) System.err.println("Could not send message");
     }
 
-    public synchronized void sendMessage(Message message) {
-        String JSONString = JSONUtils.toJson(message);
-
-        try {
-            dataOutputStream.writeUTF(JSONString);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    protected abstract boolean handleMessage(Message message);
+    protected abstract void handleMessage(Message message);
 
 
     @Override
     public void run() {
 
-        while (!end.get()) {
+        Thread sender = createSenderThread();
+        sender.start();
+
+        while (running.get()) {
             try {
                 String receivedStr = dataInputStream.readUTF();
                 Message message = JSONUtils.fromJson(receivedStr);
                 System.out.println("Received: " + message);  //TODO
-                boolean handled = handleMessage(message);    //TODO
-                if (!handled) {
-                    receivedMessagesQueue.put(message);
-                }
+                handleMessage(message);
             } catch (SocketException se) {
-                if (!end.get()) {
-                    System.out.println("Socket Closed.");
-                }
+                if (running.get()) System.out.println("Socket Closed.");
                 break;
             } catch (EOFException eof) {
-                if (!end.get()) {
-                    System.out.println("Remote closed connection.");
-                }
+                if (running.get()) System.out.println("Remote closed connection.");
                 break;
             } catch (IOException ioe) {
-                if (!end.get()) {
-                    System.out.println("IO Error.");
-                }
-                break;
-            } catch (InterruptedException ie) {
-                System.out.println("couldn't put message in Queue.");
+                if (running.get()) System.out.println("IO Error during read.");
                 break;
             }
         }
@@ -89,8 +63,31 @@ public abstract class ConnectionThread extends Thread {
         end();
     }
 
+
+    private Thread createSenderThread() {
+        Thread sender = new Thread(() -> {
+            while (running.get()) {
+                try {
+                    Message msg = outgoingMessagesQueue.take();
+                    String json = JSONUtils.toJson(msg);
+                    dataOutputStream.writeUTF(json);
+                    dataOutputStream.flush();
+                } catch (InterruptedException interruptedException) {
+                    running.set(false);
+                } catch (IOException ioException) {
+                    System.out.println("Sender thread interrupted.");
+                    running.set(false);
+                }
+            }
+        }, "ConnectionThread-Sender");
+        sender.setDaemon(true);
+        return sender;
+    }
+
+
+
     public void end() {
-        end.set(true);
+        running.set(false);
         try {
             socket.close();
         } catch (IOException e) {}

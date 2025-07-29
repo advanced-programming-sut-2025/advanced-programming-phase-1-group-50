@@ -8,6 +8,7 @@ import java.util.HashMap;
 public class Message {
     private MessageType type;
     private HashMap<String, Object> body;
+    private String requestID;
 
     public Message() {}
 
@@ -46,6 +47,13 @@ public class Message {
         return JSONUtils.getGson().fromJson(json, type);
     }
 
+    public String getRequestID() {
+        return requestID;
+    }
+
+    public void setRequestID(String requestID) {
+        this.requestID = requestID;
+    }
 
     @Override
     public String toString() {
