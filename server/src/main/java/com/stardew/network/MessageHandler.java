@@ -87,6 +87,10 @@ public class MessageHandler {
                 return true;
             }
 
+            case MAP_REQUEST -> {
+
+            }
+
             default -> {
                 return false;
             }

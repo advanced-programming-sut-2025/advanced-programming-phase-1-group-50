@@ -7,8 +7,6 @@ import java.awt.*;
 public interface Placeable {
     Rectangle getBounds();
     char getSymbol();
-    String getColor();
-    String getBackground();
     TextureID getTexture();
     Color getMiniMapColor();
 
