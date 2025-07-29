@@ -1,10 +1,7 @@
 package com.stardew.model.mapInfo.foraging;
 
-import com.stardew.model.TextureID;
-import com.stardew.model.gameApp.date.Season;
 import com.stardew.model.gameApp.date.Time;
 import com.stardew.model.gameApp.date.Weather;
-import com.stardew.model.mapInfo.Growable;
 import com.stardew.model.mapInfo.Placeable;
 
 import java.awt.*;

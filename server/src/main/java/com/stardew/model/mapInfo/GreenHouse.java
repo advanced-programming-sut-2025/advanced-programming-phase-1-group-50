@@ -1,10 +1,10 @@
 package com.stardew.model.mapInfo;
 
 import com.stardew.model.TextureID;
+import com.stardew.model.mapInfo.foraging.Growable;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class GreenHouse implements Placeable{
 

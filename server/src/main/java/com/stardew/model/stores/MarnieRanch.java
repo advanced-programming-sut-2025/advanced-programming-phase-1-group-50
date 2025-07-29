@@ -1,15 +1,11 @@
 package com.stardew.model.stores;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.model.Result;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class MarnieRanch extends Store{
-//    private final String backgroundCode = BackgroundColors.RED;
-//    private final String colorCode = ColorPrinter.PINK;
     private ArrayList<ShopItem> inventory;
 
     public MarnieRanch(int x, int y, int width, int height) {
@@ -74,20 +70,5 @@ public class MarnieRanch extends Store{
             item.resetQuantityEveryNight();
         }
     }
-
-//    @Override
-//    public String getColor(){
-//        return colorCode;
-//    }
-//
-//    @Override
-//    public String getBackground(){
-//        return backgroundCode;
-//    }
-//
-//    @Override
-//    public Color getMiniMapColor() {
-//        return Color.YELLOW;
-//    }
 
 }

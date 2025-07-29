@@ -6,8 +6,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class CarpenterShop extends Store{
-//    private final String backgroundCode = BackgroundColors.BRIGHT_RED;
-//    private final String colorCode = ColorPrinter.BRIGHT_CYAN;
     private ArrayList<ShopItem> inventory;
 
     public CarpenterShop(int x, int y, int width, int height) {
@@ -89,19 +87,4 @@ public class CarpenterShop extends Store{
     public char getSymbol() {
         return 'w';
     }
-
-//    @Override
-//    public String getColor() {
-//        return colorCode;
-//    }
-//
-//    @Override
-//    public String getBackground() {
-//        return backgroundCode;
-//    }
-//
-//    @Override
-//    public Color getMiniMapColor() {
-//        return Color.LIGHT_GRAY;
-//    }
 }
