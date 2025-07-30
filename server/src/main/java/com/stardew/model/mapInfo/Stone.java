@@ -52,10 +52,7 @@ public class Stone implements Placeable , Ingredient{
 
 
 
-    @Override
-    public Color getMiniMapColor() {
-        return Color.GRAY;
-    }
+
 
 
     @Override

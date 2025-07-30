@@ -28,8 +28,5 @@ public class Cottage implements Placeable{
     }
 
 
-    @Override
-    public Color getMiniMapColor() {
-        return Color.WHITE;
-    }
+
 }

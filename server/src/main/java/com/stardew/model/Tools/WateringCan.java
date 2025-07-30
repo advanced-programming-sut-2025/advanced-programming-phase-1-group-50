@@ -37,8 +37,8 @@ public class WateringCan extends Tool {
         return 0;
     }
 
-//    @Override
-//    public Result useTool() {
+    @Override
+    public Result useTool() {
 //        Weather weather = App.getGame().getTime().getWeather();
 //        int multiple = switch (weather) {
 //            case Rainy -> 2;
@@ -70,40 +70,41 @@ public class WateringCan extends Tool {
 //            return energyConsumptionResult;
 //
 //        return new Result(true, "");
-//    }
-//
-//    public ToolType getToolType() {
-//        return type;
-//    }
-//
-//    public PoleType getPoleType() {
-//        return null;
-//    }
-//
-//    public int getCapacity() {
-//        return capacity;
-//    }
-//
-//
-//    public int getWaterCapacity() {
-//        return waterCapacity;
-//    }
-//
-//    public boolean isFull() {
-//        return waterCapacity == capacity;
-//    }
-//
-//    public void makeFull() {
-//        waterCapacity = capacity;
-//    }
-//
-//    @Override
-//    public TextureID getInventoryTexture() {
-//        return textureRegion;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return String.format("WateringCan \n   type: %s, capacity: %d/%d   ", type, waterCapacity, capacity);
-//    }
+        return null;
+    }
+
+    public ToolType getToolType() {
+        return type;
+    }
+
+    public PoleType getPoleType() {
+        return null;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+
+    public int getWaterCapacity() {
+        return waterCapacity;
+    }
+
+    public boolean isFull() {
+        return waterCapacity == capacity;
+    }
+
+    public void makeFull() {
+        waterCapacity = capacity;
+    }
+
+    @Override
+    public TextureID getInventoryTexture() {
+        return textureRegion;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("WateringCan \n   type: %s, capacity: %d/%d   ", type, waterCapacity, capacity);
+    }
 }

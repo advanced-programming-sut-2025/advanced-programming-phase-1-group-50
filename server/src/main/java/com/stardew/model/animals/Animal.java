@@ -34,9 +34,9 @@ public class Animal implements Placeable {
         this.type = type;
         this.name = name;
         this.friendShip = 0;
-        this.lastPetTime = App.getGame().getTime().clone();
-        this.lastFeedTime = App.getGame().getTime().clone();
-        this.lastProductTime = App.getGame().getTime().clone();
+//        this.lastPetTime = App.getGame().getTime().clone();
+//        this.lastFeedTime = App.getGame().getTime().clone();
+//        this.lastProductTime = App.getGame().getTime().clone();
         this.habitat = habitat;
         this.state = AnimalState.IN_HABITAT;
         this.position = new Vector2(habitat.getPosition().x + 1, habitat.getPosition().y + 1);
@@ -68,59 +68,65 @@ public class Animal implements Placeable {
     }
 
     public void pet() {
-        lastPetTime = App.getGame().getTime().clone();
-        state = AnimalState.IS_PETTING;
-        stateTime = 0;
-        incrementFriendShip(15);
+//        lastPetTime = App.getGame().getTime().clone();
+//        state = AnimalState.IS_PETTING;
+//        stateTime = 0;
+//        incrementFriendShip(15);
     }
 
     public boolean hasPettedYesterday() {
-        return lastPetTime.getDate() == App.getGame().getTime().getDate() - 1;
+//        return lastPetTime.getDate() == App.getGame().getTime().getDate() - 1;
+        return true;
     }
 
     public boolean hasPettedToday() {
-        return lastPetTime.getDate() == App.getGame().getTime().getDate();
+//        return lastPetTime.getDate() == App.getGame().getTime().getDate();
+        return true;
     }
 
     public void feed() {
-        lastFeedTime = App.getGame().getTime().clone();
+//        lastFeedTime = App.getGame().getTime().clone();
     }
 
     public boolean hasFedYesterday() {
-        return lastFeedTime.getDate() == App.getGame().getTime().getDate() - 1;
+//        return lastFeedTime.getDate() == App.getGame().getTime().getDate() - 1;
+        return true;
     }
 
     public boolean hasFedToday() {
-        return lastFeedTime.getDate() == App.getGame().getTime().getDate();
+//        return lastFeedTime.getDate() == App.getGame().getTime().getDate();
+            return true;
     }
 
     public boolean isReadyProduct() {
         //TODO -> for pig is different
-        Time today = App.getGame().getTime().clone();
-        int dayOfToday = today.getDate();
-        if (!today.getSeason().equals(lastProductTime.getSeason()))
-            dayOfToday += Math.abs(lastProductTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
-        return dayOfToday >= lastProductTime.getDate() + type.getDaysToGetProduct();
+//        Time today = App.getGame().getTime().clone();
+//        int dayOfToday = today.getDate();
+//        if (!today.getSeason().equals(lastProductTime.getSeason()))
+//            dayOfToday += Math.abs(lastProductTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
+//        return dayOfToday >= lastProductTime.getDate() + type.getDaysToGetProduct();
+        return true;
     }
 
     public AnimalGood getProduct() {
-        if (!isReadyProduct())
-            return null;
-
-        int whichProduct = 0;
-        if (type.getAnimalGoods().size() == 2 && friendShip >= 100) {
-            double random = Math.random() + 0.5;
-            double chance = (friendShip + (150 * random)) / 1500;
-            if (Math.random() <= chance)
-                whichProduct = 1;
-        }
-
-        lastProductTime = App.getGame().getTime().clone();
-
-        double qualityValue = ((double) friendShip / 1000) * (0.5 + 0.5 * Math.random());
-        Quality quality = Quality.getQualityByValue(qualityValue);
-
-        return new AnimalGood(type.getAnimalGoods().get(whichProduct), quality);
+//        if (!isReadyProduct())
+//            return null;
+//
+//        int whichProduct = 0;
+//        if (type.getAnimalGoods().size() == 2 && friendShip >= 100) {
+//            double random = Math.random() + 0.5;
+//            double chance = (friendShip + (150 * random)) / 1500;
+//            if (Math.random() <= chance)
+//                whichProduct = 1;
+//        }
+//
+//        lastProductTime = App.getGame().getTime().clone();
+//
+//        double qualityValue = ((double) friendShip / 1000) * (0.5 + 0.5 * Math.random());
+//        Quality quality = Quality.getQualityByValue(qualityValue);
+//
+//        return new AnimalGood(type.getAnimalGoods().get(whichProduct), quality);
+        return null;
     }
 
     public Habitat getHabitat() {
@@ -188,18 +194,18 @@ public class Animal implements Placeable {
 
     }
 
-    public void render(Batch batch) {
-        if (state == AnimalState.IN_HABITAT) return;
-
-        Animation<TextureRegion> animation = type.getAnimation(state);
-        TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
-
-        batch.draw(currentFrame,
-            position.x * GamePictureManager.TILE_SIZE,
-            position.y * GamePictureManager.TILE_SIZE,
-            type.getAnimalHabitat() == HabitatType.Coop ? 40 : 65,
-            type.getAnimalHabitat() == HabitatType.Coop ? 40 : 65);
-    }
+//    public void render(Batch batch) {
+//        if (state == AnimalState.IN_HABITAT) return;
+//
+//        Animation<TextureRegion> animation = type.getAnimation(state);
+//        TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
+//
+//        batch.draw(currentFrame,
+//            position.x * GamePictureManager.TILE_SIZE,
+//            position.y * GamePictureManager.TILE_SIZE,
+//            type.getAnimalHabitat() == HabitatType.Coop ? 40 : 65,
+//            type.getAnimalHabitat() == HabitatType.Coop ? 40 : 65);
+//    }
 
     @Override
     public Rectangle getBounds() {

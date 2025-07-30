@@ -63,8 +63,9 @@ public class Axe extends Tool{
 //            return energyConsumptionResult;
 //
 //        return new Result(true, "");
+        return null;
 
-    }
+   }
 
     public ToolType getToolType() {
         return type;
@@ -83,4 +84,5 @@ public class Axe extends Tool{
     public String toString(){
         return "Axe " + type.name();
     }
+
 }

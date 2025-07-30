@@ -46,6 +46,7 @@ public class FishingPole extends Tool{
 //            return energyConsumptionResult;
 //
 //        return new Result(true, "");
+        return null;
     }
 
     @Override

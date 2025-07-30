@@ -104,6 +104,31 @@ public class Crop implements Placeable , Ingredient , Sellable , Growable , Eata
         return levelOfGrowth >= type.getNumberOfStages();
     }
 
+    @Override
+    public boolean isCompleteAgain() {
+        return false;
+    }
+
+    @Override
+    public void doAgainHarvesting() {
+
+    }
+
+    @Override
+    public void watering() {
+
+    }
+
+    @Override
+    public boolean canBeAlive(Time today) {
+        return false;
+    }
+
+    @Override
+    public int getNumberOfDaysToComplete() {
+        return 0;
+    }
+
 //    public void watering() {
 //        lastWaterTime = App.getGame().getTime().clone();
 //    }
@@ -136,6 +161,11 @@ public class Crop implements Placeable , Ingredient , Sellable , Growable , Eata
 
     public int getCurrentStage() {
         return levelOfGrowth;
+    }
+
+    @Override
+    public boolean hasWateredToday() {
+        return false;
     }
 
 //    public boolean hasWateredToday() {

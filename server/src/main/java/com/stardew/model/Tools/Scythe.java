@@ -12,11 +12,12 @@ public class Scythe extends Tool {
 
     @Override
     public Result useTool() {
-        Result energyConsumptionResult = App.getGame().getCurrentPlayingPlayer().consumeEnergy(2);
-        if (!energyConsumptionResult.getSuccessful())
-            return energyConsumptionResult;
-
-        return new Result(true, "");
+//        Result energyConsumptionResult = App.getGame().getCurrentPlayingPlayer().consumeEnergy(2);
+//        if (!energyConsumptionResult.getSuccessful())
+//            return energyConsumptionResult;
+//
+//        return new Result(true, "");
+        return null;
 
     }
 

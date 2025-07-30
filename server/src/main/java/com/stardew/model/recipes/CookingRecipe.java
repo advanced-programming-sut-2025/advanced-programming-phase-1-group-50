@@ -8,6 +8,7 @@ import com.stardew.model.mapInfo.foraging.ForagingCrop;
 import com.stardew.model.mapInfo.foraging.Fruit;
 import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGood;
 import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGoodType;
+import com.stardew.model.cooking.Food;
 
 import java.util.HashMap;
 import java.util.Map;

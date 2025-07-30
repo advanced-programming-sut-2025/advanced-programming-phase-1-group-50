@@ -25,8 +25,5 @@ public class Door implements Placeable{
         return null;
     }
 
-    @Override
-    public Color getMiniMapColor() {
-        return null;
-    }
+
 }

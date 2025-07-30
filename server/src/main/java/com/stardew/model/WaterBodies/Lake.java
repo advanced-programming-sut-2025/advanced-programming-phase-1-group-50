@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class Lake implements Placeable {
     private final Rectangle bounds;
-    private final TextureID texture ;
+//    private final TextureID texture ;
     public Lake(int x, int y, int width, int height) {
         this.bounds = new Rectangle(x, y, width, height);
 
@@ -25,7 +25,7 @@ public class Lake implements Placeable {
 
     @Override
     public TextureID getTexture() {
-        return texture;
+        return null;
     }
 
 

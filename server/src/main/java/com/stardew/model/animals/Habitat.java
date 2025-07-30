@@ -24,7 +24,7 @@ public class Habitat implements Placeable {
     private final Rectangle bounds;
     private final Vector2 position;
     private final TextureID textureRegion;
-    private final com.badlogic.gdx.scenes.scene2d.ui.Image image;
+//    private final com.badlogic.gdx.scenes.scene2d.ui.Image image;
 
 
     public Habitat(HabitatType type, HabitatSize size, int x, int y) {
@@ -50,31 +50,31 @@ public class Habitat implements Placeable {
             }
         } else textureRegion = null;
 
-        image = new Image(textureRegion);
-        image.setPosition(position.x * TextureID.TILE_SIZE, position.y * TextureID.TILE_SIZE);
+//        image = new Image(textureRegion);
+//        image.setPosition(position.x * TextureID.TILE_SIZE, position.y * TextureID.TILE_SIZE);
     }
 
-    public void prepareWindow(Stage stage) {
-        stage.addActor(image);
-        Habitat thisHabitat = this;
-        image.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.addActor(new HabitatWindow(stage, thisHabitat, (x + image.getX()), y + image.getY() - 50));
-                return true;
-            }
-
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                Gdx.graphics.setSystemCursor(com.badlogic.gdx.graphics.Cursor.SystemCursor.Hand);
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                Gdx.graphics.setSystemCursor(com.badlogic.gdx.graphics.Cursor.SystemCursor.Arrow);
-            }
-        });
-    }
+//    public void prepareWindow(Stage stage) {
+//        stage.addActor(image);
+//        Habitat thisHabitat = this;
+//        image.addListener(new InputListener() {
+//            @Override
+//            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+//                stage.addActor(new HabitatWindow(stage, thisHabitat, (x + image.getX()), y + image.getY() - 50));
+//                return true;
+//            }
+//
+//            @Override
+//            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+//                Gdx.graphics.setSystemCursor(com.badlogic.gdx.graphics.Cursor.SystemCursor.Hand);
+//            }
+//
+//            @Override
+//            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+//                Gdx.graphics.setSystemCursor(com.badlogic.gdx.graphics.Cursor.SystemCursor.Arrow);
+//            }
+//        });
+//    }
 
     public HabitatType getType() {
         return type;
@@ -155,7 +155,7 @@ public class Habitat implements Placeable {
     }
 
 
-    public void render(Batch batch) {
-        batch.draw(textureRegion, position.x * TextureID.TILE_SIZE, position.y * TextureID.TILE_SIZE);
-    }
+//    public void render(Batch batch) {
+//        batch.draw(textureRegion, position.x * TextureID.TILE_SIZE, position.y * TextureID.TILE_SIZE);
+//    }
 }

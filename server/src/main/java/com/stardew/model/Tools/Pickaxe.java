@@ -17,37 +17,38 @@ public class Pickaxe extends Tool {
 
     @Override
     public Result useTool() {
-        Weather weather = App.getGame().getTime().getWeather();
-        int multiple = switch (weather) {
-            case Rainy -> 2;
-            case Snowy -> 3;
-            default -> 1;
-        };
-        int consumedEnergy;
-        if (App.getGame().getCurrentPlayingPlayer().getAbility().getMiningLevel() == Ability.getMaxLevel()) {
-            consumedEnergy = switch (type) {
-                case Primary -> 4 * multiple;
-                case Coppery -> 3 * multiple;
-                case Metal -> 2 * multiple;
-                case Golden -> 1;
-                default -> 0;
-            };
-        } else {
-            consumedEnergy = switch (type) {
-                case Primary -> 5 * multiple;
-                case Coppery -> 4 * multiple;
-                case Metal -> 3 * multiple;
-                case Golden -> 2 * multiple;
-                case Iridium -> 1;
-                default -> 0;
-            };
-        }
-
-        Result energyConsumptionResult = App.getGame().getCurrentPlayingPlayer().consumeEnergy(consumedEnergy);
-        if (!energyConsumptionResult.getSuccessful())
-            return energyConsumptionResult;
-
-        return new Result(true, "");
+//        Weather weather = App.getGame().getTime().getWeather();
+//        int multiple = switch (weather) {
+//            case Rainy -> 2;
+//            case Snowy -> 3;
+//            default -> 1;
+//        };
+//        int consumedEnergy;
+//        if (App.getGame().getCurrentPlayingPlayer().getAbility().getMiningLevel() == Ability.getMaxLevel()) {
+//            consumedEnergy = switch (type) {
+//                case Primary -> 4 * multiple;
+//                case Coppery -> 3 * multiple;
+//                case Metal -> 2 * multiple;
+//                case Golden -> 1;
+//                default -> 0;
+//            };
+//        } else {
+//            consumedEnergy = switch (type) {
+//                case Primary -> 5 * multiple;
+//                case Coppery -> 4 * multiple;
+//                case Metal -> 3 * multiple;
+//                case Golden -> 2 * multiple;
+//                case Iridium -> 1;
+//                default -> 0;
+//            };
+//        }
+//
+//        Result energyConsumptionResult = App.getGame().getCurrentPlayingPlayer().consumeEnergy(consumedEnergy);
+//        if (!energyConsumptionResult.getSuccessful())
+//            return energyConsumptionResult;
+//
+//        return new Result(true, "");
+        return null;
     }
 
     public void upgradeTool() {

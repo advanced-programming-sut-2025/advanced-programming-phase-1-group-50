@@ -12,11 +12,12 @@ public class Shear extends Tool {
 
     @Override
     public Result useTool() {
-        Result energyConsumptionResult = App.getGame().getCurrentPlayingPlayer().consumeEnergy(4);
-        if (!energyConsumptionResult.getSuccessful())
-            return energyConsumptionResult;
-
-        return new Result(true, "");
+//        Result energyConsumptionResult = App.getGame().getCurrentPlayingPlayer().consumeEnergy(4);
+//        if (!energyConsumptionResult.getSuccessful())
+//            return energyConsumptionResult;
+//
+//        return new Result(true, "");
+        return null;
     }
 
     public ToolType getToolType() {
