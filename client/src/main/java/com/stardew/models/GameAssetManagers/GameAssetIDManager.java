@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.model.AnimationID;
+import com.stardew.model.DrawableID;
 import com.stardew.model.TextureID;
 import com.stardew.models.date.Season;
 import com.stardew.view.GameMenu;
@@ -21,6 +22,22 @@ public class GameAssetIDManager {
                 Object value = field.get(null);
                 if (value instanceof TextureRegion) {
                     ids.put(id, (TextureRegion) value);
+                }
+            } catch (Exception e) {
+                System.err.println("Failed to load asset for ID: " + id.name());
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static HashMap<DrawableID , TextureRegion> drawables = new HashMap<>();
+    static {
+        for (DrawableID id : DrawableID.values()) {
+            try {
+                Field field = GamePictureManager.class.getField(id.name());
+                Object value = field.get(null);
+                if (value instanceof TextureRegion) {
+                    drawables.put(id, (TextureRegion) value);
                 }
             } catch (Exception e) {
                 System.err.println("Failed to load asset for ID: " + id.name());

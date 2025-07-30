@@ -154,7 +154,7 @@ public class GameMenuInputAdapter extends InputAdapter {
 
         float speed = p.getSpeed();
         p.setVelocity(vx * speed, vy * speed);
-        model.getPlayerController().update(delta);
+//        model.getPlayerController().update(delta);
 
 
     }
