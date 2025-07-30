@@ -233,6 +233,6 @@ public class SelectFarmMenu implements Screen, AppMenu {
                 Main.getMain().setScreen(new GameScreenMenu(updateRequestThread));
                 dispose();
             });
-        });
+        }).start();
     }
 }

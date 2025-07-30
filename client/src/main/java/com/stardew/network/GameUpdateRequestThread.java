@@ -27,7 +27,7 @@ public class GameUpdateRequestThread extends Thread {
             } catch (InterruptedException ignored) {
 
             } catch (Exception e) {
-                System.out.println("Error sending game state request " + e.getMessage());
+                System.err.println("Error sending game state request " + e.getMessage());
             }
         }
     }
