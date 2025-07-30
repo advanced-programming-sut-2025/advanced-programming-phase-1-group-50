@@ -8,6 +8,7 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -49,7 +50,10 @@ public abstract class ConnectionThread extends Thread {
 
         while (running.get()) {
             try {
-                String receivedStr = dataInputStream.readUTF();
+                int length = dataInputStream.readInt();
+                byte[] data = new byte[length];
+                dataInputStream.readFully(data);
+                String receivedStr = new String(data, StandardCharsets.UTF_8);
                 Message message = JSONUtils.fromJson(receivedStr);
                 boolean success = incomingMessagesQueue.offer(message);
                 System.out.println("Received: " + message);  //TODO
@@ -76,7 +80,9 @@ public abstract class ConnectionThread extends Thread {
                 try {
                     Message msg = outgoingMessagesQueue.take();
                     String json = JSONUtils.toJson(msg);
-                    dataOutputStream.writeUTF(json);
+                    byte[] data = json.getBytes(StandardCharsets.UTF_8);
+                    dataOutputStream.writeInt(data.length);
+                    dataOutputStream.write(data);
                     dataOutputStream.flush();
                 } catch (InterruptedException interruptedException) {
                     System.err.println("Sender thread interrupted.");
