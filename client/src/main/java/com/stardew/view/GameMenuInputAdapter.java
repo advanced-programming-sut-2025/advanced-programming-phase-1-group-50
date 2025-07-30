@@ -11,6 +11,10 @@ import com.stardew.models.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.models.stores.Store;
 import com.stardew.models.userInfo.Player;
+import com.stardew.network.Event;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 import com.stardew.view.GridMap.TileSelectionWindow;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.InventoryWindows.InventoryWindow;
@@ -23,21 +27,28 @@ import com.stardew.view.cheatConsole.CheatWindow;
 import com.stardew.view.windows.CookingWindow;
 import com.stardew.view.windows.CraftingWindow;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 public class GameMenuInputAdapter extends InputAdapter {
-    private final GameModel model;
+//    private final GameModel model;
+    private final int id;
     private final Set<Integer> keys = new HashSet<>();
     private final Set<Integer> justPressedKeys = new HashSet<>();
+    private float lastVx, lastVy;
 
     private Stage stage;
     private HotBarActor hotBar;
 
 
-    public GameMenuInputAdapter(GameModel model) {
-        this.model = model;
+    public GameMenuInputAdapter(int id) {
+        this.id = id;
     }
+
+//    public GameMenuInputAdapter(GameModel model) {
+//        this.model = model;
+//    }
 
     @Override
     public boolean keyDown(int keycode) {
@@ -64,23 +75,23 @@ public class GameMenuInputAdapter extends InputAdapter {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Player currentPlayer = App.getGame().getCurrentPlayingPlayer();
-
-        int startX = App.getGame().getMap().getFarmStartX(currentPlayer , App.getGame());
-        int startY = App.getGame().getMap().getFarmStartY(currentPlayer , App.getGame());
-
-        Vector2 stageCoords = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
-        int indexTileX = ((int)(stageCoords.x / GamePictureManager.TILE_SIZE)) + startX;
-        int indexTileY = ((int)(stageCoords.y / GamePictureManager.TILE_SIZE)) + startY;
-
-        model.handleClickTile(indexTileX, indexTileY);
+//        Player currentPlayer = App.getGame().getCurrentPlayingPlayer();
+//
+//        int startX = App.getGame().getMap().getFarmStartX(currentPlayer , App.getGame());
+//        int startY = App.getGame().getMap().getFarmStartY(currentPlayer , App.getGame());
+//
+//        Vector2 stageCoords = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
+//        int indexTileX = ((int)(stageCoords.x / GamePictureManager.TILE_SIZE)) + startX;
+//        int indexTileY = ((int)(stageCoords.y / GamePictureManager.TILE_SIZE)) + startY;
+//
+//        model.handleClickTile(indexTileX, indexTileY);
 
 
         return true;
     }
 
     public void update(float delta) {
-        Player p = App.getGame().getCurrentPlayingPlayer();
+//        Player p = App.getGame().getCurrentPlayingPlayer();
         float vx = 0 , vy = 0;
         int dir = 0;
 
@@ -104,6 +115,7 @@ public class GameMenuInputAdapter extends InputAdapter {
             dir = 2;
         }
 
+        sendMoveEventIfNeed(vx, vy, dir, delta);
 
 
         if ((keys.contains(Input.Keys.SHIFT_LEFT) || keys.contains(Input.Keys.SHIFT_RIGHT)) &&
@@ -136,27 +148,34 @@ public class GameMenuInputAdapter extends InputAdapter {
         }
 
 
-        handlePlayerMove(p, vx, vy, dir, delta);
-
         justPressedKeys.clear();
     }
 
-    private void handlePlayerMove(Player p, float vx, float vy, int dir, float delta) {
+    private void sendMoveEventIfNeed(float vx, float vy, int dir, float delta) {
 
         float length = (float) Math.sqrt(vx * vx + vy * vy);
-        if(length > 0){
-            vx/=length;
-            vy/=length;
-            p.setMoveDirection(dir);
-        }else{
-            p.setMoveDirection(0);
+        if (length > 0) {
+            vx /= length;
+            vy /= length;
+        } else {
+            dir = 0;
         }
 
-        float speed = p.getSpeed();
-        p.setVelocity(vx * speed, vy * speed);
-//        model.getPlayerController().update(delta);
+        if (vx == lastVx && vy == lastVy) return;
 
+        vx *= delta;
+        vy *= delta;
+        lastVx = vx;
+        lastVy = vy;
 
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("id", id);
+        body.put("event", Event.Moving);
+        body.put("vx", vx);
+        body.put("vy", vy);
+        body.put("dir", dir);
+        Message message = new Message(body, MessageType.EVENT_IN_GAME);
+        NetworkManager.getConnection().sendMessage(message);
     }
 
     public void createStoreWindow(Store store) {
@@ -188,17 +207,26 @@ public class GameMenuInputAdapter extends InputAdapter {
 
     @Override
     public boolean scrolled(float amountX , float amountY){
-        if (hotBar != null) {
-            int current = hotBar.getSelectedIndex();
-            int count = hotBar.getItemCount();
-
-            if (amountY > 0) {
-                hotBar.setSelectedIndex((current + 1) % count);
-            } else if (amountY < 0) {
-                hotBar.setSelectedIndex((current - 1 + count) % count);
-            }
-        }
+//        if (hotBar != null) {
+//            int current = hotBar.getSelectedIndex();
+//            int count = hotBar.getItemCount();
+//
+//            if (amountY > 0) {
+//                hotBar.setSelectedIndex((current + 1) % count);
+//            } else if (amountY < 0) {
+//                hotBar.setSelectedIndex((current - 1 + count) % count);
+//            }
+//        }
         return true;
+    }
+
+
+    private void sendEvent(Event event) {
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("id", id);
+        body.put("event", event);
+        Message message = new Message(body, MessageType.EVENT_IN_GAME);
+        NetworkManager.getConnection().sendMessage(message);
     }
 
 }
