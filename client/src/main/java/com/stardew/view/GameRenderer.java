@@ -38,7 +38,7 @@ public class GameRenderer {
     public void render(float delta) {
         renderBackground();
         renderPlayer(delta);
-        renderPlaceables();
+//        renderPlaceables(); TODO must complete all getTextureID methods in Placeables
 
 
 

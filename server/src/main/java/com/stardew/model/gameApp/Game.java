@@ -157,17 +157,22 @@ public class Game {
 
     public GameState getGameState(int startX, int startY, int endX, int endY, ClientConnectionThread connection) {
         ArrayList<TileDTO> tiles = new ArrayList<>();
-        ArrayList<PlaceableDTO> placeables = new ArrayList<>();
+        Set<Placeable> placeablesSet = new HashSet<>();
         for (int i = startX; i <= endX; i++) {
             for (int j = startY; j <= endY; j++) {
                 Tile tile = map.getTiles()[i][j];
-                if (tile == null) continue;
                 tiles.add(tile.toDTO());
                 Placeable placeable = tile.getPlaceable();
-                if (placeable != null) {
-                    placeables.add(new PlaceableDTO(i, j, placeable.getBounds().width, placeable.getBounds().height, placeable.getTexture()));
-                }
+                if (placeable != null) placeablesSet.add(placeable);
             }
+        }
+        ArrayList<PlaceableDTO> placeables = new ArrayList<>();
+        for (Placeable placeable : placeablesSet) {
+            placeables.add(new PlaceableDTO(
+                placeable.getBounds().x, placeable.getBounds().y,
+                placeable.getBounds().width, placeable.getBounds().height,
+                placeable.getTexture())
+            );
         }
         PlayerDTO player = players.get(connection).toDTO();
 
