@@ -19,7 +19,8 @@ public class PlayerController {
     public PlayerController(Player player , GameModel model) {
         this.player = player;
         this.model = model;
-        this.tiles = model.getMap().getTiles();
+//        this.tiles = model.getMap().getTiles();
+        this.tiles = new Tile[250][200];
     }
 
     public void update(float delta) {

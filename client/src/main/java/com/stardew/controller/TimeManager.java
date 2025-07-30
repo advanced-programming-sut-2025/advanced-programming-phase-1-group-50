@@ -204,7 +204,8 @@ public class TimeManager {
             if (App.getGame().getTime().getSeason().equals(Season.Winter)) {
                 firstTimeChangeInSpring = false;
                 changeTileTextureInSpring = false;
-                Tile[][] tiles = gameModel.getMap().getTiles();
+//                Tile[][] tiles = gameModel.getMap().getTiles();
+                Tile[][] tiles = new Tile[250][200];
                 for (Tile[] tile : tiles) {
                     for (Tile value : tile) {
                         value.checkSeasonIsWinter();
@@ -223,7 +224,7 @@ public class TimeManager {
         if(!changeTileTextureInSpring) {
             if (App.getGame().getTime().getSeason().equals(Season.Spring)) {
                 changeTileTextureInWinter = false;
-                Tile[][] tiles = gameModel.getMap().getTiles();
+                Tile[][] tiles = new Tile[250][200];
                 for (Tile[] tile : tiles) {
                     for (Tile value : tile) {
                         value.checkIsSeasonSpring();
@@ -235,7 +236,8 @@ public class TimeManager {
     }
 
     public void setWateredTile(float delta){
-        for(Tile[] tile : gameModel.getMap().getTiles()){
+        Tile[][] tiles = new Tile[250][200];
+        for(Tile[] tile : tiles){
             for (Tile value : tile) {
                 if(value.isWatered()){
                     value.setWateredTimeTexture(value.getWateredTimeTexture() + delta);

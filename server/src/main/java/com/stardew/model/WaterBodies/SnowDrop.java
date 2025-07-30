@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class SnowDrop {
     public float x , y , speedX , speedY;
-    public Animation<TextureRegion> snowAnimation = GamePictureManager.snowAnimation;
+//    public Animation<TextureRegion> snowAnimation = GamePictureManager.snowAnimation;
     public float stateTime = 0;
 
     public SnowDrop(float x, float y, float speedX, float speedY) {
@@ -23,10 +23,10 @@ public class SnowDrop {
         stateTime += delta;
     }
 
-    public void draw(SpriteBatch batch) {
-        TextureRegion frame = snowAnimation.getKeyFrame(stateTime);
-        batch.draw(frame, x, y);
-    }
+//    public void draw(SpriteBatch batch) {
+//        TextureRegion frame = snowAnimation.getKeyFrame(stateTime);
+//        batch.draw(frame, x, y);
+//    }
 
     public boolean isOffScreen(){
         return y < -16;

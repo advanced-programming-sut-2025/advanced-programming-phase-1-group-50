@@ -216,4 +216,8 @@ public abstract class ArtisanMachine implements Placeable {
 //            default -> null;
 //        };
 //    }
+    @Override
+    public TextureID getTexture() {
+        return null;
+    }
 }

@@ -20,9 +20,9 @@ public class ShippingBin implements Placeable {
     public ShippingBin(int x, int y) {
 
         this.bounds = new Rectangle(x, y, 1, 1);
-        for (Player player : App.getGame().getPlayers()) {
-            dailyRevenue.put(player, 0);
-        }
+//        for (Player player : App.getGame().getPlayers()) {
+//            dailyRevenue.put(player, 0);
+//        }
     }
 
     @Override
@@ -79,10 +79,7 @@ public class ShippingBin implements Placeable {
         return texture;
     }
 
-    @Override
-    public Color getMiniMapColor() {
-        return null;
-    }
+
 
 
 }

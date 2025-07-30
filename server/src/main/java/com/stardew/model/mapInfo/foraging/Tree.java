@@ -1,5 +1,6 @@
 package com.stardew.model.mapInfo.foraging;
 
+import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.date.Time;
 import com.stardew.model.gameApp.date.Weather;
 import com.stardew.model.mapInfo.Placeable;
@@ -46,6 +47,11 @@ public class Tree implements Placeable  , Growable {
         return 'T';
     }
 
+    @Override
+    public TextureID getTexture() {
+        return null;
+    }
+
     public TreeType getType() {
         return type;
     }
@@ -73,6 +79,21 @@ public class Tree implements Placeable  , Growable {
 
     public boolean isComplete() {
         return levelOfGrowth >= type.getStages().size();
+    }
+
+    @Override
+    public boolean isCompleteAgain() {
+        return false;
+    }
+
+    @Override
+    public void doAgainHarvesting() {
+
+    }
+
+    @Override
+    public void watering() {
+
     }
 
 //    public boolean isCompleteAgain() {
@@ -110,6 +131,11 @@ public class Tree implements Placeable  , Growable {
         if (today.getSeason() != lastGrowthTime.getSeason())
             todayDate += Math.abs(lastGrowthTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
         return todayDate <= lastWaterTime.getDate() + numberOfDaysCanBeAliveWithoutWater;
+    }
+
+    @Override
+    public int getNumberOfDaysToComplete() {
+        return 0;
     }
 
 //    public int getNumberOfDaysToComplete() {

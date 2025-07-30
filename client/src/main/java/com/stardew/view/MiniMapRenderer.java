@@ -18,7 +18,7 @@ public class MiniMapRenderer {
     }
 
     public Texture getMiniMapTexture(){
-        Tile[][] tiles = gameModel.getMap().getTiles();
+        Tile[][] tiles = new Tile[mapWidth][mapHeight];
         int tileSizeMiniMap = 4;
         int miniMapWidth = mapWidth * tileSizeMiniMap;
         int miniMapHeight = mapHeight * tileSizeMiniMap;

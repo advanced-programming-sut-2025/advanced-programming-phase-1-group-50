@@ -4,6 +4,7 @@ import com.stardew.model.Tools.Tool;
 import com.stardew.model.animals.Animal;
 import com.stardew.model.animals.AnimalGood;
 import com.stardew.model.animals.Hay;
+import com.stardew.model.cooking.Food;
 import com.stardew.model.mapInfo.foraging.Crop;
 import com.stardew.model.mapInfo.foraging.ForagingMineral;
 import com.stardew.model.mapInfo.foraging.Fruit;
@@ -86,7 +87,7 @@ public class Backpack {
 
     public void addTool(Tool tool) {
         tools.add(tool);
-        player.addInventoryItem(tool);
+//        player.addInventoryItem(tool);
 
     }
 
@@ -96,7 +97,7 @@ public class Backpack {
 
     public void removeTool(Tool tool) {
         tools.remove(tool);
-        player.removeInventoryItem(tool);
+//        player.removeInventoryItem(tool);
 
     }
 
@@ -114,7 +115,7 @@ public class Backpack {
             }
 
         }
-        player.addInventoryItem(ingredient);
+//        player.addInventoryItem(ingredient);
 
 
 
@@ -124,7 +125,7 @@ public class Backpack {
         int value = ingredientQuantity.getOrDefault(ingredient , 0);
         if(value == quantity){
             ingredientQuantity.remove(ingredient);
-            player.removeInventoryItem(ingredient);
+//            player.removeInventoryItem(ingredient);
         } else {
             ingredientQuantity.put(ingredient, value - quantity);
         }
@@ -183,14 +184,14 @@ public class Backpack {
     }
 
     public ArtisanMachine getArtisanMachineByName(String name) {
-        ArtisanMachine machineIns = ArtisanMachine.getArtisanMachineByRecipe(CraftingRecipes.getRecipeByName(name));
-
-        if (machineIns == null) return null;
-
-        for (ArtisanMachine machine : artisanMachines) {
-            if (machine.getClass() == machineIns.getClass())
-                return machine;
-        }
+//        ArtisanMachine machineIns = ArtisanMachine.getArtisanMachineByRecipe(CraftingRecipes.getRecipeByName(name));
+//
+//        if (machineIns == null) return null;
+//
+//        for (ArtisanMachine machine : artisanMachines) {
+//            if (machine.getClass() == machineIns.getClass())
+//                return machine;
+//        }
         return null;
     }
 
