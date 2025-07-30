@@ -2,6 +2,7 @@ package com.stardew.models;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.stardew.model.PlaceableDTO;
 import com.stardew.model.PlayerDTO;
 import com.stardew.model.TileDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class GameModel {
     private final OrthographicCamera camera;
     private ArrayList<TileDTO> tiles;
+    private ArrayList<PlaceableDTO> placeables;
     private PlayerDTO player;
     private final int mapWidth, mapHeight;
     private int startX;
@@ -180,12 +182,20 @@ public class GameModel {
         this.player = player;
     }
 
+    public void updatePlaceables(ArrayList<PlaceableDTO> placeables) {
+        this.placeables = placeables;
+    }
+
     public ArrayList<TileDTO> getTiles() {
         return tiles;
     }
 
     public PlayerDTO getPlayer() {
         return player;
+    }
+
+    public ArrayList<PlaceableDTO> getPlaceables() {
+        return placeables;
     }
 
     public int getStartX() {

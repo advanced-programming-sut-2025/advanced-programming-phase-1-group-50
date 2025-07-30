@@ -3,6 +3,8 @@ package com.stardew.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,14 +14,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.stardew.Main;
+import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.App;
-import com.stardew.models.userInfo.Player;
+import com.stardew.network.GameUpdateRequestThread;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 import com.stardew.network.NetworkManager;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SelectFarmMenu implements Screen, AppMenu {
@@ -36,7 +38,9 @@ public class SelectFarmMenu implements Screen, AppMenu {
     private float remainingTime = SELECT_TIME;
     private String farmSelected;
     private boolean hasSentReadyMessage = false;
-    private final ArrayList<Player> players = new ArrayList<>();
+    private boolean fadeOutStarted;
+    private float fadeAlpha = 0f;
+    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
 
 
     public SelectFarmMenu(int id) {
@@ -48,8 +52,6 @@ public class SelectFarmMenu implements Screen, AppMenu {
             "Farm 3",
             "Farm 4",
         };
-
-//        this.players.addAll(players);
 
         selectFarm = new SelectBox<>(GamePictureManager.skin);
         selectFarm.setItems(farmNames);
@@ -84,32 +86,36 @@ public class SelectFarmMenu implements Screen, AppMenu {
         farm1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                App.gameSample.setCurrentPlayingPlayer(players.get(0));
-                stage.addActor(new ShowFarmsWindow(stage , 1 , App.gameSample));
+                showResult(new Result(false, "NO Implementation"));
+//                App.gameSample.setCurrentPlayingPlayer(players.get(0));
+//                stage.addActor(new ShowFarmsWindow(stage , 1 , App.gameSample));
             }
         });
         farm2 = new TextButton("Farm 2", GamePictureManager.skin);
         farm2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                App.gameSample.setCurrentPlayingPlayer(players.get(1));
-                stage.addActor(new ShowFarmsWindow(stage , 2 , App.gameSample));
+                showResult(new Result(false, "NO Implementation"));
+//                App.gameSample.setCurrentPlayingPlayer(players.get(1));
+//                stage.addActor(new ShowFarmsWindow(stage , 2 , App.gameSample));
             }
         });
         farm3 = new TextButton("Farm 3", GamePictureManager.skin);
         farm3.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                App.gameSample.setCurrentPlayingPlayer(players.get(2));
-                stage.addActor(new ShowFarmsWindow(stage , 3 , App.gameSample));
+                showResult(new Result(false, "NO Implementation"));
+//                App.gameSample.setCurrentPlayingPlayer(players.get(2));
+//                stage.addActor(new ShowFarmsWindow(stage , 3 , App.gameSample));
             }
         });
         farm4 = new TextButton("Farm 4", GamePictureManager.skin);
         farm4.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                App.gameSample.setCurrentPlayingPlayer(players.get(3));
-                stage.addActor(new ShowFarmsWindow(stage , 4 , App.gameSample));
+                showResult(new Result(false, "NO Implementation"));
+//                App.gameSample.setCurrentPlayingPlayer(players.get(3));
+//                stage.addActor(new ShowFarmsWindow(stage , 4 , App.gameSample));
             }
         });
     }
@@ -174,35 +180,59 @@ public class SelectFarmMenu implements Screen, AppMenu {
         updateTimeLabel();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+
+        if (fadeOutStarted) {
+            fadeAlpha += delta / 2f;
+            if (fadeAlpha > 1f) fadeAlpha = 1f;
+
+            Gdx.gl.glEnable(GL20.GL_BLEND);
+            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.setColor(0, 0, 0, fadeAlpha);
+            shapeRenderer.rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            shapeRenderer.end();
+
+            Gdx.gl.glDisable(GL20.GL_BLEND);
+        }
     }
 
-    @Override
-    public void resize(int i, int i1) {
+    @Override public void resize(int i, int i1) {
 
     }
-
-    @Override
-    public void pause() {
+    @Override public void pause() {
 
     }
-
-    @Override
-    public void resume() {
+    @Override public void resume() {
 
     }
-
-    @Override
-    public void hide() {
+    @Override public void hide() {
 
     }
-
-    @Override
-    public void dispose() {
-
+    @Override public void dispose() {
+        shapeRenderer.dispose();
     }
-
     public Stage getStage() {
         return stage;
     }
 
+    public void startGameTransition(int gameId) {
+        fadeOutStarted = true;
+
+        GameUpdateRequestThread updateRequestThread = new GameUpdateRequestThread(id);
+        updateRequestThread.start();
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+            Gdx.app.postRunnable(() -> {
+                Main.getMain().setScreen(new GameScreenMenu(updateRequestThread));
+                dispose();
+            });
+        });
+    }
 }

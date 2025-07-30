@@ -7,10 +7,10 @@ package com.stardew.model.mapInfo;
 //import com.stardew.model.ShippingBin;
 //import com.stardew.model.app.App;
 //import com.stardew.model.date.Weather;
-//import com.stardew.model.foraging.Crop;
-//import com.stardew.model.foraging.CropType;
-//import com.stardew.model.foraging.ForagingMineral;
-//import com.stardew.model.foraging.Tree;
+import com.stardew.model.mapInfo.foraging.Crop;
+import com.stardew.model.mapInfo.foraging.CropType;
+import com.stardew.model.mapInfo.foraging.ForagingMineral;
+import com.stardew.model.mapInfo.foraging.Tree;
 import com.stardew.model.userInfo.Player;
 //import com.stardew.view.GameScreenMenu;
 
@@ -24,7 +24,9 @@ import java.util.Random;
 
 public class GameMap {
     private final static Random rand = new Random();
-    private final Tile[][] tiles = new Tile[250][200];
+    private final Tile[][] tiles;
+    private final int width;
+    private final int height;
     private final ArrayList<Farm> farms;
 //    private NpcVillage npcVillage;
 //    private final ArrayList<NpcHome> npcHomes = new ArrayList<>();
@@ -34,6 +36,9 @@ public class GameMap {
 
     public GameMap(ArrayList<Farm> farms) {
         this.farms = farms;
+        this.width = 250;
+        this.height = 200;
+        this.tiles = new Tile[width][height];
         buildMap();
     }
 
@@ -81,21 +86,21 @@ public class GameMap {
 //        npcHomes.add(sebastianHome);
 
 
-//        for (Farm farm : farms) {
-//
-//            for (Placeable placeable : farm.getPlaceables()) {
-//
-//                for (int i = placeable.getBounds().x; i < placeable.getBounds().x + placeable.getBounds().width; i++) {
-//                    for (int j = placeable.getBounds().y; j < placeable.getBounds().y + placeable.getBounds().height; j++) {
-//
-//                        tiles[i][j].setWalkable(false);
-//                        tiles[i][j].setSymbol(placeable.getSymbol());
-//                        tiles[i][j].setPlaceable(placeable);
-//
-//                    }
-//                }
-//            }
-//        }
+        for (Farm farm : farms) {
+
+            for (Placeable placeable : farm.getPlaceables()) {
+
+                for (int i = placeable.getBounds().x; i < placeable.getBounds().x + placeable.getBounds().width; i++) {
+                    for (int j = placeable.getBounds().y; j < placeable.getBounds().y + placeable.getBounds().height; j++) {
+
+                        tiles[i][j].setWalkable(false);
+                        tiles[i][j].setSymbol(placeable.getSymbol());
+                        tiles[i][j].setPlaceable(placeable);
+
+                    }
+                }
+            }
+        }
 //        for (int i = this.npcVillage.getRectangle().x; i < this.npcVillage.getRectangle().x + this.npcVillage.getRectangle().width; i++) {
 //            for (int j = this.npcVillage.getRectangle().y; j < this.npcVillage.getRectangle().y + this.npcVillage.getRectangle().height; j++) {
 //                tiles[i][j].setSymbol('.');
@@ -122,10 +127,10 @@ public class GameMap {
 
         setBorderFarmsAndNpcVillage();
         setDoorFarmsAndNpcVillage();
-//        for (Farm farm : farms) {
-//            setWalkableDoorTrue(farm.getDoor().getBounds().x, farm.getDoor().getBounds().y,
-//                    farm.getDoor().getBounds().width, farm.getDoor().getBounds().height);
-//        }
+        for (Farm farm : farms) {
+            setWalkableDoorTrue(farm.getDoor().getBounds().x, farm.getDoor().getBounds().y,
+                    farm.getDoor().getBounds().width, farm.getDoor().getBounds().height);
+        }
 //        for (Door d : npcVillage.getDoors()) {
 //            setWalkableDoorTrue(d.getBounds().x, d.getBounds().y, d.getBounds().width, d.getBounds().height);
 //        }
@@ -152,11 +157,11 @@ public class GameMap {
     }
 
     public void setDoorFarmsAndNpcVillage() {
-//        farms.get(0).setDoor(new Door(99, 37, 1, 3));
-//
-//        farms.get(1).setDoor(new Door(149, 37, 1, 3));
-//        farms.get(2).setDoor(new Door(99, 155, 1, 3));
-//        farms.get(3).setDoor(new Door(149, 155, 1, 3));
+        farms.get(0).setDoor(new Door(99, 37, 1, 3));
+
+        farms.get(1).setDoor(new Door(149, 37, 1, 3));
+        farms.get(2).setDoor(new Door(99, 155, 1, 3));
+        farms.get(3).setDoor(new Door(149, 155, 1, 3));
 //        npcVillage.addDoors(new Door(99, 105, 1, 3));
 //        npcVillage.addDoors(new Door(149, 105, 1, 3));
 //        npcVillage.addDoors(new Door(125, 74, 3, 1));
@@ -187,24 +192,24 @@ public class GameMap {
     }
 
     public void randomForagingMineralGenerator() {
-//        for (Farm farm : farms) {
-//            for (Quarry quarry : farm.getQuarries()) {
-//                int numberOfForagingMinerals = 2;
-//                int counter = 0;
-//                while (counter < numberOfForagingMinerals) {
-//                    ForagingMineral foragingMineral = ForagingMineral.values()[rand.nextInt(ForagingMineral.values().length)];
-//                    quarry.addForagingMineral(foragingMineral);
-//                    counter++;
-//
-//                }
-//            }
-//        }
+        for (Farm farm : farms) {
+            for (Quarry quarry : farm.getQuarries()) {
+                int numberOfForagingMinerals = 2;
+                int counter = 0;
+                while (counter < numberOfForagingMinerals) {
+                    ForagingMineral foragingMineral = ForagingMineral.values()[rand.nextInt(ForagingMineral.values().length)];
+                    quarry.addForagingMineral(foragingMineral);
+                    counter++;
+
+                }
+            }
+        }
     }
 
-//    public CropType generateRandomCropType() {
-//        CropType[] cropTypes = CropType.values();
-//        return cropTypes[rand.nextInt(cropTypes.length)];
-//    }
+    public CropType generateRandomCropType() {
+        CropType[] cropTypes = CropType.values();
+        return cropTypes[rand.nextInt(cropTypes.length)];
+    }
 
     public void generateRandomForagingCrop(Farm farm) {
 
@@ -223,30 +228,29 @@ public class GameMap {
 //                farm.getPlaceables().add(crop);
 //            }
 //            counter++;
-//
 //        }
 
     }
 
     public void generateRandomStoneFarm(Farm farm) {
-//        int numberOfStone = rand.nextInt(2) + 1;
-//        int counter = 0;
-//
-//        while (counter < numberOfStone) {
-//            int x = rand.nextInt(farm.getRectangle().width) + farm.getRectangle().x;
-//            int y = rand.nextInt(farm.getRectangle().height) + farm.getRectangle().y;
-//            Tile tile = findTile(x, y);
-//
-//            if (tile.getPlaceable() == null) {
-//                Stone stone = new Stone(x, y);
-//                tile.setPlaceable(stone);
-//                tile.setWalkable(false);
-//                tile.setSymbol(stone.getSymbol());
-//                farm.getStones().add(stone);
-//                farm.getPlaceables().add(stone);
-//            }
-//            counter++;
-//        }
+        int numberOfStone = rand.nextInt(2) + 1;
+        int counter = 0;
+
+        while (counter < numberOfStone) {
+            int x = rand.nextInt(farm.getRectangle().width) + farm.getRectangle().x;
+            int y = rand.nextInt(farm.getRectangle().height) + farm.getRectangle().y;
+            Tile tile = findTile(x, y);
+
+            if (tile.getPlaceable() == null) {
+                Stone stone = new Stone(x, y);
+                tile.setPlaceable(stone);
+                tile.setWalkable(false);
+                tile.setSymbol(stone.getSymbol());
+                farm.getStones().add(stone);
+                farm.getPlaceables().add(stone);
+            }
+            counter++;
+        }
     }
 
     public Tile getTileByDirection(Tile currentTile, Direction direction) {
@@ -321,6 +325,15 @@ public class GameMap {
 //
 //        return false;
 //    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
 
 //    public int getFarmStartX(Player player , Game game) {
 //        int[] startXForMap = {0, 150, 0, 150};

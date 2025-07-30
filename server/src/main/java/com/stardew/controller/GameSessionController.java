@@ -3,7 +3,9 @@ package com.stardew.controller;
 import com.stardew.model.gameApp.Game;
 import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
+import com.stardew.network.MessageType;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -31,15 +33,38 @@ public class GameSessionController {
     }
 
 
-    public void sendUpdateGameState(Message message, ClientConnectionThread connection) {
+    public void handleUpdateGameState(Message message, ClientConnectionThread connection) {
         if (message == null) return;
 
         int id = message.getIntFromBody("id");
         Game game = games.get(id);
 
-        if (game == null) {
-            //TODO
-            // complete a GameState to send to client
-        }
+        if (game == null) return;
+
+        int startX = message.getIntFromBody("startX");
+        int startY = message.getIntFromBody("startY");
+        int endX = message.getIntFromBody("endX");
+        int endY = message.getIntFromBody("endY");
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("id", id);
+        body.put("gameState", game.getGameState(startX, startY, endX, endY, connection));
+        Message response = new Message(body, MessageType.UPDATE_GAME_RESULT);
+        connection.sendMessage(response);
+    }
+
+    public void handleMapRequest(Message message, ClientConnectionThread connection) {
+        if (message == null) return;
+        int id = message.getIntFromBody("id");
+        Game game = games.get(id);
+        if (game == null) return;
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("id", id);
+        body.put("mapWidth", game.getMap().getWidth());
+        body.put("mapHeight", game.getMap().getHeight());
+        Message response = new Message(body, MessageType.MAP_REQUEST_RESULT);
+
+        connection.sendMessage(response);
     }
 }

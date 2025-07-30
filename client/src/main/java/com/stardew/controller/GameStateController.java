@@ -1,12 +1,12 @@
 package com.stardew.controller;
 
-import com.google.gson.reflect.TypeToken;
+import com.stardew.model.GameState;
+import com.stardew.model.PlaceableDTO;
 import com.stardew.model.PlayerDTO;
 import com.stardew.model.TileDTO;
 import com.stardew.models.GameModel;
 import com.stardew.network.Message;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class GameStateController {
@@ -29,7 +29,20 @@ public class GameStateController {
     public void handleUpdate(Message message) {
         if (message == null) return;
 
-        Type tileDTOType = new TypeToken<ArrayList<TileDTO>>(){}.getType();
+        GameState state = message.getFromBody("gameState", GameState.class);
+
+        ArrayList<TileDTO> tileDTOs = state.getTiles();
+        ArrayList<PlaceableDTO> placeables = state.getPlaceables();// TODO handle
+        PlayerDTO player = state.getPlayer();
+
+        gameState.updateTiles(tileDTOs);
+        gameState.updatePlayer(player);
+        gameState.updateCamera();
+        gameState.updateVisibleTilesBounds();
+    }
+
+    public void handleRequestMap(Message message) {
+        if (message == null) return;
 
         if (firstUpdate) {
             int mapWidth = message.getIntFromBody("mapWidth");
@@ -37,14 +50,6 @@ public class GameStateController {
             gameState = new GameModel(mapWidth, mapHeight);
             firstUpdate = false;
         }
-
-        ArrayList<TileDTO> tileDTOs = message.getFromBody("tileDTOs", tileDTOType);
-        PlayerDTO player = message.getFromBody("player", PlayerDTO.class);
-
-        gameState.updateTiles(tileDTOs);
-        gameState.updatePlayer(player);
-        gameState.updateCamera();
-        gameState.updateVisibleTilesBounds();
     }
 
 

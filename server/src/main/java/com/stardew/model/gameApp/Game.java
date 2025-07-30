@@ -9,10 +9,16 @@ package com.stardew.model.gameApp;
 //import com.stardew.model.foraging.Crop;
 //import com.stardew.model.foraging.Growable;
 //import com.stardew.model.foraging.Tree;
+import com.stardew.model.GameState;
+import com.stardew.model.PlaceableDTO;
+import com.stardew.model.PlayerDTO;
+import com.stardew.model.TileDTO;
 import com.stardew.model.gameApp.date.Time;
 import com.stardew.model.mapInfo.Farm;
 //import com.stardew.model.mapInfo.GreenHouse;
 import com.stardew.model.mapInfo.GameMap;
+import com.stardew.model.mapInfo.Placeable;
+import com.stardew.model.mapInfo.Tile;
 import com.stardew.model.userInfo.Player;
 import com.stardew.model.userInfo.User;
 import com.stardew.network.ClientConnectionThread;
@@ -22,8 +28,8 @@ import java.util.*;
 public class Game {
     private final Map<ClientConnectionThread, Player> players;
     private final ArrayList<Farm> farms = new ArrayList<>();
-    private Time time;
-    private GameMap map;
+    private final Time time;
+    private final GameMap map;
     private final User gameCreator;
     private Player currentPlayingPlayer;
 //    private RelationNetwork relationsBetweenPlayers;
@@ -149,6 +155,26 @@ public class Game {
 //    public ArrayList<Trade> getTrades() {
 //        return trades;
 //    }
+
+    public GameState getGameState(int startX, int startY, int endX, int endY, ClientConnectionThread connection) {
+        ArrayList<TileDTO> tiles = new ArrayList<>();
+        ArrayList<PlaceableDTO> placeables = new ArrayList<>();
+        for (int i = startX; i <= endX; i++) {
+            for (int j = startY; j <= endY; j++) {
+                Tile tile = map.getTiles()[i][j];
+                if (tile == null) continue;
+                tiles.add(tile.toDTO());
+                Placeable placeable = tile.getPlaceable();
+                if (placeable != null) {
+                    placeables.add(new PlaceableDTO(i, j, placeable.getBounds().width, placeable.getBounds().height, placeable.getTexture()));
+                }
+            }
+        }
+        PlayerDTO player = players.get(connection).toDTO();
+
+        return new GameState(tiles, placeables, player);
+    }
+
 
 //    public void callMethodsForTomorrow() {
 //        //((GameMenu) App.getMenu().getMenu()).doNights();

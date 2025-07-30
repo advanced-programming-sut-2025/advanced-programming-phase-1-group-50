@@ -64,17 +64,14 @@ public class MessageHandler {
             }
             case GO_TO_GAME_SCREEN -> {
                 int id = message.getIntFromBody("id");
-                GameUpdateRequestThread updateRequestThread = new GameUpdateRequestThread(id);
-                updateRequestThread.start();
                 Gdx.app.postRunnable(() -> {
-                    //TODO
-                    // have a delay here
-                    // have a timer to start game
-                    Screen currentScreen = Main.getMain().getScreen();
-                    GameScreenMenu gameScreenMenu = new GameScreenMenu(updateRequestThread);
-                    Main.getMain().setScreen(gameScreenMenu);
-                    currentScreen.dispose();
+                    SelectFarmMenu currentScreen = ((SelectFarmMenu) Main.getMain().getScreen());
+                    currentScreen.startGameTransition(id);
                 });
+                return true;
+            }
+            case MAP_REQUEST_RESULT -> {
+                gameStateController.handleRequestMap(message);
                 return true;
             }
             case UPDATE_GAME_RESULT -> {
