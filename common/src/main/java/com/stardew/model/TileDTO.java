@@ -4,16 +4,14 @@ public class TileDTO {
     private int x;
     private int y;
     private TextureID backgroundTextureID;
-    private TextureID textureID;
     //TODO another
 
     public TileDTO() {}
 
-    public TileDTO(int x, int y, TextureID backgroundTextureID , TextureID textureID) {
+    public TileDTO(int x, int y, TextureID backgroundTextureID) {
         this.x = x;
         this.y = y;
         this.backgroundTextureID = backgroundTextureID;
-        this.textureID = textureID;
     }
 
     public int getX() {
@@ -26,9 +24,5 @@ public class TileDTO {
 
     public TextureID getBackgroundTextureID() {
         return backgroundTextureID;
-    }
-
-    public TextureID getTextureID() {
-        return textureID;
     }
 }

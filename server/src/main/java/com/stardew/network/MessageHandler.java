@@ -89,10 +89,13 @@ public class MessageHandler {
                 return true;
             }
             case UPDATE_GAME -> {
-                gameSessionController.sendUpdateGameState(message, connection);
+                gameSessionController.handleUpdateGameState(message, connection);
                 return true;
             }
-
+            case MAP_REQUEST -> {
+                gameSessionController.handleMapRequest(message, connection);
+                return true;
+            }
             default -> {
                 return false;
             }

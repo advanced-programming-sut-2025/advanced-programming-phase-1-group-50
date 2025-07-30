@@ -17,7 +17,7 @@ public class Tile {
     private boolean gotThunder;
     private char symbol = '#';
     private boolean walkable ;
-//    private Placeable placeable;
+    private Placeable placeable;
     private boolean isPlowed = false;
 //    private Fertilizer fertilizer = null;
     private boolean watered = false;
@@ -84,14 +84,14 @@ public class Tile {
     public void setWalkable(boolean walkable) {
         this.walkable = walkable;
     }
-//    public Placeable getPlaceable() {
-//        return placeable;
-//    }
-//    public void setPlaceable(Placeable placeable) {
-//        this.placeable = placeable;
+    public Placeable getPlaceable() {
+        return placeable;
+    }
+    public void setPlaceable(Placeable placeable) {
+        this.placeable = placeable;
 //        if (placeable != null)
 //            setTexture(placeable.getTexture());
-//    }
+    }
 
     public boolean isPlowed() {
         return isPlowed;
@@ -185,6 +185,6 @@ public class Tile {
     }
 
     public TileDTO toDTO(){
-        return new TileDTO(position.getX(), position.getY(), backgroundTextureID , textureID );
+        return new TileDTO(position.getX(), position.getY(), backgroundTextureID);
     }
 }

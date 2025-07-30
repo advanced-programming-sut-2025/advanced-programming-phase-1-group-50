@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class GameUpdateRequestThread extends Thread {
     private volatile boolean running = true;
     private final int id;
+    private boolean firstUpdate = true;
 
     public GameUpdateRequestThread(int id) {
         this.id = id;
@@ -21,7 +22,7 @@ public class GameUpdateRequestThread extends Thread {
     public void run() {
         while (running) {
             try {
-                NetworkManager.getConnection().sendMessage(updateMessage());
+                NetworkManager.getConnection().sendMessage(getMessage());
                 Thread.sleep(50);
             } catch (InterruptedException ignored) {
 
@@ -29,6 +30,14 @@ public class GameUpdateRequestThread extends Thread {
                 System.out.println("Error sending game state request " + e.getMessage());
             }
         }
+    }
+
+    private Message getMessage() {
+        if (firstUpdate) {
+            firstUpdate = false;
+            return requestMap();
+        } else
+            return updateMessage();
     }
 
 
@@ -42,10 +51,9 @@ public class GameUpdateRequestThread extends Thread {
         return new Message(body, MessageType.UPDATE_GAME);
     }
 
-    public void requestMap(){
+    private Message requestMap(){
         HashMap<String,Object> body = new HashMap<>();
         body.put("id", id);
-        Message message = new Message(body, MessageType.MAP_REQUEST);
-        NetworkManager.getConnection().sendMessage(message);
+        return new Message(body, MessageType.MAP_REQUEST);
     }
 }

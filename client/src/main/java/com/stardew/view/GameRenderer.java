@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
 import com.stardew.controller.GameStateController;
+import com.stardew.model.PlaceableDTO;
 import com.stardew.model.PlayerDTO;
 import com.stardew.model.TileDTO;
 import com.stardew.models.GameAssetManagers.GameAssetIDManager;
@@ -37,6 +38,7 @@ public class GameRenderer {
     public void render(float delta) {
         renderBackground();
         renderPlayer(delta);
+        renderPlaceables();
 
 
 
@@ -72,6 +74,15 @@ public class GameRenderer {
             currentFrame.getRegionHeight() * 3
         );
 
+    }
+
+    private void renderPlaceables() {
+        for (PlaceableDTO placeable : gameModel.getPlaceables()) {
+            batch.draw(
+                GameAssetIDManager.getTextureRegion(placeable.getTextureID()),
+                placeable.getX(), placeable.getY() //TODO now it is done according to texture size
+            );
+        }
     }
 
 //    public void renderMapTilesAndPlayer() {
