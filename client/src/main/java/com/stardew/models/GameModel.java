@@ -20,6 +20,8 @@ public class GameModel {
     private int startY;
     private int endX;
     private int endY;
+    private final Object lock = new Object();
+    private final Object boundsLock = new Object();
 //    private final Map map;
 //    private PlayerController playerController;
 //    private Stage stage;
@@ -104,10 +106,12 @@ public class GameModel {
         float cameraLeft = camX - viewportWidth / 2;
         float cameraBottom = camY - viewportHeight / 2;
 
-        startX = Math.max(0, (int) (cameraLeft / tileSize) - 3);
-        startY = Math.max(0, (int) (cameraBottom / tileSize) - 3);
-        endX = Math.min(mapWidth, (int) ((camX + viewportWidth / 2) / tileSize) + 4);
-        endY = Math.min(mapHeight, (int) ((camY + viewportHeight / 2) / tileSize) + 4);
+        synchronized (boundsLock) {
+            startX = Math.max(0, (int) (cameraLeft / tileSize) - 3);
+            startY = Math.max(0, (int) (cameraBottom / tileSize) - 3);
+            endX = Math.min(mapWidth, (int) ((camX + viewportWidth / 2) / tileSize) + 4);
+            endY = Math.min(mapHeight, (int) ((camY + viewportHeight / 2) / tileSize) + 4);
+        }
 
     }
 
@@ -175,43 +179,63 @@ public class GameModel {
     }
 
     public void updateTiles(ArrayList<TileDTO> tiles) {
-        this.tiles = tiles;
+        synchronized (lock) {
+            this.tiles = tiles;
+        }
     }
 
     public void updatePlayer(PlayerDTO player) {
-        this.player = player;
+        synchronized (lock) {
+            this.player = player;
+        }
     }
 
     public void updatePlaceables(ArrayList<PlaceableDTO> placeables) {
-        this.placeables = placeables;
+        synchronized (lock) {
+            this.placeables = placeables;
+        }
     }
 
     public ArrayList<TileDTO> getTiles() {
-        return tiles;
+        synchronized (lock) {
+            return tiles;
+        }
     }
 
     public PlayerDTO getPlayer() {
-        return player;
+        synchronized (lock) {
+            return player;
+        }
     }
 
     public ArrayList<PlaceableDTO> getPlaceables() {
-        return placeables;
+        synchronized (lock) {
+            return placeables;
+        }
     }
 
     public int getStartX() {
-        return startX;
+        synchronized (boundsLock) {
+            return startX;
+        }
     }
 
     public int getStartY() {
-        return startY;
+        synchronized (boundsLock) {
+            return startY;
+        }
     }
 
     public int getEndX() {
-        return endX;
+        synchronized (boundsLock) {
+            return endX;
+        }
     }
 
     public int getEndY() {
-        return endY;
+        synchronized (boundsLock) {
+            return endY;
+        }
     }
 
     //    public Map getMap() {
