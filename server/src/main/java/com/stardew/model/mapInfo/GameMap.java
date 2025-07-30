@@ -7,13 +7,18 @@ package com.stardew.model.mapInfo;
 //import com.stardew.model.ShippingBin;
 //import com.stardew.model.app.App;
 //import com.stardew.model.date.Weather;
+import com.stardew.model.NPCs.NPC;
+import com.stardew.model.NPCs.NPCType;
+import com.stardew.model.ShippingBin;
 import com.stardew.model.mapInfo.foraging.Crop;
 import com.stardew.model.mapInfo.foraging.CropType;
 import com.stardew.model.mapInfo.foraging.ForagingMineral;
 import com.stardew.model.mapInfo.foraging.Tree;
+import com.stardew.model.stores.*;
 import com.stardew.model.userInfo.Player;
 //import com.stardew.view.GameScreenMenu;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -28,9 +33,9 @@ public class GameMap {
     private final int width;
     private final int height;
     private final ArrayList<Farm> farms;
-//    private NpcVillage npcVillage;
-//    private final ArrayList<NpcHome> npcHomes = new ArrayList<>();
-//    private final ArrayList<ShippingBin> shippingBins = new ArrayList<>();
+    private NpcVillage npcVillage;
+    private final ArrayList<NpcHome> npcHomes = new ArrayList<>();
+    private final ArrayList<ShippingBin> shippingBins = new ArrayList<>();
 
 
 
@@ -59,31 +64,31 @@ public class GameMap {
             }
         }
 
-//        this.npcVillage = new NpcVillage(new Rectangle(100, 75, 49, 49),
-//                new Blacksmith(102, 77, 6, 4),
-//                new CarpenterShop(101, 83, 16, 12),
-//                new FishShop(110, 97, 4, 4),
-//                new JojaMart(138, 89, 4, 4),
-//                new MarnieRanch(118, 116, 18, 8),
-//                new PierreGeneralStore(138, 97, 4, 4),
-//                new StardopSaloon(138, 110, 4, 4));
-//
-//        NPC abigailNpc = new NPC(NPCType.Abigail);
-//        NPC sebastianNpc = new NPC(NPCType.Sebastian);
-//        NPC leahNpc = new NPC(NPCType.Leah);
-//        NPC robinNpc = new NPC(NPCType.Robin);
-//        NPC harveyNpc = new NPC(NPCType.Harvey);
-//
-//        NpcHome abigailHome = new NpcHome(130, 77, 6, 6, abigailNpc);
-//        npcHomes.add(abigailHome);
-//        NpcHome harveyHome = new NpcHome(130, 85, 6, 6, harveyNpc);
-//        npcHomes.add(harveyHome);
-//        NpcHome robinHome = new NpcHome(130, 93, 6, 6, robinNpc);
-//        npcHomes.add(robinHome);
-//        NpcHome leahHome = new NpcHome(130, 101, 6, 6, leahNpc);
-//        npcHomes.add(leahHome);
-//        NpcHome sebastianHome = new NpcHome(130, 109,6 ,6 , sebastianNpc);
-//        npcHomes.add(sebastianHome);
+        this.npcVillage = new NpcVillage(new Rectangle(100, 75, 49, 49),
+                new Blacksmith(102, 77, 6, 4),
+                new CarpenterShop(101, 83, 16, 12),
+                new FishShop(110, 97, 4, 4),
+                new JojaMart(138, 89, 4, 4),
+                new MarnieRanch(118, 116, 18, 8),
+                new PierreGeneralStore(138, 97, 4, 4),
+                new StardopSaloon(138, 110, 4, 4));
+
+        NPC abigailNpc = new NPC(NPCType.Abigail);
+        NPC sebastianNpc = new NPC(NPCType.Sebastian);
+        NPC leahNpc = new NPC(NPCType.Leah);
+        NPC robinNpc = new NPC(NPCType.Robin);
+        NPC harveyNpc = new NPC(NPCType.Harvey);
+
+        NpcHome abigailHome = new NpcHome(130, 77, 6, 6, abigailNpc);
+        npcHomes.add(abigailHome);
+        NpcHome harveyHome = new NpcHome(130, 85, 6, 6, harveyNpc);
+        npcHomes.add(harveyHome);
+        NpcHome robinHome = new NpcHome(130, 93, 6, 6, robinNpc);
+        npcHomes.add(robinHome);
+        NpcHome leahHome = new NpcHome(130, 101, 6, 6, leahNpc);
+        npcHomes.add(leahHome);
+        NpcHome sebastianHome = new NpcHome(130, 109,6 ,6 , sebastianNpc);
+        npcHomes.add(sebastianHome);
 
 
         for (Farm farm : farms) {
@@ -101,29 +106,29 @@ public class GameMap {
                 }
             }
         }
-//        for (int i = this.npcVillage.getRectangle().x; i < this.npcVillage.getRectangle().x + this.npcVillage.getRectangle().width; i++) {
-//            for (int j = this.npcVillage.getRectangle().y; j < this.npcVillage.getRectangle().y + this.npcVillage.getRectangle().height; j++) {
-//                tiles[i][j].setSymbol('.');
-//            }
-//        }
-//        for (Placeable p : this.npcVillage.getPlaceables()) {
-//            for (int i = p.getBounds().x; i < p.getBounds().x + p.getBounds().width; i++) {
-//                for (int j = p.getBounds().y; j < p.getBounds().y + p.getBounds().height; j++) {
-//                    tiles[i][j].setWalkable(false);
-//                    tiles[i][j].setSymbol(p.getSymbol());
-//                    tiles[i][j].setPlaceable(p);
-//                }
-//            }
-//        }
-//        for (NpcHome h : npcHomes) {
-//            for (int i = h.getBounds().x; i < h.getBounds().x + h.getBounds().width; i++) {
-//                for (int j = h.getBounds().y; j < h.getBounds().y + h.getBounds().height; j++) {
-//                    tiles[i][j].setSymbol(h.getSymbol());
-//                    tiles[i][j].setPlaceable(h);
-//                    tiles[i][j].setWalkable(false);
-//                }
-//            }
-//        }
+        for (int i = this.npcVillage.getRectangle().x; i < this.npcVillage.getRectangle().x + this.npcVillage.getRectangle().width; i++) {
+            for (int j = this.npcVillage.getRectangle().y; j < this.npcVillage.getRectangle().y + this.npcVillage.getRectangle().height; j++) {
+                tiles[i][j].setSymbol('.');
+            }
+        }
+        for (Placeable p : this.npcVillage.getPlaceables()) {
+            for (int i = p.getBounds().x; i < p.getBounds().x + p.getBounds().width; i++) {
+                for (int j = p.getBounds().y; j < p.getBounds().y + p.getBounds().height; j++) {
+                    tiles[i][j].setWalkable(false);
+                    tiles[i][j].setSymbol(p.getSymbol());
+                    tiles[i][j].setPlaceable(p);
+                }
+            }
+        }
+        for (NpcHome h : npcHomes) {
+            for (int i = h.getBounds().x; i < h.getBounds().x + h.getBounds().width; i++) {
+                for (int j = h.getBounds().y; j < h.getBounds().y + h.getBounds().height; j++) {
+                    tiles[i][j].setSymbol(h.getSymbol());
+                    tiles[i][j].setPlaceable(h);
+                    tiles[i][j].setWalkable(false);
+                }
+            }
+        }
 
         setBorderFarmsAndNpcVillage();
         setDoorFarmsAndNpcVillage();
@@ -131,16 +136,16 @@ public class GameMap {
             setWalkableDoorTrue(farm.getDoor().getBounds().x, farm.getDoor().getBounds().y,
                     farm.getDoor().getBounds().width, farm.getDoor().getBounds().height);
         }
-//        for (Door d : npcVillage.getDoors()) {
-//            setWalkableDoorTrue(d.getBounds().x, d.getBounds().y, d.getBounds().width, d.getBounds().height);
-//        }
+        for (Door d : npcVillage.getDoors()) {
+            setWalkableDoorTrue(d.getBounds().x, d.getBounds().y, d.getBounds().width, d.getBounds().height);
+        }
 
 
     }
 
-//    public ArrayList<NpcHome> getNpcHomes() {
-//        return npcHomes;
-//    }
+    public ArrayList<NpcHome> getNpcHomes() {
+        return npcHomes;
+    }
 
 
     public void setBorderFarmsAndNpcVillage() {
@@ -162,10 +167,10 @@ public class GameMap {
         farms.get(1).setDoor(new Door(149, 37, 1, 3));
         farms.get(2).setDoor(new Door(99, 155, 1, 3));
         farms.get(3).setDoor(new Door(149, 155, 1, 3));
-//        npcVillage.addDoors(new Door(99, 105, 1, 3));
-//        npcVillage.addDoors(new Door(149, 105, 1, 3));
-//        npcVillage.addDoors(new Door(125, 74, 3, 1));
-//        npcVillage.addDoors(new Door(125, 124, 3, 1));
+        npcVillage.addDoors(new Door(99, 105, 1, 3));
+        npcVillage.addDoors(new Door(149, 105, 1, 3));
+        npcVillage.addDoors(new Door(125, 74, 3, 1));
+        npcVillage.addDoors(new Door(125, 124, 3, 1));
     }
 
 
@@ -178,9 +183,9 @@ public class GameMap {
 
     }
 
-//    public NpcVillage getNpcVillage() {
-//        return npcVillage;
-//    }
+    public NpcVillage getNpcVillage() {
+        return npcVillage;
+    }
 
     public void setWalkableDoorTrue(int x, int y, int width, int height) {
         for (int i = x; i < x + width; i++) {
@@ -266,9 +271,9 @@ public class GameMap {
         };
     }
 
-//    public ArrayList<ShippingBin> getShippingBins() {
-//        return shippingBins;
-//    }
+    public ArrayList<ShippingBin> getShippingBins() {
+        return shippingBins;
+    }
 
 //    public boolean addShippingBin(int x, int y) {
 //        if (!(tiles[x][y].getPlaceable() == null)) {
