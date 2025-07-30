@@ -47,8 +47,10 @@ public class Player {
 //    private RelationWithNPC relationWithHarvey;
 //    private RelationWithNPC relationWithLeah;
 //    private RelationWithNPC relationWithRobin;
-    private int moveDirection = 0;
-//    private float speed = 5f;
+    private volatile int moveDirection = 0;
+    private float moveDistance;
+    private final float distanceByTile = 5f;
+    private float speed = 5f;
 //    private float vx , vy = 0;
 //    private InventoryItem currentInventoryItem = null;
 //    private ArrayList<InventoryItem> inventoryItems = new ArrayList<>();
@@ -349,23 +351,27 @@ public class Player {
         this.playerPosition = playerPosition;
     }
 
-//    public void setMoveDirection(int dir){
-//        this.moveDirection = dir;
-//    }
+    public void setMoveDirection(int dir){
+        this.moveDirection = dir;
+    }
 
-//    public int getMoveDirection(){
-//        return moveDirection;
-//    }
+    public float getSpeed(){
+        return speed;
+    }
 
-//    public void setSpeed(float speed){
-//        this.speed = speed;
-//    }
+    public float getMoveDistance() {
+        return moveDistance;
+    }
 
-//    public float getSpeed(){
-//        return speed;
-//    }
+    public void setMoveDistance(float moveDistance) {
+        this.moveDistance = moveDistance;
+    }
 
-//    public void setVelocity(float vx , float vy){
+    public float getDistanceByTile() {
+        return distanceByTile;
+    }
+
+    //    public void setVelocity(float vx , float vy){
 //        this.vx = vx;
 //        this.vy = vy;
 //    }

@@ -34,4 +34,5 @@ public enum MessageType {
     UPDATE_GAME_RESULT,
     MAP_REQUEST,
     MAP_REQUEST_RESULT,
+    EVENT_IN_GAME,
 }

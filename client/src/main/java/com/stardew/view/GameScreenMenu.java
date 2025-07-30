@@ -26,7 +26,7 @@ public class GameScreenMenu implements Screen {
     private GameRenderer gameRenderer;
     private GameMenuInputAdapter gameMenuInputAdapter;
     private Stage stage;
-
+    private final int id;
 //    private final HotBarActor hotBarActor= new HotBarActor();
 
     private SpriteBatch batch;
@@ -39,11 +39,22 @@ public class GameScreenMenu implements Screen {
 
 
 
-    public GameScreenMenu(GameUpdateRequestThread updateRequestThread) {
+    public GameScreenMenu(GameUpdateRequestThread updateRequestThread, int id) {
+        this.id = id;
         this.updateRequestThread = updateRequestThread;
         this.batch = Main.getBatch();
         this.gameState = GameStateController.getInstance().getGameState();
         this.gameRenderer = new GameRenderer(this.batch);
+        this.stage = new Stage(new ScreenViewport(gameState.getCamera()));
+        this.gameMenuInputAdapter = new GameMenuInputAdapter(id);
+        this.gameMenuInputAdapter.setStage(stage);
+
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(stage);
+        inputMultiplexer.addProcessor(uiStage);
+        inputMultiplexer.addProcessor(gameMenuInputAdapter);
+        Gdx.input.setInputProcessor(inputMultiplexer);
+
 //        initializeGame();
 //        uiStage.addActor(hotBarActor);
 
@@ -98,7 +109,7 @@ public class GameScreenMenu implements Screen {
 //        energyManager.update();
 //        gameModel.update(v);
         gameRenderer.render(v);
-//        gameMenuInputAdapter.update(v);
+        gameMenuInputAdapter.update(v);
 //        weatherManager.draw(batch);
 //
 //

@@ -219,7 +219,7 @@ public class SelectFarmMenu implements Screen, AppMenu {
     public void startGameTransition(int gameId) {
         fadeOutStarted = true;
 
-        GameUpdateRequestThread updateRequestThread = new GameUpdateRequestThread(id);
+        GameUpdateRequestThread updateRequestThread = new GameUpdateRequestThread(gameId);
         updateRequestThread.start();
 
         new Thread(() -> {
@@ -230,7 +230,7 @@ public class SelectFarmMenu implements Screen, AppMenu {
             }
 
             Gdx.app.postRunnable(() -> {
-                Main.getMain().setScreen(new GameScreenMenu(updateRequestThread));
+                Main.getMain().setScreen(new GameScreenMenu(updateRequestThread, gameId));
                 dispose();
             });
         }).start();
