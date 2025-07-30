@@ -96,6 +96,10 @@ public class MessageHandler {
                 gameSessionController.handleMapRequest(message, connection);
                 return true;
             }
+            case EVENT_IN_GAME -> {
+                gameSessionController.handleEventInGame(message, connection);
+                return true;
+            }
             default -> {
                 return false;
             }

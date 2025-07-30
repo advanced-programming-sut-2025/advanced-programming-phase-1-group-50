@@ -2,6 +2,7 @@ package com.stardew.controller;
 
 import com.stardew.model.gameApp.Game;
 import com.stardew.network.ClientConnectionThread;
+import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 
@@ -66,5 +67,25 @@ public class GameSessionController {
         Message response = new Message(body, MessageType.MAP_REQUEST_RESULT);
 
         connection.sendMessage(response);
+    }
+
+    public void handleEventInGame(Message message, ClientConnectionThread connection) {
+        if (message == null) return;
+        int id = message.getIntFromBody("id");
+        Game game = games.get(id);
+        if (game == null) return;
+
+        Event event = message.getFromBody("event", Event.class);
+        if (event == null) return;
+
+        switch (event) {
+            case Moving -> {
+                Float vx = message.getFromBody("vx", Float.class);
+                Float vy = message.getFromBody("vy", Float.class);
+                int dir = message.getIntFromBody("dir");
+                PlayerController.getInstance().handleMovement(game.getPlayer(connection), game.getMap().getTiles(), vx, vy, dir);
+            }
+        }
+
     }
 }
