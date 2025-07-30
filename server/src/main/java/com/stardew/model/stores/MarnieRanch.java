@@ -1,6 +1,7 @@
 package com.stardew.model.stores;
 
 import com.stardew.model.Result;
+import com.stardew.model.TextureID;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ public class MarnieRanch extends Store{
 
     public MarnieRanch(int x, int y, int width, int height) {
 //        super(GamePictureManager.marnieRanchRegions,new TextureRegion(GamePictureManager.marnieRanchTexture),new Rectangle(x, y, width, height), "Marnie", 9, 16);
-        super(null,null,new Rectangle(x,y,width,height),"Marnie",9,16);
+        super(null, TextureID.marnieRegion,new Rectangle(x,y,width,height),"Marnie",9,16);
     }
 
 

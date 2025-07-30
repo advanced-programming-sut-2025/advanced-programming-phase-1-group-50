@@ -7,7 +7,7 @@ import java.awt.*;
 public class Cottage implements Placeable{
 
     private final Rectangle bounds;
-    private TextureID texture;
+    private TextureID texture = TextureID.cottageTexture;
     public Cottage(int x, int y, int width, int height) {
         bounds = new Rectangle(x, y, width, height);
     }

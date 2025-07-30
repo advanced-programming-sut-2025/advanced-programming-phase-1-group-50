@@ -22,7 +22,7 @@ public class Farm {
     private final ArrayList<Placeable> placeables = new ArrayList<>();
     private final ArrayList<Crop> crops;
     private final ArrayList<Habitat> habitats = new ArrayList<>();
-    private Door door;
+
 
     public Farm(Cottage cottage, GreenHouse greenHouse, ArrayList<Lake> lakes, ArrayList<Quarry> quarries,
                 ArrayList<Tree> trees, ArrayList<Stone> stones, ArrayList<Crop> crops, Rectangle rectangle, int type) {
@@ -101,14 +101,7 @@ public class Farm {
         return type;
     }
 
-    public void setDoor(Door door) {
-        this.door = door;
-        placeables.add(door);
-    }
 
-    public Door getDoor() {
-        return door;
-    }
 
     public void addHabitat(Habitat habitat) {
         habitats.add(habitat);

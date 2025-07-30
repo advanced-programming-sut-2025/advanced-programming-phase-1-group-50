@@ -1,6 +1,7 @@
 package com.stardew.model.mapInfo.foraging;
 
 import com.stardew.model.TextureID;
+import com.stardew.model.gameApp.date.Season;
 import com.stardew.model.gameApp.date.Time;
 import com.stardew.model.gameApp.date.Weather;
 import com.stardew.model.mapInfo.Placeable;
@@ -49,6 +50,12 @@ public class Tree implements Placeable  , Growable {
 
     @Override
     public TextureID getTexture() {
+        if (isGeneratedRandomly)  //TODO it must change according to season (it throws null pointer now)
+            return type.getStage5Texture(Season.Spring);
+
+        if (levelOfGrowth <= type.getStages().size() - 1) {
+            return type.getStageTextures()[levelOfGrowth];
+        }
         return null;
     }
 

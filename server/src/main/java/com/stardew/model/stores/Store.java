@@ -15,10 +15,10 @@ public abstract class Store implements Placeable {
     protected final int startHour;
     protected final int endHour;
     protected final TextureRegion[][] regions;
-    protected final TextureRegion texture;
+    protected final TextureID texture;
     protected Image storeImage;
 
-    public Store(TextureRegion[][] regions, TextureRegion texture,Rectangle bounds, String shopAssistantName, int startHour, int endHour) {
+    public Store(TextureRegion[][] regions, TextureID texture,Rectangle bounds, String shopAssistantName, int startHour, int endHour) {
         this.regions = regions;
         this.texture = texture;
         this.bounds = bounds;
@@ -52,7 +52,7 @@ public abstract class Store implements Placeable {
 
     //new-just for compileErrors
     public TextureID getTexture() {
-        return null;
+        return texture;
     }
 
     public Color getMiniMapColor() {

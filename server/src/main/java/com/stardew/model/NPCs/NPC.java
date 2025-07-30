@@ -1,5 +1,8 @@
 package com.stardew.model.NPCs;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.stardew.model.TextureID;
+
 import java.util.Random;
 
 public class NPC {
@@ -295,14 +298,14 @@ public class NPC {
 //        };
 //    }
 //
-//    public Texture getHomeTextureByType(NPCType type){
-//
-//        return switch (type) {
-//            case Leah -> GamePictureManager.npcHome1Texture;
-//            case Robin -> GamePictureManager.npcHome2Texture;
-//            case Harvey -> GamePictureManager.npcHome3Texture;
-//            case Sebastian -> GamePictureManager.npcHome4Texture;
-//            case Abigail -> GamePictureManager.npcHome5Texture;
-//        };
-//    }
+    public TextureID getHomeTextureByType(NPCType type){
+
+        return switch (type) {
+            case Leah -> TextureID.npcHome1Region;
+            case Robin -> TextureID.npcHome2Region;
+            case Harvey -> TextureID.npcHome3Region;
+            case Sebastian -> TextureID.npcHome4Region;
+            case Abigail -> TextureID.npcHome5Region;
+        };
+    }
 }

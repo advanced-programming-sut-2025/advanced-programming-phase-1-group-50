@@ -1,6 +1,7 @@
 package com.stardew.model.stores;
 
 import com.stardew.model.Result;
+import com.stardew.model.TextureID;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class Blacksmith extends Store {
     public Blacksmith(int x, int y, int width, int height) {
         //super(GamePictureManager.blacksmithRegions ,new TextureRegion(GamePictureManager.blacksmithTexture),new
         // Rectangle(x, y, width, height), "Clint", 9, 16);
-        super(null, null, new Rectangle(x, y, width, height), "Clint", 9, 16);
+        super(null, TextureID.blacksmithTextureRegion, new Rectangle(x, y, width, height), "Clint", 9, 16);
     }
 
     @Override

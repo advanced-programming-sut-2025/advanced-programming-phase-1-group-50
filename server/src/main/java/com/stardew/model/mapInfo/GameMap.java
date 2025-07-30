@@ -131,14 +131,9 @@ public class GameMap {
         }
 
         setBorderFarmsAndNpcVillage();
-        setDoorFarmsAndNpcVillage();
-        for (Farm farm : farms) {
-            setWalkableDoorTrue(farm.getDoor().getBounds().x, farm.getDoor().getBounds().y,
-                    farm.getDoor().getBounds().width, farm.getDoor().getBounds().height);
-        }
-        for (Door d : npcVillage.getDoors()) {
-            setWalkableDoorTrue(d.getBounds().x, d.getBounds().y, d.getBounds().width, d.getBounds().height);
-        }
+
+
+
 
 
     }
@@ -161,17 +156,7 @@ public class GameMap {
 
     }
 
-    public void setDoorFarmsAndNpcVillage() {
-        farms.get(0).setDoor(new Door(99, 37, 1, 3));
 
-        farms.get(1).setDoor(new Door(149, 37, 1, 3));
-        farms.get(2).setDoor(new Door(99, 155, 1, 3));
-        farms.get(3).setDoor(new Door(149, 155, 1, 3));
-        npcVillage.addDoors(new Door(99, 105, 1, 3));
-        npcVillage.addDoors(new Door(149, 105, 1, 3));
-        npcVillage.addDoors(new Door(125, 74, 3, 1));
-        npcVillage.addDoors(new Door(125, 124, 3, 1));
-    }
 
 
     public Tile[][] getTiles() {

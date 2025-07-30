@@ -1,6 +1,7 @@
 package com.stardew.model.stores;
 
 import com.stardew.model.Result;
+import com.stardew.model.TextureID;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ public class StardopSaloon extends Store{
 
     public StardopSaloon(int x, int y, int width, int height) {
 //        super(GamePictureManager.stardopSaloonRegions,new TextureRegion(GamePictureManager.stardopSaloonTexture),new Rectangle(x, y, width, height), "Gus", 12, 24);
-        super(null,null,new Rectangle(x,y,width,height),"Gus",12,24);
+        super(null, TextureID.stardopSaloonRegion,new Rectangle(x,y,width,height),"Gus",12,24);
     }
 
     @Override

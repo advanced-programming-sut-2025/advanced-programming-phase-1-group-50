@@ -38,7 +38,7 @@ public class GameRenderer {
     public void render(float delta) {
         renderBackground();
         renderPlayer(delta);
-//        renderPlaceables(); TODO must complete all getTextureID methods in Placeables
+        renderPlaceables();
 
 
 
@@ -80,7 +80,8 @@ public class GameRenderer {
         for (PlaceableDTO placeable : gameModel.getPlaceables()) {
             batch.draw(
                 GameAssetIDManager.getTextureRegion(placeable.getTextureID()),
-                placeable.getX(), placeable.getY() //TODO now it is done according to texture size
+                placeable.getX() * tileSize, placeable.getY() * tileSize ,
+                placeable.getWidth() * tileSize , placeable.getHeight()  * tileSize //TODO now it is done according to texture size
             );
         }
     }

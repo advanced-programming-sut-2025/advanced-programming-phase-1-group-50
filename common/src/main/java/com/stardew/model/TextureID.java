@@ -668,4 +668,20 @@ public enum TextureID {
     mahoganyFall,
     mahoganyWinter,
     mahoganySpring,
+    lakeTexture,
+    marnieRegion,
+    blacksmithTextureRegion,
+    fishShopTextureRegion,
+    carpenterShopTextureRegion,
+    stardopSaloonRegion,
+    jojaMartRegion,
+    pierresShopRegion,
+    npcHome1Region,
+    npcHome2Region,
+    npcHome3Region,
+    npcHome4Region,
+    npcHome5Region,
+    greenHouseRegion,
+
+
 }

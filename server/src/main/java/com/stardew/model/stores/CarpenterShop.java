@@ -1,6 +1,8 @@
 package com.stardew.model.stores;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.stardew.model.Result;
+import com.stardew.model.TextureID;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ public class CarpenterShop extends Store{
 
     public CarpenterShop(int x, int y, int width, int height) {
         //super(GamePictureManager.carpenterShopRegions, new TextureRegion(GamePictureManager.carpenterShopTexture), new Rectangle(x, y, width, height), "Robin", 9, 20);
-        super(null,null,new Rectangle(x,y,width,height),"Robin",9,20);
+        super(null, TextureID.carpenterShopTextureRegion,new Rectangle(x,y,width,height),"Robin",9,20);
     }
 
     @Override

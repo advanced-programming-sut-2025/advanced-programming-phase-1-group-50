@@ -28,6 +28,7 @@ public class Animal implements Placeable {
     private final float PET_TIME = 5f;
     private final float speed = 1f;
     private final static int maxFriendShip = 1000;
+    private Rectangle bounds;
 
 
     public Animal(AnimalType type, String name, Habitat habitat) {
@@ -40,6 +41,7 @@ public class Animal implements Placeable {
         this.habitat = habitat;
         this.state = AnimalState.IN_HABITAT;
         this.position = new Vector2(habitat.getPosition().x + 1, habitat.getPosition().y + 1);
+        bounds =  new Rectangle(1, 1);
     }
 
     public AnimalType getType() {
@@ -209,7 +211,7 @@ public class Animal implements Placeable {
 
     @Override
     public Rectangle getBounds() {
-        return null;
+        return bounds;
     }
 
     @Override

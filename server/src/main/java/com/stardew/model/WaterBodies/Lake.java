@@ -25,7 +25,7 @@ public class Lake implements Placeable {
 
     @Override
     public TextureID getTexture() {
-        return null;
+        return TextureID.lakeTexture;
     }
 
 

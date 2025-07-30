@@ -18,7 +18,7 @@ public class NpcHome implements Placeable {
         rectangle = new Rectangle(x, y, width, height);
         this.npc = npc;
 //        regions = npc.getHomeRegions(npc.getType());
-//        texture = new TextureRegion(npc.getHomeTextureByType(npc.getType()));
+        texture = npc.getHomeTextureByType(npc.getType());
 
     }
 

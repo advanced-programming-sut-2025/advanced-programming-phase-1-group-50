@@ -1,6 +1,7 @@
 package com.stardew.model.stores;
 
 import com.stardew.model.Result;
+import com.stardew.model.TextureID;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ public class JojaMart extends Store {
 
     public JojaMart(int x, int y, int width, int height) {
         //super( GamePictureManager.jojaMartRegions,new TextureRegion(GamePictureManager.jojaMartTexture),new Rectangle(x, y, width, height), "Morris", 9, 23);
-        super(null,null,new Rectangle(x,y,width,height),"Mor" +
+        super(null, TextureID.jojaMartRegion,new Rectangle(x,y,width,height),"Mor" +
             "ris",9,23);
     }
 

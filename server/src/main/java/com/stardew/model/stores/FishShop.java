@@ -1,6 +1,7 @@
 package com.stardew.model.stores;
 
 import com.stardew.model.Result;
+import com.stardew.model.TextureID;
 import com.stardew.model.Tools.PoleType;
 import com.stardew.model.recipes.CraftingRecipes;
 
@@ -12,7 +13,7 @@ public class FishShop extends Store{
 
     public FishShop(int x, int y, int width, int height) {
 //        super(GamePictureManager.fishShopRegions,new TextureRegion(GamePictureManager.fishShopTexture),new Rectangle(x, y, width, height), "willy", 9, 17);
-        super(null,null,new Rectangle(x,y,width,height),"willy",9,17);
+        super(null, TextureID.fishShopTextureRegion,new Rectangle(x,y,width,height),"willy",9,17);
     }
 
     @Override

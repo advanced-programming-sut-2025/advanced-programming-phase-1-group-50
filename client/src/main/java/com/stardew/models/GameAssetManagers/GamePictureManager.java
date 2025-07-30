@@ -1619,6 +1619,7 @@ public class GamePictureManager {
 
 
     public static Texture greenHouseTexture = new Texture("Greenhouse/greenhouse.png");
+    public static TextureRegion greenHouseRegion = new TextureRegion(greenHouseTexture);
     public static TextureRegion[][] regions ;
     static {
         regions = TextureRegion.split(greenHouseTexture , greenHouseTexture.getWidth() / 6, greenHouseTexture.getHeight() / 6);
@@ -1648,18 +1649,21 @@ public class GamePictureManager {
 
 
     public static Texture blacksmithTexture = new Texture("Stores/Blacksmith.png");
+    public static TextureRegion blacksmithTextureRegion = new TextureRegion(blacksmithTexture);
     public static TextureRegion[][] blacksmithRegions ;
     static {
         blacksmithRegions = TextureRegion.split(blacksmithTexture , blacksmithTexture.getWidth() / 6, blacksmithTexture.getHeight() / 4);
     }
 
     public static Texture fishShopTexture = new Texture("Stores/Fish_Shop.png");
+    public static TextureRegion fishShopTextureRegion = new TextureRegion(fishShopTexture);
     public static TextureRegion[][] fishShopRegions ;
     static {
         fishShopRegions = TextureRegion.split(fishShopTexture , fishShopTexture.getWidth() / 4, fishShopTexture.getHeight() / 4);
     }
 
     public static Texture carpenterShopTexture = new Texture("Stores/Carpenter's_Shop.png");
+    public static TextureRegion carpenterShopTextureRegion = new TextureRegion(carpenterShopTexture);
     public static TextureRegion[][] carpenterShopRegions ;
     static {
         carpenterShopRegions = TextureRegion.split(carpenterShopTexture , carpenterShopTexture.getWidth() / 16, carpenterShopTexture.getHeight() / 12);
@@ -1667,6 +1671,7 @@ public class GamePictureManager {
 
 
     public static Texture marnieRanchTexture = new Texture("Stores/Ranch.png");
+    public static TextureRegion marnieRegion = new TextureRegion(marnieRanchTexture);
     public static TextureRegion[][] marnieRanchRegions ;
     static {
         marnieRanchRegions = TextureRegion.split(marnieRanchTexture , marnieRanchTexture.getWidth() / 18, marnieRanchTexture.getHeight() / 8);
@@ -1674,6 +1679,7 @@ public class GamePictureManager {
     }
 
     public static Texture stardopSaloonTexture = new Texture("Stores/Saloon.png");
+    public static TextureRegion stardopSaloonRegion = new TextureRegion(stardopSaloonTexture);
     public static TextureRegion[][] stardopSaloonRegions ;
     static {
         stardopSaloonRegions = TextureRegion.split(stardopSaloonTexture , stardopSaloonTexture.getWidth() / 4, stardopSaloonTexture.getHeight() / 4);
@@ -1682,6 +1688,7 @@ public class GamePictureManager {
 
 
     public static Texture jojaMartTexture = new Texture("Stores/Jojamart.png");
+    public static TextureRegion jojaMartRegion = new TextureRegion(jojaMartTexture);
     public static TextureRegion[][] jojaMartRegions ;
     static {
         jojaMartRegions = TextureRegion.split(jojaMartTexture , jojaMartTexture.getWidth() / 4, jojaMartTexture.getHeight() / 4);
@@ -1689,12 +1696,14 @@ public class GamePictureManager {
 
 
     public static Texture pierresShopTexture = new Texture("Stores/Pierres_shop.png");
+    public static TextureRegion pierresShopRegion = new TextureRegion(pierresShopTexture);
     public static TextureRegion[][] pierresShopRegions ;
     static {
         pierresShopRegions = TextureRegion.split(pierresShopTexture , pierresShopTexture.getWidth() / 4, pierresShopTexture.getHeight() / 4);
     }
 
     public static Texture npcHome1Texture = new Texture("NpcHomes/NpcHome1.png");
+    public static TextureRegion npcHome1Region = new TextureRegion(npcHome1Texture);
     public static TextureRegion[][] npcHome1Regions;
     static {
         npcHome1Regions = TextureRegion.split(npcHome1Texture , npcHome1Texture.getWidth() / 6, npcHome1Texture.getHeight() / 6);
@@ -1702,6 +1711,7 @@ public class GamePictureManager {
     }
 
     public static Texture npcHome2Texture = new Texture("NpcHomes/NpcHome2.png");
+    public static TextureRegion npcHome2Region = new TextureRegion(npcHome2Texture);
     public static TextureRegion[][] npcHome2Regions;
     static {
         npcHome2Regions = TextureRegion.split(npcHome2Texture , npcHome2Texture.getWidth() / 6, npcHome2Texture.getHeight() / 6);
@@ -1709,6 +1719,7 @@ public class GamePictureManager {
     }
 
     public static Texture npcHome3Texture = new Texture("NpcHomes/NpcHome3.png");
+    public static TextureRegion npcHome3Region = new TextureRegion(npcHome3Texture);
     public static TextureRegion[][] npcHome3Regions;
     static {
         npcHome3Regions = TextureRegion.split(npcHome3Texture , npcHome3Texture.getWidth() / 6, npcHome3Texture.getHeight() / 6);
@@ -1717,6 +1728,7 @@ public class GamePictureManager {
 
 
     public static Texture npcHome4Texture = new Texture("NpcHomes/NpcHome4.png");
+    public static TextureRegion npcHome4Region = new TextureRegion(npcHome4Texture);
     public static TextureRegion[][] npcHome4Regions;
     static {
         npcHome4Regions = TextureRegion.split(npcHome4Texture , npcHome4Texture.getWidth() / 6, npcHome4Texture.getHeight() / 6);
@@ -1724,6 +1736,7 @@ public class GamePictureManager {
     }
 
     public static Texture npcHome5Texture = new Texture("NpcHomes/NpcHome5.png");
+    public static TextureRegion npcHome5Region = new TextureRegion(npcHome5Texture);
     public static TextureRegion[][] npcHome5Regions;
     static {
         npcHome5Regions = TextureRegion.split(npcHome5Texture , npcHome5Texture.getWidth() / 6, npcHome5Texture.getHeight() / 6);

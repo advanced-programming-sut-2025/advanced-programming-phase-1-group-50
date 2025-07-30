@@ -1,6 +1,7 @@
 package com.stardew.model.stores;
 
 import com.stardew.model.Result;
+import com.stardew.model.TextureID;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ public class PierreGeneralStore extends Store {
 
     public PierreGeneralStore(int x, int y, int width, int height) {
         //super(GamePictureManager.pierresShopRegions,new TextureRegion(GamePictureManager.pierresShopTexture),new Rectangle(x, y, width, height), "Pierre", 9, 23);
-        super(null,null,new Rectangle(x,y,width,height),"Pierre",9,23);
+        super(null, TextureID.pierresShopRegion,new Rectangle(x,y,width,height),"Pierre",9,23);
     }
 
     @Override
