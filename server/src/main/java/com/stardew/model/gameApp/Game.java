@@ -2,7 +2,6 @@ package com.stardew.model.gameApp;
 
 //import com.stardew.controller.GameMenuController;
 //import com.stardew.model.BetweenPlayersGift;
-import com.stardew.model.Result;
 //import com.stardew.model.ShippingBin;
 //import com.stardew.model.Trade;
 //import com.stardew.model.animals.Animal;
@@ -16,11 +15,12 @@ import com.stardew.model.mapInfo.Farm;
 import com.stardew.model.mapInfo.GameMap;
 import com.stardew.model.userInfo.Player;
 import com.stardew.model.userInfo.User;
+import com.stardew.network.ClientConnectionThread;
 
 import java.util.*;
 
 public class Game {
-    private final ArrayList<Player> players = new ArrayList<>();
+    private final Map<ClientConnectionThread, Player> players;
     private final ArrayList<Farm> farms = new ArrayList<>();
     private Time time;
     private GameMap map;
@@ -33,13 +33,13 @@ public class Game {
 //    private final ArrayList<Trade> trades = new ArrayList<>();
 //    private final GameMenuController gameMenuController = new GameMenuController();
 
-    public Game(ArrayList<Player> players, ArrayList<Farm> farms, User u, GameMap map) {
+    public Game(Map<ClientConnectionThread, Player> players, ArrayList<Farm> farms, User u, GameMap map) {
         this.farms.addAll(farms);
-        this.players.addAll(players);
+        this.players = players;
         this.gameCreator = u;
-//        this.time = new Time();
+        this.time = new Time();
         this.map = map;
-        relationInitializer(players);
+//        relationInitializer(players);
     }
 
 //    public ArrayList<BetweenPlayersGift> getGifts() {
@@ -50,21 +50,17 @@ public class Game {
 //        return relationsBetweenPlayers;
 //    }
 
-    public ArrayList<Player> getPlayers() {
-        return players;
+    public Player getPlayer(ClientConnectionThread connection) {
+        return players.get(connection);
+    }
+
+    public ArrayList<Player> getAllPlayers() {
+        return new ArrayList<>(players.values());
     }
 
     public Time getTime() {
         return time;
     }
-
-    public ArrayList<Farm> etFarms() {
-        return farms;
-    }
-
-//    public void setTime(Time time) {
-//        this.time = time;
-//    }
 
     public User getGameCreator() {
         return gameCreator;
@@ -79,44 +75,40 @@ public class Game {
         this.currentPlayingPlayer.setConsumedEnergyInTurn(0);
     }
 
-    public Result nextPlayerTurn() {
-        int size = players.size();
-        int currentIndex = players.indexOf(currentPlayingPlayer);
-        int checkedPlayers = 0;
-
-        while (checkedPlayers < size) {
-            currentIndex = (currentIndex + 1) % size;
-            Player nextPlayer = players.get(currentIndex);
-
-            if (!nextPlayer.isFaintedToday()) {
-                setCurrentPlayingPlayer(nextPlayer);
-
-                break;
-            }
-            checkedPlayers++;
-        }
-
-        if (checkedPlayers == size) {
-//            time.advancedDay(1);
-            return new Result(true, "All players have been fainted! Next day is started!\n" +
-                    "Current player: " + players.getFirst().getUsername() + "\n\n" + players.getFirst().UncheckedNotifications());
-        }
-
-        if (currentPlayingPlayer.equals(players.get(0))) {
-//            time.advancedHour(1);
-            return new Result(true, "An hour passed!\n" +
-                    "Current player: " + players.getFirst().getUsername() + "\n\n" + players.getFirst().UncheckedNotifications());
-        }
-
-        return new Result(true, "Next player: " + currentPlayingPlayer.getUsername() + "\n\n" + currentPlayingPlayer.UncheckedNotifications());
-    }
+//    public Result nextPlayerTurn() {
+//        int size = players.size();
+//        int currentIndex = players.indexOf(currentPlayingPlayer);
+//        int checkedPlayers = 0;
+//
+//        while (checkedPlayers < size) {
+//            currentIndex = (currentIndex + 1) % size;
+//            Player nextPlayer = players.get(currentIndex);
+//
+//            if (!nextPlayer.isFaintedToday()) {
+//                setCurrentPlayingPlayer(nextPlayer);
+//
+//                break;
+//            }
+//            checkedPlayers++;
+//        }
+//
+//        if (checkedPlayers == size) {
+////            time.advancedDay(1);
+//            return new Result(true, "All players have been fainted! Next day is started!\n" +
+//                    "Current player: " + players.getFirst().getUsername() + "\n\n" + players.getFirst().UncheckedNotifications());
+//        }
+//
+//        if (currentPlayingPlayer.equals(players.get(0))) {
+////            time.advancedHour(1);
+//            return new Result(true, "An hour passed!\n" +
+//                    "Current player: " + players.getFirst().getUsername() + "\n\n" + players.getFirst().UncheckedNotifications());
+//        }
+//
+//        return new Result(true, "Next player: " + currentPlayingPlayer.getUsername() + "\n\n" + currentPlayingPlayer.UncheckedNotifications());
+//    }
 
     public GameMap getMap() {
         return map;
-    }
-
-    public void setMap(GameMap map) {
-        this.map = map;
     }
 
     private void relationInitializer(ArrayList<Player> players) {
