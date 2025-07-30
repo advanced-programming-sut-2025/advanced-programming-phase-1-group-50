@@ -1,7 +1,9 @@
 package com.stardew.model.mapInfo.foraging;
 
 import com.stardew.model.TextureID;
+import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.gameApp.date.Time;
+import com.stardew.model.gameApp.date.Weather;
 import com.stardew.model.mapInfo.Eatable;
 import com.stardew.model.mapInfo.Ingredient;
 import com.stardew.model.mapInfo.Placeable;
@@ -21,13 +23,15 @@ public class Crop implements Placeable , Ingredient , Sellable , Growable , Eata
     private final int numberOfDaysCanBeAliveWithoutWater;
     private final Rectangle bounds;
     private boolean isGeneratedRandomly = false;
+    private TimeProvider timeProvider;
 
 
 
-    public Crop(CropType type, Time timeOfPlanting, Fertilizer fertilizer , int x ,  int y) {
+    public Crop(CropType type, TimeProvider timeOfPlanting, Fertilizer fertilizer , int x , int y) {
         this.type = type;
-        this.lastGrowthTime = timeOfPlanting.clone();
-        this.lastWaterTime = timeOfPlanting.clone();
+        this.timeProvider = timeOfPlanting;
+        this.lastGrowthTime = timeOfPlanting.getTime().clone();
+        this.lastWaterTime = timeOfPlanting.getTime().clone();
         this.fertilizer = fertilizer;
         if (fertilizer == null) {
             levelOfGrowth = 0;
@@ -77,100 +81,80 @@ public class Crop implements Placeable , Ingredient , Sellable , Growable , Eata
         return !type.isOneTime();
     }
 
-//    public boolean isCompleteAgain() {
-//        if (!isComplete() || type.isOneTime())
-//            return false;
-//
-//        if (lastHarvestTime == null) {
-//            return true;
-//        }
-//
-//        Time today = App.getGame().getTime().clone();
-//        int timeForGrow = type.getRegrowthTime();
-//
-//        int todayDate = today.getDate();
-//        if (today.getSeason() != lastHarvestTime.getSeason())
-//            todayDate += Math.abs(lastHarvestTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
-//
-//        return lastHarvestTime.getDate() + timeForGrow <= todayDate;
-//    }
+    public boolean isCompleteAgain() {
+        if (!isComplete() || type.isOneTime())
+            return false;
 
-//    public void doAgainHarvesting() {
-//        lastHarvestTime = App.getGame().getTime().clone();
-//        levelOfGrowth = type.getNumberOfStages() + 1;
-//    }
+        if (lastHarvestTime == null) {
+            return true;
+        }
+
+        Time today = timeProvider.getTime().clone();
+        int timeForGrow = type.getRegrowthTime();
+
+        int todayDate = today.getDate();
+        if (today.getSeason() != lastHarvestTime.getSeason())
+            todayDate += Math.abs(lastHarvestTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
+
+        return lastHarvestTime.getDate() + timeForGrow <= todayDate;
+    }
+
+    public void doAgainHarvesting() {
+        lastHarvestTime = timeProvider.getTime().clone();
+        levelOfGrowth = type.getNumberOfStages() + 1;
+    }
 
     public boolean isComplete() {
         return levelOfGrowth >= type.getNumberOfStages();
     }
 
-    @Override
-    public boolean isCompleteAgain() {
-        return false;
-    }
 
-    @Override
-    public void doAgainHarvesting() {
 
-    }
+
 
     @Override
     public void watering() {
-
+        lastWaterTime = timeProvider.getTime().clone();
     }
 
-    @Override
+
+
     public boolean canBeAlive(Time today) {
-        return false;
+        if (today.getWeather().equals(Weather.Rainy)) {
+            watering();
+            return true;
+        }
+        int todayDate = today.getDate();
+        if (today.getSeason() != lastGrowthTime.getSeason())
+            todayDate += Math.abs(lastGrowthTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
+        return todayDate <= lastWaterTime.getDate() + numberOfDaysCanBeAliveWithoutWater;
     }
-
-    @Override
+//
     public int getNumberOfDaysToComplete() {
-        return 0;
+        if (isComplete())
+            return 0;
+        int passedDays = 0;
+        for (int i = 0; i < levelOfGrowth; i++) {
+            passedDays += type.getTimeForGrow(i);
+        }
+        Time today = timeProvider.getTime().clone();
+        int todayDate = today.getDate();
+        if (today.getSeason() != lastGrowthTime.getSeason())
+            todayDate += Math.abs(lastGrowthTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
+        passedDays += todayDate - lastGrowthTime.getDate();
+        return type.getTotalHarvestTime() - passedDays;
     }
-
-//    public void watering() {
-//        lastWaterTime = App.getGame().getTime().clone();
-//    }
-//
-//    public boolean canBeAlive(Time today) {
-//        if (today.getWeather().equals(Weather.Rainy)) {
-//            watering();
-//            return true;
-//        }
-//        int todayDate = today.getDate();
-//        if (today.getSeason() != lastGrowthTime.getSeason())
-//            todayDate += Math.abs(lastGrowthTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
-//        return todayDate <= lastWaterTime.getDate() + numberOfDaysCanBeAliveWithoutWater;
-//    }
-//
-//    public int getNumberOfDaysToComplete() {
-//        if (isComplete())
-//            return 0;
-//        int passedDays = 0;
-//        for (int i = 0; i < levelOfGrowth; i++) {
-//            passedDays += type.getTimeForGrow(i);
-//        }
-//        Time today = App.getGame().getTime().clone();
-//        int todayDate = today.getDate();
-//        if (today.getSeason() != lastGrowthTime.getSeason())
-//            todayDate += Math.abs(lastGrowthTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
-//        passedDays += todayDate - lastGrowthTime.getDate();
-//        return type.getTotalHarvestTime() - passedDays;
-//    }
 
     public int getCurrentStage() {
         return levelOfGrowth;
     }
 
-    @Override
-    public boolean hasWateredToday() {
-        return false;
-    }
 
-//    public boolean hasWateredToday() {
-//        return App.getGame().getTime().getDate() == lastWaterTime.getDate();
-//    }
+
+
+    public boolean hasWateredToday() {
+        return timeProvider.getTime().getDate() == lastWaterTime.getDate();
+    }
 
     public boolean hasFertilized() {
         return fertilizer != null;

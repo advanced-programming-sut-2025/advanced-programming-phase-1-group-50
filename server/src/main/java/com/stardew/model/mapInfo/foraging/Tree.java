@@ -1,6 +1,7 @@
 package com.stardew.model.mapInfo.foraging;
 
 import com.stardew.model.TextureID;
+import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.gameApp.date.Season;
 import com.stardew.model.gameApp.date.Time;
 import com.stardew.model.gameApp.date.Weather;
@@ -19,11 +20,13 @@ public class Tree implements Placeable  , Growable {
     private final int numberOfDaysCanBeAliveWithoutWater;
     private Rectangle bounds;
     private boolean isGeneratedRandomly = false;
+    private final TimeProvider timeProvider;
 
-    public Tree(TreeType type, Time timeOfPlanting, Fertilizer fertilizer, int x, int y, int width, int height) {
+    public Tree(TreeType type, TimeProvider timeOfPlanting, Fertilizer fertilizer, int x, int y, int width, int height) {
         this.type = type;
-        this.lastGrowthTime = timeOfPlanting.clone();
-        this.lastWaterTime = timeOfPlanting.clone();
+        this.timeProvider = timeOfPlanting;
+        this.lastGrowthTime = timeOfPlanting.getTime().clone();
+        this.lastWaterTime = timeOfPlanting.getTime().clone();
         this.fertilizer = fertilizer;
         if (fertilizer == null) {
             this.levelOfGrowth = 0;
@@ -48,16 +51,7 @@ public class Tree implements Placeable  , Growable {
         return 'T';
     }
 
-    @Override
-    public TextureID getTexture() {
-        if (isGeneratedRandomly)  //TODO it must change according to season (it throws null pointer now)
-            return type.getStage5Texture(Season.Spring);
 
-        if (levelOfGrowth <= type.getStages().size() - 1) {
-            return type.getStageTextures()[levelOfGrowth];
-        }
-        return null;
-    }
 
     public TreeType getType() {
         return type;
@@ -88,46 +82,32 @@ public class Tree implements Placeable  , Growable {
         return levelOfGrowth >= type.getStages().size();
     }
 
-    @Override
+
     public boolean isCompleteAgain() {
-        return false;
+        if (!isComplete())
+            return false;
+
+        if (lastHarvestTime == null)
+            return true;
+
+        Time today = timeProvider.getTime().clone();
+        int timeForGrow = type.getHarvestCycle();
+
+        int todayDate = today.getDate();
+        if (today.getSeason() != lastHarvestTime.getSeason())
+            todayDate += Math.abs(lastHarvestTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
+
+        return lastHarvestTime.getDate() + timeForGrow <= todayDate;
     }
 
     @Override
     public void doAgainHarvesting() {
-
+        lastHarvestTime = timeProvider.getTime().clone();
     }
 
-    @Override
     public void watering() {
-
+        lastWaterTime = timeProvider.getTime().clone();
     }
-
-//    public boolean isCompleteAgain() {
-//        if (!isComplete())
-//            return false;
-//
-//        if (lastHarvestTime == null)
-//            return true;
-//
-//        Time today = App.getGame().getTime().clone();
-//        int timeForGrow = type.getHarvestCycle();
-//
-//        int todayDate = today.getDate();
-//        if (today.getSeason() != lastHarvestTime.getSeason())
-//            todayDate += Math.abs(lastHarvestTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
-//
-//        return lastHarvestTime.getDate() + timeForGrow <= todayDate;
-//    }
-
-//    @Override
-//    public void doAgainHarvesting() {
-//        lastHarvestTime = App.getGame().getTime().clone();
-//    }
-
-//    public void watering() {
-//        lastWaterTime = App.getGame().getTime().clone();
-//    }
 
     public boolean canBeAlive(Time today) {
         if (today.getWeather().equals(Weather.Rainy)) {
@@ -140,33 +120,30 @@ public class Tree implements Placeable  , Growable {
         return todayDate <= lastWaterTime.getDate() + numberOfDaysCanBeAliveWithoutWater;
     }
 
-    @Override
-    public int getNumberOfDaysToComplete() {
-        return 0;
-    }
 
-//    public int getNumberOfDaysToComplete() {
-//        if (isComplete())
-//            return 0;
-//        int passedDays = 0;
-//        for (int i = 0; i < levelOfGrowth; i++) {
-//            passedDays += type.getTimeForGrow(i);
-//        }
-//        Time today = App.getGame().getTime().clone();
-//        int todayDate = today.getDate();
-//        if (today.getSeason() != lastGrowthTime.getSeason())
-//            todayDate += Math.abs(lastGrowthTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
-//        passedDays += todayDate - lastGrowthTime.getDate();
-//        return type.getTotalHarvestTime() - passedDays;
-//    }
+
+    public int getNumberOfDaysToComplete() {
+        if (isComplete())
+            return 0;
+        int passedDays = 0;
+        for (int i = 0; i < levelOfGrowth; i++) {
+            passedDays += type.getTimeForGrow(i);
+        }
+        Time today = timeProvider.getTime().clone();
+        int todayDate = today.getDate();
+        if (today.getSeason() != lastGrowthTime.getSeason())
+            todayDate += Math.abs(lastGrowthTime.getSeason().ordinal() - today.getSeason().ordinal()) * 28;
+        passedDays += todayDate - lastGrowthTime.getDate();
+        return type.getTotalHarvestTime() - passedDays;
+    }
 
     public int getCurrentStage() {
         return levelOfGrowth;
     }
 
     public boolean hasWateredToday() {
-//        return App.getGame().getTime().getDate() == lastWaterTime.getDate();
-        return false;
+        return timeProvider.getTime().getDate() == lastWaterTime.getDate();
+
    }
 
     public boolean hasFertilized() {
@@ -194,23 +171,23 @@ public class Tree implements Placeable  , Growable {
 
 
 
-//    public TextureID getTexture() {
-//        if (isGeneratedRandomly)  //TODO it must change according to season (it throws null pointer now)
-//            return type.getStage5Texture(Season.Spring);
-//
-//        if (levelOfGrowth <= type.getStages().size() - 1) {
-//            return type.getStageTextures()[levelOfGrowth];
-//        }
-//        else if (type.getSeason() != App.getGame().getTime().getSeason()) {
-//            return type.getStage5Texture(App.getGame().getTime().getSeason());
-//        }
-//        else {
-//            if (isCompleteAgain())
-//                return type.getStage5WithFruitTexture(App.getGame().getTime().getSeason());
-//            else
-//                return type.getStage5Texture(App.getGame().getTime().getSeason());
-//        }
-//    }
+    public TextureID getTexture() {
+        if (isGeneratedRandomly)  //TODO it must change according to season (it throws null pointer now)
+            return type.getStage5Texture(Season.Spring);
+
+        if (levelOfGrowth <= type.getStages().size() - 1) {
+            return type.getStageTextures()[levelOfGrowth];
+        }
+        else if (type.getSeason() != timeProvider.getTime().getSeason()) {
+            return type.getStage5Texture(timeProvider.getTime().getSeason());
+        }
+        else {
+            if (isCompleteAgain())
+                return type.getStage5WithFruitTexture(timeProvider.getTime().getSeason());
+            else
+                return type.getStage5Texture(timeProvider.getTime().getSeason());
+        }
+    }
 
 
 

@@ -1,9 +1,11 @@
 package com.stardew.model.gameApp.date;
 
+import com.stardew.model.gameApp.TimeProvider;
+
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Time {
+public class Time implements TimeProvider {
     public Time clone;
     private Season season;
     private DaysOfTheWeek dayOfWeek ;
@@ -115,5 +117,8 @@ public class Time {
         cloned.weather = weather;
         cloned.nextDayWeather = nextDayWeather;
         return cloned;
+    }
+    public Time getTime(){
+        return this;
     }
 }
