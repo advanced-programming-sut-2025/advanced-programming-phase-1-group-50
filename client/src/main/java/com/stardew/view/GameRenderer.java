@@ -48,7 +48,7 @@ public class GameRenderer {
     private void renderBackground() {
         for (TileDTO tile : gameModel.getTiles()) {
             batch.draw(
-                GameAssetIDManager.ids.get(tile.getBackgroundTextureID()),
+                GameAssetIDManager.getTextureRegion(tile.getBackgroundTextureID()),
                 tile.getX() * tileSize, tile.getY() * tileSize, tileSize, tileSize
             );
         }
