@@ -9,10 +9,7 @@ package com.stardew.model.gameApp;
 //import com.stardew.model.foraging.Crop;
 //import com.stardew.model.foraging.Growable;
 //import com.stardew.model.foraging.Tree;
-import com.stardew.model.GameState;
-import com.stardew.model.PlaceableDTO;
-import com.stardew.model.PlayerDTO;
-import com.stardew.model.TileDTO;
+import com.stardew.model.*;
 import com.stardew.model.gameApp.date.Time;
 import com.stardew.model.mapInfo.Farm;
 //import com.stardew.model.mapInfo.GreenHouse;
@@ -20,6 +17,8 @@ import com.stardew.model.mapInfo.GameMap;
 import com.stardew.model.mapInfo.Placeable;
 import com.stardew.model.mapInfo.Tile;
 import com.stardew.model.userInfo.Player;
+import com.stardew.model.userInfo.RelationNetwork;
+import com.stardew.model.userInfo.RelationWithPlayers;
 import com.stardew.model.userInfo.User;
 import com.stardew.network.ClientConnectionThread;
 
@@ -32,11 +31,11 @@ public class Game {
     private final GameMap map;
     private final User gameCreator;
     private Player currentPlayingPlayer;
-//    private RelationNetwork relationsBetweenPlayers;
-//    private final ArrayList<BetweenPlayersGift> gifts = new ArrayList<>();
+    private RelationNetwork relationsBetweenPlayers;
+    private final ArrayList<BetweenPlayersGift> gifts = new ArrayList<>();
     private int giftIndex = 0;
     private int tradeIndex = 0;
-//    private final ArrayList<Trade> trades = new ArrayList<>();
+    private final ArrayList<Trade> trades = new ArrayList<>();
 //    private final GameMenuController gameMenuController = new GameMenuController();
 
     public Game(Map<ClientConnectionThread, Player> players, ArrayList<Farm> farms, User u, GameMap map) {
@@ -48,13 +47,13 @@ public class Game {
 //        relationInitializer(players);
     }
 
-//    public ArrayList<BetweenPlayersGift> getGifts() {
-//        return gifts;
-//    }
+    public ArrayList<BetweenPlayersGift> getGifts() {
+        return gifts;
+    }
 
-//    public RelationNetwork getRelationsBetweenPlayers() {
-//        return relationsBetweenPlayers;
-//    }
+    public RelationNetwork getRelationsBetweenPlayers() {
+        return relationsBetweenPlayers;
+    }
 
     public Player getPlayer(ClientConnectionThread connection) {
         return players.get(connection);
@@ -118,14 +117,14 @@ public class Game {
     }
 
     private void relationInitializer(ArrayList<Player> players) {
-//        relationsBetweenPlayers = new RelationNetwork();
-//
-//        for (int i = 0; i < players.size(); i++) {
-//            for (int j = i + 1; j < players.size(); j++) {
-//                Set<Player> key = new HashSet<>(Arrays.asList(players.get(i), players.get(j)));
-//                relationsBetweenPlayers.relationNetwork.put(key, new RelationWithPlayers());
-//            }
-//        }
+        relationsBetweenPlayers = new RelationNetwork();
+
+        for (int i = 0; i < players.size(); i++) {
+            for (int j = i + 1; j < players.size(); j++) {
+                Set<Player> key = new HashSet<>(Arrays.asList(players.get(i), players.get(j)));
+                relationsBetweenPlayers.relationNetwork.put(key, new RelationWithPlayers());
+            }
+        }
     }
 
     public void addGiftsIndex() {
@@ -136,9 +135,9 @@ public class Game {
         return giftIndex;
     }
 
-//    public void addToGifts(BetweenPlayersGift gift) {
-//        gifts.add(gift);
-//    }
+    public void addToGifts(BetweenPlayersGift gift) {
+        gifts.add(gift);
+    }
 
     public void addTradesIndex() {
         tradeIndex++;
@@ -148,9 +147,9 @@ public class Game {
         return tradeIndex;
     }
 
-//    public void addToTrades(Trade trade) {
-//        trades.add(trade);
-//    }
+    public void addToTrades(Trade trade) {
+        trades.add(trade);
+    }
 
 //    public ArrayList<Trade> getTrades() {
 //        return trades;
