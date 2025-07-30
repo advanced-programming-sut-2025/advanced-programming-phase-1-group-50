@@ -32,11 +32,12 @@ public class GameStateController {
         GameState state = message.getFromBody("gameState", GameState.class);
 
         ArrayList<TileDTO> tileDTOs = state.getTiles();
-        ArrayList<PlaceableDTO> placeables = state.getPlaceables();// TODO handle
+        ArrayList<PlaceableDTO> placeables = state.getPlaceables();
         PlayerDTO player = state.getPlayer();
 
         gameState.updateTiles(tileDTOs);
         gameState.updatePlayer(player);
+        gameState.updatePlaceables(placeables);
         gameState.updateCamera();
         gameState.updateVisibleTilesBounds();
     }
