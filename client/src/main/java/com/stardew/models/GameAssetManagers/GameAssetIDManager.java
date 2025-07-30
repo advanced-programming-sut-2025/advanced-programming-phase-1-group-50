@@ -87,36 +87,36 @@ public class GameAssetIDManager {
 
         TextureRegion[][] cow = TextureRegion.split(new Texture("Animals_animation/Cow_White.png"), 32, 32);
         animations.put(AnimationID.cow_move_right , new Animation<>(0.15f, cow[1]));
-        animations.put(AnimationID.cow_move_left , new Animation<>(0.15f, cow[3]));
+        animations.put(AnimationID.cow_move_left , new Animation<>(0.15f, cow[0]));
         animations.put(AnimationID.cow_move_up , new Animation<>(0.15f, cow[2]));
         animations.put(AnimationID.cow_move_down , new Animation<>(0.15f, cow[0]));
-        animations.put(AnimationID.cow_in_farm_eating , new Animation<>(0.15f, cow[6]));
-        animations.put(AnimationID.cow_is_petting , new Animation<>(0.15f, cow[4]));
+        animations.put(AnimationID.cow_in_farm_eating , new Animation<>(0.15f, cow[4]));
+        animations.put(AnimationID.cow_is_petting , new Animation<>(0.15f, cow[3]));
 
 
         TextureRegion[][] goat = TextureRegion.split(new Texture("Animals_animation/Goat.png"), 32, 32);
         animations.put(AnimationID.goat_move_right , new Animation<>(0.15f, goat[1]));
-        animations.put(AnimationID.goat_move_left , new Animation<>(0.15f, goat[3]));
+        animations.put(AnimationID.goat_move_left , new Animation<>(0.15f, goat[0]));
         animations.put(AnimationID.goat_move_up , new Animation<>(0.15f, goat[2]));
         animations.put(AnimationID.goat_move_down , new Animation<>(0.15f, goat[0]));
-        animations.put(AnimationID.goat_in_farm_eating , new Animation<>(0.15f, goat[6]));
-        animations.put(AnimationID.goat_is_petting , new Animation<>(0.15f, goat[4]));
+        animations.put(AnimationID.goat_in_farm_eating , new Animation<>(0.15f, goat[4]));
+        animations.put(AnimationID.goat_is_petting , new Animation<>(0.15f, goat[3]));
 
         TextureRegion[][] sheep = TextureRegion.split(new Texture("Animals_animation/Sheep.png"), 32, 32);
         animations.put(AnimationID.sheep_move_right , new Animation<>(0.15f, sheep[1]));
-        animations.put(AnimationID.sheep_move_left , new Animation<>(0.15f, sheep[3]));
+        animations.put(AnimationID.sheep_move_left , new Animation<>(0.15f, sheep[0]));
         animations.put(AnimationID.sheep_move_up , new Animation<>(0.15f, sheep[2]));
         animations.put(AnimationID.sheep_move_down , new Animation<>(0.15f, sheep[0]));
-        animations.put(AnimationID.sheep_in_farm_eating , new Animation<>(0.15f, sheep[6]));
-        animations.put(AnimationID.sheep_is_petting , new Animation<>(0.15f, sheep[4]));
+        animations.put(AnimationID.sheep_in_farm_eating , new Animation<>(0.15f, sheep[4]));
+        animations.put(AnimationID.sheep_is_petting , new Animation<>(0.15f, sheep[3]));
 
         TextureRegion[][] pig = TextureRegion.split(new Texture("Animals_animation/Pig.png"), 32, 32);
         animations.put(AnimationID.pig_move_right , new Animation<>(0.15f, pig[1]));
-        animations.put(AnimationID.pig_move_left , new Animation<>(0.15f, pig[3]));
+        animations.put(AnimationID.pig_move_left , new Animation<>(0.15f, pig[0]));
         animations.put(AnimationID.pig_move_up , new Animation<>(0.15f, pig[2]));
         animations.put(AnimationID.pig_move_down , new Animation<>(0.15f, pig[0]));
-        animations.put(AnimationID.pig_in_farm_eating , new Animation<>(0.15f, pig[6]));
-        animations.put(AnimationID.pig_is_petting , new Animation<>(0.15f, pig[4]));
+        animations.put(AnimationID.pig_in_farm_eating , new Animation<>(0.15f, pig[4]));
+        animations.put(AnimationID.pig_is_petting , new Animation<>(0.15f, pig[3]));
     }
 
     public static Animation<TextureRegion> getAnimation(AnimationID id) {
