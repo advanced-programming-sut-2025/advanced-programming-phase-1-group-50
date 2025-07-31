@@ -1,6 +1,7 @@
 package com.stardew.model.animals;
 
 import com.stardew.model.InventoryItemDTO;
+import com.stardew.model.ItemInventoryType;
 import com.stardew.model.TextureID;
 import com.stardew.model.animals.FishBehaviors.FishBehavior;
 import com.stardew.model.gameApp.date.Season;
@@ -108,6 +109,16 @@ public enum FishType implements Ingredient {
     @Override
     public TextureID getInventoryTexture() {
         return texture;
+    }
+
+    @Override
+    public InventoryItemDTO toDTO() {
+        return new InventoryItemDTO(getInventoryTexture() , false , 1 , ItemInventoryType.fishType , name());
+    }
+
+    @Override
+    public String getId() {
+        return name();
     }
 
 

@@ -6,4 +6,5 @@ import com.stardew.model.TextureID;
 public interface InventoryItem {
     TextureID getInventoryTexture();
     InventoryItemDTO toDTO();
+    String getId();
 }

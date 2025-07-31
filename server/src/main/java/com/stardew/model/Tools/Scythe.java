@@ -1,10 +1,21 @@
 package com.stardew.model.Tools;
 
+import com.stardew.model.InventoryItemDTO;
+import com.stardew.model.ItemInventoryType;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.App;
 
+import java.util.UUID;
+
 public class Scythe extends Tool {
+    private final String id;
+
+
+    public Scythe() {
+        id= UUID.randomUUID().toString();
+    }
+
     @Override
     public int getConsumptionEnergy() {
         return 0;
@@ -37,6 +48,16 @@ public class Scythe extends Tool {
     @Override
     public TextureID getInventoryTexture() {
         return TextureID.scytheTexture;
+    }
+
+    @Override
+    public InventoryItemDTO toDTO() {
+        return new InventoryItemDTO(getInventoryTexture() , true , 1 , ItemInventoryType.scythe , id);
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 
     @Override

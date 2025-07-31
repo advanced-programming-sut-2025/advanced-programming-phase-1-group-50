@@ -2,6 +2,7 @@ package com.stardew.model.mapInfo.foraging;
 
 import com.stardew.model.CropTextureID;
 import com.stardew.model.InventoryItemDTO;
+import com.stardew.model.ItemInventoryType;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.date.Season;
 import com.stardew.model.mapInfo.Ingredient;
@@ -232,6 +233,7 @@ public enum CropType implements Ingredient {
     private final TextureID mainTexture;
     private final static HashMap<String, CropType> stringToCropType = new HashMap<>();
 
+
     static {
         for (CropType value : CropType.values()) {
             stringToCropType.put(value.name().toLowerCase(), value);
@@ -323,6 +325,16 @@ public enum CropType implements Ingredient {
 
     public TextureID getInventoryTexture() {
         return mainTexture;
+    }
+
+    @Override
+    public InventoryItemDTO toDTO() {
+        return new InventoryItemDTO(getInventoryTexture() , false , 1 , ItemInventoryType.cropType , name());
+    }
+
+    @Override
+    public String getId() {
+        return name();
     }
 
 

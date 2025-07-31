@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.stardew.model.GameState;
 import com.stardew.model.InventoryItemDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.InventoryItem;
@@ -12,6 +13,10 @@ import com.stardew.models.app.App;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.tools.Tool;
 import com.stardew.models.userInfo.Player;
+import com.stardew.network.Event;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 import com.stardew.view.PlayersRelationsWindows.FriendshipWindow;
 import com.stardew.view.windows.CloseableWindow;
 import com.badlogic.gdx.graphics.Color;
@@ -34,11 +39,15 @@ public class InventoryWindow extends CloseableWindow {
     private final HotBarActor hotBar;
     private final BackpackGridActor backpackGrid;
     private final ScrollPane backpackScrollPane;
+    private static InventoryWindow currentInstance = null;
+    private final int id;
 
 
-    public InventoryWindow(Stage stage , HotBarActor hotBar , ArrayList<InventoryItemDTO> dto , String username) {
+    public InventoryWindow(Stage stage , HotBarActor hotBar , ArrayList<InventoryItemDTO> dto , String username , int id) {
         super("Inventory", stage);
         this.hotBar = hotBar;
+        this.id = id;
+        currentInstance = this;
 
 
         setSize(750, 500);
@@ -77,19 +86,25 @@ public class InventoryWindow extends CloseableWindow {
 
         trashButton = new ImageButton(GamePictureManager.trashDrawable);
         trashButton.setSize(50 , 70);
-//        trashButton.addListener(new ClickListener() {
-//            @Override
-//            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-//                int xx = backpackGrid.getSelectedX();
-//                int yy = backpackGrid.getSelectedY();
-//                if(xx == -1 && yy == -1) {
-//                    return false;
-//                }
-//
-//                Player p = App.getGame().getCurrentPlayingPlayer();
-//
-//                InventoryItem item = backpackGrid.getInventoryItemByXAndY(xx , yy);
-//                if(item != null) {
+        trashButton.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                int xx = backpackGrid.getSelectedX();
+                int yy = backpackGrid.getSelectedY();
+                if(xx == -1 && yy == -1) {
+                    return false;
+                }
+
+
+
+                InventoryItemDTO item = backpackGrid.getInventoryItemByXAndY(xx , yy);
+                if(item != null) {
+                    HashMap<String , Object> body = new HashMap<>();
+                    body.put("id" , id);
+                    body.put("itemDTO", item);
+                    body.put("event" , Event.RemoveItem);
+                    Message message = new Message(body , MessageType.EVENT_IN_GAME);
+                    NetworkManager.getConnection().sendMessage(message);
 //                    if(item instanceof Tool t){
 //                        p.getBackpack().removeTool(t);
 //                    }
@@ -97,12 +112,12 @@ public class InventoryWindow extends CloseableWindow {
 //                    else if(item instanceof Ingredient ing){
 //                        p.getBackpack().removeIngredients(ing , p.getBackpack().getIngredientQuantity().get(ing));
 //                    }
-//                }
+                }
 //                hotBar.update();
 //                backpackGrid.update();
-//                return true;
-//            }
-//        });
+                return true;
+            }
+        });
 
 
 
@@ -208,6 +223,27 @@ public class InventoryWindow extends CloseableWindow {
         }
 
         return null;
+    }
+
+    public void updateDTO(ArrayList<InventoryItemDTO> dto) {
+        backpackGrid.updateDTO(dto);
+    }
+
+    @Override
+    public boolean remove() {
+        boolean removed = super.remove();
+        if (removed) currentInstance = null;
+        return removed;
+    }
+
+    public static boolean isOpen() {
+        return currentInstance != null;
+    }
+
+
+
+    public static InventoryWindow getInstance() {
+        return currentInstance;
     }
 
 }

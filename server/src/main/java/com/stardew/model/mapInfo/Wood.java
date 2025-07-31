@@ -1,5 +1,7 @@
 package com.stardew.model.mapInfo;
 
+import com.stardew.model.InventoryItemDTO;
+import com.stardew.model.ItemInventoryType;
 import com.stardew.model.TextureID;
 
 public class Wood implements Ingredient {
@@ -21,5 +23,15 @@ public class Wood implements Ingredient {
     @Override
     public TextureID getInventoryTexture() {
         return TextureID.woodTexture;
+    }
+
+    @Override
+    public InventoryItemDTO toDTO() {
+        return new InventoryItemDTO(getInventoryTexture() , false , 1 , ItemInventoryType.wood , "wood");
+    }
+
+    @Override
+    public String getId() {
+        return "wood";
     }
 }

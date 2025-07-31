@@ -1,8 +1,13 @@
 package com.stardew.controller;
 
+import com.badlogic.gdx.Gdx;
+import com.google.gson.reflect.TypeToken;
+import com.stardew.Main;
 import com.stardew.model.*;
 import com.stardew.models.GameModel;
 import com.stardew.network.Message;
+import com.stardew.view.InventoryWindows.HotBarActor;
+import com.stardew.view.InventoryWindows.InventoryWindow;
 
 import java.util.ArrayList;
 
@@ -61,6 +66,11 @@ public class GameStateController {
         if (message == null) return;
         InventoryItemDTO[] items = message.getFromBody("hotBar", InventoryItemDTO[].class);
         gameState.updateHotBar(items);
+        Gdx.app.postRunnable(() -> {
+            if (HotBarActor.isOpen()) {
+                HotBarActor.getCurrentInstance().update();
+            }
+        });
     }
 
 
@@ -77,5 +87,17 @@ public class GameStateController {
     public void restartGame() {
         instance = null;
         firstUpdate = true;
+    }
+
+    public void handleUpdateInventoryList(Message message) {
+        ArrayList<InventoryItemDTO> dto = message.getFromBody("inventory", new TypeToken<ArrayList<InventoryItemDTO>>(){}.getType());
+
+        Gdx.app.postRunnable(() -> {
+            if (InventoryWindow.isOpen()) {
+                InventoryWindow.getInstance().updateDTO(dto);
+            }
+        });
+
+
     }
 }

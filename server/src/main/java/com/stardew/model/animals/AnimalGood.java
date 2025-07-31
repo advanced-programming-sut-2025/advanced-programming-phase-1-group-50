@@ -1,22 +1,26 @@
 package com.stardew.model.animals;
 
 import com.stardew.model.InventoryItemDTO;
+import com.stardew.model.ItemInventoryType;
 import com.stardew.model.TextureID;
 import com.stardew.model.mapInfo.Eatable;
 import com.stardew.model.mapInfo.Ingredient;
 import com.stardew.model.stores.Sellable;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class AnimalGood implements Ingredient , Sellable , Eatable {
     private final AnimalGoodType type;
     private final Quality quality;
     private final int sellPrice;
+    private final String id;
 
     public AnimalGood(AnimalGoodType type, Quality quality) {
         this.type = type;
         this.quality = quality;
         this.sellPrice = (int) (type.getPrice() * quality.getRatio());
+        this.id = UUID.randomUUID().toString();
     }
 
     public AnimalGoodType getType() {
@@ -58,5 +62,13 @@ public class AnimalGood implements Ingredient , Sellable , Eatable {
         return type.getInventoryTexture();
     }
 
+    public InventoryItemDTO toDTO() {
+        return new InventoryItemDTO(getInventoryTexture() , false , 1 , ItemInventoryType.animalGood , id);
+    }
 
+
+    @Override
+    public String getId() {
+        return id;
+    }
 }

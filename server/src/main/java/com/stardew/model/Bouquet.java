@@ -28,4 +28,9 @@ public class Bouquet implements Ingredient {
     public InventoryItemDTO toDTO() {
         return null;
     }
+
+    @Override
+    public String getId() {
+        return "";
+    }
 }

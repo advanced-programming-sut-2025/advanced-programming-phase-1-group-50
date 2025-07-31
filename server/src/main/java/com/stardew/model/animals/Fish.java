@@ -2,12 +2,14 @@ package com.stardew.model.animals;
 
 import com.badlogic.gdx.math.Vector2;
 import com.stardew.model.InventoryItemDTO;
+import com.stardew.model.ItemInventoryType;
 import com.stardew.model.TextureID;
 import com.stardew.model.animals.FishBehaviors.FishBehavior;
 import com.stardew.model.mapInfo.Ingredient;
 import com.stardew.model.stores.Sellable;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Fish implements Ingredient , Sellable {
     private final FishType type;
@@ -18,6 +20,7 @@ public class Fish implements Ingredient , Sellable {
     private final Vector2 position;
     private static final float MAX_Y = 690;
     private static final float MIN_Y = 90;
+    private final String id;
 
     public Fish(FishType type, Quality quality) {
         this.type = type;
@@ -26,6 +29,7 @@ public class Fish implements Ingredient , Sellable {
         texture = type.getInventoryTexture();
         behavior = this.type.createBehavior();
         position = new Vector2(0, 0);
+        id = UUID.randomUUID().toString();
     }
 
     public FishType getType() {
@@ -81,6 +85,16 @@ public class Fish implements Ingredient , Sellable {
     @Override
     public TextureID getInventoryTexture() {
         return texture;
+    }
+
+    @Override
+    public InventoryItemDTO toDTO() {
+        return new InventoryItemDTO(getInventoryTexture() , false , 1 , ItemInventoryType.fish , id);
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 
 

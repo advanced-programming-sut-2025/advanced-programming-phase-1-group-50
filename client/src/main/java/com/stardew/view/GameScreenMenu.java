@@ -48,6 +48,7 @@ public class GameScreenMenu implements Screen {
         this.gameRenderer = new GameRenderer(this.batch);
         this.stage = new Stage(new ScreenViewport(gameState.getCamera()));
         this.gameMenuInputAdapter = new GameMenuInputAdapter(id);
+        this.gameMenuInputAdapter.setGameState(gameState);
         this.gameMenuInputAdapter.setStage(stage);
         this.uiStage = new Stage(new ScreenViewport());
         this.timeManager = new TimeManager(gameState, uiStage);

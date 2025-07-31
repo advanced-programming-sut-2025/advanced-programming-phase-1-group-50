@@ -1,12 +1,16 @@
 package com.stardew.model.Tools;
 
 import com.stardew.model.InventoryItemDTO;
+import com.stardew.model.ItemInventoryType;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
+
+import java.util.UUID;
 
 public class Axe extends Tool{
     private ToolType type = ToolType.Primary;
     private TextureID texture = TextureID.axeTexture;
+    private final String id;
 
     public void upgradeTool() {
         if (this.type == ToolType.Primary) {
@@ -23,6 +27,10 @@ public class Axe extends Tool{
             this.type = ToolType.Iridium;
             texture = TextureID.iridiumAxeTexture;
         }
+    }
+
+    public Axe(){
+        this.id = UUID.randomUUID().toString();
     }
 
     @Override
@@ -79,6 +87,16 @@ public class Axe extends Tool{
     public TextureID getInventoryTexture() {
         //type.getTextureRegion : Todo
         return texture;
+    }
+
+    @Override
+    public InventoryItemDTO toDTO() {
+        return new InventoryItemDTO(getInventoryTexture() , true , 1 , ItemInventoryType.axe , id);
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 
     public String toString(){

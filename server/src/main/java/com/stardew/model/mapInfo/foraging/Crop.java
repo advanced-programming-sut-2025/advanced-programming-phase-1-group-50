@@ -1,6 +1,7 @@
 package com.stardew.model.mapInfo.foraging;
 
 import com.stardew.model.InventoryItemDTO;
+import com.stardew.model.ItemInventoryType;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.gameApp.date.Time;
@@ -12,6 +13,7 @@ import com.stardew.model.stores.Sellable;
 
 import java.awt.*;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Crop implements Placeable , Ingredient , Sellable , Growable , Eatable {
 
@@ -25,6 +27,7 @@ public class Crop implements Placeable , Ingredient , Sellable , Growable , Eata
     private final Rectangle bounds;
     private boolean isGeneratedRandomly = false;
     private TimeProvider timeProvider;
+    private final String id;
 
 
 
@@ -48,6 +51,7 @@ public class Crop implements Placeable , Ingredient , Sellable , Growable , Eata
             }
         }
         this.bounds = new Rectangle(x, y,1, 1);
+        this.id = UUID.randomUUID().toString();
     }
 
     public int calculatePrice() {
@@ -238,5 +242,14 @@ public class Crop implements Placeable , Ingredient , Sellable , Growable , Eata
         return type.getMainTexture();
     }
 
+    @Override
+    public InventoryItemDTO toDTO() {
+        return new InventoryItemDTO(getInventoryTexture() , false , 1 , ItemInventoryType.crop , id);
+    }
 
+
+    @Override
+    public String getId() {
+        return "";
+    }
 }

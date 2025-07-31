@@ -1,6 +1,7 @@
 package com.stardew.model.mapInfo.foraging;
 
 import com.stardew.model.InventoryItemDTO;
+import com.stardew.model.ItemInventoryType;
 import com.stardew.model.TextureID;
 import com.stardew.model.mapInfo.Eatable;
 import com.stardew.model.mapInfo.Ingredient;
@@ -56,6 +57,16 @@ public enum Fruit implements Ingredient , Eatable , Sellable {
 
     public TextureID getInventoryTexture(){
         return texture;
+    }
+
+    @Override
+    public InventoryItemDTO toDTO() {
+        return new InventoryItemDTO(getInventoryTexture() , false , 1 , ItemInventoryType.fruit , name());
+    }
+
+    @Override
+    public String getId() {
+        return name();
     }
 
 

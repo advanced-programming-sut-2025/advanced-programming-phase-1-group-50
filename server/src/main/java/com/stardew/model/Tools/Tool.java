@@ -29,7 +29,4 @@ public abstract class Tool implements InventoryItem {
         };
     }
 
-    public InventoryItemDTO toDTO() {
-        return new InventoryItemDTO(getInventoryTexture(), true , 1);
-    }
 }

@@ -1,16 +1,25 @@
 package com.stardew.model.Tools;
 
+import com.stardew.model.InventoryItemDTO;
+import com.stardew.model.ItemInventoryType;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.App;
 import com.stardew.model.gameApp.date.Weather;
 import com.stardew.model.userInfo.Ability;
 
+import java.util.UUID;
+
 public class WateringCan extends Tool {
     private ToolType type = ToolType.Primary;
     private int capacity = 40;
     private int waterCapacity = capacity;
     private TextureID textureRegion = TextureID.wateringCanTexture;
+    private final String id;
+
+    public WateringCan(){
+        this.id = UUID.randomUUID().toString();
+    }
 
     public void upgradeTool() {
         if (this.type == ToolType.Primary) {
@@ -101,6 +110,16 @@ public class WateringCan extends Tool {
     @Override
     public TextureID getInventoryTexture() {
         return textureRegion;
+    }
+
+    @Override
+    public InventoryItemDTO toDTO() {
+        return new InventoryItemDTO(getInventoryTexture() , true ,1  , ItemInventoryType.wateringCan , id);
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 
     @Override

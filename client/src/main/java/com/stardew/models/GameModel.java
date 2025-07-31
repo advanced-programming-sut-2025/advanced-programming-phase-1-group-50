@@ -24,6 +24,7 @@ public class GameModel {
     private final Object lock = new Object();
     private final Object boundsLock = new Object();
     private InventoryItemDTO[] hotBar;
+    private ArrayList<InventoryItemDTO> inventory;
 
 //    private final Map map;
 //    private PlayerController playerController;
@@ -288,6 +289,14 @@ public class GameModel {
 
     public InventoryItemDTO[] getHotBar() {
         return hotBar;
+    }
+
+    public void updateInventory(ArrayList<InventoryItemDTO> inventory) {
+        this.inventory = inventory;
+    }
+
+    public ArrayList<InventoryItemDTO> getInventory() {
+        return inventory;
     }
 
 }

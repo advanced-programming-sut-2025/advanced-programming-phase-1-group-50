@@ -25,7 +25,7 @@ public class BackpackGridActor extends Actor {
     private TextureRegion selectedTexture = GamePictureManager.selectedTile;
     private final BitmapFont smallFont = GamePictureManager.smallFont;
     private final GlyphLayout layout = new GlyphLayout();
-    private final ArrayList<InventoryItemDTO> dto;
+    private ArrayList<InventoryItemDTO> dto;
 
     private int lastVisitedCellX = -1;
     private int lastVisitedCellY = -1;
@@ -160,12 +160,17 @@ public class BackpackGridActor extends Actor {
         return selectedY;
     }
 
-//    public InventoryItem getInventoryItemByXAndY(int x, int y) {
-//        if (x == -1 || y == -1) return null;
-//        return cells[y][x].inventoryItem;
-//    }
+    public InventoryItemDTO getInventoryItemByXAndY(int x, int y) {
+        if (x == -1 || y == -1) return null;
+        return cells[y][x].inventoryItem;
+    }
 
     public void update(){
         initializeGrid();
+    }
+
+    public void updateDTO(ArrayList<InventoryItemDTO> dto) {
+        this.dto = dto;
+        update();
     }
 }

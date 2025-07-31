@@ -1,14 +1,21 @@
 package com.stardew.model.Tools;
 
 import com.stardew.model.InventoryItemDTO;
+import com.stardew.model.ItemInventoryType;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 
+import java.util.UUID;
+
 public class FishingPole extends Tool{
     private final PoleType type;
+    private final String id;
+
+
 
     public FishingPole(PoleType poleType) {
         this.type = poleType;
+        this.id = UUID.randomUUID().toString();
     }
 
     @Override
@@ -73,6 +80,16 @@ public class FishingPole extends Tool{
             case Iridium -> TextureID.iridiumFishingPole;
             case Fiberglass -> TextureID.fiberglassFishingPole;
         };
+    }
+
+    @Override
+    public InventoryItemDTO toDTO() {
+        return new InventoryItemDTO(getInventoryTexture() , true , 1 , ItemInventoryType.fishingPole , id);
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 
     public String toString(){

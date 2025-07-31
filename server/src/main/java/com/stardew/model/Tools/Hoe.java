@@ -1,15 +1,23 @@
 package com.stardew.model.Tools;
 
 import com.stardew.model.InventoryItemDTO;
+import com.stardew.model.ItemInventoryType;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
+
+import java.util.UUID;
 
 public class Hoe extends Tool {
     private ToolType type = ToolType.Primary;
     private TextureID hoeTexture = TextureID.hoeTexture;
+    private String id;
     @Override
     public int getConsumptionEnergy() {
         return 0;
+    }
+
+    public Hoe() {
+        id= UUID.randomUUID().toString();
     }
 
     @Override
@@ -62,6 +70,16 @@ public class Hoe extends Tool {
     @Override
     public TextureID getInventoryTexture() {
         return hoeTexture;
+    }
+
+    @Override
+    public InventoryItemDTO toDTO() {
+        return new InventoryItemDTO(getInventoryTexture() , true , 1 , ItemInventoryType.hoe , id);
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 
     @Override
