@@ -1,9 +1,6 @@
 package com.stardew.controller;
 
-import com.stardew.model.GameState;
-import com.stardew.model.PlaceableDTO;
-import com.stardew.model.PlayerDTO;
-import com.stardew.model.TileDTO;
+import com.stardew.model.*;
 import com.stardew.models.GameModel;
 import com.stardew.network.Message;
 
@@ -67,5 +64,11 @@ public class GameStateController {
     public void restartGame() {
         instance = null;
         firstUpdate = true;
+    }
+
+    public void updateTime(Message message) {
+        if (message == null) return;
+        TimeDTO dto = message.getFromBody("timeDTO", TimeDTO.class);
+        gameState.getTimeManager().setTimeDTO(dto);
     }
 }

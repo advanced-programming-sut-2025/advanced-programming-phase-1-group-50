@@ -24,6 +24,7 @@ public class GameScreenMenu implements Screen {
     private final GameUpdateRequestThread updateRequestThread;
     private GameModel gameState;
     private GameRenderer gameRenderer;
+
     private GameMenuInputAdapter gameMenuInputAdapter;
     private Stage stage;
     private final int id;
@@ -32,7 +33,7 @@ public class GameScreenMenu implements Screen {
     private SpriteBatch batch;
     private final Stage uiStage = new Stage(new ScreenViewport());
 
-//    private final TimeManager timeManager = new TimeManager(uiStage);
+    private final TimeManager timeManager ;
 //    private final EnergyManager energyManager = new EnergyManager(uiStage);
 
 //    private final WeatherManager weatherManager = new WeatherManager();
@@ -48,6 +49,10 @@ public class GameScreenMenu implements Screen {
         this.stage = new Stage(new ScreenViewport(gameState.getCamera()));
         this.gameMenuInputAdapter = new GameMenuInputAdapter(id);
         this.gameMenuInputAdapter.setStage(stage);
+        this.timeManager = GameStateController.getInstance().getGameState().getTimeManager();
+
+        this.timeManager.setStage(uiStage);
+        this.timeManager.initializeUI();
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(stage);
@@ -105,7 +110,7 @@ public class GameScreenMenu implements Screen {
 //        weatherManager.render(v);
         batch.begin();
 //
-//        timeManager.updateTime(v);
+        timeManager.updateTime();
 //        energyManager.update();
 //        gameModel.update(v);
         gameRenderer.render(v);
@@ -118,8 +123,8 @@ public class GameScreenMenu implements Screen {
 //        stage.act(v);
 //        stage.draw();
 //
-//        uiStage.act(v);
-//        uiStage.draw();
+        uiStage.act(v);
+        uiStage.draw();
 //
 //
 //        timeManager.checkForDayTransition();

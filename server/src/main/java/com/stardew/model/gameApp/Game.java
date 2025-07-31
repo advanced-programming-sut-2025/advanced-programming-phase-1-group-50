@@ -36,6 +36,8 @@ public class Game {
     private int giftIndex = 0;
     private int tradeIndex = 0;
     private final ArrayList<Trade> trades = new ArrayList<>();
+    private final TimeService timeService;
+    private boolean started = false;
 //    private final GameMenuController gameMenuController = new GameMenuController();
 
     public Game(Map<ClientConnectionThread, Player> players, ArrayList<Farm> farms, User u, GameMap map) {
@@ -44,6 +46,9 @@ public class Game {
         this.gameCreator = u;
         this.time = new Time();
         this.map = map;
+        timeService = new TimeService(time);
+        timeService.setGame(this);
+
 //        relationInitializer(players);
     }
 
@@ -290,4 +295,29 @@ public class Game {
 //        this.getMap().getNpcVillage().getStardopSaloon().ResetQuantityEveryNight();
 //
 //    }
+
+    public TimeService getTimeService() {
+        return timeService;
+    }
+
+    public ArrayList<ClientConnectionThread> clientConnectionThreads() {
+        ArrayList<ClientConnectionThread> clientConnectionThreads = new ArrayList<>();
+        for(Map.Entry<ClientConnectionThread , Player> entry : players.entrySet()) {
+            ClientConnectionThread connection = entry.getKey();
+            clientConnectionThreads.add(connection);
+        }
+        return clientConnectionThreads;
+    }
+
+    public void startTime(){
+        timeService.start();
+    }
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
 }

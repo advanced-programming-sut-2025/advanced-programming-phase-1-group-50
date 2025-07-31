@@ -1,5 +1,6 @@
 package com.stardew.model.gameApp.date;
 
+import com.stardew.model.TimeDTO;
 import com.stardew.model.gameApp.TimeProvider;
 
 import java.util.ArrayList;
@@ -120,5 +121,9 @@ public class Time implements TimeProvider {
     }
     public Time getTime(){
         return this;
+    }
+
+    public TimeDTO toDTO(){
+        return new TimeDTO(hour , date , season.name() , dayOfWeek.getDayOfWeek() , weather.name());
     }
 }

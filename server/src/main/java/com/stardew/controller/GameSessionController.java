@@ -37,10 +37,18 @@ public class GameSessionController {
     public void handleUpdateGameState(Message message, ClientConnectionThread connection) {
         if (message == null) return;
 
+
         int id = message.getIntFromBody("id");
         Game game = games.get(id);
 
+
+
         if (game == null) return;
+        if(!game.isStarted()) {
+            game.setStarted(true);
+            game.startTime();
+        }
+
 
         int startX = message.getIntFromBody("startX");
         int startY = message.getIntFromBody("startY");
@@ -64,7 +72,9 @@ public class GameSessionController {
         body.put("id", id);
         body.put("mapWidth", game.getMap().getWidth());
         body.put("mapHeight", game.getMap().getHeight());
+
         Message response = new Message(body, MessageType.MAP_REQUEST_RESULT);
+
 
         connection.sendMessage(response);
     }

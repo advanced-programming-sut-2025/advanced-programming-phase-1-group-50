@@ -78,6 +78,17 @@ public class MessageHandler {
                 gameStateController.handleUpdate(message);
                 return true;
             }
+            case UPDATE_TIME -> {
+
+                Screen currentScreen = Main.getMain().getScreen();
+                Gdx.app.postRunnable(() -> {
+                    if(currentScreen instanceof GameScreenMenu) {
+
+                        gameStateController.updateTime(message);
+                    }
+                });
+                return true;
+            }
             default -> {
                 return false;
             }

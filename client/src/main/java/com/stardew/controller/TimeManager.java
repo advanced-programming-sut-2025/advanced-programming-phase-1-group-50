@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.stardew.controller.GameDateAndWeatherController.DateController;
+import com.stardew.model.TimeDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.GameModel;
 import com.stardew.models.app.App;
@@ -26,31 +27,34 @@ public class TimeManager {
     private Image blackFadeImage;
     private Image nightOverlay;
     private float start = 0f;
-    private final Stage uiStage ;
+    private Stage uiStage ;
     private final Image clockImage = new Image(GamePictureManager.clockTexture);
     private int previousDigitsOfGold = 0;
     private boolean changeTileTextureInWinter = false;
     private boolean changeTileTextureInSpring = false;
     private boolean firstTimeChangeInSpring = true;
-    private GameModel gameModel;
-    private float timeTileWatered;
+
+    private TimeDTO timeDTO = new TimeDTO(9 , 1 , "Spring" , "Saturday" , "Sunny") ;
 
 
 
 
-    public TimeManager(Stage uiStage ) {
+
+    public TimeManager() {
+
+
+
+
+
+
+
+    }
+
+    public void setStage(Stage uiStage) {
         this.uiStage = uiStage;
-        initializeTime();
-        initializeFadeImage();
-        initializeOverlayImage();
-
-
-
     }
 
-    public void setGameModel(GameModel gameModel) {
-        this.gameModel = gameModel;
-    }
+
 
     public void initializeFadeImage(){
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
@@ -126,30 +130,30 @@ public class TimeManager {
 
     }
 
-    public void updateTime(float v){
-        start += v;
-        if(start >= 60){
-            start = 0;
-            App.getGame().getTime().advancedHour(1);
-        }
+    public void updateTime(){
+//        start += v;
+//        if(start >= 60){
+//            start = 0;
+//            App.getGame().getTime().advancedHour(1);
+//        }
         updateTimeUi();
     }
 
     private void updateTimeUi(){
-        Time time = App.getGame().getTime();
-        int hour = time.getHour();
-        int day = time.getDate();
+
+        int hour = timeDTO.getHour();
+        int day = timeDTO.getDay();
         int minute = (((int)start) / 10) * 10;
-        String dayOfTheWeek = time.getDayOfWeek().getDayOfWeek();
-        String season = time.getSeason().name();
+        String dayOfTheWeek = timeDTO.getDayOfWeekName();
+        String season = timeDTO.getSeasonName();
         String timeText = String.format("%02d:%02d    %2d", hour, minute, day);
         String seasonAndDayOfTheWeek = String.format("%-6s%11s", season, dayOfTheWeek);
-        int playerGold = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity()
-            .getOrDefault(new Coin() , 0);
+//        int playerGold = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity()
+//            .getOrDefault(new Coin() , 0);
         timeLabel.setText(timeText);
         seasonAndDayLabel.setText(seasonAndDayOfTheWeek);
-        playerGoldLabel.setText(playerGold + "");
-        setPlayerGoldLabelPosition(playerGold);
+//        playerGoldLabel.setText(playerGold + "");
+//        setPlayerGoldLabelPosition(playerGold);
     }
 
     public void initializeTime(){
@@ -248,5 +252,15 @@ public class TimeManager {
                 }
             }
         }
+    }
+
+    public void setTimeDTO(TimeDTO timeDTO){
+        this.timeDTO = timeDTO;
+    }
+
+    public void initializeUI(){
+        initializeTime();
+        initializeFadeImage();
+        initializeOverlayImage();
     }
 }
