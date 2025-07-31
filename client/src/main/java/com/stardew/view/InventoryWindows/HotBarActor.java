@@ -49,32 +49,32 @@ public class HotBarActor extends Actor {
                 return true;
             }
 
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                SmartTooltip.getInstance().hide();
-                lastVisitedCellX = -1;
-            }
+//            @Override
+//            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+//                SmartTooltip.getInstance().hide();
+//                lastVisitedCellX = -1;
+//            }
 
-            @Override
-            public boolean mouseMoved(InputEvent event, float x, float y) {
-                int index = (int)(x / itemSize);
-                if (index != lastVisitedCellX) {
-                    lastVisitedCellX = index;
-                    SmartTooltip.getInstance().hide();
-
-                    String info = "";
-                    if (index >= 0 && index < cells.length) {
-                        if (cells[index].textureRegion != null) {
-                            info = "  " + cells[index].inventoryItem.toString() + "  ";
-                        }
-                    }
-
-                    if (!info.isEmpty())
-                        SmartTooltip.getInstance().show(info);
-
-                }
-                return true;
-            }
+//            @Override
+//            public boolean mouseMoved(InputEvent event, float x, float y) {
+//                int index = (int)(x / itemSize);
+//                if (index != lastVisitedCellX) {
+//                    lastVisitedCellX = index;
+//                    SmartTooltip.getInstance().hide();
+//
+//                    String info = "";
+//                    if (index >= 0 && index < cells.length) {
+//                        if (cells[index].textureRegion != null) {
+//                            info = "  " + cells[index].inventoryItem.toString() + "  ";
+//                        }
+//                    }
+//
+//                    if (!info.isEmpty())
+//                        SmartTooltip.getInstance().show(info);
+//
+//                }
+//                return true;
+//            }
         });
     }
 

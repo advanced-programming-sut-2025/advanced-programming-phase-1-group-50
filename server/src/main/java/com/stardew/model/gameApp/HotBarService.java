@@ -24,14 +24,17 @@ public class HotBarService {
             InventoryItemDTO[] hotbar = new InventoryItemDTO[10];
             int index = 0;
             for(InventoryItem item : player.getHotBar()){
-                InventoryItemDTO itemDTO = item.toDTO();
-                int amount ;
-                if(!itemDTO.isTool()){
-                    amount = itemDTO.getQuantity();
-                    itemDTO.setQuantity(amount);
+                if(item != null) {
+                    InventoryItemDTO itemDTO = item.toDTO();
+                    System.out.println(itemDTO);
+                    int amount;
+                    if (!itemDTO.isTool()) {
+                        amount = player.getQuantityOfIngredient(item);
+                        itemDTO.setQuantity(amount);
+                    }
+                    hotbar[index] = itemDTO;
+                    index++;
                 }
-                hotbar[index] = itemDTO;
-                index++;
 
 
             }
