@@ -1,12 +1,10 @@
 package com.stardew.model.gameApp;
 
-import com.stardew.model.userInfo.Player;
 import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -25,9 +23,9 @@ public class TimeService {
     public void start() {
         sendUpdateTime();
         executor.scheduleAtFixedRate(() -> {
-            timeProvider.getTime().advancedHour(1);
+            timeProvider.getTime().advancedMinute(10);
             sendUpdateTime();
-        }, 60, 60,TimeUnit.SECONDS);
+        }, 10, 10,TimeUnit.SECONDS);
     }
 
     public void stop() {

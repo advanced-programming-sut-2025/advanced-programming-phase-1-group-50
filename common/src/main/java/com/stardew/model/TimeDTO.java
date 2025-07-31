@@ -1,6 +1,7 @@
 package com.stardew.model;
 
 public class TimeDTO {
+    private int minute;
     private int hour;
     private int day;
     private String seasonName;
@@ -9,12 +10,17 @@ public class TimeDTO {
 
     public TimeDTO() {}
 
-    public TimeDTO(int hour, int day, String seasonName, String dayOfWeekName, String weather) {
+    public TimeDTO(int minute, int hour, int day, String seasonName, String dayOfWeekName, String weather) {
+        this.minute = minute;
         this.hour = hour;
         this.day = day;
         this.seasonName = seasonName;
         this.dayOfWeekName = dayOfWeekName;
         this.weather = weather;
+    }
+
+    public int getMinute() {
+        return minute;
     }
 
     public int getHour() {
