@@ -1,6 +1,6 @@
 package com.stardew.model.animals;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.TextureID;
 import com.stardew.model.mapInfo.Eatable;
 import com.stardew.model.mapInfo.Ingredient;
@@ -57,4 +57,6 @@ public class AnimalGood implements Ingredient , Sellable , Eatable {
     public TextureID getInventoryTexture() {
         return type.getInventoryTexture();
     }
+
+
 }

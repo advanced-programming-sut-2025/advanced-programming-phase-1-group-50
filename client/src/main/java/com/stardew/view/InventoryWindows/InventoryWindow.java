@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.stardew.model.InventoryItemDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.InventoryItem;
 import com.stardew.models.app.App;
@@ -35,7 +36,7 @@ public class InventoryWindow extends CloseableWindow {
     private final ScrollPane backpackScrollPane;
 
 
-    public InventoryWindow(Stage stage , HotBarActor hotBar) {
+    public InventoryWindow(Stage stage , HotBarActor hotBar , ArrayList<InventoryItemDTO> dto , String username) {
         super("Inventory", stage);
         this.hotBar = hotBar;
 
@@ -54,13 +55,13 @@ public class InventoryWindow extends CloseableWindow {
         playerNameLabel = new Label("" , st);
         playerNameLabel.setFontScale(1.5f);
 
-        playerNameLabel.setText(App.getGame().getCurrentPlayingPlayer().getUsername());
+        playerNameLabel.setText(username);
         add(playerNameLabel).left().padBottom(10).center();
         row();
 
 
 
-        backpackGrid = new BackpackGridActor();
+        backpackGrid = new BackpackGridActor(dto);
 
         backpackScrollPane = new ScrollPane(backpackGrid, GamePictureManager.skin);
         backpackScrollPane.setFadeScrollBars(false);
@@ -76,32 +77,32 @@ public class InventoryWindow extends CloseableWindow {
 
         trashButton = new ImageButton(GamePictureManager.trashDrawable);
         trashButton.setSize(50 , 70);
-        trashButton.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                int xx = backpackGrid.getSelectedX();
-                int yy = backpackGrid.getSelectedY();
-                if(xx == -1 && yy == -1) {
-                    return false;
-                }
-
-                Player p = App.getGame().getCurrentPlayingPlayer();
-
-                InventoryItem item = backpackGrid.getInventoryItemByXAndY(xx , yy);
-                if(item != null) {
-                    if(item instanceof Tool t){
-                        p.getBackpack().removeTool(t);
-                    }
-
-                    else if(item instanceof Ingredient ing){
-                        p.getBackpack().removeIngredients(ing , p.getBackpack().getIngredientQuantity().get(ing));
-                    }
-                }
-                hotBar.update();
-                backpackGrid.update();
-                return true;
-            }
-        });
+//        trashButton.addListener(new ClickListener() {
+//            @Override
+//            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+//                int xx = backpackGrid.getSelectedX();
+//                int yy = backpackGrid.getSelectedY();
+//                if(xx == -1 && yy == -1) {
+//                    return false;
+//                }
+//
+//                Player p = App.getGame().getCurrentPlayingPlayer();
+//
+//                InventoryItem item = backpackGrid.getInventoryItemByXAndY(xx , yy);
+//                if(item != null) {
+//                    if(item instanceof Tool t){
+//                        p.getBackpack().removeTool(t);
+//                    }
+//
+//                    else if(item instanceof Ingredient ing){
+//                        p.getBackpack().removeIngredients(ing , p.getBackpack().getIngredientQuantity().get(ing));
+//                    }
+//                }
+//                hotBar.update();
+//                backpackGrid.update();
+//                return true;
+//            }
+//        });
 
 
 

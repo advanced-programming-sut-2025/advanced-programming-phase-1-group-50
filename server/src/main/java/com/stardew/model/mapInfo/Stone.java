@@ -1,5 +1,6 @@
 package com.stardew.model.mapInfo;
 
+import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.TextureID;
 
 import java.awt.*;
@@ -59,4 +60,6 @@ public class Stone implements Placeable , Ingredient{
     public TextureID getInventoryTexture() {
         return texture;
     }
+
+
 }

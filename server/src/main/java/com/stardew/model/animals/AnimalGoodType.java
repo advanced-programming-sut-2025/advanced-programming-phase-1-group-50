@@ -1,6 +1,6 @@
 package com.stardew.model.animals;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.TextureID;
 import com.stardew.model.mapInfo.Ingredient;
 
@@ -45,6 +45,8 @@ public enum AnimalGoodType implements Ingredient {
         return textureRegion;
     }
 
+
+
     public int getEnergy() {
         return energy;
     }
@@ -52,4 +54,6 @@ public enum AnimalGoodType implements Ingredient {
     public static AnimalGoodType getAnimalGoodTypeByName(String name) {
         return stringToAnimalGoodType.getOrDefault(name.toLowerCase(), null);
     }
+
+
 }

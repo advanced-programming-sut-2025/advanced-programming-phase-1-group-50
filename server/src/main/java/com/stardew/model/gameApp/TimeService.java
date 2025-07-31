@@ -28,7 +28,7 @@ public class TimeService {
             sendUpdateTime();
         }, 60, 60,TimeUnit.SECONDS);
     }
-
+    // TODO : when the game finished , we should stop the executor;
     public void stop() {
         executor.shutdown();
     }

@@ -1,7 +1,7 @@
 package com.stardew.model.animals;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.TextureID;
 import com.stardew.model.animals.FishBehaviors.FishBehavior;
 import com.stardew.model.mapInfo.Ingredient;
@@ -82,6 +82,7 @@ public class Fish implements Ingredient , Sellable {
     public TextureID getInventoryTexture() {
         return texture;
     }
+
 
     public void moveY(float deltaY) {
         position.y = Math.max(MIN_Y, Math.min(MAX_Y, position.y + deltaY));

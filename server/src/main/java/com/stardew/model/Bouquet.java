@@ -23,4 +23,9 @@ public class Bouquet implements Ingredient {
     public TextureID getInventoryTexture() {
         return null;
     }
+
+    @Override
+    public InventoryItemDTO toDTO() {
+        return null;
+    }
 }

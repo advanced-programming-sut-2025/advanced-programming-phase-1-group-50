@@ -263,4 +263,8 @@ public class TimeManager {
         initializeFadeImage();
         initializeOverlayImage();
     }
+
+    public Stage getUIStage() {
+        return uiStage;
+    }
 }

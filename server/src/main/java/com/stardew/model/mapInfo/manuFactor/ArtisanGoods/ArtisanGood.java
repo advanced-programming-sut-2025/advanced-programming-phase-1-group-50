@@ -1,5 +1,6 @@
 package com.stardew.model.mapInfo.manuFactor.ArtisanGoods;
 
+import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.TextureID;
 import com.stardew.model.mapInfo.Eatable;
 import com.stardew.model.mapInfo.Ingredient;
@@ -56,4 +57,5 @@ public class ArtisanGood implements Ingredient , Eatable , Sellable {
     public TextureID getInventoryTexture() {
         return type.getTexture();
     }
+
 }

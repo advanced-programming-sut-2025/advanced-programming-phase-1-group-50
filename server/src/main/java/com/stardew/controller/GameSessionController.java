@@ -1,6 +1,7 @@
 package com.stardew.controller;
 
 import com.stardew.model.gameApp.Game;
+import com.stardew.model.userInfo.Player;
 import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
@@ -94,6 +95,10 @@ public class GameSessionController {
                 Float vy = message.getFromBody("vy", Float.class);
                 int dir = message.getIntFromBody("dir");
                 PlayerController.getInstance().handleMovement(game.getPlayer(connection), game.getMap().getTiles(), vx, vy, dir);
+            }
+            case ShowInventory -> {
+                Player p = game.getPlayer(connection);
+                InventoryController.getInstance().handleSendInventoryList(p , connection , message.getRequestID());
             }
         }
 

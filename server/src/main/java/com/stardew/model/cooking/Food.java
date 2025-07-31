@@ -1,7 +1,7 @@
 package com.stardew.model.cooking;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.model.DrawableID;
+import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.TextureID;
 import com.stardew.model.mapInfo.Eatable;
 import com.stardew.model.mapInfo.Ingredient;
@@ -72,4 +72,6 @@ public enum Food implements Ingredient , Sellable , Eatable {
     public TextureID getInventoryTexture() {
         return null;
     }
+
+
 }

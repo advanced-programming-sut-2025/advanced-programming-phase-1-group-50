@@ -3,14 +3,11 @@ package com.stardew.view;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.google.gson.reflect.TypeToken;
+import com.stardew.model.InventoryItemDTO;
 import com.stardew.models.ShippingBin;
-import com.stardew.models.GameModel;
-import com.stardew.models.app.App;
 import com.stardew.models.stores.Store;
-import com.stardew.models.userInfo.Player;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
@@ -27,6 +24,7 @@ import com.stardew.view.cheatConsole.CheatWindow;
 import com.stardew.view.windows.CookingWindow;
 import com.stardew.view.windows.CraftingWindow;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -54,16 +52,17 @@ public class GameMenuInputAdapter extends InputAdapter {
     public boolean keyDown(int keycode) {
         keys.add(keycode);
         justPressedKeys.add(keycode);
-        if(hotBar != null) {
-            if(keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {
-                hotBar.setSelectedIndex(keycode - Input.Keys.NUM_1);
-
-            }
-            else if(keycode == Input.Keys.NUM_0){
-                hotBar.setSelectedIndex(9);
-            }
-        }
         return true;
+//        if(hotBar != null) {
+//            if(keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {
+//                hotBar.setSelectedIndex(keycode - Input.Keys.NUM_1);
+//
+//            }
+//            else if(keycode == Input.Keys.NUM_0){
+//                hotBar.setSelectedIndex(9);
+//            }
+//        }
+//        return true;
     }
 
 
@@ -140,7 +139,7 @@ public class GameMenuInputAdapter extends InputAdapter {
         }
 
         if(justPressedKeys.contains(Input.Keys.ESCAPE)){
-            stage.addActor(new InventoryWindow(stage , hotBar));
+            sendInventoryShow();
         }
 
         if (justPressedKeys.contains(Input.Keys.R)) {
@@ -176,6 +175,19 @@ public class GameMenuInputAdapter extends InputAdapter {
         body.put("dir", dir);
         Message message = new Message(body, MessageType.EVENT_IN_GAME);
         NetworkManager.getConnection().sendMessage(message);
+    }
+
+    private void sendInventoryShow(){
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("id", id);
+        body.put("event", Event.ShowInventory);
+        Message response = NetworkManager.getConnection().sendAndWaitForResponse(new Message(body , MessageType.EVENT_IN_GAME) , 500);
+        if(response != null && response.getType() == MessageType.SHOW_INVENTORY_RESULT){
+            ArrayList<InventoryItemDTO> dto = response.getFromBody("inventory", new TypeToken<ArrayList<InventoryItemDTO>>(){}.getType());
+            String username = response.getFromBody("username");
+            System.out.println("hello");
+            stage.addActor(new InventoryWindow(stage , hotBar , dto , username));
+        }
     }
 
     public void createStoreWindow(Store store) {

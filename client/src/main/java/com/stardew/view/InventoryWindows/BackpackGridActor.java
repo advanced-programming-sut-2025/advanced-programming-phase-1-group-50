@@ -7,15 +7,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.stardew.model.InventoryItemDTO;
+import com.stardew.models.GameAssetManagers.GameAssetIDManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.InventoryItem;
 import com.stardew.models.app.App;
-import com.stardew.models.manuFactor.Ingredient;
-import com.stardew.models.userInfo.Player;
 import com.stardew.view.windows.SmartTooltip;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class BackpackGridActor extends Actor {
     private final float cellSize = 48f;
@@ -26,11 +25,13 @@ public class BackpackGridActor extends Actor {
     private TextureRegion selectedTexture = GamePictureManager.selectedTile;
     private final BitmapFont smallFont = GamePictureManager.smallFont;
     private final GlyphLayout layout = new GlyphLayout();
+    private final ArrayList<InventoryItemDTO> dto;
 
     private int lastVisitedCellX = -1;
     private int lastVisitedCellY = -1;
 
-    public BackpackGridActor() {
+    public BackpackGridActor(ArrayList<InventoryItemDTO> dto) {
+        this.dto = dto;
         initializeGrid();
 
         addListener(new InputListener() {
@@ -45,43 +46,43 @@ public class BackpackGridActor extends Actor {
                 return true;
             }
 
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                SmartTooltip.getInstance().hide();
-                lastVisitedCellX = -1;
-                lastVisitedCellY = -1;
-            }
+//            @Override
+//            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+//                SmartTooltip.getInstance().hide();
+//                lastVisitedCellX = -1;
+//                lastVisitedCellY = -1;
+//            }
 
-            @Override
-            public boolean mouseMoved(InputEvent event, float x, float y) {
-                int cellX = (int)(x / cellSize);
-                int cellY = (int)(y / cellSize);
-                if (cellX != lastVisitedCellX || cellY != lastVisitedCellY) {
-                    lastVisitedCellX = cellX;
-                    lastVisitedCellY = cellY;
-                    SmartTooltip.getInstance().hide();
-
-                    String info = "";
-                    if (cellY >= 0 && cellY < cells.length && cellX >= 0 && cellX < cells[0].length) {
-                        if (cells[cellY][cellX].textureRegion != null) {
-                            info = "  " + cells[cellY][cellX].inventoryItem.toString() + "  ";
-                        }
-                    }
-
-                    if (!info.isEmpty())
-                        SmartTooltip.getInstance().show(info);
-
-                }
-                return true;
-            }
+//            @Override
+//            public boolean mouseMoved(InputEvent event, float x, float y) {
+//                int cellX = (int)(x / cellSize);
+//                int cellY = (int)(y / cellSize);
+//                if (cellX != lastVisitedCellX || cellY != lastVisitedCellY) {
+//                    lastVisitedCellX = cellX;
+//                    lastVisitedCellY = cellY;
+//                    SmartTooltip.getInstance().hide();
+//
+//                    String info = "";
+//                    if (cellY >= 0 && cellY < cells.length && cellX >= 0 && cellX < cells[0].length) {
+//                        if (cells[cellY][cellX].textureRegion != null) {
+//                            info = "  " + cells[cellY][cellX].inventoryItem.toString() + "  ";
+//                        }
+//                    }
+//
+//                    if (!info.isEmpty())
+//                        SmartTooltip.getInstance().show(info);
+//
+//                }
+//                return true;
+//            }
         });
     }
 
     public void initializeGrid() {
-        InventoryItem[][] it = getInventoryItems();
+        InventoryItemDTO[][] it = getInventoryItems(dto);
 
-        ArrayList<InventoryItem> inventoryItems = App.getGame().getCurrentPlayingPlayer().getInventoryItems();
-        int size = inventoryItems.size();
+
+        int size = dto.size();
         int index = 0;
 
         if (it.length == 0 || it[0].length == 0) return;
@@ -92,9 +93,9 @@ public class BackpackGridActor extends Actor {
             for (int j = 0; j < it[i].length; j++) {
                 cells[i][j] = new ItemCell();
                 if(index >= 0 && index < size) {
-                    cells[i][j].textureRegion = inventoryItems.get(index).getInventoryTexture();
-                    cells[i][j].inventoryItem = inventoryItems.get(index);
-                    cells[i][j].quantity = App.getGame().getCurrentPlayingPlayer().getQuantityOfIngredient(inventoryItems.get(index));
+                    cells[i][j].textureRegion = GameAssetIDManager.getTextureRegion(dto.get(index).getTextureID());
+                    cells[i][j].inventoryItem = dto.get(index);
+                    cells[i][j].quantity =dto.get(index).getQuantity();
                 }
                 else{
                     cells[i][j].textureRegion = null;
@@ -106,14 +107,8 @@ public class BackpackGridActor extends Actor {
         }
     }
 
-    public InventoryItem[][] getInventoryItems() {
-        Player p = App.getGame().getCurrentPlayingPlayer();
-        ArrayList<InventoryItem> items = new ArrayList<>();
+    public InventoryItemDTO[][] getInventoryItems(ArrayList<InventoryItemDTO> items) {
 
-        for (Map.Entry<Ingredient, Integer> entry : p.getBackpack().getIngredientQuantity().entrySet()) {
-            items.add(entry.getKey());
-        }
-        items.addAll(p.getBackpack().getTools());
 
         int total = items.size();
         int cols = 10;
@@ -121,7 +116,7 @@ public class BackpackGridActor extends Actor {
 
         setSize(cols * cellSize, rows * cellSize);
 
-        InventoryItem[][] items1 = new InventoryItem[rows][cols];
+        InventoryItemDTO[][] items1 = new InventoryItemDTO[rows][cols];
 
         for (int index = 0; index < items.size(); index++) {
             int row = index / cols;
@@ -165,10 +160,10 @@ public class BackpackGridActor extends Actor {
         return selectedY;
     }
 
-    public InventoryItem getInventoryItemByXAndY(int x, int y) {
-        if (x == -1 || y == -1) return null;
-        return cells[y][x].inventoryItem;
-    }
+//    public InventoryItem getInventoryItemByXAndY(int x, int y) {
+//        if (x == -1 || y == -1) return null;
+//        return cells[y][x].inventoryItem;
+//    }
 
     public void update(){
         initializeGrid();

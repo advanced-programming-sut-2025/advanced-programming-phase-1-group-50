@@ -1,5 +1,6 @@
 package com.stardew.model.Tools;
 
+import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.Result;
 import com.stardew.model.mapInfo.InventoryItem;
 
@@ -26,5 +27,9 @@ public abstract class Tool implements InventoryItem {
             case "wateringcan" -> new WateringCan();
             default -> null;
         };
+    }
+
+    public InventoryItemDTO toDTO() {
+        return new InventoryItemDTO(getInventoryTexture(), true , 1);
     }
 }

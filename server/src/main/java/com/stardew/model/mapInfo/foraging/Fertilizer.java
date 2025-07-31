@@ -1,5 +1,6 @@
 package com.stardew.model.mapInfo.foraging;
 
+import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.TextureID;
 import com.stardew.model.mapInfo.Ingredient;
 
@@ -25,4 +26,6 @@ public enum Fertilizer implements Ingredient {
     public TextureID getInventoryTexture() {
         return texture;
     }
+
+
 }

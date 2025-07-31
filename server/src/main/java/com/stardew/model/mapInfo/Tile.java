@@ -6,6 +6,7 @@ package com.stardew.model.mapInfo;
 //import com.stardew.model.Placeable;
 import com.stardew.model.TextureID;
 import com.stardew.model.TileDTO;
+import com.stardew.model.mapInfo.foraging.Fertilizer;
 import com.stardew.model.gameApp.App;
 //import com.stardew.model.foraging.Fertilizer;
 
@@ -19,12 +20,12 @@ public class Tile {
     private boolean walkable ;
     private Placeable placeable;
     private boolean isPlowed = false;
-//    private Fertilizer fertilizer = null;
+    private Fertilizer fertilizer = null;
     private boolean watered = false;
     private TextureID textureID ;
     private TextureID backgroundTextureID ;
     private TextureID pastTextureID;
-//    private TileTypeTextureRegion typeTextureRegion;
+
     private float wateredTimeTexture = 0.0f;
 
 
@@ -113,18 +114,18 @@ public class Tile {
 //        return fertilizer;
 //    }
 
-//    public void setFertilizer(Fertilizer fertilizer) {
-//        this.fertilizer = fertilizer;
-//        if (fertilizer != null) {
-//            this.backgroundTexture = (fertilizer == Fertilizer.WaterFertilizer) ?
-//                GamePictureManager.waterFertilizedTile : GamePictureManager.growthFertilizedTile;
-//            typeTextureRegion = TileTypeTextureRegion.Fertilizer;
-//        }
-//        else {
-//            this.backgroundTexture = pastTexture;
-//            typeTextureRegion = TileTypeTextureRegion.Normal;
-//        }
-//    }
+    public void setFertilizer(Fertilizer fertilizer) {
+        this.fertilizer = fertilizer;
+        if (fertilizer != null) {
+            this.backgroundTextureID = (fertilizer == Fertilizer.WaterFertilizer) ?
+                TextureID.waterFertilizedTile : TextureID.growthFertilizedTile;
+
+        }
+        else {
+            this.backgroundTextureID = pastTextureID;
+
+        }
+    }
 
 //    public TextureRegion getTexture() {
 //        return texture;

@@ -1,29 +1,19 @@
 package com.stardew.model.userInfo;
 
-//import com.stardew.model.InventoryItem;
-//import com.stardew.model.NPCs.NPCType;
-//import com.stardew.model.NPCs.RelationWithNPC;
-//import com.stardew.model.Notification.MarriageRequest;
+
+import com.stardew.model.NPCs.NPCType;
+import com.stardew.model.NPCs.RelationWithNPC;
+import com.stardew.model.Notification.MarriageRequest;
+import com.stardew.model.Notification.Notification;
 import com.stardew.model.PlayerDTO;
 import com.stardew.model.Result;
-//import com.stardew.model.Notification.Notification;
-//import com.stardew.model.manuFactor.Ingredient;
-import com.stardew.model.Tools.Axe;
-import com.stardew.model.Tools.Pickaxe;
-import com.stardew.model.Tools.Scythe;
-import com.stardew.model.Tools.Hoe;
-import com.stardew.model.Tools.WateringCan;
-import com.stardew.model.mapInfo.Farm;
-import com.stardew.model.mapInfo.Pair;
-import com.stardew.model.mapInfo.Position;
-//import com.stardew.model.mapInfo.Wood;
-//import com.stardew.model.tools.*;
-import com.stardew.model.gameApp.*;
+
+import com.stardew.model.Tools.*;
+import com.stardew.model.mapInfo.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+
 
 public class Player {
     private final int maxEnergy = 200;
@@ -31,10 +21,10 @@ public class Player {
     private int consumedEnergyInTurn = 0;
     private  final String username;
     private  final String nickname;
-//    private final Ability ability = new Ability(this);
-//    private Tool currentTool;
+    private final Ability ability = new Ability(this);
+    private Tool currentTool;
     private final Backpack backpack = new Backpack(BackpackType.Primary);
-//    private final ArrayList<Notification> notifications = new ArrayList<>();
+    private final ArrayList<Notification> notifications = new ArrayList<>();
     private Farm farm;
     private boolean isFaintedToday = false;
     private boolean isMarried = false;
@@ -42,18 +32,18 @@ public class Player {
     private Pair<Float , Float> playerPosition = new Pair<>(15f, 8f);
     private Position currentPosition;
     private boolean isInfinite = false;
-//    private RelationWithNPC relationWithAbigail;
-//    private RelationWithNPC relationWithSebastian;
-//    private RelationWithNPC relationWithHarvey;
-//    private RelationWithNPC relationWithLeah;
-//    private RelationWithNPC relationWithRobin;
+    private RelationWithNPC relationWithAbigail;
+    private RelationWithNPC relationWithSebastian;
+    private RelationWithNPC relationWithHarvey;
+    private RelationWithNPC relationWithLeah;
+    private RelationWithNPC relationWithRobin;
     private volatile int moveDirection = 0;
     private float moveDistance;
     private final float distanceByTile = 5f;
     private float speed = 5f;
 //    private float vx , vy = 0;
-//    private InventoryItem currentInventoryItem = null;
-//    private ArrayList<InventoryItem> inventoryItems = new ArrayList<>();
+    private InventoryItem currentInventoryItem = null;
+    private ArrayList<InventoryItem> inventoryItems = new ArrayList<>();
     private final User currentUser;
 
     public Player(User currentUser) {
@@ -72,20 +62,20 @@ public class Player {
         this.backpack.getTools().add(pickaxe);
         this.backpack.getTools().add(axe);
         this.backpack.getTools().add(wateringCan);
-//        for(Tool tool : backpack.getTools()) {
-//            if(tool instanceof Hoe) {
-//                this.currentTool = tool;
-//                break;
-//            }
-//        }
-//        this.backpack.getIngredientQuantity().put(new Coin() , 20);
-//        this.backpack.getIngredientQuantity().put(new Wood() , 100);
+        for(Tool tool : backpack.getTools()) {
+            if(tool instanceof Hoe) {
+                this.currentTool = tool;
+                break;
+            }
+        }
+        this.backpack.getIngredientQuantity().put(new Coin() , 20);
+        this.backpack.getIngredientQuantity().put(new Wood() , 100);
         updateInventoryItems();
-//        this.relationWithAbigail = new RelationWithNPC(NPCType.Abigail);
-//        this.relationWithSebastian = new RelationWithNPC(NPCType.Sebastian);
-//        this.relationWithHarvey = new RelationWithNPC(NPCType.Harvey);
-//        this.relationWithLeah = new RelationWithNPC(NPCType.Leah);
-//        this.relationWithRobin = new RelationWithNPC(NPCType.Robin);
+        this.relationWithAbigail = new RelationWithNPC(NPCType.Abigail);
+        this.relationWithSebastian = new RelationWithNPC(NPCType.Sebastian);
+        this.relationWithHarvey = new RelationWithNPC(NPCType.Harvey);
+        this.relationWithLeah = new RelationWithNPC(NPCType.Leah);
+        this.relationWithRobin = new RelationWithNPC(NPCType.Robin);
 
     }
     public int getMaxEnergy() {
@@ -93,50 +83,50 @@ public class Player {
     }
 
     public void updateInventoryItems() {
-//        inventoryItems.clear();
-//        inventoryItems.addAll(getBackpack().getIngredientQuantity().keySet());
-//        inventoryItems.addAll(backpack.getTools());
+        inventoryItems.clear();
+        inventoryItems.addAll(getBackpack().getIngredientQuantity().keySet());
+        inventoryItems.addAll(backpack.getTools());
     }
 
-//    public RelationWithNPC getRelationWithAbigail() {
-//        return relationWithAbigail;
-//    }
+    public RelationWithNPC getRelationWithAbigail() {
+        return relationWithAbigail;
+    }
 
-//    public void setRelationWithAbigail(RelationWithNPC relationWithAbigail) {
-//        this.relationWithAbigail = relationWithAbigail;
-//    }
+    public void setRelationWithAbigail(RelationWithNPC relationWithAbigail) {
+        this.relationWithAbigail = relationWithAbigail;
+    }
 
-//    public RelationWithNPC getRelationWithSebastian() {
-//        return relationWithSebastian;
-//    }
+    public RelationWithNPC getRelationWithSebastian() {
+        return relationWithSebastian;
+    }
 
-//    public void setRelationWithSebastian(RelationWithNPC relationWithSebastian) {
-//        this.relationWithSebastian = relationWithSebastian;
-//    }
+    public void setRelationWithSebastian(RelationWithNPC relationWithSebastian) {
+        this.relationWithSebastian = relationWithSebastian;
+    }
 
-//    public RelationWithNPC getRelationWithHarvey() {
-//        return relationWithHarvey;
-//    }
+    public RelationWithNPC getRelationWithHarvey() {
+        return relationWithHarvey;
+    }
 
-//    public void setRelationWithHarvey(RelationWithNPC relationWithHarvey) {
-//        this.relationWithHarvey = relationWithHarvey;
-//    }
+    public void setRelationWithHarvey(RelationWithNPC relationWithHarvey) {
+        this.relationWithHarvey = relationWithHarvey;
+    }
 
-//    public RelationWithNPC getRelationWithLeah() {
-//        return relationWithLeah;
-//    }
+    public RelationWithNPC getRelationWithLeah() {
+        return relationWithLeah;
+    }
 
-//    public void setRelationWithLeah(RelationWithNPC relationWithLeah) {
-//        this.relationWithLeah = relationWithLeah;
-//    }
+    public void setRelationWithLeah(RelationWithNPC relationWithLeah) {
+        this.relationWithLeah = relationWithLeah;
+    }
 
-//    public RelationWithNPC getRelationWithRobin() {
-//        return relationWithRobin;
-//    }
+    public RelationWithNPC getRelationWithRobin() {
+        return relationWithRobin;
+    }
 
-//    public void setRelationWithRobin(RelationWithNPC relationWithRobin) {
-//        this.relationWithRobin = relationWithRobin;
-//    }
+    public void setRelationWithRobin(RelationWithNPC relationWithRobin) {
+        this.relationWithRobin = relationWithRobin;
+    }
 
 
     public Result faint() {
@@ -145,17 +135,17 @@ public class Player {
         return new Result(false , "");
     }
 
-//    public Tool getCurrentTool() {
-//        return currentTool;
-//    }
+    public Tool getCurrentTool() {
+        return currentTool;
+    }
 
     public void fishing(){
 
     }
 
-//    public void setCurrentTool(Tool currentTool) {
-//        this.currentTool = currentTool;
-//    }
+    public void setCurrentTool(Tool currentTool) {
+        this.currentTool = currentTool;
+    }
     public Farm getFarm(){
         return farm;
     }
@@ -181,9 +171,10 @@ public class Player {
     public String getNickname(){
         return nickname;
     }
-//    public Ability getAbility(){
-//        return ability;
-//    }
+
+    public Ability getAbility(){
+        return ability;
+    }
 
 
     public Backpack getBackpack() {
@@ -264,13 +255,13 @@ public class Player {
 
     }
 
-//    public void addNotification (Notification notification) {
-//        this.notifications.add(notification);
-//    }
+    public void addNotification (Notification notification) {
+        this.notifications.add(notification);
+    }
 
-//    public ArrayList<Notification> getNotifications() {
-//        return notifications;
-//    }
+    public ArrayList<Notification> getNotifications() {
+        return notifications;
+    }
 
     public boolean isMarried() {
         return isMarried;
@@ -296,19 +287,19 @@ public class Player {
 
         StringBuilder result = new StringBuilder("Notifications:");
 
-//        for (Notification notification : notifications) {
-//
-//            if (!notification.isChecked()) {
-//
-//                result.append("\n").append(notification);
-//
-//                if (!(notification instanceof MarriageRequest)) {
-//                    notification.setChecked(true);
-//                }
-//
-//            }
-//
-//        }
+        for (Notification notification : notifications) {
+
+            if (!notification.isChecked()) {
+
+                result.append("\n").append(notification);
+
+                if (!(notification instanceof MarriageRequest)) {
+                    notification.setChecked(true);
+                }
+
+            }
+
+        }
 
         return result.toString();
     }
@@ -384,76 +375,76 @@ public class Player {
 //        return vy;
 //    }
 
-//    public void setCurrentInventoryItem(InventoryItem item){
-//        this.currentInventoryItem = item;
-//
-//        if (item instanceof Tool tool)
-//            setCurrentTool(tool);
-//        else
-//            setCurrentTool(null);
-//    }
+    public void setCurrentInventoryItem(InventoryItem item){
+        this.currentInventoryItem = item;
 
-//    public InventoryItem getCurrentInventoryItem(){
-//        return currentInventoryItem;
-//    }
+        if (item instanceof Tool tool)
+            setCurrentTool(tool);
+        else
+            setCurrentTool(null);
+    }
 
-//    public void addInventoryItem(InventoryItem item){
-//        if(inventoryItems.contains(item)){
-//            return;
-//        }
-//        this.inventoryItems.add(item);
-//    }
-//
-//    public ArrayList<InventoryItem> getInventoryItems(){
-//        return inventoryItems;
-//    }
-//
-//    public InventoryItem[] getHotBar() {
-//        InventoryItem[] hotBar = new InventoryItem[10];
-//        for (int i = 0; i < 10; i++) {
-//            if (i < inventoryItems.size()) {
-//                hotBar[i] = inventoryItems.get(i);
-//            } else {
-//                hotBar[i] = null;
-//            }
-//        }
-//        return hotBar;
-//    }
+    public InventoryItem getCurrentInventoryItem(){
+        return currentInventoryItem;
+    }
 
+    public void addInventoryItem(InventoryItem item){
+        if(inventoryItems.contains(item)){
+            return;
+        }
+        this.inventoryItems.add(item);
+    }
 
+    public ArrayList<InventoryItem> getInventoryItems(){
+        return inventoryItems;
+    }
 
-//    public void swapInventoryItem(InventoryItem item1, InventoryItem item2) {
-//        if (item1 == null || item2 == null || item1.equals(item2)) return;
-//
-//        int index1 = inventoryItems.indexOf(item1);
-//        int index2 = inventoryItems.indexOf(item2);
-//
-//        if (index1 == -1 || index2 == -1) return;
-//
-//        inventoryItems.set(index1, item2);
-//        inventoryItems.set(index2, item1);
-//    }
-
-
-//    public int getQuantityOfIngredient(InventoryItem ingredient) {
-//        if(ingredient instanceof Tool) {
-//            return 1;
-//        }
-//        else if(ingredient instanceof Ingredient){
-//            return backpack.getIngredientQuantity().getOrDefault(ingredient, 0);
-//        }
-//        return 0;
-//    }
+    public InventoryItem[] getHotBar() {
+        InventoryItem[] hotBar = new InventoryItem[10];
+        for (int i = 0; i < 10; i++) {
+            if (i < inventoryItems.size()) {
+                hotBar[i] = inventoryItems.get(i);
+            } else {
+                hotBar[i] = null;
+            }
+        }
+        return hotBar;
+    }
 
 
 
-//    public void shuffleInventoryItems() {
-//        Collections.shuffle(inventoryItems);
-//    }
-//
-//    public void removeInventoryItem(InventoryItem item) {
-//        inventoryItems.remove(item);
-//    }
+    public void swapInventoryItem(InventoryItem item1, InventoryItem item2) {
+        if (item1 == null || item2 == null || item1.equals(item2)) return;
+
+        int index1 = inventoryItems.indexOf(item1);
+        int index2 = inventoryItems.indexOf(item2);
+
+        if (index1 == -1 || index2 == -1) return;
+
+        inventoryItems.set(index1, item2);
+        inventoryItems.set(index2, item1);
+    }
+
+
+    public int getQuantityOfIngredient(InventoryItem ingredient) {
+        if(ingredient instanceof Tool) {
+            return 1;
+        }
+        else if(ingredient instanceof Ingredient){
+            return backpack.getIngredientQuantity().getOrDefault(ingredient, 0);
+        }
+        return 0;
+    }
+
+
+
+    public void shuffleInventoryItems() {
+        Collections.shuffle(inventoryItems);
+    }
+
+    public void removeInventoryItem(InventoryItem item) {
+        inventoryItems.remove(item);
+    }
 
     public PlayerDTO toDTO(){
         return new PlayerDTO(playerPosition.getFirst() , playerPosition.getSecond(), moveDirection , energy );

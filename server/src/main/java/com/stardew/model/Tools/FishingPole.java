@@ -1,8 +1,8 @@
 package com.stardew.model.Tools;
 
+import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
-import com.stardew.model.gameApp.date.Weather;
 
 public class FishingPole extends Tool{
     private final PoleType type;

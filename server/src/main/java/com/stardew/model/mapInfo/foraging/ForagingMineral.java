@@ -1,5 +1,6 @@
 package com.stardew.model.mapInfo.foraging;
 
+import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.TextureID;
 import com.stardew.model.mapInfo.Ingredient;
 import com.stardew.model.stores.Sellable;
@@ -57,4 +58,6 @@ public enum ForagingMineral implements Ingredient , Sellable {
     public TextureID getInventoryTexture() {
         return texture;
     }
+
+
 }

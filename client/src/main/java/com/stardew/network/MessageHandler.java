@@ -89,6 +89,7 @@ public class MessageHandler {
                 });
                 return true;
             }
+
             default -> {
                 return false;
             }
