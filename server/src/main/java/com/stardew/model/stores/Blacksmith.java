@@ -11,9 +11,7 @@ public class Blacksmith extends Store {
     private ArrayList<ShopItem> inventory;
 
     public Blacksmith(int x, int y, int width, int height) {
-        //super(GamePictureManager.blacksmithRegions ,new TextureRegion(GamePictureManager.blacksmithTexture),new
-        // Rectangle(x, y, width, height), "Clint", 9, 16);
-        super(null, TextureID.blacksmithTextureRegion, new Rectangle(x, y, width, height), "Clint", 9, 16);
+        super( TextureID.blacksmithTextureRegion, new Rectangle(x, y, width, height), "Clint", 9, 16);
     }
 
     @Override

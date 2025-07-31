@@ -12,8 +12,7 @@ public class CarpenterShop extends Store{
     private ArrayList<ShopItem> inventory;
 
     public CarpenterShop(int x, int y, int width, int height) {
-        //super(GamePictureManager.carpenterShopRegions, new TextureRegion(GamePictureManager.carpenterShopTexture), new Rectangle(x, y, width, height), "Robin", 9, 20);
-        super(null, TextureID.carpenterShopTextureRegion,new Rectangle(x,y,width,height),"Robin",9,20);
+        super(TextureID.carpenterShopTextureRegion,new Rectangle(x,y,width,height),"Robin",9,20);
     }
 
     @Override

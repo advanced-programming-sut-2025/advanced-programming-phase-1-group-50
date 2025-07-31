@@ -14,8 +14,7 @@ public class PierreGeneralStore extends Store {
     private ArrayList<ShopItem> inventory;
 
     public PierreGeneralStore(int x, int y, int width, int height) {
-        //super(GamePictureManager.pierresShopRegions,new TextureRegion(GamePictureManager.pierresShopTexture),new Rectangle(x, y, width, height), "Pierre", 9, 23);
-        super(null, TextureID.pierresShopRegion,new Rectangle(x,y,width,height),"Pierre",9,23);
+        super( TextureID.pierresShopRegion,new Rectangle(x,y,width,height),"Pierre",9,23);
     }
 
     @Override

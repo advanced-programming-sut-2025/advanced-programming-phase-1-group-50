@@ -12,8 +12,7 @@ public class FishShop extends Store{
     private ArrayList<ShopItem> inventory;
 
     public FishShop(int x, int y, int width, int height) {
-//        super(GamePictureManager.fishShopRegions,new TextureRegion(GamePictureManager.fishShopTexture),new Rectangle(x, y, width, height), "willy", 9, 17);
-        super(null, TextureID.fishShopTextureRegion,new Rectangle(x,y,width,height),"willy",9,17);
+        super(TextureID.fishShopTextureRegion,new Rectangle(x,y,width,height),"willy",9,17);
     }
 
     @Override

@@ -11,8 +11,7 @@ public class MarnieRanch extends Store{
     private ArrayList<ShopItem> inventory;
 
     public MarnieRanch(int x, int y, int width, int height) {
-//        super(GamePictureManager.marnieRanchRegions,new TextureRegion(GamePictureManager.marnieRanchTexture),new Rectangle(x, y, width, height), "Marnie", 9, 16);
-        super(null, TextureID.marnieRegion,new Rectangle(x,y,width,height),"Marnie",9,16);
+        super( TextureID.marnieRegion,new Rectangle(x,y,width,height),"Marnie",9,16);
     }
 
 

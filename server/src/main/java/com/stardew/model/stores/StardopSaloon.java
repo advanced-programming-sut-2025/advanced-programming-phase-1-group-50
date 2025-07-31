@@ -13,8 +13,7 @@ public class StardopSaloon extends Store{
     private ArrayList<ShopItem> inventory;
 
     public StardopSaloon(int x, int y, int width, int height) {
-//        super(GamePictureManager.stardopSaloonRegions,new TextureRegion(GamePictureManager.stardopSaloonTexture),new Rectangle(x, y, width, height), "Gus", 12, 24);
-        super(null, TextureID.stardopSaloonRegion,new Rectangle(x,y,width,height),"Gus",12,24);
+        super( TextureID.stardopSaloonRegion,new Rectangle(x,y,width,height),"Gus",12,24);
     }
 
     @Override

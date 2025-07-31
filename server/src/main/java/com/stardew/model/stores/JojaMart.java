@@ -12,9 +12,7 @@ public class JojaMart extends Store {
     private ArrayList<ShopItem> inventory;
 
     public JojaMart(int x, int y, int width, int height) {
-        //super( GamePictureManager.jojaMartRegions,new TextureRegion(GamePictureManager.jojaMartTexture),new Rectangle(x, y, width, height), "Morris", 9, 23);
-        super(null, TextureID.jojaMartRegion,new Rectangle(x,y,width,height),"Mor" +
-            "ris",9,23);
+        super(TextureID.jojaMartRegion, new Rectangle(x, y, width, height), "Morris", 9, 23);
     }
 
     @Override
