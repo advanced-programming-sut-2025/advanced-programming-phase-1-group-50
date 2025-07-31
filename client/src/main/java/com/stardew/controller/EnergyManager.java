@@ -7,26 +7,29 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.models.userInfo.Player;
 
 public class EnergyManager {
     private final Stage stage ;
     private ProgressBar progressBar;
+    private GameModel gameModel;
 
-    public EnergyManager(Stage stage) {
+    public EnergyManager(GameModel gameModel, Stage stage) {
         this.stage = stage;
+        this.gameModel = gameModel;
         initializeProgressBar();
 
     }
 
 
     public void initializeProgressBar(){
-        Player player = App.getGame().getCurrentPlayingPlayer();
+        ;
         Skin skin = GamePictureManager.skin;
-        progressBar = new ProgressBar(0, player.getMaxEnergy(), 1, true, skin);
+        progressBar = new ProgressBar(0, 200, 1, true, skin);
         progressBar.setAnimateDuration(0.5f);
-        progressBar.setValue(player.getEnergy());
+        progressBar.setValue(200);
         progressBar.setSize(20, 200);
         progressBar.setPosition(20 , Gdx.graphics.getHeight() - 210);
         stage.addActor(progressBar);
@@ -34,8 +37,16 @@ public class EnergyManager {
 
 
     public void update() {
-        Player player = App.getGame().getCurrentPlayingPlayer();
-        progressBar.setValue(player.getEnergy());
+        int energy = gameModel.getPlayerEnergy();
+        progressBar.setValue(energy);
+    }
+
+    public GameModel getGameModel() {
+        return gameModel;
+    }
+
+    public void setGameModel(GameModel gameModel) {
+        this.gameModel = gameModel;
     }
 
 }

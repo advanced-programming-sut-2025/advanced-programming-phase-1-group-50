@@ -36,6 +36,7 @@ public class GameStateController {
         gameState.updatePlayer(player);
         gameState.updatePlaceables(placeables);
         gameState.updateCamera();
+        gameState.updateEnergy(player.getEnergy());
         gameState.updateVisibleTilesBounds();
     }
 

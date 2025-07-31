@@ -34,7 +34,7 @@ public class GameScreenMenu implements Screen {
     private final Stage uiStage;
 
     private final TimeManager timeManager ;
-//    private final EnergyManager energyManager = new EnergyManager(uiStage);
+    private final EnergyManager energyManager ;
 
 //    private final WeatherManager weatherManager = new WeatherManager();
 
@@ -51,6 +51,7 @@ public class GameScreenMenu implements Screen {
         this.gameMenuInputAdapter.setStage(stage);
         this.uiStage = new Stage(new ScreenViewport());
         this.timeManager = new TimeManager(gameState, uiStage);
+        this.energyManager = new EnergyManager(gameState, uiStage);
         gameMenuInputAdapter.setHotBar(hotBarActor);
 
 
@@ -112,7 +113,7 @@ public class GameScreenMenu implements Screen {
         batch.begin();
 //
         timeManager.updateTime();
-//        energyManager.update();
+        energyManager.update();
 //        gameModel.update(v);
         gameRenderer.render(v);
         gameMenuInputAdapter.update(v);

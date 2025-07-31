@@ -23,6 +23,7 @@ public class GameModel {
     private int startY;
     private int endX;
     private int endY;
+    private int playerEnergy;
     private final Object lock = new Object();
     private final Object boundsLock = new Object();
 
@@ -267,6 +268,10 @@ public class GameModel {
         return mapHeight;
     }
 
+    public void updateEnergy(int energy) {
+        this.playerEnergy = energy;
+    }
+
 //    public PlayerController getPlayerController() {
 //        return playerController;
 //    }
@@ -274,5 +279,9 @@ public class GameModel {
 //    public AnimalsManager getAnimalsManager() {
 //        return animalsManager;
 //    }
+
+    public int getPlayerEnergy() {
+        return playerEnergy;
+    }
 
 }
