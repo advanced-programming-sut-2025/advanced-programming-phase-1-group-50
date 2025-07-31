@@ -2,6 +2,9 @@ package com.stardew.model.stores;
 
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
+import com.stardew.model.cooking.Food;
+import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGoodType;
+import com.stardew.model.recipes.CookingRecipe;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,29 +13,28 @@ public class StardopSaloon extends Store{
     private ArrayList<ShopItem> inventory;
 
     public StardopSaloon(int x, int y, int width, int height) {
-//        super(GamePictureManager.stardopSaloonRegions,new TextureRegion(GamePictureManager.stardopSaloonTexture),new Rectangle(x, y, width, height), "Gus", 12, 24);
-        super(null, TextureID.stardopSaloonRegion,new Rectangle(x,y,width,height),"Gus",12,24);
+        super( TextureID.stardopSaloonRegion,new Rectangle(x,y,width,height),"Gus",12,24);
     }
 
     @Override
     public void loadInventory() {
 
         inventory = new ArrayList<>();
-//        inventory.add(new StardopSaloonArtisanGoodItem("Beer", ArtisanGoodType.Beer,400,Integer.MAX_VALUE));
-//        inventory.add(new StardopSaloonArtisanGoodItem("Coffee", ArtisanGoodType.Coffee,300,Integer.MAX_VALUE));
-//        inventory.add(new StardopSaloonFoodItem("Salad", Food.Salad,220,Integer.MAX_VALUE));
-//        inventory.add(new StardopSaloonFoodItem("Bread", Food.Bread,120,Integer.MAX_VALUE));
-//        inventory.add(new StardopSaloonFoodItem("Spaghetti", Food.Spaghetti,240,Integer.MAX_VALUE));
-//        inventory.add(new StardopSaloonFoodItem("Pizza", Food.Pizza,600,Integer.MAX_VALUE));
-//        inventory.add(new StardopSaloonRecipeItem("Hashbrowns", CookingRecipe.HashBrowns,50,1));
-//        inventory.add(new StardopSaloonRecipeItem("Omelet", CookingRecipe.Omelet,100,1));
-//        inventory.add(new StardopSaloonRecipeItem("Pancakes", CookingRecipe.Pancakes,100,1));
-//        inventory.add(new StardopSaloonRecipeItem("Bread", CookingRecipe.Bread,100,1));
-//        inventory.add(new StardopSaloonRecipeItem("Tortilla", CookingRecipe.Tortilla,100,1));
-//        inventory.add(new StardopSaloonRecipeItem("Pizza", CookingRecipe.Pizza,150,1));
-//        inventory.add(new StardopSaloonRecipeItem("Maki Roll", CookingRecipe.MakiRoll,300,1));
-//        inventory.add(new StardopSaloonRecipeItem("Triple Shot  Espresso", CookingRecipe.TripleShotEspresso,5000,1));
-//        inventory.add(new StardopSaloonRecipeItem("Cookie", CookingRecipe.Cookie,300,1));
+        inventory.add(new StardopSaloonArtisanGoodItem("Beer", ArtisanGoodType.Beer,400,Integer.MAX_VALUE));
+        inventory.add(new StardopSaloonArtisanGoodItem("Coffee", ArtisanGoodType.Coffee,300,Integer.MAX_VALUE));
+        inventory.add(new StardopSaloonFoodItem("Salad", Food.Salad,220,Integer.MAX_VALUE));
+        inventory.add(new StardopSaloonFoodItem("Bread", Food.Bread,120,Integer.MAX_VALUE));
+        inventory.add(new StardopSaloonFoodItem("Spaghetti", Food.Spaghetti,240,Integer.MAX_VALUE));
+        inventory.add(new StardopSaloonFoodItem("Pizza", Food.Pizza,600,Integer.MAX_VALUE));
+        inventory.add(new StardopSaloonRecipeItem("Hashbrowns", CookingRecipe.HashBrowns,50,1));
+        inventory.add(new StardopSaloonRecipeItem("Omelet", CookingRecipe.Omelet,100,1));
+        inventory.add(new StardopSaloonRecipeItem("Pancakes", CookingRecipe.Pancakes,100,1));
+        inventory.add(new StardopSaloonRecipeItem("Bread", CookingRecipe.Bread,100,1));
+        inventory.add(new StardopSaloonRecipeItem("Tortilla", CookingRecipe.Tortilla,100,1));
+        inventory.add(new StardopSaloonRecipeItem("Pizza", CookingRecipe.Pizza,150,1));
+        inventory.add(new StardopSaloonRecipeItem("Maki Roll", CookingRecipe.MakiRoll,300,1));
+        inventory.add(new StardopSaloonRecipeItem("Triple Shot  Espresso", CookingRecipe.TripleShotEspresso,5000,1));
+        inventory.add(new StardopSaloonRecipeItem("Cookie", CookingRecipe.Cookie,300,1));
 
     }
 

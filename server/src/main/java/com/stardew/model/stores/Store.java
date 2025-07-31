@@ -1,6 +1,5 @@
 package com.stardew.model.stores;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
@@ -14,12 +13,10 @@ public abstract class Store implements Placeable {
     protected final String shopAssistantName;
     protected final int startHour;
     protected final int endHour;
-    protected final TextureRegion[][] regions;
     protected final TextureID texture;
     protected Image storeImage;
 
-    public Store(TextureRegion[][] regions, TextureID texture,Rectangle bounds, String shopAssistantName, int startHour, int endHour) {
-        this.regions = regions;
+    public Store(TextureID texture,Rectangle bounds, String shopAssistantName, int startHour, int endHour) {
         this.texture = texture;
         this.bounds = bounds;
         this.shopAssistantName = shopAssistantName;
@@ -50,21 +47,8 @@ public abstract class Store implements Placeable {
         //TODO
     }
 
-    //new-just for compileErrors
     public TextureID getTexture() {
         return texture;
-    }
-
-    public Color getMiniMapColor() {
-        return null;
-    }
-
-    //new-just for compileErrors
-
-//    @Override
-//    public TextureRegion getTexture() {return texture;}
-    public TextureRegion[][] getRegions() {
-        return regions;
     }
     public abstract char getSymbol();
     public void loadInventory() {}
