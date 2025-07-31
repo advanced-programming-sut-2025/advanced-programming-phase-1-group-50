@@ -46,8 +46,7 @@ public class Game {
         this.gameCreator = u;
         this.time = new Time();
         this.map = map;
-        timeService = new TimeService(time);
-        timeService.setGame(this);
+        this.timeService = new TimeService(time, this);
 
 //        relationInitializer(players);
     }

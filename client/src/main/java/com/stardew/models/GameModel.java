@@ -6,6 +6,7 @@ import com.stardew.controller.TimeManager;
 import com.stardew.model.PlaceableDTO;
 import com.stardew.model.PlayerDTO;
 import com.stardew.model.TileDTO;
+import com.stardew.model.TimeDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class GameModel {
     private ArrayList<TileDTO> tiles;
     private ArrayList<PlaceableDTO> placeables;
     private PlayerDTO player;
+    private TimeDTO time;
     private final int mapWidth, mapHeight;
     private int startX;
     private int startY;
@@ -23,7 +25,6 @@ public class GameModel {
     private int endY;
     private final Object lock = new Object();
     private final Object boundsLock = new Object();
-    private final TimeManager timeManager;
 
 //    private final Map map;
 //    private PlayerController playerController;
@@ -43,7 +44,6 @@ public class GameModel {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, 0);
-        timeManager = new TimeManager();
 
 //        Player p = App.getGame().getCurrentPlayingPlayer();
 //        camera.position.set(p.getPlayerPosition().getFirst() , p.getPlayerPosition().getSecond() , 0);
@@ -201,6 +201,10 @@ public class GameModel {
         }
     }
 
+    public void updateTime(TimeDTO time) {
+        this.time = time;
+    }
+
     public ArrayList<TileDTO> getTiles() {
         synchronized (lock) {
             return tiles;
@@ -217,6 +221,10 @@ public class GameModel {
         synchronized (lock) {
             return placeables;
         }
+    }
+
+    public TimeDTO getTime() {
+        return time;
     }
 
     public int getStartX() {
@@ -266,9 +274,5 @@ public class GameModel {
 //    public AnimalsManager getAnimalsManager() {
 //        return animalsManager;
 //    }
-
-    public TimeManager getTimeManager() {
-        return timeManager;
-    }
 
 }
