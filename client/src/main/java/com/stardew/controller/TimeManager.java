@@ -134,7 +134,7 @@ public class TimeManager {
         TimeDTO timeDTO = gameModel.getTime();
         int hour = timeDTO.getHour();
         int day = timeDTO.getDay();
-        int minute = (((int)start) / 10) * 10;
+        int minute = timeDTO.getMinute();
         String dayOfTheWeek = timeDTO.getDayOfWeekName();
         String season = timeDTO.getSeasonName();
         String timeText = String.format("%02d:%02d    %2d", hour, minute, day);
