@@ -21,38 +21,29 @@ import com.stardew.models.mapInfo.Tile;
 import com.stardew.models.userInfo.Coin;
 
 public class TimeManager {
+    private final GameModel gameModel;
     private Label timeLabel ;
     private Label seasonAndDayLabel;
     private Label playerGoldLabel;
     private Image blackFadeImage;
     private Image nightOverlay;
     private float start = 0f;
-    private Stage uiStage ;
+    private final Stage uiStage ;
     private final Image clockImage = new Image(GamePictureManager.clockTexture);
     private int previousDigitsOfGold = 0;
     private boolean changeTileTextureInWinter = false;
     private boolean changeTileTextureInSpring = false;
     private boolean firstTimeChangeInSpring = true;
 
-    private TimeDTO timeDTO = new TimeDTO(9 , 1 , "Spring" , "Saturday" , "Sunny") ;
 
 
-
-
-
-    public TimeManager() {
-
-
-
-
-
-
-
-    }
-
-    public void setStage(Stage uiStage) {
+    public TimeManager(GameModel gameModel, Stage uiStage) {
+        this.gameModel = gameModel;
         this.uiStage = uiStage;
+        initializeUI();
     }
+
+
 
 
 
@@ -140,10 +131,10 @@ public class TimeManager {
     }
 
     private void updateTimeUi(){
-
+        TimeDTO timeDTO = gameModel.getTime();
         int hour = timeDTO.getHour();
         int day = timeDTO.getDay();
-        int minute = (((int)start) / 10) * 10;
+        int minute = timeDTO.getMinute();
         String dayOfTheWeek = timeDTO.getDayOfWeekName();
         String season = timeDTO.getSeasonName();
         String timeText = String.format("%02d:%02d    %2d", hour, minute, day);
@@ -254,11 +245,8 @@ public class TimeManager {
         }
     }
 
-    public void setTimeDTO(TimeDTO timeDTO){
-        this.timeDTO = timeDTO;
-    }
 
-    public void initializeUI(){
+    private void initializeUI(){
         initializeTime();
         initializeFadeImage();
         initializeOverlayImage();

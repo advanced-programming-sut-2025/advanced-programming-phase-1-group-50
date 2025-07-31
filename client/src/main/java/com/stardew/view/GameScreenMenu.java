@@ -31,7 +31,7 @@ public class GameScreenMenu implements Screen {
     private final HotBarActor hotBarActor= new HotBarActor();
 
     private SpriteBatch batch;
-    private final Stage uiStage = new Stage(new ScreenViewport());
+    private final Stage uiStage;
 
     private final TimeManager timeManager ;
 //    private final EnergyManager energyManager = new EnergyManager(uiStage);
@@ -49,11 +49,11 @@ public class GameScreenMenu implements Screen {
         this.stage = new Stage(new ScreenViewport(gameState.getCamera()));
         this.gameMenuInputAdapter = new GameMenuInputAdapter(id);
         this.gameMenuInputAdapter.setStage(stage);
+        this.uiStage = new Stage(new ScreenViewport());
+        this.timeManager = new TimeManager(gameState, uiStage);
         gameMenuInputAdapter.setHotBar(hotBarActor);
-        this.timeManager = GameStateController.getInstance().getGameState().getTimeManager();
 
-        this.timeManager.setStage(uiStage);
-        this.timeManager.initializeUI();
+
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(stage);

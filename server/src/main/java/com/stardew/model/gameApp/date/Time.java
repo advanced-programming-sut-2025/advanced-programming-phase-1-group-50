@@ -7,14 +7,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Time implements TimeProvider {
-    public Time clone;
     private Season season;
     private DaysOfTheWeek dayOfWeek ;
     private int date;
     private int hour;
+    private int minute;
     private Weather weather;
     private Weather nextDayWeather;
+
+
     public Time(){
+        this.minute = 0;
         this.hour = 9;
         this.dayOfWeek = DaysOfTheWeek.Saturday;
         this.season = Season.Spring;
@@ -22,6 +25,14 @@ public class Time implements TimeProvider {
         this.weather = Weather.Sunny;
         this.nextDayWeather = Weather.Sunny;
 
+    }
+
+    public void advancedMinute(int m) {
+        this.minute += m;
+        while (this.minute >= 60) {
+            this.minute -= 60;
+            advancedHour(1);
+        }
     }
 
     public void advancedHour(int h){
@@ -115,6 +126,7 @@ public class Time implements TimeProvider {
         cloned.dayOfWeek = dayOfWeek;
         cloned.date = date;
         cloned.hour = hour;
+        cloned.minute = minute;
         cloned.weather = weather;
         cloned.nextDayWeather = nextDayWeather;
         return cloned;
@@ -124,6 +136,6 @@ public class Time implements TimeProvider {
     }
 
     public TimeDTO toDTO(){
-        return new TimeDTO(hour , date , season.name() , dayOfWeek.getDayOfWeek() , weather.name());
+        return new TimeDTO(minute, hour, date, season.name(), dayOfWeek.getDayOfWeek(), weather.name());
     }
 }
