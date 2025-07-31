@@ -6,7 +6,6 @@ import com.google.gson.reflect.TypeToken;
 import com.stardew.Main;
 import com.stardew.controller.GameStateController;
 import com.stardew.model.LobbyDTO;
-import com.stardew.view.GameScreenMenu;
 import com.stardew.view.LobbyMenus.LobbyMenu;
 import com.stardew.view.LobbyMenus.PreLobbyMenu;
 import com.stardew.view.SelectFarmMenu;
@@ -79,14 +78,7 @@ public class MessageHandler {
                 return true;
             }
             case UPDATE_TIME -> {
-
-                Screen currentScreen = Main.getMain().getScreen();
-                Gdx.app.postRunnable(() -> {
-                    if(currentScreen instanceof GameScreenMenu) {
-
-                        gameStateController.updateTime(message);
-                    }
-                });
+                gameStateController.handleUpdateTime(message);
                 return true;
             }
             default -> {

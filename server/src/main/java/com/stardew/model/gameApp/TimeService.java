@@ -14,15 +14,16 @@ import java.util.concurrent.TimeUnit;
 public class TimeService {
     private final ScheduledExecutorService executor;
     private final TimeProvider timeProvider;
-    private Game game;
-    public TimeService(TimeProvider timeProvider) {
+    private final Game game;
+
+    public TimeService(TimeProvider timeProvider, Game game) {
         this.timeProvider = timeProvider;
+        this.game = game;
         executor = Executors.newSingleThreadScheduledExecutor();
     }
-    public void setGame(Game game) {
-        this.game = game;
-    }
+
     public void start() {
+        sendUpdateTime();
         executor.scheduleAtFixedRate(() -> {
             timeProvider.getTime().advancedHour(1);
             sendUpdateTime();

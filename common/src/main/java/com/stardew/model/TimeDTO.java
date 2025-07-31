@@ -7,6 +7,8 @@ public class TimeDTO {
     private String dayOfWeekName;
     private String weather;
 
+    public TimeDTO() {}
+
     public TimeDTO(int hour, int day, String seasonName, String dayOfWeekName, String weather) {
         this.hour = hour;
         this.day = day;
@@ -35,11 +37,4 @@ public class TimeDTO {
         return weather;
     }
 
-    public void setTime(int hour, int day, String seasonName, String dayOfWeekName, String weather) {
-        this.hour = hour;
-        this.day = day;
-        this.seasonName = seasonName;
-        this.dayOfWeekName = dayOfWeekName;
-        this.weather = weather;
-    }
 }

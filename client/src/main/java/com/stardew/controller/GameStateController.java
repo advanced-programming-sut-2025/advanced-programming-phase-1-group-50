@@ -50,6 +50,12 @@ public class GameStateController {
         }
     }
 
+    public void handleUpdateTime(Message message) {
+        if (message == null) return;
+        TimeDTO dto = message.getFromBody("timeDTO", TimeDTO.class);
+        gameState.updateTime(dto);
+    }
+
 
     public GameModel getGameState() {
         return gameState;
@@ -64,11 +70,5 @@ public class GameStateController {
     public void restartGame() {
         instance = null;
         firstUpdate = true;
-    }
-
-    public void updateTime(Message message) {
-        if (message == null) return;
-        TimeDTO dto = message.getFromBody("timeDTO", TimeDTO.class);
-        gameState.getTimeManager().setTimeDTO(dto);
     }
 }
