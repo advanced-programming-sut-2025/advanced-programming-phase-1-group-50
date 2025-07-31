@@ -3,10 +3,7 @@ package com.stardew.models;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.stardew.controller.TimeManager;
-import com.stardew.model.PlaceableDTO;
-import com.stardew.model.PlayerDTO;
-import com.stardew.model.TileDTO;
-import com.stardew.model.TimeDTO;
+import com.stardew.model.*;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 
 import java.util.ArrayList;
@@ -26,6 +23,7 @@ public class GameModel {
     private int playerEnergy;
     private final Object lock = new Object();
     private final Object boundsLock = new Object();
+    private InventoryItemDTO[] hotBar;
 
 //    private final Map map;
 //    private PlayerController playerController;
@@ -282,6 +280,14 @@ public class GameModel {
 
     public int getPlayerEnergy() {
         return playerEnergy;
+    }
+
+    public void updateHotBar(InventoryItemDTO[] hotBar) {
+        this.hotBar = hotBar;
+    }
+
+    public InventoryItemDTO[] getHotBar() {
+        return hotBar;
     }
 
 }

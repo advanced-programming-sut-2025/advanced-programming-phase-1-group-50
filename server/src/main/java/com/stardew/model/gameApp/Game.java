@@ -38,6 +38,7 @@ public class Game {
     private int tradeIndex = 0;
     private final ArrayList<Trade> trades = new ArrayList<>();
     private final TimeService timeService;
+    private final HotBarService hotBarService;
     private boolean started = false;
 //    private final GameMenuController gameMenuController = new GameMenuController();
 
@@ -48,6 +49,7 @@ public class Game {
         this.time = new Time();
         this.map = map;
         this.timeService = new TimeService(time, this);
+        this.hotBarService = new HotBarService(this);
 
 //        relationInitializer(players);
     }
@@ -313,6 +315,10 @@ public class Game {
         timeService.start();
     }
 
+    public void startHotBar(){
+        hotBarService.start();
+    }
+
     public boolean isStarted() {
         return started;
     }
@@ -327,5 +333,14 @@ public class Game {
             gamePlayers.add(entry.getValue());
         }
         return gamePlayers;
+    }
+
+    public ClientConnectionThread getClientConnectionThreadByPlayer(Player player) {
+        for(Map.Entry<ClientConnectionThread , Player> entry : players.entrySet()) {
+            if(entry.getValue() == player) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 }

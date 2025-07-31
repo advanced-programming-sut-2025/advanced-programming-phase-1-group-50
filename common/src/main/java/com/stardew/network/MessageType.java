@@ -37,4 +37,5 @@ public enum MessageType {
     EVENT_IN_GAME,
     UPDATE_TIME,
     SHOW_INVENTORY_RESULT,
+    UPDATE_HOT_BAR,
 }

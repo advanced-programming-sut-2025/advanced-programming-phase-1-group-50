@@ -8,7 +8,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.stardew.model.InventoryItemDTO;
+import com.stardew.models.GameAssetManagers.GameAssetIDManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.GameModel;
 import com.stardew.models.InventoryItem;
 import com.stardew.models.app.App;
 import com.stardew.models.userInfo.Player;
@@ -25,11 +28,14 @@ public class HotBarActor extends Actor {
     private int lastVisitedCellX = -1;
     private final BitmapFont smallFont = GamePictureManager.smallFont;
     private final GlyphLayout layout = new GlyphLayout();
+    private final GameModel gameState;
 
 
 
-    public HotBarActor() {
-//        initialize();
+    public HotBarActor(GameModel gameState) {
+
+        this.gameState = gameState;
+        initialize();
 
         addListener(new InputListener() {
             @Override
@@ -75,20 +81,20 @@ public class HotBarActor extends Actor {
     public void initialize() {
         setSize(itemSize * itemCount, itemSize);
         setPosition(Gdx.graphics.getWidth() / 2f - getWidth() / 2f, 70);
-//        InventoryItem[] items = currentPlayer.getHotBar();
+        InventoryItemDTO[] items = gameState.getHotBar();
 
         for (int i = 0; i < itemCount; i++) {
             cells[i] = new ItemCell();
 
-//            if (items[i] != null && items[i].getInventoryTexture() != null) {
-//                cells[i].textureRegion = items[i].getInventoryTexture();
-//                cells[i].inventoryItem = items[i];
-//                cells[i].quantity = App.getGame().getCurrentPlayingPlayer().getQuantityOfIngredient(items[i]);
-//            } else {
-//                cells[i].textureRegion = null;
-//                cells[i].inventoryItem = null;
-//                cells[i].quantity = 0;
-//            }
+            if (items[i] != null && items[i].getTextureID() != null) {
+                cells[i].textureRegion = GameAssetIDManager.getTextureRegion(items[i].getTextureID());
+                cells[i].inventoryItem = items[i];
+                cells[i].quantity = items[i].getQuantity();
+            } else {
+                cells[i].textureRegion = null;
+                cells[i].inventoryItem = null;
+                cells[i].quantity = 0;
+            }
         }
     }
 

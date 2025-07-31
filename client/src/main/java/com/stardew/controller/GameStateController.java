@@ -57,6 +57,12 @@ public class GameStateController {
         gameState.updateTime(dto);
     }
 
+    public void updateHotBar(Message message) {
+        if (message == null) return;
+        InventoryItemDTO[] items = message.getFromBody("hotBar", InventoryItemDTO[].class);
+        gameState.updateHotBar(items);
+    }
+
 
     public GameModel getGameState() {
         return gameState;

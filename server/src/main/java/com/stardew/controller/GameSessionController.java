@@ -46,6 +46,7 @@ public class GameSessionController {
         if(!game.isStarted()) {
             game.setStarted(true);
             game.startTime();
+            game.startHotBar();
         }
 
 

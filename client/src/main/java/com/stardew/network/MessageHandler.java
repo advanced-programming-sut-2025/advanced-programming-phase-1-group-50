@@ -81,6 +81,10 @@ public class MessageHandler {
                 gameStateController.handleUpdateTime(message);
                 return true;
             }
+            case UPDATE_HOT_BAR -> {
+                gameStateController.updateHotBar(message);
+                return true;
+            }
 
             default -> {
                 return false;
