@@ -2,6 +2,7 @@ package com.stardew.model.stores;
 
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
+import com.stardew.model.mapInfo.foraging.ForagingMineral;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,18 +20,18 @@ public class Blacksmith extends Store {
     public void loadInventory() {
 
         inventory = new ArrayList<>();
-//        inventory.add(new BlackSmithStocksItem("Copper Ore", ForagingMineral.Copper, 75, Integer.MAX_VALUE));
-//        inventory.add(new BlackSmithStocksItem("Iron Ore", ForagingMineral.Iron, 150, Integer.MAX_VALUE));
-//        inventory.add(new BlackSmithStocksItem("Coal", ForagingMineral.Coal, 150, Integer.MAX_VALUE));
-//        inventory.add(new BlackSmithStocksItem("Gold Ore", ForagingMineral.Gold, 400, Integer.MAX_VALUE));
-//        inventory.add(new BlackSmithToolUpgradeItem("Copper Tool", 2000, 1));
-//        inventory.add(new BlackSmithToolUpgradeItem("Steel Tool", 5000, 1));
-//        inventory.add(new BlackSmithToolUpgradeItem("Gold Tool", 10000, 1));
-//        inventory.add(new BlackSmithToolUpgradeItem("Iridium Tool", 25000, 1));
-//        inventory.add(new BlackSmithToolUpgradeItem("Copper Trash Can", 1000, 1));
-//        inventory.add(new BlackSmithToolUpgradeItem("Steel Trash Can", 2500, 1));
-//        inventory.add(new BlackSmithToolUpgradeItem("Gold Trash Can", 5000, 1));
-//        inventory.add(new BlackSmithToolUpgradeItem("Iridium Trash Can", 12500, 1));
+        inventory.add(new BlacksmithStocksItem("Copper Ore", ForagingMineral.Copper, 75, Integer.MAX_VALUE));
+        inventory.add(new BlacksmithStocksItem("Iron Ore", ForagingMineral.Iron, 150, Integer.MAX_VALUE));
+        inventory.add(new BlacksmithStocksItem("Coal", ForagingMineral.Coal, 150, Integer.MAX_VALUE));
+        inventory.add(new BlacksmithStocksItem("Gold Ore", ForagingMineral.Gold, 400, Integer.MAX_VALUE));
+        inventory.add(new BlacksmithToolUpgradeItem("Copper Tool", 2000, 1));
+        inventory.add(new BlacksmithToolUpgradeItem("Steel Tool", 5000, 1));
+        inventory.add(new BlacksmithToolUpgradeItem("Gold Tool", 10000, 1));
+        inventory.add(new BlacksmithToolUpgradeItem("Iridium Tool", 25000, 1));
+        inventory.add(new BlacksmithToolUpgradeItem("Copper Trash Can", 1000, 1));
+        inventory.add(new BlacksmithToolUpgradeItem("Steel Trash Can", 2500, 1));
+        inventory.add(new BlacksmithToolUpgradeItem("Gold Trash Can", 5000, 1));
+        inventory.add(new BlacksmithToolUpgradeItem("Iridium Trash Can", 12500, 1));
 
     }
 
@@ -38,7 +39,7 @@ public class Blacksmith extends Store {
     public ArrayList<ShopItem> showAllProducts() {
         ArrayList<ShopItem> items = new ArrayList<>();
         for (ShopItem item : inventory) {
-            if (item instanceof BlackSmithStocksItem) {
+            if (item instanceof BlacksmithStocksItem) {
                 items.add(item);
             }
         }
@@ -49,7 +50,7 @@ public class Blacksmith extends Store {
     public ArrayList<ShopItem> showAvailableProducts() {
         ArrayList<ShopItem> availableProducts = new ArrayList<>();
         for (ShopItem item : inventory) {
-            if (item.remainingQuantity > 0 && item instanceof BlackSmithStocksItem) {
+            if (item.remainingQuantity > 0 && item instanceof BlacksmithStocksItem) {
                 availableProducts.add(item);
             }
         }
