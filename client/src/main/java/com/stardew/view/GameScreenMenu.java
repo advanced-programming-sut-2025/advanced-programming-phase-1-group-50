@@ -53,7 +53,7 @@ public class GameScreenMenu implements Screen {
         this.uiStage = new Stage(new ScreenViewport());
         this.timeManager = new TimeManager(gameState, uiStage);
         this.energyManager = new EnergyManager(gameState, uiStage);
-        this.hotBarActor = new HotBarActor(gameState);
+        this.hotBarActor = new HotBarActor(gameState , id);
         gameMenuInputAdapter.setHotBar(hotBarActor);
 
 

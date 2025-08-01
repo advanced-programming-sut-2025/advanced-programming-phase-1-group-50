@@ -195,4 +195,10 @@ public class InventoryController {
         sendHotBarUpdate(player , connection);
     }
 
+    public void handleSetCurrentItem(Player player,Message message) {
+        int index = message.getIntFromBody("index");
+        InventoryItem item = player.getHotBar()[index];
+        player.setCurrentInventoryItem(item);
+    }
+
 }

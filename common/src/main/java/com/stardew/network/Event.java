@@ -10,5 +10,6 @@ public enum Event {
     GetRelationWithNPCInfo,
     GetMapInfo,
     ShuffleInventory,
+    SetCurrentItem,
 
 }

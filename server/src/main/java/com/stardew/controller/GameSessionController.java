@@ -129,6 +129,12 @@ public class GameSessionController {
                 InventoryController.getInstance().handleShuffleInventory(player, connection , message.getRequestID());
 
             }
+
+            case SetCurrentItem -> {
+                Player player = game.getPlayer(connection);
+                InventoryController.getInstance().handleSetCurrentItem(player , message);
+
+            }
         }
 
     }

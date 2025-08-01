@@ -15,7 +15,13 @@ import com.stardew.models.GameModel;
 import com.stardew.models.InventoryItem;
 import com.stardew.models.app.App;
 import com.stardew.models.userInfo.Player;
+import com.stardew.network.Event;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 import com.stardew.view.windows.SmartTooltip;
+
+import java.util.HashMap;
 
 public class HotBarActor extends Actor {
 //    private final Player currentPlayer = App.getGame().getCurrentPlayingPlayer();
@@ -30,12 +36,14 @@ public class HotBarActor extends Actor {
     private final GlyphLayout layout = new GlyphLayout();
     private final GameModel gameState;
     private static HotBarActor currentInstance = null;
+    private final int id;
 
 
 
-    public HotBarActor(GameModel gameState) {
+    public HotBarActor(GameModel gameState , int id) {
 
         this.gameState = gameState;
+        this.id = id;
         currentInstance = this;
         initialize();
 
@@ -45,38 +53,43 @@ public class HotBarActor extends Actor {
                 int index = (int) (x / itemSize);
                 if (index >= 0 && index < itemCount) {
                     selectedIndex = index;
-//                    currentPlayer.setCurrentInventoryItem(currentPlayer.getHotBar()[index]);
+                    HashMap<String , Object> body = new HashMap<>();
+                    body.put("id", id);
+                    body.put("index", index);
+                    body.put("event" , Event.SetCurrentItem);
+                    Message m = new Message(body , MessageType.EVENT_IN_GAME);
+                    NetworkManager.getConnection().sendMessage(m);
 
                 }
                 return true;
             }
 
-//            @Override
-//            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-//                SmartTooltip.getInstance().hide();
-//                lastVisitedCellX = -1;
-//            }
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                SmartTooltip.getInstance().hide();
+                lastVisitedCellX = -1;
+            }
 
-//            @Override
-//            public boolean mouseMoved(InputEvent event, float x, float y) {
-//                int index = (int)(x / itemSize);
-//                if (index != lastVisitedCellX) {
-//                    lastVisitedCellX = index;
-//                    SmartTooltip.getInstance().hide();
-//
-//                    String info = "";
-//                    if (index >= 0 && index < cells.length) {
-//                        if (cells[index].textureRegion != null) {
-//                            info = "  " + cells[index].inventoryItem.toString() + "  ";
-//                        }
-//                    }
-//
-//                    if (!info.isEmpty())
-//                        SmartTooltip.getInstance().show(info);
-//
-//                }
-//                return true;
-//            }
+            @Override
+            public boolean mouseMoved(InputEvent event, float x, float y) {
+                int index = (int)(x / itemSize);
+                if (index != lastVisitedCellX) {
+                    lastVisitedCellX = index;
+                    SmartTooltip.getInstance().hide();
+
+                    String info = "";
+                    if (index >= 0 && index < cells.length) {
+                        if (cells[index].textureRegion != null) {
+                            info = "  " + cells[index].inventoryItem.toString() + "  ";
+                        }
+                    }
+
+                    if (!info.isEmpty())
+                        SmartTooltip.getInstance().show(info);
+
+                }
+                return true;
+            }
         });
     }
 
