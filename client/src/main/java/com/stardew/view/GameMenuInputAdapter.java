@@ -7,6 +7,8 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.google.gson.reflect.TypeToken;
 import com.stardew.model.InventoryItemDTO;
+import com.stardew.models.ClientInfo.LoggedInUser;
+import com.stardew.models.GameModel;
 import com.stardew.models.ShippingBin;
 import com.stardew.models.stores.Store;
 import com.stardew.network.Event;
@@ -36,6 +38,7 @@ public class GameMenuInputAdapter extends InputAdapter {
 
     private Stage stage;
     private HotBarActor hotBar;
+    private GameModel gameState;
 
 
     public GameMenuInputAdapter(int id) {
@@ -45,6 +48,10 @@ public class GameMenuInputAdapter extends InputAdapter {
 //    public GameMenuInputAdapter(GameModel model) {
 //        this.model = model;
 //    }
+
+    public void setGameState(GameModel gameState) {
+        this.gameState = gameState;
+    }
 
     @Override
     public boolean keyDown(int keycode) {
@@ -140,6 +147,7 @@ public class GameMenuInputAdapter extends InputAdapter {
 
         if(justPressedKeys.contains(Input.Keys.ESCAPE)){
             sendInventoryShow();
+            //stage.addActor(new InventoryWindow(stage , hotBar , gameState.getInventory() , LoggedInUser.getUser().getUsername()));
         }
 
         if (justPressedKeys.contains(Input.Keys.R)) {
@@ -177,18 +185,23 @@ public class GameMenuInputAdapter extends InputAdapter {
         NetworkManager.getConnection().sendMessage(message);
     }
 
-    private void sendInventoryShow(){
+    private void sendInventoryShow() {
         HashMap<String, Object> body = new HashMap<>();
         body.put("id", id);
         body.put("event", Event.ShowInventory);
-        Message response = NetworkManager.getConnection().sendAndWaitForResponse(new Message(body , MessageType.EVENT_IN_GAME) , 500);
-        if(response != null && response.getType() == MessageType.SHOW_INVENTORY_RESULT){
+
+        Message message = new Message(body, MessageType.EVENT_IN_GAME);
+        Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+
+        if (response != null && response.getType() == MessageType.SHOW_INVENTORY_RESULT) {
             ArrayList<InventoryItemDTO> dto = response.getFromBody("inventory", new TypeToken<ArrayList<InventoryItemDTO>>(){}.getType());
-            String username = response.getFromBody("username");
-            System.out.println("hello");
-            stage.addActor(new InventoryWindow(stage , hotBar , dto , username));
+
+            stage.addActor(new InventoryWindow(stage, hotBar, dto, LoggedInUser.getUser().getUsername() ,id));
+        } else {
+            System.out.println("Inventory fetch failed or timed out.");
         }
     }
+
 
     private void sendGetCookingOrCraftingInfo(String cookingOrCrafting) {
         new Thread(() -> {
@@ -250,15 +263,6 @@ public class GameMenuInputAdapter extends InputAdapter {
 //            }
 //        }
         return true;
-    }
-
-
-    private void sendEvent(Event event) {
-        HashMap<String, Object> body = new HashMap<>();
-        body.put("id", id);
-        body.put("event", event);
-        Message message = new Message(body, MessageType.EVENT_IN_GAME);
-        NetworkManager.getConnection().sendMessage(message);
     }
 
 }

@@ -96,6 +96,11 @@ public class GameSessionController {
                 Player p = game.getPlayer(connection);
                 InventoryController.getInstance().handleSendInventoryList(p , connection , message.getRequestID());
             }
+            case RemoveItem -> {
+                Player p = game.getPlayer(connection);
+                InventoryController.getInstance().handleRemoveItem(p , message , connection , message.getRequestID());
+
+            }
             case GetCookingOrCraftingInfo -> {
                 Player player = game.getPlayer(connection);
                 CookingCraftingInfoController.getInstance().handleGetInfo(message, player, connection);

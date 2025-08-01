@@ -85,6 +85,10 @@ public class MessageHandler {
                 gameStateController.updateHotBar(message);
                 return true;
             }
+            case SHOW_INVENTORY_RESULT -> {
+                gameStateController.handleUpdateInventoryList(message);
+                return true;
+            }
 
             default -> {
                 return false;

@@ -1,14 +1,23 @@
 package com.stardew.model.Tools;
 
+import com.stardew.model.InventoryItemDTO;
+import com.stardew.model.ItemInventoryType;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.App;
 import com.stardew.model.gameApp.date.Weather;
 import com.stardew.model.userInfo.Ability;
 
+import java.util.UUID;
+
 public class Pickaxe extends Tool {
     private ToolType type = ToolType.Primary;
     private TextureID texture = TextureID.pickaxeTexture;
+    private final String id ;
+
+    public Pickaxe() {
+        id = UUID.randomUUID().toString();
+    }
 
     @Override
     public int getConsumptionEnergy() {
@@ -79,6 +88,16 @@ public class Pickaxe extends Tool {
     @Override
     public TextureID getInventoryTexture() {
         return texture;
+    }
+
+    @Override
+    public InventoryItemDTO toDTO() {
+        return new InventoryItemDTO(getInventoryTexture() , true , 1 , ItemInventoryType.pickaxe , id);
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 
     @Override

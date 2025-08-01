@@ -29,12 +29,14 @@ public class HotBarActor extends Actor {
     private final BitmapFont smallFont = GamePictureManager.smallFont;
     private final GlyphLayout layout = new GlyphLayout();
     private final GameModel gameState;
+    private static HotBarActor currentInstance = null;
 
 
 
     public HotBarActor(GameModel gameState) {
 
         this.gameState = gameState;
+        currentInstance = this;
         initialize();
 
         addListener(new InputListener() {
@@ -136,6 +138,21 @@ public class HotBarActor extends Actor {
 
     public void update(){
         initialize();
+    }
+
+    @Override
+    public boolean remove() {
+        boolean removed = super.remove();
+        if (removed) currentInstance = null;
+        return removed;
+    }
+
+    public static boolean isOpen() {
+        return currentInstance != null;
+    }
+
+    public static HotBarActor getCurrentInstance() {
+        return currentInstance;
     }
 }
 

@@ -1,6 +1,7 @@
 package com.stardew.model.mapInfo.foraging;
 
 import com.stardew.model.InventoryItemDTO;
+import com.stardew.model.ItemInventoryType;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.date.Season;
 import com.stardew.model.mapInfo.Eatable;
@@ -91,6 +92,16 @@ public enum ForagingCrop implements Ingredient, Eatable {
     @Override
     public TextureID getInventoryTexture() {
         return texture;
+    }
+
+    @Override
+    public InventoryItemDTO toDTO() {
+        return new InventoryItemDTO(getInventoryTexture() , false , 1 , ItemInventoryType.foragingCrop , name());
+    }
+
+    @Override
+    public String getId() {
+        return name();
     }
 
 
