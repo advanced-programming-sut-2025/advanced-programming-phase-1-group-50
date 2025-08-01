@@ -40,4 +40,8 @@ public class InventoryItemDTO {
         return id;
     }
 
+    public String toString() {
+        return type.name();
+    }
+
 }

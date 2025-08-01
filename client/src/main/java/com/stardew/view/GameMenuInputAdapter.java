@@ -132,7 +132,7 @@ public class GameMenuInputAdapter extends InputAdapter {
         }
 
         if(justPressedKeys.contains(Input.Keys.M)){
-            stage.addActor(new MapWindow(stage));
+//            stage.addActor(new MapWindow(stage));
         }
 
         if (justPressedKeys.contains(Input.Keys.B)) {

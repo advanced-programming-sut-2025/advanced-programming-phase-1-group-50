@@ -56,7 +56,7 @@ public abstract class ConnectionThread extends Thread {
                 String receivedStr = new String(data, StandardCharsets.UTF_8);
                 Message message = JSONUtils.fromJson(receivedStr);
                 boolean success = incomingMessagesQueue.offer(message);
-                if(message.getType().equals(MessageType.EVENT_IN_GAME) || message.getType().equals(MessageType.SHOW_INVENTORY_RESULT) || message.getType().equals(MessageType.UPDATE_HOT_BAR)) System.out.println(message); //TODO
+                if(message.getType().equals(MessageType.EVENT_IN_GAME) || message.getType().equals(MessageType.GET_MAP_INFO_RESULT) || message.getType().equals(MessageType.UPDATE_HOT_BAR)) System.out.println(message); //TODO
                 if (!success) System.err.println("Could not put in incoming_messages_queue");
             } catch (SocketException se) {
                 if (running.get()) System.out.println("Socket Closed.");

@@ -46,35 +46,35 @@ public class BackpackGridActor extends Actor {
                 return true;
             }
 
-//            @Override
-//            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-//                SmartTooltip.getInstance().hide();
-//                lastVisitedCellX = -1;
-//                lastVisitedCellY = -1;
-//            }
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                SmartTooltip.getInstance().hide();
+                lastVisitedCellX = -1;
+                lastVisitedCellY = -1;
+            }
 
-//            @Override
-//            public boolean mouseMoved(InputEvent event, float x, float y) {
-//                int cellX = (int)(x / cellSize);
-//                int cellY = (int)(y / cellSize);
-//                if (cellX != lastVisitedCellX || cellY != lastVisitedCellY) {
-//                    lastVisitedCellX = cellX;
-//                    lastVisitedCellY = cellY;
-//                    SmartTooltip.getInstance().hide();
-//
-//                    String info = "";
-//                    if (cellY >= 0 && cellY < cells.length && cellX >= 0 && cellX < cells[0].length) {
-//                        if (cells[cellY][cellX].textureRegion != null) {
-//                            info = "  " + cells[cellY][cellX].inventoryItem.toString() + "  ";
-//                        }
-//                    }
-//
-//                    if (!info.isEmpty())
-//                        SmartTooltip.getInstance().show(info);
-//
-//                }
-//                return true;
-//            }
+            @Override
+            public boolean mouseMoved(InputEvent event, float x, float y) {
+                int cellX = (int)(x / cellSize);
+                int cellY = (int)(y / cellSize);
+                if (cellX != lastVisitedCellX || cellY != lastVisitedCellY) {
+                    lastVisitedCellX = cellX;
+                    lastVisitedCellY = cellY;
+                    SmartTooltip.getInstance().hide();
+
+                    String info = "";
+                    if (cellY >= 0 && cellY < cells.length && cellX >= 0 && cellX < cells[0].length) {
+                        if (cells[cellY][cellX].textureRegion != null) {
+                            info = "  " + cells[cellY][cellX].inventoryItem.toString() + "  ";
+                        }
+                    }
+
+                    if (!info.isEmpty())
+                        SmartTooltip.getInstance().show(info);
+
+                }
+                return true;
+            }
         });
     }
 

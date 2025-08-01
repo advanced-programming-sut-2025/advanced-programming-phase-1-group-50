@@ -6,5 +6,9 @@ public enum Event {
     ShowInventory,
     RemoveItem,
     GetCookingOrCraftingInfo,
+    GetSkillInfo,
+    GetRelationWithNPCInfo,
+    GetMapInfo,
+    ShuffleInventory,
 
 }

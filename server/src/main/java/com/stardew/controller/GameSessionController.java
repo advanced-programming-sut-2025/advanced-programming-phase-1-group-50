@@ -8,6 +8,7 @@ import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -104,6 +105,29 @@ public class GameSessionController {
             case GetCookingOrCraftingInfo -> {
                 Player player = game.getPlayer(connection);
                 CookingCraftingInfoController.getInstance().handleGetInfo(message, player, connection);
+            }
+
+            case GetSkillInfo -> {
+                Player player = game.getPlayer(connection);
+                InventoryController.getInstance().handleSendSkillInfo(player , connection , message.getRequestID());
+
+            }
+
+            case GetRelationWithNPCInfo -> {
+                Player player = game.getPlayer(connection);
+                InventoryController.getInstance().handleSendRelationWithNPCInfo(player, connection , message.getRequestID());
+            }
+
+            case GetMapInfo -> {
+                ArrayList<Player> players = game.getAllPlayers();
+                InventoryController.getInstance().handleSendMapInfo(players , game , connection , message.getRequestID());
+
+            }
+
+            case ShuffleInventory -> {
+                Player player = game.getPlayer(connection);
+                InventoryController.getInstance().handleShuffleInventory(player, connection , message.getRequestID());
+
             }
         }
 

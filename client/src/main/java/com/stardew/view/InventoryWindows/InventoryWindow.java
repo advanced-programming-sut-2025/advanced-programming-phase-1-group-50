@@ -1,12 +1,15 @@
 package com.stardew.view.InventoryWindows;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.google.gson.reflect.TypeToken;
 import com.stardew.model.GameState;
 import com.stardew.model.InventoryItemDTO;
+import com.stardew.model.TextureID;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.InventoryItem;
 import com.stardew.models.app.App;
@@ -20,10 +23,10 @@ import com.stardew.network.NetworkManager;
 import com.stardew.view.PlayersRelationsWindows.FriendshipWindow;
 import com.stardew.view.windows.CloseableWindow;
 import com.badlogic.gdx.graphics.Color;
+import com.stardew.view.windows.CookingWindow;
+import com.stardew.view.windows.CraftingWindow;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class InventoryWindow extends CloseableWindow {
 
@@ -125,7 +128,26 @@ public class InventoryWindow extends CloseableWindow {
         socialButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                stage.addActor(new SocialWindow(stage));
+
+                new Thread(() -> {
+                    HashMap<String, Object> body = new HashMap<>();
+                    body.put("id", id);
+                    body.put("event", Event.GetRelationWithNPCInfo);
+                    Message message = new Message(body, MessageType.EVENT_IN_GAME);
+                    Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+                    if (response != null && response.getType().equals(MessageType.GET_RELATION_INFO_RESULT)) {
+                        int relationWithAbigail = response.getIntFromBody("relationWithAbigail");
+                        int relationWithHarvey = response.getIntFromBody("relationWithHarvey");
+                        int relationWithLeah = response.getIntFromBody("relationWithLeah");
+                        int relationWithSebastian = response.getIntFromBody("relationWithSebastian");
+                        int relationWithRobin = response.getIntFromBody("relationWithRobin");
+
+                        Gdx.app.postRunnable(() -> stage.addActor(new SocialWindow(stage , relationWithAbigail , relationWithHarvey
+                            , relationWithLeah , relationWithSebastian , relationWithRobin )));
+                    }
+                }).start();
+
+
                 return true;
             }
         });
@@ -135,7 +157,33 @@ public class InventoryWindow extends CloseableWindow {
         skillsButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                stage.addActor(new SkillWindow(stage));
+//                stage.addActor(new SkillWindow(stage));
+                new Thread(() -> {
+                    HashMap<String, Object> body = new HashMap<>();
+                    body.put("id", id);
+                    body.put("event", Event.GetSkillInfo);
+
+                    Message message = new Message(body, MessageType.EVENT_IN_GAME);
+                    Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+                    if (response != null && response.getType() == MessageType.GET_SKILL_INFO_RESULT) {
+                        int farmingLevel = response.getIntFromBody("farmingLevel");
+                        int foragingLevel = response.getIntFromBody("foragingLevel");
+                        int miningLevel = response.getIntFromBody("miningLevel");
+                        int fishingLevel = response.getIntFromBody("fishingLevel");
+
+                        int farmingRate = response.getIntFromBody("farmingRate");
+                        int foragingRate = response.getIntFromBody("foragingRate");
+                        int miningRate = response.getIntFromBody("miningRate");
+                        int fishingRate = response.getIntFromBody("fishingRate");
+
+                        Gdx.app.postRunnable(() -> stage.addActor(new SkillWindow(stage, farmingLevel, miningLevel
+                            , fishingLevel , foragingLevel
+                        ,farmingRate,foragingRate
+                            ,miningRate,fishingRate)));
+
+
+                    }
+                }).start();
                 return true;
             }
         });
@@ -145,7 +193,20 @@ public class InventoryWindow extends CloseableWindow {
         mapButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                stage.addActor(new MapWindow(stage));
+//                stage.addActor(new MapWindow(stage));
+
+                new Thread(() -> {
+                    HashMap<String, Object> body = new HashMap<>();
+                    body.put("id", id);
+                    body.put("event", Event.GetMapInfo);
+                    Message message = new Message(body, MessageType.EVENT_IN_GAME);
+                    Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+                    if(response != null && response.getType() == MessageType.GET_MAP_INFO_RESULT) {
+                        TextureID[][] tiles = response.getFromBody("tiles", new TypeToken<TextureID[][]>(){}.getType());
+
+                        Gdx.app.postRunnable(() -> stage.addActor(new MapWindow(stage , tiles)));
+                    }
+                }).start();
                 return true;
             }
         });
@@ -156,6 +217,8 @@ public class InventoryWindow extends CloseableWindow {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 stage.addActor(new SettingWindow(stage));
+
+
                 return true;
             }
 
@@ -165,7 +228,12 @@ public class InventoryWindow extends CloseableWindow {
         shuffleButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                App.getGame().getCurrentPlayingPlayer().shuffleInventoryItems();
+//                App.getGame().getCurrentPlayingPlayer().shuffleInventoryItems();
+                HashMap<String , Object> body = new HashMap<>();
+                body.put("id", id);
+                body.put("event", Event.ShuffleInventory);
+                Message message = new Message(body, MessageType.EVENT_IN_GAME);
+                NetworkManager.getConnection().sendMessage(message);
             }
         });
 

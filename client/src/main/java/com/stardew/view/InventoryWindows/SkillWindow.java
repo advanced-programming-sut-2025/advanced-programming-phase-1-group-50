@@ -32,7 +32,7 @@ public class SkillWindow extends CloseableWindow {
     private final Label fishingLevelLabel;
     private final Label foragingLevelLabel;
 
-    public SkillWindow(Stage stage) {
+    public SkillWindow(Stage stage , int farmingLevel , int miningLevel , int fishingLevel , int foragingLevel , int farmingRate , int foragingRate , int miningRate , int fishingRate) {
         super("skill window", stage);
 
         Label titleLabel = getTitleLabel();
@@ -104,30 +104,29 @@ public class SkillWindow extends CloseableWindow {
         TooltipManager.getInstance().hideAll();
 
 
-        Player p = App.getGame().getCurrentPlayingPlayer();
-        miningBar = new ProgressBar(0, p.getAbility().getRequiredPointsForLevel(p.getAbility().getMiningLevel()), 1, false, GamePictureManager.skin);
-        farmingBar = new ProgressBar(0, p.getAbility().getRequiredPointsForLevel(p.getAbility().getFarmingLevel()), 1, false, GamePictureManager.skin);
-        fishingBar = new ProgressBar(0, p.getAbility().getRequiredPointsForLevel(p.getAbility().getFishingLevel()), 1, false, GamePictureManager.skin);
-        foragingBar = new ProgressBar(0, p.getAbility().getRequiredPointsForLevel(p.getAbility().getForagingLevel()), 1, false, GamePictureManager.skin);
+        miningBar = new ProgressBar(0, requiredRateForLevel(miningLevel), 1, false, GamePictureManager.skin);
+        farmingBar = new ProgressBar(0, requiredRateForLevel(farmingLevel), 1, false, GamePictureManager.skin);
+        fishingBar = new ProgressBar(0, requiredRateForLevel(fishingLevel), 1, false, GamePictureManager.skin);
+        foragingBar = new ProgressBar(0, requiredRateForLevel(foragingLevel), 1, false, GamePictureManager.skin);
 
-        miningBar.setValue(p.getAbility().getMiningRate());
-        farmingBar.setValue(p.getAbility().getFarmingRate());
-        fishingBar.setValue(p.getAbility().getFishingRate());
-        foragingBar.setValue(p.getAbility().getForagingRate());
+        miningBar.setValue(miningRate);
+        farmingBar.setValue(farmingRate);
+        fishingBar.setValue(fishingRate);
+        foragingBar.setValue(foragingRate);
 
 
-        miningLevelLabel = new Label(String.format("%d/%d   %d" , p.getAbility().getMiningRate()
-            , p.getAbility().getRequiredPointsForLevel(p.getAbility().getMiningLevel())
-            , p.getAbility().getMiningLevel()) , GamePictureManager.skin);
-        farmingLevelLabel = new Label(String.format("%d/%d   %d" , p.getAbility().getFarmingRate()
-            , p.getAbility().getRequiredPointsForLevel(p.getAbility().getFarmingLevel())
-            , p.getAbility().getFarmingLevel()), GamePictureManager.skin);
-        fishingLevelLabel = new Label(String.format("%d/%d   %d" , p.getAbility().getFishingRate()
-            , p.getAbility().getRequiredPointsForLevel(p.getAbility().getFishingLevel())
-            , p.getAbility().getFishingLevel()), GamePictureManager.skin);
-        foragingLevelLabel = new Label(String.format("%d/%d   %d" , p.getAbility().getForagingRate()
-            , p.getAbility().getRequiredPointsForLevel(p.getAbility().getForagingLevel())
-            , p.getAbility().getForagingLevel()), GamePictureManager.skin);
+        miningLevelLabel = new Label(String.format("%d/%d   %d" , miningRate
+            , requiredRateForLevel(miningLevel)
+            , miningLevel) , GamePictureManager.skin);
+        farmingLevelLabel = new Label(String.format("%d/%d   %d" , farmingRate
+            , requiredRateForLevel(farmingLevel)
+            , farmingLevel), GamePictureManager.skin);
+        fishingLevelLabel = new Label(String.format("%d/%d   %d" , fishingRate
+            , requiredRateForLevel(fishingLevel)
+            , fishingLevel), GamePictureManager.skin);
+        foragingLevelLabel = new Label(String.format("%d/%d   %d" , foragingRate
+            , requiredRateForLevel(foragingLevel)
+            , foragingLevel), GamePictureManager.skin);
 
 
         Table content = new Table();
@@ -162,6 +161,9 @@ public class SkillWindow extends CloseableWindow {
         Texture texture = new Texture(pixmap);
         pixmap.dispose();
         return new TextureRegionDrawable(new TextureRegion(texture));
+    }
+    private int requiredRateForLevel(int level) {
+        return 100 * level + 50;
     }
 
 }
