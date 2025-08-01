@@ -15,10 +15,34 @@ package com.stardew.controller.CookingCraftingControllers;
 //import com.stardew.models.recipes.CookingRecipe;
 //import com.stardew.models.userInfo.Player;
 
+import com.stardew.model.Result;
+import com.stardew.model.animals.AnimalGood;
+import com.stardew.model.animals.Fish;
+import com.stardew.model.cooking.Food;
+import com.stardew.model.mapInfo.Ingredient;
+import com.stardew.model.mapInfo.foraging.Crop;
+import com.stardew.model.recipes.CookingRecipe;
+import com.stardew.model.userInfo.Player;
+import com.stardew.network.ClientConnectionThread;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class CookingController {
+    private static CookingController instance;
+
+    private CookingController () {}
+
+    public static synchronized CookingController getInstance() {
+        if (instance == null) {
+            instance = new CookingController();
+        }
+        return instance;
+    }
+
+
 
 //    public Result cookingRefrigeratorPutPick(String action, String itemName) {
 //        Food food = Food.getFoodByName(itemName);
@@ -102,57 +126,67 @@ public class CookingController {
 //        return new Result(true, output.toString());
 //    }
 //
-//    public Result cookingPrepare(CookingRecipe recipe) {
-//        Player player = App.getGame().getCurrentPlayingPlayer();
-//
-//        if (recipe == null)
-//            return new Result(false, "Recipe not found!");
-//        if (!player.getBackpack().containRecipe(recipe))
-//            return new Result(false, "You don't have <" + recipe.name() + "> CookingRecipe in your backpack!");
-//        if (!player.getBackpack().hasCapacity())
-//            return new Result(false, "You don't have enough space in backpack!");
-//
-//        Result energyConsumptionResult = player.consumeEnergy(3);
-//        if (!energyConsumptionResult.getSuccessful())
-//            return energyConsumptionResult;
-//
-//        HashMap<Ingredient, Integer> requiredIngredients = recipe.getIngredients();
-//
-//        for (Ingredient requiredIngredient : requiredIngredients.keySet()) {
-//
-//            Ingredient ingredientInBackpack = getIngredient(requiredIngredient, player);
-//
-//            if (ingredientInBackpack == null)
-//                return new Result(false, "You don't have any <" + requiredIngredient + "> in your backpack!");
-//
-//            if (player.getBackpack().getIngredientQuantity().getOrDefault(ingredientInBackpack,0) < requiredIngredients.get(requiredIngredient)) {
-//                return new Result(false, "You don't have enough <" + requiredIngredient + "> in your backpack!");
-//            }
-//        }
-//        //decrease all needed ingredients
-//        for (Ingredient requiredIngredient : requiredIngredients.keySet()) {
-//            Ingredient ingredientInBackpack = getIngredient(requiredIngredient, player);
-//            player.getBackpack().removeIngredients(ingredientInBackpack, requiredIngredients.get(requiredIngredient));
-//        }
-//
-//        Food food = Food.getFoodByName(recipe.name());
-//        player.getBackpack().addIngredients(food, 1);
-//
-//        return new Result(true, "You cook <" + food + "> successfully!");
-//    }
-//
-//    private Ingredient getIngredient(Ingredient requiredIngredient, Player player) {
-//        for (Ingredient myIngredient : player.getBackpack().getIngredientQuantity().keySet()) {
-//            if ((myIngredient instanceof Crop crop && crop.getType().equals(requiredIngredient)) ||
-//                    (myIngredient instanceof AnimalGood animalGood && animalGood.getType().equals(requiredIngredient)) ||
-//                    (myIngredient instanceof Fish fish && fish.getType().equals(requiredIngredient)) ||
-//                    (myIngredient.equals(requiredIngredient))) {
-//                return myIngredient;
-//            }
-//        }
-//        return null;
-//    }
-//
+    public void cookingPrepare(Message message, Player player, ClientConnectionThread connection) {
+        String recipeName = message.getFromBody("name");
+
+        CookingRecipe recipe = CookingRecipe.getRecipeByName(recipeName);
+
+        if (recipe == null) {
+            Result result = new Result(false, "Recipe not found!");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+        if (!player.getBackpack().containRecipe(recipe)) {
+            Result result = new Result(false, "You don't have <" + recipe.name() + "> CookingRecipe in your backpack!");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+        if (!player.getBackpack().hasCapacity()) {
+            Result result = new Result(false, "You don't have enough space in backpack!");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+
+        Result energyConsumptionResult = player.consumeEnergy(3);
+        if (!energyConsumptionResult.getSuccessful()) {
+            sendResultMessage(message.getRequestID(), connection, energyConsumptionResult);
+            return;
+        }
+
+        HashMap<Ingredient, Integer> requiredIngredients = recipe.getIngredients();
+
+        StringBuilder negativeResults = new StringBuilder();
+        for (Ingredient requiredIngredient : requiredIngredients.keySet()) {
+
+            Ingredient ingredientInBackpack = getIngredient(requiredIngredient, player);
+
+            if (ingredientInBackpack == null)
+                negativeResults.append("You don't have any <").append(requiredIngredient).append("> in your backpack!\n\n");
+
+            else if (player.getBackpack().getIngredientQuantity().getOrDefault(ingredientInBackpack,0) < requiredIngredients.get(requiredIngredient)) {
+                negativeResults.append("You don't have enough <").append(requiredIngredient).append("> in your backpack!\n\n");
+            }
+        }
+
+        if (!negativeResults.isEmpty()) {
+            Result result = new Result(false, negativeResults.toString());
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+
+        //decrease all needed ingredients
+        for (Ingredient requiredIngredient : requiredIngredients.keySet()) {
+            Ingredient ingredientInBackpack = getIngredient(requiredIngredient, player);
+            player.getBackpack().removeIngredients(ingredientInBackpack, requiredIngredients.get(requiredIngredient));
+        }
+
+        Food food = Food.getFoodByName(recipe.name());
+        player.getBackpack().addIngredients(food, 1);
+
+        Result result = new Result(true, "You cook <" + food + "> successfully!");
+        sendResultMessage(message.getRequestID(), connection, result);
+    }
+
 //    public Result eat(Eatable item) {
 //        if (item == null)
 //            return new Result(false, "item not found!");
@@ -169,5 +203,29 @@ public class CookingController {
 //        else
 //            return new Result(false, "You don't have Item <" + item + "> in your backpack!");
 //    }
+
+
+
+
+    private void sendResultMessage(String requestID, ClientConnectionThread connection, Result result) {
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body, MessageType.EVENT_IN_GAME_RESULT);
+        response.setRequestID(requestID);
+        connection.sendMessage(response);
+    }
+
+    private Ingredient getIngredient(Ingredient requiredIngredient, Player player) {
+        for (Ingredient myIngredient : player.getBackpack().getIngredientQuantity().keySet()) {
+            if ((myIngredient instanceof Crop crop && crop.getType().equals(requiredIngredient)) ||
+                (myIngredient instanceof AnimalGood animalGood && animalGood.getType().equals(requiredIngredient)) ||
+                (myIngredient instanceof Fish fish && fish.getType().equals(requiredIngredient)) ||
+                (myIngredient.equals(requiredIngredient))) {
+                return myIngredient;
+            }
+        }
+        return null;
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.stardew.controller;
 
+import com.stardew.controller.CookingCraftingControllers.CookingController;
 import com.stardew.controller.CookingCraftingControllers.CookingCraftingInfoController;
 import com.stardew.model.gameApp.Game;
 import com.stardew.model.userInfo.Player;
@@ -104,6 +105,10 @@ public class GameSessionController {
             case GetCookingOrCraftingInfo -> {
                 Player player = game.getPlayer(connection);
                 CookingCraftingInfoController.getInstance().handleGetInfo(message, player, connection);
+            }
+            case CookingFood -> {
+                Player player = game.getPlayer(connection);
+                CookingController.getInstance().cookingPrepare(message, player, connection);
             }
         }
 

@@ -6,5 +6,5 @@ public enum Event {
     ShowInventory,
     RemoveItem,
     GetCookingOrCraftingInfo,
-
+    CookingFood,
 }

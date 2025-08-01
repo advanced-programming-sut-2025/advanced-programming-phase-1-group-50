@@ -215,9 +215,9 @@ public class GameMenuInputAdapter extends InputAdapter {
                 Map<String, String> descriptions = response.getFromBody("descriptions", new TypeToken<HashMap<String, String>>(){}.getType());
                 Set<String> ownRecipes = response.getFromBody("ownRecipes", new TypeToken<HashSet<String>>(){}.getType());
                 if (cookingOrCrafting.equalsIgnoreCase("cooking")) {
-                    Gdx.app.postRunnable(() -> stage.addActor(new CookingWindow(stage, descriptions, ownRecipes)));
+                    Gdx.app.postRunnable(() -> stage.addActor(new CookingWindow(id, stage, descriptions, ownRecipes)));
                 } else if (cookingOrCrafting.equalsIgnoreCase("crafting")) {
-                    Gdx.app.postRunnable(() -> stage.addActor(new CraftingWindow(stage, descriptions, ownRecipes)));
+                    Gdx.app.postRunnable(() -> stage.addActor(new CraftingWindow(id, stage, descriptions, ownRecipes)));
                 }
             }
         }).start();

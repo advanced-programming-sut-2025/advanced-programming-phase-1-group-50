@@ -19,7 +19,7 @@ public class CraftingWindow extends CloseableWindow {
     private final HashMap<CraftingAsset, ImageButton> buttons = new HashMap<>();
     private final CraftingController controller = new CraftingController();
 
-    public CraftingWindow(Stage stage, Map<String, String> descriptions, Set<String> ownRecipes) {
+    public CraftingWindow(int id, Stage stage, Map<String, String> descriptions, Set<String> ownRecipes) {
         super("Crafting Menu", stage);
 
         createUI(descriptions, ownRecipes);

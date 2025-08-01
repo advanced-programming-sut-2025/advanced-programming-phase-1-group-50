@@ -1,12 +1,18 @@
 package com.stardew.view.windows;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.stardew.controller.CookingAndCraftingControllers.CookingController;
+import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.CookingAsset;
+import com.stardew.network.Event;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,9 +21,11 @@ import java.util.Set;
 public class CookingWindow extends CloseableWindow {
     private final HashMap<CookingAsset, ImageButton> buttons = new HashMap<>();
     private final CookingController controller = new CookingController();
+    private final int id;
 
-    public CookingWindow(Stage stage, Map<String, String> descriptions, Set<String> ownRecipes) {
+    public CookingWindow(int id, Stage stage, Map<String, String> descriptions, Set<String> ownRecipes) {
         super("Cooking Menu", stage);
+        this.id = id;
 
         createUI(descriptions, ownRecipes);
 
@@ -50,10 +58,18 @@ public class CookingWindow extends CloseableWindow {
             imageButton.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    //TODO
-                    // change here: send message and get Result
-//                    Result result = controller.cookingPrepare(cookingAsset.getRecipe());
-//                    showResult(result);
+                    new Thread(() -> {
+                        HashMap<String, Object> body = new HashMap<>();
+                        body.put("id", id);
+                        body.put("event", Event.CookingFood);
+                        body.put("name", cookingAsset.name());
+                        Message message = new Message(body, MessageType.EVENT_IN_GAME);
+                        Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+                        if (response != null && response.getType() == MessageType.EVENT_IN_GAME_RESULT) {
+                            Result result = response.getFromBody("result", Result.class);
+//                            Gdx.app.postRunnable(() -> showResult(result));
+                        }
+                    }).start();
                     return true;
                 }
 
