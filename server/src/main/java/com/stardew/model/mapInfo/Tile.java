@@ -64,14 +64,14 @@ public class Tile {
     }
     public void setWatered(boolean watered) {
         this.watered = watered;
-//        if (watered) {
-//            backgroundTexture = GamePictureManager.wateredTileTexture;
-//            typeTextureRegion = TileTypeTextureRegion.Watered;
-//        }
-//        else {
-//            backgroundTexture = GamePictureManager.plowedTile;
-//            typeTextureRegion = TileTypeTextureRegion.Normal;
-//        }
+        if (watered) {
+            backgroundTextureID = TextureID.wateredTileTexture;
+
+        }
+        else {
+            backgroundTextureID = TextureID.plowedTile;
+
+        }
     }
 
     public boolean isWatered(){
@@ -100,19 +100,19 @@ public class Tile {
 
     public void setPlowed(boolean plowed) {
         isPlowed = plowed;
-//        if(plowed){
-//            this.backgroundTexture = GamePictureManager.plowedTile;
-//            typeTextureRegion = TileTypeTextureRegion.Plowed;
-//        }
-//        else {
-//            this.backgroundTexture = pastTexture;
-//            typeTextureRegion = TileTypeTextureRegion.Normal;
-//        }
+        if(plowed){
+            this.backgroundTextureID = TextureID.plowedTile;
+
+        }
+        else {
+            this.backgroundTextureID = pastTextureID;
+
+        }
     }
 
-//    public Fertilizer getFertilizer() {
-//        return fertilizer;
-//    }
+    public Fertilizer getFertilizer() {
+        return fertilizer;
+    }
 
     public void setFertilizer(Fertilizer fertilizer) {
         this.fertilizer = fertilizer;
@@ -135,15 +135,7 @@ public class Tile {
 //        this.texture = texture;
 //    }
 
-//    public boolean isAroundMe(Tile tile) {
-//        for (Direction direction : Direction.values()) {
-//            Tile inDirectionTile = App.getGame().getMap().getTileByDirection(this, direction);
-//            if (inDirectionTile != null && inDirectionTile.getPosition().equals(tile.getPosition())) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+
 
 
     public TextureID getBackgroundTexture() {

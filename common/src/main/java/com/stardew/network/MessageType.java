@@ -42,4 +42,5 @@ public enum MessageType {
     GET_SKILL_INFO_RESULT,
     GET_RELATION_INFO_RESULT,
     GET_MAP_INFO_RESULT,
+    CLICK_TILE_RESULT,
 }

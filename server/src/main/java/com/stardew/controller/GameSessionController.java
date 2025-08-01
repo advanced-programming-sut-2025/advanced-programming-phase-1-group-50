@@ -135,6 +135,11 @@ public class GameSessionController {
                 InventoryController.getInstance().handleSetCurrentItem(player , message);
 
             }
+
+            case CLickTile -> {
+                Player player = game.getPlayer(connection);
+                InventoryController.getInstance().handleClickTile(player, game , message , connection , message.getRequestID());
+            }
         }
 
     }

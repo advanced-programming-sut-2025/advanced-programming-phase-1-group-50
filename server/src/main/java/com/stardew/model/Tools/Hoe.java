@@ -4,6 +4,8 @@ import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.ItemInventoryType;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
+import com.stardew.model.gameApp.date.Weather;
+import com.stardew.model.userInfo.Player;
 
 import java.util.UUID;
 
@@ -21,7 +23,7 @@ public class Hoe extends Tool {
     }
 
     @Override
-    public Result useTool() {
+    public Result useTool(Weather weather , Player player) {
         int consumedEnergy = switch (type) {
             case Primary -> 5;
             case Coppery -> 4;
@@ -31,9 +33,9 @@ public class Hoe extends Tool {
             default -> 0;
         };
 
-//        Result energyConsumptionResult = App.getGame().getCurrentPlayingPlayer().consumeEnergy(consumedEnergy);
-//        if (!energyConsumptionResult.getSuccessful())
-//            return energyConsumptionResult;
+        Result energyConsumptionResult = player.consumeEnergy(consumedEnergy);
+        if (!energyConsumptionResult.getSuccessful())
+            return energyConsumptionResult;
 
         return new Result(true, "");
     }

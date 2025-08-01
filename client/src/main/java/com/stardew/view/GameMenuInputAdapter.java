@@ -4,10 +4,14 @@ package com.stardew.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.google.gson.reflect.TypeToken;
 import com.stardew.model.InventoryItemDTO;
+import com.badlogic.gdx.utils.Timer;
+import com.stardew.model.Result;
 import com.stardew.models.ClientInfo.LoggedInUser;
+import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.GameModel;
 import com.stardew.models.ShippingBin;
 import com.stardew.models.stores.Store;
@@ -26,6 +30,7 @@ import com.stardew.view.StoreWindows.StoreWindow;
 import com.stardew.view.cheatConsole.CheatWindow;
 import com.stardew.view.windows.CookingWindow;
 import com.stardew.view.windows.CraftingWindow;
+import com.stardew.view.windows.SmartTooltip;
 
 import java.util.*;
 
@@ -84,10 +89,11 @@ public class GameMenuInputAdapter extends InputAdapter {
 //        int startX = App.getGame().getMap().getFarmStartX(currentPlayer , App.getGame());
 //        int startY = App.getGame().getMap().getFarmStartY(currentPlayer , App.getGame());
 //
-//        Vector2 stageCoords = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
-//        int indexTileX = ((int)(stageCoords.x / GamePictureManager.TILE_SIZE)) + startX;
-//        int indexTileY = ((int)(stageCoords.y / GamePictureManager.TILE_SIZE)) + startY;
-//
+        Vector2 stageCoords = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
+        int indexTileX = ((int)(stageCoords.x / GamePictureManager.TILE_SIZE)) ;
+        int indexTileY = ((int)(stageCoords.y / GamePictureManager.TILE_SIZE)) ;
+        sendClickTile(indexTileX, indexTileY);
+
 //        model.handleClickTile(indexTileX, indexTileY);
 
 
@@ -218,6 +224,32 @@ public class GameMenuInputAdapter extends InputAdapter {
                     Gdx.app.postRunnable(() -> stage.addActor(new CookingWindow(stage, descriptions, ownRecipes)));
                 } else if (cookingOrCrafting.equalsIgnoreCase("crafting")) {
                     Gdx.app.postRunnable(() -> stage.addActor(new CraftingWindow(stage, descriptions, ownRecipes)));
+                }
+            }
+        }).start();
+    }
+
+    private void sendClickTile(int X , int Y) {
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", id);
+            body.put("x" , X);
+            body.put("y" , Y);
+            body.put("event" , Event.CLickTile);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if(response != null && response.getType() == MessageType.CLICK_TILE_RESULT) {
+                Result result = response.getFromBody("result", Result.class);
+                if(result != null) {
+                    Gdx.app.postRunnable(() -> {
+                        SmartTooltip.getInstance().show("  " + result.getMessage() + "  ");
+                        Timer.schedule(new Timer.Task() {
+                            @Override
+                            public void run() {
+                                SmartTooltip.getInstance().hide();
+                            }
+                        }, 3f);
+                    });
                 }
             }
         }).start();

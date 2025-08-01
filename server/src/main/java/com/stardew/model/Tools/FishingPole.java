@@ -4,6 +4,9 @@ import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.ItemInventoryType;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
+import com.stardew.model.gameApp.date.Weather;
+import com.stardew.model.userInfo.Ability;
+import com.stardew.model.userInfo.Player;
 
 import java.util.UUID;
 
@@ -24,36 +27,36 @@ public class FishingPole extends Tool{
     }
 
     @Override
-    public Result useTool() {
-//        Weather weather = App.getGame().getTime().getWeather();
-//        int multiple = switch (weather) {
-//            case Rainy -> 2;
-//            case Snowy -> 3;
-//            default -> 1;
-//        };
-//        int consumedEnergy;
-//        if (App.getGame().getCurrentPlayingPlayer().getAbility().getFarmingLevel() == Ability.getMaxLevel()) {
-//            consumedEnergy = switch (type) {
-//                case Training, Bamboo -> 7 * multiple;
-//                case Fiberglass -> 5 * multiple;
-//                case Iridium -> 3 * multiple;
-//            };
-//        } else {
-//            consumedEnergy = switch (type) {
-//                case Training, Bamboo -> 8 * multiple;
-//                case Fiberglass -> 6 * multiple;
-//                case Iridium -> 4 * multiple;
-//
-//
-//            };
-//        }
-//
-//        Result energyConsumptionResult = App.getGame().getCurrentPlayingPlayer().consumeEnergy(consumedEnergy);
-//        if (!energyConsumptionResult.getSuccessful())
-//            return energyConsumptionResult;
-//
-//        return new Result(true, "");
-        return null;
+    public Result useTool(Weather weather , Player player) {
+
+        int multiple = switch (weather) {
+            case Rainy -> 2;
+            case Snowy -> 3;
+            default -> 1;
+        };
+        int consumedEnergy;
+        if (player.getAbility().getFarmingLevel() == Ability.getMaxLevel()) {
+            consumedEnergy = switch (type) {
+                case Training, Bamboo -> 7 * multiple;
+                case Fiberglass -> 5 * multiple;
+                case Iridium -> 3 * multiple;
+            };
+        } else {
+            consumedEnergy = switch (type) {
+                case Training, Bamboo -> 8 * multiple;
+                case Fiberglass -> 6 * multiple;
+                case Iridium -> 4 * multiple;
+
+
+            };
+        }
+
+        Result energyConsumptionResult = player.consumeEnergy(consumedEnergy);
+        if (!energyConsumptionResult.getSuccessful())
+            return energyConsumptionResult;
+
+        return new Result(true, "");
+
     }
 
     @Override

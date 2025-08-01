@@ -3,11 +3,15 @@ package com.stardew.controller;
 
 import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.ItemInventoryType;
+import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.Tools.Tool;
 import com.stardew.model.gameApp.Game;
 import com.stardew.model.mapInfo.Ingredient;
 import com.stardew.model.mapInfo.InventoryItem;
+import com.stardew.model.mapInfo.foraging.Fertilizer;
+import com.stardew.model.mapInfo.foraging.Seeds;
+import com.stardew.model.mapInfo.foraging.TreeSource;
 import com.stardew.model.userInfo.Player;
 import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
@@ -20,6 +24,8 @@ import java.util.HashMap;
 
 public class InventoryController {
     private static InventoryController instance;
+    private final ToolController toolController = new ToolController();
+    private final ForagingController foragingController = new ForagingController();
     private InventoryController() {}
 
     public static InventoryController getInstance() {
@@ -199,6 +205,37 @@ public class InventoryController {
         int index = message.getIntFromBody("index");
         InventoryItem item = player.getHotBar()[index];
         player.setCurrentInventoryItem(item);
+    }
+
+    public void handleClickTile(Player player ,Game game ,Message message , ClientConnectionThread connection , String requestID ) {
+        int indexTileX = message.getIntFromBody("x");
+        int indexTileY = message.getIntFromBody("y");
+        Tile[][] tiles = game.getMap().getTiles();
+        if (indexTileX < 0 || indexTileX >= tiles.length || indexTileY < 0 || indexTileY >= tiles[0].length)
+            return;
+        Tile target = game.getMap().findTile(indexTileX, indexTileY);
+        InventoryItem item = player.getCurrentInventoryItem();
+        Result result  = null;
+
+
+        if(item instanceof Tool){
+            result = toolController.useTool(target , player , game.getTime().getWeather() , game.getTime());
+        }
+        else if(item instanceof Fertilizer fertilizer){
+            result = foragingController.fertilize(fertilizer , target , player);
+        }
+        else if(item instanceof Seeds || item instanceof TreeSource){
+            result = foragingController.plant(item , target , player , game.getTime());
+        }
+        HashMap<String , Object> body = new HashMap<>();
+        body.put("result" , result);
+        Message m = new Message(body , MessageType.CLICK_TILE_RESULT);
+        m.setRequestID(requestID);
+        connection.sendMessage(m);
+        handleSendInventoryList(player, connection , requestID);
+        sendHotBarUpdate(player , connection);
+
+
     }
 
 }

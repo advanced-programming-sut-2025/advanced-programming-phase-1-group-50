@@ -2,7 +2,9 @@ package com.stardew.model.Tools;
 
 import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.Result;
+import com.stardew.model.gameApp.date.Weather;
 import com.stardew.model.mapInfo.InventoryItem;
+import com.stardew.model.userInfo.Player;
 
 public abstract class Tool implements InventoryItem {
     protected ToolType toolType;
@@ -10,7 +12,7 @@ public abstract class Tool implements InventoryItem {
     protected String name;
 
     public abstract int getConsumptionEnergy();
-    public abstract Result useTool();
+    public abstract Result useTool(Weather weather , Player player);
     public abstract void upgradeTool();
     public abstract ToolType getToolType();
     public abstract PoleType getPoleType();

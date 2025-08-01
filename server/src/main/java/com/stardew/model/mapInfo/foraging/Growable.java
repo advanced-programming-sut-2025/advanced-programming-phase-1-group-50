@@ -14,7 +14,7 @@ public interface Growable {
     int getCurrentStage();
     boolean hasWateredToday();
     boolean hasFertilized();
-    //Fertilizer getFertilizer();
+    Fertilizer getFertilizer();
     String getName();
     String getNameOfProduct();
 }
