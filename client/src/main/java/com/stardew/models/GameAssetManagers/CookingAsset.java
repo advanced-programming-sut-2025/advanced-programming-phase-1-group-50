@@ -2,67 +2,43 @@ package com.stardew.models.GameAssetManagers;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.stardew.models.recipes.CookingRecipe;
 
 public enum CookingAsset {
-    FriedEgg(GamePictureManager.friedEggNormal, GamePictureManager.friedEggDisable, CookingRecipe.FriedEgg),
-    BakedFish(GamePictureManager.bakedFishNormal, GamePictureManager.bakedFishDisable, CookingRecipe.BakedFish),
-    Salad(GamePictureManager.saladNormal, GamePictureManager.saladDisable, CookingRecipe.Salad),
-    Omelet(GamePictureManager.omeletNormal, GamePictureManager.omeletDisable, CookingRecipe.Omelet),
-    PumpkinPie(GamePictureManager.pumpkinPieNormal, GamePictureManager.pumpkinPieDisable, CookingRecipe.PumpkinPie),
-    Spaghetti(GamePictureManager.spaghettiNormal, GamePictureManager.spaghettiDisable, CookingRecipe.Spaghetti),
-    Pizza(GamePictureManager.pizzaNormal, GamePictureManager.pizzaDisable, CookingRecipe.Pizza),
-    Tortilla(GamePictureManager.tortillaNormal, GamePictureManager.tortillaDisable, CookingRecipe.Tortilla),
-    MakiRoll(GamePictureManager.makiRollNormal, GamePictureManager.makiRollDisable, CookingRecipe.MakiRoll),
-    TripleShotEspresso(GamePictureManager.tripleShotEspressoNormal, GamePictureManager.tripleShotEspressoDisable, CookingRecipe.TripleShotEspresso),
-    Cookie(GamePictureManager.cookieNormal, GamePictureManager.cookieDisable, CookingRecipe.Cookie),
-    HashBrowns(GamePictureManager.hashbrownsNormal, GamePictureManager.hashbrownsDisable, CookingRecipe.HashBrowns),
-    Pancakes(GamePictureManager.pancakesNormal, GamePictureManager.pancakesDisable, CookingRecipe.Pancakes),
-    FruitSalad(GamePictureManager.fruitSaladNormal, GamePictureManager.fruitSaladDisable, CookingRecipe.FruitSalad),
-    RedPlate(GamePictureManager.redPlateNormal, GamePictureManager.redPlateDisable, CookingRecipe.RedPlate),
-    Bread(GamePictureManager.breadNormal, GamePictureManager.breadDisable, CookingRecipe.Bread),
-    SalmonDinner(GamePictureManager.salmonDinnerNormal, GamePictureManager.salmonDinnerDisable, CookingRecipe.SalmonDinner),
-    VegetableMedley(GamePictureManager.vegetableMedleyNormal, GamePictureManager.vegetableMedleyDisable, CookingRecipe.VegetableMedley),
-    FarmersLunch(GamePictureManager.farmersLunchNormal, GamePictureManager.farmersLunchDisable, CookingRecipe.FarmersLunch),
-    SurvivalBurger(GamePictureManager.survivalBurgerNormal, GamePictureManager.survivalBurgerDisable, CookingRecipe.SurvivalBurger),
-    DishOTheSea(GamePictureManager.dishOTheSeaNormal, GamePictureManager.dishOTheSeaDisable, CookingRecipe.DishOTheSea),
-    SeaFoamPudding(GamePictureManager.seaFoamPuddingNormal, GamePictureManager.seaFoamPuddingDisable, CookingRecipe.SeaFoamPudding),
-    MinersTreat(GamePictureManager.minersTreatNormal, GamePictureManager.minersTreatDisable , CookingRecipe.MinersTreat),;
+    FriedEgg(GamePictureManager.friedEggNormal, GamePictureManager.friedEggDisable),
+    BakedFish(GamePictureManager.bakedFishNormal, GamePictureManager.bakedFishDisable),
+    Salad(GamePictureManager.saladNormal, GamePictureManager.saladDisable),
+    Omelet(GamePictureManager.omeletNormal, GamePictureManager.omeletDisable),
+    PumpkinPie(GamePictureManager.pumpkinPieNormal, GamePictureManager.pumpkinPieDisable),
+    Spaghetti(GamePictureManager.spaghettiNormal, GamePictureManager.spaghettiDisable),
+    Pizza(GamePictureManager.pizzaNormal, GamePictureManager.pizzaDisable),
+    Tortilla(GamePictureManager.tortillaNormal, GamePictureManager.tortillaDisable),
+    MakiRoll(GamePictureManager.makiRollNormal, GamePictureManager.makiRollDisable),
+    TripleShotEspresso(GamePictureManager.tripleShotEspressoNormal, GamePictureManager.tripleShotEspressoDisable),
+    Cookie(GamePictureManager.cookieNormal, GamePictureManager.cookieDisable),
+    HashBrowns(GamePictureManager.hashbrownsNormal, GamePictureManager.hashbrownsDisable),
+    Pancakes(GamePictureManager.pancakesNormal, GamePictureManager.pancakesDisable),
+    FruitSalad(GamePictureManager.fruitSaladNormal, GamePictureManager.fruitSaladDisable),
+    RedPlate(GamePictureManager.redPlateNormal, GamePictureManager.redPlateDisable),
+    Bread(GamePictureManager.breadNormal, GamePictureManager.breadDisable),
+    SalmonDinner(GamePictureManager.salmonDinnerNormal, GamePictureManager.salmonDinnerDisable),
+    VegetableMedley(GamePictureManager.vegetableMedleyNormal, GamePictureManager.vegetableMedleyDisable),
+    FarmersLunch(GamePictureManager.farmersLunchNormal, GamePictureManager.farmersLunchDisable),
+    SurvivalBurger(GamePictureManager.survivalBurgerNormal, GamePictureManager.survivalBurgerDisable),
+    DishOTheSea(GamePictureManager.dishOTheSeaNormal, GamePictureManager.dishOTheSeaDisable),
+    SeaFoamPudding(GamePictureManager.seaFoamPuddingNormal, GamePictureManager.seaFoamPuddingDisable),
+    MinersTreat(GamePictureManager.minersTreatNormal, GamePictureManager.minersTreatDisable);
 
-    private final TextureRegionDrawable normalImage;
-    private final TextureRegionDrawable disabledImage;
     private final ImageButton.ImageButtonStyle style;
-    private final CookingRecipe recipe;
-    private final String description;
 
-    CookingAsset(TextureRegionDrawable normalImage, TextureRegionDrawable disabledImage, CookingRecipe recipe) {
-        this.normalImage = normalImage;
-        this.disabledImage = disabledImage;
-        this.recipe = recipe;
+    CookingAsset(TextureRegionDrawable normalImage, TextureRegionDrawable disabledImage) {
         style = new ImageButton.ImageButtonStyle();
         style.imageUp = normalImage;
         style.imageDisabled = disabledImage;
-
-        description = CookingRecipe.getDescription(recipe);
     }
 
     public ImageButton.ImageButtonStyle getStyle() {
         return style;
     }
 
-    public TextureRegionDrawable getNormalImage() {
-        return normalImage;
-    }
 
-    public TextureRegionDrawable getDisabledImage() {
-        return disabledImage;
-    }
-
-    public CookingRecipe getRecipe() {
-        return recipe;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 }

@@ -7,20 +7,19 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.stardew.controller.CookingAndCraftingControllers.CookingController;
 import com.stardew.models.GameAssetManagers.CookingAsset;
-import com.stardew.models.Result;
-import com.stardew.models.app.App;
-import com.stardew.models.userInfo.Player;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class CookingWindow extends CloseableWindow {
     private final HashMap<CookingAsset, ImageButton> buttons = new HashMap<>();
     private final CookingController controller = new CookingController();
 
-    public CookingWindow(Stage stage) {
+    public CookingWindow(Stage stage, Map<String, String> descriptions, Set<String> ownRecipes) {
         super("Cooking Menu", stage);
 
-        createUI();
+        createUI(descriptions, ownRecipes);
 
         pad(150);
         defaults().space(20);
@@ -39,31 +38,28 @@ public class CookingWindow extends CloseableWindow {
     }
 
 
-    private void createUI() {
+    private void createUI(Map<String, String> descriptions, Set<String> ownRecipes) {
 
         for (CookingAsset cookingAsset : CookingAsset.values()) {
-            buttons.put(cookingAsset, new ImageButton(cookingAsset.getStyle()));
-        }
-
-        Player player = App.getGame().getCurrentPlayingPlayer();
-
-        for (CookingAsset cookingAsset : CookingAsset.values()) {
-            ImageButton imageButton = buttons.get(cookingAsset);
-            imageButton.setDisabled(!player.getBackpack().containRecipe(cookingAsset.getRecipe()));
+            ImageButton imageButton = new ImageButton(cookingAsset.getStyle());
+            imageButton.setDisabled(!ownRecipes.contains(cookingAsset.name()));
+            buttons.put(cookingAsset, imageButton);
 
             SmartTooltip tooltip = SmartTooltip.getInstance();
 
             imageButton.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    Result result = controller.cookingPrepare(cookingAsset.getRecipe());
-                    showResult(result);
+                    //TODO
+                    // change here: send message and get Result
+//                    Result result = controller.cookingPrepare(cookingAsset.getRecipe());
+//                    showResult(result);
                     return true;
                 }
 
                 @Override
                 public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                    tooltip.show(cookingAsset.getDescription());
+                    tooltip.show(descriptions.get(cookingAsset.name()));
                 }
 
                 @Override

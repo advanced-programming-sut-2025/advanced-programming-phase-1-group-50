@@ -4,5 +4,5 @@ public enum Event {
     Moving,
     CLickTile,
     ShowInventory,
-
+    GetCookingOrCraftingInfo,
 }

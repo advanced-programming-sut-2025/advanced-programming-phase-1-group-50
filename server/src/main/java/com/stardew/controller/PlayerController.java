@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.stardew.model.mapInfo.Pair;
 import com.stardew.model.mapInfo.Tile;
 import com.stardew.model.userInfo.Player;
+import com.stardew.network.Message;
 
 public class PlayerController {
     private static PlayerController instance;
@@ -17,7 +18,12 @@ public class PlayerController {
     }
 
 
-    public void handleMovement(Player player, Tile[][] tiles, float vx, float vy, int dir) {
+    public void handleMovement(Player player, Tile[][] tiles, Message message) {
+        if (message == null) return;
+
+        Float vx = message.getFromBody("vx", Float.class);
+        Float vy = message.getFromBody("vy", Float.class);
+        int dir = message.getIntFromBody("dir");
 
         if(player.getEnergy() <= 0) return;
 

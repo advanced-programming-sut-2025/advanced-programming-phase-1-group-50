@@ -12,15 +12,17 @@ import com.stardew.models.app.App;
 import com.stardew.models.userInfo.Player;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class CraftingWindow extends CloseableWindow {
     private final HashMap<CraftingAsset, ImageButton> buttons = new HashMap<>();
     private final CraftingController controller = new CraftingController();
 
-    public CraftingWindow(Stage stage) {
+    public CraftingWindow(Stage stage, Map<String, String> descriptions, Set<String> ownRecipes) {
         super("Crafting Menu", stage);
 
-        createUI();
+        createUI(descriptions, ownRecipes);
 
         pad(150);
         defaults().space(20);
@@ -39,31 +41,26 @@ public class CraftingWindow extends CloseableWindow {
     }
 
 
-    private void createUI() {
+    private void createUI(Map<String, String> descriptions, Set<String> ownRecipes) {
 
         for (CraftingAsset craftingAsset : CraftingAsset.values()) {
-            buttons.put(craftingAsset, new ImageButton(craftingAsset.getStyle()));
-        }
+            ImageButton imageButton = new ImageButton(craftingAsset.getStyle());
+            buttons.put(craftingAsset, imageButton);
 
-        Player player = App.getGame().getCurrentPlayingPlayer();
-
-        for (CraftingAsset craftingAsset : CraftingAsset.values()) {
-            ImageButton imageButton = buttons.get(craftingAsset);
-
-            imageButton.setDisabled(!player.getBackpack().containRecipe(craftingAsset.getRecipe()));
+            imageButton.setDisabled(!ownRecipes.contains(craftingAsset.name()));
 
             SmartTooltip tooltip = SmartTooltip.getInstance();
             imageButton.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    Result result = controller.craftingCraft(craftingAsset.getRecipe(), stage);
-                    showResult(result);
+//                    Result result = controller.craftingCraft(craftingAsset.getRecipe(), stage);
+//                    showResult(result);
                     return true;
                 }
 
                 @Override
                 public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                    tooltip.show(craftingAsset.getDescription());
+                    tooltip.show(descriptions.get(craftingAsset.name()));
                 }
 
                 @Override
