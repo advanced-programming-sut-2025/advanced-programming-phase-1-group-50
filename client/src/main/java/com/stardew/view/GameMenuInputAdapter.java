@@ -1,6 +1,7 @@
 
 package com.stardew.view;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -26,10 +27,7 @@ import com.stardew.view.cheatConsole.CheatWindow;
 import com.stardew.view.windows.CookingWindow;
 import com.stardew.view.windows.CraftingWindow;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class GameMenuInputAdapter extends InputAdapter {
 //    private final GameModel model;
@@ -138,11 +136,13 @@ public class GameMenuInputAdapter extends InputAdapter {
         }
 
         if (justPressedKeys.contains(Input.Keys.B)) {
-            stage.addActor(new CraftingWindow(stage));
+            sendGetCookingOrCraftingInfo("crafting");
+//            stage.addActor(new CraftingWindow(stage));
         }
 
         if (justPressedKeys.contains(Input.Keys.E)) {
-            stage.addActor(new CookingWindow(stage));
+            sendGetCookingOrCraftingInfo("cooking");
+//            stage.addActor(new CookingWindow(stage));
         }
 
         if(justPressedKeys.contains(Input.Keys.ESCAPE)){
@@ -203,6 +203,26 @@ public class GameMenuInputAdapter extends InputAdapter {
     }
 
 
+    private void sendGetCookingOrCraftingInfo(String cookingOrCrafting) {
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", id);
+            body.put("event", Event.GetCookingOrCraftingInfo);
+            body.put("cookingOrCrafting", cookingOrCrafting);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType() == MessageType.GET_COOKING_CRAFTING_INFO_RESULT) {
+                Map<String, String> descriptions = response.getFromBody("descriptions", new TypeToken<HashMap<String, String>>(){}.getType());
+                Set<String> ownRecipes = response.getFromBody("ownRecipes", new TypeToken<HashSet<String>>(){}.getType());
+                if (cookingOrCrafting.equalsIgnoreCase("cooking")) {
+                    Gdx.app.postRunnable(() -> stage.addActor(new CookingWindow(stage, descriptions, ownRecipes)));
+                } else if (cookingOrCrafting.equalsIgnoreCase("crafting")) {
+                    Gdx.app.postRunnable(() -> stage.addActor(new CraftingWindow(stage, descriptions, ownRecipes)));
+                }
+            }
+        }).start();
+    }
+
     public void createStoreWindow(Store store) {
         stage.addActor(new StoreWindow(stage , store));
     }
@@ -243,15 +263,6 @@ public class GameMenuInputAdapter extends InputAdapter {
 //            }
 //        }
         return true;
-    }
-
-
-    private void sendEvent(Event event) {
-        HashMap<String, Object> body = new HashMap<>();
-        body.put("id", id);
-        body.put("event", event);
-        Message message = new Message(body, MessageType.EVENT_IN_GAME);
-        NetworkManager.getConnection().sendMessage(message);
     }
 
 }

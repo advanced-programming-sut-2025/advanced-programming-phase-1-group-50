@@ -66,6 +66,7 @@ public class GameScreenMenu implements Screen {
 
 //        initializeGame();
         uiStage.addActor(hotBarActor);
+        SmartTooltip.initialize(stage, GamePictureManager.skin);
 
     }
 

@@ -1,5 +1,6 @@
 package com.stardew.controller;
 
+import com.stardew.controller.CookingCraftingControllers.CookingCraftingInfoController;
 import com.stardew.model.gameApp.Game;
 import com.stardew.model.userInfo.Player;
 import com.stardew.network.ClientConnectionThread;
@@ -88,10 +89,8 @@ public class GameSessionController {
 
         switch (event) {
             case Moving -> {
-                Float vx = message.getFromBody("vx", Float.class);
-                Float vy = message.getFromBody("vy", Float.class);
-                int dir = message.getIntFromBody("dir");
-                PlayerController.getInstance().handleMovement(game.getPlayer(connection), game.getMap().getTiles(), vx, vy, dir);
+                Player player = game.getPlayer(connection);
+                PlayerController.getInstance().handleMovement(player, game.getMap().getTiles(), message);
             }
             case ShowInventory -> {
                 Player p = game.getPlayer(connection);
@@ -101,6 +100,10 @@ public class GameSessionController {
                 Player p = game.getPlayer(connection);
                 InventoryController.getInstance().handleRemoveItem(p , message , connection , message.getRequestID());
 
+            }
+            case GetCookingOrCraftingInfo -> {
+                Player player = game.getPlayer(connection);
+                CookingCraftingInfoController.getInstance().handleGetInfo(message, player, connection);
             }
         }
 
