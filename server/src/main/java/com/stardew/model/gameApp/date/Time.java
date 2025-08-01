@@ -22,7 +22,7 @@ public class Time implements TimeProvider {
         this.dayOfWeek = DaysOfTheWeek.Saturday;
         this.season = Season.Spring;
         this.date = 1;
-        this.weather = Weather.Sunny;
+        this.weather = Weather.Stormy;
         this.nextDayWeather = Weather.Sunny;
 
     }

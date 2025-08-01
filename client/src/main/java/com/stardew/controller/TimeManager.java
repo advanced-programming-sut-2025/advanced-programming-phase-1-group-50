@@ -95,12 +95,12 @@ public class TimeManager {
         nightOverlay.setColor(0, 0, 0, 0f);
 
         //TODO  : add tis line to gameScreenMenu
-        //stage.addActor(nightOverlay);
+        uiStage.addActor(nightOverlay);
     }
 
 
-    public void updateNightOverlay(){
-        int hour = App.getGame().getTime().getHour();
+    public void updateNightOverlay(int hour){
+
         float targetAlpha;
 
         if (hour >= 18 && hour < 22) {

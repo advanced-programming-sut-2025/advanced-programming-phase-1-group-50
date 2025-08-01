@@ -36,7 +36,7 @@ public class GameScreenMenu implements Screen {
     private final TimeManager timeManager ;
     private final EnergyManager energyManager ;
 
-//    private final WeatherManager weatherManager = new WeatherManager();
+    private final WeatherManager weatherManager;
 
 
 
@@ -54,6 +54,7 @@ public class GameScreenMenu implements Screen {
         this.timeManager = new TimeManager(gameState, uiStage);
         this.energyManager = new EnergyManager(gameState, uiStage);
         this.hotBarActor = new HotBarActor(gameState , id);
+        this.weatherManager = new WeatherManager(gameState);
         gameMenuInputAdapter.setHotBar(hotBarActor);
 
 
@@ -112,7 +113,7 @@ public class GameScreenMenu implements Screen {
 
 
         batch.setProjectionMatrix(gameState.getCamera().combined);
-//        weatherManager.render(v);
+        weatherManager.render(v , gameState.getTime().getWeather());
         batch.begin();
 //
         timeManager.updateTime();
@@ -120,7 +121,7 @@ public class GameScreenMenu implements Screen {
 //        gameModel.update(v);
         gameRenderer.render(v);
         gameMenuInputAdapter.update(v);
-//        weatherManager.draw(batch);
+        weatherManager.draw(batch , gameState.getTime().getWeather());
 //
 //
         batch.end();
@@ -133,11 +134,11 @@ public class GameScreenMenu implements Screen {
 //
 //
 //        timeManager.checkForDayTransition();
-//        timeManager.updateNightOverlay();
+        timeManager.updateNightOverlay(gameState.getTime().getHour());
 //        timeManager.changeTileTextureInWinter();
 //        timeManager.changeTileTextureInSpring();
 //        timeManager.setWateredTile(v);
-//        weatherManager.thunder(v , stage);
+        weatherManager.thunder(v , stage , gameState.getTime().getWeather());
 
     }
 
