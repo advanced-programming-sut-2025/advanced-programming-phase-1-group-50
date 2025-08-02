@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class PierreGeneralStore extends Store {
     private ArrayList<ShopItem> inventory;
 
-    public PierreGeneralStore(int x, int y, int width, int height) {
-        super( TextureID.pierresShopRegion,new Rectangle(x,y,width,height),"Pierre",9,23);
+    public PierreGeneralStore(int gameId,int x, int y, int width, int height) {
+        super(gameId,TextureID.pierresShopRegion,new Rectangle(x,y,width,height),"Pierre",9,23);
     }
 
     @Override

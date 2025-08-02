@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class JojaMart extends Store {
     private ArrayList<ShopItem> inventory;
 
-    public JojaMart(int x, int y, int width, int height) {
-        super(TextureID.jojaMartRegion, new Rectangle(x, y, width, height), "Morris", 9, 23);
+    public JojaMart(int gameId,int x, int y, int width, int height) {
+        super(gameId,TextureID.jojaMartRegion, new Rectangle(x, y, width, height), "Morris", 9, 23);
     }
 
     @Override

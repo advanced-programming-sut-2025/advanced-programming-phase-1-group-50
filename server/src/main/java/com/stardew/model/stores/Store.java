@@ -1,8 +1,10 @@
 package com.stardew.model.stores;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.stardew.controller.GameSessionController;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
+import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.mapInfo.Placeable;
 
 import java.awt.*;
@@ -15,8 +17,10 @@ public abstract class Store implements Placeable {
     protected final int endHour;
     protected final TextureID texture;
     protected Image storeImage;
+    protected final int gameId;
 
-    public Store(TextureID texture,Rectangle bounds, String shopAssistantName, int startHour, int endHour) {
+    public Store(int gameId,TextureID texture,Rectangle bounds, String shopAssistantName, int startHour, int endHour) {
+        this.gameId = gameId;
         this.texture = texture;
         this.bounds = bounds;
         this.shopAssistantName = shopAssistantName;
@@ -34,8 +38,8 @@ public abstract class Store implements Placeable {
     }
 
     public boolean isOpen() {
-        //TODO
-        return true;
+        TimeProvider timeProvider = GameSessionController.getInstance().getGame(gameId).getTime();
+        return timeProvider.getTime().getHour() >= startHour && timeProvider.getTime().getHour() < endHour;
     }
 
     public Image getStoreImage() {

@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class FishShop extends Store{
     private ArrayList<ShopItem> inventory;
 
-    public FishShop(int x, int y, int width, int height) {
-        super(TextureID.fishShopTextureRegion,new Rectangle(x,y,width,height),"willy",9,17);
+    public FishShop(int gameId,int x, int y, int width, int height) {
+        super(gameId,TextureID.fishShopTextureRegion,new Rectangle(x,y,width,height),"willy",9,17);
     }
 
     @Override
