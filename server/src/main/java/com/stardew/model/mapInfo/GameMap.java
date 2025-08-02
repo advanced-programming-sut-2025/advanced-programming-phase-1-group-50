@@ -39,12 +39,12 @@ public class GameMap {
 
 
 
-    public GameMap(ArrayList<Farm> farms) {
+    public GameMap(int gameId ,ArrayList<Farm> farms) {
         this.farms = farms;
         this.width = 250;
         this.height = 200;
         this.tiles = new Tile[width][height];
-        buildMap();
+        buildMap(gameId);
     }
 
     public Tile findTile(int x, int y) {
@@ -57,7 +57,7 @@ public class GameMap {
         return findTile(position.getX(), position.getY());
     }
 
-    private void buildMap() {
+    private void buildMap(int gameId) {
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
                 tiles[i][j] = new Tile(new Position(i, j));
@@ -65,13 +65,13 @@ public class GameMap {
         }
 
         this.npcVillage = new NpcVillage(new Rectangle(100, 75, 49, 49),
-                new Blacksmith(102, 77, 6, 4),
-                new CarpenterShop(101, 83, 16, 12),
-                new FishShop(110, 97, 4, 4),
-                new JojaMart(138, 89, 4, 4),
-                new MarnieRanch(118, 116, 18, 8),
-                new PierreGeneralStore(138, 97, 4, 4),
-                new StardopSaloon(138, 110, 4, 4));
+                new Blacksmith(gameId,102, 77, 6, 4),
+                new CarpenterShop(gameId,101, 83, 16, 12),
+                new FishShop(gameId,110, 97, 4, 4),
+                new JojaMart(gameId,138, 89, 4, 4),
+                new MarnieRanch(gameId,118, 116, 18, 8),
+                new PierreGeneralStore(gameId,138, 97, 4, 4),
+                new StardopSaloon(gameId,138, 110, 4, 4));
 
         NPC abigailNpc = new NPC(NPCType.Abigail);
         NPC sebastianNpc = new NPC(NPCType.Sebastian);

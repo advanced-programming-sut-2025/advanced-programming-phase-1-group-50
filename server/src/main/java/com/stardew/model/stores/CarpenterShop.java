@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class CarpenterShop extends Store{
     private ArrayList<ShopItem> inventory;
 
-    public CarpenterShop(int x, int y, int width, int height) {
-        super(TextureID.carpenterShopTextureRegion,new Rectangle(x,y,width,height),"Robin",9,20);
+    public CarpenterShop(int gameId,int x, int y, int width, int height) {
+        super(gameId,TextureID.carpenterShopTextureRegion,new Rectangle(x,y,width,height),"Robin",9,20);
     }
 
     @Override

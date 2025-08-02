@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class MarnieRanch extends Store{
     private ArrayList<ShopItem> inventory;
 
-    public MarnieRanch(int x, int y, int width, int height) {
-        super( TextureID.marnieRegion,new Rectangle(x,y,width,height),"Marnie",9,16);
+    public MarnieRanch(int gameId,int x, int y, int width, int height) {
+        super(gameId,TextureID.marnieRegion,new Rectangle(x,y,width,height),"Marnie",9,16);
     }
 
 

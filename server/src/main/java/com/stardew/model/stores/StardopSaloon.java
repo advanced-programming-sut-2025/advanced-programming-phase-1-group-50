@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public class StardopSaloon extends Store{
     private ArrayList<ShopItem> inventory;
 
-    public StardopSaloon(int x, int y, int width, int height) {
-        super( TextureID.stardopSaloonRegion,new Rectangle(x,y,width,height),"Gus",12,24);
+    public StardopSaloon(int gameId,int x, int y, int width, int height) {
+        super(gameId,TextureID.stardopSaloonRegion,new Rectangle(x,y,width,height),"Gus",12,24);
     }
 
     @Override
