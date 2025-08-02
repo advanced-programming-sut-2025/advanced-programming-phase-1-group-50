@@ -9,6 +9,7 @@ package com.stardew.model.gameApp;
 //import com.stardew.model.foraging.Crop;
 //import com.stardew.model.foraging.Growable;
 //import com.stardew.model.foraging.Tree;
+import com.google.gson.JsonObject;
 import com.stardew.model.*;
 import com.stardew.model.animals.Animal;
 import com.stardew.model.gameApp.date.Time;
@@ -47,6 +48,7 @@ public class Game {
         this.players = players;
         this.gameCreator = u;
         this.time = new Time();
+        time.setGame(this);
         this.map = map;
         this.timeService = new TimeService(time, this);
         this.hotBarService = new HotBarService(this);
@@ -199,6 +201,8 @@ public class Game {
                 player.setEnergy(200/ratio);
             }
             player.setFaintedToday(false);
+
+
             Iterator<Tree> treeIterator = player.getFarm().getTrees().iterator();
             while (treeIterator.hasNext()) {
                 Tree tree = treeIterator.next();
@@ -214,6 +218,7 @@ public class Game {
                     tile.setPlowed(false);
                 }
             }
+
 
             Iterator<Crop> cropIterator = player.getFarm().getCrops().iterator();
             while (cropIterator.hasNext()) {
@@ -232,6 +237,8 @@ public class Game {
                 }
             }
 
+
+
             GreenHouse gh = player.getFarm().getGreenHouse();
             Iterator<Growable> cropIterator2 = gh.getGrowables().iterator();
             if(!gh.isBroken()) {
@@ -249,8 +256,12 @@ public class Game {
                     }
                 }
             }
+
+
             map.generateRandomForagingCrop(player.getFarm());
             map.generateRandomStoneFarm(player.getFarm());
+
+
 
             for (Animal animal : player.getBackpack().getAllAnimals()) {
                 if (animal.isOutOfHabitat()) {
@@ -268,29 +279,36 @@ public class Game {
         map.randomForagingMineralGenerator();
 
 
+
+
         for (ShippingBin bin : this.map.getShippingBins()) {
             bin.checkEveryNight();
         }
 
-        for (RelationWithPlayers relation : relationsBetweenPlayers.relationNetwork.values()) {
-            relation.checkEveryNight();
-        }
 
-        for (Player player : getPlayers()) {
-            player.getRelationWithAbigail().checkEveryNight(player);
-            player.getRelationWithHarvey().checkEveryNight(player);
-            player.getRelationWithLeah().checkEveryNight(player);
-            player.getRelationWithRobin().checkEveryNight(player);
-            player.getRelationWithSebastian().checkEveryNight(player);
-        }
 
-        this.getMap().getNpcVillage().getBlacksmith().ResetQuantityEveryNight();
-        this.getMap().getNpcVillage().getMarnieRanch().ResetQuantityEveryNight();
-        this.getMap().getNpcVillage().getPierreGeneralStore().ResetQuantityEveryNight();
-        this.getMap().getNpcVillage().getJojaMart().ResetQuantityEveryNight();
-        this.getMap().getNpcVillage().getFishShop().ResetQuantityEveryNight();
-        this.getMap().getNpcVillage().getCarpenterShop().ResetQuantityEveryNight();
-        this.getMap().getNpcVillage().getStardopSaloon().ResetQuantityEveryNight();
+//        for (RelationWithPlayers relation : relationsBetweenPlayers.relationNetwork.values()) {
+//            relation.checkEveryNight();
+//        }
+//
+//        for (Player player : getPlayers()) {
+//            player.getRelationWithAbigail().checkEveryNight(player);
+//            player.getRelationWithHarvey().checkEveryNight(player);
+//            player.getRelationWithLeah().checkEveryNight(player);
+//            player.getRelationWithRobin().checkEveryNight(player);
+//            player.getRelationWithSebastian().checkEveryNight(player);
+//        }
+//        System.out.println("relations are done");
+//
+//        this.getMap().getNpcVillage().getBlacksmith().ResetQuantityEveryNight();
+//        this.getMap().getNpcVillage().getMarnieRanch().ResetQuantityEveryNight();
+//        this.getMap().getNpcVillage().getPierreGeneralStore().ResetQuantityEveryNight();
+//        this.getMap().getNpcVillage().getJojaMart().ResetQuantityEveryNight();
+//        this.getMap().getNpcVillage().getFishShop().ResetQuantityEveryNight();
+//        this.getMap().getNpcVillage().getCarpenterShop().ResetQuantityEveryNight();
+//        this.getMap().getNpcVillage().getStardopSaloon().ResetQuantityEveryNight();
+//
+//        System.out.println("completed");
 
     }
 
