@@ -175,11 +175,7 @@ public class Game {
         }
         ArrayList<PlaceableDTO> placeables = new ArrayList<>();
         for (Placeable placeable : placeablesSet) {
-            placeables.add(new PlaceableDTO(
-                placeable.getBounds().x, placeable.getBounds().y,
-                placeable.getBounds().width, placeable.getBounds().height,
-                placeable.getTexture())
-            );
+            placeables.add(placeable.toPlaceableDTO());
         }
         PlayerDTO player = players.get(connection).toDTO();
 

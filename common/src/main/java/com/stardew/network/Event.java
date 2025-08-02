@@ -7,4 +7,6 @@ public enum Event {
     RemoveItem,
     GetCookingOrCraftingInfo,
     CookingFood,
+    GetMyFarmInfo,
+    CraftingMachine,
 }

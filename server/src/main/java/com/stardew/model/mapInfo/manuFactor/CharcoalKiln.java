@@ -39,8 +39,4 @@ public class CharcoalKiln extends ArtisanMachine {
 //        return new Result(false, "This Machine can't make this Item!!");
 //    }
 
-    @Override
-    public TextureID getTexture() {
-        return null;
-    }
 }

@@ -22,6 +22,8 @@ public class Farm {
     private final ArrayList<Placeable> placeables = new ArrayList<>();
     private final ArrayList<Crop> crops;
     private final ArrayList<Habitat> habitats = new ArrayList<>();
+    public static final int WIDTH = 100;
+    public static final int HEIGHT = 75;
 
 
     public Farm(Cottage cottage, GreenHouse greenHouse, ArrayList<Lake> lakes, ArrayList<Quarry> quarries,

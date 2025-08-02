@@ -58,6 +58,11 @@ public class CookingWindow extends CloseableWindow {
             imageButton.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    if (imageButton.isDisabled()) {
+//                        showResult(new Result(false, "You don't have Recipe for this"));
+                        return true;
+                    }
+
                     new Thread(() -> {
                         HashMap<String, Object> body = new HashMap<>();
                         body.put("id", id);

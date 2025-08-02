@@ -23,10 +23,6 @@ public class CheesePress extends ArtisanMachine {
 
     }
 
-    @Override
-    public TextureID getTexture() {
-        return null;
-    }
 
 //    @Override
 //    public Result canUse(Player player, String product) {

@@ -127,22 +127,16 @@ public class GameMenuInputAdapter extends InputAdapter {
             stage.addActor(new CheatWindow(stage));
         }
 
-        if (justPressedKeys.contains(Input.Keys.SPACE)) {
-            stage.addActor(new TileSelectionWindow(stage, 5, 3));
-        }
-
         if(justPressedKeys.contains(Input.Keys.M)){
             stage.addActor(new MapWindow(stage));
         }
 
         if (justPressedKeys.contains(Input.Keys.B)) {
             sendGetCookingOrCraftingInfo("crafting");
-//            stage.addActor(new CraftingWindow(stage));
         }
 
         if (justPressedKeys.contains(Input.Keys.E)) {
             sendGetCookingOrCraftingInfo("cooking");
-//            stage.addActor(new CookingWindow(stage));
         }
 
         if(justPressedKeys.contains(Input.Keys.ESCAPE)){

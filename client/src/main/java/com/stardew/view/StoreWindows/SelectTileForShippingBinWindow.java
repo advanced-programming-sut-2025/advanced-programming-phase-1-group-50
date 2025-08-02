@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.stardew.controller.CookingAndCraftingControllers.TileSelectionController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
@@ -17,8 +16,8 @@ import com.stardew.view.windows.CloseableWindow;
 
 public class SelectTileForShippingBinWindow extends CloseableWindow {
 
-    private final TileSelectionController controller;
-    private final GridMapActor gridMap;
+//    private final TileSelectionController controller;
+    private GridMapActor gridMap;
 
 
     public SelectTileForShippingBinWindow(Stage stage, StoreWindow storeWindow, int selectionWidth, int selectionHeight) {
@@ -38,8 +37,8 @@ public class SelectTileForShippingBinWindow extends CloseableWindow {
         setColor(Color.BROWN);
 
 
-        controller = new TileSelectionController(selectionWidth, selectionHeight);
-        gridMap = new GridMapActor(selectionWidth, selectionHeight , App.getGame());
+//        controller = new TileSelectionController(selectionWidth, selectionHeight);
+//        gridMap = new GridMapActor(selectionWidth, selectionHeight , App.getGame());
         ScrollPane scrollPane = new ScrollPane(gridMap, GamePictureManager.skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(false, false);
@@ -66,17 +65,17 @@ public class SelectTileForShippingBinWindow extends CloseableWindow {
         OKButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Result result = controller.checkTileSelection(gridMap.getSelectedTile());
-                if (result.getSuccessful()) {
-                    closeWindow();
-                    int xPosition = controller.getSelectedTile().getPosition().getX();
-                    int yPosition = controller.getSelectedTile().getPosition().getY();
-                    Result result1 = App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseShippingBin(xPosition,yPosition);
-                    storeWindow.refreshProducts();
-                    showResult(result1);
-                } else {
-                    showResult(result);
-                }
+//                Result result = controller.checkTileSelection(gridMap.getSelectedTile());
+//                if (result.getSuccessful()) {
+//                    closeWindow();
+//                    int xPosition = controller.getSelectedTile().getPosition().getX();
+//                    int yPosition = controller.getSelectedTile().getPosition().getY();
+//                    Result result1 = App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseShippingBin(xPosition,yPosition);
+//                    storeWindow.refreshProducts();
+//                    showResult(result1);
+//                } else {
+//                    showResult(result);
+//                }
 
             }
         });

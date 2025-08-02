@@ -29,7 +29,7 @@ public class ShowFarmsWindow extends CloseableWindow {
         setSize(900, 700);
         setPosition((float) Gdx.graphics.getWidth() /2, (float) Gdx.graphics.getHeight() /2);
 
-        gridMap = new GridMapActor(1, 1 , game);
+//        gridMap = new GridMapActor(1, 1 , game);
         scrollPane = new ScrollPane(gridMap, GamePictureManager.skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(false, false);
