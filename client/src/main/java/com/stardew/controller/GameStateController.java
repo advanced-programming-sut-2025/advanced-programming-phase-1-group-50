@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.google.gson.reflect.TypeToken;
 import com.stardew.Main;
 import com.stardew.model.*;
+import com.stardew.models.GameAssetManagers.GameAssetIDManager;
 import com.stardew.models.GameModel;
 import com.stardew.network.Message;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.InventoryWindows.InventoryWindow;
+import com.stardew.view.ReactionWindows.ReactionTable;
 
 import java.util.ArrayList;
 
@@ -99,5 +101,14 @@ public class GameStateController {
         });
 
 
+    }
+
+    public void handleUpdateReaction(Message message) {
+        if (message == null) return;
+        TextureID emoji = message.getFromBody("emoji", TextureID.class);
+        String username = message.getFromBody("username");
+        Gdx.app.postRunnable(() -> {
+            ReactionTable.getInstance().update(GameAssetIDManager.getTextureRegion(emoji), username);
+        });
     }
 }

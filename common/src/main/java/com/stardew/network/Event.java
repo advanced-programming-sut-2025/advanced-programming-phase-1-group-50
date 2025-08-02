@@ -18,4 +18,6 @@ public enum Event {
     PutInRefrigerator,
     PickFromRefrigerator,
     EatItem,
+    Reaction,
+
 }

@@ -44,4 +44,5 @@ public enum MessageType {
     GET_RELATION_INFO_RESULT,
     GET_MAP_INFO_RESULT,
     CLICK_TILE_RESULT,
+    UPDATE_REACTION,
 }

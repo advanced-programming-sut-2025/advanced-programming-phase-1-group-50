@@ -683,6 +683,17 @@ public enum TextureID {
     npcHome5Region,
     greenHouseRegion,
     skillsTextureRegion,
+    cryEmoji,
+    sadEmoji,
+    smileEmoji,
+    angryEmoji,
+    pokerFaceEmoji,
+    loveEmoji,
+    likeEmoji,
+    disLikeEmoji,
+    brokenHeartEmoji,
+    thankYouEmoji,
+    OopsEmoji,
 
 
 }

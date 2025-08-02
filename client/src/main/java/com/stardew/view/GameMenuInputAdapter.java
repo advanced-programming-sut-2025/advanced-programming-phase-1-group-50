@@ -21,6 +21,8 @@ import com.stardew.network.MessageType;
 import com.stardew.network.NetworkManager;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.InventoryWindows.InventoryWindow;
+import com.stardew.view.InventoryWindows.MapWindow;
+import com.stardew.view.ReactionWindows.ReactionWindow;
 import com.stardew.view.RefrigeratorView.RefrigeratorWindow;
 import com.stardew.view.SellProductWindow.ShippingBinWindow;
 import com.stardew.view.StoreWindows.StoreClosedMessageWindow;
@@ -151,6 +153,10 @@ public class GameMenuInputAdapter extends InputAdapter {
 
         if (justPressedKeys.contains(Input.Keys.R)) {
             sendMessageToPrepareRefrigerator();
+        }
+
+        if(justPressedKeys.contains(Input.Keys.Z)){
+            stage.addActor(new ReactionWindow(stage , id));
         }
 
 

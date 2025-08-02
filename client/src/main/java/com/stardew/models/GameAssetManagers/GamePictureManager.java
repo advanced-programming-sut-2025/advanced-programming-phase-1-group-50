@@ -1886,5 +1886,19 @@ public class GamePictureManager {
     }
     public static Animation<TextureRegion> stormAnimation = new Animation<>(0.15f , frames4 , Animation.PlayMode.LOOP);
 
+    public static TextureRegion cryEmoji = new TextureRegion(new Texture("Emoji/Emojis013.png"));
+    public static TextureRegion smileEmoji = new TextureRegion(new Texture("Emoji/Emojis000.png"));
+    public static TextureRegion angryEmoji = new TextureRegion(new Texture("Emoji/Emojis014.png"));
+    public static TextureRegion pokerFaceEmoji = new TextureRegion(new Texture("Emoji/Emojis016.png"));
+    public static TextureRegion loveEmoji = new TextureRegion(new Texture("Emoji/Emojis043.png"));
+    public static TextureRegion likeEmoji = new TextureRegion(new Texture("Emoji/Emojis035.png"));
+    public static TextureRegion disLikeEmoji = new TextureRegion(new Texture("Emoji/Emojis036.png"));
+    public static TextureRegion brokenHeartEmoji = new TextureRegion(new Texture("Emoji/Emojis045.png"));
+    public static TextureRegion sadEmoji = new TextureRegion(new Texture("Emoji/Emojis012.png"));
+
+    public static TextureRegion thankYouEmoji = new TextureRegion(new Texture("ThankYou.png"));
+    public static TextureRegion OopsEmoji = new TextureRegion(new Texture("Oops!.png"));
+
+
 
 }

@@ -10,6 +10,7 @@ import com.stardew.models.date.Season;
 import com.stardew.view.GameMenu;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -122,5 +123,27 @@ public class GameAssetIDManager {
     public static Animation<TextureRegion> getAnimation(AnimationID id) {
         return animations.get(id);
     }
+
+
+    public static ArrayList<TextureID> emojis = new ArrayList<>();
+    static {
+        emojis.add(TextureID.cryEmoji);
+        emojis.add(TextureID.smileEmoji);
+        emojis.add(TextureID.sadEmoji);
+        emojis.add(TextureID.angryEmoji);
+        emojis.add(TextureID.loveEmoji);
+        emojis.add(TextureID.brokenHeartEmoji);
+        emojis.add(TextureID.pokerFaceEmoji);
+        emojis.add(TextureID.likeEmoji);
+        emojis.add(TextureID.disLikeEmoji);
+
+    }
+
+    public static ArrayList<TextureID> emojis2 = new ArrayList<>();
+    static {
+        emojis2.add(TextureID.thankYouEmoji);
+        emojis2.add(TextureID.OopsEmoji);
+    }
+
 
 }

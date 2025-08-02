@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class Blacksmith extends Store {
     private ArrayList<ShopItem> inventory;
 
-    public Blacksmith(int x, int y, int width, int height) {
-        super( TextureID.blacksmithTextureRegion, new Rectangle(x, y, width, height), "Clint", 9, 16);
+    public Blacksmith(int gameId,int x, int y, int width, int height) {
+        super(gameId,TextureID.blacksmithTextureRegion, new Rectangle(x, y, width, height), "Clint", 9, 16);
     }
 
     @Override

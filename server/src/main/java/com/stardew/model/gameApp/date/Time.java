@@ -1,6 +1,7 @@
 package com.stardew.model.gameApp.date;
 
 import com.stardew.model.TimeDTO;
+import com.stardew.model.gameApp.Game;
 import com.stardew.model.gameApp.TimeProvider;
 
 import java.util.ArrayList;
@@ -14,9 +15,11 @@ public class Time implements TimeProvider {
     private int minute;
     private Weather weather;
     private Weather nextDayWeather;
+    private Game game;
 
 
     public Time(){
+
         this.minute = 0;
         this.hour = 9;
         this.dayOfWeek = DaysOfTheWeek.Saturday;
@@ -25,6 +28,10 @@ public class Time implements TimeProvider {
         this.weather = Weather.Sunny;
         this.nextDayWeather = Weather.Sunny;
 
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     public void advancedMinute(int m) {
@@ -58,7 +65,7 @@ public class Time implements TimeProvider {
             this.dayOfWeek = days[(currentIndex + 1) % days.length];
             this.weather = this.nextDayWeather;
             this.nextDayWeather = createNextDayWeather();
-            //App.getGame().callMethodsForTomorrow();
+            game.callMethodsForTomorrow();
         }
     }
     public void advancedSeason(){

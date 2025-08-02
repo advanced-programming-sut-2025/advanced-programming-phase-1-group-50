@@ -171,6 +171,10 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 CookingController.getInstance().handleEat(message, player, connection);
             }
+
+            case Reaction -> {
+                ReactionController.getInstance().handleReactionProcess(message , game);
+            }
         }
 
     }

@@ -90,6 +90,11 @@ public class MessageHandler {
                 return true;
             }
 
+            case UPDATE_REACTION -> {
+                gameStateController.handleUpdateReaction(message);
+                return true;
+            }
+
             default -> {
                 return false;
             }
