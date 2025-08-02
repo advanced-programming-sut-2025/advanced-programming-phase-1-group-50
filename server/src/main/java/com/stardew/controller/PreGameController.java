@@ -94,7 +94,7 @@ public class PreGameController {
         ArrayList<Farm> farms = new ArrayList<>();
         Map<ClientConnectionThread, Player> players = new ConcurrentHashMap<>();
         for (User user : lobby.getUsers()) {
-            Player player = new Player(user);
+            Player player = new Player(user, counter);
             Farm farm = FarmFactory.makeFarm(
                 playersFarmStatusInLobby.get(user.getUsername()),
                 GameMap.getFarmStartX(counter),

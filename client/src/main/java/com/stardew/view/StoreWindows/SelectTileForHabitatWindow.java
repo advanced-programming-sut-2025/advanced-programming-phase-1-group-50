@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.controller.AnimalsControllers.AnimalsController;
-import com.stardew.controller.CookingAndCraftingControllers.TileSelectionController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
@@ -18,8 +17,8 @@ import com.stardew.view.windows.CloseableWindow;
 
 public class SelectTileForHabitatWindow extends CloseableWindow {
 
-    private final TileSelectionController controller;
-    private final GridMapActor gridMap;
+//    private final TileSelectionController controller;
+    private GridMapActor gridMap;
 
 
     public SelectTileForHabitatWindow(Stage stage, StoreWindow storeWindow, String buildingName, int selectionWidth,
@@ -40,8 +39,8 @@ public class SelectTileForHabitatWindow extends CloseableWindow {
         setColor(Color.BROWN);
 
 
-        controller = new TileSelectionController(selectionWidth, selectionHeight);
-        gridMap = new GridMapActor(selectionWidth, selectionHeight , App.getGame());
+//        controller = new TileSelectionController(selectionWidth, selectionHeight);
+//        gridMap = new GridMapActor(selectionWidth, selectionHeight , App.getGame());
         ScrollPane scrollPane = new ScrollPane(gridMap, GamePictureManager.skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(false, false);
@@ -68,36 +67,36 @@ public class SelectTileForHabitatWindow extends CloseableWindow {
         OKButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Result result = controller.checkTileSelection(gridMap.getSelectedTile());
-                if (result.getSuccessful()) {
-                    closeWindow();
-                    AnimalsController controller1 = new AnimalsController();
-                    Result result1 = controller1.build(stage, controller.getSelectedTile(), buildingName);
-                    switch (buildingName) {
-                        case "barn":
-                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Barn");
-                            break;
-                        case "big_barn":
-                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Big Barn");
-                            break;
-                        case "deluxe_barn":
-                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Deluxe Barn");
-                            break;
-                        case "coop":
-                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Coop");
-                            break;
-                        case "big_coop":
-                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Big Coop");
-                            break;
-                        case "deluxe_coop":
-                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Deluxe Coop");
-                            break;
-                    }
-                    storeWindow.refreshProducts();
-                    showResult(result1);
-                } else {
-                    showResult(result);
-                }
+//                Result result = controller.checkTileSelection(gridMap.getSelectedTile());
+//                if (result.getSuccessful()) {
+//                    closeWindow();
+//                    AnimalsController controller1 = new AnimalsController();
+//                    Result result1 = controller1.build(stage, controller.getSelectedTile(), buildingName);
+//                    switch (buildingName) {
+//                        case "barn":
+//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Barn");
+//                            break;
+//                        case "big_barn":
+//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Big Barn");
+//                            break;
+//                        case "deluxe_barn":
+//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Deluxe Barn");
+//                            break;
+//                        case "coop":
+//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Coop");
+//                            break;
+//                        case "big_coop":
+//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Big Coop");
+//                            break;
+//                        case "deluxe_coop":
+//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Deluxe Coop");
+//                            break;
+//                    }
+//                    storeWindow.refreshProducts();
+//                    showResult(result1);
+//                } else {
+//                    showResult(result);
+//                }
 
             }
         });

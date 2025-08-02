@@ -1,6 +1,8 @@
 package com.stardew.controller;
 
+import com.stardew.controller.CookingCraftingControllers.CookingController;
 import com.stardew.controller.CookingCraftingControllers.CookingCraftingInfoController;
+import com.stardew.controller.CookingCraftingControllers.CraftingController;
 import com.stardew.model.gameApp.Game;
 import com.stardew.model.userInfo.Player;
 import com.stardew.network.ClientConnectionThread;
@@ -105,6 +107,18 @@ public class GameSessionController {
             case GetCookingOrCraftingInfo -> {
                 Player player = game.getPlayer(connection);
                 CookingCraftingInfoController.getInstance().handleGetInfo(message, player, connection);
+            }
+            case CookingFood -> {
+                Player player = game.getPlayer(connection);
+                CookingController.getInstance().cookingPrepare(message, player, connection);
+            }
+            case GetMyFarmInfo -> {
+                Player player = game.getPlayer(connection);
+                CookingCraftingInfoController.getInstance().handleGetFarmInfo(message, player, game.getMap(), connection);
+            }
+            case CraftingMachine -> {
+                Player player = game.getPlayer(connection);
+                CraftingController.getInstance().craftingCraft(message, player, game.getMap(), connection);
             }
 
             case GetSkillInfo -> {

@@ -41,12 +41,15 @@ public class Player {
     private float moveDistance;
     private final float distanceByTile = 5f;
     private float speed = 5f;
+    private final int indexOfFarmRegion;
 //    private float vx , vy = 0;
     private InventoryItem currentInventoryItem = null;
     private ArrayList<InventoryItem> inventoryItems = new ArrayList<>();
     private final User currentUser;
 
-    public Player(User currentUser) {
+
+    public Player(User currentUser, int indexOfFarmRegion) {
+        this.indexOfFarmRegion = indexOfFarmRegion;
         this.username = currentUser.getUsername();
         this.nickname = currentUser.getNickname();
         this.currentUser = currentUser;
@@ -153,6 +156,11 @@ public class Player {
         this.farm = map;
         this.playerPosition = new Pair<>((float)farm.getRectangle().x , (float)farm.getRectangle().y );
     }
+
+    public int getIndexOfFarmRegion() {
+        return indexOfFarmRegion;
+    }
+
     public Position getPosition(){
         float x = playerPosition.getFirst();
         float y = playerPosition.getSecond();

@@ -38,56 +38,56 @@ public class CraftingController {
         return new Result(true, output.toString());
     }
 
-    public Result craftingCraft(CraftingRecipes recipe, Stage stage) {
-        Player player = App.getGame().getCurrentPlayingPlayer();
-
-        if (recipe == null)
-            return new Result(false, "Recipe not found!");
-        if (!player.getBackpack().containRecipe(recipe))
-            return new Result(false, "You don't have <" + recipe.name() + "> CraftingRecipe in your backpack!");
-        if (!player.getBackpack().hasCapacity())
-            return new Result(false, "You don't have enough space in backpack!");
-
-        Result energyConsumptionResult = player.consumeEnergy(2);
-        if (!energyConsumptionResult.getSuccessful())
-            return energyConsumptionResult;
-
-        HashMap<Ingredient, Integer> ingredients = recipe.getIngredients();
-        for (Ingredient ingredient : ingredients.keySet()) {
-            if (!(player.getBackpack().getIngredientQuantity().containsKey(ingredient) &&
-                player.getBackpack().getIngredientQuantity().getOrDefault(ingredient,0) >= ingredients.get(ingredient))) {
-                return new Result(false, "You don't have enough <" + ingredient + "> in your backpack!");
-            }
-        }
-        //decrease all needed ingredients
-        for (Ingredient ingredient : ingredients.keySet()) {
-            player.getBackpack().removeIngredients(ingredient, ingredients.get(ingredient));
-        }
-
-        ArtisanMachine artisanMachine = ArtisanMachine.getArtisanMachineByRecipe(recipe);
-        if (artisanMachine != null) {
-            TileSelectionWindow tileSelectionWindow = new TileSelectionWindow(stage, 1, 1);
-            stage.addActor(tileSelectionWindow);
-            tileSelectionWindow.setOnCloseCallback(tile -> {
-                if (tile == null)
-                    tileSelectionWindow.showResult(new Result(false, "You did not select a tile!"));
-                else {
-                    player.getBackpack().addArtisanMachine(artisanMachine);
-                    artisanMachine.prepareWindows(stage, tile.getPosition().getX(), tile.getPosition().getY());
-                    tile.setWalkable(false);
-                    tile.setPlaceable(artisanMachine);
-                    tileSelectionWindow.showResult(new Result(true, "You craft <" + recipe.name() + "> successfully!"));
-                }
-            });
-            return new Result(true, "Please select a tile to place the machine!");
-        }
-        else if (recipe.equals(CraftingRecipes.MysticTreeSeed)) {
-            player.getBackpack().addIngredients(TreeSource.MysticTreeSeeds, 1);
-            return new Result(true, "You craft <" + recipe.name() + "> successfully!");
-        }
-
-        return new Result(false, "Unknown recipe!");
-    }
+//    public Result craftingCraft(CraftingRecipes recipe, Stage stage) {
+//        Player player = App.getGame().getCurrentPlayingPlayer();
+//
+//        if (recipe == null)
+//            return new Result(false, "Recipe not found!");
+//        if (!player.getBackpack().containRecipe(recipe))
+//            return new Result(false, "You don't have <" + recipe.name() + "> CraftingRecipe in your backpack!");
+//        if (!player.getBackpack().hasCapacity())
+//            return new Result(false, "You don't have enough space in backpack!");
+//
+//        Result energyConsumptionResult = player.consumeEnergy(2);
+//        if (!energyConsumptionResult.getSuccessful())
+//            return energyConsumptionResult;
+//
+//        HashMap<Ingredient, Integer> ingredients = recipe.getIngredients();
+//        for (Ingredient ingredient : ingredients.keySet()) {
+//            if (!(player.getBackpack().getIngredientQuantity().containsKey(ingredient) &&
+//                player.getBackpack().getIngredientQuantity().getOrDefault(ingredient,0) >= ingredients.get(ingredient))) {
+//                return new Result(false, "You don't have enough <" + ingredient + "> in your backpack!");
+//            }
+//        }
+//        //decrease all needed ingredients
+//        for (Ingredient ingredient : ingredients.keySet()) {
+//            player.getBackpack().removeIngredients(ingredient, ingredients.get(ingredient));
+//        }
+//
+//        ArtisanMachine artisanMachine = ArtisanMachine.getArtisanMachineByRecipe(recipe);
+//        if (artisanMachine != null) {
+//            TileSelectionWindow tileSelectionWindow = new TileSelectionWindow(stage, 1, 1);
+//            stage.addActor(tileSelectionWindow);
+//            tileSelectionWindow.setOnCloseCallback(tile -> {
+//                if (tile == null)
+//                    tileSelectionWindow.showResult(new Result(false, "You did not select a tile!"));
+//                else {
+//                    player.getBackpack().addArtisanMachine(artisanMachine);
+//                    artisanMachine.prepareWindows(stage, tile.getPosition().getX(), tile.getPosition().getY());
+//                    tile.setWalkable(false);
+//                    tile.setPlaceable(artisanMachine);
+//                    tileSelectionWindow.showResult(new Result(true, "You craft <" + recipe.name() + "> successfully!"));
+//                }
+//            });
+//            return new Result(true, "Please select a tile to place the machine!");
+//        }
+//        else if (recipe.equals(CraftingRecipes.MysticTreeSeed)) {
+//            player.getBackpack().addIngredients(TreeSource.MysticTreeSeeds, 1);
+//            return new Result(true, "You craft <" + recipe.name() + "> successfully!");
+//        }
+//
+//        return new Result(false, "Unknown recipe!");
+//    }
 
     public Result addItem(String itemName, int quantity) {
         Player player = App.getGame().getCurrentPlayingPlayer();

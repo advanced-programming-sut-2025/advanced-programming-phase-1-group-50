@@ -133,22 +133,16 @@ public class GameMenuInputAdapter extends InputAdapter {
             stage.addActor(new CheatWindow(stage));
         }
 
-        if (justPressedKeys.contains(Input.Keys.SPACE)) {
-            stage.addActor(new TileSelectionWindow(stage, 5, 3));
-        }
-
         if(justPressedKeys.contains(Input.Keys.M)){
 //            stage.addActor(new MapWindow(stage));
         }
 
         if (justPressedKeys.contains(Input.Keys.B)) {
             sendGetCookingOrCraftingInfo("crafting");
-//            stage.addActor(new CraftingWindow(stage));
         }
 
         if (justPressedKeys.contains(Input.Keys.E)) {
             sendGetCookingOrCraftingInfo("cooking");
-//            stage.addActor(new CookingWindow(stage));
         }
 
         if(justPressedKeys.contains(Input.Keys.ESCAPE)){
@@ -221,9 +215,9 @@ public class GameMenuInputAdapter extends InputAdapter {
                 Map<String, String> descriptions = response.getFromBody("descriptions", new TypeToken<HashMap<String, String>>(){}.getType());
                 Set<String> ownRecipes = response.getFromBody("ownRecipes", new TypeToken<HashSet<String>>(){}.getType());
                 if (cookingOrCrafting.equalsIgnoreCase("cooking")) {
-                    Gdx.app.postRunnable(() -> stage.addActor(new CookingWindow(stage, descriptions, ownRecipes)));
+                    Gdx.app.postRunnable(() -> stage.addActor(new CookingWindow(id, stage, descriptions, ownRecipes)));
                 } else if (cookingOrCrafting.equalsIgnoreCase("crafting")) {
-                    Gdx.app.postRunnable(() -> stage.addActor(new CraftingWindow(stage, descriptions, ownRecipes)));
+                    Gdx.app.postRunnable(() -> stage.addActor(new CraftingWindow(id, stage, descriptions, ownRecipes)));
                 }
             }
         }).start();

@@ -5,32 +5,32 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.stardew.model.PlaceableDTO;
+import com.stardew.model.TileDTO;
+import com.stardew.models.GameAssetManagers.GameAssetIDManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.Game;
-import com.stardew.models.mapInfo.Tile;
-import com.stardew.models.userInfo.Player;
+
+import java.util.ArrayList;
 
 public class GridMapActor extends Actor {
-    private final int cols = 100; //TODO
-    private final int rows = 75; //TODO
-    private final float cellSize = 24; //TODO
+    private final int cols = 100;
+    private final int rows = 75;
+    private final float cellSize = 24;
     private CellInfo[][] grid;
-    private Tile[][] tiles;
-    private Game game;
+    private final ArrayList<TileDTO> tiles;
+    private final ArrayList<PlaceableDTO> placeables;
     private int selectedX = -1;  //selected index X in cells in this Actor
     private int selectedY = -1;  //selected index Y in cells in this Actor
     private final int selectionWidth;
     private final int selectionHeight;
-    private final TextureRegion normalTexture = GamePictureManager.emptyTile;  //TODO
-    private final TextureRegion selectedTexture = GamePictureManager.selectedTile;  //TODO
-    private int startX;  //the X index of tiles in map for current player
-    private int startY;  //the Y index of tiles in map for current player
+    private final TextureRegion normalTexture = GamePictureManager.emptyTile;
+    private final TextureRegion selectedTexture = GamePictureManager.selectedTile;
 
-    public GridMapActor(int selectionWidth, int selectionHeight , Game game) {
+    public GridMapActor(int selectionWidth, int selectionHeight, ArrayList<TileDTO> tiles, ArrayList<PlaceableDTO> placeables) {
         this.selectionWidth = selectionWidth;
         this.selectionHeight = selectionHeight;
-        this.game = game;
-        this.tiles = game.getMap().getTiles();
+        this.tiles = tiles;
+        this.placeables = placeables;
 
         initializeGrid();
 
@@ -53,21 +53,22 @@ public class GridMapActor extends Actor {
 
     public void initializeGrid() {
 
-        Player currentPlayer = game.getCurrentPlayingPlayer();
-
-        startX = game.getMap().getFarmStartX(currentPlayer , game);
-        startY = game.getMap().getFarmStartY(currentPlayer , game);
-
         grid = new CellInfo[cols][rows];
+
         for (int x = 0; x < cols; x++) {
             for (int y = 0; y < rows; y++) {
                 grid[x][y] = new CellInfo();
-                if (tiles[x + startX][y + startY].getPlaceable() == null) {
-                    grid[x][y].occupied = false;
-                    grid[x][y].contentTexture = null;
-                } else {
-                    grid[x][y].occupied = true;
-                    grid[x][y].contentTexture = tiles[x + startX][y + startY].getPlaceable().getTexture();
+            }
+        }
+
+        for (PlaceableDTO placeable : placeables) {
+            int x = placeable.getX();
+            int y = placeable.getY();
+            for (int i = 0; i < tiles.size(); i++) {
+                if (tiles.get(i).getX() == x && tiles.get(i).getY() == y) {
+                    grid[i / rows][i % rows].occupied = true;
+                    grid[i / rows][i % rows].contentTexture = GameAssetIDManager.getTextureRegion(placeable.getTextureID());
+                    break;
                 }
             }
         }
@@ -95,10 +96,15 @@ public class GridMapActor extends Actor {
         }
     }
 
-    public Tile getSelectedTile() {
-        if (selectedX == -1 || selectedY == -1)
-            return null;
-        return tiles[selectedX + startX][selectedY + startY];
+
+    public int getSelectedX() {
+        int index = selectedX * rows + selectedY;
+        return tiles.get(index).getX();
+    }
+
+    public int getSelectedY() {
+        int index = selectedX * rows + selectedY;
+        return tiles.get(index).getY();
     }
 
 

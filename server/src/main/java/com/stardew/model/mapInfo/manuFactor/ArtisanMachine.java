@@ -5,6 +5,7 @@ import com.stardew.model.gameApp.date.Time;
 import com.stardew.model.gameApp.date.TimeInterval;
 import com.stardew.model.mapInfo.Placeable;
 import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGood;
+import com.stardew.model.recipes.CraftingRecipes;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -198,24 +199,25 @@ public abstract class ArtisanMachine implements Placeable {
 
 
 
-//    public static ArtisanMachine getArtisanMachineByRecipe(CraftingRecipes recipe) {
-//        if (recipe == null)
-//            return null;
-//        return switch (recipe) {
-//            case CharcoalKiln -> new CharcoalKiln();
-//            case Furnace -> new Furnace();
-//            case BeeHouse -> new BeeHouse();
-//            case CheesePress -> new CheesePress();
-//            case Keg -> new Keg();
-//            case Loom -> new Loom();
-//            case MayonnaiseMachine -> new MayonnaiseMachine();
-//            case OilMaker -> new OilMaker();
-//            case PreservesJar -> new PreservesJar();
-//            case Dehydrator -> new Dehydrator();
-//            case FishSmoker -> new FishSmoker();
-//            default -> null;
-//        };
-//    }
+    public static ArtisanMachine getArtisanMachineByRecipe(CraftingRecipes recipe) {
+        if (recipe == null)
+            return null;
+        return switch (recipe) {
+            case CharcoalKiln -> new CharcoalKiln();
+            case Furnace -> new Furnace();
+            case BeeHouse -> new BeeHouse();
+            case CheesePress -> new CheesePress();
+            case Keg -> new Keg();
+            case Loom -> new Loom();
+            case MayonnaiseMachine -> new MayonnaiseMachine();
+            case OilMaker -> new OilMaker();
+            case PreservesJar -> new PreservesJar();
+            case Dehydrator -> new Dehydrator();
+            case FishSmoker -> new FishSmoker();
+            default -> null;
+        };
+    }
+
     @Override
     public TextureID getTexture() {
         return null;

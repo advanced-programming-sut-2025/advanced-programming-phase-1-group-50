@@ -1,33 +1,31 @@
 package com.stardew.view.GridMap;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.stardew.controller.CookingAndCraftingControllers.TileSelectionController;
+import com.stardew.model.PlaceableDTO;
+import com.stardew.model.TileDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
-import com.stardew.models.app.App;
-import com.stardew.models.mapInfo.Tile;
 import com.stardew.view.windows.CloseableWindow;
 
-import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.function.BiConsumer;
 
 public class TileSelectionWindow extends CloseableWindow {
-    private final TileSelectionController controller;
-    private Consumer<Tile> onCloseCallback;
+    private BiConsumer<Integer, Integer> onOKCallback;
     private final ImageButton OKButton;
     private final GridMapActor gridMap;
     private final ScrollPane scrollPane;
 
 
-    public TileSelectionWindow(Stage stage, int selectionWidth, int selectionHeight) {
+    public TileSelectionWindow(Stage stage, int selectionWidth, int selectionHeight,
+                               ArrayList<TileDTO> tiles, ArrayList<PlaceableDTO> placeables) {
         super(" Select a tile to place: A Rectangle " + selectionWidth + " x " + selectionHeight, stage);
 
         Label titleLabel = getTitleLabel();
@@ -44,8 +42,8 @@ public class TileSelectionWindow extends CloseableWindow {
         setColor(Color.BROWN);
 
 
-        controller = new TileSelectionController(selectionWidth, selectionHeight);
-        gridMap = new GridMapActor(selectionWidth, selectionHeight , App.getGame());
+//        controller = new TileSelectionController(selectionWidth, selectionHeight);
+        gridMap = new GridMapActor(selectionWidth, selectionHeight , tiles, placeables);
         scrollPane = new ScrollPane(gridMap, GamePictureManager.skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(false, false);
@@ -72,33 +70,28 @@ public class TileSelectionWindow extends CloseableWindow {
         OKButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Result result = controller.checkTileSelection(gridMap.getSelectedTile());
-                if (result.getSuccessful())
-                    closeWindow();
-                else
-                    showResult(result);
+//                Result result = controller.checkTileSelection(gridMap.getSelectedTile());
+//                if (result.getSuccessful())
+//                    closeWindow();
+//                else
+//                    showResult(result);
+                int selectedX = gridMap.getSelectedX();
+                int selectedY = gridMap.getSelectedY();
+                if (selectedX != -1 && selectedY != -1) {
+                    if (onOKCallback != null) {
+                        onOKCallback.accept(selectedX, selectedY);
+                        closeWindow();
+                    }
+                }
+                else {
+                    showResult(new Result(false, "Please select a tile!"));
+                }
             }
         });
     }
 
-    public void setOnCloseCallback(Consumer<Tile> callback) {
-        this.onCloseCallback = callback;
+    public void setOnOKCallback(BiConsumer<Integer, Integer> callback) {
+        this.onOKCallback = callback;
     }
 
-    @Override
-    protected void closeWindow() {
-        getChildren().forEach(Actor::clearListeners);
-
-        if (onCloseCallback != null)
-            onCloseCallback.accept(controller.getSelectedTile());
-
-        addAction(Actions.sequence(
-            Actions.parallel(
-                Actions.fadeOut(0.3f),
-                Actions.scaleTo(0.7f, 0.7f, 0.3f)
-            ),
-            Actions.removeActor()
-        ));
-
-    }
 }

@@ -1,5 +1,11 @@
 package com.stardew.controller.CookingCraftingControllers;
 
+import com.stardew.model.PlaceableDTO;
+import com.stardew.model.TileDTO;
+import com.stardew.model.mapInfo.Farm;
+import com.stardew.model.mapInfo.GameMap;
+import com.stardew.model.mapInfo.Placeable;
+import com.stardew.model.mapInfo.Tile;
 import com.stardew.model.recipes.CookingRecipe;
 import com.stardew.model.recipes.CraftingRecipes;
 import com.stardew.model.userInfo.Player;
@@ -7,6 +13,7 @@ import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -61,5 +68,37 @@ public class CookingCraftingInfoController {
         for (CraftingRecipes recipe : player.getBackpack().getCraftingRecipes()) {
             ownRecipes.add(recipe.name());
         }
+    }
+
+
+
+    public void handleGetFarmInfo(Message message, Player player, GameMap map, ClientConnectionThread connection) {
+        if (message == null) return;
+        if (player == null) return;
+
+        int farmStartX = GameMap.getFarmStartX(player.getIndexOfFarmRegion());
+        int farmStartY = GameMap.getFarmStartY(player.getIndexOfFarmRegion());
+
+        ArrayList<TileDTO> tiles = new ArrayList<>();
+        ArrayList<PlaceableDTO> placeables = new ArrayList<>();
+
+        for (int i = farmStartX; i < farmStartX + Farm.WIDTH; i++) {
+            for (int j = farmStartY; j < farmStartY + Farm.HEIGHT; j++) {
+                Tile tile = map.findTile(i, j);
+                if (tile == null) continue;
+                tiles.add(tile.toDTO());
+                Placeable placeable = tile.getPlaceable();
+                if (placeable != null)
+                    placeables.add(new PlaceableDTO(i, j, 1, 1, placeable.getTexture()));
+            }
+        }
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("tiles", tiles);
+        body.put("placeables", placeables);
+
+        Message response = new Message(body, MessageType.EVENT_IN_GAME_RESULT);
+        response.setRequestID(message.getRequestID());
+        connection.sendMessage(response);
     }
 }

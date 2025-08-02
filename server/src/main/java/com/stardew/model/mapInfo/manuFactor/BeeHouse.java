@@ -21,8 +21,4 @@ public class BeeHouse extends ArtisanMachine{
 //        return new Result(true, "Your product is being made.Please wait.");
 //    }
 
-    @Override
-    public TextureID getTexture() {
-        return null;
-    }
 }
