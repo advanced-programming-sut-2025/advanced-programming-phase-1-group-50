@@ -2,9 +2,11 @@ package com.stardew.models;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+
 import com.stardew.controller.TimeManager;
 import com.stardew.model.*;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.view.windows.SmartTooltip;
 
 import java.util.ArrayList;
 

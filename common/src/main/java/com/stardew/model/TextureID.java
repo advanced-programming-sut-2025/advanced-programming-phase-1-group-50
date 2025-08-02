@@ -682,6 +682,7 @@ public enum TextureID {
     npcHome4Region,
     npcHome5Region,
     greenHouseRegion,
+    skillsTextureRegion,
 
 
 }

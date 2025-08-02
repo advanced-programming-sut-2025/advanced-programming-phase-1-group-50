@@ -20,11 +20,15 @@ public class WeatherManager {
     private GameModel gameModel;
     private float thunderTimer;
 
+    public WeatherManager(GameModel gameModel) {
+        this.gameModel = gameModel;
+    }
 
 
 
-    public void render(float delta) {
-        if(App.getGame().getTime().getWeather().equals(Weather.Rainy)) {
+
+    public void render(float delta , String weather) {
+        if(weather.equals("Rainy")) {
             spawnTimer += delta;
             if (spawnTimer >= 0.03f) {
                 spawnTimer = 0;
@@ -45,7 +49,7 @@ public class WeatherManager {
                     }
                 }
             }
-        } else if (App.getGame().getTime().getWeather().equals(Weather.Snowy)) {
+        } else if (weather.equals("Snowy")) {
             spawnTimer += delta;
             if (spawnTimer >= 0.03f) {
                 spawnTimer = 0;
@@ -67,7 +71,7 @@ public class WeatherManager {
                 }
             }
         }
-        else if(App.getGame().getTime().getWeather().equals(Weather.Stormy)){
+        else if(weather.equals("Stormy")){
             spawnTimer += delta;
             if (spawnTimer >= 0.03f) {
                 spawnTimer = 0;
@@ -93,17 +97,17 @@ public class WeatherManager {
         }
     }
 
-    public void draw(SpriteBatch batch) {
-        if(App.getGame().getTime().getWeather().equals(Weather.Rainy)) {
+    public void draw(SpriteBatch batch , String weather) {
+        if(weather.equals("Rainy")) {
             for (RainDrop r : rainDrops) {
                 r.draw(batch);
             }
         }
-        else if (App.getGame().getTime().getWeather().equals(Weather.Snowy)) {
+        else if (weather.equals("Snowy")) {
             for (SnowDrop r : snowDrops) {
                 r.draw(batch);
             }
-        } else if (App.getGame().getTime().getWeather().equals(Weather.Stormy)) {
+        } else if (weather.equals("Stormy")) {
             for(Wind r : winds) {
                 r.draw(batch);
             }
@@ -115,8 +119,8 @@ public class WeatherManager {
         this.gameModel = gameModel;
     }
 
-    public void thunder(float delta , Stage stage) {
-        if(App.getGame().getTime().getWeather().equals(Weather.Stormy)) {
+    public void thunder(float delta , Stage stage , String weather) {
+        if(weather.equals("Stormy")) {
             thunderTimer += delta;
             if(thunderTimer >= 10f) {
                 thunderTimer = 0;

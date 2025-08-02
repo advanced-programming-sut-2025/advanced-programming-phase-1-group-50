@@ -93,9 +93,9 @@ public class GameStateController {
         ArrayList<InventoryItemDTO> dto = message.getFromBody("inventory", new TypeToken<ArrayList<InventoryItemDTO>>(){}.getType());
 
         Gdx.app.postRunnable(() -> {
-            if (InventoryWindow.isOpen()) {
+
                 InventoryWindow.getInstance().updateDTO(dto);
-            }
+
         });
 
 

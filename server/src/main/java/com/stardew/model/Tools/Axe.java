@@ -4,6 +4,9 @@ import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.ItemInventoryType;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
+import com.stardew.model.gameApp.date.Weather;
+import com.stardew.model.userInfo.Ability;
+import com.stardew.model.userInfo.Player;
 
 import java.util.UUID;
 
@@ -39,39 +42,39 @@ public class Axe extends Tool{
     }
 
     @Override
-    public Result useTool() {
-//        Weather weather = App.getGame().getTime().getWeather();
-//        int multiple = switch (weather) {
-//            case Rainy -> 2;
-//            case Snowy -> 3;
-//            default -> 1;
-//        };
-//        int consumedEnergy;
-//        if (App.getGame().getCurrentPlayingPlayer().getAbility().getFarmingLevel() == Ability.getMaxLevel()) {
-//            consumedEnergy = switch (type) {
-//                case Primary -> 4 * multiple;
-//                case Coppery -> 3 * multiple;
-//                case Metal -> 2 * multiple;
-//                case Golden -> 1;
-//                default -> 0;
-//            };
-//        } else {
-//            consumedEnergy = switch (type) {
-//                case Primary -> 5 * multiple;
-//                case Coppery -> 4 * multiple;
-//                case Metal -> 3 * multiple;
-//                case Golden -> 2 * multiple;
-//                case Iridium -> 1;
-//                default -> 0;
-//            };
-//        }
-//
-//        Result energyConsumptionResult = App.getGame().getCurrentPlayingPlayer().consumeEnergy(consumedEnergy);
-//        if (!energyConsumptionResult.getSuccessful())
-//            return energyConsumptionResult;
-//
-//        return new Result(true, "");
-        return null;
+    public Result useTool(Weather weather , Player player) {
+
+        int multiple = switch (weather) {
+            case Rainy -> 2;
+            case Snowy -> 3;
+            default -> 1;
+        };
+        int consumedEnergy;
+        if (player.getAbility().getFarmingLevel() == Ability.getMaxLevel()) {
+            consumedEnergy = switch (type) {
+                case Primary -> 4 * multiple;
+                case Coppery -> 3 * multiple;
+                case Metal -> 2 * multiple;
+                case Golden -> 1;
+                default -> 0;
+            };
+        } else {
+            consumedEnergy = switch (type) {
+                case Primary -> 5 * multiple;
+                case Coppery -> 4 * multiple;
+                case Metal -> 3 * multiple;
+                case Golden -> 2 * multiple;
+                case Iridium -> 1;
+                default -> 0;
+            };
+        }
+
+        Result energyConsumptionResult = player.consumeEnergy(consumedEnergy);
+        if (!energyConsumptionResult.getSuccessful())
+            return energyConsumptionResult;
+
+        return new Result(true, "");
+
 
    }
 

@@ -1769,6 +1769,8 @@ public class GamePictureManager {
     public static TextureRegionDrawable skillsTextureDrawable = new TextureRegionDrawable
         (new TextureRegion(new Texture("Inventory/Skills.png")));
 
+    public static TextureRegion skillsTextureRegion = skillsTextureDrawable.getRegion();
+
     public static TextureRegionDrawable mapTextureDrawable = new TextureRegionDrawable
         (new TextureRegion(new Texture("Inventory/Map.png")));
 

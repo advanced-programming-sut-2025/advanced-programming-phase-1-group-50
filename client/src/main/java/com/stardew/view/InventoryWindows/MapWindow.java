@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.stardew.model.TextureID;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
 import com.stardew.view.GridMap.GridMapActor;
@@ -15,7 +16,7 @@ public class MapWindow extends CloseableWindow {
     private final ImageButton OKButton;
     private final MapWindowActor mapWindowActor;
     private final ScrollPane scrollPane;
-    public MapWindow(Stage stage) {
+    public MapWindow(Stage stage , TextureID[][] tiles) {
         super("Map Window" ,stage );
 
         Label titleLabel = getTitleLabel();
@@ -31,7 +32,7 @@ public class MapWindow extends CloseableWindow {
             stage.getCamera().position.y - getHeight() / 2);
         setColor(Color.BROWN);
 
-        mapWindowActor = new MapWindowActor(App.getGame().getMap().getTiles());
+        mapWindowActor = new MapWindowActor(tiles);
         scrollPane = new ScrollPane(mapWindowActor, GamePictureManager.skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(false, false);

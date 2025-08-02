@@ -5,6 +5,8 @@ import com.stardew.model.ItemInventoryType;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.App;
+import com.stardew.model.gameApp.date.Weather;
+import com.stardew.model.userInfo.Player;
 
 import java.util.UUID;
 
@@ -22,13 +24,13 @@ public class Scythe extends Tool {
     }
 
     @Override
-    public Result useTool() {
-//        Result energyConsumptionResult = App.getGame().getCurrentPlayingPlayer().consumeEnergy(2);
-//        if (!energyConsumptionResult.getSuccessful())
-//            return energyConsumptionResult;
-//
-//        return new Result(true, "");
-        return null;
+    public Result useTool(Weather weather , Player player) {
+        Result energyConsumptionResult = player.consumeEnergy(2);
+        if (!energyConsumptionResult.getSuccessful())
+            return energyConsumptionResult;
+
+        return new Result(true, "");
+
 
     }
 

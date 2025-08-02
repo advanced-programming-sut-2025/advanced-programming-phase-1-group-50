@@ -9,4 +9,10 @@ public enum Event {
     CookingFood,
     GetMyFarmInfo,
     CraftingMachine,
+    GetSkillInfo,
+    GetRelationWithNPCInfo,
+    GetMapInfo,
+    ShuffleInventory,
+    SetCurrentItem,
+
 }

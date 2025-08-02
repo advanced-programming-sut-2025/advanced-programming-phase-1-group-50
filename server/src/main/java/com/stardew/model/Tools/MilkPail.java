@@ -5,6 +5,8 @@ import com.stardew.model.ItemInventoryType;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.App;
+import com.stardew.model.gameApp.date.Weather;
+import com.stardew.model.userInfo.Player;
 
 import java.util.UUID;
 
@@ -21,14 +23,14 @@ public class MilkPail extends Tool{
     }
 
     @Override
-    public Result useTool() {
+    public Result useTool(Weather weather , Player player) {
         // TODO : add lobby id
-//        Result energyConsumptionResult = App.getGame().getCurrentPlayingPlayer().consumeEnergy(4);
-//        if (!energyConsumptionResult.getSuccessful())
-//            return energyConsumptionResult;
-//
-//        return new Result(true, "");
-        return null;
+        Result energyConsumptionResult = player.consumeEnergy(4);
+        if (!energyConsumptionResult.getSuccessful())
+            return energyConsumptionResult;
+
+        return new Result(true, "");
+
     }
 
     public ToolType getToolType() {

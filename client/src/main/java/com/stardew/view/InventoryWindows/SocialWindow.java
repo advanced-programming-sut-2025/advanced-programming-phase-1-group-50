@@ -20,7 +20,7 @@ public class SocialWindow extends CloseableWindow {
     private final ImageButton leahButton;
     private final ImageButton harveyButton;
     private final ImageButton OKButton;
-    public SocialWindow(Stage stage) {
+    public SocialWindow(Stage stage , int abigail , int harvey , int leah , int sebastian , int robin) {
         super("Social Window" ,stage );
         Label titleLabel = getTitleLabel();
 
@@ -55,13 +55,13 @@ public class SocialWindow extends CloseableWindow {
         sebastianButton = new ImageButton(sebastianDrawable);
         leahButton = new ImageButton(leahDrawable);
         harveyButton = new ImageButton(harveyDrawable);
-        Player p = App.getGame().getCurrentPlayingPlayer();
 
-        addCharacterRow(contentTable, abigailButton, "Abigail", p.getRelationWithAbigail().getNumericalFriendShipLevel() / 200, heartDrawable, skin);
-        addCharacterRow(contentTable, robinButton, "Robin", p.getRelationWithRobin().getNumericalFriendShipLevel() / 200, heartDrawable, skin);
-        addCharacterRow(contentTable, sebastianButton, "Sebastian", p.getRelationWithSebastian().getNumericalFriendShipLevel() / 200, heartDrawable, skin);
-        addCharacterRow(contentTable, leahButton, "Leah", 4, heartDrawable, skin);
-        addCharacterRow(contentTable, harveyButton, "Harvey", 3, heartDrawable, skin);
+
+        addCharacterRow(contentTable, abigailButton, "Abigail", abigail, heartDrawable, skin);
+        addCharacterRow(contentTable, robinButton, "Robin", robin, heartDrawable, skin);
+        addCharacterRow(contentTable, sebastianButton, "Sebastian", sebastian, heartDrawable, skin);
+        addCharacterRow(contentTable, leahButton, "Leah", leah, heartDrawable, skin);
+        addCharacterRow(contentTable, harveyButton, "Harvey", harvey, heartDrawable, skin);
 
         add(contentTable).expand().top().left();
 
