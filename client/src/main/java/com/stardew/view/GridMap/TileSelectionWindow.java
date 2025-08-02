@@ -42,7 +42,6 @@ public class TileSelectionWindow extends CloseableWindow {
         setColor(Color.BROWN);
 
 
-//        controller = new TileSelectionController(selectionWidth, selectionHeight);
         gridMap = new GridMapActor(selectionWidth, selectionHeight , tiles, placeables);
         scrollPane = new ScrollPane(gridMap, GamePictureManager.skin);
         scrollPane.setFadeScrollBars(false);
@@ -70,11 +69,6 @@ public class TileSelectionWindow extends CloseableWindow {
         OKButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-//                Result result = controller.checkTileSelection(gridMap.getSelectedTile());
-//                if (result.getSuccessful())
-//                    closeWindow();
-//                else
-//                    showResult(result);
                 int selectedX = gridMap.getSelectedX();
                 int selectedY = gridMap.getSelectedY();
                 if (selectedX != -1 && selectedY != -1) {

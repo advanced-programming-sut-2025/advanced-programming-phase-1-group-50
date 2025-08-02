@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.google.gson.reflect.TypeToken;
-import com.stardew.controller.CookingAndCraftingControllers.CraftingController;
 import com.stardew.model.PlaceableDTO;
 import com.stardew.model.Result;
 import com.stardew.model.TileDTO;
@@ -25,7 +24,6 @@ import java.util.Set;
 
 public class CraftingWindow extends CloseableWindow {
     private final HashMap<CraftingAsset, ImageButton> buttons = new HashMap<>();
-    private final CraftingController controller = new CraftingController();
     private final int id;
 
     public CraftingWindow(int id, Stage stage, Map<String, String> descriptions, Set<String> ownRecipes) {

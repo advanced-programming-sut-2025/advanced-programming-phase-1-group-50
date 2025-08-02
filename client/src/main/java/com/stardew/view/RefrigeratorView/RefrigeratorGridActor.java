@@ -7,14 +7,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.stardew.model.InventoryItemDTO;
+import com.stardew.models.GameAssetManagers.GameAssetIDManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.App;
-import com.stardew.models.cooking.Eatable;
-import com.stardew.models.cooking.Refrigerator;
 import com.stardew.view.windows.SmartTooltip;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class RefrigeratorGridActor extends Actor {
     private final int cols = 12;
@@ -27,12 +25,13 @@ public class RefrigeratorGridActor extends Actor {
     private final TextureRegion selectedTexture = GamePictureManager.selectedTile;
     private final BitmapFont smallFont = GamePictureManager.smallFont;
     private final GlyphLayout layout = new GlyphLayout();
-
+    private ArrayList<InventoryItemDTO> itemsInRefrigerator;
     private int lastVisitedCellX = -1;
     private int lastVisitedCellY = -1;
 
 
-    public RefrigeratorGridActor() {
+    public RefrigeratorGridActor(ArrayList<InventoryItemDTO> itemsInRefrigerator) {
+        this.itemsInRefrigerator = itemsInRefrigerator;
         initializeGrid();
 
         setSize(cols * cellSize, rows * cellSize);
@@ -81,31 +80,22 @@ public class RefrigeratorGridActor extends Actor {
     }
 
     private void initializeGrid() {
-        Refrigerator refrigerator = App.getGame().getCurrentPlayingPlayer().getBackpack().getRefrigerator();
-        HashMap<Eatable, Integer> itemQuantity = refrigerator.getItemsQuantity();
-        ArrayList<Eatable> itemsInRefrigerator = new ArrayList<>(itemQuantity.keySet());
-        int size = itemsInRefrigerator.size();
-        int index = 0;
 
         items = new RefrigeratorItem[cols][rows];
         for (int i = 0; i < cols; i++) {
             for (int j = 0; j < rows; j++) {
                 items[i][j] = new RefrigeratorItem();
-                if (index >= 0 && index < size) {
-                    items[i][j].occupied = true;
-                    items[i][j].eatableItem = itemsInRefrigerator.get(index);
-                    items[i][j].quantity = itemQuantity.get(itemsInRefrigerator.get(index));
-                    items[i][j].itemTexture = itemsInRefrigerator.get(index).getInventoryTexture();
-                }
-                index++;
             }
         }
+        completeGrid();
     }
 
-    public void update() {
-        Refrigerator refrigerator = App.getGame().getCurrentPlayingPlayer().getBackpack().getRefrigerator();
-        HashMap<Eatable, Integer> itemQuantity = refrigerator.getItemsQuantity();
-        ArrayList<Eatable> itemsInRefrigerator = new ArrayList<>(itemQuantity.keySet());
+    public void update(ArrayList<InventoryItemDTO> itemsInRefrigerator) {
+        this.itemsInRefrigerator = itemsInRefrigerator;
+        completeGrid();
+    }
+
+    private void completeGrid() {
         int index = 0;
         int size = itemsInRefrigerator.size();
 
@@ -114,8 +104,8 @@ public class RefrigeratorGridActor extends Actor {
                 if (index >= 0 && index < size) {
                     items[i][j].occupied = true;
                     items[i][j].eatableItem = itemsInRefrigerator.get(index);
-                    items[i][j].quantity = itemQuantity.get(itemsInRefrigerator.get(index));
-                    items[i][j].itemTexture = itemsInRefrigerator.get(index).getInventoryTexture();
+                    items[i][j].quantity = itemsInRefrigerator.get(index).getQuantity();
+                    items[i][j].itemTexture = GameAssetIDManager.getTextureRegion(itemsInRefrigerator.get(index).getTextureID());
                 }
                 else {
                     items[i][j].occupied = false;
@@ -155,15 +145,11 @@ public class RefrigeratorGridActor extends Actor {
         }
     }
 
-    public RefrigeratorItem[][] getItems() {
-        return items;
+    public InventoryItemDTO getSelectedItem() {
+        if (selectedX == -1 || selectedY == -1) return null;
+        int index = selectedX * rows + selectedY;
+        if (index < 0 || index >= itemsInRefrigerator.size()) return null;
+        return itemsInRefrigerator.get(index);
     }
 
-    public int getSelectedX() {
-        return selectedX;
-    }
-
-    public int getSelectedY() {
-        return selectedY;
-    }
 }

@@ -154,6 +154,23 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 InventoryController.getInstance().handleClickTile(player, game , message , connection , message.getRequestID());
             }
+
+            case GetRefrigeratorItems -> {
+                Player player = game.getPlayer(connection);
+                CookingController.getInstance().handleGetRefrigeratorItems(message, player, connection);
+            }
+            case PutInRefrigerator -> {
+                Player player = game.getPlayer(connection);
+                CookingController.getInstance().putInRefrigerator(message, player, connection);
+            }
+            case PickFromRefrigerator -> {
+                Player player = game.getPlayer(connection);
+                CookingController.getInstance().pickFromRefrigerator(message, player, connection);
+            }
+            case EatItem -> {
+                Player player = game.getPlayer(connection);
+                CookingController.getInstance().handleEat(message, player, connection);
+            }
         }
 
     }

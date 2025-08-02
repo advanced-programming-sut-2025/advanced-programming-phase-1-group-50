@@ -14,5 +14,8 @@ public enum Event {
     GetMapInfo,
     ShuffleInventory,
     SetCurrentItem,
-
+    GetRefrigeratorItems,
+    PutInRefrigerator,
+    PickFromRefrigerator,
+    EatItem,
 }

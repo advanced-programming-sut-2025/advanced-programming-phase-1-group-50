@@ -165,7 +165,7 @@ public class BackpackGridActor extends Actor {
         return cells[y][x].inventoryItem;
     }
 
-    public void update(){
+    private void update(){
         initializeGrid();
     }
 

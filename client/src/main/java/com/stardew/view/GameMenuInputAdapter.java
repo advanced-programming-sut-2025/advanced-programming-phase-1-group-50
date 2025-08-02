@@ -19,10 +19,8 @@ import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 import com.stardew.network.NetworkManager;
-import com.stardew.view.GridMap.TileSelectionWindow;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.InventoryWindows.InventoryWindow;
-import com.stardew.view.InventoryWindows.MapWindow;
 import com.stardew.view.RefrigeratorView.RefrigeratorWindow;
 import com.stardew.view.SellProductWindow.ShippingBinWindow;
 import com.stardew.view.StoreWindows.StoreClosedMessageWindow;
@@ -32,6 +30,7 @@ import com.stardew.view.windows.CookingWindow;
 import com.stardew.view.windows.CraftingWindow;
 import com.stardew.view.windows.SmartTooltip;
 
+import java.lang.reflect.Type;
 import java.util.*;
 
 public class GameMenuInputAdapter extends InputAdapter {
@@ -151,7 +150,7 @@ public class GameMenuInputAdapter extends InputAdapter {
         }
 
         if (justPressedKeys.contains(Input.Keys.R)) {
-            stage.addActor(new RefrigeratorWindow(stage));
+            sendMessageToPrepareRefrigerator();
         }
 
 
@@ -202,6 +201,33 @@ public class GameMenuInputAdapter extends InputAdapter {
         }
     }
 
+    private void sendMessageToPrepareRefrigerator() {
+        new Thread(() -> {
+            ArrayList<InventoryItemDTO> inventoryItems = null;
+            ArrayList<InventoryItemDTO> refrigeratorItems = null;
+
+            Type type = new TypeToken<ArrayList<InventoryItemDTO>>() {}.getType();
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", id);
+            body.put("event", Event.ShowInventory);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType() == MessageType.SHOW_INVENTORY_RESULT) {
+                inventoryItems = response.getFromBody("inventory", type);
+            }
+            HashMap<String, Object> body2 = new HashMap<>();
+            body2.put("id", id);
+            body2.put("event", Event.GetRefrigeratorItems);
+            Message message2 = new Message(body2, MessageType.EVENT_IN_GAME);
+            Message response2 = NetworkManager.getConnection().sendAndWaitForResponse(message2, 500);
+            if (response2 != null && response2.getType() == MessageType.EVENT_IN_GAME_RESULT) {
+                refrigeratorItems = response2.getFromBody("refrigerator", type);
+            }
+            if (inventoryItems != null && refrigeratorItems != null)
+                stage.addActor(new RefrigeratorWindow(stage, id, inventoryItems, refrigeratorItems));
+        }).start();
+
+    }
 
     private void sendGetCookingOrCraftingInfo(String cookingOrCrafting) {
         new Thread(() -> {
