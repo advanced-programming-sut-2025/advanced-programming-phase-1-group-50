@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.Main;
 import com.stardew.controller.EnergyManager;
@@ -18,6 +19,7 @@ import com.stardew.models.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.network.GameUpdateRequestThread;
 import com.stardew.view.InventoryWindows.HotBarActor;
+import com.stardew.view.ReactionWindows.ReactionTable;
 import com.stardew.view.windows.SmartTooltip;
 
 public class GameScreenMenu implements Screen {
@@ -37,6 +39,9 @@ public class GameScreenMenu implements Screen {
     private final EnergyManager energyManager ;
 
     private final WeatherManager weatherManager;
+    private final ReactionTable reactionTable;
+
+
 
 
 
@@ -56,6 +61,8 @@ public class GameScreenMenu implements Screen {
         this.hotBarActor = new HotBarActor(gameState , id);
         this.weatherManager = new WeatherManager(gameState);
         gameMenuInputAdapter.setHotBar(hotBarActor);
+        this.reactionTable = new ReactionTable();
+        uiStage.addActor(reactionTable);
 
 
 
@@ -122,6 +129,8 @@ public class GameScreenMenu implements Screen {
         gameRenderer.render(v);
         gameMenuInputAdapter.update(v);
         weatherManager.draw(batch , gameState.getTime().getWeather());
+        reactionTable.render(v);
+
 //
 //
         batch.end();

@@ -14,5 +14,6 @@ public enum Event {
     GetMapInfo,
     ShuffleInventory,
     SetCurrentItem,
+    Reaction,
 
 }

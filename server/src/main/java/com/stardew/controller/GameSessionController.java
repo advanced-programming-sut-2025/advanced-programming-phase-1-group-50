@@ -154,6 +154,10 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 InventoryController.getInstance().handleClickTile(player, game , message , connection , message.getRequestID());
             }
+
+            case Reaction -> {
+                ReactionController.getInstance().handleReactionProcess(message , game);
+            }
         }
 
     }
