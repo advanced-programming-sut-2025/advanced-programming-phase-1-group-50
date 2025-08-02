@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import com.stardew.model.InventoryItemDTO;
 import com.badlogic.gdx.utils.Timer;
 import com.stardew.model.Result;
+import com.stardew.model.TextureID;
 import com.stardew.models.ClientInfo.LoggedInUser;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.GameModel;
@@ -63,17 +64,32 @@ public class GameMenuInputAdapter extends InputAdapter {
     public boolean keyDown(int keycode) {
         keys.add(keycode);
         justPressedKeys.add(keycode);
+
+        int index ;
+        if(keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {
+            index = keycode - Input.Keys.NUM_1;
+            HashMap<String , Object> body = new HashMap<>();
+            body.put("id", id);
+            body.put("index", index);
+            body.put("event" , Event.SetCurrentItem);
+            Message m = new Message(body , MessageType.EVENT_IN_GAME);
+            NetworkManager.getConnection().sendMessage(m);
+
+
+        }
+        else if(keycode == Input.Keys.NUM_0){
+            index = 0;
+            HashMap<String , Object> body = new HashMap<>();
+            body.put("id", id);
+            body.put("index", index);
+            body.put("event" , Event.SetCurrentItem);
+            Message m = new Message(body , MessageType.EVENT_IN_GAME);
+            NetworkManager.getConnection().sendMessage(m);
+
+        }
+
+
         return true;
-//        if(hotBar != null) {
-//            if(keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {
-//                hotBar.setSelectedIndex(keycode - Input.Keys.NUM_1);
-//
-//            }
-//            else if(keycode == Input.Keys.NUM_0){
-//                hotBar.setSelectedIndex(9);
-//            }
-//        }
-//        return true;
     }
 
 
@@ -135,7 +151,7 @@ public class GameMenuInputAdapter extends InputAdapter {
         }
 
         if(justPressedKeys.contains(Input.Keys.M)){
-//            stage.addActor(new MapWindow(stage));
+            sendMapRequest();
         }
 
         if (justPressedKeys.contains(Input.Keys.B)) {
@@ -321,6 +337,21 @@ public class GameMenuInputAdapter extends InputAdapter {
 //            }
 //        }
         return true;
+    }
+
+    private void sendMapRequest() {
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", id);
+            body.put("event", Event.GetMapInfo);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if(response != null && response.getType() == MessageType.GET_MAP_INFO_RESULT) {
+                TextureID[][] tiles = response.getFromBody("tiles", new TypeToken<TextureID[][]>(){}.getType());
+
+                Gdx.app.postRunnable(() -> stage.addActor(new MapWindow(stage , tiles)));
+            }
+        }).start();
     }
 
 }
