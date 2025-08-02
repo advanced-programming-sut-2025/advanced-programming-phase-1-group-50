@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.stardew.controller.CookingAndCraftingControllers.CookingController;
 import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.CookingAsset;
 import com.stardew.network.Event;
@@ -20,7 +19,6 @@ import java.util.Set;
 
 public class CookingWindow extends CloseableWindow {
     private final HashMap<CookingAsset, ImageButton> buttons = new HashMap<>();
-    private final CookingController controller = new CookingController();
     private final int id;
 
     public CookingWindow(int id, Stage stage, Map<String, String> descriptions, Set<String> ownRecipes) {

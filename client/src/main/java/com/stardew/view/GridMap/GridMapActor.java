@@ -99,11 +99,13 @@ public class GridMapActor extends Actor {
 
     public int getSelectedX() {
         int index = selectedX * rows + selectedY;
+        if (index < 0 || index >= tiles.size()) return -1;
         return tiles.get(index).getX();
     }
 
     public int getSelectedY() {
         int index = selectedX * rows + selectedY;
+        if (index < 0 || index >= tiles.size()) return -1;
         return tiles.get(index).getY();
     }
 

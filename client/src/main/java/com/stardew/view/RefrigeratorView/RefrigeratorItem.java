@@ -1,19 +1,11 @@
 package com.stardew.view.RefrigeratorView;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.stardew.models.cooking.Eatable;
+import com.stardew.model.InventoryItemDTO;
 
 public class RefrigeratorItem {
     boolean occupied;
     TextureRegion itemTexture;
-    Eatable eatableItem;
+    InventoryItemDTO eatableItem;
     int quantity;
-
-    public boolean isOccupied() {
-        return occupied;
-    }
-
-    public Eatable getEatableItem() {
-        return eatableItem;
-    }
 }
