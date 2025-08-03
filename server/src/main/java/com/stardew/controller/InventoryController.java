@@ -7,8 +7,7 @@ import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.Tools.Tool;
 import com.stardew.model.gameApp.Game;
-import com.stardew.model.mapInfo.Ingredient;
-import com.stardew.model.mapInfo.InventoryItem;
+import com.stardew.model.mapInfo.*;
 import com.stardew.model.mapInfo.foraging.Fertilizer;
 import com.stardew.model.mapInfo.foraging.Seeds;
 import com.stardew.model.mapInfo.foraging.TreeSource;
@@ -16,7 +15,6 @@ import com.stardew.model.userInfo.Player;
 import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
-import com.stardew.model.mapInfo.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -210,6 +208,10 @@ public class InventoryController {
     public void handleClickTile(Player player ,Game game ,Message message , ClientConnectionThread connection , String requestID ) {
         int indexTileX = message.getIntFromBody("x");
         int indexTileY = message.getIntFromBody("y");
+        int x = (int) Math.floor(player.getPlayerPosition().getFirst());
+        int y =(int) Math.floor(player.getPlayerPosition().getSecond());
+
+        Tile currentTile = game.getMap().findTile(x , y);
         Tile[][] tiles = game.getMap().getTiles();
         if (indexTileX < 0 || indexTileX >= tiles.length || indexTileY < 0 || indexTileY >= tiles[0].length)
             return;
@@ -217,15 +219,17 @@ public class InventoryController {
         InventoryItem item = player.getCurrentInventoryItem();
         Result result  = null;
 
-
-        if(item instanceof Tool){
-            result = toolController.useTool(target , player , game.getTime().getWeather() , game.getTime());
+        if(isAroundMe(currentTile , target , game.getMap())) {
+            if (item instanceof Tool) {
+                result = toolController.useTool(target, player, game.getTime().getWeather(), game.getTime());
+            } else if (item instanceof Fertilizer fertilizer) {
+                result = foragingController.fertilize(fertilizer, target, player);
+            } else if (item instanceof Seeds || item instanceof TreeSource) {
+                result = foragingController.plant(item, target, player, game.getTime());
+            }
         }
-        else if(item instanceof Fertilizer fertilizer){
-            result = foragingController.fertilize(fertilizer , target , player);
-        }
-        else if(item instanceof Seeds || item instanceof TreeSource){
-            result = foragingController.plant(item , target , player , game.getTime());
+        else {
+            result = new Result(false,"Selected Tile is not near you!");
         }
         HashMap<String , Object> body = new HashMap<>();
         body.put("result" , result);
@@ -236,6 +240,16 @@ public class InventoryController {
         sendHotBarUpdate(player , connection);
 
 
+    }
+
+        public boolean isAroundMe( Tile current, Tile tile , GameMap map) {
+        for (Direction direction : Direction.values()) {
+            Tile inDirectionTile = map.getTileByDirection(current, direction);
+            if (inDirectionTile != null && inDirectionTile.getPosition().equals(tile.getPosition())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

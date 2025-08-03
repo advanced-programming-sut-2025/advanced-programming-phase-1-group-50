@@ -197,13 +197,5 @@ public class ToolController {
 
     }
 
-    //    public boolean isAroundMe(Tile tile) {
-//        for (Direction direction : Direction.values()) {
-//            Tile inDirectionTile = App.getGame().getMap().getTileByDirection(this, direction);
-//            if (inDirectionTile != null && inDirectionTile.getPosition().equals(tile.getPosition())) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+
 }
