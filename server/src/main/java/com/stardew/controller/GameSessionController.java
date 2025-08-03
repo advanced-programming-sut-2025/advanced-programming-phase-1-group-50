@@ -1,5 +1,6 @@
 package com.stardew.controller;
 
+import com.stardew.controller.CookingCraftingControllers.ArtisanController;
 import com.stardew.controller.CookingCraftingControllers.CookingController;
 import com.stardew.controller.CookingCraftingControllers.CookingCraftingInfoController;
 import com.stardew.controller.CookingCraftingControllers.CraftingController;
@@ -118,7 +119,7 @@ public class GameSessionController {
             }
             case CraftingMachine -> {
                 Player player = game.getPlayer(connection);
-                CraftingController.getInstance().craftingCraft(message, player, game.getMap(), connection);
+                CraftingController.getInstance().craftingCraft(message, player, game.getMap(), game.getTime(), connection);
             }
 
             case GetSkillInfo -> {
@@ -170,6 +171,30 @@ public class GameSessionController {
             case EatItem -> {
                 Player player = game.getPlayer(connection);
                 CookingController.getInstance().handleEat(message, player, connection);
+            }
+            case GetMachineDetails -> {
+                Player player = game.getPlayer(connection);
+                ArtisanController.getInstance().handleGetMachineInfo(message, player, connection);
+            }
+            case CheatFinishMachineProcess -> {
+                Player player = game.getPlayer(connection);
+                ArtisanController.getInstance().cheatFinishProcess(message, player);
+            }
+            case CancelMachineProcess -> {
+                Player player = game.getPlayer(connection);
+                ArtisanController.getInstance().cancelProcess(message, player, connection);
+            }
+            case CollectMachineProduct -> {
+                Player player = game.getPlayer(connection);
+                ArtisanController.getInstance().collectProduct(message, player, connection);
+            }
+            case IsReadyProduct -> {
+                Player player = game.getPlayer(connection);
+                ArtisanController.getInstance().isReadyProduct(message, player, connection);
+            }
+            case UseArtisanMachine -> {
+                Player player = game.getPlayer(connection);
+                ArtisanController.getInstance().artisanUse(message, player, connection);
             }
 
             case Reaction -> {

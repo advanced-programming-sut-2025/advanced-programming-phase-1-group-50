@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.model.Result;
 import com.stardew.model.gameApp.App;
 import com.stardew.model.cooking.Food;
+import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.mapInfo.*;
 import com.stardew.model.mapInfo.foraging.TreeSource;
 import com.stardew.model.mapInfo.manuFactor.ArtisanMachine;
@@ -44,7 +45,7 @@ public class CraftingController {
 //    }
 //
 
-    public void craftingCraft(Message message, Player player, GameMap map, ClientConnectionThread connection) {
+    public void craftingCraft(Message message, Player player, GameMap map, TimeProvider timeProvider, ClientConnectionThread connection) {
         if (message == null) return;
         if (player == null) return;
 
@@ -93,7 +94,7 @@ public class CraftingController {
             player.getBackpack().removeIngredients(ingredient, ingredients.get(ingredient));
         }
 
-        ArtisanMachine artisanMachine = ArtisanMachine.getArtisanMachineByRecipe(recipe);
+        ArtisanMachine artisanMachine = ArtisanMachine.getArtisanMachineByRecipe(recipe, timeProvider);
         if (artisanMachine != null) {
             Tile tile = map.findTile(x, y);
             if (tile == null) {
@@ -107,7 +108,13 @@ public class CraftingController {
             tile.setWalkable(false);
             tile.setPlaceable(artisanMachine);
             player.getBackpack().addArtisanMachine(artisanMachine);
-            sendResultMessage(message.getRequestID(), connection, new Result(true, "You craft <" + recipe.name() + "> successfully!"));
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("result", new Result(true, "You craft <" + recipe.name() + "> successfully!"));
+            body.put("machineID", artisanMachine.getId());
+            Message response = new Message(body, MessageType.EVENT_IN_GAME_RESULT);
+            response.setRequestID(message.getRequestID());
+            connection.sendMessage(response);
+
         }
         else if (recipe.equals(CraftingRecipes.MysticTreeSeed)) {
             player.getBackpack().addIngredients(TreeSource.MysticTreeSeeds, 1);

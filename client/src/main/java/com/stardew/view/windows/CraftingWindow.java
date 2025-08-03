@@ -10,11 +10,13 @@ import com.google.gson.reflect.TypeToken;
 import com.stardew.model.PlaceableDTO;
 import com.stardew.model.Result;
 import com.stardew.model.TileDTO;
+import com.stardew.models.GameAssetManagers.ArtisanAsset;
 import com.stardew.models.GameAssetManagers.CraftingAsset;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 import com.stardew.network.NetworkManager;
+import com.stardew.view.ArtisanMachine.ArtisanMachinesManager;
 import com.stardew.view.GridMap.TileSelectionWindow;
 
 import java.util.ArrayList;
@@ -94,6 +96,16 @@ public class CraftingWindow extends CloseableWindow {
                                     if (craftResponse != null && craftResponse.getType() == MessageType.EVENT_IN_GAME_RESULT) {
                                         Result result = craftResponse.getFromBody("result", Result.class);
 //                                        Gdx.app.postRunnable(() -> showResult(result));
+                                        if (result.getSuccessful()) {
+                                            String machineID = response.getFromBody("machineID");
+                                            ArtisanMachinesManager.getInstance().addMachine(
+                                                ArtisanAsset.getArtisanAssetByName(craftingAsset.name()),
+                                                machineID,
+                                                id,
+                                                selectedX,
+                                                selectedY
+                                            );
+                                        }
                                     }
                                 }).start();
                             });
