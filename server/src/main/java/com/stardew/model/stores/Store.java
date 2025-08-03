@@ -1,6 +1,5 @@
 package com.stardew.model.stores;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.stardew.controller.GameSessionController;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
@@ -16,7 +15,7 @@ public abstract class Store implements Placeable {
     protected final int startHour;
     protected final int endHour;
     protected final TextureID texture;
-    protected Image storeImage;
+    //protected Image storeImage;
     protected final int gameId;
 
     public Store(int gameId,TextureID texture,Rectangle bounds, String shopAssistantName, int startHour, int endHour) {
@@ -42,10 +41,10 @@ public abstract class Store implements Placeable {
         return timeProvider.getTime().getHour() >= startHour && timeProvider.getTime().getHour() < endHour;
     }
 
-    public Image getStoreImage() {
-       //TODO
-        return storeImage;
-    }
+//    public Image getStoreImage() {
+//       //TODO
+//        return storeImage;
+//    }
 
     public void createStoreWindow() {
         //TODO

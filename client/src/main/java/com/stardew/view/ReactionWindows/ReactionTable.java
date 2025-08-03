@@ -74,11 +74,15 @@ public class ReactionTable extends Table {
 
     public void render(float v) {
         if (GotReaction()) {
+            setVisible(true);
             timeReaction += v;
             if (timeReaction >= TIME_REMAINING_REACTION) {
                 timeReaction = 0f;
                 clearReaction();
             }
+        }
+        else{
+            setVisible(false);
         }
     }
 

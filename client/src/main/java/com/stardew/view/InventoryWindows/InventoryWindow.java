@@ -7,15 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.google.gson.reflect.TypeToken;
-import com.stardew.model.GameState;
 import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.TextureID;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.InventoryItem;
-import com.stardew.models.app.App;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.tools.Tool;
-import com.stardew.models.userInfo.Player;
+import com.stardew.models.userInfo.RelationWithPlayers;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
@@ -23,9 +20,8 @@ import com.stardew.network.NetworkManager;
 import com.stardew.view.PlayersRelationsWindows.FriendshipWindow;
 import com.stardew.view.windows.CloseableWindow;
 import com.badlogic.gdx.graphics.Color;
-import com.stardew.view.windows.CookingWindow;
-import com.stardew.view.windows.CraftingWindow;
 
+import java.lang.reflect.Type;
 import java.util.*;
 
 public class InventoryWindow extends CloseableWindow {
@@ -249,7 +245,7 @@ public class InventoryWindow extends CloseableWindow {
         friendshipButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                stage.addActor(new FriendshipWindow(stage));
+                stage.addActor(new FriendshipWindow(id,stage));
                 return true;
             }
         });

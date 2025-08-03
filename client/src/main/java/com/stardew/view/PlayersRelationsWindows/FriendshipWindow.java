@@ -1,46 +1,74 @@
 package com.stardew.view.PlayersRelationsWindows;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.stardew.controller.PlayersRealtionController.PlayersRelationController;
-import com.stardew.models.app.App;
-import com.stardew.models.userInfo.Player;
+import com.google.gson.reflect.TypeToken;
 import com.stardew.models.userInfo.RelationWithPlayers;
+import com.stardew.network.Event;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 import com.stardew.view.windows.CloseableWindow;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 
 public class FriendshipWindow extends CloseableWindow {
-    private final HashMap<Player, RelationWithPlayers> relations = new HashMap<>();
+
+    private final HashMap<String, RelationWithPlayers> relations = new HashMap<>();
     private final Table mainTable;
+    private final int gameId;
 
-    public FriendshipWindow(Stage stage) {
+    public FriendshipWindow(int gameId, Stage stage) {
         super("Friendships", stage);
+        this.gameId = gameId;
+
         mainTable = new Table();
-        createUI();
+
+        ScrollPane scrollPane = new ScrollPane(mainTable, GamePictureManager.skin);
+        scrollPane.setFadeScrollBars(false);
+        add(scrollPane).expand().fill().pad(20);
+
+        pack();
+        setPosition(
+            stage.getCamera().position.x - getWidth() / 2,
+            stage.getCamera().position.y - getHeight() / 2
+        );
+
+        updateRelations();
     }
 
-    private void initializeRelations() {
-        for (Player player : App.getGame().getPlayers()) {
-            if (!player.equals(App.getGame().getCurrentPlayingPlayer())) {
-                relations.put(player, PlayersRelationController.getFriendshipLevelsWithPlayers(player));
-            }
-        }
-    }
-
-    protected void createUI() {
+    protected void updateRelations() {
         relations.clear();
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("event", Event.GetPlayersRelationsInfo);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType().equals(MessageType.GET_BETWEEN_PLAYERS_RELATIONS_INFO)) {
+                Type type = new TypeToken<HashMap<String, RelationWithPlayers>>(){}.getType();
+                HashMap<String, RelationWithPlayers> newRelations = response.getFromBody("relations", type);
+                Gdx.app.postRunnable(() -> {
+                    relations.putAll(newRelations);
+                    createUI();
+                });
+            }
+        }).start();
+    }
+
+    private void createUI() {
         mainTable.clear();
-        initializeRelations();
         mainTable.top().pad(10).defaults().pad(10);
 
-        for (Player player : relations.keySet()) {
-            RelationWithPlayers relation = relations.get(player);
+        for (String username : relations.keySet()) {
+            RelationWithPlayers relation = relations.get(username);
 
-            Label nameLabel = new Label(player.getUsername(), GamePictureManager.skin);
+            Label nameLabel = new Label(username, GamePictureManager.skin);
             nameLabel.setFontScale(1.3f);
             nameLabel.setColor(Color.BLACK);
 
@@ -61,7 +89,7 @@ public class FriendshipWindow extends CloseableWindow {
             giftButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                        openGiftMenu(player , relation);
+                    openGiftMenu(username, relation);
                 }
             });
 
@@ -74,19 +102,10 @@ public class FriendshipWindow extends CloseableWindow {
         }
 
         mainTable.center();
-        ScrollPane scrollPane = new ScrollPane(mainTable, GamePictureManager.skin);
-        scrollPane.setFadeScrollBars(false);
-        add(scrollPane).expand().fill().pad(20);
-        pack();
-
-        setPosition(
-            stage.getCamera().position.x - getWidth() / 2,
-            stage.getCamera().position.y - getHeight() / 2
-        );
     }
 
-    private void openGiftMenu(Player player, RelationWithPlayers relation) {
-        GiftMenuWindow giftMenuWindow = new GiftMenuWindow(stage, this, player, relation);
+    private void openGiftMenu(String username, RelationWithPlayers relation) {
+        GiftMenuWindow giftMenuWindow = new GiftMenuWindow(stage, this, null, relation); // TODO
         stage.addActor(giftMenuWindow);
     }
 }

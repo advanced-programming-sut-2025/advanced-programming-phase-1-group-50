@@ -65,7 +65,7 @@ public class RateGiftWindow extends CloseableWindow {
                 if (selectedRate > 0) {
                     PlayersRelationController.rateGift(gift, selectedRate);
                     giftHistoryWindow.fillGiftTable();
-                    friendshipWindow.createUI();
+                    friendshipWindow.updateRelations();
                     closeWindow();
                 }
             }

@@ -25,4 +25,5 @@ public enum Event {
     CancelMachineProcess,
     CollectMachineProduct,
     UseArtisanMachine,
+    GetPlayersRelationsInfo,
 }
