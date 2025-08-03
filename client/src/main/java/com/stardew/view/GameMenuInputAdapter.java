@@ -37,28 +37,22 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 public class GameMenuInputAdapter extends InputAdapter {
-//    private final GameModel model;
     private final int id;
     private final Set<Integer> keys = new HashSet<>();
     private final Set<Integer> justPressedKeys = new HashSet<>();
     private float lastVx, lastVy;
 
-    private Stage stage;
+    private final Stage stage;
     private HotBarActor hotBar;
-    private GameModel gameState;
+    private final GameModel gameModel;
 
 
-    public GameMenuInputAdapter(int id) {
+    public GameMenuInputAdapter(int id, GameModel gameModel, Stage stage) {
+        this.stage = stage;
+        this.gameModel = gameModel;
         this.id = id;
     }
 
-//    public GameMenuInputAdapter(GameModel model) {
-//        this.model = model;
-//    }
-
-    public void setGameState(GameModel gameState) {
-        this.gameState = gameState;
-    }
 
     @Override
     public boolean keyDown(int keycode) {
@@ -309,11 +303,6 @@ public class GameMenuInputAdapter extends InputAdapter {
         stage.addActor(new ShippingBinWindow(stage , bin));
     }
 
-
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
 
 
     public void setHotBar(HotBarActor hotBar) {

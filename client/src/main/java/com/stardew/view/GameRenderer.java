@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
-import com.stardew.controller.GameStateController;
 import com.stardew.model.PlaceableDTO;
 import com.stardew.model.PlayerDTO;
 import com.stardew.model.TileDTO;
@@ -24,11 +23,9 @@ public class GameRenderer {
 //    private final MiniMapRenderer miniMapRenderer ;
 
 
-//    public GameRenderer(GameModel gameModel, GameMenuInputAdapter gameMenuInputAdapter, SpriteBatch batch) {
-    public GameRenderer(SpriteBatch batch) {
-//        this.gameModel = gameModel;
+    public GameRenderer(SpriteBatch batch, GameModel gameModel) {
         this.batch = batch;
-        this.gameModel = GameStateController.getInstance().getGameState();
+        this.gameModel = gameModel;
         this.tileSize = GamePictureManager.TILE_SIZE;
 //        this.gameMenuInputAdapter = gameMenuInputAdapter;
 //        miniMapRenderer = new MiniMapRenderer(gameModel , 250 , 200);

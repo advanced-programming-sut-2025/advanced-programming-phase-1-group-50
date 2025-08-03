@@ -5,20 +5,22 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.stardew.controller.CookingAndCraftingControllers.ArtisanController;
 import com.stardew.models.GameAssetManagers.ArtisanAsset;
 import com.stardew.models.GameAssetManagers.ArtisanGoodAsset;
-import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Result;
+import com.stardew.model.Result;
+import com.stardew.network.Event;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
+import com.stardew.view.ArtisanMachine.ArtisanMachinesManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ArtisanWindow extends CloseableWindow {
-    private ArtisanController controller = new ArtisanController();
 
 
-    public ArtisanWindow(ArtisanAsset artisanAsset, Stage stage, float x, float y) {
+    public ArtisanWindow(Stage stage, ArtisanAsset artisanAsset, String machineID, int gameID, float x, float y) {
         super("Artisan Menu", stage);
 
         pad(25, 5, 20, 0);
@@ -33,8 +35,22 @@ public class ArtisanWindow extends CloseableWindow {
             product.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    Result result = controller.artisanUse(asset.getMachineMakerName(), asset.name());
-                    showResult(result);
+                    new Thread(() -> {
+                        HashMap<String, Object> body = new HashMap<>();
+                        body.put("id", gameID);
+                        body.put("event", Event.UseArtisanMachine);
+                        body.put("machineID", machineID);
+                        body.put("itemName", asset.name());
+                        Message message = new Message(body, MessageType.EVENT_IN_GAME);
+                        Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+                        if (response != null) {
+                            Result result = response.getFromBody("result", Result.class);
+//                            Gdx.app.postRunnable(() -> showResult(result));
+                            if (result.getSuccessful()) {
+                                ArtisanMachinesManager.getInstance().updateMachine(machineID);
+                            }
+                        }
+                    }).start();
                     return true;
                 }
 

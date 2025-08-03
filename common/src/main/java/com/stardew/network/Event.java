@@ -19,5 +19,11 @@ public enum Event {
     PickFromRefrigerator,
     EatItem,
     Reaction,
+    GetMachineDetails,
+    IsReadyProduct,
+    CheatFinishMachineProcess,
+    CancelMachineProcess,
+    CollectMachineProduct,
+    UseArtisanMachine,
     GetPlayersRelationsInfo,
 }

@@ -70,20 +70,20 @@ public abstract class ArtisanMachine implements Placeable {
         ArtisanMachine artisanMachine = this;
 
         image.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (button == Input.Buttons.LEFT) {
-                    stage.addActor(new ArtisanWindow(ArtisanAsset.getArtisanAssetByInstance(artisanMachine),
-                        stage, x + image.getX(), y + image.getY()));
-                    return true;
-                }
-                else if (button == Input.Buttons.RIGHT) {
-                    stage.addActor(new ArtisanOptionWindow(ArtisanAsset.getArtisanAssetByInstance(artisanMachine),
-                        stage, x + image.getX(), y + image.getY()));
-                    return true;
-                }
-                return false;
-            }
+//            @Override
+//            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+//                if (button == Input.Buttons.LEFT) {
+//                    stage.addActor(new ArtisanWindow(ArtisanAsset.getArtisanAssetByInstance(artisanMachine),
+//                        stage, x + image.getX(), y + image.getY()));
+//                    return true;
+//                }
+//                else if (button == Input.Buttons.RIGHT) {
+//                    stage.addActor(new ArtisanOptionWindow(ArtisanAsset.getArtisanAssetByInstance(artisanMachine),
+//                        stage, x + image.getX(), y + image.getY()));
+//                    return true;
+//                }
+//                return false;
+//            }
 
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {

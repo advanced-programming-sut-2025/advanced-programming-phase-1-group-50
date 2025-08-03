@@ -1,5 +1,6 @@
 package com.stardew.models.GameAssetManagers;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.stardew.models.manuFactor.*;
 
 import java.util.ArrayList;
@@ -7,49 +8,62 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum ArtisanAsset {
-    BeeHouse(List.of(
-        ArtisanGoodAsset.Honey)),
-    CharcoalKiln(List.of(
-        ArtisanGoodAsset.Coal)),
-    CheesePress(Arrays.asList(
-        ArtisanGoodAsset.Cheese,
-        ArtisanGoodAsset.GoatCheese)),
-    Dehydrator(Arrays.asList(
-        ArtisanGoodAsset.DriedMushroom,
-        ArtisanGoodAsset.DriedFruit,
-        ArtisanGoodAsset.Raisins)),
-    FishSmoker(List.of(
-        ArtisanGoodAsset.SmokedFish)),
-    Furnace(Arrays.asList(
-        ArtisanGoodAsset.IronBar,
-        ArtisanGoodAsset.IridiumBar,
-        ArtisanGoodAsset.CopperBar,
-        ArtisanGoodAsset.GoldBar)),
-    Keg(Arrays.asList(
-        ArtisanGoodAsset.Beer,
-        ArtisanGoodAsset.Vinegar,
-        ArtisanGoodAsset.Coffee,
-        ArtisanGoodAsset.Juice,
-        ArtisanGoodAsset.Mead,
-        ArtisanGoodAsset.PaleAle,
-        ArtisanGoodAsset.Wine)),
-    Loom(List.of(
-        ArtisanGoodAsset.Cloth)),
-    MayonnaiseMachine(Arrays.asList(
-        ArtisanGoodAsset.Mayonnaise,
-        ArtisanGoodAsset.DuckMayonnaise,
-        ArtisanGoodAsset.DinosaurMayonnaise)),
-    OilMaker(Arrays.asList(
-        ArtisanGoodAsset.Oil,
-        ArtisanGoodAsset.TruffleOil)),
-    PreservesJar(Arrays.asList(
-        ArtisanGoodAsset.Pickles,
-        ArtisanGoodAsset.Jelly));
+    BeeHouse(new Image(GamePictureManager.beeHouseNormal),
+        List.of(
+            ArtisanGoodAsset.Honey)),
+    CharcoalKiln(new Image(GamePictureManager.charcoalKilnNormal),
+        List.of(
+            ArtisanGoodAsset.Coal)),
+    CheesePress(new Image(GamePictureManager.cheesePressNormal),
+        Arrays.asList(
+            ArtisanGoodAsset.Cheese,
+            ArtisanGoodAsset.GoatCheese)),
+    Dehydrator(new Image(GamePictureManager.dehydratorNormal),
+        Arrays.asList(
+            ArtisanGoodAsset.DriedMushroom,
+            ArtisanGoodAsset.DriedFruit,
+            ArtisanGoodAsset.Raisins)),
+    FishSmoker(new Image(GamePictureManager.fishSmokerNormal),
+        List.of(
+            ArtisanGoodAsset.SmokedFish)),
+    Furnace(new Image(GamePictureManager.furnaceNormal),
+        Arrays.asList(
+            ArtisanGoodAsset.IronBar,
+            ArtisanGoodAsset.IridiumBar,
+            ArtisanGoodAsset.CopperBar,
+            ArtisanGoodAsset.GoldBar)),
+    Keg(new Image(GamePictureManager.kegNormal),
+        Arrays.asList(
+            ArtisanGoodAsset.Beer,
+            ArtisanGoodAsset.Vinegar,
+            ArtisanGoodAsset.Coffee,
+            ArtisanGoodAsset.Juice,
+            ArtisanGoodAsset.Mead,
+            ArtisanGoodAsset.PaleAle,
+            ArtisanGoodAsset.Wine)),
+    Loom(new Image(GamePictureManager.loomNormal),
+        List.of(
+            ArtisanGoodAsset.Cloth)),
+    MayonnaiseMachine(new Image(GamePictureManager.mayonnaiseMachineNormal),
+        Arrays.asList(
+            ArtisanGoodAsset.Mayonnaise,
+            ArtisanGoodAsset.DuckMayonnaise,
+            ArtisanGoodAsset.DinosaurMayonnaise)),
+    OilMaker(new Image(GamePictureManager.oilMakerNormal),
+        Arrays.asList(
+            ArtisanGoodAsset.Oil,
+            ArtisanGoodAsset.TruffleOil)),
+    PreservesJar(new Image(GamePictureManager.preservesJarNormal),
+        Arrays.asList(
+            ArtisanGoodAsset.Pickles,
+            ArtisanGoodAsset.Jelly));
 
+    private final Image image;
     private final ArrayList<ArtisanGoodAsset> products;
     private final String description;
 
-    ArtisanAsset(List<ArtisanGoodAsset> products) {
+    ArtisanAsset(Image image, List<ArtisanGoodAsset> products) {
+        this.image = image;
         this.products = new ArrayList<>(products);
 
         StringBuilder des = new StringBuilder();
@@ -59,6 +73,10 @@ public enum ArtisanAsset {
         }
 
         description = des.toString();
+    }
+
+    public Image getImage() {
+        return image;
     }
 
     public ArrayList<ArtisanGoodAsset> getProducts() {
@@ -94,5 +112,9 @@ public enum ArtisanAsset {
             return PreservesJar;
         else
             return null;
+    }
+
+    public static ArtisanAsset getArtisanAssetByName(String name) {
+        return ArtisanAsset.valueOf(name);
     }
 }

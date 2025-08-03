@@ -18,6 +18,7 @@ import com.stardew.models.ShippingBin;
 import com.stardew.models.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.network.GameUpdateRequestThread;
+import com.stardew.view.ArtisanMachine.ArtisanMachinesManager;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.ReactionWindows.ReactionTable;
 import com.stardew.view.windows.SmartTooltip;
@@ -50,12 +51,10 @@ public class GameScreenMenu implements Screen {
         this.updateRequestThread = updateRequestThread;
         this.batch = Main.getBatch();
         this.gameState = GameStateController.getInstance().getGameState();
-        this.gameRenderer = new GameRenderer(this.batch);
+        this.gameRenderer = new GameRenderer(this.batch, gameState);
         this.stage = new Stage(new ScreenViewport(gameState.getCamera()));
-        this.gameMenuInputAdapter = new GameMenuInputAdapter(id);
-        this.gameMenuInputAdapter.setGameState(gameState);
-        this.gameMenuInputAdapter.setStage(stage);
         this.uiStage = new Stage(new ScreenViewport());
+        this.gameMenuInputAdapter = new GameMenuInputAdapter(id, gameState, stage);
         this.timeManager = new TimeManager(gameState, uiStage);
         this.energyManager = new EnergyManager(gameState, uiStage);
         this.hotBarActor = new HotBarActor(gameState , id);
@@ -72,9 +71,9 @@ public class GameScreenMenu implements Screen {
         inputMultiplexer.addProcessor(gameMenuInputAdapter);
         Gdx.input.setInputProcessor(inputMultiplexer);
 
-//        initializeGame();
         uiStage.addActor(hotBarActor);
         SmartTooltip.initialize(stage, GamePictureManager.skin);
+        ArtisanMachinesManager.initialize(stage);
 
     }
 

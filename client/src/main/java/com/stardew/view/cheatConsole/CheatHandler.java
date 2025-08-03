@@ -2,7 +2,6 @@ package com.stardew.view.cheatConsole;
 
 import com.stardew.controller.AbilityAndEnergyController.EnergyController;
 import com.stardew.controller.AnimalsControllers.AnimalsController;
-import com.stardew.controller.CookingAndCraftingControllers.CraftingController;
 import com.stardew.controller.GameDateAndWeatherController.DateController;
 import com.stardew.controller.GameDateAndWeatherController.WeatherController;
 import com.stardew.controller.GameMenuController;
@@ -15,7 +14,7 @@ public class CheatHandler {
     private final WeatherController weatherController = new WeatherController();
     private final EnergyController energyController = new EnergyController();
     private final GameMenuController gameMenuController = new GameMenuController();
-    private final CraftingController craftingController = new CraftingController();
+//    private final CraftingController craftingController = new CraftingController();
     private final AnimalsController animalsController = new AnimalsController();
 
 
@@ -46,11 +45,11 @@ public class CheatHandler {
         else if ((matcher = CheatCommand.CheatAddDollars.getMatcher(input)) != null) {
             return gameMenuController.cheatAddDollars(matcher).getMessage();
         }
-        else if ((matcher = CheatCommand.CheatAddItem.getMatcher(input)) != null) {
-            return craftingController.addItem(
-                matcher.group("itemName"),
-                Integer.parseInt(matcher.group("count"))).getMessage();
-        }
+//        else if ((matcher = CheatCommand.CheatAddItem.getMatcher(input)) != null) {
+//            return craftingController.addItem(
+//                matcher.group("itemName"),
+//                Integer.parseInt(matcher.group("count"))).getMessage();
+//        }
         else if ((matcher = CheatCommand.CheatSetFriendship.getMatcher(input)) != null) {
             return animalsController.setFriendship(
                 matcher.group("animalName"),

@@ -176,22 +176,18 @@ public class Backpack {
     }
 
     public void addArtisanMachine(ArtisanMachine artisanMachine) {
-        artisanMachines.add(artisanMachine);
+        synchronized (artisanMachines) {
+            artisanMachines.add(artisanMachine);
+        }
     }
 
-    public ArrayList<ArtisanMachine> getArtisanMachines() {
-        return artisanMachines;
-    }
-
-    public ArtisanMachine getArtisanMachineByName(String name) {
-//        ArtisanMachine machineIns = ArtisanMachine.getArtisanMachineByRecipe(CraftingRecipes.getRecipeByName(name));
-//
-//        if (machineIns == null) return null;
-//
-//        for (ArtisanMachine machine : artisanMachines) {
-//            if (machine.getClass() == machineIns.getClass())
-//                return machine;
-//        }
+    public ArtisanMachine getArtisanMachineByID(String id) {
+        synchronized (artisanMachines) {
+            for (ArtisanMachine machine : artisanMachines) {
+                if (machine.getId().equals(id))
+                    return machine;
+            }
+        }
         return null;
     }
 
