@@ -1,6 +1,6 @@
-package com.stardew.model;
+package com.stardew.model.animals;
 
-import com.stardew.model.animals.AnimalState;
+import com.stardew.model.AnimationID;
 
 import java.util.HashMap;
 import java.util.Map;
