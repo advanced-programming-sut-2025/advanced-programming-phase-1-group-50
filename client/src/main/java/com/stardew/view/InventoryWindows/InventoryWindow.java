@@ -245,18 +245,7 @@ public class InventoryWindow extends CloseableWindow {
         friendshipButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                new Thread(() -> {
-                    HashMap<String, Object> body = new HashMap<>();
-                    body.put("id", id);
-                    body.put("event", Event.GetPlayersRelationsInfo);
-                    Message message = new Message(body, MessageType.EVENT_IN_GAME);
-                    Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
-                    if (response != null && response.getType().equals(MessageType.GET_BETWEEN_PLAYERS_RELATIONS_INFO)) {
-                        Type type = new TypeToken<HashMap<String, RelationWithPlayers>>(){}.getType();
-                        HashMap<String, RelationWithPlayers> receivedRelations = response.getFromBody("relations", type);
-                        Gdx.app.postRunnable(() -> stage.addActor(new FriendshipWindow(stage , receivedRelations)));
-                    }
-                }).start();
+                stage.addActor(new FriendshipWindow(id,stage));
                 return true;
             }
         });
