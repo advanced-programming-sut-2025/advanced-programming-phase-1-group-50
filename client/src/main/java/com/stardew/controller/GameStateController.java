@@ -111,4 +111,12 @@ public class GameStateController {
             ReactionTable.getInstance().update(GameAssetIDManager.getTextureRegion(emoji), username);
         });
     }
+
+    public void handleUpdateCoin(Message message) {
+        if (message == null) return;
+        int coin = message.getIntFromBody("coin");
+        Gdx.app.postRunnable(() -> {
+            gameState.updateCoin(coin);
+        });
+    }
 }

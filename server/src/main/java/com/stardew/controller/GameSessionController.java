@@ -40,7 +40,7 @@ public class GameSessionController {
     }
 
 
-    public void handleUpdateGameState(Message message, ClientConnectionThread connection) {
+    public void handleUpdateGameState(Message message, ClientConnectionThread connection ) {
         if (message == null) return;
 
         int id = message.getIntFromBody("id");
@@ -204,6 +204,11 @@ public class GameSessionController {
             case GetPlayersRelationsInfo -> {
                 Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().getRelations(message, player, connection);
+            }
+
+            case CheatCode -> {
+                Player player = game.getPlayer(connection);
+                CheatCodeController.getInstance().executeCheatCode(message , connection , game , player );
             }
         }
 

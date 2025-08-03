@@ -29,6 +29,7 @@ public class GameModel {
     private InventoryItemDTO[] hotBar;
     private ArrayList<InventoryItemDTO> inventory;
     private TextureRegion reaction;
+    private int coin;
 
 //    private final Map map;
 //    private PlayerController playerController;
@@ -310,6 +311,15 @@ public class GameModel {
 
     public TextureRegion getReaction() {
         return reaction;
+    }
+
+
+    public void updateCoin(int coin) {
+        this.coin = coin;
+    }
+
+    public int getCoin() {
+        return coin;
     }
 
 }

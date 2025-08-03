@@ -11,6 +11,7 @@ import com.stardew.model.mapInfo.*;
 import com.stardew.model.mapInfo.foraging.Fertilizer;
 import com.stardew.model.mapInfo.foraging.Seeds;
 import com.stardew.model.mapInfo.foraging.TreeSource;
+import com.stardew.model.userInfo.Coin;
 import com.stardew.model.userInfo.Player;
 import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
@@ -102,6 +103,7 @@ public class InventoryController {
 
             HashMap<String, Object> body = new HashMap<>();
             body.put("hotBar", hotbar);
+            body.put("coin" , player.getBackpack().getIngredientQuantity().getOrDefault(new Coin() , 0));
             Message m = new Message(body, MessageType.UPDATE_HOT_BAR);
             connection.sendMessage(m);
         }

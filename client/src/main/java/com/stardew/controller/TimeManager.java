@@ -34,6 +34,7 @@ public class TimeManager {
     private boolean changeTileTextureInWinter = false;
     private boolean changeTileTextureInSpring = false;
     private boolean firstTimeChangeInSpring = true;
+    private int coin;
 
 
 
@@ -132,6 +133,7 @@ public class TimeManager {
 
     private void updateTimeUi(){
         TimeDTO timeDTO = gameModel.getTime();
+        coin = gameModel.getCoin();
         int hour = timeDTO.getHour();
         int day = timeDTO.getDay();
         int minute = timeDTO.getMinute();
@@ -139,12 +141,11 @@ public class TimeManager {
         String season = timeDTO.getSeasonName();
         String timeText = String.format("%02d:%02d    %2d", hour, minute, day);
         String seasonAndDayOfTheWeek = String.format("%-6s%11s", season, dayOfTheWeek);
-//        int playerGold = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity()
-//            .getOrDefault(new Coin() , 0);
+        int playerGold = coin;
         timeLabel.setText(timeText);
         seasonAndDayLabel.setText(seasonAndDayOfTheWeek);
-//        playerGoldLabel.setText(playerGold + "");
-//        setPlayerGoldLabelPosition(playerGold);
+        playerGoldLabel.setText(playerGold + "");
+        setPlayerGoldLabelPosition(playerGold);
     }
 
     public void initializeTime(){

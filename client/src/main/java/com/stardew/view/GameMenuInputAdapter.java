@@ -141,7 +141,7 @@ public class GameMenuInputAdapter extends InputAdapter {
 
         if ((keys.contains(Input.Keys.SHIFT_LEFT) || keys.contains(Input.Keys.SHIFT_RIGHT)) &&
             justPressedKeys.contains(Input.Keys.L)) {
-            stage.addActor(new CheatWindow(stage));
+            stage.addActor(new CheatWindow(stage , id));
         }
 
         if(justPressedKeys.contains(Input.Keys.M)){

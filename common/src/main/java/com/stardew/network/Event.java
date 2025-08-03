@@ -26,4 +26,5 @@ public enum Event {
     CollectMachineProduct,
     UseArtisanMachine,
     GetPlayersRelationsInfo,
+    CheatCode,
 }
