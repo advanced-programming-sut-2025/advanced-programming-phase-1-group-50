@@ -64,6 +64,12 @@ public class GameStateController {
         gameState.updateTime(dto);
     }
 
+    public void handleUpdateAnimals(Message message) {
+        if (message == null) return;
+        ArrayList<AnimalDTO> animals = message.getFromBody("animals", new TypeToken<ArrayList<AnimalDTO>>(){}.getType());
+        gameState.updateAnimals(animals);
+    }
+
     public void updateHotBar(Message message) {
         if (message == null) return;
         InventoryItemDTO[] items = message.getFromBody("hotBar", InventoryItemDTO[].class);

@@ -1,8 +1,5 @@
 package com.stardew.model.animals;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.stardew.model.AnimalStateToAnimationIDMapper;
 import com.stardew.model.AnimationID;
 import com.stardew.model.TextureID;
 
@@ -84,7 +81,7 @@ public enum AnimalType {
         return animalGoodTypes;
     }
 
-    public AnimationID getAnimation(AnimalState state) {
+    public AnimationID getAnimationID(AnimalState state) {
         return animations.get(state);
     }
 

@@ -4,6 +4,8 @@ import com.stardew.controller.CookingCraftingControllers.ArtisanController;
 import com.stardew.controller.CookingCraftingControllers.CookingController;
 import com.stardew.controller.CookingCraftingControllers.CookingCraftingInfoController;
 import com.stardew.controller.CookingCraftingControllers.CraftingController;
+import com.stardew.model.AnimalDTO;
+import com.stardew.model.animals.Animal;
 import com.stardew.model.gameApp.Game;
 import com.stardew.model.userInfo.Player;
 import com.stardew.network.ClientConnectionThread;
@@ -79,6 +81,25 @@ public class GameSessionController {
         body.put("mapHeight", game.getMap().getHeight());
         Message response = new Message(body, MessageType.MAP_REQUEST_RESULT);
 
+        connection.sendMessage(response);
+    }
+
+    public void handleUpdateAnimals(Message message, ClientConnectionThread connection) {
+        if (message == null) return;
+        int id = message.getIntFromBody("id");
+        Game game = games.get(id);
+        if (game == null) return;
+
+        Player player = game.getPlayer(connection);
+        if (player == null) return;
+
+        ArrayList<AnimalDTO> animals = new ArrayList<>();
+        for (Animal animal : player.getBackpack().getAllAnimals()) {
+            animals.add(animal.toDTO());
+        }
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("animals", animals);
+        Message response = new Message(body, MessageType.UPDATE_ANIMALS_RESULT);
         connection.sendMessage(response);
     }
 

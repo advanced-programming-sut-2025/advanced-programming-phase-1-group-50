@@ -1,15 +1,10 @@
 package com.stardew.model.animals;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
+import com.stardew.model.AnimalDTO;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.gameApp.date.Time;
 import com.stardew.model.mapInfo.Placeable;
-import com.stardew.model.gameApp.App;
 
 import java.awt.*;
 
@@ -23,14 +18,15 @@ public class Animal implements Placeable {
     private final Habitat habitat;
     private AnimalState state;
     private AnimalState nextState;
-    private Vector2 position;
-    private Vector2 targetPosition;
+    private final Vec2 position;
+    private Vec2 targetPosition;
     private float stateTime = 0f;
     private final float PET_TIME = 5f;
     private final float speed = 1f;
     private final static int maxFriendShip = 1000;
-    private Rectangle bounds;
+    private final Rectangle bounds;
     private final TimeProvider timeProvider;
+    private final Object lock = new Object();
 
 
     public Animal(AnimalType type, TimeProvider timeProvider, String name, Habitat habitat) {
@@ -43,7 +39,7 @@ public class Animal implements Placeable {
         this.lastProductTime = timeProvider.getTime().clone();
         this.habitat = habitat;
         this.state = AnimalState.IN_HABITAT;
-        this.position = new Vector2(habitat.getPosition().x + 1, habitat.getPosition().y + 1);
+        this.position = new Vec2(habitat.getPosition().x + 1, habitat.getPosition().y + 1);
         bounds =  new Rectangle(1, 1);
     }
 
@@ -73,10 +69,12 @@ public class Animal implements Placeable {
     }
 
     public void pet() {
-        lastPetTime = timeProvider.getTime().clone();
-        state = AnimalState.IS_PETTING;
-        stateTime = 0;
-        incrementFriendShip(15);
+        synchronized (lock) {
+            lastPetTime = timeProvider.getTime().clone();
+            state = AnimalState.IS_PETTING;
+            stateTime = 0;
+            incrementFriendShip(15);
+        }
     }
 
     public boolean hasPettedYesterday() {
@@ -102,7 +100,6 @@ public class Animal implements Placeable {
     }
 
     public boolean isReadyProduct() {
-        //TODO -> for pig is different
         Time today = timeProvider.getTime().clone();
         int dayOfToday = today.getDate();
         if (!today.getSeason().equals(lastProductTime.getSeason()))
@@ -140,27 +137,29 @@ public class Animal implements Placeable {
         return state != AnimalState.IN_HABITAT;
     }
 
-    private void moveTo(Vector2 destination) {
+    private void moveTo(Vec2 destination) {
         targetPosition = destination;
 
-        Vector2 diff = targetPosition.cpy().sub(position);
-        if (Math.abs(diff.x) > Math.abs(diff.y)) {
-            state = diff.x > 0 ? AnimalState.MOVING_RIGHT : AnimalState.MOVING_LEFT;
-        }
-        else {
-            state = diff.y > 0 ? AnimalState.MOVING_UP : AnimalState.MOVING_DOWN;
-        }
+        Vec2 diff = targetPosition.cpy().sub(position);
+        synchronized (lock) {
+            if (Math.abs(diff.x) > Math.abs(diff.y)) {
+                state = diff.x > 0 ? AnimalState.MOVING_RIGHT : AnimalState.MOVING_LEFT;
+            }
+            else {
+                state = diff.y > 0 ? AnimalState.MOVING_UP : AnimalState.MOVING_DOWN;
+            }
 
-        stateTime = 0f;
+            stateTime = 0f;
+        }
     }
 
     public void goToHabitat() {
-        moveTo(new Vector2(habitat.getPosition().x + 1, habitat.getPosition().y + 1));
+        moveTo(new Vec2(habitat.getPosition().x + 1, habitat.getPosition().y + 1));
         nextState = AnimalState.IN_HABITAT;
     }
 
     public void shepherdAnimal(float x, float y) {
-        moveTo(new Vector2(x, y));
+        moveTo(new Vec2(x, y));
         nextState = AnimalState.IN_FARM_EATING;
     }
 
@@ -171,28 +170,29 @@ public class Animal implements Placeable {
         };
     }
 
-    public Vector2 getPosition() {
+    public Vec2 getPosition() {
         return position;
     }
 
     public void update(float delta) {
         if (state == AnimalState.IN_HABITAT) return;
 
-        stateTime += delta;
-        if (isMoving()) {
-            float distance = position.dst(targetPosition);
-            if (distance <= 0.1f) {
-                position.set(targetPosition);
-                state = nextState;
-                stateTime = 0f;
-            } else {
-                Vector2 direction = targetPosition.cpy().sub(position).nor();
-                position.add(direction.scl(speed * delta));
+        synchronized (lock) {
+            stateTime += delta;
+            if (isMoving()) {
+                float distance = position.dst(targetPosition);
+                if (distance <= 0.1f) {
+                    position.set(targetPosition);
+                    state = nextState;
+                    stateTime = 0f;
+                } else {
+                    Vec2 direction = targetPosition.cpy().sub(position).nor();
+                    position.add(direction.scl(speed * delta));
+                }
+            } else if (state == AnimalState.IS_PETTING) {
+                if (stateTime >= PET_TIME)
+                    state = AnimalState.IN_FARM_EATING;
             }
-        }
-        else if (state == AnimalState.IS_PETTING) {
-            if (stateTime >= PET_TIME)
-                state = AnimalState.IN_FARM_EATING;
         }
 
     }
@@ -200,15 +200,21 @@ public class Animal implements Placeable {
 //    public void render(Batch batch) {
 //        if (state == AnimalState.IN_HABITAT) return;
 //
-//        Animation<TextureRegion> animation = type.getAnimation(state);
+//        Animation<TextureRegion> animation = type.getAnimationID(state);
 //        TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
 //
 //        batch.draw(currentFrame,
 //            position.x * GamePictureManager.TILE_SIZE,
 //            position.y * GamePictureManager.TILE_SIZE,
-//            type.getAnimalHabitat() == HabitatType.Coop ? 40 : 65,
+//            type.getAnimalHabitat() == HabitatType.Coop ? 40 : 65, //TODO if need, I must send size of rendering
 //            type.getAnimalHabitat() == HabitatType.Coop ? 40 : 65);
 //    }
+
+    public AnimalDTO toDTO() {
+        synchronized (lock) {
+            return new AnimalDTO(position.x, position.y, stateTime, type.getAnimationID(state));
+        }
+    }
 
     @Override
     public Rectangle getBounds() {
@@ -220,11 +226,9 @@ public class Animal implements Placeable {
         return 0;
     }
 
-
-
     @Override
     public TextureID getTexture() {
-        return type.getNormalTexture();
+        return null;
     }
 
 

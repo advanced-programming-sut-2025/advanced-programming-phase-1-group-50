@@ -96,6 +96,10 @@ public class MessageHandler {
                 gameStateController.handleUpdateReaction(message);
                 return true;
             }
+            case UPDATE_ANIMALS_RESULT -> {
+                gameStateController.handleUpdateAnimals(message);
+                return true;
+            }
 
             default -> {
                 return false;
