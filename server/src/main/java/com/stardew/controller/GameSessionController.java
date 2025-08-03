@@ -175,6 +175,11 @@ public class GameSessionController {
             case Reaction -> {
                 ReactionController.getInstance().handleReactionProcess(message , game);
             }
+
+            case GetPlayersRelationsInfo -> {
+                Player player = game.getPlayer(connection);
+                PlayersRelationController.getInstance().getRelations(message, player, connection);
+            }
         }
 
     }

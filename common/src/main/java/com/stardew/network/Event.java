@@ -19,5 +19,5 @@ public enum Event {
     PickFromRefrigerator,
     EatItem,
     Reaction,
-
+    GetPlayersRelationsInfo,
 }

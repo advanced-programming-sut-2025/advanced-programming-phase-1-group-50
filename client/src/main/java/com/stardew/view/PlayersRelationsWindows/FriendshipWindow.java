@@ -4,9 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.stardew.controller.PlayersRealtionController.PlayersRelationController;
-import com.stardew.models.app.App;
-import com.stardew.models.userInfo.Player;
 import com.stardew.models.userInfo.RelationWithPlayers;
 import com.stardew.view.windows.CloseableWindow;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
@@ -14,33 +11,36 @@ import com.stardew.models.GameAssetManagers.GamePictureManager;
 import java.util.HashMap;
 
 public class FriendshipWindow extends CloseableWindow {
-    private final HashMap<Player, RelationWithPlayers> relations = new HashMap<>();
+    private final HashMap<String, RelationWithPlayers> relations = new HashMap<>();
     private final Table mainTable;
 
-    public FriendshipWindow(Stage stage) {
+    public FriendshipWindow(Stage stage, HashMap<String, RelationWithPlayers> inputRelations) {
         super("Friendships", stage);
         mainTable = new Table();
-        createUI();
+        this.relations.putAll(inputRelations);
+        createUI(false);
     }
 
-    private void initializeRelations() {
-        for (Player player : App.getGame().getPlayers()) {
-            if (!player.equals(App.getGame().getCurrentPlayingPlayer())) {
-                relations.put(player, PlayersRelationController.getFriendshipLevelsWithPlayers(player));
-            }
+    private void updateRelations() {
+//        relations.clear();
+//        for (Player player : App.getGame().getPlayers()) {
+//            if (!player.equals(App.getGame().getCurrentPlayingPlayer())) {
+//                relations.put(player, PlayersRelationController.getFriendshipLevelsPlayers(player));
+//            }
+//        }
+    }
+
+    protected void createUI(boolean refresh) {
+        if (refresh) {
+            updateRelations();
         }
-    }
-
-    protected void createUI() {
-        relations.clear();
         mainTable.clear();
-        initializeRelations();
         mainTable.top().pad(10).defaults().pad(10);
 
-        for (Player player : relations.keySet()) {
-            RelationWithPlayers relation = relations.get(player);
+        for (String username : relations.keySet()) {
+            RelationWithPlayers relation = relations.get(username);
 
-            Label nameLabel = new Label(player.getUsername(), GamePictureManager.skin);
+            Label nameLabel = new Label(username, GamePictureManager.skin);
             nameLabel.setFontScale(1.3f);
             nameLabel.setColor(Color.BLACK);
 
@@ -61,7 +61,7 @@ public class FriendshipWindow extends CloseableWindow {
             giftButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                        openGiftMenu(player , relation);
+                        openGiftMenu(username , relation);
                 }
             });
 
@@ -85,8 +85,8 @@ public class FriendshipWindow extends CloseableWindow {
         );
     }
 
-    private void openGiftMenu(Player player, RelationWithPlayers relation) {
-        GiftMenuWindow giftMenuWindow = new GiftMenuWindow(stage, this, player, relation);
+    private void openGiftMenu(String username, RelationWithPlayers relation) {
+        GiftMenuWindow giftMenuWindow = new GiftMenuWindow(stage, this, null, relation); // TODO
         stage.addActor(giftMenuWindow);
     }
 }

@@ -53,7 +53,7 @@ public class Game {
         this.timeService = new TimeService(time, this);
         this.hotBarService = new HotBarService(this);
 
-//        relationInitializer(players);
+        relationInitializer(players);
     }
 
     public ArrayList<BetweenPlayersGift> getGifts() {
@@ -125,12 +125,14 @@ public class Game {
         return map;
     }
 
-    private void relationInitializer(ArrayList<Player> players) {
+    private void relationInitializer(Map<ClientConnectionThread, Player> players) {
+        ArrayList<Player> playerArrayList = new ArrayList<>(players.values());
+
         relationsBetweenPlayers = new RelationNetwork();
 
-        for (int i = 0; i < players.size(); i++) {
-            for (int j = i + 1; j < players.size(); j++) {
-                Set<Player> key = new HashSet<>(Arrays.asList(players.get(i), players.get(j)));
+        for (int i = 0; i < playerArrayList.size(); i++) {
+            for (int j = i + 1; j < playerArrayList.size(); j++) {
+                Set<Player> key = new HashSet<>(Arrays.asList(playerArrayList.get(i), playerArrayList.get(j)));
                 relationsBetweenPlayers.relationNetwork.put(key, new RelationWithPlayers());
             }
         }

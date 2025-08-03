@@ -1,7 +1,5 @@
 package com.stardew.models.userInfo;
 
-import java.util.ArrayList;
-
 public class RelationWithPlayers {
 
     private int xp = 0;
@@ -13,7 +11,6 @@ public class RelationWithPlayers {
     private boolean haveGaveGiftToday = false;
     private boolean haveHuggedToday = false;
     private boolean haveGaveFlowerToday = false;
-    private final ArrayList<DialoguesBetweenPlayers> dialogues = new ArrayList<>();
 
     public boolean HaveTradedToday() {
         return haveTradedToday;
@@ -174,10 +171,6 @@ public class RelationWithPlayers {
         checkXp();
     }
 
-    public void addDialogue(DialoguesBetweenPlayers dialogue) {
-        this.dialogues.add(dialogue);
-    }
-
     public boolean canHug() {
         if (this.friendshipLevel.equals(FriendshipLevelsWithPlayers.LevelTwo)) {
             return true;
@@ -186,15 +179,6 @@ public class RelationWithPlayers {
             return true;
         }
         return this.friendshipLevel.equals(FriendshipLevelsWithPlayers.LevelFour);
-    }
-
-    public String getTalkHistory() {
-
-        StringBuilder talkHistory = new StringBuilder();
-        for (DialoguesBetweenPlayers dialogue: dialogues) {
-            talkHistory.append(dialogue.toString());
-        }
-        return talkHistory.toString();
     }
 
     public boolean canGift() {
