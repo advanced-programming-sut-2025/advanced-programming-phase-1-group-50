@@ -277,7 +277,7 @@ public class GamePictureManager {
 
     //end_process image :
 
-        public static Texture endProcessTexture = new Texture("Achievement/end_process.png");
+        public static TextureRegionDrawable endProcessTexture = new TextureRegionDrawable(new TextureRegion(new Texture("Achievement/end_process.png")));
 
     //Tree :
 

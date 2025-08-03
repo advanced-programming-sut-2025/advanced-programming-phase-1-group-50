@@ -3,26 +3,24 @@ package com.stardew.models.GameAssetManagers;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.model.AnimationID;
 import com.stardew.model.DrawableID;
 import com.stardew.model.TextureID;
-import com.stardew.models.date.Season;
-import com.stardew.view.GameMenu;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class GameAssetIDManager {
-    public static HashMap<TextureID, TextureRegion> ids = new HashMap<>();
+    private static final HashMap<TextureID, TextureRegion> regions = new HashMap<>();
     static {
         for (TextureID id : TextureID.values()) {
             try {
                 Field field = GamePictureManager.class.getField(id.name());
                 Object value = field.get(null);
                 if (value instanceof TextureRegion) {
-                    ids.put(id, (TextureRegion) value);
+                    regions.put(id, (TextureRegion) value);
                 }
             } catch (Exception e) {
                 System.err.println("Failed to load asset for ID: " + id.name());
@@ -31,14 +29,14 @@ public class GameAssetIDManager {
         }
     }
 
-    public static HashMap<DrawableID , TextureRegion> drawables = new HashMap<>();
+    private static final HashMap<DrawableID , TextureRegionDrawable> drawables = new HashMap<>();
     static {
         for (DrawableID id : DrawableID.values()) {
             try {
                 Field field = GamePictureManager.class.getField(id.name());
                 Object value = field.get(null);
-                if (value instanceof TextureRegion) {
-                    drawables.put(id, (TextureRegion) value);
+                if (value instanceof TextureRegionDrawable drawable) {
+                    drawables.put(id, drawable);
                 }
             } catch (Exception e) {
                 System.err.println("Failed to load asset for ID: " + id.name());
@@ -48,8 +46,12 @@ public class GameAssetIDManager {
     }
 
     public static TextureRegion getTextureRegion(TextureID id) {
-        return ids.get(id);
+        return regions.get(id);
     }
+    public static TextureRegionDrawable getDrawable(DrawableID id) {
+        return drawables.get(id);
+    }
+
     private static final HashMap<AnimationID, Animation<TextureRegion>> animations = new HashMap<>();
     static {
         TextureRegion[][] chicken = TextureRegion.split(new Texture("Animals_animation/Chicken_Brown.png"), 16, 16);
