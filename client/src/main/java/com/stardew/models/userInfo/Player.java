@@ -1,5 +1,6 @@
 package com.stardew.models.userInfo;
 
+import com.stardew.model.PlayersRelation.RelationWithPlayers;
 import com.stardew.models.InventoryItem;
 import com.stardew.models.NPCs.NPCType;
 import com.stardew.models.NPCs.RelationWithNPC;

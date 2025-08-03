@@ -1,4 +1,4 @@
-package com.stardew.model.userInfo;
+package com.stardew.model.PlayersRelation;
 
 public enum FriendshipLevelsWithPlayers {
     LevelZero(),

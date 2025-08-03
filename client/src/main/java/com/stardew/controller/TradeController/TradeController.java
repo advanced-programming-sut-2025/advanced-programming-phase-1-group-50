@@ -1,5 +1,6 @@
 package com.stardew.controller.TradeController;
 
+import com.stardew.model.PlayersRelation.RelationWithPlayers;
 import com.stardew.models.Result;
 import com.stardew.models.Trade;
 import com.stardew.models.app.App;
@@ -9,7 +10,6 @@ import com.stardew.models.stores.Sellable;
 import com.stardew.models.userInfo.Coin;
 import com.stardew.models.userInfo.Player;
 import com.stardew.models.userInfo.RelationNetwork;
-import com.stardew.models.userInfo.RelationWithPlayers;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,7 +1,6 @@
-package com.stardew.model.userInfo;
+package com.stardew.model.PlayersRelation;
 
 public class RelationWithPlayers {
-
     private int xp = 0;
     private FriendshipLevelsWithPlayers friendshipLevel = FriendshipLevelsWithPlayers.LevelZero;
     private boolean gaveFlower = false;
@@ -189,4 +188,5 @@ public class RelationWithPlayers {
     public String toString() {
         return  friendshipLevel.toString() + "  xp: " + this.xp ;
     }
+
 }

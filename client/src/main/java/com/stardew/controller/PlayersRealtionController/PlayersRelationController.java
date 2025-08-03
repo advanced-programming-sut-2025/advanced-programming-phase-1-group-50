@@ -1,6 +1,8 @@
 package com.stardew.controller.PlayersRealtionController;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.stardew.model.PlayersRelation.FriendshipLevelsWithPlayers;
+import com.stardew.model.PlayersRelation.RelationWithPlayers;
 import com.stardew.models.BetweenPlayersGift;
 import com.stardew.models.Bouquet;
 import com.stardew.models.Notification.MarriageRequest;

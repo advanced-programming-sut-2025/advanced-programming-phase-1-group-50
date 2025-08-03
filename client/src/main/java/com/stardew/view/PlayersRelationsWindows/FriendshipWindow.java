@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.google.gson.reflect.TypeToken;
-import com.stardew.models.userInfo.RelationWithPlayers;
+import com.stardew.model.PlayersRelation.RelationWithPlayers;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;

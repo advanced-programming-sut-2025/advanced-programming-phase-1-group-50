@@ -1,8 +1,8 @@
 package com.stardew.controller;
 
+import com.stardew.model.PlayersRelation.RelationWithPlayers;
 import com.stardew.model.gameApp.Game;
 import com.stardew.model.userInfo.Player;
-import com.stardew.model.userInfo.RelationWithPlayers;
 import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;

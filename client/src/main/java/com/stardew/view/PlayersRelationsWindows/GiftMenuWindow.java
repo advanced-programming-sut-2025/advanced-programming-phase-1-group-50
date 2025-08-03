@@ -8,9 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.stardew.model.PlayersRelation.RelationWithPlayers;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.userInfo.Player;
-import com.stardew.models.userInfo.RelationWithPlayers;
 import com.stardew.view.windows.CloseableWindow;
 import com.stardew.view.windows.SmartTooltip;
 

@@ -1,6 +1,7 @@
 package com.stardew.models.app;
 
 import com.stardew.controller.GameMenuController;
+import com.stardew.model.PlayersRelation.RelationWithPlayers;
 import com.stardew.models.BetweenPlayersGift;
 import com.stardew.models.Result;
 import com.stardew.models.ShippingBin;

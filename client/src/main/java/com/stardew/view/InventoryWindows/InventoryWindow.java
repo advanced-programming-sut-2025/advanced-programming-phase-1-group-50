@@ -12,7 +12,6 @@ import com.stardew.model.TextureID;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.tools.Tool;
-import com.stardew.models.userInfo.RelationWithPlayers;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
@@ -21,7 +20,6 @@ import com.stardew.view.PlayersRelationsWindows.FriendshipWindow;
 import com.stardew.view.windows.CloseableWindow;
 import com.badlogic.gdx.graphics.Color;
 
-import java.lang.reflect.Type;
 import java.util.*;
 
 public class InventoryWindow extends CloseableWindow {
