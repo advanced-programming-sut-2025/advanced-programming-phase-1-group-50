@@ -23,6 +23,7 @@ public class GameUpdateRequestThread extends Thread {
         while (running) {
             try {
                 NetworkManager.getConnection().sendMessage(getMessage());
+                if (!firstUpdate) NetworkManager.getConnection().sendMessage(updateAnimalsMessage());
                 Thread.sleep(50);
             } catch (InterruptedException ignored) {
 
@@ -55,5 +56,11 @@ public class GameUpdateRequestThread extends Thread {
         HashMap<String,Object> body = new HashMap<>();
         body.put("id", id);
         return new Message(body, MessageType.MAP_REQUEST);
+    }
+
+    private Message updateAnimalsMessage() {
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("id", id);
+        return new Message(body, MessageType.UPDATE_ANIMALS);
     }
 }

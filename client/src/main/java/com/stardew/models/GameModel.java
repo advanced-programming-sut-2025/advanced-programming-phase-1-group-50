@@ -18,6 +18,7 @@ public class GameModel {
     private ArrayList<PlaceableDTO> placeables;
     private PlayerDTO player;
     private TimeDTO time;
+    private ArrayList<AnimalDTO> animals = new ArrayList<>();
     private final int mapWidth, mapHeight;
     private int startX;
     private int startY;
@@ -210,6 +211,10 @@ public class GameModel {
         this.time = time;
     }
 
+    public void updateAnimals(ArrayList<AnimalDTO> animals) {
+        this.animals = animals;
+    }
+
     public ArrayList<TileDTO> getTiles() {
         synchronized (lock) {
             return tiles;
@@ -230,6 +235,10 @@ public class GameModel {
 
     public TimeDTO getTime() {
         return time;
+    }
+
+    public ArrayList<AnimalDTO> getAnimals() {
+        return animals;
     }
 
     public int getStartX() {

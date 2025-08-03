@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
+import com.stardew.model.AnimalDTO;
 import com.stardew.model.PlaceableDTO;
 import com.stardew.model.PlayerDTO;
 import com.stardew.model.TileDTO;
@@ -36,7 +37,7 @@ public class GameRenderer {
         renderBackground();
         renderPlayer(delta);
         renderPlaceables();
-
+        renderAnimals();
 
 
 //        renderMapTilesAndPlayer();
@@ -78,7 +79,22 @@ public class GameRenderer {
             batch.draw(
                 GameAssetIDManager.getTextureRegion(placeable.getTextureID()),
                 placeable.getX() * tileSize, placeable.getY() * tileSize ,
-                placeable.getWidth() * tileSize , placeable.getHeight()  * tileSize //TODO now it is done according to texture size
+                placeable.getWidth() * tileSize , placeable.getHeight()  * tileSize
+            );
+        }
+    }
+
+    private void renderAnimals() {
+        for (AnimalDTO animal : gameModel.getAnimals()) {
+            Animation<TextureRegion> animation = GameAssetIDManager.getAnimation(animal.getAnimationID());
+            if (animation == null) continue;
+            float stateTime = animal.getStateTime();
+            batch.draw(
+                animation.getKeyFrame(stateTime, true),
+                animal.getX() * tileSize,
+                animal.getY() * tileSize,
+                tileSize,
+                tileSize
             );
         }
     }
