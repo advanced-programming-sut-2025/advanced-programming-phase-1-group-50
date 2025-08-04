@@ -89,28 +89,29 @@ public class ProfileMenu implements AppMenu , Screen {
         changePassword.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                controller.handleChangePassword();
+                //controller.handleChangePassword();
+
             }
         });
         changeUsername = new TextButton("Change Username", GamePictureManager.skin);
         changeUsername.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                controller.handleChangeUsername();
+                //controller.handleChangeUsername();
             }
         });
         changeEmail = new TextButton("Change Email", GamePictureManager.skin);
         changeEmail.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                controller.handleChangeEmail();
+                //controller.handleChangeEmail();
             }
         });
         changeNickname = new TextButton("Change Nickname", GamePictureManager.skin);
         changeNickname.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                controller.handleChangeNickname();
+                //controller.handleChangeNickname();
             }
         });
         showUserInfo = new TextButton("Show UserInfo", GamePictureManager.skin);
@@ -118,7 +119,7 @@ public class ProfileMenu implements AppMenu , Screen {
         showUserInfo.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                controller.handleShowUserInfo();
+                //controller.handleShowUserInfo();
             }
         });
         back = new TextButton("Back", GamePictureManager.skin);
@@ -156,10 +157,10 @@ public class ProfileMenu implements AppMenu , Screen {
 
         avatar.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                String result = avatar.getSelected();
-                App.getLoggedInUser().setAvatar(getAvatarByName(result));
-
-                avatarImage.setDrawable(new TextureRegionDrawable(getAvatarByName(result).getAvatar()));
+//                String result = avatar.getSelected();
+//                App.getLoggedInUser().setAvatar(getAvatarByName(result));
+//
+//                avatarImage.setDrawable(new TextureRegionDrawable(getAvatarByName(result).getAvatar()));
 
             }
         });
