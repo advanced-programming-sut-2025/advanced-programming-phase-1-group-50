@@ -1,6 +1,9 @@
 package com.stardew.controller.PlayersRealtionController;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.google.gson.reflect.TypeToken;
 import com.stardew.model.PlayersRelation.BetweenPlayersGift;
 import com.stardew.model.PlayersRelation.FriendshipLevelsWithPlayers;
 import com.stardew.model.PlayersRelation.RelationWithPlayers;
@@ -11,8 +14,15 @@ import com.stardew.models.Notification.Notification;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.userInfo.*;
+import com.stardew.network.Event;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 import com.stardew.view.InPersonPlayersRelationsWindows.RespondMarriageWindow;
+import com.stardew.view.PlayersRelationsWindows.FriendshipWindow;
+import com.stardew.view.PlayersRelationsWindows.GiftHistoryWindow;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -107,22 +117,22 @@ public class PlayersRelationController {
         return (gift.getReceiverUsername().equals(LoggedInUser.getUser().getUsername())) && (!gift.isRated());
     }
 
-    public static void rateGift(int gameId,int giftId, int rate) {
-//        gift.setRate(rate);
-//        gift.setRated();
-//
-//        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
-//        Set<Player> lookUpKey = new HashSet<>();
-//        lookUpKey.add(gift.getReceiver());
-//        lookUpKey.add(gift.getSender());
-//
-//        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-//        if (!tempRelation.HaveGaveGiftToday()) {
-//            tempRelation.changeXp((rate - 3) * 30 + 15);
-//        }
-//        tempRelation.setHaveGaveGiftToday(true);
-//        tempNetwork.relationNetwork.put(lookUpKey, tempRelation);
-
+    public static void rateGift(int gameId, int giftId, int rate, GiftHistoryWindow giftHistoryWindow, FriendshipWindow friendshipWindow) {
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id",gameId);
+            body.put("giftId",giftId);
+            body.put("rate",rate);
+            body.put("event" , Event.RateGift);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType().equals(MessageType.RATE_GIFT_RESPONSE)) {
+                    Gdx.app.postRunnable(() -> {
+                        giftHistoryWindow.updateAllGifts();
+                        friendshipWindow.updateRelations();
+                    });
+            }
+        }).start();
     }
 
     public static Result canHug(Player otherPlayer) {

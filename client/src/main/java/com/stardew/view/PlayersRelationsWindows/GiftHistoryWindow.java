@@ -87,7 +87,7 @@ public class GiftHistoryWindow extends CloseableWindow {
         );
     }
 
-    protected void updateAllGifts() {
+    public void updateAllGifts() {
         new Thread(() -> {
             HashMap<String, Object> body = new HashMap<>();
             body.put("id",gameId);
@@ -95,11 +95,11 @@ public class GiftHistoryWindow extends CloseableWindow {
             Message message = new Message(body, MessageType.EVENT_IN_GAME);
             Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
             if (response != null && response.getType().equals(MessageType.GET_BETWEEN_PLAYERS_GIFT_INFO)) {
-                Type giftListType = new TypeToken<List<BetweenPlayersGift>>() {}.getType();
-                List<BetweenPlayersGift> receivedGifts = message.getFromBody("gifts", giftListType);
+                Type giftListType = new TypeToken<ArrayList<BetweenPlayersGift>>() {}.getType();
+                ArrayList<BetweenPlayersGift> receivedGifts = response.getFromBody("gifts", giftListType);
                 Gdx.app.postRunnable(() -> {
                     allGifts.clear();
-                    allGifts.addAll((Collection<? extends BetweenPlayersGift>) receivedGifts);
+                    allGifts.addAll(receivedGifts);
                     fillGiftTable();
                 });
             }
@@ -139,7 +139,7 @@ public class GiftHistoryWindow extends CloseableWindow {
             rateLabel.setColor(Color.BROWN);
 
             TextButton rateButton = new TextButton("Rate", GamePictureManager.skin);
-            boolean canRate = PlayersRelationController.canRateGift(gift); // TODO
+            boolean canRate = PlayersRelationController.canRateGift(gift);
             if (!canRate) {
                 rateButton.setColor(Color.DARK_GRAY);
                 rateButton.setDisabled(true);

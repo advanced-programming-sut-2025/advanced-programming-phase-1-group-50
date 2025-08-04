@@ -56,6 +56,15 @@ public class Game {
         relationInitializer(players);
     }
 
+    public BetweenPlayersGift getGiftById(int id) {
+        for (BetweenPlayersGift gift : gifts) {
+            if (gift.getId() == id) {
+                return gift;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<BetweenPlayersGift> getGifts() {
         return gifts;
     }

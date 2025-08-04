@@ -42,7 +42,7 @@ public class FriendshipWindow extends CloseableWindow {
         updateRelations();
     }
 
-    protected void updateRelations() {
+    public void updateRelations() {
         relations.clear();
         new Thread(() -> {
             HashMap<String, Object> body = new HashMap<>();

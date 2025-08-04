@@ -34,4 +34,5 @@ public enum Event {
     CollectAnimalProduct,
     CheatCode,
     GetBetweenPlayersGifts,
+    RateGift,
 }
