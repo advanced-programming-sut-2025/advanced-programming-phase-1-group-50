@@ -13,7 +13,6 @@ import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.stores.Sellable;
-import com.stardew.models.userInfo.Player;
 import com.stardew.view.windows.CloseableWindow;
 
 import java.util.ArrayList;
@@ -22,11 +21,11 @@ import java.util.List;
 
 public class SelectGiftToSendWindow extends CloseableWindow {
     private final Table productTable;
-    private final Player receiver;
+    private final String receiverUsername;
 
-    public SelectGiftToSendWindow(Stage stage, Player receiver) {
+    public SelectGiftToSendWindow(Stage stage, String receiver) {
         super("Gift Selection", stage);
-        this.receiver = receiver;
+        this.receiverUsername = receiver;
 
         pad(40);
         defaults().space(15);
@@ -121,6 +120,6 @@ public class SelectGiftToSendWindow extends CloseableWindow {
     }
 
     private void openSendGiftWindow(String productName, int quantity) {
-        stage.addActor(new SendGiftWindow(stage, this, receiver, productName, quantity));
+        stage.addActor(new SendGiftWindow(stage, this, receiverUsername, productName, quantity));
     }
 }

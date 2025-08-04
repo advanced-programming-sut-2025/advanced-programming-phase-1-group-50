@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.controller.PlayersRealtionController.PlayersRelationController;
-import com.stardew.models.BetweenPlayersGift;
+import com.stardew.model.PlayersRelation.BetweenPlayersGift;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.view.windows.CloseableWindow;
 

@@ -1,10 +1,11 @@
 package com.stardew.controller.PlayersRealtionController;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.stardew.model.PlayersRelation.BetweenPlayersGift;
 import com.stardew.model.PlayersRelation.FriendshipLevelsWithPlayers;
 import com.stardew.model.PlayersRelation.RelationWithPlayers;
-import com.stardew.models.BetweenPlayersGift;
 import com.stardew.models.Bouquet;
+import com.stardew.models.ClientInfo.LoggedInUser;
 import com.stardew.models.Notification.MarriageRequest;
 import com.stardew.models.Notification.Notification;
 import com.stardew.models.Result;
@@ -105,24 +106,24 @@ public class PlayersRelationController {
 //    }
 
     public static boolean canRateGift(BetweenPlayersGift gift) {
-        return (gift.getReceiver().equals(App.getGame().getCurrentPlayingPlayer())) && (!gift.isRated());
+        return (gift.getReceiverUsername().equals(LoggedInUser.getUser().getUsername())) && (!gift.isRated());
     }
 
     public static void rateGift(BetweenPlayersGift gift, int rate) {
-        gift.setRate(rate);
-        gift.setRated();
-
-        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
-        Set<Player> lookUpKey = new HashSet<>();
-        lookUpKey.add(gift.getReceiver());
-        lookUpKey.add(gift.getSender());
-
-        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-        if (!tempRelation.HaveGaveGiftToday()) {
-            tempRelation.changeXp((rate - 3) * 30 + 15);
-        }
-        tempRelation.setHaveGaveGiftToday(true);
-        tempNetwork.relationNetwork.put(lookUpKey, tempRelation);
+//        gift.setRate(rate);
+//        gift.setRated();
+//
+//        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
+//        Set<Player> lookUpKey = new HashSet<>();
+//        lookUpKey.add(gift.getReceiver());
+//        lookUpKey.add(gift.getSender());
+//
+//        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+//        if (!tempRelation.HaveGaveGiftToday()) {
+//            tempRelation.changeXp((rate - 3) * 30 + 15);
+//        }
+//        tempRelation.setHaveGaveGiftToday(true);
+//        tempNetwork.relationNetwork.put(lookUpKey, tempRelation);
 
     }
 
@@ -309,31 +310,32 @@ public class PlayersRelationController {
         }
     }
 
-    public static Result sendGiftToPlayer(String productName, int quantity, Player receiver) {
-
-        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
-        Set<Player> lookUpKey = new HashSet<>();
-        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
-        lookUpKey.add(receiver);
-
-        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-
-        App.getGame().addGiftsIndex();
-        BetweenPlayersGift tempGift = new BetweenPlayersGift(Sellable.getSellableByName(productName),
-            App.getGame().getCurrentPlayingPlayer(), receiver, App.getGame().getGiftIndex());
-        App.getGame().addToGifts(tempGift);
-
-        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(productName), quantity);
-        receiver.getBackpack().addIngredients((Ingredient) Sellable.getSellableByName(productName), quantity);
-
-        receiver.addNotification(new Notification("you have received a gift", App.getGame().getCurrentPlayingPlayer()));
-
-
-        if (tempRelation.isMarriage()) {
-            App.getGame().getCurrentPlayingPlayer().addEnergy(50);
-            receiver.addEnergy(50);
-        }
-
-        return new Result(true, "He/She received your gift with id " + App.getGame().getGiftIndex());
+    public static Result sendGiftToPlayer(String productName, int quantity, String receiverUsername) {
+//
+//        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
+//        Set<Player> lookUpKey = new HashSet<>();
+//        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
+//        lookUpKey.add(receiver);
+//
+//        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+//
+//        App.getGame().addGiftsIndex();
+//        BetweenPlayersGift tempGift = new BetweenPlayersGift(Sellable.getSellableByName(productName),
+//            App.getGame().getCurrentPlayingPlayer(), receiver, App.getGame().getGiftIndex());
+//        App.getGame().addToGifts(tempGift);
+//
+//        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(productName), quantity);
+//        receiver.getBackpack().addIngredients((Ingredient) Sellable.getSellableByName(productName), quantity);
+//
+//        receiver.addNotification(new Notification("you have received a gift", App.getGame().getCurrentPlayingPlayer()));
+//
+//
+//        if (tempRelation.isMarriage()) {
+//            App.getGame().getCurrentPlayingPlayer().addEnergy(50);
+//            receiver.addEnergy(50);
+//        }
+//
+//        return new Result(true, "He/She received your gift with id " + App.getGame().getGiftIndex());
+        return null;
     }
 }
