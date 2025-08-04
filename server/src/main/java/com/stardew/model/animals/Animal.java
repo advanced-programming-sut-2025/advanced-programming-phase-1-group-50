@@ -1,5 +1,6 @@
 package com.stardew.model.animals;
 
+import com.stardew.controller.AnimalsControllers.AnimalsController;
 import com.stardew.model.AnimalDTO;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.TimeProvider;
@@ -210,9 +211,26 @@ public class Animal implements Placeable {
 //            type.getAnimalHabitat() == HabitatType.Coop ? 40 : 65);
 //    }
 
+    private String getDescription() {
+        return "\n\n" +
+            String.format("     Name: %s   \n\n", name) +
+            String.format("     Type: %s   \n\n", type) +
+            String.format("     LevelOfFriendship: %d   \n\n", friendShip) +
+            String.format("     hasPettedToday: %s   \n\n", hasPettedToday()) +
+            String.format("     hasFedToday: %s   \n\n", hasFedToday());
+    }
+
     public AnimalDTO toDTO() {
         synchronized (lock) {
-            return new AnimalDTO(position.x, position.y, stateTime, type.getAnimationID(state));
+            return new AnimalDTO(
+                position.x,
+                position.y,
+                stateTime,
+                name,
+                getDescription(),
+                type.getAnimationID(state),
+                type.getNormalTexture()
+            );
         }
     }
 

@@ -1,5 +1,6 @@
 package com.stardew.controller;
 
+import com.stardew.controller.AnimalsControllers.AnimalsController;
 import com.stardew.controller.CookingCraftingControllers.ArtisanController;
 import com.stardew.controller.CookingCraftingControllers.CookingController;
 import com.stardew.controller.CookingCraftingControllers.CookingCraftingInfoController;
@@ -42,7 +43,7 @@ public class GameSessionController {
     }
 
 
-    public void handleUpdateGameState(Message message, ClientConnectionThread connection ) {
+    public void handleUpdateGameState(Message message, ClientConnectionThread connection) {
         if (message == null) return;
 
         int id = message.getIntFromBody("id");
@@ -95,7 +96,8 @@ public class GameSessionController {
 
         ArrayList<AnimalDTO> animals = new ArrayList<>();
         for (Animal animal : player.getBackpack().getAllAnimals()) {
-            animals.add(animal.toDTO());
+            if (animal.isOutOfHabitat())
+                animals.add(animal.toDTO());
         }
         HashMap<String, Object> body = new HashMap<>();
         body.put("animals", animals);
@@ -230,6 +232,31 @@ public class GameSessionController {
             case CheatCode -> {
                 Player player = game.getPlayer(connection);
                 CheatCodeController.getInstance().executeCheatCode(message , connection , game , player );
+            }
+
+            case GetAnimalsProductsInfo -> {
+                Player player = game.getPlayer(connection);
+                AnimalsController.getInstance().animalProductsInfo(message, player, connection);
+            }
+            case FeedAnimal -> {
+                Player player = game.getPlayer(connection);
+                AnimalsController.getInstance().feedAnimal(message, player, connection);
+            }
+            case PetAnimal -> {
+                Player player = game.getPlayer(connection);
+                AnimalsController.getInstance().petAnimal(message, player, connection);
+            }
+            case ShepherdAnimal -> {
+                Player player = game.getPlayer(connection);
+                AnimalsController.getInstance().shepherdAnimal(message, game, player, connection);
+            }
+            case CollectAnimalProduct -> {
+                Player player = game.getPlayer(connection);
+                AnimalsController.getInstance().collectProduct(message, game, player, connection);
+            }
+            case SellAnimal -> {
+                Player player = game.getPlayer(connection);
+                AnimalsController.getInstance().sellAnimal(message, player, connection);
             }
         }
 
