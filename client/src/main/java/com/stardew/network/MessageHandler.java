@@ -80,11 +80,12 @@ public class MessageHandler {
             }
             case UPDATE_TIME -> {
                 gameStateController.handleUpdateTime(message);
-                ArtisanMachinesManager.getInstance().updateMachines();
+                //ArtisanMachinesManager.getInstance().updateMachines();
                 return true;
             }
             case UPDATE_HOT_BAR -> {
                 gameStateController.updateHotBar(message);
+                gameStateController.handleUpdateCoin(message);
                 return true;
             }
             case SHOW_INVENTORY_RESULT -> {

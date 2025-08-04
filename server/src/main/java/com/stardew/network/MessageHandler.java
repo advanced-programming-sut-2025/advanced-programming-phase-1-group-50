@@ -1,6 +1,7 @@
 package com.stardew.network;
 
 import com.stardew.controller.*;
+import com.stardew.model.userInfo.Player;
 
 public class MessageHandler {
     private static MessageHandler instance;

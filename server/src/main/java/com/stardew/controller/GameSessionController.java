@@ -229,6 +229,11 @@ public class GameSessionController {
                 PlayersRelationController.getInstance().getRelations(message, player, connection);
             }
 
+            case CheatCode -> {
+                Player player = game.getPlayer(connection);
+                CheatCodeController.getInstance().executeCheatCode(message , connection , game , player );
+            }
+
             case GetAnimalsProductsInfo -> {
                 Player player = game.getPlayer(connection);
                 AnimalsController.getInstance().animalProductsInfo(message, player, connection);

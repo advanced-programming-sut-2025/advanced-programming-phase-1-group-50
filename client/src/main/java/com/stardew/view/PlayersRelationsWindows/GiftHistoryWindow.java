@@ -7,20 +7,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.stardew.controller.PlayersRealtionController.PlayersRelationController;
-import com.stardew.models.BetweenPlayersGift;
+import com.stardew.model.PlayersRelation.BetweenPlayersGift;
+import com.stardew.models.ClientInfo.LoggedInUser;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
-import com.stardew.models.userInfo.Player;
 import com.stardew.view.windows.CloseableWindow;
 
 public class GiftHistoryWindow extends CloseableWindow {
-    private final Player otherPlayer;
+    private final String otherPlayerUsername;
     private final Table giftTable;
     private final FriendshipWindow friendshipWindow;
 
-    public GiftHistoryWindow(Stage stage, FriendshipWindow friendshipWindow, Player otherPlayer) {
+    public GiftHistoryWindow(Stage stage, FriendshipWindow friendshipWindow, String otherPlayer) {
         super("Gifts' History", stage);
-        this.otherPlayer = otherPlayer;
+        this.otherPlayerUsername = otherPlayer;
         this.friendshipWindow = friendshipWindow;
 
         pad(40);
@@ -77,11 +77,12 @@ public class GiftHistoryWindow extends CloseableWindow {
     protected void fillGiftTable() {
         giftTable.clear();
         int counter = 0;
+        //TODO
 
         for (BetweenPlayersGift gift : App.getGame().getGifts()) {
             boolean isInvolved =
-                (gift.getReceiver().equals(App.getGame().getCurrentPlayingPlayer()) && gift.getSender().equals(otherPlayer)) ||
-                    (gift.getSender().equals(App.getGame().getCurrentPlayingPlayer()) && gift.getReceiver().equals(otherPlayer));
+                (gift.getReceiverUsername().equals(LoggedInUser.getUser().getUsername()) && gift.getSenderUsername().equals(otherPlayerUsername)) ||
+                    (gift.getSenderUsername().equals(LoggedInUser.getUser().getUsername()) && gift.getReceiverUsername().equals(otherPlayerUsername));
 
             if (!isInvolved) {
                 continue;
@@ -89,16 +90,16 @@ public class GiftHistoryWindow extends CloseableWindow {
 
             counter++;
 
-            Label productLabel = new Label(gift.getProduct().toString(), GamePictureManager.skin);
+            Label productLabel = new Label(gift.getProductName(), GamePictureManager.skin);
             productLabel.setFontScale(1.2f);
             productLabel.setColor(Color.BROWN);
             Label idLabel = new Label(String.valueOf(gift.getId()), GamePictureManager.skin);
             idLabel.setFontScale(1.2f);
             idLabel.setColor(Color.BROWN);
-            Label senderLabel = new Label(gift.getSender().getUsername(), GamePictureManager.skin);
+            Label senderLabel = new Label(gift.getSenderUsername(), GamePictureManager.skin);
             senderLabel.setFontScale(1.2f);
             senderLabel.setColor(Color.BROWN);
-            Label receiverLabel = new Label(gift.getReceiver().getUsername(), GamePictureManager.skin);
+            Label receiverLabel = new Label(gift.getReceiverUsername(), GamePictureManager.skin);
             receiverLabel.setFontScale(1.2f);
             receiverLabel.setColor(Color.BROWN);
             Label rateLabel = new Label(String.valueOf(gift.getRate()), GamePictureManager.skin);

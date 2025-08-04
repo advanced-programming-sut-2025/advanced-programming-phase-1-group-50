@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.stardew.controller.PlayersRealtionController.PlayersRelationController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Result;
-import com.stardew.models.userInfo.Player;
 import com.stardew.view.windows.CloseableWindow;
 
 
@@ -20,9 +19,9 @@ public class SendGiftWindow extends CloseableWindow {
     private final Label quantityLabel;
     private int selectedQuantity = 1;
 
-    public SendGiftWindow(Stage stage, SelectGiftToSendWindow selectGiftToSendWindow, Player receiver,
+    public SendGiftWindow(Stage stage, SelectGiftToSendWindow selectGiftToSendWindow, String receiverUsername,
                           String productName, int quantity) {
-        super("Sending a gift to " + receiver.getUsername(), stage);
+        super("Sending a gift to " + receiverUsername, stage);
         this.maxQuantity = quantity;
 
         pad(60);
@@ -65,7 +64,7 @@ public class SendGiftWindow extends CloseableWindow {
         sellButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Result result = PlayersRelationController.sendGiftToPlayer(productName,selectedQuantity,receiver);
+                Result result = PlayersRelationController.sendGiftToPlayer(productName,selectedQuantity,receiverUsername);
                 selectGiftToSendWindow.refreshProducts();
                 closeWindow();
                 showResult(result);

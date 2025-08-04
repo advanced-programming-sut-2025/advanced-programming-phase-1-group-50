@@ -10,6 +10,7 @@ package com.stardew.model.gameApp;
 //import com.stardew.model.foraging.Growable;
 //import com.stardew.model.foraging.Tree;
 import com.stardew.model.*;
+import com.stardew.model.PlayersRelation.BetweenPlayersGift;
 import com.stardew.model.PlayersRelation.RelationWithPlayers;
 import com.stardew.model.animals.Animal;
 import com.stardew.model.gameApp.date.Time;

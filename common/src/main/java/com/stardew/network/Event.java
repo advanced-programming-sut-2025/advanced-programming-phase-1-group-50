@@ -32,4 +32,5 @@ public enum Event {
     ShepherdAnimal,
     SellAnimal,
     CollectAnimalProduct,
+    CheatCode,
 }
