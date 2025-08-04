@@ -75,7 +75,7 @@ public class CheatCodeController {
         HashMap<String , Object> body = new HashMap<>();
         body.put("result", result);
         Message m = new Message(body , MessageType.CHEAT_CODE_RESULT);
-
+        m.setRequestID(message.getRequestID());
         clientConnection.sendMessage(m);
         InventoryController.getInstance().handleSendInventoryList(player , clientConnection , message.getRequestID());
         InventoryController.getInstance().sendHotBarUpdate(player , clientConnection);
