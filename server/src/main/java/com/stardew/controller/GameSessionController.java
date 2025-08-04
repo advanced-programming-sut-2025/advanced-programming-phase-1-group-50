@@ -258,6 +258,10 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 AnimalsController.getInstance().sellAnimal(message, player, connection);
             }
+
+            case GetBetweenPlayersGifts -> {
+                PlayersRelationController.getInstance().getAllGifts(message, connection);
+            }
         }
 
     }

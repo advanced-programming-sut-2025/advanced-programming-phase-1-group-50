@@ -10,8 +10,6 @@ import com.stardew.models.Notification.MarriageRequest;
 import com.stardew.models.Notification.Notification;
 import com.stardew.models.Result;
 import com.stardew.models.app.App;
-import com.stardew.models.manuFactor.Ingredient;
-import com.stardew.models.stores.Sellable;
 import com.stardew.models.userInfo.*;
 import com.stardew.view.InPersonPlayersRelationsWindows.RespondMarriageWindow;
 
@@ -109,7 +107,7 @@ public class PlayersRelationController {
         return (gift.getReceiverUsername().equals(LoggedInUser.getUser().getUsername())) && (!gift.isRated());
     }
 
-    public static void rateGift(BetweenPlayersGift gift, int rate) {
+    public static void rateGift(int gameId,int giftId, int rate) {
 //        gift.setRate(rate);
 //        gift.setRated();
 //

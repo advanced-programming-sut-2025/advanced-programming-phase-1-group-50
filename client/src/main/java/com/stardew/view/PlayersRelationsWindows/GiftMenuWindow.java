@@ -14,7 +14,7 @@ import com.stardew.view.windows.CloseableWindow;
 import com.stardew.view.windows.SmartTooltip;
 
 public class GiftMenuWindow extends CloseableWindow {
-    public GiftMenuWindow(Stage stage, FriendshipWindow friendshipWindow, String username, RelationWithPlayers relation) {
+    public GiftMenuWindow(int gameId,Stage stage, FriendshipWindow friendshipWindow, String username, RelationWithPlayers relation) {
         super("Gift menu", stage);
 
         Table table = new Table();
@@ -47,7 +47,7 @@ public class GiftMenuWindow extends CloseableWindow {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (relation.canGift()) {
-                    stage.addActor(new SelectGiftToSendWindow(stage, username));
+                    stage.addActor(new SelectGiftToSendWindow(gameId,stage, username));
                     remove();
                 }
             }
@@ -59,7 +59,7 @@ public class GiftMenuWindow extends CloseableWindow {
         giftHistoryButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                stage.addActor(new GiftHistoryWindow(stage, friendshipWindow, username));
+                stage.addActor(new GiftHistoryWindow(gameId,stage, friendshipWindow, username));
                 remove();
             }
         });

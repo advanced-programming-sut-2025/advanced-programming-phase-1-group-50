@@ -22,9 +22,11 @@ import java.util.List;
 public class SelectGiftToSendWindow extends CloseableWindow {
     private final Table productTable;
     private final String receiverUsername;
+    private final int gameId;
 
-    public SelectGiftToSendWindow(Stage stage, String receiver) {
+    public SelectGiftToSendWindow(int gameId,Stage stage, String receiver) {
         super("Gift Selection", stage);
+        this.gameId = gameId;
         this.receiverUsername = receiver;
 
         pad(40);

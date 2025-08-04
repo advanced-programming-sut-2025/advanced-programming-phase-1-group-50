@@ -1,25 +1,38 @@
 package com.stardew.view.PlayersRelationsWindows;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.google.gson.reflect.TypeToken;
 import com.stardew.controller.PlayersRealtionController.PlayersRelationController;
 import com.stardew.model.PlayersRelation.BetweenPlayersGift;
 import com.stardew.models.ClientInfo.LoggedInUser;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.App;
+import com.stardew.network.Event;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 import com.stardew.view.windows.CloseableWindow;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
 public class GiftHistoryWindow extends CloseableWindow {
     private final String otherPlayerUsername;
     private final Table giftTable;
     private final FriendshipWindow friendshipWindow;
+    private final int gameId;
+    private final ArrayList<BetweenPlayersGift> allGifts = new ArrayList<>();
 
-    public GiftHistoryWindow(Stage stage, FriendshipWindow friendshipWindow, String otherPlayer) {
+    public GiftHistoryWindow(int gameId,Stage stage, FriendshipWindow friendshipWindow, String otherPlayer) {
         super("Gifts' History", stage);
+        this.gameId = gameId;
         this.otherPlayerUsername = otherPlayer;
         this.friendshipWindow = friendshipWindow;
 
@@ -65,7 +78,7 @@ public class GiftHistoryWindow extends CloseableWindow {
         add(headerTable).row();
         add(scrollPane).width(600).height(400).row();
 
-        fillGiftTable();
+        updateAllGifts();
 
         pack();
         setPosition(
@@ -74,12 +87,31 @@ public class GiftHistoryWindow extends CloseableWindow {
         );
     }
 
-    protected void fillGiftTable() {
+    protected void updateAllGifts() {
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id",gameId);
+            body.put("event" , Event.GetBetweenPlayersGifts);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType().equals(MessageType.GET_BETWEEN_PLAYERS_GIFT_INFO)) {
+                Type giftListType = new TypeToken<List<BetweenPlayersGift>>() {}.getType();
+                List<BetweenPlayersGift> receivedGifts = message.getFromBody("gifts", giftListType);
+                Gdx.app.postRunnable(() -> {
+                    allGifts.clear();
+                    allGifts.addAll((Collection<? extends BetweenPlayersGift>) receivedGifts);
+                    fillGiftTable();
+                });
+            }
+        }).start();
+
+    }
+
+    private void fillGiftTable() {
         giftTable.clear();
         int counter = 0;
-        //TODO
 
-        for (BetweenPlayersGift gift : App.getGame().getGifts()) {
+        for (BetweenPlayersGift gift : allGifts) {
             boolean isInvolved =
                 (gift.getReceiverUsername().equals(LoggedInUser.getUser().getUsername()) && gift.getSenderUsername().equals(otherPlayerUsername)) ||
                     (gift.getSenderUsername().equals(LoggedInUser.getUser().getUsername()) && gift.getReceiverUsername().equals(otherPlayerUsername));
@@ -107,7 +139,7 @@ public class GiftHistoryWindow extends CloseableWindow {
             rateLabel.setColor(Color.BROWN);
 
             TextButton rateButton = new TextButton("Rate", GamePictureManager.skin);
-            boolean canRate = PlayersRelationController.canRateGift(gift);
+            boolean canRate = PlayersRelationController.canRateGift(gift); // TODO
             if (!canRate) {
                 rateButton.setColor(Color.DARK_GRAY);
                 rateButton.setDisabled(true);
@@ -150,6 +182,6 @@ public class GiftHistoryWindow extends CloseableWindow {
     }
 
     private void openRateGiftWindow(BetweenPlayersGift gift) {
-        stage.addActor(new RateGiftWindow(stage, friendshipWindow, this, gift));
+        stage.addActor(new RateGiftWindow(gameId,stage, friendshipWindow, this, gift.getId()));
     }
 }
