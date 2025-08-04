@@ -10,16 +10,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.controller.PlayersRealtionController.PlayersRelationController;
-import com.stardew.models.BetweenPlayersGift;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.view.windows.CloseableWindow;
 
 public class RateGiftWindow extends CloseableWindow {
     private final ImageButton[] starButtons = new ImageButton[5];
     private int selectedRate = 0;
+    private final int gameId;
 
-    public RateGiftWindow(Stage stage, FriendshipWindow friendshipWindow, GiftHistoryWindow giftHistoryWindow, BetweenPlayersGift gift) {
+    public RateGiftWindow(int gameId,Stage stage, FriendshipWindow friendshipWindow, GiftHistoryWindow giftHistoryWindow, int giftId) {
         super("Rating the gift", stage);
+        this.gameId = gameId;
 
         pad(60);
         defaults().space(20);
@@ -63,8 +64,8 @@ public class RateGiftWindow extends CloseableWindow {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (selectedRate > 0) {
-                    PlayersRelationController.rateGift(gift, selectedRate);
-                    giftHistoryWindow.fillGiftTable();
+                    PlayersRelationController.rateGift(gameId,giftId, selectedRate);
+                    giftHistoryWindow.updateAllGifts();
                     friendshipWindow.updateRelations();
                     closeWindow();
                 }

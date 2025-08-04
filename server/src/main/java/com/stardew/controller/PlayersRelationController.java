@@ -53,4 +53,19 @@ public class PlayersRelationController {
         response.setRequestID(message.getRequestID());
         clientConnectionThread.sendMessage(response);
     }
+
+    public void getAllGifts(Message message,ClientConnectionThread clientConnectionThread) {
+        if (message == null) {
+            return;
+        }
+
+        int id = message.getIntFromBody("id");
+        Game game = GameSessionController.getInstance().getGame(id);
+
+        HashMap<String , Object> body = new HashMap<>();
+        body.put("gifts", game.getGifts());
+        Message response = new Message(body, MessageType.GET_BETWEEN_PLAYERS_GIFT_INFO);
+        response.setRequestID(message.getRequestID());
+        clientConnectionThread.sendMessage(response);
+    }
 }

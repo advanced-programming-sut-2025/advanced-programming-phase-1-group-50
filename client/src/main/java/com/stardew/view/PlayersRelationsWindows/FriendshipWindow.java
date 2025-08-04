@@ -105,7 +105,7 @@ public class FriendshipWindow extends CloseableWindow {
     }
 
     private void openGiftMenu(String username, RelationWithPlayers relation) {
-        GiftMenuWindow giftMenuWindow = new GiftMenuWindow(stage, this, null, relation); // TODO
+        GiftMenuWindow giftMenuWindow = new GiftMenuWindow(gameId,stage, this, username, relation);
         stage.addActor(giftMenuWindow);
     }
 }

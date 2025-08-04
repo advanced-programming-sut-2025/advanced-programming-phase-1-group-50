@@ -1,8 +1,8 @@
 package com.stardew.models.app;
 
 import com.stardew.controller.GameMenuController;
+import com.stardew.model.PlayersRelation.BetweenPlayersGift;
 import com.stardew.model.PlayersRelation.RelationWithPlayers;
-import com.stardew.models.BetweenPlayersGift;
 import com.stardew.models.Result;
 import com.stardew.models.ShippingBin;
 import com.stardew.models.Trade;
@@ -20,7 +20,6 @@ import com.stardew.models.userInfo.Player;
 import java.util.*;
 
 import com.stardew.models.userInfo.*;
-import com.stardew.view.GameMenu;
 
 public class Game {
     private final ArrayList<Player> players = new ArrayList<>();
