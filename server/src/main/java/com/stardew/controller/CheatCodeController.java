@@ -1,5 +1,7 @@
 package com.stardew.controller;
 
+import com.stardew.controller.AnimalsControllers.AnimalsController;
+import com.stardew.controller.CookingCraftingControllers.CraftingController;
 import com.stardew.model.Result;
 import com.stardew.model.gameApp.CheatCommand;
 import com.stardew.model.gameApp.Game;
@@ -17,6 +19,8 @@ public class CheatCodeController {
     private final DateController dateController = new DateController();
     private final WeatherController weatherController = new WeatherController();
     private final EnergyController energyController = new EnergyController();
+    private final CraftingController craftingController = CraftingController.getInstance();
+    private final AnimalsController animalsController = AnimalsController.getInstance();
     private CheatCodeController() {
 
     }
@@ -57,16 +61,19 @@ public class CheatCodeController {
         else if ((matcher = CheatCommand.CheatAddDollars.getMatcher(input)) != null) {
             result = cheatAddDollars(matcher , player).getMessage();
         }
-//        else if ((matcher = CheatCommand.CheatAddItem.getMatcher(input)) != null) {
-//            return craftingController.addItem(
-//                matcher.group("itemName"),
-//                Integer.parseInt(matcher.group("count"))).getMessage();
-//        }
-//        else if ((matcher = CheatCommand.CheatSetFriendship.getMatcher(input)) != null) {
-//            return animalsController.setFriendship(
-//                matcher.group("animalName"),
-//                Integer.parseInt(matcher.group("amount"))).getMessage();
-//        }
+        else if ((matcher = CheatCommand.CheatAddItem.getMatcher(input)) != null) {
+            result = craftingController.addItem(
+                matcher.group("itemName"),
+                Integer.parseInt(matcher.group("count")),
+                player,
+                game.getTime()).getMessage();
+        }
+        else if ((matcher = CheatCommand.CheatSetFriendship.getMatcher(input)) != null) {
+            result = animalsController.setFriendship(
+                player,
+                matcher.group("animalName"),
+                Integer.parseInt(matcher.group("amount"))).getMessage();
+        }
 
         else {
             result =  "invalid command";
