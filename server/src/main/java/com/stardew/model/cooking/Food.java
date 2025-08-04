@@ -1,6 +1,5 @@
 package com.stardew.model.cooking;
 
-import com.stardew.model.DrawableID;
 import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.ItemInventoryType;
 import com.stardew.model.TextureID;
@@ -11,35 +10,35 @@ import com.stardew.model.stores.Sellable;
 import java.util.HashMap;
 
 public enum Food implements Ingredient , Sellable , Eatable {
-    FriedEgg(50, 35, DrawableID.friedEggNormal),
-    BakedFish(75, 100, DrawableID.friedEggNormal),
-    Salad(113, 110, DrawableID.saladNormal),
-    Omelet(100, 125, DrawableID.omeletNormal),
-    PumpkinPie(225, 385, DrawableID.pumpkinPieNormal),
-    Spaghetti(75, 120, DrawableID.spaghettiNormal),
-    Pizza(150, 300, DrawableID.pizzaNormal),
-    Tortilla(50, 50, DrawableID.tortillaNormal),
-    MakiRoll(100, 220, DrawableID.makiRollNormal),
-    TripleShotEspresso(200, 450, DrawableID.tripleShotEspressoNormal),
-    Cookie(90, 140, DrawableID.cookieNormal),
-    HashBrowns(90, 120, DrawableID.hashbrownsNormal),
-    Pancakes(90, 80, DrawableID.pancakesNormal),
-    FruitSalad(263, 450, DrawableID.fruitSaladNormal),
-    RedPlate(240, 400, DrawableID.redPlateNormal),
-    Bread(50, 60, DrawableID.breadNormal),
-    SalmonDinner(125, 300, DrawableID.salmonDinnerNormal),
-    VegetableMedley(165, 120, DrawableID.vegetableMedleyNormal),
-    FarmersLunch(200, 150, DrawableID.farmersLunchNormal),
-    SurvivalBurger(125, 180, DrawableID.survivalBurgerNormal),
-    DishOTheSea(150, 220, DrawableID.dishOTheSeaNormal),
-    SeaFoamPudding(175, 300, DrawableID.seaFoamPuddingNormal),
-    JojaCola(13,25, null),
-    TroutSoup(100,100, null),
-    MinersTreat(125, 200, DrawableID.minersTreatNormal);
+    FriedEgg(50, 35, TextureID.friedEgg),
+    BakedFish(75, 100, TextureID.bakedFish),
+    Salad(113, 110, TextureID.salad),
+    Omelet(100, 125, TextureID.omelet),
+    PumpkinPie(225, 385, TextureID.pumpkinPie),
+    Spaghetti(75, 120, TextureID.spaghetti),
+    Pizza(150, 300, TextureID.pizza),
+    Tortilla(50, 50, TextureID.tortilla),
+    MakiRoll(100, 220, TextureID.makiRoll),
+    TripleShotEspresso(200, 450, TextureID.tripleShotEspresso),
+    Cookie(90, 140, TextureID.cookie),
+    HashBrowns(90, 120, TextureID.hashbrowns),
+    Pancakes(90, 80, TextureID.pancakes),
+    FruitSalad(263, 450, TextureID.fruitSalad),
+    RedPlate(240, 400, TextureID.redPlate),
+    Bread(50, 60, TextureID.bread),
+    SalmonDinner(125, 300, TextureID.salmonDinner),
+    VegetableMedley(165, 120, TextureID.vegetableMedley),
+    FarmersLunch(200, 150, TextureID.farmersLunch),
+    SurvivalBurger(125, 180, TextureID.survivalBurger),
+    DishOTheSea(150, 220, TextureID.dishOTheSea),
+    SeaFoamPudding(175, 300, TextureID.seaFoamPudding),
+    JojaCola(13,25, TextureID.jojaColaTexture),
+    TroutSoup(100,100, TextureID.troutSoupTexture),
+    MinersTreat(125, 200, TextureID.minersTreat);
 
     private final int energy;
     private final int sellPrice;
-    private final DrawableID textureRegion;
+    private final TextureID textureRegion;
     private static final HashMap<String, Food> stringToFood = new HashMap<>();
 
     static {
@@ -48,7 +47,7 @@ public enum Food implements Ingredient , Sellable , Eatable {
         }
     }
 
-    Food(int energy, int sellPrice, DrawableID textureRegion) {
+    Food(int energy, int sellPrice, TextureID textureRegion) {
         this.energy = energy;
         this.sellPrice = sellPrice;
         this.textureRegion = textureRegion;
@@ -62,16 +61,12 @@ public enum Food implements Ingredient , Sellable , Eatable {
         return sellPrice;
     }
 
-    public DrawableID getTextureRegion() {
-        return textureRegion;
-    }
-
     public static Food getFoodByName(String name) {
         return stringToFood.getOrDefault(name.toLowerCase(), null);
     }
 
     public TextureID getInventoryTexture() {
-        return null;
+        return textureRegion;
     }
 
     @Override
