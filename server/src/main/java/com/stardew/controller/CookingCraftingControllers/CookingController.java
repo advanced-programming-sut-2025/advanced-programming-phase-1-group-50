@@ -68,6 +68,7 @@ public class CookingController {
 
         player.getBackpack().removeIngredients(eatable, 1);
         refrigerator.addItem(eatable, 1);
+        InventoryController.getInstance().sendHotBarUpdate(player, connection);
         Result result = new Result(true, "You put <" + eatable + "> successfully in refrigerator!");
         sendResultMessage(message.getRequestID(), connection, result);
     }
@@ -77,7 +78,9 @@ public class CookingController {
         if (player == null) return;
 
         InventoryItemDTO itemDTO = message.getFromBody("item", InventoryItemDTO.class);
-        InventoryItem item = InventoryController.getInstance().getInventoryItemByID(itemDTO, player.getInventoryItems());
+        Refrigerator refrigerator = player.getBackpack().getRefrigerator();
+        ArrayList<InventoryItem> refrigeratorItems = new ArrayList<>(refrigerator.getItemsQuantity().keySet());
+        InventoryItem item = InventoryController.getInstance().getInventoryItemByID(itemDTO, refrigeratorItems);
 
         if (!(item instanceof Eatable eatable)) {
             Result result = new Result(false, "Some wrong happened!");
@@ -85,7 +88,6 @@ public class CookingController {
             return;
         }
 
-        Refrigerator refrigerator = player.getBackpack().getRefrigerator();
 
         if (!player.getBackpack().getRefrigerator().containEatable(eatable)) {
             Result result = new Result(false, "You don't have this item in the Refrigerator!");
@@ -99,6 +101,7 @@ public class CookingController {
         }
         refrigerator.removeItem(eatable, 1);
         player.getBackpack().addIngredients(eatable, 1);
+        InventoryController.getInstance().sendHotBarUpdate(player, connection);
         Result result = new Result(true, "You pickUp <" + eatable + "> successfully!");
         sendResultMessage(message.getRequestID(), connection, result);
     }
@@ -165,11 +168,12 @@ public class CookingController {
     }
 
     public void handleEat(Message message, Player player, ClientConnectionThread connection) {
-        if (message == null) return;
-        if (player == null) return;
+        if (message == null || player == null) return;
 
         InventoryItemDTO itemDTO = message.getFromBody("item", InventoryItemDTO.class);
-        InventoryItem item = InventoryController.getInstance().getInventoryItemByID(itemDTO, player.getInventoryItems());
+        Refrigerator refrigerator = player.getBackpack().getRefrigerator();
+        ArrayList<InventoryItem> refrigeratorItems = new ArrayList<>(refrigerator.getItemsQuantity().keySet());
+        InventoryItem item = InventoryController.getInstance().getInventoryItemByID(itemDTO, refrigeratorItems);
 
         if (!(item instanceof Eatable eatable)) {
             Result result = new Result(false, "item not found!");
@@ -177,7 +181,6 @@ public class CookingController {
             return;
         }
 
-        Refrigerator refrigerator = player.getBackpack().getRefrigerator();
 
         if (refrigerator.containEatable(eatable)) {
             refrigerator.removeItem(eatable, 1);
