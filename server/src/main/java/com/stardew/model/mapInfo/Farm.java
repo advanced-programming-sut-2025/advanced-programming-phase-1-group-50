@@ -109,7 +109,11 @@ public class Farm {
         habitats.add(habitat);
     }
 
-    public ArrayList<Habitat> getHabitats() {
-        return habitats;
+    public Habitat getHabitatByID(String id) {
+        for (Habitat habitat : habitats) {
+            if (habitat.getId().equals(id))
+                return habitat;
+        }
+        return null;
     }
 }

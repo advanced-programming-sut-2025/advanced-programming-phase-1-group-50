@@ -1,20 +1,13 @@
 package com.stardew.model.animals;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.stardew.model.AnimalDTO;
+import com.stardew.model.HabitatDTO;
 import com.stardew.model.TextureID;
 import com.stardew.model.mapInfo.Placeable;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Habitat implements Placeable {
 
@@ -22,9 +15,9 @@ public class Habitat implements Placeable {
     private final HabitatSize size;
     private final ArrayList<Animal> animals;
     private final Rectangle bounds;
-    private final Vector2 position;
+    private final Vec2 position;
     private final TextureID textureRegion;
-//    private final com.badlogic.gdx.scenes.scene2d.ui.Image image;
+    private final String id;
 
 
     public Habitat(HabitatType type, HabitatSize size, int x, int y) {
@@ -32,7 +25,8 @@ public class Habitat implements Placeable {
         this.size = size;
         animals = new ArrayList<>();
         this.bounds = new Rectangle(x, y, type.getLengthX(), type.getLengthY());
-        this.position = new Vector2(x, y);
+        this.position = new Vec2(x, y);
+        this.id = UUID.randomUUID().toString();
 
         if (type == HabitatType.Barn) {
             switch (size) {
@@ -49,32 +43,8 @@ public class Habitat implements Placeable {
                 default -> textureRegion = null;
             }
         } else textureRegion = null;
-
-//        image = new Image(textureRegion);
-//        image.setPosition(position.x * TextureID.TILE_SIZE, position.y * TextureID.TILE_SIZE);
     }
 
-//    public void prepareWindow(Stage stage) {
-//        stage.addActor(image);
-//        Habitat thisHabitat = this;
-//        image.addListener(new InputListener() {
-//            @Override
-//            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-//                stage.addActor(new HabitatWindow(stage, thisHabitat, (x + image.getX()), y + image.getY() - 50));
-//                return true;
-//            }
-//
-//            @Override
-//            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-//                Gdx.graphics.setSystemCursor(com.badlogic.gdx.graphics.Cursor.SystemCursor.Hand);
-//            }
-//
-//            @Override
-//            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-//                Gdx.graphics.setSystemCursor(com.badlogic.gdx.graphics.Cursor.SystemCursor.Arrow);
-//            }
-//        });
-//    }
 
     public HabitatType getType() {
         return type;
@@ -108,8 +78,18 @@ public class Habitat implements Placeable {
         animals.remove(animal);
     }
 
-    public Vector2 getPosition() {
+    public Vec2 getPosition() {
         return position;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public HabitatDTO toHabitatDTO() {
+        ArrayList<AnimalDTO> animalDTOs = new ArrayList<>();
+        for (Animal animal : animals) animalDTOs.add(animal.toDTO());
+        return new HabitatDTO(((int) position.x), ((int) position.y), id, size.name(), type.name(), animalDTOs, textureRegion);
     }
 
     public static HabitatType getHabitatTypeByInput(String input) {

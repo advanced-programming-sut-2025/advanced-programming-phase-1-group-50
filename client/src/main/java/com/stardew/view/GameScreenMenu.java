@@ -19,6 +19,7 @@ import com.stardew.models.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.network.GameUpdateRequestThread;
 import com.stardew.view.ArtisanMachine.ArtisanMachinesManager;
+import com.stardew.view.ArtisanMachine.HabitatUI;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.ReactionWindows.ReactionTable;
 import com.stardew.view.windows.SmartTooltip;
@@ -74,6 +75,7 @@ public class GameScreenMenu implements Screen {
         uiStage.addActor(hotBarActor);
         SmartTooltip.initialize(stage, GamePictureManager.skin);
         ArtisanMachinesManager.initialize(stage);
+        HabitatUI.initialize(stage, id);
 
     }
 

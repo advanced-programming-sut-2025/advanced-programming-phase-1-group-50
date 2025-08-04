@@ -1,15 +1,37 @@
 package com.stardew.controller.AnimalsControllers;
 
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.model.Result;
+import com.stardew.model.Tools.MilkPail;
+import com.stardew.model.Tools.Shear;
+import com.stardew.model.Tools.Tool;
+import com.stardew.model.animals.Animal;
+import com.stardew.model.animals.AnimalGood;
+import com.stardew.model.animals.AnimalType;
+import com.stardew.model.animals.Habitat;
+import com.stardew.model.gameApp.Game;
+import com.stardew.model.gameApp.date.Weather;
 import com.stardew.model.mapInfo.Tile;
 import com.stardew.model.userInfo.Coin;
 import com.stardew.model.userInfo.Player;
+import com.stardew.network.ClientConnectionThread;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class AnimalsController {
+    private static AnimalsController instance;
+
+    private AnimalsController() {}
+
+    public static synchronized AnimalsController getInstance() {
+        if (instance == null) {
+            instance = new AnimalsController();
+        }
+        return instance;
+    }
 
 
 //    public Result build(Stage stage, Tile tile,String buildingName) {
@@ -35,11 +57,12 @@ public class AnimalsController {
 //        }
 //
 //        player.getFarm().addHabitat(habitat);
+//        TODO send a message for connection to add a new HabitatUI
 //        player.getFarm().getPlaceables().add(habitat);
 //
 //        return new Result(true, "You purchased the building successfully.");
 //    }
-//
+
 //    public Result buyAnimal(String animalT, String name) {
 //        Player player = App.getGame().getCurrentPlayingPlayer();
 //        Map map = App.getGame().getMap();
@@ -67,199 +90,255 @@ public class AnimalsController {
 //        Animal animal = new Animal(animalType, name, habitat);
 //        player.getBackpack().addAnimal(animal);
 //        habitat.addAnimal(animal);
+//        AnimalUpdateManager.getInstance().addAnimal(animal);
 //
 //        return new Result(true, "You buy a <" + animalType + "> with name <" + name + "> successfully!");
 //    }
-//
-//    public Result pet(Animal animal) {
-//
-//        if (animal == null)
-//            return new Result(false, "Animal not found!");
-//
-//        if (!animal.isOutOfHabitat())
-//            return new Result(false, "<" + animal.getName() + ">  isn't out of habitat!");
-//
-//        animal.pet();
-//
-//        return new Result(true, "You pet <" + animal.getName() + "> successfully!");
-//    }
-//
-//    public Result setFriendship(String animalName, int amount) {
-//        Player player = App.getGame().getCurrentPlayingPlayer();
-//        Animal animal = player.getBackpack().getAnimalByName(animalName);
-//
-//        if (animal == null)
-//            return new Result(false, "Animal <" + animalName + "> not found!");
-//        if (amount <= 0)
-//            return new Result(false, "You can't set friendship to negative amount!");
-//        if (amount > 1000)
-//            return new Result(false, "You can't set friendship more than 1000!");
-//
-//        animal.setFriendShip(amount);
-//
-//        return new Result(true, "You set friendship with <" + animalName + "> to " + amount + "!");
-//    }
-//
-//    public Result animalInfo(Animal animal) {
-//
-//        if (animal == null)
-//            return new Result(false, "No animals found!");
-//
-//        String animalsInfo = "\n\n" +
-//            String.format("     Name: %s   \n\n", animal.getName()) +
-//            String.format("     Type: %s   \n\n", animal.getType()) +
-//            String.format("     LevelOfFriendship: %d   \n\n", animal.getFriendShip()) +
-//            String.format("     hasPettedToday: %s   \n\n", animal.hasPettedToday()) +
-//            String.format("     hasFedToday: %s   \n\n", animal.hasFedToday());
-//
-//        return new Result(true, animalsInfo);
-//    }
-//
-//    public Result shepherdAnimal(Animal animal) {
-//
-//        if (animal == null)
-//            return new Result(false, "Animal not found!");
-//
-//        if (animal.isOutOfHabitat()) {
-//            animal.goToHabitat();
-//            Tile animalTile = App.getGame().getMap().findTile(((int) animal.getPosition().x), ((int)animal.getPosition().y));
-//            animalTile.setPlaceable(null);
-//            animalTile.setWalkable(true);
-//            return new Result(true, "You put <" + animal + "> in the habitat!");
-//        }
-//
-//        if (!App.getGame().getTime().getWeather().equals(Weather.Sunny))
-//            return new Result(false, "Weather is not Sunny! you can't shepherd your animal!");
-//
-//        float randomX, randomY;
-//        float x, y;
-//        Tile tile;
-//
-//        do {
-//            randomX = new Random().nextInt(3) + 3;
-//            if (new Random().nextBoolean())
-//                randomX *= -1;
-//            randomY = new Random().nextInt(3) + 2f;
-//
-//            x = animal.getHabitat().getPosition().x + randomX;
-//            y = animal.getHabitat().getPosition().y - randomY;
-//            tile = App.getGame().getMap().findTile(((int) x), ((int) y));
-//
-//        } while (tile == null || tile.getPlaceable() != null);
-//
-//        animal.shepherdAnimal(x, y);
-//        animal.feed();
-//        animal.incrementFriendShip(8);
-//        tile.setPlaceable(animal);
-//        tile.setWalkable(false);
-//
-//        return new Result(true, "You shepherd your animal!");
-//    }
-//
-//    public Result feedHay(Animal animal) {
-//        Player player = App.getGame().getCurrentPlayingPlayer();
-//
-//        if (animal == null)
-//            return new Result(false, "Animal not found!");
-//
-//        if (!player.getBackpack().hasEnoughHay(1))
-//            return new Result(false, "You don't have enough hay to feed animal!");
-//
-//        if (animal.isOutOfHabitat())
-//            return new Result(false, "You can't feed Animal out of habitat!");
-//
-//        player.getBackpack().decreaseHay(1);
-//        animal.feed();
-//        animal.incrementFriendShip(4);
-//
-//        return new Result(true, "You feed animal <" + animal.getName() + "> successfully!");
-//    }
-//
-//    public Result animalProduces(Habitat habitat) {
-//        if (habitat == null)
-//            return new Result(false, "Habitat not found!");
-//
-//        ArrayList<Animal> animals = habitat.getAnimals();
-//
-//        if (animals.isEmpty())
-//            return new Result(false, "No animals found!");
-//
-//        StringBuilder output = new StringBuilder();
-//        output.append("Animals that their products haven't been collected yet:\n");
-//
-//        for (Animal animal : animals) {
-//            if (animal.isReadyProduct())
-//                output.append(String.format("%-20s (%-9s ->   %-25s\n",
-//                        animal.getName(), animal.getType() + ")", animal.getType().getAnimalGoods()));
-//        }
-//
-//        return new Result(true, output.toString());
-//    }
-//
-//    public Result collectProduce(Animal animal) {
-//        Player player = App.getGame().getCurrentPlayingPlayer();
-//
-//        if (animal == null)
-//            return new Result(false, "Animal not found!");
-//        if (!animal.isReadyProduct())
-//            return new Result(false, "Product is not ready!");
-//
-//        Tool tool = player.getCurrentTool();
-//
-//        if (animal.getType().equals(AnimalType.Sheep)) {
-//            if (tool == null)
-//                return new Result(false, "you don't have a tool, please set your current tool!");
-//
-//            if (!(tool instanceof Shear shear))
-//                return new Result(false, "Your current tool is not Shear!");
-//
-//            Result energyConsumptionResult = shear.useTool();
-//            if (!energyConsumptionResult.getSuccessful())
-//                return energyConsumptionResult;
-//        }
-//        else if (animal.getType().equals(AnimalType.Cow) || animal.getType().equals(AnimalType.Goat)) {
-//            if (tool == null)
-//                return new Result(false, "you don't have a tool, please set your current tool!");
-//
-//            if (!(tool instanceof MilkPail milkPail))
-//                return new Result(false, "Your current tool is not MilkPail!");
-//
-//            Result energyConsumptionResult = milkPail.useTool();
-//            if (!energyConsumptionResult.getSuccessful())
-//                return energyConsumptionResult;
-//        }
-//
-//        AnimalGood animalGood = animal.getProduct();
-//        player.getBackpack().addIngredients(animalGood, 1);
-//        player.getAbility().increaseFarmingRate(5);
-//        animal.incrementFriendShip(5);
-//
-//        return new Result(true,
-//                String.format("You collect %s with quality %s. Base price: %s -> New Price: %s",
-//                        animalGood.getType(), animalGood.getQuality(), animalGood.getType().getPrice(), animalGood.getSellPrice()));
-//    }
-//
-//    public Result sellAnimal(Animal animal) {
-//        Player player = App.getGame().getCurrentPlayingPlayer();
-//
-//        if (animal == null)
-//            return new Result(false, "Animal not found!");
-//
-//        if (animal.isOutOfHabitat())
-//            return new Result(false, "Animal must be in habitat!");
-//
-//        if (!animal.getHabitat().getAnimals().contains(animal))
-//            return new Result(false, "You don't have this animal now!!\nPlease refresh window");
-//
-//        double price = animal.getType().getPrice() * (((double)(animal.getFriendShip()) / 1000) + 0.3);
-//
-//        player.getBackpack().addIngredients(new Coin(), ((int) price));
-//        player.getBackpack().getAllAnimals().remove(animal);
-//        animal.getHabitat().getAnimals().remove(animal);
-//
-//        return new Result(true, "You sell Animal <" + animal.getName() + "> $" + price + "!");
-//    }
-//
+
+    public void petAnimal(Message message, Player player, ClientConnectionThread connection) {
+        if (message == null || player == null || connection == null) return;
+
+        Animal animal = player.getBackpack().getAnimalByName(message.getFromBody("animalName"));
+
+        if (animal == null) {
+            Result result = new Result(false, "Animal not found! ");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+
+        if (!animal.isOutOfHabitat()) {
+            Result result = new Result(false, "<" + animal.getName() + ">  isn't out of habitat!");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+
+        animal.pet();
+
+        Result result = new Result(true, "You pet <" + animal.getName() + "> successfully!");
+        sendResultMessage(message.getRequestID(), connection, result);
+    }
+
+    public Result setFriendship(Player player, String animalName, int amount) {
+
+        Animal animal = player.getBackpack().getAnimalByName(animalName);
+
+        if (animal == null)
+            return new Result(false, "Animal <" + animalName + "> not found!");
+        if (amount <= 0)
+            return new Result(false, "You can't set friendship to negative amount!");
+        if (amount > 1000)
+            return new Result(false, "You can't set friendship more than 1000!");
+
+        animal.setFriendShip(amount);
+
+        return new Result(true, "You set friendship with <" + animalName + "> to " + amount + "!");
+    }
+
+    public void shepherdAnimal(Message message, Game game, Player player, ClientConnectionThread connection) {
+        if (message == null || player == null || connection == null) return;
+
+        Animal animal = player.getBackpack().getAnimalByName(message.getFromBody("animalName"));
+
+        if (animal == null) {
+            Result result = new Result(false, " Animal not found! ");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+
+        if (animal.isOutOfHabitat()) {
+            animal.goToHabitat();
+            Tile animalTile = game.getMap().findTile(((int) animal.getPosition().x), ((int)animal.getPosition().y));
+            animalTile.setPlaceable(null);
+            animalTile.setWalkable(true);
+            Result result = new Result(true, "You put <" + animal + "> in the habitat!");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+
+        if (!game.getTime().getWeather().equals(Weather.Sunny)) {
+            Result result = new Result(false, "Weather is not Sunny! you can't shepherd your animal!");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+
+        float randomX, randomY;
+        float x, y;
+        Tile tile;
+
+        do {
+            randomX = new Random().nextInt(3) + 3;
+            if (new Random().nextBoolean())
+                randomX *= -1;
+            randomY = new Random().nextInt(3) + 2f;
+
+            x = animal.getHabitat().getPosition().x + randomX;
+            y = animal.getHabitat().getPosition().y - randomY;
+            tile = game.getMap().findTile(((int) x), ((int) y));
+
+        } while (tile == null || tile.getPlaceable() != null);
+
+        animal.shepherdAnimal(x, y);
+        animal.feed();
+        animal.incrementFriendShip(8);
+        tile.setPlaceable(animal);
+        tile.setWalkable(false);
+
+        Result result = new Result(true, "You shepherd your animal!");
+        sendResultMessage(message.getRequestID(), connection, result);
+    }
+
+    public void feedAnimal(Message message, Player player, ClientConnectionThread connection) {
+        if (message == null || player == null || connection == null) return;
+
+        Animal animal = player.getBackpack().getAnimalByName(message.getFromBody("animalName"));
+
+        if (animal == null) {
+            Result result = new Result(false, "Animal not found!");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+
+        if (!player.getBackpack().hasEnoughHay(1)) {
+            Result result = new Result(false, "You don't have enough hay to feed animal!");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+
+        if (animal.isOutOfHabitat()) {
+            Result result = new Result(false, "You can't feed Animal out of habitat!");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+
+        player.getBackpack().decreaseHay(1);
+        animal.feed();
+        animal.incrementFriendShip(4);
+
+        Result result = new Result(true, "You feed animal <" + animal.getName() + "> successfully!");
+        sendResultMessage(message.getRequestID(), connection, result);
+    }
+
+    public void animalProductsInfo(Message message, Player player, ClientConnectionThread connection) {
+        if (message == null || player == null || connection == null) return;
+
+        Habitat habitat = player.getFarm().getHabitatByID(message.getFromBody("habitatID"));
+
+        if (habitat == null) {
+            Result result = new Result(false, "Habitat not found!");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+
+        ArrayList<Animal> animals = habitat.getAnimals();
+
+        if (animals.isEmpty()) {
+            Result result = new Result(false, "No animals found!");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+
+        StringBuilder output = new StringBuilder();
+        output.append("Animals that their products haven't been collected yet:\n\n");
+
+        for (Animal animal : animals) {
+            if (animal.isReadyProduct())
+                output.append(String.format("%-20s (%-9s ->   %-25s\n",
+                        animal.getName(), animal.getType() + ")", animal.getType().getAnimalGoods()));
+        }
+
+        Result result = new Result(true, output.toString());
+        sendResultMessage(message.getRequestID(), connection, result);
+    }
+
+    public void collectProduct(Message message, Game game, Player player, ClientConnectionThread connection) {
+        if (message == null || player == null || connection == null) return;
+
+        Animal animal = player.getBackpack().getAnimalByName(message.getFromBody("animalName"));
+
+        if (animal == null) {
+            Result result = new Result(false, " Animal not found!  ");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+        if (!animal.isReadyProduct()) {
+            Result result = new Result(false, "Product is not ready!");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+
+        Tool tool = player.getCurrentTool();
+
+        if (animal.getType().equals(AnimalType.Sheep)) {
+            if (!(tool instanceof Shear shear)) {
+                Result result = new Result(false, "Your current tool is not Shear!");
+                sendResultMessage(message.getRequestID(), connection, result);
+                return;
+            }
+
+            Result energyConsumptionResult = shear.useTool(game.getTime().getWeather(), player);
+            if (!energyConsumptionResult.getSuccessful()) {
+                sendResultMessage(message.getRequestID(), connection, energyConsumptionResult);
+                return;
+            }
+        }
+        else if (animal.getType().equals(AnimalType.Cow) || animal.getType().equals(AnimalType.Goat)) {
+            if (!(tool instanceof MilkPail milkPail)) {
+                Result result = new Result(false, "Your current tool is not MilkPail!");
+                sendResultMessage(message.getRequestID(), connection, result);
+                return;
+            }
+
+            Result energyConsumptionResult = milkPail.useTool(game.getTime().getWeather(), player);
+            if (!energyConsumptionResult.getSuccessful()) {
+                sendResultMessage(message.getRequestID(), connection, energyConsumptionResult);
+                return;
+            }
+        }
+
+        AnimalGood animalGood = animal.getProduct();
+        player.getBackpack().addIngredients(animalGood, 1);
+        player.getAbility().increaseFarmingRate(5);
+        animal.incrementFriendShip(5);
+
+        Result result = new Result(true,
+            String.format("You collect %s with quality %s. Base price: %s -> New Price: %s",
+            animalGood.getType(), animalGood.getQuality(), animalGood.getType().getPrice(), animalGood.getSellPrice()));
+        sendResultMessage(message.getRequestID(), connection, result);
+    }
+
+    public void sellAnimal(Message message, Player player, ClientConnectionThread connection) {
+        if (message == null || player == null || connection == null) return;
+
+        Animal animal = player.getBackpack().getAnimalByName(message.getFromBody("animalName"));
+
+        if (animal == null) {
+            Result result = new Result(false, " Animal not found!");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+
+        if (animal.isOutOfHabitat()) {
+            Result result = new Result(false, "Animal must be in habitat!");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+
+        if (!animal.getHabitat().getAnimals().contains(animal)) {
+            Result result = new Result(false, "You don't have this animal now!!\nPlease refresh window");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
+
+        double price = animal.getType().getPrice() * (((double)(animal.getFriendShip()) / 1000) + 0.3);
+
+        player.getBackpack().addIngredients(new Coin(), ((int) price));
+        player.getBackpack().getAllAnimals().remove(animal);
+        animal.getHabitat().getAnimals().remove(animal);
+
+        Result result = new Result(true, "You sell Animal <" + animal.getName() + "> $" + price + "!");
+        sendResultMessage(message.getRequestID(), connection, result);
+    }
+
 //    public Result fishing(FishingPole fishingPole, Stage stage) {
 //        Player player = App.getGame().getCurrentPlayingPlayer();
 //        int fishingLevel = player.getAbility().getFishingLevel();
@@ -286,4 +365,17 @@ public class AnimalsController {
 //
 //        return new Result(true, "MiniGame Started");
 //    }
+
+
+
+
+
+    private void sendResultMessage(String requestID, ClientConnectionThread connection, Result result) {
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body, MessageType.EVENT_IN_GAME_RESULT);
+        response.setRequestID(requestID);
+        connection.sendMessage(response);
+    }
+
 }

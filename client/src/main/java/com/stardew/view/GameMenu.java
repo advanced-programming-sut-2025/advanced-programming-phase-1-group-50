@@ -1,11 +1,5 @@
 package com.stardew.view;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.regex.*;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -18,7 +12,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.stardew.Main;
 import com.stardew.controller.AbilityAndEnergyController.AbilityController;
 import com.stardew.controller.AbilityAndEnergyController.EnergyController;
-import com.stardew.controller.AnimalsControllers.AnimalsController;
 import com.stardew.controller.ForagingControllers.ForagingController;
 import com.stardew.controller.GameDateAndWeatherController.DateController;
 import com.stardew.controller.GameDateAndWeatherController.WeatherController;
@@ -26,14 +19,6 @@ import com.stardew.controller.NPCController.NPCController;
 import com.stardew.controller.PlayersRealtionController.PlayersRelationController;
 import com.stardew.controller.ToolsControllers.ToolController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.App;
-import com.stardew.models.app.Menus;
-import com.stardew.models.enums.GameMenuCommands;
-import com.stardew.models.enums.NPCsCommands;
-import com.stardew.models.mapInfo.Position;
-import com.stardew.models.stores.Blacksmith;
-import com.stardew.models.userInfo.*;
-import com.stardew.models.Result;
 import com.stardew.controller.GameMenuController;
 
 public class GameMenu implements AppMenu , Screen {
@@ -43,7 +28,7 @@ public class GameMenu implements AppMenu , Screen {
     private final EnergyController energyController = new EnergyController();
     private final ToolController toolController = new ToolController();
     private final ForagingController foragingController = new ForagingController();
-    private final AnimalsController animalsController = new AnimalsController();
+//    private final AnimalsController animalsController = new AnimalsController();
 //    private final CookingController cookingController = new CookingController();
 //    private final CraftingController craftingController = new CraftingController();
 //    private final ArtisanController artisanController = new ArtisanController();
