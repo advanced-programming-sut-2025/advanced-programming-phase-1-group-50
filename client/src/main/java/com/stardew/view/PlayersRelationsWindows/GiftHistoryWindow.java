@@ -95,11 +95,11 @@ public class GiftHistoryWindow extends CloseableWindow {
             Message message = new Message(body, MessageType.EVENT_IN_GAME);
             Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
             if (response != null && response.getType().equals(MessageType.GET_BETWEEN_PLAYERS_GIFT_INFO)) {
-                Type giftListType = new TypeToken<List<BetweenPlayersGift>>() {}.getType();
-                List<BetweenPlayersGift> receivedGifts = response.getFromBody("gifts", giftListType);
+                Type giftListType = new TypeToken<ArrayList<BetweenPlayersGift>>() {}.getType();
+                ArrayList<BetweenPlayersGift> receivedGifts = response.getFromBody("gifts", giftListType);
                 Gdx.app.postRunnable(() -> {
                     allGifts.clear();
-                    allGifts.addAll((Collection<? extends BetweenPlayersGift>) receivedGifts);
+                    allGifts.addAll(receivedGifts);
                     fillGiftTable();
                 });
             }
