@@ -11,6 +11,7 @@ public class MessageHandler {
     private final LobbyController lobbyController;
     private final PreGameController preGameController;
     private final GameSessionController gameSessionController;
+    private final ProfileController profileController;
 
     private MessageHandler() {
         loginAndRegisterController = new LoginAndRegisterController();
@@ -19,6 +20,7 @@ public class MessageHandler {
         lobbyController = LobbyController.getInstance();
         preGameController = PreGameController.getInstance();
         gameSessionController = GameSessionController.getInstance();
+        profileController = ProfileController.getInstance();
         //TODO Other controllers
     }
 
@@ -105,6 +107,31 @@ public class MessageHandler {
                 gameSessionController.handleEventInGame(message, connection);
                 return true;
             }
+            case PROFILE_CHANGE_PASSWORD -> {
+                profileController.handleChangePassword(message, connection);
+                return true;
+            }
+
+            case PROFILE_CHANGE_USERNAME -> {
+                profileController.handleChangeUsername(message, connection);
+                return true;
+            }
+
+            case PROFILE_CHANGE_EMAIL -> {
+                profileController.handleChangeEmail(message, connection);
+                return true;
+            }
+
+            case PROFILE_CHANGE_NICKNAME-> {
+                profileController.handleChangeNickname(message, connection);
+                return true;
+            }
+
+            case PROFILE_SHOW_USER_INFO -> {
+                profileController.handelShowUserInfo(message, connection);
+                return true;
+            }
+
             default -> {
                 return false;
             }

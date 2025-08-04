@@ -33,8 +33,9 @@ public class ProfileMenu implements AppMenu , Screen {
     private final TextButton changeEmail;
     private final TextButton showUserInfo;
     private final TextButton back;
-    private final SelectBox<String> avatar;
-    private Image avatarImage;
+    private final AppMenu menu = this;
+//    private final SelectBox<String> avatar;
+//    private Image avatarImage;
     public void check(Scanner scanner) {
         String input = scanner.nextLine();
         input = input.trim();
@@ -90,6 +91,7 @@ public class ProfileMenu implements AppMenu , Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //controller.handleChangePassword();
+                stage.addActor(new ChangeInfoWindow(stage , "Change Password" , menu));
 
             }
         });
@@ -97,6 +99,7 @@ public class ProfileMenu implements AppMenu , Screen {
         changeUsername.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                stage.addActor(new ChangeInfoWindow(stage , "Change Username" , menu));
                 //controller.handleChangeUsername();
             }
         });
@@ -104,6 +107,7 @@ public class ProfileMenu implements AppMenu , Screen {
         changeEmail.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                stage.addActor(new ChangeInfoWindow(stage , "Change Email" , menu));
                 //controller.handleChangeEmail();
             }
         });
@@ -112,6 +116,7 @@ public class ProfileMenu implements AppMenu , Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //controller.handleChangeNickname();
+                stage.addActor(new ChangeInfoWindow(stage , "Change Nickname" , menu));
             }
         });
         showUserInfo = new TextButton("Show UserInfo", GamePictureManager.skin);
@@ -120,6 +125,7 @@ public class ProfileMenu implements AppMenu , Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //controller.handleShowUserInfo();
+                stage.addActor(new ChangeInfoWindow(stage , "Show UserInfo" , menu));
             }
         });
         back = new TextButton("Back", GamePictureManager.skin);
@@ -143,27 +149,27 @@ public class ProfileMenu implements AppMenu , Screen {
 
 
 
-        avatar = new SelectBox<>(GamePictureManager.skin);
-        avatar.setItems(avatars);
-
-        if(App.getLoggedInUser()!=null){
-            avatarImage = new Image(App.getLoggedInUser().getAvatar().getAvatar());
-        }
-        else {
-            avatarImage = new Image(Avatar.abigail.getAvatar());
-        }
-
-
-
-        avatar.addListener(new ChangeListener() {
-            public void changed(ChangeEvent event, Actor actor) {
-//                String result = avatar.getSelected();
-//                App.getLoggedInUser().setAvatar(getAvatarByName(result));
+//        avatar = new SelectBox<>(GamePictureManager.skin);
+//        avatar.setItems(avatars);
 //
-//                avatarImage.setDrawable(new TextureRegionDrawable(getAvatarByName(result).getAvatar()));
-
-            }
-        });
+//        if(App.getLoggedInUser()!=null){
+//            avatarImage = new Image(App.getLoggedInUser().getAvatar().getAvatar());
+//        }
+//        else {
+//            avatarImage = new Image(Avatar.abigail.getAvatar());
+//        }
+//
+//
+//
+//        avatar.addListener(new ChangeListener() {
+//            public void changed(ChangeEvent event, Actor actor) {
+////                String result = avatar.getSelected();
+////                App.getLoggedInUser().setAvatar(getAvatarByName(result));
+////
+////                avatarImage.setDrawable(new TextureRegionDrawable(getAvatarByName(result).getAvatar()));
+//
+//            }
+//        });
 
         controller.setView(this);
 
@@ -197,8 +203,8 @@ public class ProfileMenu implements AppMenu , Screen {
         table.add(changeEmail).width(250).height(50).pad(10).row();
         table.add(showUserInfo).width(250).height(50).pad(10).row();
         table.add(back).width(250).height(50).pad(10).row();
-        table.add(avatar).width(250).height(50).pad(10).row();
-        table.add(avatarImage).width(250).height(250).pad(10).row();
+//        table.add(avatar).width(250).height(50).pad(10).row();
+//        table.add(avatarImage).width(250).height(250).pad(10).row();
 
         stage.addActor(table);
     }
@@ -239,14 +245,14 @@ public class ProfileMenu implements AppMenu , Screen {
 
     }
 
-    public Avatar getAvatarByName(String name) {
-        return switch (name) {
-            case "Abigail" -> Avatar.abigail;
-            case "Robin" -> Avatar.robin;
-            case "Leah" -> Avatar.leah;
-            case "Sebastian" -> Avatar.sebastian;
-            case "Harvey" -> Avatar.harvey;
-            default -> null;
-        };
-    }
+//    public Avatar getAvatarByName(String name) {
+//        return switch (name) {
+//            case "Abigail" -> Avatar.abigail;
+//            case "Robin" -> Avatar.robin;
+//            case "Leah" -> Avatar.leah;
+//            case "Sebastian" -> Avatar.sebastian;
+//            case "Harvey" -> Avatar.harvey;
+//            default -> null;
+//        };
+//    }
 }

@@ -20,4 +20,8 @@ public class LoggedInUser {
     public void logout() {
         user = null;
     }
+
+    public static void setUsername(String newUsername) {
+        LoggedInUser.user = new UserDTO(newUsername , user.getNickname());
+    }
 }
