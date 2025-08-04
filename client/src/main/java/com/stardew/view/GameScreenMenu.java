@@ -13,6 +13,7 @@ import com.stardew.controller.EnergyManager;
 import com.stardew.controller.GameStateController;
 import com.stardew.controller.PlayerController;
 import com.stardew.controller.TimeManager;
+import com.stardew.model.ScoreBoardDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.ShippingBin;
 import com.stardew.models.GameModel;
@@ -42,6 +43,7 @@ public class GameScreenMenu implements Screen {
 
     private final WeatherManager weatherManager;
     private final ReactionTable reactionTable;
+    private final ScoreBoardTable scoreBoard;
 
 
 
@@ -62,7 +64,9 @@ public class GameScreenMenu implements Screen {
         this.weatherManager = new WeatherManager(gameState);
         gameMenuInputAdapter.setHotBar(hotBarActor);
         this.reactionTable = new ReactionTable();
+        this.scoreBoard = new ScoreBoardTable(gameState);
         uiStage.addActor(reactionTable);
+        uiStage.addActor(scoreBoard);
 
 
 
@@ -131,6 +135,7 @@ public class GameScreenMenu implements Screen {
         gameMenuInputAdapter.update(v);
         weatherManager.draw(batch , gameState.getTime().getWeather());
         reactionTable.render(v);
+        scoreBoard.updatePlayer();
 
 //
 //

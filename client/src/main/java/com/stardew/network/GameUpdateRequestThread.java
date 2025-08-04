@@ -23,7 +23,11 @@ public class GameUpdateRequestThread extends Thread {
         while (running) {
             try {
                 NetworkManager.getConnection().sendMessage(getMessage());
-                if (!firstUpdate) NetworkManager.getConnection().sendMessage(updateAnimalsMessage());
+                if (!firstUpdate){
+                    NetworkManager.getConnection().sendMessage(updateAnimalsMessage());
+                    NetworkManager.getConnection().sendMessage(scoreBoardRequest());
+                }
+
                 Thread.sleep(50);
             } catch (InterruptedException ignored) {
 
@@ -62,5 +66,12 @@ public class GameUpdateRequestThread extends Thread {
         HashMap<String, Object> body = new HashMap<>();
         body.put("id", id);
         return new Message(body, MessageType.UPDATE_ANIMALS);
+    }
+
+    private Message scoreBoardRequest() {
+        HashMap<String,Object> body = new HashMap<>();
+        body.put("id", id);
+        return new Message(body , MessageType.UPDATE_SCOREBOARD);
+
     }
 }

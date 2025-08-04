@@ -10,6 +10,7 @@ import com.stardew.network.Message;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.InventoryWindows.InventoryWindow;
 import com.stardew.view.ReactionWindows.ReactionTable;
+import com.stardew.view.ScoreBoardTable;
 
 import java.util.ArrayList;
 
@@ -123,6 +124,15 @@ public class GameStateController {
         int coin = message.getIntFromBody("coin");
         Gdx.app.postRunnable(() -> {
             gameState.updateCoin(coin);
+        });
+    }
+
+
+    public void handleUpdateScoreBoard(Message message) {
+        if (message == null) return;
+        ArrayList<ScoreBoardDTO> dtoS = message.getFromBody("scoreBoard", new TypeToken<ArrayList<ScoreBoardDTO>>(){}.getType());
+        Gdx.app.postRunnable(() -> {
+            gameState.updateScoreBoard(dtoS);
         });
     }
 }
