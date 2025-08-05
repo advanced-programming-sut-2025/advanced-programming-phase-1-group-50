@@ -38,7 +38,7 @@ public class Quarry implements Placeable {
 
     @Override
     public TextureID getTexture() {
-        return null;
+        return TextureID.quarry;
     }
 
 }
