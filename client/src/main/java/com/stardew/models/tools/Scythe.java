@@ -1,8 +1,8 @@
 package com.stardew.models.tools;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Result;
 import com.stardew.models.app.App;
 
 public class Scythe extends Tool {

@@ -9,8 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Result;
-import com.stardew.models.app.App;
 import com.stardew.view.GridMap.GridMapActor;
 import com.stardew.view.windows.CloseableWindow;
 

@@ -1,10 +1,9 @@
 package com.stardew.models.NPCs;
 
-import com.stardew.models.Result;
+import com.stardew.model.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.foraging.Crop;
 import com.stardew.models.foraging.CropType;
-import com.stardew.models.foraging.ForagingMineral;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.manuFactor.artisanGoods.ArtisanGood;
 import com.stardew.models.manuFactor.artisanGoods.ArtisanGoodType;

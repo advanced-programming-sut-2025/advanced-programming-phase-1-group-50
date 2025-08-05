@@ -9,9 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.model.PlaceableDTO;
+import com.stardew.model.Result;
 import com.stardew.model.TileDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Result;
 import com.stardew.view.windows.CloseableWindow;
 
 import java.util.ArrayList;

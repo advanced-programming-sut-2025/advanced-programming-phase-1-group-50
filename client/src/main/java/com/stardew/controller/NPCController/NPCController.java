@@ -1,7 +1,7 @@
 package com.stardew.controller.NPCController;
 
+import com.stardew.model.Result;
 import com.stardew.models.NPCs.*;
-import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.mapInfo.NpcHome;

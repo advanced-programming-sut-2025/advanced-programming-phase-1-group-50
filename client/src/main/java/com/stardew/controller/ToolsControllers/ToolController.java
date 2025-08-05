@@ -3,7 +3,7 @@ package com.stardew.controller.ToolsControllers;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.controller.AnimalsControllers.AnimalsController;
 import com.stardew.controller.ForagingControllers.ForagingController;
-import com.stardew.models.Result;
+import com.stardew.model.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.foraging.ForagingMineral;
 import com.stardew.models.foraging.Growable;

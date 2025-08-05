@@ -1,6 +1,6 @@
 package com.stardew.models.NPCs;
 
-import com.stardew.models.Result;
+import com.stardew.model.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.cooking.Food;
 import com.stardew.models.foraging.ForagingMineral;

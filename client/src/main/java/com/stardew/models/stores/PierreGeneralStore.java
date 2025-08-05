@@ -2,11 +2,11 @@ package com.stardew.models.stores;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stardew.model.Result;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.Bouquet;
 import com.stardew.models.ColorPrinter;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.date.Season;
 import com.stardew.models.foraging.CropType;

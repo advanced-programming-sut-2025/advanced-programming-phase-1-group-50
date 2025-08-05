@@ -1,8 +1,8 @@
 package com.stardew.models.manuFactor;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Result;
 import com.stardew.models.date.TimeInterval;
 import com.stardew.models.manuFactor.artisanGoods.ArtisanGood;
 import com.stardew.models.manuFactor.artisanGoods.ArtisanGoodType;
