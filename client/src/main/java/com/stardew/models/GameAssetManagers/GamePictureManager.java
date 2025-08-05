@@ -145,31 +145,60 @@ public class GamePictureManager {
         public static TextureRegion stoneIndex668Texture = new TextureRegion(new Texture("Rock/Stone_Index668.png"));
         public static TextureRegion stoneIndex670Texture = new TextureRegion(new Texture("Rock/Stone_Index670.png"));
 
+
+    //Food:
+        public static TextureRegion friedEgg = new TextureRegion(new Texture("Recipe/Fried_Egg.png"));
+        public static TextureRegion bakedFish = new TextureRegion(new Texture("Recipe/Baked_Fish.png"));
+        public static TextureRegion salad = new TextureRegion(new Texture("Recipe/Salad.png"));
+        public static TextureRegion omelet = new TextureRegion(new Texture("Recipe/Omelet.png"));
+        public static TextureRegion pumpkinPie = new TextureRegion(new Texture("Recipe/Pumpkin_Pie.png"));
+        public static TextureRegion spaghetti = new TextureRegion(new Texture("Recipe/Spaghetti.png"));
+        public static TextureRegion pizza = new TextureRegion(new Texture("Recipe/Pizza.png"));
+        public static TextureRegion tortilla = new TextureRegion(new Texture("Recipe/Tortilla.png"));
+        public static TextureRegion makiRoll = new TextureRegion(new Texture("Recipe/Maki_Roll.png"));
+        public static TextureRegion tripleShotEspresso = new TextureRegion(new Texture("Recipe/Triple_Shot_Espresso.png"));
+        public static TextureRegion cookie = new TextureRegion(new Texture("Recipe/Cookie.png"));
+        public static TextureRegion hashbrowns = new TextureRegion(new Texture("Recipe/Hashbrowns.png"));
+        public static TextureRegion pancakes = new TextureRegion(new Texture("Recipe/Pancakes.png"));
+        public static TextureRegion fruitSalad = new TextureRegion(new Texture("Recipe/Fruit_Salad.png"));
+        public static TextureRegion redPlate = new TextureRegion(new Texture("Recipe/Red_Plate.png"));
+        public static TextureRegion bread = new TextureRegion(new Texture("Recipe/Bread.png"));
+        public static TextureRegion salmonDinner = new TextureRegion(new Texture("Recipe/Salmon_Dinner.png"));
+        public static TextureRegion vegetableMedley = new TextureRegion(new Texture("Recipe/Vegetable_Medley.png"));
+        public static TextureRegion farmersLunch = new TextureRegion(new Texture("Recipe/Farmer%27s_Lunch.png"));
+        public static TextureRegion survivalBurger = new TextureRegion(new Texture("Recipe/Survival_Burger.png"));
+        public static TextureRegion dishOTheSea = new TextureRegion(new Texture("Recipe/Dish_O%27_The_Sea.png"));
+        public static TextureRegion seaFoamPudding = new TextureRegion(new Texture("Recipe/Seafoam_Pudding.png"));
+        public static TextureRegion minersTreat = new TextureRegion(new Texture("Recipe/Miner%27s_Treat.png"));
+        public static TextureRegion jojaColaTexture = new TextureRegion(new Texture("Concessions/Joja_Cola_%28large%29.png"));
+        public static TextureRegion troutSoupTexture = new TextureRegion(new Texture("Crops/Parsnip_Soup.png"));
+
+
     //Cooking_recipes :
 
-        public static TextureRegionDrawable friedEggNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Fried_Egg.png")));
-        public static TextureRegionDrawable bakedFishNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Baked_Fish.png")));
-        public static TextureRegionDrawable saladNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Salad.png")));
-        public static TextureRegionDrawable omeletNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Omelet.png")));
-        public static TextureRegionDrawable pumpkinPieNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Pumpkin_Pie.png")));
-        public static TextureRegionDrawable spaghettiNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Spaghetti.png")));
-        public static TextureRegionDrawable pizzaNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Pizza.png")));
-        public static TextureRegionDrawable tortillaNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Tortilla.png")));
-        public static TextureRegionDrawable makiRollNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Maki_Roll.png")));
-        public static TextureRegionDrawable tripleShotEspressoNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Triple_Shot_Espresso.png")));
-        public static TextureRegionDrawable cookieNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Cookie.png")));
-        public static TextureRegionDrawable hashbrownsNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Hashbrowns.png")));
-        public static TextureRegionDrawable pancakesNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Pancakes.png")));
-        public static TextureRegionDrawable fruitSaladNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Fruit_Salad.png")));
-        public static TextureRegionDrawable redPlateNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Red_Plate.png")));
-        public static TextureRegionDrawable breadNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Bread.png")));
-        public static TextureRegionDrawable salmonDinnerNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Salmon_Dinner.png")));
-        public static TextureRegionDrawable vegetableMedleyNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Vegetable_Medley.png")));
-        public static TextureRegionDrawable farmersLunchNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Farmer%27s_Lunch.png")));
-        public static TextureRegionDrawable survivalBurgerNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Survival_Burger.png")));
-        public static TextureRegionDrawable dishOTheSeaNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Dish_O%27_The_Sea.png")));
-        public static TextureRegionDrawable seaFoamPuddingNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Seafoam_Pudding.png")));
-        public static TextureRegionDrawable minersTreatNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Recipe/Miner%27s_Treat.png")));
+        public static TextureRegionDrawable friedEggNormal = new TextureRegionDrawable(friedEgg);
+        public static TextureRegionDrawable bakedFishNormal = new TextureRegionDrawable(bakedFish);
+        public static TextureRegionDrawable saladNormal = new TextureRegionDrawable(salad);
+        public static TextureRegionDrawable omeletNormal = new TextureRegionDrawable(omelet);
+        public static TextureRegionDrawable pumpkinPieNormal = new TextureRegionDrawable(pumpkinPie);
+        public static TextureRegionDrawable spaghettiNormal = new TextureRegionDrawable(spaghetti);
+        public static TextureRegionDrawable pizzaNormal = new TextureRegionDrawable(pizza);
+        public static TextureRegionDrawable tortillaNormal = new TextureRegionDrawable(tortilla);
+        public static TextureRegionDrawable makiRollNormal = new TextureRegionDrawable(makiRoll);
+        public static TextureRegionDrawable tripleShotEspressoNormal = new TextureRegionDrawable(tripleShotEspresso);
+        public static TextureRegionDrawable cookieNormal = new TextureRegionDrawable(cookie);
+        public static TextureRegionDrawable hashbrownsNormal = new TextureRegionDrawable(hashbrowns);
+        public static TextureRegionDrawable pancakesNormal = new TextureRegionDrawable(pancakes);
+        public static TextureRegionDrawable fruitSaladNormal = new TextureRegionDrawable(fruitSalad);
+        public static TextureRegionDrawable redPlateNormal = new TextureRegionDrawable(redPlate);
+        public static TextureRegionDrawable breadNormal = new TextureRegionDrawable(bread);
+        public static TextureRegionDrawable salmonDinnerNormal = new TextureRegionDrawable(salmonDinner);
+        public static TextureRegionDrawable vegetableMedleyNormal = new TextureRegionDrawable(vegetableMedley);
+        public static TextureRegionDrawable farmersLunchNormal = new TextureRegionDrawable(farmersLunch);
+        public static TextureRegionDrawable survivalBurgerNormal = new TextureRegionDrawable(survivalBurger);
+        public static TextureRegionDrawable dishOTheSeaNormal = new TextureRegionDrawable(dishOTheSea);
+        public static TextureRegionDrawable seaFoamPuddingNormal = new TextureRegionDrawable(seaFoamPudding);
+        public static TextureRegionDrawable minersTreatNormal = new TextureRegionDrawable(minersTreat);
 
         public static TextureRegionDrawable friedEggDisable = new TextureRegionDrawable(new TextureRegion(new Texture("LockedRecipes/Fried_Egg.png")));
         public static TextureRegionDrawable bakedFishDisable = new TextureRegionDrawable(new TextureRegion(new Texture("LockedRecipes/Baked_Fish.png")));
@@ -195,8 +224,6 @@ public class GamePictureManager {
         public static TextureRegionDrawable seaFoamPuddingDisable = new TextureRegionDrawable(new TextureRegion(new Texture("LockedRecipes/Seafoam_Pudding.png")));
         public static TextureRegionDrawable minersTreatDisable = new TextureRegionDrawable(new TextureRegion(new Texture("LockedRecipes/Miner%27s_Treat.png")));
 
-        public static TextureRegion jojaColaTexture = new TextureRegion(new Texture("Concessions/Joja_Cola_%28large%29.png"));
-        public static TextureRegion troutSoupTexture = new TextureRegion(new Texture("Crops/Parsnip_Soup.png"));
 
     //Crafting :
 

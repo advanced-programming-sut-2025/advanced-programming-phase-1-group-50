@@ -1,12 +1,15 @@
 package com.stardew.controller.CookingCraftingControllers;
 
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.model.Result;
+import com.stardew.model.Tools.Tool;
+import com.stardew.model.animals.*;
 import com.stardew.model.gameApp.App;
 import com.stardew.model.cooking.Food;
 import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.mapInfo.*;
-import com.stardew.model.mapInfo.foraging.TreeSource;
+import com.stardew.model.mapInfo.foraging.*;
+import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGood;
+import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGoodType;
 import com.stardew.model.mapInfo.manuFactor.ArtisanMachine;
 import com.stardew.model.recipes.CookingRecipe;
 import com.stardew.model.recipes.CraftingRecipes;
@@ -123,119 +126,118 @@ public class CraftingController {
 
     }
 
-//    public Result addItem(String itemName, int quantity) {
-//        Player player = App.getGame().getCurrentPlayingPlayer();
-//
-//        if (quantity <= 0)
-//            return new Result(false, "The quantity must be greater than zero!");
-//        if (!player.getBackpack().hasCapacity())
-//            return new Result(false, "You don't have enough space in backpack!");
-//
-//        CraftingRecipes craftingRecipe = CraftingRecipes.getRecipeByName(itemName);
-//        if (craftingRecipe != null) {
-//            player.getBackpack().addRecipe(craftingRecipe);
-//            return new Result(true, "You add <" + itemName + "> successfully!");
-//        }
-//
-//        CookingRecipe cookingRecipe = CookingRecipe.getRecipeByName(itemName);
-//        if (cookingRecipe != null) {
-//            Food food = Food.getFoodByName(itemName);
-//            player.getBackpack().addIngredients(food,quantity);
-//            player.getBackpack().addRecipe(cookingRecipe);
-//            return new Result(true, "You add <" + itemName + "> successfully!");
-//        }
-//
-//        CropType cropType = CropType.getCropTypeByName(itemName);
-//        if (cropType != null) {
-//            player.getBackpack().addIngredients(new Crop(cropType, App.getGame().getTime(), null, 1, 1), quantity);
-//            return new Result(true, "You add <" + itemName + "> successfully!");
-//        }
-//
-//        FishType fishType = FishType.getFishTypeByName(itemName);
-//        if (fishType != null) {
-//            player.getBackpack().addIngredients(new Fish(fishType, Quality.Regular), quantity);
-//            return new Result(true, "You add <" + itemName + "> successfully!");
-//        }
-//
-//        Seeds seeds = Seeds.getSeedByName(itemName);
-//        if (seeds != null) {
-//            player.getBackpack().addIngredients(seeds, quantity);
-//            return new Result(true, "You add <" + itemName + "> successfully!");
-//        }
-//
-//        TreeSource treeSource = TreeSource.getTreeSourceByName(itemName);
-//        if (treeSource != null) {
-//            player.getBackpack().addIngredients(treeSource, quantity);
-//            return new Result(true, "You add <" + itemName + "> successfully!");
-//        }
-//
-//        Fruit fruit = Fruit.getFruitByName(itemName);
-//        if (fruit != null) {
-//            player.getBackpack().addIngredients(fruit, quantity);
-//            //CommonMushroom is also in this category
-//            ForagingCrop foragingCrop = ForagingCrop.getForagingCropByName(itemName);
-//            if (foragingCrop != null)
-//                player.getBackpack().addIngredients(foragingCrop, quantity);
-//            return new Result(true, "You add <" + itemName + "> successfully!");
-//        }
-//
-//        ForagingMineral foragingMineral = ForagingMineral.getForagingMineralByName(itemName);
-//        if (foragingMineral != null) {
-//            player.getBackpack().addIngredients(foragingMineral, quantity);
-//            //Coal is also in this category
-//            ArtisanGoodType artisanGoodType = ArtisanGoodType.getArtisanGoodTypeByName(itemName);
-//            if (artisanGoodType != null)
-//                player.getBackpack().addIngredients(new ArtisanGood(artisanGoodType), quantity);
-//            return new Result(true, "You add <" + itemName + "> successfully!");
-//        }
-//
-//        ForagingCrop foragingCrop = ForagingCrop.getForagingCropByName(itemName);
-//        if (foragingCrop != null) {
-//            player.getBackpack().addIngredients(foragingCrop, quantity);
-//            return new Result(true, "You add <" + itemName + "> successfully!");
-//        }
-//
-//        ArtisanGoodType artisanGoodType = ArtisanGoodType.getArtisanGoodTypeByName(itemName);
-//        if (artisanGoodType != null) {
-//            player.getBackpack().addIngredients(new ArtisanGood(artisanGoodType), quantity);
-//            return new Result(true, "You add <" + itemName + "> successfully!");
-//        }
-//
-//        Tool tool = Tool.getToolByName(itemName);
-//        if (tool != null) {
-//            player.getBackpack().addTool(tool);
-//            return new Result(true, "You add <" + itemName + "> successfully!");
-//        }
-//
-//        Fertilizer fertilizer = Fertilizer.getFertilizerByName(itemName);
-//        if (fertilizer != null) {
-//            player.getBackpack().addIngredients(fertilizer, quantity);
-//            return new Result(true, "You add <" + fertilizer + "> successfully!");
-//        }
-//
-//        AnimalGoodType animalGoodType = AnimalGoodType.getAnimalGoodTypeByName(itemName);
-//        if (animalGoodType != null) {
-//            player.getBackpack().addIngredients(new AnimalGood(animalGoodType, Quality.Regular), quantity);
-//            return new Result(true, "You add <" + itemName + "> successfully!");
-//        }
-//
-//        if (itemName.equalsIgnoreCase("hay")) {
-//            player.getBackpack().increaseHay(quantity);
-//            return new Result(true, "You add <" + itemName + "> successfully!");
-//        }
-//
-//        if (itemName.equalsIgnoreCase("wood")) {
-//            player.getBackpack().addIngredients(new Wood(), quantity);
-//            return new Result(true, "You add <" + itemName + "> successfully!");
-//        }
-//
-//        if (itemName.equalsIgnoreCase("stone")) {
-//            player.getBackpack().addIngredients(new Stone(), quantity);
-//            return new Result(true, "You add <" + itemName + "> successfully!");
-//        }
-//
-//        return new Result(false, "There is no such Item!");
-//    }
+    public Result addItem(String itemName, int quantity, Player player, TimeProvider timeProvider) {
+
+        if (quantity <= 0)
+            return new Result(false, "The quantity must be greater than zero!");
+        if (!player.getBackpack().hasCapacity())
+            return new Result(false, "You don't have enough space in backpack!");
+
+        CraftingRecipes craftingRecipe = CraftingRecipes.getRecipeByName(itemName);
+        if (craftingRecipe != null) {
+            player.getBackpack().addRecipe(craftingRecipe);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        CookingRecipe cookingRecipe = CookingRecipe.getRecipeByName(itemName);
+        if (cookingRecipe != null) {
+            Food food = Food.getFoodByName(itemName);
+            player.getBackpack().addIngredients(food,quantity);
+            player.getBackpack().addRecipe(cookingRecipe);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        CropType cropType = CropType.getCropTypeByName(itemName);
+        if (cropType != null) {
+            player.getBackpack().addIngredients(new Crop(cropType, timeProvider, null, 1, 1), quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        FishType fishType = FishType.getFishTypeByName(itemName);
+        if (fishType != null) {
+            player.getBackpack().addIngredients(new Fish(fishType, Quality.Regular), quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        Seeds seeds = Seeds.getSeedByName(itemName);
+        if (seeds != null) {
+            player.getBackpack().addIngredients(seeds, quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        TreeSource treeSource = TreeSource.getTreeSourceByName(itemName);
+        if (treeSource != null) {
+            player.getBackpack().addIngredients(treeSource, quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        Fruit fruit = Fruit.getFruitByName(itemName);
+        if (fruit != null) {
+            player.getBackpack().addIngredients(fruit, quantity);
+            //CommonMushroom is also in this category
+            ForagingCrop foragingCrop = ForagingCrop.getForagingCropByName(itemName);
+            if (foragingCrop != null)
+                player.getBackpack().addIngredients(foragingCrop, quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        ForagingMineral foragingMineral = ForagingMineral.getForagingMineralByName(itemName);
+        if (foragingMineral != null) {
+            player.getBackpack().addIngredients(foragingMineral, quantity);
+            //Coal is also in this category
+            ArtisanGoodType artisanGoodType = ArtisanGoodType.getArtisanGoodTypeByName(itemName);
+            if (artisanGoodType != null)
+                player.getBackpack().addIngredients(new ArtisanGood(artisanGoodType), quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        ForagingCrop foragingCrop = ForagingCrop.getForagingCropByName(itemName);
+        if (foragingCrop != null) {
+            player.getBackpack().addIngredients(foragingCrop, quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        ArtisanGoodType artisanGoodType = ArtisanGoodType.getArtisanGoodTypeByName(itemName);
+        if (artisanGoodType != null) {
+            player.getBackpack().addIngredients(new ArtisanGood(artisanGoodType), quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        Tool tool = Tool.getToolByName(itemName);
+        if (tool != null) {
+            player.getBackpack().addTool(tool);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        Fertilizer fertilizer = Fertilizer.getFertilizerByName(itemName);
+        if (fertilizer != null) {
+            player.getBackpack().addIngredients(fertilizer, quantity);
+            return new Result(true, "You add <" + fertilizer + "> successfully!");
+        }
+
+        AnimalGoodType animalGoodType = AnimalGoodType.getAnimalGoodTypeByName(itemName);
+        if (animalGoodType != null) {
+            player.getBackpack().addIngredients(new AnimalGood(animalGoodType, Quality.Regular), quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        if (itemName.equalsIgnoreCase("hay")) {
+            player.getBackpack().increaseHay(quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        if (itemName.equalsIgnoreCase("wood")) {
+            player.getBackpack().addIngredients(new Wood(), quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        if (itemName.equalsIgnoreCase("stone")) {
+            player.getBackpack().addIngredients(new Stone(), quantity);
+            return new Result(true, "You add <" + itemName + "> successfully!");
+        }
+
+        return new Result(false, "There is no such Item!");
+    }
 
 
 

@@ -175,6 +175,10 @@ public class GameScreenMenu implements Screen {
         return gameMenuInputAdapter;
     }
 
+    public Stage getStage() {
+        return stage;
+    }
+
     @Override
     public void resize(int i, int i1) {
 

@@ -1,14 +1,16 @@
 package com.stardew.controller.AnimalsControllers;
 
+import com.stardew.controller.MiniGame.MiniGameController;
+import com.stardew.controller.MiniGame.MiniGameControllersManager;
 import com.stardew.model.Result;
+import com.stardew.model.Tools.FishingPole;
 import com.stardew.model.Tools.MilkPail;
 import com.stardew.model.Tools.Shear;
 import com.stardew.model.Tools.Tool;
-import com.stardew.model.animals.Animal;
-import com.stardew.model.animals.AnimalGood;
-import com.stardew.model.animals.AnimalType;
-import com.stardew.model.animals.Habitat;
+import com.stardew.model.animals.*;
 import com.stardew.model.gameApp.Game;
+import com.stardew.model.gameApp.TimeProvider;
+import com.stardew.model.gameApp.date.Season;
 import com.stardew.model.gameApp.date.Weather;
 import com.stardew.model.mapInfo.Tile;
 import com.stardew.model.userInfo.Coin;
@@ -339,32 +341,42 @@ public class AnimalsController {
         sendResultMessage(message.getRequestID(), connection, result);
     }
 
-//    public Result fishing(FishingPole fishingPole, Stage stage) {
-//        Player player = App.getGame().getCurrentPlayingPlayer();
-//        int fishingLevel = player.getAbility().getFishingLevel();
-//        Weather weather = App.getGame().getTime().getWeather();
-//        Season season = App.getGame().getTime().getSeason();
-//
-//        int numberOfFish = (int) Math.ceil(Math.random() * weather.getEffectivenessOnFishing() * (fishingLevel + 2));
-//        numberOfFish = Math.min(numberOfFish, 6);
-//
-//        ArrayList<Fish> candidateFish = new ArrayList<>();
-//        ArrayList<FishType> availableFishType = FishType.getFishesBySeason(season, fishingLevel);
-//
-//        for (int i = 0; i < numberOfFish; i++) {
-//            FishType fishType = availableFishType.get(new Random().nextInt(availableFishType.size()));
-//            double qualityValue = (Math.random() * (fishingLevel + 2) * fishingPole.getType().getEffectiveness()) /
-//                    (7 - weather.getEffectivenessOnFishing());
-//            Quality quality = Quality.getQualityByValue(qualityValue);
-//            candidateFish.add(new Fish(fishType, quality));
-//        }
-//
-//        player.getAbility().increaseFishingRate(10);
-//
-//        stage.addActor(new MiniGameWindow(stage, candidateFish.toArray(new Fish[0]), fishingPole.getPoleType()));
-//
-//        return new Result(true, "MiniGame Started");
-//    }
+    public Result fishing(Player player, ClientConnectionThread connection, TimeProvider timeProvider, FishingPole fishingPole) {
+
+        int fishingLevel = player.getAbility().getFishingLevel();
+        Weather weather = timeProvider.getTime().getWeather();
+        Season season = timeProvider.getTime().getSeason();
+
+        int numberOfFish = (int) Math.ceil(Math.random() * weather.getEffectivenessOnFishing() * (fishingLevel + 2));
+        numberOfFish = Math.min(numberOfFish, 6);
+
+        ArrayList<Fish> candidateFish = new ArrayList<>();
+        ArrayList<FishType> availableFishType = FishType.getFishesBySeason(season, fishingLevel);
+
+        for (int i = 0; i < numberOfFish; i++) {
+            FishType fishType = availableFishType.get(new Random().nextInt(availableFishType.size()));
+            double qualityValue = (Math.random() * (fishingLevel + 2) * fishingPole.getType().getEffectiveness()) /
+                    (7 - weather.getEffectivenessOnFishing());
+            Quality quality = Quality.getQualityByValue(qualityValue);
+            candidateFish.add(new Fish(fishType, quality));
+        }
+
+        player.getAbility().increaseFishingRate(10);
+
+
+        int id = MiniGameControllersManager.getInstance().generateID();
+        MiniGameController miniGameController =
+            new MiniGameController(player, connection, candidateFish.toArray(new Fish[0]), fishingPole.getPoleType(), id);
+        MiniGameControllersManager.getInstance().addController(miniGameController, id);
+
+        //TODO  send_message_to_client_to_open_miniGame_window
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("miniGame_ID", id);
+        Message message = new Message(body, MessageType.START_MINI_GAME);
+        connection.sendMessage(message);
+
+        return new Result(true, "MiniGame Started");
+    }
 
 
 
