@@ -105,7 +105,7 @@ public class ScoreBoardTable extends Table {
         row();
 
         pack();
-        setPosition(200, Gdx.graphics.getHeight() - this.getHeight() - 30);
+        setPosition(250, Gdx.graphics.getHeight() - this.getHeight() - 30);
     }
 
 
@@ -161,7 +161,7 @@ public class ScoreBoardTable extends Table {
                 row();
                 pack();
                 invalidate();
-                setPosition(200, Gdx.graphics.getHeight() - getHeight() - 30);
+                setPosition(250, Gdx.graphics.getHeight() - getHeight() - 30);
             } else {
                 Array<Label> stats = playerStats.get(name);
                 stats.get(0).setText("" + coin);

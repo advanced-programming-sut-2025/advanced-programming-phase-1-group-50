@@ -19,6 +19,7 @@ import com.stardew.models.date.Season;
 import com.stardew.models.date.Time;
 import com.stardew.models.mapInfo.Tile;
 import com.stardew.models.userInfo.Coin;
+import com.stardew.view.ReactionWindows.ReactionTable;
 
 public class TimeManager {
     private final GameModel gameModel;
@@ -35,10 +36,13 @@ public class TimeManager {
     private boolean changeTileTextureInSpring = false;
     private boolean firstTimeChangeInSpring = true;
     private int coin;
+    private boolean fade = true;
+    private static TimeManager instance;
 
 
 
     public TimeManager(GameModel gameModel, Stage uiStage) {
+        instance = this;
         this.gameModel = gameModel;
         this.uiStage = uiStage;
         initializeUI();
@@ -63,19 +67,21 @@ public class TimeManager {
     }
 
     public void checkForDayTransition(){
-        Time time = App.getGame().getTime();
-        int hour = time.getHour();
-        if(hour == 22){
+
+        if(!fade) {
+
             blackFadeImage.getColor().a = 0f;
             blackFadeImage.addAction(Actions.sequence(
                 Actions.fadeIn(1f),
-                Actions.delay(3f),
+                Actions.delay(8f),
                 Actions.fadeOut(1f)
             ));
-
-            new DateController().advancedTimeCheatCode(1);
-
         }
+        fade = true;
+
+
+
+
     }
 
 
@@ -255,5 +261,25 @@ public class TimeManager {
 
     public Stage getUIStage() {
         return uiStage;
+    }
+
+    public boolean isFade(){
+        return fade;
+    }
+
+    public void setFade(boolean fade) {
+        this.fade = fade;
+    }
+
+
+
+    public static boolean isOpen() {
+        return instance != null;
+    }
+
+
+
+    public static TimeManager getInstance() {
+        return instance;
     }
 }

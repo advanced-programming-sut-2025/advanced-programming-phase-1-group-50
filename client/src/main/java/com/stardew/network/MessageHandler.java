@@ -119,6 +119,11 @@ public class MessageHandler {
                 return true;
             }
 
+            case FADE_NIGHT -> {
+                gameStateController.handleFadeOut(message);
+                return true;
+            }
+
             default -> {
                 return false;
             }

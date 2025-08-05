@@ -135,4 +135,13 @@ public class GameStateController {
             gameState.updateScoreBoard(dtoS);
         });
     }
+
+    public void handleFadeOut(Message message) {
+        if (message == null) return;
+        Gdx.app.postRunnable(() -> {
+            TimeManager.getInstance().setFade(false);
+        });
+
+
+    }
 }

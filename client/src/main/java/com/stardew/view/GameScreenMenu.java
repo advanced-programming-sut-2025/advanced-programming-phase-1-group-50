@@ -148,7 +148,7 @@ public class GameScreenMenu implements Screen {
         uiStage.draw();
 //
 //
-//        timeManager.checkForDayTransition();
+        timeManager.checkForDayTransition();
         timeManager.updateNightOverlay(gameState.getTime().getHour());
 //        timeManager.changeTileTextureInWinter();
 //        timeManager.changeTileTextureInSpring();
