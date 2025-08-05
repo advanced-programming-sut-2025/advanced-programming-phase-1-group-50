@@ -268,6 +268,11 @@ public class GameSessionController {
             case RateGift -> {
                 PlayersRelationController.getInstance().rateGift(message,connection);
             }
+
+            case SendGiftToPlayer -> {
+                Player player = game.getPlayer(connection);
+                PlayersRelationController.getInstance().sendGiftToPlayer(message, player, connection);
+            }
         }
 
     }

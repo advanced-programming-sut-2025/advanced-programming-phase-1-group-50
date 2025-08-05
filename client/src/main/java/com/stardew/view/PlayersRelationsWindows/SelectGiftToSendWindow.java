@@ -63,7 +63,7 @@ public class SelectGiftToSendWindow extends CloseableWindow {
     }
 
     protected void refreshProducts() {
-        productTable.clear();
+        productTable.clear(); //TODO
         List<Sellable> items = new ArrayList<>();
 
         HashMap<Ingredient, Integer> ingredientQuantity =
@@ -122,6 +122,6 @@ public class SelectGiftToSendWindow extends CloseableWindow {
     }
 
     private void openSendGiftWindow(String productName, int quantity) {
-        stage.addActor(new SendGiftWindow(stage, this, receiverUsername, productName, quantity));
+        stage.addActor(new SendGiftWindow(gameId,stage, this, receiverUsername, productName, quantity));
     }
 }
