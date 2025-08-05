@@ -1,7 +1,7 @@
 package com.stardew.models.tools;
 
+import com.stardew.model.Result;
 import com.stardew.models.InventoryItem;
-import com.stardew.models.Result;
 
 public abstract class Tool implements InventoryItem {
     protected ToolType toolType;

@@ -10,13 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.stardew.controller.PlayersRealtionController.PlayersRelationController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Result;
-import com.stardew.models.userInfo.Player;
 import com.stardew.view.windows.CloseableWindow;
 
 public class InPersonFriendshipWindow extends CloseableWindow {
 
-    public InPersonFriendshipWindow(Stage stage, Player otherPlayer) {
+    public InPersonFriendshipWindow(int gameId,Stage stage, String otherPlayerUsername) {
         super("In-person friendship", stage);
 
         padTop(20);
@@ -26,7 +24,7 @@ public class InPersonFriendshipWindow extends CloseableWindow {
 
         Table contentTable = new Table();
 
-        Label nameLabel = new Label("Player: " + otherPlayer.getUsername(), GamePictureManager.skin);
+        Label nameLabel = new Label("Player: " + otherPlayerUsername, GamePictureManager.skin);
         nameLabel.setFontScale(1.2f);
         nameLabel.setColor(Color.BLACK);
         nameLabel.setAlignment(Align.center);
@@ -46,13 +44,14 @@ public class InPersonFriendshipWindow extends CloseableWindow {
         hugButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Result temp = canHug(otherPlayer);
-                if (temp.getSuccessful()) {
-                    hug(otherPlayer);
-                    closeWindow();
-                } else {
-                    showResult(temp);
-                }
+                PlayersRelationController.canHug(gameId, otherPlayerUsername, result -> {
+                    if (result.getSuccessful()) {
+                        hug(otherPlayerUsername);
+                        closeWindow();
+                    } else {
+                        showResult(result);
+                    }
+                });
             }
         });
 
@@ -70,13 +69,14 @@ public class InPersonFriendshipWindow extends CloseableWindow {
         flowerButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Result temp = canGiveFlowers(otherPlayer);
-                if (temp.getSuccessful()) {
-                    giveFlowers(otherPlayer);
-                    closeWindow();
-                } else {
-                    showResult(temp);
-                }
+                PlayersRelationController.canGiveFlower(gameId, otherPlayerUsername, result -> {
+                    if (result.getSuccessful()) {
+                        giveFlowers(otherPlayerUsername);
+                        closeWindow();
+                    } else {
+                        showResult(result);
+                    }
+                });
             }
         });
 
@@ -94,13 +94,14 @@ public class InPersonFriendshipWindow extends CloseableWindow {
         marryButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Result temp = canMarry(otherPlayer);
-                if (temp.getSuccessful()) {
-                    marry(otherPlayer);
-                    closeWindow();
-                } else {
-                    showResult(temp);
-                }
+                PlayersRelationController.canAskMarriage(gameId, otherPlayerUsername, result -> {
+                    if (result.getSuccessful()) {
+                        marry(otherPlayerUsername);
+                        closeWindow();
+                    } else {
+                        showResult(result);
+                    }
+                });
             }
         });
 
@@ -122,33 +123,19 @@ public class InPersonFriendshipWindow extends CloseableWindow {
         );
     }
 
-    private Result canHug(Player otherPlayer) {
-        return PlayersRelationController.canHug(otherPlayer);
+    private void hug(String otherPlayerUsername) {
+        PlayersRelationController.hug(otherPlayerUsername);
+        spawnHugEmojis(stage, getX() + getWidth() / 2, getY() + 20); // TODO
     }
 
-    private Result canGiveFlowers(Player otherPlayer) {
-        return PlayersRelationController.canGiveFlower(otherPlayer);
+    private void giveFlowers(String otherPlayerUsername) {
+        PlayersRelationController.giveFlower(otherPlayerUsername);
+        spawnRoseEmojis(stage, getX() + getWidth() / 2, getY() + 20); // TODO
     }
 
-    private Result canMarry(Player otherPlayer) {
-        return PlayersRelationController.canAskMarriage(otherPlayer);
-    }
-
-    private void hug(Player otherPlayer) {
-        PlayersRelationController.hug(otherPlayer);
-        // player should walk together
-        spawnHugEmojis(stage, getX() + getWidth() / 2, getY() + 20);
-    }
-
-    private void giveFlowers(Player otherPlayer) {
-        PlayersRelationController.giveFlower(otherPlayer);
-        // player should walk together
-        spawnRoseEmojis(stage, getX() + getWidth() / 2, getY() + 20);
-    }
-
-    private void marry(Player otherPlayer) {
-        PlayersRelationController.askMarriage(otherPlayer);
-        spawnRingEmojis(stage, getX() + getWidth() / 2, getY() + 20);
+    private void marry(String otherPlayerUsername) {
+        PlayersRelationController.askMarriage(otherPlayerUsername);
+        spawnRingEmojis(stage, getX() + getWidth() / 2, getY() + 20); // TODO
     }
 
     private void spawnHugEmojis(Stage stage, float x, float y) {

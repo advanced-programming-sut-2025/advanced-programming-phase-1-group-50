@@ -1,7 +1,7 @@
 package com.stardew.controller.TradeController;
 
 import com.stardew.model.PlayersRelation.RelationWithPlayers;
-import com.stardew.models.Result;
+import com.stardew.model.Result;
 import com.stardew.models.Trade;
 import com.stardew.models.app.App;
 import com.stardew.models.app.Menus;

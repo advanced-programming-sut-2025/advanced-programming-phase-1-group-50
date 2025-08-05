@@ -1,6 +1,6 @@
 package com.stardew.models.NPCs;
 
-import com.stardew.models.Result;
+import com.stardew.model.Result;
 import com.stardew.models.animals.Fish;
 import com.stardew.models.animals.FishType;
 import com.stardew.models.app.App;

@@ -1,7 +1,7 @@
 package com.stardew.controller.AnimalsControllers;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.stardew.models.Result;
+import com.stardew.model.Result;
 import com.stardew.models.animals.*;
 import com.stardew.models.app.App;
 import com.stardew.models.date.Season;
@@ -22,7 +22,7 @@ import java.util.Random;
 public class AnimalsController {
 
 
-    public Result build(Stage stage, Tile tile,String buildingName) {
+    public Result build(Stage stage, Tile tile, String buildingName) {
         Player player = App.getGame().getCurrentPlayingPlayer();
         Map map = App.getGame().getMap();
         HabitatType habitatType = Habitat.getHabitatTypeByInput(buildingName);
@@ -292,7 +292,7 @@ public class AnimalsController {
 
         player.getAbility().increaseFishingRate(10);
 
-        stage.addActor(new MiniGameWindow(stage, candidateFish.toArray(new Fish[0]), fishingPole.getPoleType()));
+        //stage.addActor(new MiniGameWindow(stage, candidateFish.toArray(new Fish[0]), fishingPole.getPoleType()));
 
         return new Result(true, "MiniGame Started");
     }

@@ -1,29 +1,20 @@
 package com.stardew.controller;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Timer;
 import com.stardew.Main;
+import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.PasswordUtil;
-import com.stardew.models.Result;
 import com.stardew.models.app.App;
 import com.stardew.models.app.Menus;
-import com.stardew.models.app.SecurityQuestion;
-import com.stardew.models.enums.LoginMenuCommands;
 import com.stardew.models.userInfo.Gender;
 import com.stardew.models.userInfo.User;
 import com.stardew.network.Message;
-import com.stardew.network.MessageType;
 import com.stardew.view.*;
 
-import java.security.SecureRandom;
-import java.util.HashMap;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

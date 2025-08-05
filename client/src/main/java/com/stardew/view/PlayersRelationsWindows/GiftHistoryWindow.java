@@ -20,7 +20,6 @@ import com.stardew.view.windows.CloseableWindow;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 
 public class GiftHistoryWindow extends CloseableWindow {

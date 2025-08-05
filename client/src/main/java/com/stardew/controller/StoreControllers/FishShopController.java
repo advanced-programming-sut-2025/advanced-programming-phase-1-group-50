@@ -1,6 +1,6 @@
 package com.stardew.controller.StoreControllers;
 
-import com.stardew.models.Result;
+import com.stardew.model.Result;
 import com.stardew.models.app.App;
 
 

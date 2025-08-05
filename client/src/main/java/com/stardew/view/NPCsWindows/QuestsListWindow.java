@@ -9,10 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.stardew.controller.NPCController.NPCController;
+import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.NPCs.NPC;
 import com.stardew.models.NPCs.RelationWithNPC;
-import com.stardew.models.Result;
 import com.stardew.view.windows.CloseableWindow;
 
 import java.util.ArrayList;

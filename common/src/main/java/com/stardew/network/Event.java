@@ -35,4 +35,5 @@ public enum Event {
     CheatCode,
     GetBetweenPlayersGifts,
     RateGift,
+    SendGiftToPlayer,
 }
