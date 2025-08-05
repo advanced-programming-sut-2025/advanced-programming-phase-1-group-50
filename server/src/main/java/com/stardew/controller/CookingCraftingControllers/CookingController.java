@@ -68,7 +68,6 @@ public class CookingController {
 
         player.getBackpack().removeIngredients(eatable, 1);
         refrigerator.addItem(eatable, 1);
-        InventoryController.getInstance().sendHotBarUpdate(player, connection);
         Result result = new Result(true, "You put <" + eatable + "> successfully in refrigerator!");
         sendResultMessage(message.getRequestID(), connection, result);
     }
@@ -101,7 +100,6 @@ public class CookingController {
         }
         refrigerator.removeItem(eatable, 1);
         player.getBackpack().addIngredients(eatable, 1);
-        InventoryController.getInstance().sendHotBarUpdate(player, connection);
         Result result = new Result(true, "You pickUp <" + eatable + "> successfully!");
         sendResultMessage(message.getRequestID(), connection, result);
     }

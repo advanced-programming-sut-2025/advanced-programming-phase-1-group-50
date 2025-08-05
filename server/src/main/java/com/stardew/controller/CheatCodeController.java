@@ -85,7 +85,6 @@ public class CheatCodeController {
         m.setRequestID(message.getRequestID());
         clientConnection.sendMessage(m);
         InventoryController.getInstance().handleSendInventoryList(player , clientConnection , message.getRequestID());
-        InventoryController.getInstance().sendHotBarUpdate(player , clientConnection);
 
     }
 

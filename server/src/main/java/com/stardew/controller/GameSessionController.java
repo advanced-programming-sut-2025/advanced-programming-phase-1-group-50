@@ -6,6 +6,7 @@ import com.stardew.controller.CookingCraftingControllers.CookingController;
 import com.stardew.controller.CookingCraftingControllers.CookingCraftingInfoController;
 import com.stardew.controller.CookingCraftingControllers.CraftingController;
 import com.stardew.model.AnimalDTO;
+import com.stardew.model.PlayerDTO;
 import com.stardew.model.ScoreBoardDTO;
 import com.stardew.model.animals.Animal;
 import com.stardew.model.gameApp.Game;
@@ -44,13 +45,11 @@ public class GameSessionController {
         games.remove(id);
     }
 
-
-    public void handleUpdateGameState(Message message, ClientConnectionThread connection) {
+    public void handleUpdatePlayers(Message message, ClientConnectionThread connection) {
         if (message == null) return;
 
         int id = message.getIntFromBody("id");
         Game game = games.get(id);
-
         if (game == null) return;
 
         if(!game.isStarted()) {
@@ -59,6 +58,24 @@ public class GameSessionController {
             game.startHotBar();
         }
 
+        int startX = message.getIntFromBody("startX");
+        int startY = message.getIntFromBody("startY");
+        int endY = message.getIntFromBody("endY");
+        int endX = message.getIntFromBody("endX");
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("main_player", game.getPlayer(connection).toDTO());
+        body.put("other_players", game.getOtherVisiblePlayers(startX, startY, endX, endY, connection));
+        Message response = new Message(body, MessageType.UPDATE_PLAYERS_RESULT);
+        connection.sendMessage(response);
+    }
+
+    public void handleUpdateTiles(Message message, ClientConnectionThread connection) {
+        if (message == null) return;
+
+        int id = message.getIntFromBody("id");
+        Game game = games.get(id);
+        if (game == null) return;
 
         int startX = message.getIntFromBody("startX");
         int startY = message.getIntFromBody("startY");
@@ -66,9 +83,9 @@ public class GameSessionController {
         int endY = message.getIntFromBody("endY");
 
         HashMap<String, Object> body = new HashMap<>();
-        body.put("id", id);
-        body.put("gameState", game.getGameState(startX, startY, endX, endY, connection));
-        Message response = new Message(body, MessageType.UPDATE_GAME_RESULT);
+        body.put("tiles", game.getVisibleTiles(startX, startY, endX, endY));
+        body.put("placeables", game.getVisiblePlaceables(startX, startY, endX, endY));
+        Message response = new Message(body, MessageType.UPDATE_TILES_RESULT);
         connection.sendMessage(response);
     }
 
@@ -105,6 +122,16 @@ public class GameSessionController {
         body.put("animals", animals);
         Message response = new Message(body, MessageType.UPDATE_ANIMALS_RESULT);
         connection.sendMessage(response);
+    }
+
+    public void handleUpdateHotBar(Message message, ClientConnectionThread connection) {
+        if (message == null) return;
+        int id = message.getIntFromBody("id");
+        Game game = games.get(id);
+        if (game == null) return;
+
+        Player player = game.getPlayer(connection);
+        InventoryController.getInstance().sendHotBarUpdate(player, connection);
     }
 
     public void handleEventInGame(Message message, ClientConnectionThread connection) {

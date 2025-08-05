@@ -72,7 +72,6 @@ public class InventoryController {
             }
         }
         handleSendInventoryList(player, connection , requestID);
-        sendHotBarUpdate(player , connection);
 
     }
 
@@ -91,7 +90,6 @@ public class InventoryController {
         for (InventoryItem item : player.getHotBar()) {
             if (item != null) {
                 InventoryItemDTO itemDTO2 = item.toDTO();
-                System.out.println(itemDTO2);
                 int amount;
                 if (!itemDTO2.isTool()) {
                     amount = player.getQuantityOfIngredient(item);
@@ -100,13 +98,13 @@ public class InventoryController {
                 hotbar[index] = itemDTO2;
                 index++;
             }
-
-            HashMap<String, Object> body = new HashMap<>();
-            body.put("hotBar", hotbar);
-            body.put("coin" , player.getBackpack().getIngredientQuantity().getOrDefault(new Coin() , 0));
-            Message m = new Message(body, MessageType.UPDATE_HOT_BAR);
-            connection.sendMessage(m);
         }
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("hotBar", hotbar);
+        body.put("coin" , player.getBackpack().getIngredientQuantity().getOrDefault(new Coin() , 0));
+        Message m = new Message(body, MessageType.UPDATE_HOT_BAR_RESULT);
+        connection.sendMessage(m);
 
 
     }
@@ -198,7 +196,6 @@ public class InventoryController {
     public void handleShuffleInventory(Player player, ClientConnectionThread connection , String requestID ) {
         player.shuffleInventoryItems();
         handleSendInventoryList(player, connection , requestID);
-        sendHotBarUpdate(player , connection);
     }
 
     public void handleSetCurrentItem(Player player,Message message) {
@@ -239,8 +236,6 @@ public class InventoryController {
         m.setRequestID(requestID);
         connection.sendMessage(m);
         handleSendInventoryList(player, connection , requestID);
-        sendHotBarUpdate(player , connection);
-
 
     }
 
