@@ -4,10 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.stardew.controller.TimeManager;
 import com.stardew.model.*;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.view.windows.SmartTooltip;
 
 import java.util.ArrayList;
 
@@ -16,7 +14,8 @@ public class GameModel {
     private final OrthographicCamera camera;
     private ArrayList<TileDTO> tiles;
     private ArrayList<PlaceableDTO> placeables;
-    private PlayerDTO player;
+    private ArrayList<PlayerDTO> otherPlayers;
+    private PlayerDTO mainPlayer;
     private TimeDTO time;
     private ArrayList<AnimalDTO> animals = new ArrayList<>();
     private final int mapWidth, mapHeight;
@@ -24,7 +23,6 @@ public class GameModel {
     private int startY;
     private int endX;
     private int endY;
-    private int playerEnergy;
     private final Object lock = new Object();
     private final Object boundsLock = new Object();
     private InventoryItemDTO[] hotBar;
@@ -70,8 +68,8 @@ public class GameModel {
 //    }
 
     public void updateCamera() {
-        float playerX = player.getX() * GamePictureManager.TILE_SIZE;
-        float playerY = player.getY() * GamePictureManager.TILE_SIZE;
+        float playerX = mainPlayer.getX() * GamePictureManager.TILE_SIZE;
+        float playerY = mainPlayer.getY() * GamePictureManager.TILE_SIZE;
 
         float cameraX = camera.position.x;
         float cameraY = camera.position.y;
@@ -196,10 +194,14 @@ public class GameModel {
         }
     }
 
-    public void updatePlayer(PlayerDTO player) {
+    public void updateMainPlayer(PlayerDTO player) {
         synchronized (lock) {
-            this.player = player;
+            this.mainPlayer = player;
         }
+    }
+
+    public void updateOtherPlayers(ArrayList<PlayerDTO> otherPlayers) {
+        this.otherPlayers = otherPlayers;
     }
 
     public void updatePlaceables(ArrayList<PlaceableDTO> placeables) {
@@ -224,8 +226,18 @@ public class GameModel {
 
     public PlayerDTO getPlayer() {
         synchronized (lock) {
-            return player;
+            return mainPlayer;
         }
+    }
+
+    public ArrayList<PlayerDTO> getOtherPlayers() {
+        return otherPlayers;
+    }
+
+    public ArrayList<PlayerDTO> getAllPlayers() {
+        ArrayList<PlayerDTO> players = new ArrayList<>(otherPlayers);
+        players.add(mainPlayer);
+        return players;
     }
 
     public ArrayList<PlaceableDTO> getPlaceables() {
@@ -282,10 +294,6 @@ public class GameModel {
         return mapHeight;
     }
 
-    public void updateEnergy(int energy) {
-        this.playerEnergy = energy;
-    }
-
 //    public PlayerController getPlayerController() {
 //        return playerController;
 //    }
@@ -295,7 +303,7 @@ public class GameModel {
 //    }
 
     public int getPlayerEnergy() {
-        return playerEnergy;
+        return mainPlayer.getEnergy();
     }
 
     public void updateHotBar(InventoryItemDTO[] hotBar) {

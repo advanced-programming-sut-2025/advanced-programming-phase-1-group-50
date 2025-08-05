@@ -2,7 +2,6 @@ package com.stardew.network;
 
 import com.stardew.controller.*;
 import com.stardew.controller.MiniGame.MiniGameControllersManager;
-import com.stardew.model.userInfo.Player;
 
 public class MessageHandler {
     private static MessageHandler instance;
@@ -94,8 +93,16 @@ public class MessageHandler {
                 lobbyController.sendOnlineUsers(connection);
                 return true;
             }
-            case UPDATE_GAME -> {
-                gameSessionController.handleUpdateGameState(message, connection);
+            case UPDATE_TILES -> {
+                gameSessionController.handleUpdateTiles(message, connection);
+                return true;
+            }
+            case UPDATE_PLAYERS -> {
+                gameSessionController.handleUpdatePlayers(message, connection);
+                return true;
+            }
+            case UPDATE_HOT_BAR -> {
+                gameSessionController.handleUpdateHotBar(message, connection);
                 return true;
             }
             case MAP_REQUEST -> {

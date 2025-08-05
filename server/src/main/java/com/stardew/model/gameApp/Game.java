@@ -81,6 +81,10 @@ public class Game {
         return new ArrayList<>(players.values());
     }
 
+    public Map<ClientConnectionThread, Player> getConnections() {
+        return players;
+    }
+
     public Time getTime() {
         return time;
     }
@@ -175,31 +179,55 @@ public class Game {
 //        return trades;
 //    }
 
-    public GameState getGameState(int startX, int startY, int endX, int endY, ClientConnectionThread connection) {
+
+    public ArrayList<PlayerDTO> getOtherVisiblePlayers(int startX, int startY, int endX, int endY, ClientConnectionThread connection) {
+        ArrayList<PlayerDTO> otherPlayers = new ArrayList<>();
+        for (ClientConnectionThread connectionThread : players.keySet()) {
+            if (connectionThread.equals(connection)) continue;
+            Player player = players.get(connectionThread);
+            if (player.getPlayerPosition().getFirst() > startX && player.getPlayerPosition().getFirst() < endX &&
+                player.getPlayerPosition().getSecond() > startY && player.getPlayerPosition().getSecond() < endY) {
+                otherPlayers.add(player.toDTO());
+            }
+        }
+        return otherPlayers;
+    }
+
+    public ArrayList<TileDTO> getVisibleTiles(int startX, int startY, int endX, int endY) {
         ArrayList<TileDTO> tiles = new ArrayList<>();
-        Set<Placeable> placeablesSet = new HashSet<>();
         for (int i = startX; i <= endX; i++) {
             for (int j = startY; j <= endY; j++) {
-                Tile tile = map.getTiles()[i][j];
+                Tile tile = map.findTile(i, j);
+                if (tile == null) continue;
                 tiles.add(tile.toDTO());
+            }
+        }
+        return tiles;
+    }
+
+    public ArrayList<PlaceableDTO> getVisiblePlaceables(int startX, int startY, int endX, int endY) {
+        ArrayList<PlaceableDTO> placeables = new ArrayList<>();
+        Set<Placeable> placeablesSet = Collections.newSetFromMap(new IdentityHashMap<>());
+        for (int i = startX; i <= endX; i++) {
+            for (int j = startY; j <= endY; j++) {
+                Tile tile = map.findTile(i, j);
+                if (tile == null) continue;
                 Placeable placeable = tile.getPlaceable();
                 if (placeable != null) placeablesSet.add(placeable);
             }
         }
-        ArrayList<PlaceableDTO> placeables = new ArrayList<>();
+
         for (Placeable placeable : placeablesSet) {
             placeables.add(placeable.toPlaceableDTO());
         }
-        PlayerDTO player = players.get(connection).toDTO();
-
-        return new GameState(tiles, placeables, player);
+        return placeables;
     }
 
 
     public void callMethodsForTomorrow() {
         //((GameMenu) App.getMenu().getMenu()).doNights();
 
-        for (Player player : getPlayers()) {
+        for (Player player : getAllPlayers()) {
             int ratio = 1;
             if (player.getRemainingNumsAfterMarriageRequestDenied() > 0){
                 ratio = 2;
@@ -352,20 +380,4 @@ public class Game {
         this.started = started;
     }
 
-    private ArrayList<Player> getPlayers() {
-        ArrayList<Player> gamePlayers = new ArrayList<>();
-        for(Map.Entry<ClientConnectionThread , Player> entry : players.entrySet()) {
-            gamePlayers.add(entry.getValue());
-        }
-        return gamePlayers;
-    }
-
-    public ClientConnectionThread getClientConnectionThreadByPlayer(Player player) {
-        for(Map.Entry<ClientConnectionThread , Player> entry : players.entrySet()) {
-            if(entry.getValue() == player) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
 }

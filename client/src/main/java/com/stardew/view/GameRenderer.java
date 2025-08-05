@@ -56,21 +56,23 @@ public class GameRenderer {
 
     private void renderPlayer(float delta) {
         stateTime += delta;
-        PlayerDTO player = gameModel.getPlayer();
-        int moveDirection = player.getDirection();
-        Animation<TextureRegion> currentAnimation = GamePictureManager.playerAnimations.get(moveDirection);
-        if(player.getEnergy() <= 0){
-            currentAnimation = GamePictureManager.faintAnimation;
+        for (PlayerDTO player : gameModel.getAllPlayers()) {
+            int moveDirection = player.getDirection();
+            Animation<TextureRegion> currentAnimation = GamePictureManager.playerAnimations.get(moveDirection);
+            if(player.getEnergy() <= 0){
+                currentAnimation = GamePictureManager.faintAnimation;
+            }
+
+            TextureRegion currentFrame = currentAnimation.getKeyFrame(stateTime, true);
+
+            batch.draw(currentFrame,
+                player.getX() * tileSize,
+                player.getY() * tileSize,
+                currentFrame.getRegionWidth() * 3,
+                currentFrame.getRegionHeight() * 3
+            );
+
         }
-
-        TextureRegion currentFrame = currentAnimation.getKeyFrame(stateTime, true);
-
-        batch.draw(currentFrame,
-            player.getX() * tileSize,
-            player.getY() * tileSize,
-            currentFrame.getRegionWidth() * 3,
-            currentFrame.getRegionHeight() * 3
-        );
 
     }
 

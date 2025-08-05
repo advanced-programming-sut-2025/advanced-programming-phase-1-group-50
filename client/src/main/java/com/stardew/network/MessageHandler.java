@@ -76,18 +76,22 @@ public class MessageHandler {
                 gameStateController.handleRequestMap(message);
                 return true;
             }
-            case UPDATE_GAME_RESULT -> {
-                gameStateController.handleUpdate(message);
+            case UPDATE_TILES_RESULT -> {
+                gameStateController.handleUpdateTiles(message);
+                return true;
+            }
+            case UPDATE_PLAYERS_RESULT -> {
+                gameStateController.handleUpdatePlayers(message);
+                return true;
+            }
+            case UPDATE_HOT_BAR_RESULT -> {
+                gameStateController.updateHotBar(message);
+                gameStateController.handleUpdateCoin(message);
                 return true;
             }
             case UPDATE_TIME -> {
                 gameStateController.handleUpdateTime(message);
                 //ArtisanMachinesManager.getInstance().updateMachines();
-                return true;
-            }
-            case UPDATE_HOT_BAR -> {
-                gameStateController.updateHotBar(message);
-                gameStateController.handleUpdateCoin(message);
                 return true;
             }
             case SHOW_INVENTORY_RESULT -> {

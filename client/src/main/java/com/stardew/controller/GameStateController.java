@@ -2,7 +2,6 @@ package com.stardew.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.google.gson.reflect.TypeToken;
-import com.stardew.Main;
 import com.stardew.model.*;
 import com.stardew.models.GameAssetManagers.GameAssetIDManager;
 import com.stardew.models.GameModel;
@@ -10,7 +9,6 @@ import com.stardew.network.Message;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.InventoryWindows.InventoryWindow;
 import com.stardew.view.ReactionWindows.ReactionTable;
-import com.stardew.view.ScoreBoardTable;
 
 import java.util.ArrayList;
 
@@ -31,20 +29,28 @@ public class GameStateController {
     }
 
 
-    public void handleUpdate(Message message) {
+    public void handleUpdateTiles(Message message) {
         if (message == null) return;
 
-        GameState state = message.getFromBody("gameState", GameState.class);
-
-        ArrayList<TileDTO> tileDTOs = state.getTiles();
-        ArrayList<PlaceableDTO> placeables = state.getPlaceables();
-        PlayerDTO player = state.getPlayer();
+        ArrayList<TileDTO> tileDTOs = message.getFromBody(
+            "tiles", new TypeToken<ArrayList<TileDTO>>(){}.getType());
+        ArrayList<PlaceableDTO> placeables = message.getFromBody(
+            "placeables", new TypeToken<ArrayList<PlaceableDTO>>(){}.getType());
 
         gameState.updateTiles(tileDTOs);
-        gameState.updatePlayer(player);
         gameState.updatePlaceables(placeables);
+    }
+
+    public void handleUpdatePlayers(Message message) {
+        if (message == null) return;
+
+        PlayerDTO mainPlayer = message.getFromBody("main_player", PlayerDTO.class);
+        ArrayList<PlayerDTO> otherPlayers = message.getFromBody(
+            "other_players", new TypeToken<ArrayList<PlayerDTO>>(){}.getType());
+
+        gameState.updateMainPlayer(mainPlayer);
+        gameState.updateOtherPlayers(otherPlayers);
         gameState.updateCamera();
-        gameState.updateEnergy(player.getEnergy());
         gameState.updateVisibleTilesBounds();
     }
 
