@@ -1,5 +1,6 @@
 package com.stardew.view.windows;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -45,7 +46,7 @@ public class ArtisanWindow extends CloseableWindow {
                         Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
                         if (response != null) {
                             Result result = response.getFromBody("result", Result.class);
-//                            Gdx.app.postRunnable(() -> showResult(result));
+                            Gdx.app.postRunnable(() -> showResult(result));
                             if (result.getSuccessful()) {
                                 ArtisanMachinesManager.getInstance().updateMachine(machineID);
                             }

@@ -34,7 +34,7 @@ public class HabitatWindow extends CloseableWindow {
 
         ArrayList<AnimalDTO> animals = habitat.getAnimals();
 
-        setSize(180, 120 + 65 * animals.size());// change dynamically
+        setSize(180, 120 + 65 * animals.size());
 
         TextButton showAnimalsProductsButton = new TextButton("Animals_Products", GamePictureManager.skin);
         showAnimalsProductsButton.addListener(new ClickListener() {
@@ -49,7 +49,7 @@ public class HabitatWindow extends CloseableWindow {
                     Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
                     if (response != null) {
                         Result result = response.getFromBody("result", Result.class);
-//                        Gdx.app.postRunnable(() -> showResult(result));
+                        Gdx.app.postRunnable(() -> showResult(result));
                     }
                 }).start();
             }

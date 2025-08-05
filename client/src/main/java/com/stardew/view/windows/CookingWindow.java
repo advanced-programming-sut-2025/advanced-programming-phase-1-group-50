@@ -57,7 +57,7 @@ public class CookingWindow extends CloseableWindow {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     if (imageButton.isDisabled()) {
-//                        showResult(new Result(false, "You don't have Recipe for this"));
+                        showResult(new Result(false, "You don't have Recipe for this"));
                         return true;
                     }
 
@@ -70,7 +70,7 @@ public class CookingWindow extends CloseableWindow {
                         Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
                         if (response != null && response.getType() == MessageType.EVENT_IN_GAME_RESULT) {
                             Result result = response.getFromBody("result", Result.class);
-//                            Gdx.app.postRunnable(() -> showResult(result));
+                            Gdx.app.postRunnable(() -> showResult(result));
                         }
                     }).start();
                     return true;

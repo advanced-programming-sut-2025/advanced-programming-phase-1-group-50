@@ -57,12 +57,12 @@ public class AnimalOptionWindow extends CloseableWindow {
                     Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
                     if (response != null) {
                         Result result = response.getFromBody("result", Result.class);
-//                        Gdx.app.postRunnable(() -> {
-//                            if (result.getSuccessful())
-//                                closeWindow();
-//                            else
-//                                showResult(result);
-//                        });
+                        Gdx.app.postRunnable(() -> {
+                            if (result.getSuccessful())
+                                closeWindow();
+                            else
+                                showResult(result);
+                        });
                     }
                 }).start();
             }
@@ -80,12 +80,12 @@ public class AnimalOptionWindow extends CloseableWindow {
                     Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
                     if (response != null) {
                         Result result = response.getFromBody("result", Result.class);
-//                        Gdx.app.postRunnable(() -> {
-//                            if (result.getSuccessful())
-//                                closeWindow();
-//                            else
-//                                showResult(result);
-//                        });
+                        Gdx.app.postRunnable(() -> {
+                            if (result.getSuccessful())
+                                closeWindow();
+                            else
+                                showResult(result);
+                        });
                     }
                 }).start();
             }
@@ -103,12 +103,12 @@ public class AnimalOptionWindow extends CloseableWindow {
                     Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
                     if (response != null) {
                         Result result = response.getFromBody("result", Result.class);
-//                        Gdx.app.postRunnable(() -> {
-//                            if (result.getSuccessful())
-//                                closeWindow();
-//                            else
-//                                showResult(result);
-//                        });
+                        Gdx.app.postRunnable(() -> {
+                            if (result.getSuccessful())
+                                closeWindow();
+                            else
+                                showResult(result);
+                        });
                     }
                 }).start();
             }
@@ -126,11 +126,11 @@ public class AnimalOptionWindow extends CloseableWindow {
                     Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
                     if (response != null) {
                         Result result = response.getFromBody("result", Result.class);
-//                        Gdx.app.postRunnable(() -> {
-//                            showResult(result);
-//                            if (result.getSuccessful())
-//                                closeWindow();
-//                        });
+                        Gdx.app.postRunnable(() -> {
+                            showResult(result);
+                            if (result.getSuccessful())
+                                closeWindow();
+                        });
                     }
                 }).start();
             }
@@ -148,11 +148,11 @@ public class AnimalOptionWindow extends CloseableWindow {
                     Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
                     if (response != null) {
                         Result result = response.getFromBody("result", Result.class);
-//                        Gdx.app.postRunnable(() -> {
-//                            showResult(result);
-//                            if (result.getSuccessful())
-//                                closeWindow();
-//                        });
+                        Gdx.app.postRunnable(() -> {
+                            showResult(result);
+                            if (result.getSuccessful())
+                                closeWindow();
+                        });
                     }
                 }).start();
             }
