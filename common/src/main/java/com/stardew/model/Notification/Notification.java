@@ -1,19 +1,19 @@
 package com.stardew.model.Notification;
 
 public class Notification {
-    //protected final String message;
+    protected final String message;
     protected boolean isChecked;
-    //protected final Player sender;
+    protected final String senderUsername;
 
-//    public Notification(String message, Player sender) {
-//        this.message = message;
-//        this.isChecked = false;
-//        this.sender = sender;
-//    }
+    public Notification(String message, String sender) {
+        this.message = message;
+        this.isChecked = false;
+        this.senderUsername = sender;
+    }
 
-//    public String getMessage() {
-//        return message;
-//    }
+    public String getMessage() {
+        return message;
+    }
 
     public boolean isChecked() {
         return isChecked;
@@ -23,12 +23,12 @@ public class Notification {
         isChecked = checked;
     }
 
-//    public Player getSender() {
-//        return sender;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "sender: " + sender.getUsername() + "  message: " + getMessage();
-//    }
+    public String getSender() {
+        return senderUsername;
+    }
+
+    @Override
+    public String toString() {
+        return "sender: " + senderUsername + "  message: " + getMessage();
+    }
 }

@@ -4,12 +4,10 @@ import java.util.*;
 import java.util.regex.Matcher;
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.stardew.Main;
 import com.stardew.controller.GameDateAndWeatherController.DateController;
+import com.stardew.model.Result;
 import com.stardew.models.ColorPrinter;
-import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Result;
 import com.stardew.models.Trade;
 import com.stardew.models.app.*;
 import com.stardew.models.manuFactor.Ingredient;

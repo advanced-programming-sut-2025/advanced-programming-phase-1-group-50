@@ -114,6 +114,11 @@ public class MessageHandler {
                 return true;
             }
 
+            case UPDATE_SCOREBOARD_RESULT -> {
+                gameStateController.handleUpdateScoreBoard(message);
+                return true;
+            }
+
             default -> {
                 return false;
             }

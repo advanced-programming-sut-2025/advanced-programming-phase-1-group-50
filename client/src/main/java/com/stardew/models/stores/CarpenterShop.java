@@ -2,10 +2,10 @@ package com.stardew.models.stores;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stardew.model.Result;
 import com.stardew.models.BackgroundColors;
 import com.stardew.models.ColorPrinter;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Result;
 import com.stardew.models.animals.HabitatSize;
 import com.stardew.models.animals.HabitatType;
 import com.stardew.models.app.App;
@@ -15,7 +15,6 @@ import com.stardew.models.userInfo.Coin;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class CarpenterShop extends Store {
     private final String backgroundCode = BackgroundColors.BRIGHT_RED;

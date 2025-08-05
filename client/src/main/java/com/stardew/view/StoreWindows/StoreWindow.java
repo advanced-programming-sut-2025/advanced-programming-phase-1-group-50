@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Result;
 import com.stardew.models.stores.*;
 import com.stardew.view.windows.CloseableWindow;
 

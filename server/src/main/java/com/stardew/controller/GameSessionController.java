@@ -6,8 +6,10 @@ import com.stardew.controller.CookingCraftingControllers.CookingController;
 import com.stardew.controller.CookingCraftingControllers.CookingCraftingInfoController;
 import com.stardew.controller.CookingCraftingControllers.CraftingController;
 import com.stardew.model.AnimalDTO;
+import com.stardew.model.ScoreBoardDTO;
 import com.stardew.model.animals.Animal;
 import com.stardew.model.gameApp.Game;
+import com.stardew.model.userInfo.Coin;
 import com.stardew.model.userInfo.Player;
 import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Event;
@@ -258,7 +260,42 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 AnimalsController.getInstance().sellAnimal(message, player, connection);
             }
+
+            case GetBetweenPlayersGifts -> {
+                PlayersRelationController.getInstance().getAllGifts(message, connection);
+            }
+
+            case RateGift -> {
+                PlayersRelationController.getInstance().rateGift(message,connection);
+            }
+
+            case SendGiftToPlayer -> {
+                Player player = game.getPlayer(connection);
+                PlayersRelationController.getInstance().sendGiftToPlayer(message, player, connection);
+            }
         }
 
+    }
+
+    public void handleUpdateScoreBoard(Message message, ClientConnectionThread connection) {
+        if(message == null) return;
+        int id = message.getIntFromBody("id");
+        Game game = games.get(id);
+        if(game == null) return;
+
+
+
+        ArrayList<ScoreBoardDTO> scoreBoardDTOS = new ArrayList<>();
+        for(Player p : game.getAllPlayers()){
+            scoreBoardDTOS.add(new ScoreBoardDTO(p.getUsername()
+                , p.getBackpack().getIngredientQuantity().getOrDefault(new Coin() , 0)
+                , p.getAbility().getFarmingLevel() , p.getAbility().getFishingLevel()
+                , p.getAbility().getForagingLevel() , p.getAbility().getMiningLevel()) );
+        }
+
+        HashMap<String , Object> body = new HashMap<>();
+        body.put("scoreBoard", scoreBoardDTOS);
+        Message response = new Message(body , MessageType.UPDATE_SCOREBOARD_RESULT);
+        connection.sendMessage(response);
     }
 }

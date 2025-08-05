@@ -31,6 +31,7 @@ public class GameModel {
     private ArrayList<InventoryItemDTO> inventory;
     private TextureRegion reaction;
     private int coin;
+    private ArrayList<ScoreBoardDTO> scoreBoard;
 
 //    private final Map map;
 //    private PlayerController playerController;
@@ -329,6 +330,14 @@ public class GameModel {
 
     public int getCoin() {
         return coin;
+    }
+
+    public void updateScoreBoard(ArrayList<ScoreBoardDTO> scoreBoard) {
+        this.scoreBoard = scoreBoard;
+    }
+
+    public ArrayList<ScoreBoardDTO> getScoreBoard() {
+        return scoreBoard;
     }
 
 }

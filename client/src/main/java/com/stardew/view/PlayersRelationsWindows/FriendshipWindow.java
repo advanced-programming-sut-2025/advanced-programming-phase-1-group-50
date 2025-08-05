@@ -42,7 +42,7 @@ public class FriendshipWindow extends CloseableWindow {
         updateRelations();
     }
 
-    protected void updateRelations() {
+    public void updateRelations() {
         relations.clear();
         new Thread(() -> {
             HashMap<String, Object> body = new HashMap<>();
@@ -105,7 +105,7 @@ public class FriendshipWindow extends CloseableWindow {
     }
 
     private void openGiftMenu(String username, RelationWithPlayers relation) {
-        GiftMenuWindow giftMenuWindow = new GiftMenuWindow(stage, this, username, relation);
+        GiftMenuWindow giftMenuWindow = new GiftMenuWindow(gameId,stage, this, username, relation);
         stage.addActor(giftMenuWindow);
     }
 }

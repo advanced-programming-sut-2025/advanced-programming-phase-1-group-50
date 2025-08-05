@@ -56,7 +56,6 @@ public class MiniGameWindow extends CloseableWindow {
         //initialize labelStyle:
         labelStyle.font = GamePictureManager.smallFont;
 
-        //hasSonarBobber = poleType == PoleType.Bamboo || poleType == PoleType.Fiberglass || poleType == PoleType.Iridium;
         nameOfFish = new Label("", labelStyle);
         mainFishImage.setPosition(40, 200);
         nameOfFish.setPosition(100, 220);
@@ -253,14 +252,14 @@ public class MiniGameWindow extends CloseableWindow {
 
         Gdx.app.postRunnable(() -> {
             if (isClosedGame) {
-//                showResult(result);
+                showResult(result);
                 terminateWindow();
             }
             else {
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
-//                        showResult(result);
+                        showResult(result);
                         terminateWindow();
                     }
                 }, 5f);  //timer is for showing last result

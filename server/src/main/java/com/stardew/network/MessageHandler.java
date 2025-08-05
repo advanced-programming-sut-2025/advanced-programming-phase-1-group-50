@@ -13,6 +13,7 @@ public class MessageHandler {
     private final PreGameController preGameController;
     private final GameSessionController gameSessionController;
     private final MiniGameControllersManager miniGameControllersManager;
+    private final ProfileController profileController;
 
     private MessageHandler() {
         loginAndRegisterController = new LoginAndRegisterController();
@@ -22,6 +23,7 @@ public class MessageHandler {
         preGameController = PreGameController.getInstance();
         gameSessionController = GameSessionController.getInstance();
         miniGameControllersManager = MiniGameControllersManager.getInstance();
+        profileController = ProfileController.getInstance();
         //TODO Other controllers
     }
 
@@ -112,6 +114,36 @@ public class MessageHandler {
                 miniGameControllersManager.handleMiniGameMessage(message);
                 return true;
             }
+            case PROFILE_CHANGE_PASSWORD -> {
+                profileController.handleChangePassword(message, connection);
+                return true;
+            }
+
+            case PROFILE_CHANGE_USERNAME -> {
+                profileController.handleChangeUsername(message, connection);
+                return true;
+            }
+
+            case PROFILE_CHANGE_EMAIL -> {
+                profileController.handleChangeEmail(message, connection);
+                return true;
+            }
+
+            case PROFILE_CHANGE_NICKNAME-> {
+                profileController.handleChangeNickname(message, connection);
+                return true;
+            }
+
+            case PROFILE_SHOW_USER_INFO -> {
+                profileController.handelShowUserInfo(message, connection);
+                return true;
+            }
+
+            case UPDATE_SCOREBOARD -> {
+                gameSessionController.handleUpdateScoreBoard(message, connection);
+                return true;
+            }
+
             default -> {
                 return false;
             }

@@ -63,7 +63,7 @@ public class AskPrivateLobbyPasswordWindow extends CloseableWindow {
                 if(response != null && response.getType() == MessageType.JOIN_LOBBY_RESULT) {
 
                     LobbyDTO lobbyDTO = response.getFromBody("lobbyDTO", LobbyDTO.class);
-                    com.stardew.models.Result result = response.getFromBody("result", com.stardew.models.Result.class);
+                    Result result = response.getFromBody("result", Result.class);
                     if(result != null) {
                         if(result.getSuccessful()){
                             Screen screen = Main.getMain().getScreen();

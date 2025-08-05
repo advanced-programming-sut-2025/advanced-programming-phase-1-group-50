@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.stardew.controller.PlayersRealtionController.PlayersRelationController;
+import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Result;
 import com.stardew.view.windows.CloseableWindow;
 
 
@@ -19,7 +19,7 @@ public class SendGiftWindow extends CloseableWindow {
     private final Label quantityLabel;
     private int selectedQuantity = 1;
 
-    public SendGiftWindow(Stage stage, SelectGiftToSendWindow selectGiftToSendWindow, String receiverUsername,
+    public SendGiftWindow(int gameId,Stage stage, SelectGiftToSendWindow selectGiftToSendWindow, String receiverUsername,
                           String productName, int quantity) {
         super("Sending a gift to " + receiverUsername, stage);
         this.maxQuantity = quantity;
@@ -60,14 +60,20 @@ public class SendGiftWindow extends CloseableWindow {
             }
         });
 
-        TextButton sellButton = new TextButton("Gift", GamePictureManager.skin);
-        sellButton.addListener(new ClickListener() {
+        TextButton giftButton = new TextButton("Gift", GamePictureManager.skin);
+        giftButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Result result = PlayersRelationController.sendGiftToPlayer(productName,selectedQuantity,receiverUsername);
-                selectGiftToSendWindow.refreshProducts();
-                closeWindow();
-                showResult(result);
+                giftButton.setDisabled(true);
+                PlayersRelationController.sendGiftToPlayer(gameId,productName,selectedQuantity,receiverUsername,
+                    result -> {
+                    selectGiftToSendWindow.refreshProducts();
+                    closeWindow();
+                    if (result == null ) {
+                        result = new Result(false, "Error sending gift (from server!)");
+                    }
+                    showResult(result);
+                    });
             }
         });
 
@@ -78,7 +84,7 @@ public class SendGiftWindow extends CloseableWindow {
         add(quantityLabel).center().width(80);
         add(plusButton).width(100).height(50).row();
 
-        add(sellButton).colspan(3).padTop(10).row();
+        add(giftButton).colspan(3).padTop(10).row();
 
         pack();
         setPosition(

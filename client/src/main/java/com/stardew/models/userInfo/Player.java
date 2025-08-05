@@ -1,13 +1,12 @@
 package com.stardew.models.userInfo;
 
 import com.stardew.model.PlayersRelation.RelationWithPlayers;
+import com.stardew.model.Result;
 import com.stardew.models.InventoryItem;
 import com.stardew.models.NPCs.NPCType;
 import com.stardew.models.NPCs.RelationWithNPC;
 import com.stardew.models.Notification.MarriageRequest;
-import com.stardew.models.Result;
 import com.stardew.models.Notification.Notification;
-import com.stardew.models.animals.Animal;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.mapInfo.Farm;
 import com.stardew.models.mapInfo.Pair;
