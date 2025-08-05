@@ -1,6 +1,7 @@
 package com.stardew.network;
 
 import com.stardew.controller.*;
+import com.stardew.controller.MiniGame.MiniGameControllersManager;
 import com.stardew.model.userInfo.Player;
 
 public class MessageHandler {
@@ -11,6 +12,7 @@ public class MessageHandler {
     private final LobbyController lobbyController;
     private final PreGameController preGameController;
     private final GameSessionController gameSessionController;
+    private final MiniGameControllersManager miniGameControllersManager;
 
     private MessageHandler() {
         loginAndRegisterController = new LoginAndRegisterController();
@@ -19,6 +21,7 @@ public class MessageHandler {
         lobbyController = LobbyController.getInstance();
         preGameController = PreGameController.getInstance();
         gameSessionController = GameSessionController.getInstance();
+        miniGameControllersManager = MiniGameControllersManager.getInstance();
         //TODO Other controllers
     }
 
@@ -103,6 +106,10 @@ public class MessageHandler {
             }
             case EVENT_IN_GAME -> {
                 gameSessionController.handleEventInGame(message, connection);
+                return true;
+            }
+            case MINI_GAME_REQUESTS -> {
+                miniGameControllersManager.handleMiniGameMessage(message);
                 return true;
             }
             default -> {

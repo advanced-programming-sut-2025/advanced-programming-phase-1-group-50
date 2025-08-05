@@ -3,30 +3,30 @@ package com.stardew.view.miniGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
+import com.stardew.model.DrawableID;
+import com.stardew.model.TextureID;
+import com.stardew.models.GameAssetManagers.GameAssetIDManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Result;
-import com.stardew.models.animals.Fish;
-import com.stardew.models.animals.FishType;
-import com.stardew.models.animals.Quality;
-import com.stardew.models.app.App;
-import com.stardew.models.tools.PoleType;
-import com.stardew.models.userInfo.Player;
+import com.stardew.model.Result;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 import com.stardew.view.windows.CloseableWindow;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.HashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class MiniGameWindow extends CloseableWindow {
+    private static MiniGameWindow instance;
     private final Image fishingSystem = new Image(GamePictureManager.fishingSystem);
     private final Image greenBar = new Image(GamePictureManager.greenBar);
     private final Image fishImage = new Image(GamePictureManager.normalFish);
@@ -36,27 +36,27 @@ public class MiniGameWindow extends CloseableWindow {
     private final Table rightPanel = new Table();
     private final Label.LabelStyle labelStyle = new Label.LabelStyle();
     private final Label perfectCatchLabel;
-    private final Fish[] fishes;
-    private final ArrayList<Fish> caughtFishes = new ArrayList<>();
-    private Fish currentFish;
-    private int numberOfPlayedFish = 0;
-    private float collisionAmount;
-    private float restTime;
-    private final float greenBarSpeed = 300f;
-    private boolean isInGreenBarAllTime = true;
-    private final boolean hasSonarBobber;
+    private final ScheduledExecutorService requestThread = Executors.newSingleThreadScheduledExecutor();
+    private volatile float greenBarY;
+    private volatile float fishY;
+    private volatile float successAmount;
     private boolean isClosedGame = false;
-    private boolean shownResult = false;
+    private boolean canShowFish;
+    private final int miniGameID;
 
+    public static MiniGameWindow getInstance() {
+        return instance;
+    }
 
-    public MiniGameWindow(Stage stage, Fish[] fishes, PoleType poleType) {
+    public MiniGameWindow(Stage stage, int miniGameID) {
         super(" Mini Game", stage);
-        this.fishes = fishes;
+        this.miniGameID = miniGameID;
+        instance = this;
 
         //initialize labelStyle:
         labelStyle.font = GamePictureManager.smallFont;
 
-        hasSonarBobber = poleType == PoleType.Bamboo || poleType == PoleType.Fiberglass || poleType == PoleType.Iridium;
+        //hasSonarBobber = poleType == PoleType.Bamboo || poleType == PoleType.Fiberglass || poleType == PoleType.Iridium;
         nameOfFish = new Label("", labelStyle);
         mainFishImage.setPosition(40, 200);
         nameOfFish.setPosition(100, 220);
@@ -91,19 +91,16 @@ public class MiniGameWindow extends CloseableWindow {
         addActor(perfectCatchLabel);
 
         initializeGame();
+        startRequestThread();
     }
 
     private void initializeGame() {
-        for (Fish fish : fishes) {
-            fish.getPosition().set(430, new Random().nextFloat(600) + 90);
-        }
-        currentFish = fishes[0];
 
         fishingSystem.setSize(300, 750);
         fishingSystem.setPosition(getWidth() / 2 - fishingSystem.getWidth() / 2, getHeight() / 2 - fishingSystem.getHeight() / 2);
-        greenBar.setPosition(fishingSystem.getX() + 128, 100);
+        greenBar.setPosition(428, 100);
         greenBar.setSize(55, 150);
-        fishImage.setPosition(currentFish.getPosition().x, currentFish.getPosition().y);
+        fishImage.setPosition(430, fishY);
         fishImage.setVisible(false);
         successBar = new ProgressBar(0, 50, 0.1f, true, GamePictureManager.skin);
         successBar.setAnimateDuration(0.1f);
@@ -114,65 +111,22 @@ public class MiniGameWindow extends CloseableWindow {
         addActor(fishImage);
         addActor(successBar);
 
-        startNewRound();
     }
 
-    private void startNewRound() {
-        fishImage.setVisible(false);
-        successBar.setValue(0);
-        mainFishImage.setVisible(false);
-        nameOfFish.setVisible(false);
-        if (numberOfPlayedFish < fishes.length) {
-            isInGreenBarAllTime = true;
-            restTime = new Random().nextFloat(4f) + 4;
-            currentFish = fishes[numberOfPlayedFish];
-            if (FishType.isLegendary(currentFish.getType())) fishImage.setDrawable(GamePictureManager.legendFish);
-            collisionAmount = successBar.getMaxValue() / 6f;
-            if (hasSonarBobber) {
-                mainFishImage.setDrawable(new TextureRegionDrawable(currentFish.getInventoryTexture()));
-                nameOfFish.setText(currentFish.toString());
-            }
-        }
-    }
+
 
     @Override
     public void act(float delta) {
         super.act(delta);
 
-        if (isFinished()) {
-            updateGreenBarMovement(delta);
-            finishAndCloseGame();
-            return;
-        }
-
-        if (restTime > 0) {
-            restTime -= delta;
-            updateGreenBarMovement(delta);
-            return;
-        }
-
-        fishImage.setVisible(true);
-        mainFishImage.setVisible(hasSonarBobber);
-        nameOfFish.setVisible(hasSonarBobber);
-        updateGreenBarMovement(delta);
-        currentFish.update(delta);
-        updateFishPosition();
-        updateSuccessBar(delta);
-        checkCatchFish();
+        sendGreenBarMovement(delta);
+        updatePositions();
+        updateSuccessBar();
 
     }
 
-    private boolean isFinished() {
-        return numberOfPlayedFish == fishes.length || isClosedGame;
-    }
-
-    private void updateSuccessBar(float delta) {
-        if (isFishInGreenBar())
-            collisionAmount += 6*delta;
-        else
-            collisionAmount -= 6*delta;
-
-        successBar.setValue(collisionAmount);
+    private void updateSuccessBar() {
+        successBar.setValue(successAmount);
 
         if (successBar.getValue() < successBar.getMaxValue() / 7)
             successBar.setColor(Color.RED);
@@ -182,146 +136,164 @@ public class MiniGameWindow extends CloseableWindow {
             successBar.setColor(Color.WHITE);
     }
 
-    private boolean isFishInGreenBar() {
-        Rectangle fishRectangle = new Rectangle(fishImage.getX(), fishImage.getY(), fishImage.getImageWidth(), fishImage.getImageHeight());
-        Rectangle greenBarRectangle = new Rectangle(greenBar.getX(), greenBar.getY(), greenBar.getImageWidth(), greenBar.getImageHeight());
-        if (!isInGreenBarAllTime)
-            return greenBarRectangle.contains(fishRectangle);
-        else {
-            isInGreenBarAllTime = greenBarRectangle.contains(fishRectangle);
-            return isInGreenBarAllTime;
-        }
+    private void updatePositions() {
+        fishImage.setY(fishY);
+        greenBar.setY(greenBarY);
     }
 
-    private void checkCatchFish() {
-        if (successBar.getValue() == successBar.getMaxValue()) {
-            numberOfPlayedFish++;
-            caughtFishes.add(currentFish);
-            checkToBePerfect(currentFish);
-            showCaughtFish(currentFish);
-            startNewRound();
-        }
-        else if (successBar.getValue() == successBar.getMinValue()) {
-            numberOfPlayedFish++;
-            startNewRound();
-        }
-    }
 
-    private void updateGreenBarMovement(float delta) {
+    // "command" -> "movement"   : send
+    private void sendGreenBarMovement(float delta) {
         float vy = 0;
 
         if (Gdx.input.isKeyPressed(Input.Keys.UP))
             vy += 1;
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
+        else if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
             vy -= 1;
 
-        if (vy == 0)
-            return;
+        if (vy == 0) return;
 
-        float newX = greenBar.getX();
-        float newY = greenBar.getY() + vy * greenBarSpeed * delta;
-        if (newY < 85) newY = 85;
-        if (newY > 590) newY = 590;
-
-        greenBar.setPosition(newX, newY);
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("dy", vy * delta);
+        body.put("miniGame_ID", miniGameID);
+        body.put("command", "movement");
+        Message message = new Message(body, MessageType.MINI_GAME_REQUESTS);
+        NetworkManager.getConnection().sendMessage(message);
     }
 
-    private void updateFishPosition() {
-        fishImage.setPosition(currentFish.getPosition().x, currentFish.getPosition().y);
+    // "command" -> "close"    : send
+    private void sendCloseGameMessage() {
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("miniGame_ID", miniGameID);
+        body.put("command", "close");
+        Message message = new Message(body, MessageType.MINI_GAME_REQUESTS);
+        NetworkManager.getConnection().sendMessage(message);
     }
 
-    private void showCaughtFish(Fish fish) {
-        Image image = new Image(fish.getInventoryTexture());
-        Label label = new Label(fish.toString(), labelStyle);
-        Table table = new Table();
-        table.add(image).size(32);
-        table.add(label).padLeft(10).left().expandX().fillX();
-        rightPanel.add(table).padBottom(10).left().row();
+    // "command" -> "get_status"   : send
+    private void startRequestThread() {
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("miniGame_ID", miniGameID);
+        body.put("command", "get_status");
+        Message message = new Message(body, MessageType.MINI_GAME_REQUESTS);
+        requestThread.scheduleAtFixedRate(
+            () -> NetworkManager.getConnection().sendMessage(message), 30, 20, TimeUnit.MILLISECONDS
+        );
     }
 
-    private void checkToBePerfect(Fish fish) {
-        if (isInGreenBarAllTime) {
-            Quality previousQuality = fish.getQuality();
-            if (previousQuality != Quality.Regular) fish.developQuality();
-            Quality newQuality = fish.getQuality();
+    // "command" -> "caught_fish"  : receive
+    private void showCaughtFish(Message message) {
+        TextureID textureID = message.getFromBody("textureID", TextureID.class);
+        String description = message.getFromBody("description", String.class);
 
-            Player player = App.getGame().getCurrentPlayingPlayer();
-            int previousFishingRate = player.getAbility().getFishingRate();
-            player.getAbility().increaseFishingRate(((int) (previousFishingRate * 1.4)));
-            int newFishingRate = player.getAbility().getFishingRate();
+        Gdx.app.postRunnable(() -> {
+            Image image = new Image(GameAssetIDManager.getTextureRegion(textureID));
+            Label label = new Label(description, labelStyle);
+            Table table = new Table();
+            table.add(image).size(32);
+            table.add(label).padLeft(10).left().expandX().fillX();
+            rightPanel.add(table).padBottom(10).left().row();
+        });
+    }
 
-            perfectCatchLabel.setText(
-                "You catch this fish PERFECTLY!\n\n\n" +
-                "    Previous Quality:  " + previousQuality + "\n\n" +
-                "    New Quality:       " + newQuality + "\n\n\n" +
-                "    Previous Fishing Skill:  " + previousFishingRate + "\n\n" +
-                "    new Fishing Skill:       " + newFishingRate + "\n\n"
-            );
+    // "command" -> "perfect_fish"   : receive
+    private void showPerfectCaught(Message message) {
+        String description = message.getFromBody("description", String.class);
 
+        Gdx.app.postRunnable(() -> {
+            perfectCatchLabel.setText(description);
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
                     perfectCatchLabel.setText("");
                 }
             }, 5f);
-        }
+        });
     }
 
+    //"command" -> "status"     : receive
+    private void handleUpdateStatus(Message message) {
+        boolean isResting = message.getFromBody("is_resting", Boolean.class);
+        greenBarY = message.getFromBody("greenBar_y", Float.class);
+        Gdx.app.postRunnable(() -> {
+            if (isResting) {
+                successAmount = 0;
+                fishImage.setVisible(false);
+                mainFishImage.setVisible(false);
+                nameOfFish.setVisible(false);
+            } else {
+                fishImage.setVisible(true);
+                mainFishImage.setVisible(canShowFish);
+                nameOfFish.setVisible(canShowFish);
 
-
-    private void finishAndCloseGame() {
-
-        if (!shownResult) {     //end game (just one time do it)
-            Player player = App.getGame().getCurrentPlayingPlayer();
-            for (Fish fish : caughtFishes) {
-                player.getBackpack().addIngredients(fish, 1);
-            }
-        }
-
-        if (isClosedGame && !shownResult) {
-            showResult(prepareResult());
-            shownResult = true;
-        }
-        if (!isClosedGame && !shownResult) {
-            shownResult = true;
-            Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    showResult(prepareResult());
-                    closeWindow();
+                boolean isFirstUpdate = message.getFromBody("is_first_update", Boolean.class);
+                canShowFish = message.getFromBody("can_show_fish", Boolean.class);
+                if (isFirstUpdate) {
+                    DrawableID fishDrawableID = message.getFromBody("fish_drawableID", DrawableID.class);
+                    fishImage.setDrawable(GameAssetIDManager.getDrawable(fishDrawableID));
+                    if (canShowFish) {
+                        TextureID mainFishTextureID = message.getFromBody("main_fish_textureID", TextureID.class);
+                        String mainFishName = message.getFromBody("main_fish_name", String.class);
+                        mainFishImage.setDrawable(new TextureRegionDrawable(GameAssetIDManager.getTextureRegion(mainFishTextureID)));
+                        nameOfFish.setText(mainFishName);
+                    }
                 }
-            }, 5f);  //timer is for showing last result
-        }
+
+                fishY = message.getFromBody("fish_y", Float.class);
+                successAmount = message.getFromBody("success_amount", Float.class);
+            }
+
+        });
     }
 
-    private Result prepareResult() {
-        if (caughtFishes.isEmpty())
-            return new Result(false, "NO Fish was caught");
+    // "command" -> "terminate"   : receive
+    private void handleTerminateGame(Message message) {
+        Result result = message.getFromBody("result", Result.class);
+        requestThread.shutdown();
 
-        StringBuilder result = new StringBuilder();
-        result.append("Caught Fish: \n\n\n");
-        for (Fish fish : caughtFishes) {
-            result.append(fish.getInfo()).append("\n\n");
-        }
-        return new Result(true, result.toString());
+        Gdx.app.postRunnable(() -> {
+            if (isClosedGame) {
+//                showResult(result);
+                terminateWindow();
+            }
+            else {
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+//                        showResult(result);
+                        terminateWindow();
+                    }
+                }, 5f);  //timer is for showing last result
+            }
+        });
     }
+
 
 
 
     @Override
     protected void closeWindow() {
+        if (!isClosedGame) sendCloseGameMessage();
         isClosedGame = true;
 
-        getChildren().forEach(Actor::clearListeners);
+    }
 
-        addAction(Actions.sequence(
-            Actions.parallel(
-                Actions.fadeOut(0.3f),
-                Actions.scaleTo(0.7f, 0.7f, 0.3f)
-            ),
-            Actions.removeActor()
-        ));
+    private void terminateWindow() {
+        super.closeWindow();
+    }
 
+
+
+
+    public void handleMessages(Message message) {
+        String command = message.getFromBody("command", String.class);
+        switch (command) {
+            case "caught_fish" -> showCaughtFish(message);
+            case "perfect_fish" -> showPerfectCaught(message);
+            case "status" -> handleUpdateStatus(message);
+            case "terminate" -> handleTerminateGame(message);
+            default -> System.err.println("Unknown command in MINI_GAME: " + command);
+        }
     }
 
 }

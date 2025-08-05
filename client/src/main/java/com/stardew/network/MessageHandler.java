@@ -2,14 +2,16 @@ package com.stardew.network;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.google.gson.reflect.TypeToken;
 import com.stardew.Main;
 import com.stardew.controller.GameStateController;
 import com.stardew.model.LobbyDTO;
-import com.stardew.view.ArtisanMachine.ArtisanMachinesManager;
+import com.stardew.view.GameScreenMenu;
 import com.stardew.view.LobbyMenus.LobbyMenu;
 import com.stardew.view.LobbyMenus.PreLobbyMenu;
 import com.stardew.view.SelectFarmMenu;
+import com.stardew.view.miniGame.MiniGameWindow;
 
 import java.util.ArrayList;
 
@@ -99,6 +101,16 @@ public class MessageHandler {
             }
             case UPDATE_ANIMALS_RESULT -> {
                 gameStateController.handleUpdateAnimals(message);
+                return true;
+            }
+            case START_MINI_GAME -> {
+                Stage stage = ((GameScreenMenu) Main.getMain().getScreen()).getStage();
+                stage.addActor(new MiniGameWindow(stage, message.getIntFromBody("miniGame_ID")));
+                return true;
+            }
+            case MINI_GAME_REQUESTS -> {
+                MiniGameWindow miniGame = MiniGameWindow.getInstance();
+                if (miniGame != null) miniGame.handleMessages(message);
                 return true;
             }
 

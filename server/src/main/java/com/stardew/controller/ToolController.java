@@ -1,6 +1,6 @@
 package com.stardew.controller;
 
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.stardew.controller.AnimalsControllers.AnimalsController;
 import com.stardew.model.Result;
 import com.stardew.model.Tools.Axe;
 import com.stardew.model.Tools.Pickaxe;
@@ -17,11 +17,12 @@ import com.stardew.model.mapInfo.foraging.ForagingMineral;
 import com.stardew.model.mapInfo.foraging.Growable;
 import com.stardew.model.mapInfo.foraging.Tree;
 import com.stardew.model.userInfo.Player;
+import com.stardew.network.ClientConnectionThread;
 
 import java.util.Random;
 
 public class ToolController {
-//    private final AnimalsController animalsController = new AnimalsController();
+    private final AnimalsController animalsController = AnimalsController.getInstance();
     private final ForagingController foragingController = new ForagingController();
 
 //    public Result ToolsEquip(String input) {
@@ -49,7 +50,7 @@ public class ToolController {
 //        return new Result(true, "Available Tools : \n" + sb);
 //    }
 
-    public Result useTool(Tile targetTile, Player p , Weather weather , TimeProvider timeProvider) {
+    public Result useTool(Tile targetTile, ClientConnectionThread connection, Player p , Weather weather , TimeProvider timeProvider) {
         if (targetTile == null)
             return new Result(false, "Selected tile is null!");
 
@@ -141,17 +142,17 @@ public class ToolController {
 
             return new Result(false, "there is no tree for cut!");
         }
-//        if (tool instanceof FishingPole fishingPole) {
-//
-//            if (targetTile.getPlaceable() instanceof Lake lake) {
-//                Result energyConsumptionResult = fishingPole.useTool();
-//                if (!energyConsumptionResult.getSuccessful())
-//                    return energyConsumptionResult;
-//                return animalsController.fishing(fishingPole, stage);
-//            }
-//
-//            return new Result(false, "there is no lake for fishing!");
-//        }
+        if (tool instanceof FishingPole fishingPole) {
+
+            if (targetTile.getPlaceable() instanceof Lake) {
+                Result energyConsumptionResult = fishingPole.useTool(weather, p);
+                if (!energyConsumptionResult.getSuccessful())
+                    return energyConsumptionResult;
+                return animalsController.fishing(p, connection, timeProvider, fishingPole);
+            }
+
+            return new Result(false, "there is no lake for fishing!");
+        }
         if (tool instanceof Scythe scythe) {
 
             if (targetTile.getPlaceable() instanceof Growable plant) {

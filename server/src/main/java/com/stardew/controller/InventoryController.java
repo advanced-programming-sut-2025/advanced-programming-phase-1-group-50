@@ -223,7 +223,7 @@ public class InventoryController {
 
         if(isAroundMe(currentTile , target , game.getMap())) {
             if (item instanceof Tool) {
-                result = toolController.useTool(target, player, game.getTime().getWeather(), game.getTime());
+                result = toolController.useTool(target, connection, player, game.getTime().getWeather(), game.getTime());
             } else if (item instanceof Fertilizer fertilizer) {
                 result = foragingController.fertilize(fertilizer, target, player);
             } else if (item instanceof Seeds || item instanceof TreeSource) {
