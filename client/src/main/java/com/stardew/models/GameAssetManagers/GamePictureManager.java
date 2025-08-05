@@ -1713,6 +1713,8 @@ public class GamePictureManager {
 
     }
 
+    public static TextureRegion quarry = new TextureRegion(new Texture("Quarry.png"));
+
 
     public static Texture jojaMartTexture = new Texture("Stores/Jojamart.png");
     public static TextureRegion jojaMartRegion = new TextureRegion(jojaMartTexture);

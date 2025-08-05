@@ -6,7 +6,6 @@ import com.stardew.model.PlayersRelation.BetweenPlayersGift;
 import com.stardew.model.PlayersRelation.FriendshipLevelsWithPlayers;
 import com.stardew.model.PlayersRelation.RelationWithPlayers;
 import com.stardew.model.Result;
-import com.stardew.models.Bouquet;
 import com.stardew.models.ClientInfo.LoggedInUser;
 import com.stardew.models.Notification.MarriageRequest;
 import com.stardew.models.Notification.Notification;
@@ -26,7 +25,6 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 public class PlayersRelationController {
-
 //    public Result TalkToPlayer(Matcher matcher) {
 //
 //        Player receiver = null;
@@ -111,7 +109,6 @@ public class PlayersRelationController {
 //        return new Result(true, message);
 //
 //    }
-
     public static boolean canRateGift(BetweenPlayersGift gift) {
         return (gift.getReceiverUsername().equals(LoggedInUser.getUser().getUsername())) && (!gift.isRated());
     }
@@ -153,143 +150,148 @@ public class PlayersRelationController {
         }).start();
     }
 
-    public static Result canHug(Player otherPlayer) {
-        if (otherPlayer == null || App.getGame().getCurrentPlayingPlayer().equals(otherPlayer)) {
-            return new Result(false, "Invalid player");
-        }
+    public static void canHug(int gameId, String otherPlayerUsername, Consumer<Result> callback) {
+        //TODO
+//        if (otherPlayerUsername == null || LoggedInUser.getUser().getUsername().equals(otherPlayerUsername)) {
+//            callback.accept(new Result(false, "Invalid player"));
+//            return;
+//        }
+//
+//        fetchRelationsInfo(gameId, relations -> {
+//            RelationWithPlayers tempRelation = relations.get(otherPlayerUsername);
+//
+//            if (tempRelation == null) {
+//                callback.accept(new Result(false, "Invalid player"));
+//            } else if (!tempRelation.canHug()) {
+//                callback.accept(new Result(false, "Your friendship level must be at least two"));
+//            } else {
+//                callback.accept(new Result(true, ""));
+//            }
+//        });
+    }
 
-        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
-        Set<Player> lookUpKey = new HashSet<>();
-        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
-        lookUpKey.add(otherPlayer);
 
-        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+    public static void hug(String otherPlayerUsername) {
+        //TODO
+//
+//        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
+//        Set<Player> lookUpKey = new HashSet<>();
+//        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
+//        lookUpKey.add(otherPlayer);
+//
+//        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+//
+//        if (tempRelation.canHug()) {
+//            if (!tempRelation.HaveHuggedToday()) {
+//                tempRelation.setHaveHuggedToday(true);
+//                tempRelation.changeXp(60);
+//            }
+//
+//            if (tempRelation.isMarriage()) {
+//                App.getGame().getCurrentPlayingPlayer().addEnergy(50);
+//                otherPlayer.addEnergy(50);
+//            }
+//        }
+    }
 
-        if (!tempRelation.canHug()) {
-            return new Result(false, "your friendship level must be at least two");
-        }
+    public static void canGiveFlower(int gameId,String otherPlayerUsername, Consumer<Result> callback) {
+        //TODO
+//        if (otherPlayerUsername == null || LoggedInUser.getUser().getUsername().equals(otherPlayerUsername)) {
+//            callback.accept(new Result(false, "Invalid player"));
+//            return;
+//        }
+//
+//        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Bouquet(),
+//            0) == 0) {
+//            return new Result(false, "You don't have any bouquet!");
+//        }
+//
+//        fetchRelationsInfo(gameId, relations -> {
+//            RelationWithPlayers tempRelation = relations.get(otherPlayerUsername);
+//
+//            if (tempRelation == null) {
+//                callback.accept(new Result(false, "Invalid player"));
+//            } else if (!tempRelation.canGiveFlower()) {
+//                callback.accept(new Result(false, "you can't give flower at this friendship level"));
+//            } else {
+//                callback.accept(new Result(true, ""));
+//            }
+//        });
+    }
 
-        return new Result(true, "");
+    public static void giveFlower(String otherPlayerUsername) {
+        //TODO
+//
+//        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
+//        Set<Player> lookUpKey = new HashSet<>();
+//        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
+//        lookUpKey.add(otherPlayer);
+//
+//        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+//
+//        tempRelation.setGaveFlower();
+//        tempRelation.setHaveGaveFlowerToday(true);
+//        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Bouquet(), 1);
+//        otherPlayer.getBackpack().addIngredients(new Bouquet(), 1);
+//        if (tempRelation.isMarriage()) {
+//            App.getGame().getCurrentPlayingPlayer().addEnergy(50);
+//            otherPlayer.addEnergy(50);
+//        }
+//        tempRelation.changeXp(0);
 
     }
 
-    public static void hug(Player otherPlayer) {
-
-        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
-        Set<Player> lookUpKey = new HashSet<>();
-        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
-        lookUpKey.add(otherPlayer);
-
-        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-
-        if (tempRelation.canHug()) {
-            if (!tempRelation.HaveHuggedToday()) {
-                tempRelation.setHaveHuggedToday(true);
-                tempRelation.changeXp(60);
-            }
-
-            if (tempRelation.isMarriage()) {
-                App.getGame().getCurrentPlayingPlayer().addEnergy(50);
-                otherPlayer.addEnergy(50);
-            }
-        }
+    public static void canAskMarriage(int gameId,String otherPlayerUsername, Consumer<Result> callback) {
+        //TODO
+//        if (otherPlayer == null || App.getGame().getCurrentPlayingPlayer().equals(otherPlayer)) {
+//            return new Result(false, "Invalid player!");
+//        }
+//
+//        if (App.getGame().getCurrentPlayingPlayer().getCurrentUser().getGender().equals(Gender.Female) || otherPlayer.getCurrentUser().getGender().equals(Gender.Male)) {
+//            return new Result(false , "Gender conflict!");
+//        }
+//
+//        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
+//        Set<Player> lookUpKey = new HashSet<>();
+//        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
+//        lookUpKey.add(otherPlayer);
+//
+//        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+//
+//        if (tempRelation.isMarriage()) {
+//            return new Result(false , "She's your wife!!!");
+//        }
+//
+//        if (!tempRelation.canRequestMarriage()) {
+//            return new Result(false, "You can't request marriage at this friendship level!");
+//        }
+//
+//        if (otherPlayer.isMarried()) {
+//            return new Result(false , "She's married!");
+//        }
+//
+//        for (Player player : App.getGame().getPlayers()) {
+//            for (Notification notification : player.getNotifications()) {
+//                if (notification instanceof MarriageRequest) {
+//                    if (!notification.isChecked() && notification.getSender().equals(App.getGame().getCurrentPlayingPlayer())) {
+//                        return new Result(false , "Del ke nist, karvansarast!");
+//                    }
+//                }
+//            }
+//        }
+//
+//        for (Notification notification : otherPlayer.getNotifications()) {
+//            if (notification instanceof MarriageRequest && !notification.isChecked()) {
+//                return new Result(false , "Vaisa to saf");
+//            }
+//        }
+//
+//        return new Result(true,"");
     }
 
-    public static Result canGiveFlower(Player otherPlayer) {
-        if (otherPlayer == null || App.getGame().getCurrentPlayingPlayer().equals(otherPlayer)) {
-            return new Result(false, "Invalid player!");
-        }
-
-        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Bouquet(),
-            0) == 0) {
-            return new Result(false, "You don't have any bouquet!");
-        }
-
-        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
-        Set<Player> lookUpKey = new HashSet<>();
-        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
-        lookUpKey.add(otherPlayer);
-
-        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-
-        if (!tempRelation.canGiveFlower()) {
-            return new Result(false, "you can't give flower at this friendship level");
-        }
-
-        return new Result(true, "");
-
-    }
-
-    public static void giveFlower(Player otherPlayer) {
-
-        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
-        Set<Player> lookUpKey = new HashSet<>();
-        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
-        lookUpKey.add(otherPlayer);
-
-        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-
-        tempRelation.setGaveFlower();
-        tempRelation.setHaveGaveFlowerToday(true);
-        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Bouquet(), 1);
-        otherPlayer.getBackpack().addIngredients(new Bouquet(), 1);
-        if (tempRelation.isMarriage()) {
-            App.getGame().getCurrentPlayingPlayer().addEnergy(50);
-            otherPlayer.addEnergy(50);
-        }
-        tempRelation.changeXp(0);
-
-    }
-
-    public static Result canAskMarriage(Player otherPlayer) {
-        if (otherPlayer == null || App.getGame().getCurrentPlayingPlayer().equals(otherPlayer)) {
-            return new Result(false, "Invalid player!");
-        }
-
-        if (App.getGame().getCurrentPlayingPlayer().getCurrentUser().getGender().equals(Gender.Female) || otherPlayer.getCurrentUser().getGender().equals(Gender.Male)) {
-            return new Result(false , "Gender conflict!");
-        }
-
-        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
-        Set<Player> lookUpKey = new HashSet<>();
-        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
-        lookUpKey.add(otherPlayer);
-
-        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-
-        if (tempRelation.isMarriage()) {
-            return new Result(false , "She's your wife!!!");
-        }
-
-        if (!tempRelation.canRequestMarriage()) {
-            return new Result(false, "You can't request marriage at this friendship level!");
-        }
-
-        if (otherPlayer.isMarried()) {
-            return new Result(false , "She's married!");
-        }
-
-        for (Player player : App.getGame().getPlayers()) {
-            for (Notification notification : player.getNotifications()) {
-                if (notification instanceof MarriageRequest) {
-                    if (!notification.isChecked() && notification.getSender().equals(App.getGame().getCurrentPlayingPlayer())) {
-                        return new Result(false , "Del ke nist, karvansarast!");
-                    }
-                }
-            }
-        }
-
-        for (Notification notification : otherPlayer.getNotifications()) {
-            if (notification instanceof MarriageRequest && !notification.isChecked()) {
-                return new Result(false , "Vaisa to saf");
-            }
-        }
-
-        return new Result(true,"");
-    }
-
-    public static void askMarriage(Player otherPlayer) {
-        otherPlayer.addNotification(new MarriageRequest("You are my soulmate. Every day with you feels like a dream. Will you stay by my side forever?", App.getGame().getCurrentPlayingPlayer()));
+    public static void askMarriage(String otherPlayerUsername) {
+        //TODO
+        //otherPlayer.addNotification(new MarriageRequest("You are my soulmate. Every day with you feels like a dream. Will you stay by my side forever?", App.getGame().getCurrentPlayingPlayer()));
     }
 
     public static void checkForMarriageRequest(Stage stage) {

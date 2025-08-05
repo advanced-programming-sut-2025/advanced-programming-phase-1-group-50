@@ -25,7 +25,7 @@ public class TimeService {
         executor.scheduleAtFixedRate(() -> {
             timeProvider.getTime().advancedMinute(10);
             sendUpdateTime();
-        }, 1, 1,TimeUnit.SECONDS);
+        }, 10, 10,TimeUnit.SECONDS);
     }
     // TODO : when the game finished , we should stop the executor;
     public void stop() {
@@ -40,6 +40,15 @@ public class TimeService {
             cl.sendMessage(m);
         }
 
+    }
+
+
+    public void sendFadeMessage(){
+        HashMap<String , Object> body = new HashMap<>();
+        Message message = new Message(body , MessageType.FADE_NIGHT);
+        for(ClientConnectionThread cl : game.clientConnectionThreads()){
+            cl.sendMessage(message);
+        }
     }
 
 }

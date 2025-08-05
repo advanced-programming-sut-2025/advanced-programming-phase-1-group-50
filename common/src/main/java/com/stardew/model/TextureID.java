@@ -717,6 +717,7 @@ public enum TextureID {
     brokenHeartEmoji,
     thankYouEmoji,
     OopsEmoji,
+    quarry;
 
 
     }
