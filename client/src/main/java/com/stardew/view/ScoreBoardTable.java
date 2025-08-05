@@ -51,7 +51,7 @@ public class ScoreBoardTable extends Table {
         row();
 
         // Buttons under headers
-        coinSort = new TextButton("coin", skin);
+        coinSort = new TextButton("", skin);
         coinSort.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -60,7 +60,7 @@ public class ScoreBoardTable extends Table {
 //                updatePlayer();
             }
         });
-        farmingSort = new TextButton("farming", skin);
+        farmingSort = new TextButton("", skin);
         farmingSort.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -69,7 +69,7 @@ public class ScoreBoardTable extends Table {
 //                updatePlayer();
             }
         });
-        fishingSort = new TextButton("fishing", skin);
+        fishingSort = new TextButton("", skin);
         fishingSort.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -78,7 +78,7 @@ public class ScoreBoardTable extends Table {
 //                updatePlayer();
             }
         });
-        foragingSort = new TextButton("foraging", skin);
+        foragingSort = new TextButton("", skin);
         foragingSort.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -87,7 +87,7 @@ public class ScoreBoardTable extends Table {
 //                updatePlayer();
             }
         });
-        miningSort = new TextButton("mining", skin);
+        miningSort = new TextButton("", skin);
         miningSort.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -97,15 +97,15 @@ public class ScoreBoardTable extends Table {
         });
 
         add(new Label("", skin)).pad(5); // Empty cell under "Player"
-        add(coinSort).padTop(5);
-        add(farmingSort).padTop(5);
-        add(fishingSort).padTop(5);
-        add(foragingSort).padTop(5);
-        add(miningSort).padTop(5);
+        add(coinSort).size(40 , 40).padTop(5);
+        add(farmingSort).size(40 , 40).padTop(5);
+        add(fishingSort).size(40 , 40).padTop(5);
+        add(foragingSort).size(40 , 40).padTop(5);
+        add(miningSort).size(40 , 40).padTop(5);
         row();
 
         pack();
-        setPosition(150, Gdx.graphics.getHeight() - this.getHeight() - 30);
+        setPosition(200, Gdx.graphics.getHeight() - this.getHeight() - 30);
     }
 
 
@@ -123,11 +123,11 @@ public class ScoreBoardTable extends Table {
 
         // Sort buttons
         add(new Label("", skin)).pad(5);
-        add(coinSort).padTop(5);
-        add(farmingSort).padTop(5);
-        add(fishingSort).padTop(5);
-        add(foragingSort).padTop(5);
-        add(miningSort).padTop(5);
+        add(coinSort).size(40 , 40).padTop(5);
+        add(farmingSort).size(40 , 40).padTop(5);
+        add(fishingSort).size(40 , 40).padTop(5);
+        add(foragingSort).size(40 , 40).padTop(5);
+        add(miningSort).size(40 , 40).padTop(5);
         row();
 
         ArrayList<ScoreBoardDTO> scores = gameState.getScoreBoard();
@@ -161,7 +161,7 @@ public class ScoreBoardTable extends Table {
                 row();
                 pack();
                 invalidate();
-                setPosition(150, Gdx.graphics.getHeight() - getHeight() - 30);
+                setPosition(200, Gdx.graphics.getHeight() - getHeight() - 30);
             } else {
                 Array<Label> stats = playerStats.get(name);
                 stats.get(0).setText("" + coin);
