@@ -79,7 +79,7 @@ public class RefrigeratorWindow extends CloseableWindow {
             public void clicked(InputEvent event, float x, float y) {
                 InventoryItemDTO itemDTO = refrigeratorGridActor.getSelectedItem();
                 if (itemDTO == null) {
-//                    showResult(new Result(false, "Please select an item!"));
+                    showResult(new Result(false, "Please select an item!"));
                     return;
                 }
                 new Thread(() -> {
@@ -91,7 +91,7 @@ public class RefrigeratorWindow extends CloseableWindow {
                     Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
                     if (response != null && response.getType() == MessageType.EVENT_IN_GAME_RESULT) {
                         Result result = response.getFromBody("result", Result.class);
-//                        Gdx.app.postRunnable(() -> showResult(result));
+                        Gdx.app.postRunnable(() -> showResult(result));
                         updateRefrigeratorWithMessage();
                         updateBackpackWithMessage();
                     }
@@ -107,7 +107,7 @@ public class RefrigeratorWindow extends CloseableWindow {
                 int sy = backpackGridActor.getSelectedY();
                 InventoryItemDTO itemDTO = backpackGridActor.getInventoryItemByXAndY(sx, sy);
                 if (itemDTO == null) {
-//                    showResult(new Result(false, "Please select an item!"));
+                    showResult(new Result(false, "Please select an item!"));
                     return;
                 }
                 new Thread(() -> {
@@ -119,7 +119,7 @@ public class RefrigeratorWindow extends CloseableWindow {
                     Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
                     if (response != null && response.getType() == MessageType.EVENT_IN_GAME_RESULT) {
                         Result result = response.getFromBody("result", Result.class);
-//                        Gdx.app.postRunnable(() -> showResult(result));
+                        Gdx.app.postRunnable(() -> showResult(result));
                         updateRefrigeratorWithMessage();
                         updateBackpackWithMessage();
                     }
@@ -132,7 +132,7 @@ public class RefrigeratorWindow extends CloseableWindow {
             public void clicked(InputEvent event, float x, float y) {
                 InventoryItemDTO itemDTO = refrigeratorGridActor.getSelectedItem();
                 if (itemDTO == null) {
-//                    showResult(new Result(false, "Please select an item!"));
+                    showResult(new Result(false, "Please select an item!"));
                     return;
                 }
                 new Thread(() -> {
@@ -144,7 +144,7 @@ public class RefrigeratorWindow extends CloseableWindow {
                     Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
                     if (response != null && response.getType() == MessageType.EVENT_IN_GAME_RESULT) {
                         Result result = response.getFromBody("result", Result.class);
-//                        Gdx.app.postRunnable(() -> showResult(result));
+                        Gdx.app.postRunnable(() -> showResult(result));
                         updateRefrigeratorWithMessage();
                     }
                 }).start();
