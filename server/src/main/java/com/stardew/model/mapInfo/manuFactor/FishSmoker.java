@@ -1,6 +1,7 @@
 package com.stardew.model.mapInfo.manuFactor;
 
 import com.stardew.model.Result;
+import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.mapInfo.Ingredient;
 import com.stardew.model.mapInfo.foraging.ForagingMineral;
@@ -11,8 +12,13 @@ import com.stardew.model.animals.Fish;
 
 public class FishSmoker extends ArtisanMachine{
 
-    public FishSmoker(TimeProvider timeProvider) {
-        super(timeProvider);
+    public FishSmoker(TimeProvider timeProvider, int x, int y) {
+        super(timeProvider, x, y);
+    }
+
+    @Override
+    public TextureID getTexture() {
+        return TextureID.fishSmoker;
     }
 
     @Override

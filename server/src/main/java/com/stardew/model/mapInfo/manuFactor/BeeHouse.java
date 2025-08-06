@@ -1,6 +1,7 @@
 package com.stardew.model.mapInfo.manuFactor;
 
 import com.stardew.model.Result;
+import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.gameApp.date.TimeInterval;
 import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGood;
@@ -8,9 +9,14 @@ import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGoodType;
 import com.stardew.model.userInfo.Player;
 
 public class BeeHouse extends ArtisanMachine{
-    public BeeHouse(TimeProvider timeProvider) {
-        super(timeProvider);
+    public BeeHouse(TimeProvider timeProvider, int x, int y) {
+        super(timeProvider, x, y);
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Honey), new TimeInterval(4, 0));
+    }
+
+    @Override
+    public TextureID getTexture() {
+        return TextureID.beeHouse;
     }
 
     @Override

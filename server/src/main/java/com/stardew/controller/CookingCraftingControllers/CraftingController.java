@@ -3,7 +3,6 @@ package com.stardew.controller.CookingCraftingControllers;
 import com.stardew.model.Result;
 import com.stardew.model.Tools.Tool;
 import com.stardew.model.animals.*;
-import com.stardew.model.gameApp.App;
 import com.stardew.model.cooking.Food;
 import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.mapInfo.*;
@@ -33,20 +32,6 @@ public class CraftingController {
     }
 
 
-
-//    public Result craftingShowRecipes() {
-//        Player player = App.getGame().getCurrentPlayingPlayer();
-//        HashSet<CraftingRecipes> recipes = player.getBackpack().getCraftingRecipes();
-//        StringBuilder output = new StringBuilder();
-//        output.append("Crafting Recipes: \n");
-//        int counter = 1;
-//        for (CraftingRecipes recipe : recipes) {
-//            output.append(String.format("%-2d. %s\n", counter, recipe));
-//            counter++;
-//        }
-//        return new Result(true, output.toString());
-//    }
-//
 
     public void craftingCraft(Message message, Player player, GameMap map, TimeProvider timeProvider, ClientConnectionThread connection) {
         if (message == null) return;
@@ -97,32 +82,32 @@ public class CraftingController {
             player.getBackpack().removeIngredients(ingredient, ingredients.get(ingredient));
         }
 
-        ArtisanMachine artisanMachine = ArtisanMachine.getArtisanMachineByRecipe(recipe, timeProvider);
-        if (artisanMachine != null) {
-            Tile tile = map.findTile(x, y);
-            if (tile == null) {
-                sendResultMessage(message.getRequestID(), connection, new Result(false, "Please select a valid tile in your farm"));
-                return;
-            }
-            if (tile.getPlaceable() != null) {
-                sendResultMessage(message.getRequestID(), connection, new Result(false, "Selected tile is not free!"));
-                return;
-            }
-            tile.setWalkable(false);
-            tile.setPlaceable(artisanMachine);
-            player.getBackpack().addArtisanMachine(artisanMachine);
-            HashMap<String, Object> body = new HashMap<>();
-            body.put("result", new Result(true, "You craft <" + recipe.name() + "> successfully!"));
-            body.put("machineID", artisanMachine.getId());
-            Message response = new Message(body, MessageType.EVENT_IN_GAME_RESULT);
-            response.setRequestID(message.getRequestID());
-            connection.sendMessage(response);
-
-        }
-        else if (recipe.equals(CraftingRecipes.MysticTreeSeed)) {
+        if (recipe.equals(CraftingRecipes.MysticTreeSeed)) {
             player.getBackpack().addIngredients(TreeSource.MysticTreeSeeds, 1);
             sendResultMessage(message.getRequestID(), connection, new Result(true, "You craft <" + recipe.name() + "> successfully!"));
+            return;
         }
+
+        Tile tile = map.findTile(x, y);
+        if (tile == null) {
+            sendResultMessage(message.getRequestID(), connection, new Result(false, "Please select a valid tile in your farm"));
+            return;
+        }
+        if (tile.getPlaceable() != null) {
+            sendResultMessage(message.getRequestID(), connection, new Result(false, "Selected tile is not free!"));
+            return;
+        }
+        ArtisanMachine artisanMachine = ArtisanMachine.CreateArtisanMachineByRecipe(recipe, timeProvider, x, y);
+        if (artisanMachine == null) return;
+        tile.setWalkable(false);
+        tile.setPlaceable(artisanMachine);
+        player.getBackpack().addArtisanMachine(artisanMachine);
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", new Result(true, "You craft <" + recipe.name() + "> successfully!"));
+        body.put("machineID", artisanMachine.getId());
+        Message response = new Message(body, MessageType.EVENT_IN_GAME_RESULT);
+        response.setRequestID(message.getRequestID());
+        connection.sendMessage(response);
 
     }
 

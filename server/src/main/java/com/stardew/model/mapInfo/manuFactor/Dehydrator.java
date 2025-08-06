@@ -1,6 +1,7 @@
 package com.stardew.model.mapInfo.manuFactor;
 
 import com.stardew.model.Result;
+import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.mapInfo.Ingredient;
 import com.stardew.model.mapInfo.foraging.Crop;
@@ -12,8 +13,13 @@ import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGoodType;
 import com.stardew.model.userInfo.Player;
 
 public class Dehydrator extends ArtisanMachine{
-    public Dehydrator(TimeProvider timeProvider) {
-        super(timeProvider);
+    public Dehydrator(TimeProvider timeProvider, int x, int y) {
+        super(timeProvider, x, y);
+    }
+
+    @Override
+    public TextureID getTexture() {
+        return TextureID.dehydrator;
     }
 
     @Override

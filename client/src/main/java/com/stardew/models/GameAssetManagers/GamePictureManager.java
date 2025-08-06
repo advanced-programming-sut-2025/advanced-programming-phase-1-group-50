@@ -226,27 +226,48 @@ public class GamePictureManager {
 
 
     //Crafting :
+        public static TextureRegion cherryBomb = new TextureRegion(new Texture("Crafting/Cherry_Bomb.png"));
+        public static TextureRegion bomb = new TextureRegion(new Texture("Crafting/Bomb.png"));
+        public static TextureRegion megaBomb = new TextureRegion(new Texture("Crafting/Mega_Bomb.png"));
+        public static TextureRegion sprinkler = new TextureRegion(new Texture("Crafting/Sprinkler.png"));
+        public static TextureRegion qualitySprinkler = new TextureRegion(new Texture("Crafting/Quality_Sprinkler.png"));
+        public static TextureRegion iridiumSprinkler = new TextureRegion(new Texture("Crafting/Iridium_Sprinkler.png"));
+        public static TextureRegion charcoalKiln = new TextureRegion(new Texture("Crafting/Charcoal_Kiln.png"));
+        public static TextureRegion furnace = new TextureRegion(new Texture("Crafting/Furnace.png"));
+        public static TextureRegion scarecrow = new TextureRegion(new Texture("Crafting/Scarecrow.png"));
+        public static TextureRegion deluxeScarecrow = new TextureRegion(new Texture("Crafting/Deluxe_Scarecrow.png"));
+        public static TextureRegion beeHouse = new TextureRegion(new Texture("Crafting/Bee_House.png"));
+        public static TextureRegion cheesePress = new TextureRegion(new Texture("Crafting/Cheese_Press.png"));
+        public static TextureRegion keg = new TextureRegion(new Texture("Crafting/Keg.png"));
+        public static TextureRegion loom = new TextureRegion(new Texture("Crafting/Loom.png"));
+        public static TextureRegion mayonnaiseMachine = new TextureRegion(new Texture("Crafting/Mayonnaise_Machine.png"));
+        public static TextureRegion oilMaker = new TextureRegion(new Texture("Crafting/Oil_Maker.png"));
+        public static TextureRegion preservesJar = new TextureRegion(new Texture("Crafting/Preserves_Jar.png"));
+        public static TextureRegion dehydrator = new TextureRegion(new Texture("Crafting/Dehydrator.png"));
+        public static TextureRegion fishSmoker = new TextureRegion(new Texture("Crafting/Fish_Smoker.png"));
+        public static TextureRegion mysticTreeSeed = new TextureRegion(new Texture("Crafting/Mystic_Tree_Seed.png"));
 
-        public static TextureRegionDrawable cherryBombNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Cherry_Bomb.png")));
-        public static TextureRegionDrawable bombNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Bomb.png")));
-        public static TextureRegionDrawable megaBombNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Mega_Bomb.png")));
-        public static TextureRegionDrawable sprinklerNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Sprinkler.png")));
-        public static TextureRegionDrawable qualitySprinklerNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Quality_Sprinkler.png")));
-        public static TextureRegionDrawable iridiumSprinklerNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Iridium_Sprinkler.png")));
-        public static TextureRegionDrawable charcoalKilnNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Charcoal_Kiln.png")));
-        public static TextureRegionDrawable furnaceNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Furnace.png")));
-        public static TextureRegionDrawable scarecrowNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Scarecrow.png")));
-        public static TextureRegionDrawable deluxeScarecrowNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Deluxe_Scarecrow.png")));
-        public static TextureRegionDrawable beeHouseNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Bee_House.png")));
-        public static TextureRegionDrawable cheesePressNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Cheese_Press.png")));
-        public static TextureRegionDrawable kegNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Keg.png")));
-        public static TextureRegionDrawable loomNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Loom.png")));
-        public static TextureRegionDrawable mayonnaiseMachineNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Mayonnaise_Machine.png")));
-        public static TextureRegionDrawable oilMakerNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Oil_Maker.png")));
-        public static TextureRegionDrawable preservesJarNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Preserves_Jar.png")));
-        public static TextureRegionDrawable dehydratorNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Dehydrator.png")));
-        public static TextureRegionDrawable fishSmokerNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Fish_Smoker.png")));
-        public static TextureRegionDrawable mysticTreeSeedNormal = new TextureRegionDrawable(new TextureRegion(new Texture("Crafting/Mystic_Tree_Seed.png")));
+
+        public static TextureRegionDrawable cherryBombNormal = new TextureRegionDrawable(cherryBomb);
+        public static TextureRegionDrawable bombNormal = new TextureRegionDrawable(bomb);
+        public static TextureRegionDrawable megaBombNormal = new TextureRegionDrawable(megaBomb);
+        public static TextureRegionDrawable sprinklerNormal = new TextureRegionDrawable(sprinkler);
+        public static TextureRegionDrawable qualitySprinklerNormal = new TextureRegionDrawable(qualitySprinkler);
+        public static TextureRegionDrawable iridiumSprinklerNormal = new TextureRegionDrawable(iridiumSprinkler);
+        public static TextureRegionDrawable charcoalKilnNormal = new TextureRegionDrawable(charcoalKiln);
+        public static TextureRegionDrawable furnaceNormal = new TextureRegionDrawable(furnace);
+        public static TextureRegionDrawable scarecrowNormal = new TextureRegionDrawable(scarecrow);
+        public static TextureRegionDrawable deluxeScarecrowNormal = new TextureRegionDrawable(deluxeScarecrow);
+        public static TextureRegionDrawable beeHouseNormal = new TextureRegionDrawable(beeHouse);
+        public static TextureRegionDrawable cheesePressNormal = new TextureRegionDrawable(cheesePress);
+        public static TextureRegionDrawable kegNormal = new TextureRegionDrawable(keg);
+        public static TextureRegionDrawable loomNormal = new TextureRegionDrawable(loom);
+        public static TextureRegionDrawable mayonnaiseMachineNormal = new TextureRegionDrawable(mayonnaiseMachine);
+        public static TextureRegionDrawable oilMakerNormal = new TextureRegionDrawable(oilMaker);
+        public static TextureRegionDrawable preservesJarNormal = new TextureRegionDrawable(preservesJar);
+        public static TextureRegionDrawable dehydratorNormal = new TextureRegionDrawable(dehydrator);
+        public static TextureRegionDrawable fishSmokerNormal = new TextureRegionDrawable(fishSmoker);
+        public static TextureRegionDrawable mysticTreeSeedNormal = new TextureRegionDrawable(mysticTreeSeed);
 
         public static TextureRegionDrawable cherryBombDisable = new TextureRegionDrawable(new TextureRegion(new Texture("LockedCrafting/Cherry_Bomb.png")));
         public static TextureRegionDrawable bombDisable = new TextureRegionDrawable(new TextureRegion(new Texture("LockedCrafting/Bomb.png")));

@@ -6,23 +6,21 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.Main;
 import com.stardew.controller.EnergyManager;
 import com.stardew.controller.GameStateController;
-import com.stardew.controller.PlayerController;
 import com.stardew.controller.TimeManager;
-import com.stardew.model.ScoreBoardDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.ShippingBin;
 import com.stardew.models.GameModel;
 import com.stardew.models.app.App;
 import com.stardew.network.GameUpdateRequestThread;
 import com.stardew.view.ArtisanMachine.ArtisanMachinesManager;
-import com.stardew.view.ArtisanMachine.HabitatUI;
+import com.stardew.view.ArtisanMachine.HabitatUIManager;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.ReactionWindows.ReactionTable;
+import com.stardew.view.miniGame.MiniGameStarter;
 import com.stardew.view.windows.SmartTooltip;
 
 public class GameScreenMenu implements Screen {
@@ -79,7 +77,8 @@ public class GameScreenMenu implements Screen {
         uiStage.addActor(hotBarActor);
         SmartTooltip.initialize(stage, GamePictureManager.skin);
         ArtisanMachinesManager.initialize(stage);
-        HabitatUI.initialize(stage, id);
+        HabitatUIManager.initialize(stage, id);
+        MiniGameStarter.initialize(stage);
 
     }
 
@@ -173,10 +172,6 @@ public class GameScreenMenu implements Screen {
 
     public GameMenuInputAdapter getGameMenuInputAdapter() {
         return gameMenuInputAdapter;
-    }
-
-    public Stage getStage() {
-        return stage;
     }
 
     @Override

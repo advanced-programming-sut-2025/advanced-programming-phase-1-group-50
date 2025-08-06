@@ -1,6 +1,6 @@
 package com.stardew.models.GameAssetManagers;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.models.manuFactor.*;
 
 import java.util.ArrayList;
@@ -8,31 +8,31 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum ArtisanAsset {
-    BeeHouse(new Image(GamePictureManager.beeHouseNormal),
+    BeeHouse(GamePictureManager.beeHouseNormal,
         List.of(
             ArtisanGoodAsset.Honey)),
-    CharcoalKiln(new Image(GamePictureManager.charcoalKilnNormal),
+    CharcoalKiln(GamePictureManager.charcoalKilnNormal,
         List.of(
             ArtisanGoodAsset.Coal)),
-    CheesePress(new Image(GamePictureManager.cheesePressNormal),
+    CheesePress(GamePictureManager.cheesePressNormal,
         Arrays.asList(
             ArtisanGoodAsset.Cheese,
             ArtisanGoodAsset.GoatCheese)),
-    Dehydrator(new Image(GamePictureManager.dehydratorNormal),
+    Dehydrator(GamePictureManager.dehydratorNormal,
         Arrays.asList(
             ArtisanGoodAsset.DriedMushroom,
             ArtisanGoodAsset.DriedFruit,
             ArtisanGoodAsset.Raisins)),
-    FishSmoker(new Image(GamePictureManager.fishSmokerNormal),
+    FishSmoker(GamePictureManager.fishSmokerNormal,
         List.of(
             ArtisanGoodAsset.SmokedFish)),
-    Furnace(new Image(GamePictureManager.furnaceNormal),
+    Furnace(GamePictureManager.furnaceNormal,
         Arrays.asList(
             ArtisanGoodAsset.IronBar,
             ArtisanGoodAsset.IridiumBar,
             ArtisanGoodAsset.CopperBar,
             ArtisanGoodAsset.GoldBar)),
-    Keg(new Image(GamePictureManager.kegNormal),
+    Keg(GamePictureManager.kegNormal,
         Arrays.asList(
             ArtisanGoodAsset.Beer,
             ArtisanGoodAsset.Vinegar,
@@ -41,29 +41,29 @@ public enum ArtisanAsset {
             ArtisanGoodAsset.Mead,
             ArtisanGoodAsset.PaleAle,
             ArtisanGoodAsset.Wine)),
-    Loom(new Image(GamePictureManager.loomNormal),
+    Loom(GamePictureManager.loomNormal,
         List.of(
             ArtisanGoodAsset.Cloth)),
-    MayonnaiseMachine(new Image(GamePictureManager.mayonnaiseMachineNormal),
+    MayonnaiseMachine(GamePictureManager.mayonnaiseMachineNormal,
         Arrays.asList(
             ArtisanGoodAsset.Mayonnaise,
             ArtisanGoodAsset.DuckMayonnaise,
             ArtisanGoodAsset.DinosaurMayonnaise)),
-    OilMaker(new Image(GamePictureManager.oilMakerNormal),
+    OilMaker(GamePictureManager.oilMakerNormal,
         Arrays.asList(
             ArtisanGoodAsset.Oil,
             ArtisanGoodAsset.TruffleOil)),
-    PreservesJar(new Image(GamePictureManager.preservesJarNormal),
+    PreservesJar(GamePictureManager.preservesJarNormal,
         Arrays.asList(
             ArtisanGoodAsset.Pickles,
             ArtisanGoodAsset.Jelly));
 
-    private final Image image;
+    private final TextureRegionDrawable drawable;
     private final ArrayList<ArtisanGoodAsset> products;
     private final String description;
 
-    ArtisanAsset(Image image, List<ArtisanGoodAsset> products) {
-        this.image = image;
+    ArtisanAsset(TextureRegionDrawable drawable, List<ArtisanGoodAsset> products) {
+        this.drawable = drawable;
         this.products = new ArrayList<>(products);
 
         StringBuilder des = new StringBuilder();
@@ -75,8 +75,8 @@ public enum ArtisanAsset {
         description = des.toString();
     }
 
-    public Image getImage() {
-        return image;
+    public TextureRegionDrawable getDrawable() {
+        return drawable;
     }
 
     public ArrayList<ArtisanGoodAsset> getProducts() {

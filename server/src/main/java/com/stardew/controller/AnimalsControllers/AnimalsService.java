@@ -7,21 +7,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class AnimalUpdateManager {
-    private static AnimalUpdateManager instance;
+public class AnimalsService {
     private final long deltaMilliSeconds = 20;
     private final ArrayList<Animal> animals = new ArrayList<>();
     private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
-    private AnimalUpdateManager() {
-        startUpdating();
-    }
 
-    public static synchronized AnimalUpdateManager getInstance() {
-        if (instance == null) {
-            instance = new AnimalUpdateManager();
-        }
-        return instance;
+    public AnimalsService() {
+        startUpdating();
     }
 
 
@@ -31,7 +24,13 @@ public class AnimalUpdateManager {
         }
     }
 
-    public void updateAnimals(float delta) {
+    public void removeAnimal(Animal animal) {
+        synchronized (animals) {
+            animals.remove(animal);
+        }
+    }
+
+    private void updateAnimals(float delta) {
         synchronized (animals) {
             for (Animal animal : animals) {
                 animal.update(delta);

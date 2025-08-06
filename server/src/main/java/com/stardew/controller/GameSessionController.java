@@ -45,6 +45,10 @@ public class GameSessionController {
         games.remove(id);
     }
 
+    public void stopAllGames() {
+        games.forEach((id, game) -> game.stopGameProcess());
+    }
+
     public void handleUpdatePlayers(Message message, ClientConnectionThread connection) {
         if (message == null) return;
 
@@ -118,6 +122,16 @@ public class GameSessionController {
             if (animal.isOutOfHabitat())
                 animals.add(animal.toDTO());
         }
+
+        if (animals.isEmpty() && AnimalsController.getInstance().hasSentEmptyListMessage(connection)) {
+            return;
+        }
+        if (animals.isEmpty()) {
+            AnimalsController.getInstance().sendEmptyListMessage(connection);
+        } else {
+            AnimalsController.getInstance().notSentEmptyListMessage(connection);
+        }
+
         HashMap<String, Object> body = new HashMap<>();
         body.put("animals", animals);
         Message response = new Message(body, MessageType.UPDATE_ANIMALS_RESULT);
@@ -285,7 +299,7 @@ public class GameSessionController {
             }
             case SellAnimal -> {
                 Player player = game.getPlayer(connection);
-                AnimalsController.getInstance().sellAnimal(message, player, connection);
+                AnimalsController.getInstance().sellAnimal(message, game.getAnimalsService(), player, connection);
             }
 
             case GetBetweenPlayersGifts -> {

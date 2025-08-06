@@ -1,7 +1,6 @@
 package com.stardew.model.mapInfo.manuFactor;
 
 import com.stardew.model.Result;
-import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.gameApp.date.Time;
 import com.stardew.model.gameApp.date.TimeInterval;
@@ -21,10 +20,13 @@ public abstract class ArtisanMachine implements Placeable {
     protected boolean cheatReady = false;
     protected final String id;
     protected final TimeProvider timeProvider;
+    protected final int x, y;
 
 
-    public ArtisanMachine(TimeProvider timeProvider) {
+    public ArtisanMachine(TimeProvider timeProvider, int x, int y) {
         this.timeProvider = timeProvider;
+        this.x = x;
+        this.y = y;
         processingTimes = new HashMap<>();
         timeOfRequest = null;
         producingGood = null;
@@ -78,6 +80,8 @@ public abstract class ArtisanMachine implements Placeable {
     public int getPassedTime() {
         if (timeOfRequest == null)
             return 0;
+        if (cheatReady)
+            return getTotalProcessingTime();
         int todayDate = timeProvider.getTime().getDate();
         int todayHour = timeProvider.getTime().getHour();
         if (timeProvider.getTime().getSeason() != timeOfRequest.getSeason())
@@ -114,7 +118,7 @@ public abstract class ArtisanMachine implements Placeable {
 
     @Override
     public Rectangle getBounds() {
-        return null;
+        return new Rectangle(x, y, 1, 1);
     }
 
     @Override
@@ -124,35 +128,23 @@ public abstract class ArtisanMachine implements Placeable {
 
 
 
-//    @Override
-//    public TextureID getTexture() {
-//        return ((TextureRegionDrawable)(image.getDrawable())).getRegion();
-//    }
 
-
-
-
-    public static ArtisanMachine getArtisanMachineByRecipe(CraftingRecipes recipe, TimeProvider timeProvider) {
+    public static ArtisanMachine CreateArtisanMachineByRecipe(CraftingRecipes recipe, TimeProvider timeProvider, int x, int y) {
         if (recipe == null)
             return null;
         return switch (recipe) {
-            case CharcoalKiln -> new CharcoalKiln(timeProvider);
-            case Furnace -> new Furnace(timeProvider);
-            case BeeHouse -> new BeeHouse(timeProvider);
-            case CheesePress -> new CheesePress(timeProvider);
-            case Keg -> new Keg(timeProvider);
-            case Loom -> new Loom(timeProvider);
-            case MayonnaiseMachine -> new MayonnaiseMachine(timeProvider);
-            case OilMaker -> new OilMaker(timeProvider);
-            case PreservesJar -> new PreservesJar(timeProvider);
-            case Dehydrator -> new Dehydrator(timeProvider);
-            case FishSmoker -> new FishSmoker(timeProvider);
+            case CharcoalKiln -> new CharcoalKiln(timeProvider, x, y);
+            case Furnace -> new Furnace(timeProvider, x, y);
+            case BeeHouse -> new BeeHouse(timeProvider, x, y);
+            case CheesePress -> new CheesePress(timeProvider, x, y);
+            case Keg -> new Keg(timeProvider, x, y);
+            case Loom -> new Loom(timeProvider, x, y);
+            case MayonnaiseMachine -> new MayonnaiseMachine(timeProvider, x, y);
+            case OilMaker -> new OilMaker(timeProvider, x, y);
+            case PreservesJar -> new PreservesJar(timeProvider, x, y);
+            case Dehydrator -> new Dehydrator(timeProvider, x, y);
+            case FishSmoker -> new FishSmoker(timeProvider, x, y);
             default -> null;
         };
-    }
-
-    @Override
-    public TextureID getTexture() {
-        return null;
     }
 }

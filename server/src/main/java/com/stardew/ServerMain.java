@@ -1,5 +1,6 @@
 package com.stardew;
 
+import com.stardew.controller.GameSessionController;
 import com.stardew.model.ServerApp;
 
 import java.util.Scanner;
@@ -21,6 +22,7 @@ public class ServerMain {
             String input = scanner.nextLine().trim();
             if (input.equalsIgnoreCase("exit")) {
                 ServerApp.endAll();
+                GameSessionController.getInstance().stopAllGames();
                 break;
             }
         }

@@ -1,6 +1,7 @@
 package com.stardew.model.mapInfo.manuFactor;
 
 import com.stardew.model.Result;
+import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.gameApp.date.TimeInterval;
 import com.stardew.model.mapInfo.Ingredient;
@@ -11,9 +12,14 @@ import com.stardew.model.userInfo.Player;
 
 public class CharcoalKiln extends ArtisanMachine {
 
-    public CharcoalKiln(TimeProvider timeProvider) {
-        super(timeProvider);
+    public CharcoalKiln(TimeProvider timeProvider, int x, int y) {
+        super(timeProvider, x, y);
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Coal), new TimeInterval(0, 1));
+    }
+
+    @Override
+    public TextureID getTexture() {
+        return TextureID.charcoalKiln;
     }
 
     @Override

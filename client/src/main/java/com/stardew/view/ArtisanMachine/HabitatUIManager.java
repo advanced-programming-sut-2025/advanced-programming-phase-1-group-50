@@ -8,31 +8,32 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.stardew.model.HabitatDTO;
-import com.stardew.model.TextureID;
 import com.stardew.models.GameAssetManagers.GameAssetIDManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.view.windows.HabitatWindow;
 
-import java.util.ArrayList;
-
-public class HabitatUI {
-    private static final ArrayList<HabitatUI> habitatUIs = new ArrayList<>();
-    private static Stage stage;
-    private static int gameID;
+public class HabitatUIManager {
+    private static HabitatUIManager instance;
+    private final Stage stage;
+    private final int gameID;
 
 
-    public static void addHabitatUI(HabitatUI habitatUI) {
-        habitatUIs.add(habitatUI);
+    private HabitatUIManager(Stage stage, int gameID) {
+        this.stage = stage;
+        this.gameID = gameID;
     }
 
     public static void initialize(Stage stage, int gameID) {
-        HabitatUI.stage = stage;
-        HabitatUI.gameID = gameID;
+        instance = new HabitatUIManager(stage, gameID);
+    }
+
+    public static HabitatUIManager getInstance() {
+        return instance;
     }
 
 
 
-    public HabitatUI(HabitatDTO habitat) {
+    public void createHabitatUI(HabitatDTO habitat) {
         int x = habitat.getX() * GamePictureManager.TILE_SIZE;
         int y = habitat.getY() * GamePictureManager.TILE_SIZE;
         Image image = new Image(GameAssetIDManager.getTextureRegion(habitat.getTextureID()));

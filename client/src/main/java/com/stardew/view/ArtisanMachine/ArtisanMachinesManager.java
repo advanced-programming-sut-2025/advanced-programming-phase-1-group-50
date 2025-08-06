@@ -15,17 +15,10 @@ public class ArtisanMachinesManager {
     }
 
     public static synchronized void initialize(Stage stage) {
-        if (instance == null) {
-            instance = new ArtisanMachinesManager(stage);
-        } else {
-            throw new IllegalStateException("ArtisanMachinesManager has already been initialized!");
-        }
+        instance = new ArtisanMachinesManager(stage);
     }
 
     public static ArtisanMachinesManager getInstance() {
-        if (instance == null) {
-            throw new IllegalStateException("ArtisanMachinesManager has not been initialized!");
-        }
         return instance;
     }
 

@@ -10,9 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.stardew.model.DrawableID;
 import com.stardew.models.GameAssetManagers.ArtisanAsset;
-import com.stardew.models.GameAssetManagers.GameAssetIDManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
@@ -37,7 +35,7 @@ public class ArtisanMachineUI {
         this.machineID = machineID;
         this.gameID = gameID;
 
-        mainImage = artisanAsset.getImage();
+        mainImage = new Image(artisanAsset.getDrawable());
         endProcessImage = new Image(GamePictureManager.endProcessTexture);
         processBar = new ProgressBar(0, 10, 1, false, GamePictureManager.skin);
         processLabel = new Label("0 / ", GamePictureManager.skin);
