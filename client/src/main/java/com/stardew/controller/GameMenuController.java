@@ -397,52 +397,6 @@ public class GameMenuController {
         return new Result(true, "your plants in your green house are harvesting");
     }
 
-    public Result storeMenu() {
-
-        Map gameMap = App.getGame().getMap();
-
-        if (gameMap.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), gameMap.getNpcVillage().getBlacksmith())) {
-
-            App.setMenu(Menus.BlackSmithMenu);
-            return new Result(true, "Now you are in the blacksmith");
-
-        } else if (gameMap.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), gameMap.getNpcVillage().getCarpenterShop())) {
-
-            App.setMenu(Menus.CarpenterShopMenu);
-            return new Result(true, "Now you are in the carpenterShop");
-
-        } else if (gameMap.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), gameMap.getNpcVillage().getMarnieRanch())) {
-
-            App.setMenu(Menus.MarnieRanchMenu);
-            return new Result(true, "Now you are in the Marnie's Ranch");
-
-        } else if (gameMap.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), gameMap.getNpcVillage().getJojaMart())) {
-
-            App.setMenu(Menus.JojaMartMenu);
-            return new Result(true, "Now you are in the Joja Mart");
-
-        } else if (gameMap.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), gameMap.getNpcVillage().getPierreGeneralStore())) {
-
-            App.setMenu(Menus.PierreGeneralStoreMenu);
-            return new Result(true, "Now you are in the Pierre General Store");
-
-        } else if (gameMap.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), gameMap.getNpcVillage().getFishShop())) {
-
-            App.setMenu(Menus.FishShopMenu);
-            return new Result(true, "Now you are in the Fish Shop");
-
-        } else if (gameMap.isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), gameMap.getNpcVillage().getStardopSaloon())) {
-
-            App.setMenu(Menus.StardopSaloonMenu);
-            return new Result(true, "Now you are in the Stardop Saloon");
-
-        } else {
-
-            return new Result(false, "you must be near a store");
-
-        }
-    }
-
     public Result startTrade() {
 
         App.setMenu(Menus.TradeMenu);

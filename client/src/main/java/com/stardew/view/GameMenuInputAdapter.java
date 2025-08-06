@@ -291,8 +291,8 @@ public class GameMenuInputAdapter extends InputAdapter {
         }).start();
     }
 
-    public void createStoreWindow(Store store) {
-        stage.addActor(new StoreWindow(stage , store));
+    public void createStoreWindow(String assistantName) {
+        stage.addActor(new StoreWindow(id,stage , assistantName));
     }
 
     public void showClosedStoreMessage() {

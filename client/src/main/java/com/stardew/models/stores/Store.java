@@ -65,7 +65,7 @@ public abstract class Store implements Placeable {
 
     private void createStoreWindow() {
         if (isOpen()) {
-            ((GameScreenMenu) Main.getMain().getScreen()).getGameMenuInputAdapter().createStoreWindow(this);
+            ((GameScreenMenu) Main.getMain().getScreen()).getGameMenuInputAdapter().createStoreWindow(this.shopAssistantName);
         } else {
             ((GameScreenMenu) Main.getMain().getScreen()).getGameMenuInputAdapter().showClosedStoreMessage();
         }
