@@ -171,21 +171,7 @@ public class PlayersRelationController {
                 callback.accept(new Result(false, "Server did not respond"));
             }
         }).start();
-
-//
-//        fetchRelationsInfo(gameId, relations -> {
-//            RelationWithPlayers tempRelation = relations.get(otherPlayerUsername);
-//
-//            if (tempRelation == null) {
-//                callback.accept(new Result(false, "Invalid player"));
-//            } else if (!tempRelation.canHug()) {
-//                callback.accept(new Result(false, "Your friendship level must be at least two"));
-//            } else {
-//                callback.accept(new Result(true, ""));
-//            }
-//        });
     }
-
 
     public static void hug(String otherPlayerUsername) {
         //TODO

@@ -128,7 +128,7 @@ public class PlayersRelationController {
     }
 
     public void sendGiftToPlayer(Message message,Player sender,ClientConnectionThread clientConnectionThread) {
-        if (message == null) {
+        if (message == null || sender == null) {
             return;
         }
 
@@ -181,6 +181,52 @@ public class PlayersRelationController {
         HashMap<String , Object> body = new HashMap<>();
         body.put("result", result);
         Message response = new Message(body, MessageType.SEND_GIFT_TO_PLAYER_RESULT);
+        response.setRequestID(message.getRequestID());
+        clientConnectionThread.sendMessage(response);
+    }
+
+    public void canHug(Message message,Player player,ClientConnectionThread clientConnectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int id = message.getIntFromBody("id");
+        Game game = GameSessionController.getInstance().getGame(id);
+        String otherPlayerUsername = message.getFromBody("otherPlayerUsername");
+        Player otherPlayer = null;
+
+        for (Player p : game.getAllPlayers()) {
+            if (p.getUsername().equals(otherPlayerUsername)) {
+                otherPlayer = p;
+                break;
+            }
+        }
+
+        if (otherPlayer == null) {
+            return;
+        }
+
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(player);
+        lookUpKey.add(otherPlayer);
+
+        RelationWithPlayers tempRelation = game.getRelationsBetweenPlayers().relationNetwork.get(lookUpKey);
+
+        if (tempRelation == null) {
+            return;
+        }
+
+        Result result;
+
+        if (!tempRelation.canHug()) {
+            result = new Result(false, "Your friendship level must be at least two");
+        } else {
+            result = new Result(true, "");
+        }
+
+        HashMap<String , Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body,MessageType.CAN_HUG_RESULT);
         response.setRequestID(message.getRequestID());
         clientConnectionThread.sendMessage(response);
     }
