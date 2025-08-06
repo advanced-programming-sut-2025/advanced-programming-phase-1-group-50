@@ -1,5 +1,6 @@
 package com.stardew.controller;
 
+import com.stardew.model.Bouquet;
 import com.stardew.model.Notification.Notification;
 import com.stardew.model.PlayersRelation.BetweenPlayersGift;
 import com.stardew.model.PlayersRelation.RelationWithPlayers;
@@ -227,6 +228,56 @@ public class PlayersRelationController {
         HashMap<String , Object> body = new HashMap<>();
         body.put("result", result);
         Message response = new Message(body,MessageType.CAN_HUG_RESULT);
+        response.setRequestID(message.getRequestID());
+        clientConnectionThread.sendMessage(response);
+    }
+
+    public void canGiveFlower(Message message,Player player,ClientConnectionThread clientConnectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int id = message.getIntFromBody("id");
+        Game game = GameSessionController.getInstance().getGame(id);
+        String otherPlayerUsername = message.getFromBody("otherPlayerUsername");
+        Player otherPlayer = null;
+
+        for (Player p : game.getAllPlayers()) {
+            if (p.getUsername().equals(otherPlayerUsername)) {
+                otherPlayer = p;
+                break;
+            }
+        }
+
+        if (otherPlayer == null) {
+            return;
+        }
+
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(player);
+        lookUpKey.add(otherPlayer);
+
+        RelationWithPlayers tempRelation = game.getRelationsBetweenPlayers().relationNetwork.get(lookUpKey);
+
+        if (tempRelation == null) {
+            return;
+        }
+
+        Result result;
+
+        if (player.getBackpack().getIngredientQuantity().getOrDefault(new Bouquet(),0) == 0) {
+            result = new Result(false, "You don't have any bouquet!");
+        } else {
+            if (!tempRelation.canGiveFlower()) {
+                result = new Result(false, "you can't give flower at this friendship level");
+            } else {
+                result = new Result(true, "");
+            }
+        }
+
+        HashMap<String , Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body,MessageType.CAN_GIVE_FLOWER_RESULT);
         response.setRequestID(message.getRequestID());
         clientConnectionThread.sendMessage(response);
     }

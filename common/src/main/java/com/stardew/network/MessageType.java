@@ -71,4 +71,5 @@ public enum MessageType {
     SEND_GIFT_TO_PLAYER_RESULT,
     FADE_NIGHT,
     CAN_HUG_RESULT,
+    CAN_GIVE_FLOWER_RESULT,
 }

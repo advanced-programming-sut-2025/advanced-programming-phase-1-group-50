@@ -305,6 +305,11 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().canHug(message, player, connection);
             }
+
+            case CanGiveFlower -> {
+                Player player = game.getPlayer(connection);
+                PlayersRelationController.getInstance().canGiveFlower(message, player, connection);
+            }
         }
 
     }

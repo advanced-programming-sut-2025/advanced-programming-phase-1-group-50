@@ -197,28 +197,26 @@ public class PlayersRelationController {
     }
 
     public static void canGiveFlower(int gameId,String otherPlayerUsername, Consumer<Result> callback) {
-        //TODO
-//        if (otherPlayerUsername == null || LoggedInUser.getUser().getUsername().equals(otherPlayerUsername)) {
-//            callback.accept(new Result(false, "Invalid player"));
-//            return;
-//        }
-//
-//        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Bouquet(),
-//            0) == 0) {
-//            return new Result(false, "You don't have any bouquet!");
-//        }
-//
-//        fetchRelationsInfo(gameId, relations -> {
-//            RelationWithPlayers tempRelation = relations.get(otherPlayerUsername);
-//
-//            if (tempRelation == null) {
-//                callback.accept(new Result(false, "Invalid player"));
-//            } else if (!tempRelation.canGiveFlower()) {
-//                callback.accept(new Result(false, "you can't give flower at this friendship level"));
-//            } else {
-//                callback.accept(new Result(true, ""));
-//            }
-//        });
+        new Thread(() -> {
+            if (otherPlayerUsername == null || LoggedInUser.getUser().getUsername().equals(otherPlayerUsername)) {
+                callback.accept(new Result(false, "Invalid player"));
+                return;
+            }
+
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("otherPlayerUsername", otherPlayerUsername);
+            body.put("event",Event.CanGiveFlower);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+
+            if (response != null && response.getType().equals(MessageType.CAN_GIVE_FLOWER_RESULT)) {
+                Result result = response.getFromBody("result", Result.class);
+                callback.accept(result);
+            } else {
+                callback.accept(new Result(false, "Server did not respond"));
+            }
+        }).start();
     }
 
     public static void giveFlower(String otherPlayerUsername) {
