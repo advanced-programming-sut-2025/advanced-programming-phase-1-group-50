@@ -315,6 +315,11 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().canAskMarriage(message, player, connection);
             }
+
+            case GetForSaleProducts -> {
+                Player player = game.getPlayer(connection);
+                PlayersRelationController.getInstance().getForSaleProducts(message, player, connection);
+            }
         }
 
     }

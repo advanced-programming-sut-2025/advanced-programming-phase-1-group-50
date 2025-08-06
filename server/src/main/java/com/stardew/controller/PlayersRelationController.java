@@ -334,4 +334,25 @@ public class PlayersRelationController {
         response.setRequestID(message.getRequestID());
         clientConnectionThread.sendMessage(response);
     }
+
+    public void getForSaleProducts(Message message,Player player,ClientConnectionThread clientConnectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        HashMap<String , Integer> products = new HashMap<>();
+        HashMap<Ingredient,Integer> ingredientQuantity = player.getBackpack().getIngredientQuantity();
+
+        for (Ingredient ingredient : ingredientQuantity.keySet()) {
+            if (Sellable.isSellable(ingredient.toString()) && ingredientQuantity.get(ingredient) > 0) {
+                products.put(ingredient.toString(),ingredientQuantity.get(ingredient));
+            }
+        }
+
+        HashMap<String , Object> body = new HashMap<>();
+        body.put("products", products);
+        Message response = new Message(body, MessageType.GET_FOR_SALE_PRODUCTS_INFO);
+        response.setRequestID(message.getRequestID());
+        clientConnectionThread.sendMessage(response);
+    }
 }

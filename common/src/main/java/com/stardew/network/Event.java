@@ -39,4 +39,5 @@ public enum Event {
     CanHug,
     CanGiveFlower,
     CanAskMarriage,
+    GetForSaleProducts,
 }
