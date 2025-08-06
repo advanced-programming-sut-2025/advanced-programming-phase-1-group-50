@@ -151,25 +151,27 @@ public class PlayersRelationController {
     }
 
     public static void canHug(int gameId, String otherPlayerUsername, Consumer<Result> callback) {
-        //TODO
-//        if (otherPlayerUsername == null || LoggedInUser.getUser().getUsername().equals(otherPlayerUsername)) {
-//            callback.accept(new Result(false, "Invalid player"));
-//            return;
-//        }
-//
-//        fetchRelationsInfo(gameId, relations -> {
-//            RelationWithPlayers tempRelation = relations.get(otherPlayerUsername);
-//
-//            if (tempRelation == null) {
-//                callback.accept(new Result(false, "Invalid player"));
-//            } else if (!tempRelation.canHug()) {
-//                callback.accept(new Result(false, "Your friendship level must be at least two"));
-//            } else {
-//                callback.accept(new Result(true, ""));
-//            }
-//        });
-    }
+        new Thread(() -> {
+            if (otherPlayerUsername == null || LoggedInUser.getUser().getUsername().equals(otherPlayerUsername)) {
+                callback.accept(new Result(false, "Invalid player"));
+                return;
+            }
 
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("otherPlayerUsername", otherPlayerUsername);
+            body.put("event",Event.CanHug);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+
+            if (response != null && response.getType().equals(MessageType.CAN_HUG_RESULT)) {
+                Result result = response.getFromBody("result", Result.class);
+                callback.accept(result);
+            } else {
+                callback.accept(new Result(false, "Server did not respond"));
+            }
+        }).start();
+    }
 
     public static void hug(String otherPlayerUsername) {
         //TODO
@@ -195,28 +197,26 @@ public class PlayersRelationController {
     }
 
     public static void canGiveFlower(int gameId,String otherPlayerUsername, Consumer<Result> callback) {
-        //TODO
-//        if (otherPlayerUsername == null || LoggedInUser.getUser().getUsername().equals(otherPlayerUsername)) {
-//            callback.accept(new Result(false, "Invalid player"));
-//            return;
-//        }
-//
-//        if (App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().getOrDefault(new Bouquet(),
-//            0) == 0) {
-//            return new Result(false, "You don't have any bouquet!");
-//        }
-//
-//        fetchRelationsInfo(gameId, relations -> {
-//            RelationWithPlayers tempRelation = relations.get(otherPlayerUsername);
-//
-//            if (tempRelation == null) {
-//                callback.accept(new Result(false, "Invalid player"));
-//            } else if (!tempRelation.canGiveFlower()) {
-//                callback.accept(new Result(false, "you can't give flower at this friendship level"));
-//            } else {
-//                callback.accept(new Result(true, ""));
-//            }
-//        });
+        new Thread(() -> {
+            if (otherPlayerUsername == null || LoggedInUser.getUser().getUsername().equals(otherPlayerUsername)) {
+                callback.accept(new Result(false, "Invalid player"));
+                return;
+            }
+
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("otherPlayerUsername", otherPlayerUsername);
+            body.put("event",Event.CanGiveFlower);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+
+            if (response != null && response.getType().equals(MessageType.CAN_GIVE_FLOWER_RESULT)) {
+                Result result = response.getFromBody("result", Result.class);
+                callback.accept(result);
+            } else {
+                callback.accept(new Result(false, "Server did not respond"));
+            }
+        }).start();
     }
 
     public static void giveFlower(String otherPlayerUsername) {
@@ -242,51 +242,26 @@ public class PlayersRelationController {
     }
 
     public static void canAskMarriage(int gameId,String otherPlayerUsername, Consumer<Result> callback) {
-        //TODO
-//        if (otherPlayer == null || App.getGame().getCurrentPlayingPlayer().equals(otherPlayer)) {
-//            return new Result(false, "Invalid player!");
-//        }
-//
-//        if (App.getGame().getCurrentPlayingPlayer().getCurrentUser().getGender().equals(Gender.Female) || otherPlayer.getCurrentUser().getGender().equals(Gender.Male)) {
-//            return new Result(false , "Gender conflict!");
-//        }
-//
-//        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
-//        Set<Player> lookUpKey = new HashSet<>();
-//        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
-//        lookUpKey.add(otherPlayer);
-//
-//        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-//
-//        if (tempRelation.isMarriage()) {
-//            return new Result(false , "She's your wife!!!");
-//        }
-//
-//        if (!tempRelation.canRequestMarriage()) {
-//            return new Result(false, "You can't request marriage at this friendship level!");
-//        }
-//
-//        if (otherPlayer.isMarried()) {
-//            return new Result(false , "She's married!");
-//        }
-//
-//        for (Player player : App.getGame().getPlayers()) {
-//            for (Notification notification : player.getNotifications()) {
-//                if (notification instanceof MarriageRequest) {
-//                    if (!notification.isChecked() && notification.getSender().equals(App.getGame().getCurrentPlayingPlayer())) {
-//                        return new Result(false , "Del ke nist, karvansarast!");
-//                    }
-//                }
-//            }
-//        }
-//
-//        for (Notification notification : otherPlayer.getNotifications()) {
-//            if (notification instanceof MarriageRequest && !notification.isChecked()) {
-//                return new Result(false , "Vaisa to saf");
-//            }
-//        }
-//
-//        return new Result(true,"");
+        new Thread(() -> {
+            if (otherPlayerUsername == null || LoggedInUser.getUser().getUsername().equals(otherPlayerUsername)) {
+                callback.accept(new Result(false, "Invalid player"));
+                return;
+            }
+
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("otherPlayerUsername", otherPlayerUsername);
+            body.put("event",Event.CanAskMarriage);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+
+            if (response != null && response.getType().equals(MessageType.CAN_ASK_MARRIAGE_RESULT)) {
+                Result result = response.getFromBody("result", Result.class);
+                callback.accept(result);
+            } else {
+                callback.accept(new Result(false, "Server did not respond"));
+            }
+        }).start();
     }
 
     public static void askMarriage(String otherPlayerUsername) {
@@ -314,6 +289,24 @@ public class PlayersRelationController {
     }
 
     public static void respondMarriage(MarriageRequest temp,boolean accepted) {
+        //TODO
+//        for (Player player : App.getGame().getPlayers()) {
+//            for (Notification notification : player.getNotifications()) {
+//                if (notification instanceof MarriageRequest) {
+//                    if (!notification.isChecked() && notification.getSender().equals(App.getGame().getCurrentPlayingPlayer())) {
+//                        return new Result(false , "Del ke nist, karvansarast!");
+//                    }
+//                }
+//            }
+//        }
+//
+//        for (Notification notification : otherPlayer.getNotifications()) {
+//            if (notification instanceof MarriageRequest && !notification.isChecked()) {
+//                return new Result(false , "Vaisa to saf");
+//            }
+//        }
+//
+//        return new Result(true,"");
         temp.setChecked(true);
 
         RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();

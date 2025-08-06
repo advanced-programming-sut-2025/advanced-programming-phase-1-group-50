@@ -1,14 +1,5 @@
 package com.stardew.model.gameApp;
 
-//import com.stardew.controller.GameMenuController;
-//import com.stardew.model.BetweenPlayersGift;
-//import com.stardew.model.ShippingBin;
-//import com.stardew.model.Trade;
-//import com.stardew.model.animals.Animal;
-//import com.stardew.model.date.Time;
-//import com.stardew.model.foraging.Crop;
-//import com.stardew.model.foraging.Growable;
-//import com.stardew.model.foraging.Tree;
 import com.stardew.controller.AnimalsControllers.AnimalsService;
 import com.stardew.model.*;
 import com.stardew.model.PlayersRelation.BetweenPlayersGift;
@@ -16,7 +7,6 @@ import com.stardew.model.PlayersRelation.RelationWithPlayers;
 import com.stardew.model.animals.Animal;
 import com.stardew.model.gameApp.date.Time;
 import com.stardew.model.mapInfo.*;
-//import com.stardew.model.mapInfo.GreenHouse;
 import com.stardew.model.mapInfo.foraging.Crop;
 import com.stardew.model.mapInfo.foraging.Growable;
 import com.stardew.model.mapInfo.foraging.Tree;
@@ -388,4 +378,23 @@ public class Game {
         timeService.stop();
         animalsService.stopUpdating();
     }
+
+
+    public void changeTileInWinter(){
+        for(Tile[] tile : map.getTiles()) {
+            for(Tile t : tile) {
+                t.checkSeasonIsWinter();
+            }
+        }
+    }
+
+
+    public void changeTileInSpring(){
+        for(Tile[] tile : map.getTiles()) {
+            for(Tile t : tile) {
+                t.checkIsSeasonSpring();
+            }
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.stardew.view.InPersonPlayersRelationsWindows;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -44,13 +45,17 @@ public class InPersonFriendshipWindow extends CloseableWindow {
         hugButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                hugButton.setDisabled(true);
                 PlayersRelationController.canHug(gameId, otherPlayerUsername, result -> {
-                    if (result.getSuccessful()) {
-                        hug(otherPlayerUsername);
-                        closeWindow();
-                    } else {
-                        showResult(result);
-                    }
+                    Gdx.app.postRunnable(() -> {
+                        if (result.getSuccessful()) {
+                            hug(otherPlayerUsername);
+                            closeWindow();
+                        } else {
+                            showResult(result);
+                            hugButton.setDisabled(false);
+                        }
+                    });
                 });
             }
         });
@@ -69,13 +74,18 @@ public class InPersonFriendshipWindow extends CloseableWindow {
         flowerButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                flowerButton.setDisabled(true);
                 PlayersRelationController.canGiveFlower(gameId, otherPlayerUsername, result -> {
-                    if (result.getSuccessful()) {
-                        giveFlowers(otherPlayerUsername);
-                        closeWindow();
-                    } else {
-                        showResult(result);
-                    }
+                    Gdx.app.postRunnable(() -> {
+
+                        if (result.getSuccessful()) {
+                            giveFlowers(otherPlayerUsername);
+                            closeWindow();
+                        } else {
+                            showResult(result);
+                            flowerButton.setDisabled(false);
+                        }
+                    });
                 });
             }
         });
@@ -94,13 +104,17 @@ public class InPersonFriendshipWindow extends CloseableWindow {
         marryButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                marryButton.setDisabled(true);
                 PlayersRelationController.canAskMarriage(gameId, otherPlayerUsername, result -> {
-                    if (result.getSuccessful()) {
-                        marry(otherPlayerUsername);
-                        closeWindow();
-                    } else {
-                        showResult(result);
-                    }
+                    Gdx.app.postRunnable(() -> {
+                        if (result.getSuccessful()) {
+                            marry(otherPlayerUsername);
+                            closeWindow();
+                        } else {
+                            showResult(result);
+                            marryButton.setDisabled(false);
+                        }
+                    });
                 });
             }
         });

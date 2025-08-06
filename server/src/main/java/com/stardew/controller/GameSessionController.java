@@ -314,6 +314,30 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().sendGiftToPlayer(message, player, connection);
             }
+
+            case CanHug -> {
+                Player player = game.getPlayer(connection);
+                PlayersRelationController.getInstance().canHug(message, player, connection);
+            }
+
+            case CanGiveFlower -> {
+                Player player = game.getPlayer(connection);
+                PlayersRelationController.getInstance().canGiveFlower(message, player, connection);
+            }
+
+            case CanAskMarriage -> {
+                Player player = game.getPlayer(connection);
+                PlayersRelationController.getInstance().canAskMarriage(message, player, connection);
+            }
+
+            case GetForSaleProducts -> {
+                Player player = game.getPlayer(connection);
+                PlayersRelationController.getInstance().getForSaleProducts(message, player, connection);
+            }
+
+            case GetStoreGoods -> {
+                StoreController.getInstance().sendStoreGoodsInfo(message,connection);
+            }
         }
 
     }

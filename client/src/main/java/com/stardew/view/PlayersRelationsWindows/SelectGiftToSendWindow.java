@@ -1,5 +1,6 @@
 package com.stardew.view.PlayersRelationsWindows;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -9,22 +10,26 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.google.gson.reflect.TypeToken;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.App;
-import com.stardew.models.manuFactor.Ingredient;
-import com.stardew.models.stores.Sellable;
+import com.stardew.network.Event;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 import com.stardew.view.windows.CloseableWindow;
 
-import java.util.ArrayList;
+import java.lang.reflect.Type;
+
 import java.util.HashMap;
-import java.util.List;
+
 
 public class SelectGiftToSendWindow extends CloseableWindow {
     private final Table productTable;
     private final String receiverUsername;
     private final int gameId;
+    private final HashMap<String, Integer> products = new HashMap<>();
 
-    public SelectGiftToSendWindow(int gameId,Stage stage, String receiver) {
+    public SelectGiftToSendWindow(int gameId, Stage stage, String receiver) {
         super("Gift Selection", stage);
         this.gameId = gameId;
         this.receiverUsername = receiver;
@@ -63,19 +68,28 @@ public class SelectGiftToSendWindow extends CloseableWindow {
     }
 
     protected void refreshProducts() {
-        productTable.clear(); //TODO
-        List<Sellable> items = new ArrayList<>();
-
-        HashMap<Ingredient, Integer> ingredientQuantity =
-            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity();
-
-        for (Ingredient ingredient : ingredientQuantity.keySet()) {
-            if (Sellable.isSellable(ingredient.toString()) && ingredientQuantity.get(ingredient) > 0) {
-                items.add((Sellable) ingredient);
+        products.clear();
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("event", Event.GetForSaleProducts);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType().equals(MessageType.GET_FOR_SALE_PRODUCTS_INFO)) {
+                Type type = new TypeToken<HashMap<String, Integer>>() {
+                }.getType();
+                HashMap<String, Integer> newProducts = response.getFromBody("products", type);
+                Gdx.app.postRunnable(() -> {
+                    products.putAll(newProducts);
+                    createUI();
+                });
             }
-        }
+        }).start();
+    }
 
-        if (items.isEmpty()) {
+    private void createUI() {
+        productTable.clear();
+        if (products.isEmpty()) {
 
             Label emptyLabel = new Label("You don't have any items to gift.", GamePictureManager.skin);
             emptyLabel.setFontScale(1.2f);
@@ -94,10 +108,9 @@ public class SelectGiftToSendWindow extends CloseableWindow {
             return;
         }
 
-
-        for (Sellable item : items) {
-            final String productName = Sellable.getNameInString(item);
-            final int quantity = ingredientQuantity.getOrDefault((Ingredient) item, 0);
+        for (String item : products.keySet()) {
+            final String productName = item;
+            final int quantity = products.get(item);
 
             TextButton nameButton = new TextButton(productName, GamePictureManager.skin);
             nameButton.pad(5);
@@ -122,6 +135,6 @@ public class SelectGiftToSendWindow extends CloseableWindow {
     }
 
     private void openSendGiftWindow(String productName, int quantity) {
-        stage.addActor(new SendGiftWindow(gameId,stage, this, receiverUsername, productName, quantity));
+        stage.addActor(new SendGiftWindow(gameId, stage, this, receiverUsername, productName, quantity));
     }
 }

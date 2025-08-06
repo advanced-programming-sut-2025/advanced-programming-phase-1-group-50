@@ -79,6 +79,12 @@ public class Time implements TimeProvider {
         } else {
             this.season = Season.Spring;
         }
+        if(this.season.equals(Season.Winter)){
+            game.changeTileInWinter();
+        }
+        else if(this.season.equals(Season.Spring)){
+            game.changeTileInSpring();
+        }
     }
 
     public Season getSeason() {

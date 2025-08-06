@@ -1,5 +1,6 @@
 package com.stardew.view.StoreWindows;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -7,21 +8,32 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.google.gson.reflect.TypeToken;
 import com.stardew.model.Result;
+import com.stardew.model.StoreGoodDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.stores.*;
+import com.stardew.network.Event;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 import com.stardew.view.windows.CloseableWindow;
 
-import java.util.List;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class StoreWindow extends CloseableWindow {
-    private final Store store;
+    private final String assistantName;
     private final Table productTable;
     private final SelectBox<String> filterBox;
+    private final ArrayList<StoreGoodDTO> goods = new ArrayList<>();
+    private final int gameId;
 
-    public StoreWindow(Stage stage, Store store) {
-        super(store.getShopAssistantName() + "'s store", stage);
-        this.store = store;
+    public StoreWindow(int gameId,Stage stage, String assistantName) {
+        super(assistantName + "'s store", stage);
+        this.assistantName = assistantName;
+        this.gameId = gameId;
 
         pad(40);
         defaults().space(15);
@@ -63,16 +75,32 @@ public class StoreWindow extends CloseableWindow {
     }
 
     protected void refreshProducts() {
+        goods.clear();
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("assistant", assistantName);
+            body.put("onlyAvailable",filterBox.getSelected().equals("Only available products"));
+            body.put("event", Event.GetStoreGoods);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType().equals(MessageType.GET_STORES_GOODS_INFO)) {
+                Type type = new TypeToken<ArrayList<StoreGoodDTO>>(){}.getType();
+                ArrayList<StoreGoodDTO> newGoods = response.getFromBody("goods", type);
+                Gdx.app.postRunnable(() -> {
+                    goods.addAll(newGoods);
+                    createUI();
+                });
+            }
+        }).start();
+    }
+
+    private void createUI() {
         productTable.clear();
-
-        List<ShopItem> items = filterBox.getSelected().equals("Only available products")
-            ? store.showAvailableProducts()
-            : store.showAllProducts();
-
-        for (ShopItem item : items) {
-            final String productName = item.getName();
+        for (StoreGoodDTO item : goods) {
+            final String productName = item.getProductName();
             final int price = item.getPrice();
-            final int quantity = item.getRemainingQuantity();
+            final int quantity = item.getQuantity();
 
             TextButton nameButton = new TextButton(productName, GamePictureManager.skin);
             nameButton.pad(5);
@@ -86,12 +114,12 @@ public class StoreWindow extends CloseableWindow {
                 nameButton.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        if (item instanceof MarnieRanchLiveStockItem) {
+                        if (item.isInstanceOfMarnieRanchLiveStockItem()) {
                             openAnimalPurchaseWindow(productName, price);
-                        } else if (item instanceof  CarpenterShopFarmBuildingsItem && item.getName().equalsIgnoreCase("Shipping Bin")) {
-                            openPurchaseShippingBinWindow(store);
-                        } else if (item instanceof CarpenterShopFarmBuildingsItem) {
-                            openPurchaseBuildingWindow(productName , store);
+                        } else if (item.isInstanceOfCarpenterShopFarmBuildingsItem() && item.getProductName().equalsIgnoreCase("Shipping Bin")) {
+                            openPurchaseShippingBinWindow(null);//TODO
+                        } else if (item.isInstanceOfCarpenterShopFarmBuildingsItem()) {
+                            openPurchaseBuildingWindow(productName ,null);//TODO
                         } else {
                             openPurchaseWindow(productName, quantity, price);
                         }
@@ -113,7 +141,7 @@ public class StoreWindow extends CloseableWindow {
             productTable.row();
         }
 
-        if (store.getShopAssistantName().equalsIgnoreCase("Clint")) {
+        if (assistantName.equalsIgnoreCase("Clint")) {
             TextButton upgradeToolButton = new TextButton("Upgrade Tool", GamePictureManager.skin);
             upgradeToolButton.pad(5);
             upgradeToolButton.getLabel().setFontScale(0.9f);
@@ -133,7 +161,8 @@ public class StoreWindow extends CloseableWindow {
             upgradeTrashButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    Result result = ((Blacksmith) store).upgradeTool("TrashCan");
+                    //Result result = ((Blacksmith) store).upgradeTool("TrashCan");
+                    Result result = new Result(false,""); // TODO
                     TrashCanUpgradeWindow trashWindow = new TrashCanUpgradeWindow(result, stage);
                     stage.addActor(trashWindow);
                 }
@@ -146,13 +175,13 @@ public class StoreWindow extends CloseableWindow {
 
 
     private void openPurchaseWindow(String productName, int quantity, int price) {
-        PurchaseWindow purchaseWindow = new PurchaseWindow(stage, this, store, productName, quantity, price);
+        PurchaseWindow purchaseWindow = new PurchaseWindow(stage, this,null, productName, quantity, price); //TODO
         stage.addActor(purchaseWindow);
     }
 
     private void openAnimalPurchaseWindow(String productName, int price) {
-        PurchaseAnimalWindow purchaseAnimalWindowWindow = new PurchaseAnimalWindow(stage, this, store, productName,
-            price);
+        PurchaseAnimalWindow purchaseAnimalWindowWindow = new PurchaseAnimalWindow(stage, this, null, productName,
+            price);//TODO
         stage.addActor(purchaseAnimalWindowWindow);
     }
 

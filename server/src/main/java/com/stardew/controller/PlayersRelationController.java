@@ -1,5 +1,6 @@
 package com.stardew.controller;
 
+import com.stardew.model.Bouquet;
 import com.stardew.model.Notification.Notification;
 import com.stardew.model.PlayersRelation.BetweenPlayersGift;
 import com.stardew.model.PlayersRelation.RelationWithPlayers;
@@ -7,6 +8,7 @@ import com.stardew.model.Result;
 import com.stardew.model.gameApp.Game;
 import com.stardew.model.mapInfo.Ingredient;
 import com.stardew.model.stores.Sellable;
+import com.stardew.model.userInfo.Gender;
 import com.stardew.model.userInfo.Player;
 import com.stardew.model.userInfo.RelationNetwork;
 import com.stardew.network.ClientConnectionThread;
@@ -128,7 +130,7 @@ public class PlayersRelationController {
     }
 
     public void sendGiftToPlayer(Message message,Player sender,ClientConnectionThread clientConnectionThread) {
-        if (message == null) {
+        if (message == null || sender == null) {
             return;
         }
 
@@ -181,6 +183,175 @@ public class PlayersRelationController {
         HashMap<String , Object> body = new HashMap<>();
         body.put("result", result);
         Message response = new Message(body, MessageType.SEND_GIFT_TO_PLAYER_RESULT);
+        response.setRequestID(message.getRequestID());
+        clientConnectionThread.sendMessage(response);
+    }
+
+    public void canHug(Message message,Player player,ClientConnectionThread clientConnectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int id = message.getIntFromBody("id");
+        Game game = GameSessionController.getInstance().getGame(id);
+        String otherPlayerUsername = message.getFromBody("otherPlayerUsername");
+        Player otherPlayer = null;
+
+        for (Player p : game.getAllPlayers()) {
+            if (p.getUsername().equals(otherPlayerUsername)) {
+                otherPlayer = p;
+                break;
+            }
+        }
+
+        if (otherPlayer == null) {
+            return;
+        }
+
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(player);
+        lookUpKey.add(otherPlayer);
+
+        RelationWithPlayers tempRelation = game.getRelationsBetweenPlayers().relationNetwork.get(lookUpKey);
+
+        if (tempRelation == null) {
+            return;
+        }
+
+        Result result;
+
+        if (!tempRelation.canHug()) {
+            result = new Result(false, "Your friendship level must be at least two");
+        } else {
+            result = new Result(true, "");
+        }
+
+        HashMap<String , Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body,MessageType.CAN_HUG_RESULT);
+        response.setRequestID(message.getRequestID());
+        clientConnectionThread.sendMessage(response);
+    }
+
+    public void canGiveFlower(Message message,Player player,ClientConnectionThread clientConnectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int id = message.getIntFromBody("id");
+        Game game = GameSessionController.getInstance().getGame(id);
+        String otherPlayerUsername = message.getFromBody("otherPlayerUsername");
+        Player otherPlayer = null;
+
+        for (Player p : game.getAllPlayers()) {
+            if (p.getUsername().equals(otherPlayerUsername)) {
+                otherPlayer = p;
+                break;
+            }
+        }
+
+        if (otherPlayer == null) {
+            return;
+        }
+
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(player);
+        lookUpKey.add(otherPlayer);
+
+        RelationWithPlayers tempRelation = game.getRelationsBetweenPlayers().relationNetwork.get(lookUpKey);
+
+        if (tempRelation == null) {
+            return;
+        }
+
+        Result result;
+
+        if (player.getBackpack().getIngredientQuantity().getOrDefault(new Bouquet(),0) == 0) {
+            result = new Result(false, "You don't have any bouquet!");
+        } else {
+            if (!tempRelation.canGiveFlower()) {
+                result = new Result(false, "you can't give flower at this friendship level");
+            } else {
+                result = new Result(true, "");
+            }
+        }
+
+        HashMap<String , Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body,MessageType.CAN_GIVE_FLOWER_RESULT);
+        response.setRequestID(message.getRequestID());
+        clientConnectionThread.sendMessage(response);
+    }
+
+    public void canAskMarriage(Message message,Player player,ClientConnectionThread clientConnectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int id = message.getIntFromBody("id");
+        Game game = GameSessionController.getInstance().getGame(id);
+        String otherPlayerUsername = message.getFromBody("otherPlayerUsername");
+        Player otherPlayer = null;
+
+        for (Player p : game.getAllPlayers()) {
+            if (p.getUsername().equals(otherPlayerUsername)) {
+                otherPlayer = p;
+                break;
+            }
+        }
+
+        if (otherPlayer == null) {
+            return;
+        }
+
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(player);
+        lookUpKey.add(otherPlayer);
+
+        RelationWithPlayers tempRelation = game.getRelationsBetweenPlayers().relationNetwork.get(lookUpKey);
+
+        if (tempRelation == null) {
+            return;
+        }
+
+        Result result;
+
+        if (player.getCurrentUser().getGender().equals(Gender.Female) || otherPlayer.getCurrentUser().getGender().equals(Gender.Male)) {
+            result = new Result(false , "Gender conflict!");
+        } else if (tempRelation.isMarriage()) {
+            result = new Result(false , "She's your wife!!!");
+        } else if (!tempRelation.canRequestMarriage()) {
+            result = new Result(false, "You can't request marriage at this friendship level!");
+        } else if (otherPlayer.isMarried()) {
+            result =  new Result(false , "She's married!");
+        } else {
+            result = new Result(true,"");
+        }
+
+        HashMap<String , Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body,MessageType.CAN_ASK_MARRIAGE_RESULT);
+        response.setRequestID(message.getRequestID());
+        clientConnectionThread.sendMessage(response);
+    }
+
+    public void getForSaleProducts(Message message,Player player,ClientConnectionThread clientConnectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        HashMap<String , Integer> products = new HashMap<>();
+        HashMap<Ingredient,Integer> ingredientQuantity = player.getBackpack().getIngredientQuantity();
+
+        for (Ingredient ingredient : ingredientQuantity.keySet()) {
+            if (Sellable.isSellable(ingredient.toString()) && ingredientQuantity.get(ingredient) > 0) {
+                products.put(ingredient.toString(),ingredientQuantity.get(ingredient));
+            }
+        }
+
+        HashMap<String , Object> body = new HashMap<>();
+        body.put("products", products);
+        Message response = new Message(body, MessageType.GET_FOR_SALE_PRODUCTS_INFO);
         response.setRequestID(message.getRequestID());
         clientConnectionThread.sendMessage(response);
     }
