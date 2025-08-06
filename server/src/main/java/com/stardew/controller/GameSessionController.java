@@ -320,6 +320,10 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().getForSaleProducts(message, player, connection);
             }
+
+            case GetStoreGoods -> {
+                StoreController.getInstance().sendStoreGoodsInfo(message,connection);
+            }
         }
 
     }

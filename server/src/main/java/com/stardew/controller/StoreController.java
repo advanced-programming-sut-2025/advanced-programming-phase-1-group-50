@@ -1,0 +1,88 @@
+package com.stardew.controller;
+
+import com.stardew.model.StoreGoodDTO;
+import com.stardew.model.mapInfo.NpcVillage;
+import com.stardew.model.stores.CarpenterShopFarmBuildingsItem;
+import com.stardew.model.stores.MarnieRanchLiveStockItem;
+import com.stardew.model.stores.ShopItem;
+import com.stardew.model.stores.Store;
+import com.stardew.network.ClientConnectionThread;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class StoreController {
+    private static StoreController instance;
+
+    private StoreController() {}
+
+    public static synchronized StoreController getInstance() {
+        if (instance == null) {
+            instance = new StoreController();
+        }
+        return instance;
+    }
+
+    public void sendStoreGoodsInfo(Message message, ClientConnectionThread connectionThread) {
+        if (message == null) {
+            return;
+        }
+
+        int gameId = message.getIntFromBody("id");
+        NpcVillage npcVillage = GameSessionController.getInstance().getGame(gameId).getMap().getNpcVillage();
+        String assistantName = message.getFromBody("assistant");
+        boolean isOnlyAvailable = message.getFromBody("onlyAvailable");
+        Store store;
+
+        switch (assistantName) {
+            case "Clint":
+                store = npcVillage.getBlacksmith();
+                break;
+            case "Robin":
+                store = npcVillage.getCarpenterShop();
+                break;
+            case "Willy":
+                store = npcVillage.getFishShop();
+                break;
+            case "Morris":
+                store = npcVillage.getJojaMart();
+                break;
+            case "Marnie":
+                store = npcVillage.getMarnieRanch();
+                break;
+            case "Pierre":
+                store = npcVillage.getPierreGeneralStore();
+                break;
+            case "Gus":
+                store = npcVillage.getStardopSaloon();
+                break;
+            default:
+                return;
+        }
+
+        ArrayList<ShopItem> items;
+
+        if (isOnlyAvailable) {
+            items = store.getAvailableProducts();
+        } else {
+            items = store.getAllProducts();
+        }
+
+        ArrayList<StoreGoodDTO> goods = new ArrayList<>();
+        for (ShopItem item : items) {
+            boolean instanceOfMarnieRanchLiveStockItem = item instanceof MarnieRanchLiveStockItem;
+            boolean instanceOfCarpenterShopFarmBuildingsItem = item instanceof CarpenterShopFarmBuildingsItem;
+            goods.add(new StoreGoodDTO(item.getName(), item.getPrice(), item.getRemainingQuantity(),
+                instanceOfMarnieRanchLiveStockItem, instanceOfCarpenterShopFarmBuildingsItem));
+        }
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("goods", goods);
+        Message response = new Message(body, MessageType.GET_STORES_GOODS_INFO);
+        response.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(response);
+    }
+
+}

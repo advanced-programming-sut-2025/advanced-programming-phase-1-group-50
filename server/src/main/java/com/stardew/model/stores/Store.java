@@ -15,7 +15,6 @@ public abstract class Store implements Placeable {
     protected final int startHour;
     protected final int endHour;
     protected final TextureID texture;
-    //protected Image storeImage;
     protected final int gameId;
 
     public Store(int gameId,TextureID texture,Rectangle bounds, String shopAssistantName, int startHour, int endHour) {
@@ -41,22 +40,13 @@ public abstract class Store implements Placeable {
         return timeProvider.getTime().getHour() >= startHour && timeProvider.getTime().getHour() < endHour;
     }
 
-//    public Image getStoreImage() {
-//       //TODO
-//        return storeImage;
-//    }
-
-    public void createStoreWindow() {
-        //TODO
-    }
-
     public TextureID getTexture() {
         return texture;
     }
     public abstract char getSymbol();
     public void loadInventory() {}
-    public abstract ArrayList<ShopItem> showAllProducts();
-    public abstract ArrayList<ShopItem> showAvailableProducts();
+    public abstract ArrayList<ShopItem> getAllProducts();
+    public abstract ArrayList<ShopItem> getAvailableProducts();
     public abstract Result purchaseProduct(int value, String productName);
     public abstract void ResetQuantityEveryNight();
 

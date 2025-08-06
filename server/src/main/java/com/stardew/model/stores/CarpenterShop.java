@@ -38,12 +38,12 @@ public class CarpenterShop extends Store{
     }
 
     @Override
-    public ArrayList<ShopItem> showAllProducts() {
+    public ArrayList<ShopItem> getAllProducts() {
         return (ArrayList<ShopItem>) inventory.clone();
     }
 
     @Override
-    public ArrayList<ShopItem> showAvailableProducts() {
+    public ArrayList<ShopItem> getAvailableProducts() {
         ArrayList<ShopItem> availableProducts = new ArrayList<>();
         for (ShopItem item : inventory) {
             if (item.remainingQuantity > 0) {

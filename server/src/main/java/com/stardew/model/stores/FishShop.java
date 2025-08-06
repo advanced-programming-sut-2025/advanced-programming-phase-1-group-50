@@ -12,7 +12,7 @@ public class FishShop extends Store{
     private ArrayList<ShopItem> inventory;
 
     public FishShop(int gameId,int x, int y, int width, int height) {
-        super(gameId,TextureID.fishShopTextureRegion,new Rectangle(x,y,width,height),"willy",9,17);
+        super(gameId,TextureID.fishShopTextureRegion,new Rectangle(x,y,width,height),"Willy",9,17);
     }
 
     @Override
@@ -30,12 +30,12 @@ public class FishShop extends Store{
     }
 
     @Override
-    public ArrayList<ShopItem> showAllProducts() {
+    public ArrayList<ShopItem> getAllProducts() {
         return (ArrayList<ShopItem>) inventory.clone();
     }
 
     @Override
-    public ArrayList<ShopItem> showAvailableProducts() {
+    public ArrayList<ShopItem> getAvailableProducts() {
         ArrayList<ShopItem> availableProducts = new ArrayList<>();
         for (ShopItem item : inventory) {
             if (item.remainingQuantity > 0) {
