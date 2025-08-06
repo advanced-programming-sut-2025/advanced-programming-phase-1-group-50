@@ -244,6 +244,7 @@ public class InventoryWindow extends CloseableWindow {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
                 stage.addActor(new FriendshipWindow(id,stage));
+                closeWindow();
                 return true;
             }
         });
