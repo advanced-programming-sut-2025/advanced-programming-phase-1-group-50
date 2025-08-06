@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import com.stardew.Main;
 import com.stardew.controller.GameStateController;
 import com.stardew.model.LobbyDTO;
+import com.stardew.view.ArtisanMachine.ArtisanMachinesManager;
 import com.stardew.view.GameScreenMenu;
 import com.stardew.view.LobbyMenus.LobbyMenu;
 import com.stardew.view.LobbyMenus.PreLobbyMenu;
@@ -91,7 +92,7 @@ public class MessageHandler {
             }
             case UPDATE_TIME -> {
                 gameStateController.handleUpdateTime(message);
-                //ArtisanMachinesManager.getInstance().updateMachines();
+                if (ArtisanMachinesManager.getInstance() != null) ArtisanMachinesManager.getInstance().updateMachines();
                 return true;
             }
             case SHOW_INVENTORY_RESULT -> {

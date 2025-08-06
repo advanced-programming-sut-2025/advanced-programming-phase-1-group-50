@@ -12,9 +12,9 @@ import java.util.ArrayList;
 
 public class GameModel {
     private final OrthographicCamera camera;
-    private ArrayList<TileDTO> tiles;
-    private ArrayList<PlaceableDTO> placeables;
-    private ArrayList<PlayerDTO> otherPlayers;
+    private ArrayList<TileDTO> tiles = new ArrayList<>();
+    private ArrayList<PlaceableDTO> placeables = new ArrayList<>();
+    private ArrayList<PlayerDTO> otherPlayers = new ArrayList<>();
     private PlayerDTO mainPlayer;
     private TimeDTO time;
     private ArrayList<AnimalDTO> animals = new ArrayList<>();

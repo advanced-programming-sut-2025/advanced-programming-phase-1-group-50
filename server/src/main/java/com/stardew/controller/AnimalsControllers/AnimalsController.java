@@ -21,10 +21,14 @@ import com.stardew.network.MessageType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AnimalsController {
     private static AnimalsController instance;
+    private final Map<ClientConnectionThread, Boolean> hasSentEmptyListMessage = new ConcurrentHashMap<>();
+
 
     private AnimalsController() {}
 
@@ -34,6 +38,20 @@ public class AnimalsController {
         }
         return instance;
     }
+
+
+    public void sendEmptyListMessage(ClientConnectionThread clientConnectionThread) {
+        hasSentEmptyListMessage.put(clientConnectionThread, true);
+    }
+
+    public void notSentEmptyListMessage(ClientConnectionThread clientConnectionThread) {
+        hasSentEmptyListMessage.put(clientConnectionThread, false);
+    }
+
+    public boolean hasSentEmptyListMessage(ClientConnectionThread clientConnectionThread) {
+        return hasSentEmptyListMessage.getOrDefault(clientConnectionThread, false);
+    }
+
 
 
 //    public Result build(Stage stage, Tile tile,String buildingName) {
@@ -59,13 +77,13 @@ public class AnimalsController {
 //        }
 //
 //        player.getFarm().addHabitat(habitat);
-//        TODO send a message for connection to add a new HabitatUI
+//        TODO  send_a_message_for_client_to_add_a_new_HabitatUI
 //        player.getFarm().getPlaceables().add(habitat);
 //
 //        return new Result(true, "You purchased the building successfully.");
 //    }
 
-//    public Result buyAnimal(String animalT, String name) {
+//    public Result buyAnimal(String animalT, AnimalsService animalsService, String name) {
 //        Player player = App.getGame().getCurrentPlayingPlayer();
 //        Map map = App.getGame().getMap();
 //        AnimalType animalType = AnimalType.getAnimalTypeByInput(animalT);
@@ -92,7 +110,7 @@ public class AnimalsController {
 //        Animal animal = new Animal(animalType, name, habitat);
 //        player.getBackpack().addAnimal(animal);
 //        habitat.addAnimal(animal);
-//        AnimalUpdateManager.getInstance().addAnimal(animal);
+//        animalsService.addAnimal(animal);
 //
 //        return new Result(true, "You buy a <" + animalType + "> with name <" + name + "> successfully!");
 //    }
@@ -308,7 +326,7 @@ public class AnimalsController {
         sendResultMessage(message.getRequestID(), connection, result);
     }
 
-    public void sellAnimal(Message message, Player player, ClientConnectionThread connection) {
+    public void sellAnimal(Message message, AnimalsService animalsService, Player player, ClientConnectionThread connection) {
         if (message == null || player == null || connection == null) return;
 
         Animal animal = player.getBackpack().getAnimalByName(message.getFromBody("animalName"));
@@ -336,6 +354,7 @@ public class AnimalsController {
         player.getBackpack().addIngredients(new Coin(), ((int) price));
         player.getBackpack().getAllAnimals().remove(animal);
         animal.getHabitat().getAnimals().remove(animal);
+        animalsService.removeAnimal(animal);
 
         Result result = new Result(true, "You sell Animal <" + animal.getName() + "> $" + price + "!");
         sendResultMessage(message.getRequestID(), connection, result);
@@ -369,7 +388,7 @@ public class AnimalsController {
             new MiniGameController(player, connection, candidateFish.toArray(new Fish[0]), fishingPole.getPoleType(), id);
         MiniGameControllersManager.getInstance().addController(miniGameController, id);
 
-        //TODO  send_message_to_client_to_open_miniGame_window
+        // send_message_to_client_to_open_miniGame_window
         HashMap<String, Object> body = new HashMap<>();
         body.put("miniGame_ID", id);
         Message message = new Message(body, MessageType.START_MINI_GAME);

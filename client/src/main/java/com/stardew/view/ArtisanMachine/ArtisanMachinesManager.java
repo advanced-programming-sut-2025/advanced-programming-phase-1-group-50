@@ -23,9 +23,6 @@ public class ArtisanMachinesManager {
     }
 
     public static ArtisanMachinesManager getInstance() {
-        if (instance == null) {
-            throw new IllegalStateException("ArtisanMachinesManager has not been initialized!");
-        }
         return instance;
     }
 

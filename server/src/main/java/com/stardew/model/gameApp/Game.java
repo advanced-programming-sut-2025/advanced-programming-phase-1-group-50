@@ -9,6 +9,7 @@ package com.stardew.model.gameApp;
 //import com.stardew.model.foraging.Crop;
 //import com.stardew.model.foraging.Growable;
 //import com.stardew.model.foraging.Tree;
+import com.stardew.controller.AnimalsControllers.AnimalsService;
 import com.stardew.model.*;
 import com.stardew.model.PlayersRelation.BetweenPlayersGift;
 import com.stardew.model.PlayersRelation.RelationWithPlayers;
@@ -40,6 +41,7 @@ public class Game {
     private final ArrayList<Trade> trades = new ArrayList<>();
     private final TimeService timeService;
     private final HotBarService hotBarService;
+    private final AnimalsService animalsService;
     private boolean started = false;
 //    private final GameMenuController gameMenuController = new GameMenuController();
 
@@ -52,7 +54,7 @@ public class Game {
         this.map = map;
         this.timeService = new TimeService(time, this);
         this.hotBarService = new HotBarService(this);
-
+        this.animalsService = new AnimalsService();
         relationInitializer(players);
     }
 
@@ -355,6 +357,8 @@ public class Game {
         return timeService;
     }
 
+    public AnimalsService getAnimalsService() { return animalsService; }
+
     public ArrayList<ClientConnectionThread> clientConnectionThreads() {
         ArrayList<ClientConnectionThread> clientConnectionThreads = new ArrayList<>();
         for(Map.Entry<ClientConnectionThread , Player> entry : players.entrySet()) {
@@ -380,4 +384,8 @@ public class Game {
         this.started = started;
     }
 
+    public void stopGameProcess() {
+        timeService.stop();
+        animalsService.stopUpdating();
+    }
 }

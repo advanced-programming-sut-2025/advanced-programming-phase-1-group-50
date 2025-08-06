@@ -27,12 +27,12 @@ public class GameUpdateRequestThread extends Thread {
 
             if (currentTime - lastSentMsg1 > 30 && !GameStateController.getInstance().isFirstUpdate()) {
                 NetworkManager.getConnection().sendMessage(updatePlayersMessage());
+                NetworkManager.getConnection().sendMessage(updateAnimalsMessage());
                 lastSentMsg1 = currentTime;
             }
 
             if (currentTime - lastSentMsg2 > 1000) {
                 NetworkManager.getConnection().sendMessage(updateTilesAndPlaceablesMessage());
-                NetworkManager.getConnection().sendMessage(updateAnimalsMessage());
                 NetworkManager.getConnection().sendMessage(updateScoreBoardMessage());
                 NetworkManager.getConnection().sendMessage(updateHotBarMessage());
                 lastSentMsg2 = currentTime;
