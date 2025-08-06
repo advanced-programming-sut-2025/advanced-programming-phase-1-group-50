@@ -1,15 +1,15 @@
 package com.stardew.model;
 
 public class PlaceableDTO {
-    private int x;
-    private int y;
-    private int width;
-    private int height;
+    private float x;
+    private float y;
+    private float width;
+    private float height;
     private TextureID textureID;
 
     public PlaceableDTO() {}
 
-    public PlaceableDTO(int x, int y, int width, int height, TextureID textureID) {
+    public PlaceableDTO(float x, float y, float width, float height, TextureID textureID) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -17,19 +17,19 @@ public class PlaceableDTO {
         this.textureID = textureID;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
-    public int getWidth() {
+    public float getWidth() {
         return width;
     }
 
-    public int getHeight() {
+    public float getHeight() {
         return height;
     }
 
