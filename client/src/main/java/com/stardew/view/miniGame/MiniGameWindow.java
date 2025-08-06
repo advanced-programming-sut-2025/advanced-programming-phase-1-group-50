@@ -279,6 +279,7 @@ public class MiniGameWindow extends CloseableWindow {
 
     private void terminateWindow() {
         super.closeWindow();
+        instance = null;
     }
 
 

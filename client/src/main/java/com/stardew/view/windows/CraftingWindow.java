@@ -95,17 +95,19 @@ public class CraftingWindow extends CloseableWindow {
                                     Message craftResponse = NetworkManager.getConnection().sendAndWaitForResponse(craftMessage, 500);
                                     if (craftResponse != null && craftResponse.getType() == MessageType.EVENT_IN_GAME_RESULT) {
                                         Result result = craftResponse.getFromBody("result", Result.class);
-                                        Gdx.app.postRunnable(() -> showResult(result));
-                                        if (result.getSuccessful()) {
-                                            String machineID = response.getFromBody("machineID");
-                                            ArtisanMachinesManager.getInstance().addMachine(
-                                                ArtisanAsset.getArtisanAssetByName(craftingAsset.name()),
-                                                machineID,
-                                                id,
-                                                selectedX,
-                                                selectedY
-                                            );
-                                        }
+                                        Gdx.app.postRunnable(() -> {
+                                            showResult(result);
+                                            if (result.getSuccessful()) {
+                                                String machineID = craftResponse.getFromBody("machineID");
+                                                ArtisanMachinesManager.getInstance().addMachine(
+                                                    ArtisanAsset.getArtisanAssetByName(craftingAsset.name()),
+                                                    machineID,
+                                                    id,
+                                                    selectedX,
+                                                    selectedY
+                                                );
+                                            }
+                                        });
                                     }
                                 }).start();
                             });

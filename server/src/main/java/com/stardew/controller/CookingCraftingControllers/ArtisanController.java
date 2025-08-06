@@ -117,8 +117,11 @@ public class ArtisanController {
         String machineID = message.getFromBody("machineID");
         ArtisanMachine artisanMachine = player.getBackpack().getArtisanMachineByID(machineID);
 
-        if (artisanMachine == null)
+        if (artisanMachine == null) {
             return;
+        } if (!artisanMachine.isAnyProducing()) {
+            return;
+        }
 
         artisanMachine.setCheatReady(true);
     }
@@ -135,11 +138,11 @@ public class ArtisanController {
 
         HashMap<String, Object> body = new HashMap<>();
         boolean isProducing = artisanMachine.isAnyProducing();
-        int passedTime = artisanMachine.getPassedTime();
-        int totalProcessingTime = artisanMachine.getTotalProcessingTime();
         body.put("isProducing", isProducing);
-        body.put("passedTime", passedTime);
-        body.put("totalProcessingTime", totalProcessingTime);
+        if (isProducing) {
+            body.put("passedTime", artisanMachine.getPassedTime());
+            body.put("totalProcessingTime", artisanMachine.getTotalProcessingTime());
+        }
         Message response = new Message(body, MessageType.EVENT_IN_GAME_RESULT);
         response.setRequestID(message.getRequestID());
         connection.sendMessage(response);

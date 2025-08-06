@@ -27,7 +27,7 @@ public enum AnimalType {
     Sheep(HabitatType.Barn , HabitatSize.Deluxe, 8000, 3,
         new ArrayList<>(List.of(AnimalGoodType.Wool)),
         AnimalStateToAnimationIDMapper.sheepStates, TextureID.sheepTexture),
-    Pig(HabitatType.Barn , HabitatSize.Deluxe, 16000, 0,
+    Pig(HabitatType.Barn , HabitatSize.Deluxe, 16000, 2,
         new ArrayList<>(List.of(AnimalGoodType.Truffle)),
         AnimalStateToAnimationIDMapper.pigStates, TextureID.pigTexture);
 
@@ -37,8 +37,6 @@ public enum AnimalType {
     private final int Price;
     private final int daysToGetProduct;
     private final ArrayList<AnimalGoodType> animalGoodTypes;
-    //TODO : this field should be Map<AnimalState , AnimationID> , we send AnimationID to client , then client will extract the real Animation from class AnimationIDManager
-    // TOdo : for player we do like animalAnimation , we send AnimationID to client,
     private final Map<AnimalState, AnimationID> animations;
     private final TextureID normalTexture;
 

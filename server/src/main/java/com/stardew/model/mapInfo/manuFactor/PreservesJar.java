@@ -1,6 +1,7 @@
 package com.stardew.model.mapInfo.manuFactor;
 
 import com.stardew.model.Result;
+import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.gameApp.date.TimeInterval;
 import com.stardew.model.mapInfo.Ingredient;
@@ -12,10 +13,15 @@ import com.stardew.model.userInfo.Player;
 
 public class PreservesJar extends ArtisanMachine{
 
-    public PreservesJar(TimeProvider timeProvider) {
-        super(timeProvider);
+    public PreservesJar(TimeProvider timeProvider, int x, int y) {
+        super(timeProvider, x, y);
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Pickles), new TimeInterval(0, 6));
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Jelly), new TimeInterval(3, 0));
+    }
+
+    @Override
+    public TextureID getTexture() {
+        return TextureID.preservesJar;
     }
 
     @Override

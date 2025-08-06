@@ -2,6 +2,7 @@ package com.stardew.controller.AnimalsControllers;
 
 import com.stardew.controller.MiniGame.MiniGameController;
 import com.stardew.controller.MiniGame.MiniGameControllersManager;
+import com.stardew.model.HabitatDTO;
 import com.stardew.model.Result;
 import com.stardew.model.Tools.FishingPole;
 import com.stardew.model.Tools.MilkPail;
@@ -53,7 +54,6 @@ public class AnimalsController {
     }
 
 
-
 //    public Result build(Stage stage, Tile tile,String buildingName) {
 //        Player player = App.getGame().getCurrentPlayingPlayer();
 //        Map map = App.getGame().getMap();
@@ -77,13 +77,15 @@ public class AnimalsController {
 //        }
 //
 //        player.getFarm().addHabitat(habitat);
-//        TODO  send_a_message_for_client_to_add_a_new_HabitatUI
 //        player.getFarm().getPlaceables().add(habitat);
+//        TODO  send_a_message_for_client_to_add_a_new_HabitatUI
+//        connection.sendMessage(prepareHabitatUIMessage(habitat));
 //
 //        return new Result(true, "You purchased the building successfully.");
 //    }
 
 //    public Result buyAnimal(String animalT, AnimalsService animalsService, String name) {
+//        TODO AnimalsService_is_in_game_and_is_for_updating_them  ->  game.getAnimalsService
 //        Player player = App.getGame().getCurrentPlayingPlayer();
 //        Map map = App.getGame().getMap();
 //        AnimalType animalType = AnimalType.getAnimalTypeByInput(animalT);
@@ -398,6 +400,13 @@ public class AnimalsController {
     }
 
 
+
+    private Message prepareHabitatUIMessage(Habitat habitat) {
+        HashMap<String, Object> body = new HashMap<>();
+        HabitatDTO habitatDTO = habitat.toHabitatDTO();
+        body.put("habitat", habitatDTO);
+        return new Message(body, MessageType.ADD_NEW_HABITAT_UI);
+    }
 
 
 

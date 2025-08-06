@@ -2,16 +2,17 @@ package com.stardew.network;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.google.gson.reflect.TypeToken;
 import com.stardew.Main;
 import com.stardew.controller.GameStateController;
+import com.stardew.model.HabitatDTO;
 import com.stardew.model.LobbyDTO;
 import com.stardew.view.ArtisanMachine.ArtisanMachinesManager;
-import com.stardew.view.GameScreenMenu;
+import com.stardew.view.ArtisanMachine.HabitatUIManager;
 import com.stardew.view.LobbyMenus.LobbyMenu;
 import com.stardew.view.LobbyMenus.PreLobbyMenu;
 import com.stardew.view.SelectFarmMenu;
+import com.stardew.view.miniGame.MiniGameStarter;
 import com.stardew.view.miniGame.MiniGameWindow;
 
 import java.util.ArrayList;
@@ -108,9 +109,13 @@ public class MessageHandler {
                 gameStateController.handleUpdateAnimals(message);
                 return true;
             }
+            case ADD_NEW_HABITAT_UI -> {
+                HabitatDTO habitatDTO = message.getFromBody("habitatDTO", HabitatDTO.class);
+                HabitatUIManager.getInstance().createHabitatUI(habitatDTO);
+                return true;
+            }
             case START_MINI_GAME -> {
-                Stage stage = ((GameScreenMenu) Main.getMain().getScreen()).getStage();
-                stage.addActor(new MiniGameWindow(stage, message.getIntFromBody("miniGame_ID")));
+                MiniGameStarter.getInstance().createMiniGameWindow(message.getIntFromBody("miniGame_ID"));
                 return true;
             }
             case MINI_GAME_REQUESTS -> {

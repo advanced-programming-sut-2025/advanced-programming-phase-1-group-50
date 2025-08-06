@@ -1,6 +1,7 @@
 package com.stardew.model.mapInfo.manuFactor;
 
 import com.stardew.model.Result;
+import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.gameApp.date.TimeInterval;
 import com.stardew.model.mapInfo.Ingredient;
@@ -12,8 +13,8 @@ import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGoodType;
 import com.stardew.model.userInfo.Player;
 
 public class Keg extends ArtisanMachine {
-    public Keg(TimeProvider timeProvider) {
-        super(timeProvider);
+    public Keg(TimeProvider timeProvider, int x, int y) {
+        super(timeProvider, x, y);
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Beer), new TimeInterval(1, 0));
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Vinegar), new TimeInterval(0, 10));
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Coffee), new TimeInterval(0, 2));
@@ -21,6 +22,11 @@ public class Keg extends ArtisanMachine {
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Mead), new TimeInterval(0, 10));
         processingTimes.put(new ArtisanGood(ArtisanGoodType.PaleAle), new TimeInterval(3, 0));
         processingTimes.put(new ArtisanGood(ArtisanGoodType.Wine) , new TimeInterval(7, 0));
+    }
+
+    @Override
+    public TextureID getTexture() {
+        return TextureID.keg;
     }
 
     @Override
