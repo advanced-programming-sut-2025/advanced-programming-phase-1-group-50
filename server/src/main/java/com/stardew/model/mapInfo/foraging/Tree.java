@@ -1,5 +1,6 @@
 package com.stardew.model.mapInfo.foraging;
 
+import com.stardew.model.PlaceableDTO;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.gameApp.date.Season;
@@ -202,4 +203,23 @@ public class Tree implements Placeable  , Growable {
 //    public void render(Batch batch) {
 //        batch.draw(getTexture(), bounds.x * GamePictureManager.TILE_SIZE, bounds.y * GamePictureManager.TILE_SIZE);
 //    }
+
+
+    @Override
+    public PlaceableDTO toPlaceableDTO() {
+        float widthOrHeight;
+        if (isGeneratedRandomly)
+            widthOrHeight = 2f;
+        else {
+            float region = 2f / (type.getStages().size() + 1);
+            int n = levelOfGrowth <= 2 ? 3 : levelOfGrowth + 1;
+            widthOrHeight = n * region;
+        }
+        return new PlaceableDTO(
+            bounds.x + (0.5f) - (widthOrHeight / 2f),
+            bounds.y,
+            widthOrHeight,
+            widthOrHeight,
+            getTexture());
+    }
 }

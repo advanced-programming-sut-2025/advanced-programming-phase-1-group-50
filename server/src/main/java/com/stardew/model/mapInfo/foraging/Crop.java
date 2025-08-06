@@ -2,6 +2,7 @@ package com.stardew.model.mapInfo.foraging;
 
 import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.ItemInventoryType;
+import com.stardew.model.PlaceableDTO;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.gameApp.date.Time;
@@ -252,4 +253,26 @@ public class Crop implements Placeable , Ingredient , Sellable , Growable , Eata
     public String getId() {
         return "";
     }
+
+
+
+
+    @Override
+    public PlaceableDTO toPlaceableDTO() {
+        float widthOrHeight;
+        if (isGeneratedRandomly)
+            widthOrHeight = 1.25f;
+        else {
+            float region = 1.25f / (type.getStages().size() + 1);
+            int n = levelOfGrowth <= 2 ? 3 : levelOfGrowth + 1;
+            widthOrHeight = n * region;
+        }
+        return new PlaceableDTO(
+            bounds.x + (0.5f) - (widthOrHeight / 2f),
+            bounds.y,
+            widthOrHeight,
+            widthOrHeight,
+            getTexture());
+    }
+
 }

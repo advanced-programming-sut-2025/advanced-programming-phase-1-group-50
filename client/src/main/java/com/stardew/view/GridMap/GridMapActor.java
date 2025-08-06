@@ -62,8 +62,8 @@ public class GridMapActor extends Actor {
         }
 
         for (PlaceableDTO placeable : placeables) {
-            int x = placeable.getX();
-            int y = placeable.getY();
+            float x = placeable.getX();
+            float y = placeable.getY();
             for (int i = 0; i < tiles.size(); i++) {
                 if (tiles.get(i).getX() == x && tiles.get(i).getY() == y) {
                     grid[i / rows][i % rows].occupied = true;
