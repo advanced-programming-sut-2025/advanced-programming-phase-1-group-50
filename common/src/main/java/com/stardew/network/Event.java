@@ -36,4 +36,5 @@ public enum Event {
     GetBetweenPlayersGifts,
     RateGift,
     SendGiftToPlayer,
+    CanHug,
 }

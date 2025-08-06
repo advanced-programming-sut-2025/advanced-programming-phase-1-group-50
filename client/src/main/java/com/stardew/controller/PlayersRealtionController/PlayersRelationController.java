@@ -151,11 +151,27 @@ public class PlayersRelationController {
     }
 
     public static void canHug(int gameId, String otherPlayerUsername, Consumer<Result> callback) {
-        //TODO
-//        if (otherPlayerUsername == null || LoggedInUser.getUser().getUsername().equals(otherPlayerUsername)) {
-//            callback.accept(new Result(false, "Invalid player"));
-//            return;
-//        }
+        new Thread(() -> {
+            if (otherPlayerUsername == null || LoggedInUser.getUser().getUsername().equals(otherPlayerUsername)) {
+                callback.accept(new Result(false, "Invalid player"));
+                return;
+            }
+
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("otherPlayerUsername", otherPlayerUsername);
+            body.put("event",Event.CanHug);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+
+            if (response != null && response.getType().equals(MessageType.CAN_HUG_RESULT)) {
+                Result result = response.getFromBody("result", Result.class);
+                callback.accept(result);
+            } else {
+                callback.accept(new Result(false, "Server did not respond"));
+            }
+        }).start();
+
 //
 //        fetchRelationsInfo(gameId, relations -> {
 //            RelationWithPlayers tempRelation = relations.get(otherPlayerUsername);

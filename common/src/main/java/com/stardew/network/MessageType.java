@@ -70,4 +70,5 @@ public enum MessageType {
     UPDATE_SCOREBOARD_RESULT,
     SEND_GIFT_TO_PLAYER_RESULT,
     FADE_NIGHT,
+    CAN_HUG_RESULT,
 }
