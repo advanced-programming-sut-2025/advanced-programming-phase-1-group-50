@@ -93,14 +93,31 @@ public class StoreController {
         String productName = message.getFromBody("productName");
         String animalName = message.getFromBody("animalName");
 
-        Store store = GameSessionController.getInstance().getGame(gameId).getMap().getNpcVillage().getMarnieRanch();
-        Result result = ((MarnieRanch) store).purchaseAnimal(player, productName, animalName);
+        MarnieRanch shop = GameSessionController.getInstance().getGame(gameId).getMap().getNpcVillage().getMarnieRanch();
+        Result result = shop.purchaseAnimal(player, productName, animalName);
 
         HashMap<String, Object> body = new HashMap<>();
         body.put("result", result);
         Message response = new Message(body, MessageType.PURCHASE_ANIMAL_RESULT);
         response.setRequestID(message.getRequestID());
         connectionThread.sendMessage(response);
+    }
+
+    public void canPurchaseShippingBin(Message message, Player player, ClientConnectionThread connectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int gameId = message.getIntFromBody("id");
+        CarpenterShop shop = GameSessionController.getInstance().getGame(gameId).getMap().getNpcVillage().getCarpenterShop();
+        Result result = shop.canPurchaseShippingBin(player);
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body, MessageType.CAN_PURCHASE_SHIPPING_BIN_RESULT);
+        response.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(response);
+
     }
 
 }
