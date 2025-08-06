@@ -8,6 +8,7 @@ import com.stardew.model.Result;
 import com.stardew.model.gameApp.Game;
 import com.stardew.model.mapInfo.Ingredient;
 import com.stardew.model.stores.Sellable;
+import com.stardew.model.userInfo.Gender;
 import com.stardew.model.userInfo.Player;
 import com.stardew.model.userInfo.RelationNetwork;
 import com.stardew.network.ClientConnectionThread;
@@ -278,6 +279,58 @@ public class PlayersRelationController {
         HashMap<String , Object> body = new HashMap<>();
         body.put("result", result);
         Message response = new Message(body,MessageType.CAN_GIVE_FLOWER_RESULT);
+        response.setRequestID(message.getRequestID());
+        clientConnectionThread.sendMessage(response);
+    }
+
+    public void canAskMarriage(Message message,Player player,ClientConnectionThread clientConnectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int id = message.getIntFromBody("id");
+        Game game = GameSessionController.getInstance().getGame(id);
+        String otherPlayerUsername = message.getFromBody("otherPlayerUsername");
+        Player otherPlayer = null;
+
+        for (Player p : game.getAllPlayers()) {
+            if (p.getUsername().equals(otherPlayerUsername)) {
+                otherPlayer = p;
+                break;
+            }
+        }
+
+        if (otherPlayer == null) {
+            return;
+        }
+
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(player);
+        lookUpKey.add(otherPlayer);
+
+        RelationWithPlayers tempRelation = game.getRelationsBetweenPlayers().relationNetwork.get(lookUpKey);
+
+        if (tempRelation == null) {
+            return;
+        }
+
+        Result result;
+
+        if (player.getCurrentUser().getGender().equals(Gender.Female) || otherPlayer.getCurrentUser().getGender().equals(Gender.Male)) {
+            result = new Result(false , "Gender conflict!");
+        } else if (tempRelation.isMarriage()) {
+            result = new Result(false , "She's your wife!!!");
+        } else if (!tempRelation.canRequestMarriage()) {
+            result = new Result(false, "You can't request marriage at this friendship level!");
+        } else if (otherPlayer.isMarried()) {
+            result =  new Result(false , "She's married!");
+        } else {
+            result = new Result(true,"");
+        }
+
+        HashMap<String , Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body,MessageType.CAN_ASK_MARRIAGE_RESULT);
         response.setRequestID(message.getRequestID());
         clientConnectionThread.sendMessage(response);
     }

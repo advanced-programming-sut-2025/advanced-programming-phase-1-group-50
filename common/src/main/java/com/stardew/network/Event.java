@@ -38,4 +38,5 @@ public enum Event {
     SendGiftToPlayer,
     CanHug,
     CanGiveFlower,
+    CanAskMarriage,
 }

@@ -72,4 +72,5 @@ public enum MessageType {
     FADE_NIGHT,
     CAN_HUG_RESULT,
     CAN_GIVE_FLOWER_RESULT,
+    CAN_ASK_MARRIAGE_RESULT,
 }
