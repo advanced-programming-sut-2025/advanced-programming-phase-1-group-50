@@ -380,4 +380,21 @@ public class Game {
         this.started = started;
     }
 
+    public void changeTileInWinter(){
+        for(Tile[] tile : map.getTiles()) {
+            for(Tile t : tile) {
+                t.checkSeasonIsWinter();
+            }
+        }
+    }
+
+
+    public void changeTileInSpring(){
+        for(Tile[] tile : map.getTiles()) {
+            for(Tile t : tile) {
+                t.checkIsSeasonSpring();
+            }
+        }
+    }
+
 }
