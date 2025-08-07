@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 
@@ -14,6 +17,7 @@ import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
 import com.stardew.models.userInfo.Player;
 import com.stardew.view.windows.CloseableWindow;
+import com.stardew.view.windows.SmartTooltip;
 
 public class SkillWindow extends CloseableWindow {
     private final ImageButton OKButton;
@@ -60,45 +64,67 @@ public class SkillWindow extends CloseableWindow {
 
 
         miningButton = new ImageButton(new TextureRegionDrawable(GamePictureManager.steelPickaxeTexture));
+        miningButton.addListener(new InputListener(){
+            @Override
+            public boolean mouseMoved(InputEvent event, float x, float y) {
+                SmartTooltip.getInstance().hide();
+                SmartTooltip.getInstance().show("Ability : mining");
+                return true;
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                SmartTooltip.getInstance().hide();
+
+            }
+        });
+
         farmingButton = new ImageButton(new TextureRegionDrawable(GamePictureManager.steelHoeTexture));
+        farmingButton.addListener(new InputListener(){
+            @Override
+            public boolean mouseMoved(InputEvent event, float x, float y) {
+                SmartTooltip.getInstance().hide();
+                SmartTooltip.getInstance().show("Ability : farming");
+                return true;
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                SmartTooltip.getInstance().hide();
+            }
+
+        });
         fishingButton = new ImageButton(GamePictureManager.fishingTextureDrawable);
+        fishingButton.addListener(new InputListener(){
+            @Override
+            public boolean mouseMoved(InputEvent event, float x, float y) {
+                SmartTooltip.getInstance().hide();
+                SmartTooltip.getInstance().show("Ability : fishing");
+                return true;
+            }
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                SmartTooltip.getInstance().hide();
+            }
+        });
         foragingButton = new ImageButton(GamePictureManager.foragingTextureDrawable);
+        foragingButton.addListener(new InputListener(){
+            @Override
+            public boolean mouseMoved(InputEvent event, float x, float y) {
+                SmartTooltip.getInstance().hide();
+                SmartTooltip.getInstance().show("Ability : foraging");
+                return true;
+            }
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                SmartTooltip.getInstance().hide();
+            }
+        });
 
 
-        Label miningLabel = new Label("Ability : mining", GamePictureManager.skin);
-        miningLabel.setColor(Color.BLACK);
-        Table tooltipTable = new Table();
-        tooltipTable.setBackground(createWhiteBackground());
-        tooltipTable.add(miningLabel).pad(5);
-
-        Tooltip<Table> miningTooltip = new Tooltip<>(tooltipTable);
-
-        Label farmingLabel = new Label("Ability : farming", GamePictureManager.skin);
-        farmingLabel.setColor(Color.BLACK);
-        Table farmingTable = new Table();
-        farmingTable.setBackground(createWhiteBackground());
-        farmingTable.add(farmingLabel).pad(5);
-        Tooltip<Table> farmingTooltip = new Tooltip<>(farmingTable);
 
 
-        Label fishingLabel = new Label("Ability : fishing", GamePictureManager.skin);
-        fishingLabel.setColor(Color.BLACK);
-        Table fishingTable = new Table();
-        fishingTable.setBackground(createWhiteBackground());
-        fishingTable.add(fishingLabel).pad(5);
-        Tooltip<Table> fishingTooltip = new Tooltip<>(fishingTable);
 
-        Label foragingLabel = new Label("Ability : foraging", GamePictureManager.skin);
-        foragingLabel.setColor(Color.BLACK);
-        Table foragingTable = new Table();
-        foragingTable.setBackground(createWhiteBackground());
-        foragingTable.add(foragingLabel).pad(5);
-        Tooltip<Table> foragingTooltip = new Tooltip<>(foragingTable);
-
-        miningButton.addListener(miningTooltip);
-        farmingButton.addListener(farmingTooltip);
-        fishingButton.addListener(fishingTooltip);
-        foragingButton.addListener(foragingTooltip);
 
         TooltipManager.getInstance().initialTime = 0.3f;
         TooltipManager.getInstance().hideAll();

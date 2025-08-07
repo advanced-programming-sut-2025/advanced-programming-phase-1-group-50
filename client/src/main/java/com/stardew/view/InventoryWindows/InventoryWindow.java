@@ -178,6 +178,7 @@ public class InventoryWindow extends CloseableWindow {
 
                     }
                 }).start();
+                closeWindow();
                 return true;
             }
         });
