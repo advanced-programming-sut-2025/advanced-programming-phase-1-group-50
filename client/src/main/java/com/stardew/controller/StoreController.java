@@ -102,4 +102,38 @@ public class StoreController {
 
         }).start();
     }
+
+    public static void upgradeTrashCan(int gameId, Consumer<Result> callback) {
+        new Thread(() -> {
+            HashMap<String,Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("event",Event.UpgradeTrashCan);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType() == MessageType.TRASHCAN_UPGRADE_RESULT) {
+                Result result = response.getFromBody("result", Result.class);
+                Gdx.app.postRunnable(() -> callback.accept(result));
+            } else {
+                Gdx.app.postRunnable(() -> callback.accept(new Result(false,"Server didn't respond")));
+            }
+        }).start();
+    }
+
+    public static void upgradeTool(int gameId,String toolName ,Consumer<Result> callback) {
+        new Thread(() -> {
+            HashMap<String,Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("toolName", toolName);
+            body.put("event",Event.UpgradeTool);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType() == MessageType.TOOL_UPGRADE_RESULT) {
+                Result result = response.getFromBody("result", Result.class);
+                Gdx.app.postRunnable(() -> callback.accept(result));
+            } else {
+                Gdx.app.postRunnable(() -> callback.accept(new Result(false,"Server didn't respond")));
+            }
+        }).start();
+    }
 }
+

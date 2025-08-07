@@ -210,4 +210,37 @@ public class StoreController {
         response.setRequestID(message.getRequestID());
         connectionThread.sendMessage(response);
     }
+
+    public void upgradeTrashCan(Message message ,Player player, ClientConnectionThread connectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int gameId = message.getIntFromBody("id");
+        Blacksmith shop = GameSessionController.getInstance().getGame(gameId).getMap().getNpcVillage().getBlacksmith();
+        Result result = shop.upgradeTool(player,"TrashCan");
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body, MessageType.TRASHCAN_UPGRADE_RESULT);
+        response.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(response);
+    }
+
+    public void upgradeTool(Message message, Player player, ClientConnectionThread connectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int gameId = message.getIntFromBody("id");
+        String toolName = message.getFromBody("toolName");
+        Blacksmith shop = GameSessionController.getInstance().getGame(gameId).getMap().getNpcVillage().getBlacksmith();
+        Result result = shop.upgradeTool(player,toolName);
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body, MessageType.TOOL_UPGRADE_RESULT);
+        response.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(response);
+    }
 }

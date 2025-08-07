@@ -6,17 +6,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.utils.Align;
+import com.stardew.controller.StoreController;
 import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.App;
 import com.stardew.view.windows.CloseableWindow;
 
 public class ToolUpgradeWindow extends CloseableWindow {
 
     private final Table contentTable;
+    private final int gameId;
 
-    public ToolUpgradeWindow(Stage stage) {
+    public ToolUpgradeWindow(int gameId,Stage stage) {
         super("Tool Upgrade", stage);
+        this.gameId = gameId;
 
         pad(40);
         defaults().space(20);
@@ -43,12 +45,15 @@ public class ToolUpgradeWindow extends CloseableWindow {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 String selectedTool = toolBox.getSelected();
-                Result result = upgradeTool(selectedTool);
-                if (result != null) {
-                    showingResult(result);
-                } else {
-                    remove();
-                }
+                String toolName = switch (selectedTool) {
+                    case "Axe" -> "axe";
+                    case "Hoe" -> "hoe";
+                    case "Pickaxe" -> "pickaxe";
+                    case "Watering Can" -> "wateringcan";
+                    default -> "";
+                };
+
+                StoreController.upgradeTool(gameId,toolName,result -> showingResult(result));
             }
         });
 
@@ -87,15 +92,5 @@ public class ToolUpgradeWindow extends CloseableWindow {
             stage.getCamera().position.x - getWidth() / 2,
             stage.getCamera().position.y - getHeight() / 2
         );
-    }
-
-    private Result upgradeTool(String toolName) {
-        return switch (toolName) {
-            case "Axe" -> App.getGame().getMap().getNpcVillage().getBlacksmith().upgradeTool("axe");
-            case "Hoe" -> App.getGame().getMap().getNpcVillage().getBlacksmith().upgradeTool("hoe");
-            case "Pickaxe" -> App.getGame().getMap().getNpcVillage().getBlacksmith().upgradeTool("pickaxe");
-            case "Watering Can" -> App.getGame().getMap().getNpcVillage().getBlacksmith().upgradeTool("wateringcan");
-            default -> null;
-        };
     }
 }

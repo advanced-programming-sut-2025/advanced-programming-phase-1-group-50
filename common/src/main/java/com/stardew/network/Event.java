@@ -46,4 +46,6 @@ public enum Event {
     PurchaseShippingBin,
     PurchaseBuilding,
     PurchaseProduct,
+    UpgradeTrashCan,
+    UpgradeTool,
 }

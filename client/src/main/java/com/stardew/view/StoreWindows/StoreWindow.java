@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.google.gson.reflect.TypeToken;
 import com.stardew.controller.StoreController;
 import com.stardew.model.PlaceableDTO;
-import com.stardew.model.Result;
 import com.stardew.model.StoreGoodDTO;
 import com.stardew.model.TileDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
@@ -152,8 +151,9 @@ public class StoreWindow extends CloseableWindow {
             upgradeToolButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    ToolUpgradeWindow toolWindow = new ToolUpgradeWindow(stage);
+                    ToolUpgradeWindow toolWindow = new ToolUpgradeWindow(gameId,stage);
                     stage.addActor(toolWindow);
+                    closeWindow();
                 }
             });
 
@@ -164,10 +164,11 @@ public class StoreWindow extends CloseableWindow {
             upgradeTrashButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    //Result result = ((Blacksmith) store).upgradeTool("TrashCan");
-                    Result result = new Result(false, ""); // TODO
-                    TrashCanUpgradeWindow trashWindow = new TrashCanUpgradeWindow(result, stage);
-                    stage.addActor(trashWindow);
+                    StoreController.upgradeTrashCan(gameId,result -> {
+                        TrashCanUpgradeWindow trashWindow = new TrashCanUpgradeWindow(result,stage);
+                        stage.addActor(trashWindow);
+                        closeWindow();
+                    });
                 }
             });
 
