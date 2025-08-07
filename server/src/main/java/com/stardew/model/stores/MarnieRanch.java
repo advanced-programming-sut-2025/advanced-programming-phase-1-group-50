@@ -1,8 +1,10 @@
 package com.stardew.model.stores;
 
+import com.stardew.controller.AnimalsControllers.AnimalsController;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.animals.AnimalType;
+import com.stardew.model.gameApp.Game;
 import com.stardew.model.userInfo.Coin;
 import com.stardew.model.userInfo.Player;
 
@@ -56,7 +58,7 @@ public class MarnieRanch extends Store{
         return availableProducts;
     }
 
-    public Result purchaseAnimal(Player player, String productName , String animalName) {
+    public Result purchaseAnimal(Game game, Player player, String productName , String animalName) {
         ShopItem item = null;
 
         for (ShopItem i : inventory) {
@@ -70,7 +72,7 @@ public class MarnieRanch extends Store{
             return new Result(false, "You don't have enough money to purchase");
         }
 
-        Result result = new Result(); // TODO : we will get it from animal controller
+        Result result = AnimalsController.getInstance().buyAnimal(game,player,productName,animalName);
 
         if (result.getSuccessful()) {
             item.decreaseRemainingQuantity(1);
