@@ -1,10 +1,8 @@
 package com.stardew.model.Tools;
 
 import com.stardew.model.InventoryItemDTO;
-import com.stardew.model.ItemInventoryType;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
-import com.stardew.model.gameApp.App;
 import com.stardew.model.gameApp.date.Weather;
 import com.stardew.model.userInfo.Ability;
 import com.stardew.model.userInfo.Player;
@@ -93,7 +91,7 @@ public class Pickaxe extends Tool {
 
     @Override
     public InventoryItemDTO toDTO() {
-        return new InventoryItemDTO(getInventoryTexture() , true , 1 , ItemInventoryType.pickaxe , id);
+        return new InventoryItemDTO(getInventoryTexture(), true, 1, toString(), id);
     }
 
     @Override

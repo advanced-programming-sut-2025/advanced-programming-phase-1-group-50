@@ -2,7 +2,6 @@ package com.stardew.controller;
 
 
 import com.stardew.model.InventoryItemDTO;
-import com.stardew.model.ItemInventoryType;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.Tools.Tool;
@@ -17,7 +16,6 @@ import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 

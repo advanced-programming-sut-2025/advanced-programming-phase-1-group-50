@@ -1,7 +1,6 @@
 package com.stardew.model.mapInfo.foraging;
 
 import com.stardew.model.InventoryItemDTO;
-import com.stardew.model.ItemInventoryType;
 import com.stardew.model.TextureID;
 import com.stardew.model.mapInfo.Ingredient;
 import com.stardew.model.stores.Sellable;
@@ -62,7 +61,7 @@ public enum ForagingMineral implements Ingredient , Sellable {
 
     @Override
     public InventoryItemDTO toDTO() {
-        return new InventoryItemDTO(getInventoryTexture() , false , 1 , ItemInventoryType.foragingMineral , name()  );
+        return new InventoryItemDTO(getInventoryTexture(), false, 1, toString(), name());
     }
 
     @Override
