@@ -1,5 +1,6 @@
 package com.stardew.model.stores;
 
+import com.stardew.controller.AnimalsControllers.AnimalsController;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.animals.HabitatSize;
@@ -9,6 +10,7 @@ import com.stardew.model.mapInfo.Stone;
 import com.stardew.model.mapInfo.Wood;
 import com.stardew.model.userInfo.Coin;
 import com.stardew.model.userInfo.Player;
+import com.stardew.network.ClientConnectionThread;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -100,23 +102,18 @@ public class CarpenterShop extends Store {
         return new Result(true, "You successfully purchased a shipping bin");
     }
 
-    public Result purchaseBuilding(Game game, Player player, String productName, int x, int y) {
-        Result result = new Result();
+    public Result purchaseBuilding(Game game, Player player, String productName, int x, int y , ClientConnectionThread connectionThread) {
+        Result result = new Result() ;
 
-        switch (productName) { // TODO : build habitat and get result
-            case "Barn":
-                //barn
-            case "Big Barn":
-                //big_barn
-            case "Deluxe Barn":
-                //deluxe_barn
-            case "Coop":
-                //coop
-            case "Big Coop":
-                //big_coop
-            case "Deluxe Coop":
-                //deluxe_coop
-        }
+        result = switch (productName) {
+            case "Barn" -> AnimalsController.getInstance().build(game, player, x, y, "barn",connectionThread);
+            case "Big Barn" -> AnimalsController.getInstance().build(game, player, x, y, "big_barn",connectionThread);
+            case "Deluxe Barn" -> AnimalsController.getInstance().build(game, player, x, y, "deluxe_barn",connectionThread);
+            case "Coop" -> AnimalsController.getInstance().build(game, player, x, y, "coop",connectionThread);
+            case "Big Coop" -> AnimalsController.getInstance().build(game, player, x, y, "big_coop",connectionThread);
+            case "Deluxe Coop" -> AnimalsController.getInstance().build(game, player, x, y, "deluxe_coop",connectionThread);
+            default -> result;
+        };
 
         ShopItem item = null;
 

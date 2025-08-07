@@ -13,6 +13,7 @@ import com.stardew.model.gameApp.Game;
 import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.gameApp.date.Season;
 import com.stardew.model.gameApp.date.Weather;
+import com.stardew.model.mapInfo.GameMap;
 import com.stardew.model.mapInfo.Tile;
 import com.stardew.model.userInfo.Coin;
 import com.stardew.model.userInfo.Player;
@@ -54,37 +55,34 @@ public class AnimalsController {
     }
 
 
-//    public Result build(Stage stage, Tile tile,String buildingName) {
-//        Player player = App.getGame().getCurrentPlayingPlayer();
-//        Map map = App.getGame().getMap();
-//        HabitatType habitatType = Habitat.getHabitatTypeByInput(buildingName);
-//        HabitatSize habitatSize = Habitat.getHabitatSizeByInput(buildingName);
-//
-//        if (habitatSize == null || habitatType == null)
-//            return new Result(false, "Size or Type not valid");
-//
-//        int x = tile.getPosition().getX();
-//        int y = tile.getPosition().getY();
-//        Habitat habitat = new Habitat(habitatType, habitatSize, x, y);
-//        habitat.prepareWindow(stage);
-//        Tile[][] tiles = map.getTiles();
-//        for (int i = x; i < x + habitatType.getLengthX(); i++) {
-//            for (int j = y; j < y + habitatType.getLengthY(); j++) {
-//                tiles[i][j].setPlaceable(habitat);
-//                tiles[i][j].setWalkable(false);
-//                tiles[i][j].setSymbol(habitat.getSymbol());
-//            }
-//        }
-//
-//        player.getFarm().addHabitat(habitat);
-//        player.getFarm().getPlaceables().add(habitat);
-//        TODO  send_a_message_for_client_to_add_a_new_HabitatUI
-//        connection.sendMessage(prepareHabitatUIMessage(habitat));
-//
-//        return new Result(true, "You purchased the building successfully.");
-//    }
+    public Result build(Game game, Player player, int x, int y, String buildingName,ClientConnectionThread connectionThread) {
+        GameMap map = game.getMap();
+        HabitatType habitatType = Habitat.getHabitatTypeByInput(buildingName);
+        HabitatSize habitatSize = Habitat.getHabitatSizeByInput(buildingName);
 
-    public Result buyAnimal(Game game,Player player,String animalT, String animalName) {
+        if (habitatSize == null || habitatType == null) {
+            return new Result(false, "Invalid size or type");
+        }
+
+        Habitat habitat = new Habitat(habitatType, habitatSize, x, y);
+
+        Tile[][] tiles = map.getTiles();
+        for (int i = x; i < x + habitatType.getLengthX(); i++) {
+            for (int j = y; j < y + habitatType.getLengthY(); j++) {
+                tiles[i][j].setPlaceable(habitat);
+                tiles[i][j].setWalkable(false);
+                tiles[i][j].setSymbol(habitat.getSymbol());
+            }
+        }
+
+        player.getFarm().addHabitat(habitat);
+        player.getFarm().getPlaceables().add(habitat);
+        connectionThread.sendMessage(prepareHabitatUIMessage(habitat));
+
+        return new Result(true, "You purchased the building successfully.");
+    }
+
+    public Result buyAnimal(Game game, Player player, String animalT, String animalName) {
         AnimalsService animalsService = game.getAnimalsService();
         AnimalType animalType = AnimalType.getAnimalTypeByInput(animalT);
 
@@ -96,8 +94,8 @@ public class AnimalsController {
         Habitat habitat = null;
         for (Habitat habitat1 : player.getFarm().getHabitats()) {
             if (habitat1.getType().equals(animalType.getAnimalHabitat()) &&
-                    habitat1.getSize().compareTo(animalType.getHabitatSize()) >= 0 &&
-                    habitat1.hasEmptyCapacity()) {
+                habitat1.getSize().compareTo(animalType.getHabitatSize()) >= 0 &&
+                habitat1.hasEmptyCapacity()) {
                 habitat = habitat1;
                 break;
             }
@@ -108,7 +106,7 @@ public class AnimalsController {
                 "Or type or size of habitats isn't compatible with animals!");
 
 
-        Animal animal = new Animal(animalType,game.getTime(),animalName, habitat);
+        Animal animal = new Animal(animalType, game.getTime(), animalName, habitat);
         player.getBackpack().addAnimal(animal);
         habitat.addAnimal(animal);
         animalsService.addAnimal(animal);
@@ -168,7 +166,7 @@ public class AnimalsController {
 
         if (animal.isOutOfHabitat()) {
             animal.goToHabitat();
-            Tile animalTile = game.getMap().findTile(((int) animal.getPosition().x), ((int)animal.getPosition().y));
+            Tile animalTile = game.getMap().findTile(((int) animal.getPosition().x), ((int) animal.getPosition().y));
             animalTile.setPlaceable(null);
             animalTile.setWalkable(true);
             Result result = new Result(true, "You put <" + animal + "> in the habitat!");
@@ -264,7 +262,7 @@ public class AnimalsController {
         for (Animal animal : animals) {
             if (animal.isReadyProduct())
                 output.append(String.format("%-20s (%-9s ->   %-25s\n",
-                        animal.getName(), animal.getType() + ")", animal.getType().getAnimalGoods()));
+                    animal.getName(), animal.getType() + ")", animal.getType().getAnimalGoods()));
         }
 
         Result result = new Result(true, output.toString());
@@ -301,8 +299,7 @@ public class AnimalsController {
                 sendResultMessage(message.getRequestID(), connection, energyConsumptionResult);
                 return;
             }
-        }
-        else if (animal.getType().equals(AnimalType.Cow) || animal.getType().equals(AnimalType.Goat)) {
+        } else if (animal.getType().equals(AnimalType.Cow) || animal.getType().equals(AnimalType.Goat)) {
             if (!(tool instanceof MilkPail milkPail)) {
                 Result result = new Result(false, "Your current tool is not MilkPail!");
                 sendResultMessage(message.getRequestID(), connection, result);
@@ -323,11 +320,13 @@ public class AnimalsController {
 
         Result result = new Result(true,
             String.format("You collect %s with quality %s. Base price: %s -> New Price: %s",
-            animalGood.getType(), animalGood.getQuality(), animalGood.getType().getPrice(), animalGood.getSellPrice()));
+                animalGood.getType(), animalGood.getQuality(), animalGood.getType().getPrice(),
+                animalGood.getSellPrice()));
         sendResultMessage(message.getRequestID(), connection, result);
     }
 
-    public void sellAnimal(Message message, AnimalsService animalsService, Player player, ClientConnectionThread connection) {
+    public void sellAnimal(Message message, AnimalsService animalsService, Player player,
+                           ClientConnectionThread connection) {
         if (message == null || player == null || connection == null) return;
 
         Animal animal = player.getBackpack().getAnimalByName(message.getFromBody("animalName"));
@@ -350,7 +349,7 @@ public class AnimalsController {
             return;
         }
 
-        double price = animal.getType().getPrice() * (((double)(animal.getFriendShip()) / 1000) + 0.3);
+        double price = animal.getType().getPrice() * (((double) (animal.getFriendShip()) / 1000) + 0.3);
 
         player.getBackpack().addIngredients(new Coin(), ((int) price));
         player.getBackpack().getAllAnimals().remove(animal);
@@ -361,7 +360,8 @@ public class AnimalsController {
         sendResultMessage(message.getRequestID(), connection, result);
     }
 
-    public Result fishing(Player player, ClientConnectionThread connection, TimeProvider timeProvider, FishingPole fishingPole) {
+    public Result fishing(Player player, ClientConnectionThread connection, TimeProvider timeProvider,
+                          FishingPole fishingPole) {
 
         int fishingLevel = player.getAbility().getFishingLevel();
         Weather weather = timeProvider.getTime().getWeather();
@@ -376,7 +376,7 @@ public class AnimalsController {
         for (int i = 0; i < numberOfFish; i++) {
             FishType fishType = availableFishType.get(new Random().nextInt(availableFishType.size()));
             double qualityValue = (Math.random() * (fishingLevel + 2) * fishingPole.getType().getEffectiveness()) /
-                    (7 - weather.getEffectivenessOnFishing());
+                (7 - weather.getEffectivenessOnFishing());
             Quality quality = Quality.getQualityByValue(qualityValue);
             candidateFish.add(new Fish(fishType, quality));
         }
@@ -386,7 +386,8 @@ public class AnimalsController {
 
         int id = MiniGameControllersManager.getInstance().generateID();
         MiniGameController miniGameController =
-            new MiniGameController(player, connection, candidateFish.toArray(new Fish[0]), fishingPole.getPoleType(), id);
+            new MiniGameController(player, connection, candidateFish.toArray(new Fish[0]), fishingPole.getPoleType(),
+                id);
         MiniGameControllersManager.getInstance().addController(miniGameController, id);
 
         // send_message_to_client_to_open_miniGame_window
@@ -399,14 +400,12 @@ public class AnimalsController {
     }
 
 
-
     private Message prepareHabitatUIMessage(Habitat habitat) {
         HashMap<String, Object> body = new HashMap<>();
         HabitatDTO habitatDTO = habitat.toHabitatDTO();
         body.put("habitat", habitatDTO);
         return new Message(body, MessageType.ADD_NEW_HABITAT_UI);
     }
-
 
 
     private void sendResultMessage(String requestID, ClientConnectionThread connection, Result result) {

@@ -156,7 +156,7 @@ public class StoreController {
         int selectedY = message.getIntFromBody("y");
 
         CarpenterShop shop = game.getMap().getNpcVillage().getCarpenterShop();
-        Result result = shop.purchaseBuilding(game,player,buildingName,selectedX,selectedY);
+        Result result = shop.purchaseBuilding(game,player,buildingName,selectedX,selectedY,connectionThread);
 
         HashMap<String, Object> body = new HashMap<>();
         body.put("result", result);
