@@ -165,5 +165,49 @@ public class StoreController {
         connectionThread.sendMessage(response);
     }
 
+    public void purchaseProduct(Message message, Player player, ClientConnectionThread connectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
 
+        int gameId = message.getIntFromBody("id");
+        NpcVillage village = GameSessionController.getInstance().getGame(gameId).getMap().getNpcVillage();
+        String productName = message.getFromBody("productName");
+        int quantity = message.getIntFromBody("quantity");
+        String assistantName = message.getFromBody("assistantName");
+
+        Result result;
+
+        switch (assistantName) {
+            case "Clint":
+                result = village.getBlacksmith().purchaseProduct(player,productName,quantity);
+                break;
+            case "Robin":
+                result = village.getCarpenterShop().purchaseProduct(player,productName,quantity);
+                break;
+            case "Willy":
+                result = village.getFishShop().purchaseProduct(player,productName,quantity);
+                break;
+            case "Morris":
+                result = village.getJojaMart().purchaseProduct(player,productName,quantity);
+                break;
+            case "Marnie":
+                result = village.getMarnieRanch().purchaseProduct(player,productName,quantity);
+                break;
+            case "Pierre":
+                result = village.getPierreGeneralStore().purchaseProduct(player,productName,quantity);
+                break;
+            case "Gus":
+                result = village.getStardopSaloon().purchaseProduct(player,productName,quantity);
+                break;
+            default:
+                return;
+        }
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body, MessageType.PURCHASE_PRODUCT_RESULT);
+        response.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(response);
+    }
 }
