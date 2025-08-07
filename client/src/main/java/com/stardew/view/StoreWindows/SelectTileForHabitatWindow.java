@@ -77,37 +77,6 @@ public class SelectTileForHabitatWindow extends CloseableWindow {
                 } else {
                     showResult(new Result(false, "Please select a tile!"));
                 }
-//                Result result = controller.checkTileSelection(gridMap.getSelectedTile());
-//                if (result.getSuccessful()) {
-//                    closeWindow();
-//                    AnimalsController controller1 = new AnimalsController();
-//                    Result result1 = controller1.build(stage, controller.getSelectedTile(), buildingName);
-//                    switch (buildingName) {
-//                        case "barn":
-//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Barn");
-//                            break;
-//                        case "big_barn":
-//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Big Barn");
-//                            break;
-//                        case "deluxe_barn":
-//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Deluxe Barn");
-//                            break;
-//                        case "coop":
-//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Coop");
-//                            break;
-//                        case "big_coop":
-//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Big Coop");
-//                            break;
-//                        case "deluxe_coop":
-//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Deluxe Coop");
-//                            break;
-//                    }
-//                    storeWindow.refreshProducts();
-//                    showResult(result1);
-//                } else {
-//                    showResult(result);
-//                }
-
             }
         });
     }

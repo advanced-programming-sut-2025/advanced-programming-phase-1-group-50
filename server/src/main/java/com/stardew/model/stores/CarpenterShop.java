@@ -13,11 +13,11 @@ import com.stardew.model.userInfo.Player;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class CarpenterShop extends Store{
+public class CarpenterShop extends Store {
     private ArrayList<ShopItem> inventory;
 
-    public CarpenterShop(int gameId,int x, int y, int width, int height) {
-        super(gameId,TextureID.carpenterShopTextureRegion,new Rectangle(x,y,width,height),"Robin",9,20);
+    public CarpenterShop(int gameId, int x, int y, int width, int height) {
+        super(gameId, TextureID.carpenterShopTextureRegion, new Rectangle(x, y, width, height), "Robin", 9, 20);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class CarpenterShop extends Store{
         return availableProducts;
     }
 
-    public Result canPurchaseBuilding(Player player,String productName) {
+    public Result canPurchaseBuilding(Player player, String productName) {
         ShopItem item = null;
 
         for (ShopItem i : inventory) {
@@ -66,6 +66,10 @@ public class CarpenterShop extends Store{
                 item = i;
                 break;
             }
+        }
+
+        if (item == null) {
+            return new Result(false, "No such product ");
         }
 
         if (player.getBackpack().getIngredientQuantity().getOrDefault(new Coin(), 0) < item.getPrice()) {
@@ -89,14 +93,50 @@ public class CarpenterShop extends Store{
             return new Result(false, "You don't own this area");
         }
 
-        game.getMap().addShippingBin(x,y);
-        player.getBackpack().removeIngredients(new Coin(),inventory.getLast().getPrice());
-        player.getBackpack().removeIngredients(new Wood(),((CarpenterShopFarmBuildingsItem)inventory.getLast()).getWoodCost());
+        game.getMap().addShippingBin(x, y);
+        player.getBackpack().removeIngredients(new Coin(), inventory.getLast().getPrice());
+        player.getBackpack().removeIngredients(new Wood(),
+            ((CarpenterShopFarmBuildingsItem) inventory.getLast()).getWoodCost());
         return new Result(true, "You successfully purchased a shipping bin");
     }
 
-    public void purchaseBuilding(String productName) {
-        //TODO
+    public Result purchaseBuilding(Game game, Player player, String productName, int x, int y) {
+        Result result = new Result();
+
+        switch (productName) { // TODO : build habitat and get result
+            case "Barn":
+                //barn
+            case "Big Barn":
+                //big_barn
+            case "Deluxe Barn":
+                //deluxe_barn
+            case "Coop":
+                //coop
+            case "Big Coop":
+                //big_coop
+            case "Deluxe Coop":
+                //deluxe_coop
+        }
+
+        ShopItem item = null;
+
+        for (ShopItem i : inventory) {
+            if (i.getName().equals(productName)) {
+                item = i;
+                break;
+            }
+        }
+
+        if (item == null) {
+            return new Result(false, "Not such product");
+        }
+
+        item.decreaseRemainingQuantity(1);
+        player.getBackpack().removeIngredients(new Coin(), item.getPrice());
+        player.getBackpack().removeIngredients(new Stone(), ((CarpenterShopFarmBuildingsItem) item).getStoneCost());
+        player.getBackpack().removeIngredients(new Wood(), ((CarpenterShopFarmBuildingsItem) item).getWoodCost());
+
+        return result;
     }
 
     @Override

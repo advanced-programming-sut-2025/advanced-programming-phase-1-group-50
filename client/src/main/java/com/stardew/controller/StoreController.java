@@ -65,6 +65,21 @@ public class StoreController {
     }
 
     public static void purchaseBuilding(int gameId, String buildingName,int x, int y , Consumer<Result> callback) {
-
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("buildingName", buildingName);
+            body.put("x", x);
+            body.put("y", y);
+            body.put("event", Event.PurchaseBuilding);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType() == MessageType.PURCHASE_BUILDING_RESULT) {
+                Result result = response.getFromBody("result", Result.class);
+                Gdx.app.postRunnable(() -> callback.accept(result));
+            } else {
+                Gdx.app.postRunnable(() -> callback.accept(new Result(false,"Server didn't respond")));
+            }
+        }).start();
     }
 }

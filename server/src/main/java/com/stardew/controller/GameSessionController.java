@@ -353,6 +353,11 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 StoreController.getInstance().purchaseShippingBin(message,player,connection);
             }
+
+            case PurchaseBuilding -> {
+                Player player = game.getPlayer(connection);
+                StoreController.getInstance().purchaseBuilding(message,player,connection);
+            }
         }
 
     }
