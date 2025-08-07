@@ -3,6 +3,8 @@ package com.stardew.model.stores;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.animals.AnimalType;
+import com.stardew.model.userInfo.Coin;
+import com.stardew.model.userInfo.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -54,9 +56,28 @@ public class MarnieRanch extends Store{
         return availableProducts;
     }
 
-    public Result purchaseAnimal(String productName , String animalName) {
-        //TODO
-        return null;
+    public Result purchaseAnimal(Player player, String productName , String animalName) {
+        ShopItem item = null;
+
+        for (ShopItem i : inventory) {
+            if (i.getName().equals(productName)) {
+                item = i;
+                break;
+            }
+        }
+
+        if (player.getBackpack().getIngredientQuantity().getOrDefault(new Coin(),0) < item.getPrice()) {
+            return new Result(false, "You don't have enough money to purchase");
+        }
+
+        Result result = new Result(); // TODO : we will get it from animal controller
+
+        if (result.getSuccessful()) {
+            item.decreaseRemainingQuantity(1);
+            player.getBackpack().removeIngredients(new Coin(), item.getPrice());
+        }
+
+        return result;
     }
 
     @Override

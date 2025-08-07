@@ -1,29 +1,28 @@
 package com.stardew.view.StoreWindows;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.math.Interpolation;
-import com.stardew.model.Result;
+import com.stardew.controller.StoreController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.stores.MarnieRanch;
-import com.stardew.models.stores.Store;
 import com.stardew.view.windows.CloseableWindow;
 
 public class PurchaseAnimalWindow extends CloseableWindow {
     private final Stage stage;
     private final String productName;
     private final int unitPrice;
-    private final Store store;
     private final StoreWindow storeWindow;
+    private final int gameId;
 
-    public PurchaseAnimalWindow(Stage stage, StoreWindow storeWindow , Store store, String productName, int price ) {
+    public PurchaseAnimalWindow(int gameId,Stage stage, StoreWindow storeWindow ,String productName, int price ) {
         super("Purchase " + productName, stage);
         this.stage = stage;
+        this.gameId = gameId;
         this.storeWindow = storeWindow;
-        this.store = store;
         this.productName = productName;
         this.unitPrice = price;
         buildUI();
@@ -42,12 +41,16 @@ public class PurchaseAnimalWindow extends CloseableWindow {
         buyButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                buyButton.setDisabled(true);
                 String animalName = nameField.getText().trim();
                 if (!animalName.isEmpty()) {
-                    Result result = ((MarnieRanch)store).purchaseAnimal(productName, animalName);
-                    storeWindow.refreshProducts();
-                    closeWindow();
-                    showResult(result);
+                    StoreController.purchaseAnimal(gameId,productName, animalName , result -> {
+                        Gdx.app.postRunnable(() -> {
+                            storeWindow.refreshProducts();
+                            closeWindow();
+                            showResult(result);
+                        });
+                    });
                 }
             }
         });

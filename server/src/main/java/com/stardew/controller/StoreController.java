@@ -1,11 +1,10 @@
 package com.stardew.controller;
 
+import com.stardew.model.Result;
 import com.stardew.model.StoreGoodDTO;
 import com.stardew.model.mapInfo.NpcVillage;
-import com.stardew.model.stores.CarpenterShopFarmBuildingsItem;
-import com.stardew.model.stores.MarnieRanchLiveStockItem;
-import com.stardew.model.stores.ShopItem;
-import com.stardew.model.stores.Store;
+import com.stardew.model.stores.*;
+import com.stardew.model.userInfo.Player;
 import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
@@ -83,6 +82,42 @@ public class StoreController {
         Message response = new Message(body, MessageType.GET_STORES_GOODS_INFO);
         response.setRequestID(message.getRequestID());
         connectionThread.sendMessage(response);
+    }
+
+    public void purchaseAnimal(Message message, Player player, ClientConnectionThread connectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int gameId = message.getIntFromBody("id");
+        String productName = message.getFromBody("productName");
+        String animalName = message.getFromBody("animalName");
+
+        MarnieRanch shop = GameSessionController.getInstance().getGame(gameId).getMap().getNpcVillage().getMarnieRanch();
+        Result result = shop.purchaseAnimal(player, productName, animalName);
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body, MessageType.PURCHASE_ANIMAL_RESULT);
+        response.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(response);
+    }
+
+    public void canPurchaseShippingBin(Message message, Player player, ClientConnectionThread connectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int gameId = message.getIntFromBody("id");
+        CarpenterShop shop = GameSessionController.getInstance().getGame(gameId).getMap().getNpcVillage().getCarpenterShop();
+        Result result = shop.canPurchaseShippingBin(player);
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body, MessageType.CAN_PURCHASE_SHIPPING_BIN_RESULT);
+        response.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(response);
+
     }
 
 }

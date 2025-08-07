@@ -338,6 +338,16 @@ public class GameSessionController {
             case GetStoreGoods -> {
                 StoreController.getInstance().sendStoreGoodsInfo(message,connection);
             }
+
+            case PurchaseAnimal -> {
+                Player player = game.getPlayer(connection);
+                StoreController.getInstance().purchaseAnimal(message,player,connection);
+            }
+
+            case CanPurchaseShippingBin -> {
+                Player player = game.getPlayer(connection);
+                StoreController.getInstance().canPurchaseShippingBin(message,player,connection);
+            }
         }
 
     }
