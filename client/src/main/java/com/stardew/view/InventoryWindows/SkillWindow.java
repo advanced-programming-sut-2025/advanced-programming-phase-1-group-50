@@ -126,8 +126,7 @@ public class SkillWindow extends CloseableWindow {
 
 
 
-        TooltipManager.getInstance().initialTime = 0.3f;
-        TooltipManager.getInstance().hideAll();
+
 
 
         miningBar = new ProgressBar(0, requiredRateForLevel(miningLevel), 1, false, GamePictureManager.skin);
