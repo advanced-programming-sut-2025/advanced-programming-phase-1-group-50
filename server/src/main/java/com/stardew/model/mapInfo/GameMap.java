@@ -10,6 +10,7 @@ package com.stardew.model.mapInfo;
 import com.stardew.model.NPCs.NPC;
 import com.stardew.model.NPCs.NPCType;
 import com.stardew.model.ShippingBin;
+import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.mapInfo.foraging.Crop;
 import com.stardew.model.mapInfo.foraging.CropType;
 import com.stardew.model.mapInfo.foraging.ForagingMineral;
@@ -36,6 +37,7 @@ public class GameMap {
     private NpcVillage npcVillage;
     private final ArrayList<NpcHome> npcHomes = new ArrayList<>();
     private final ArrayList<ShippingBin> shippingBins = new ArrayList<>();
+    private TimeProvider timeProvider;
 
 
 
@@ -45,6 +47,10 @@ public class GameMap {
         this.height = 200;
         this.tiles = new Tile[width][height];
         buildMap(gameId);
+    }
+
+    public void setTimeProvider(TimeProvider timeProvider) {
+        this.timeProvider = timeProvider;
     }
 
     public Tile findTile(int x, int y) {
@@ -201,45 +207,48 @@ public class GameMap {
         return cropTypes[rand.nextInt(cropTypes.length)];
     }
 
-    public void generateRandomForagingCrop(Farm farm) {
-
-//        int numberOfRandomCrops = 6;
-//        int counter = 0;
-//        while (counter < numberOfRandomCrops) {
-//            int x = rand.nextInt(farm.getRectangle().width) + farm.getRectangle().x;
-//            int y = rand.nextInt(farm.getRectangle().height) + farm.getRectangle().y;
-//            Tile tile = findTile(x, y);
-//            if (tile.getPlaceable() == null) {
-//                Crop crop = new Crop(generateRandomCropType(), App.getGame().getTime(), null, x, y);
-//                tile.setPlaceable(crop);
-//                tile.setWalkable(false);
-//                tile.setSymbol(crop.getSymbol());
-//                farm.getCrops().add(crop);
-//                farm.getPlaceables().add(crop);
-//            }
-//            counter++;
-//        }
+    public void generateRandomForagingCrop() {
+        for(Farm farm : farms) {
+            int numberOfRandomCrops = 6;
+            int counter = 0;
+            while (counter < numberOfRandomCrops) {
+                int x = rand.nextInt(farm.getRectangle().width) + farm.getRectangle().x;
+                int y = rand.nextInt(farm.getRectangle().height) + farm.getRectangle().y;
+                Tile tile = findTile(x, y);
+                if (tile.getPlaceable() == null) {
+                    Crop crop = new Crop(generateRandomCropType(), timeProvider, null, x, y);
+                    tile.setPlaceable(crop);
+                    tile.setWalkable(false);
+                    tile.setSymbol(crop.getSymbol());
+                    farm.getCrops().add(crop);
+                    farm.getPlaceables().add(crop);
+                }
+                counter++;
+            }
+        }
 
     }
 
-    public void generateRandomStoneFarm(Farm farm) {
-        int numberOfStone = rand.nextInt(2) + 1;
-        int counter = 0;
+    public void generateRandomStoneFarm() {
+        for(Farm farm : farms) {
+            int numberOfStone = rand.nextInt(2) + 1;
+            int counter = 0;
 
-        while (counter < numberOfStone) {
-            int x = rand.nextInt(farm.getRectangle().width) + farm.getRectangle().x;
-            int y = rand.nextInt(farm.getRectangle().height) + farm.getRectangle().y;
-            Tile tile = findTile(x, y);
+            while (counter < numberOfStone) {
+                int x = rand.nextInt(farm.getRectangle().width) + farm.getRectangle().x;
+                int y = rand.nextInt(farm.getRectangle().height) + farm.getRectangle().y;
+                Tile tile = findTile(x, y);
 
-            if (tile.getPlaceable() == null) {
-                Stone stone = new Stone(x, y);
-                tile.setPlaceable(stone);
-                tile.setWalkable(false);
-                tile.setSymbol(stone.getSymbol());
-                farm.getStones().add(stone);
-                farm.getPlaceables().add(stone);
+                if (tile.getPlaceable() == null) {
+                    Stone stone = new Stone(x, y);
+                    tile.setPlaceable(stone);
+                    tile.setWalkable(false);
+                    tile.setSymbol(stone.getSymbol());
+                    farm.getStones().add(stone);
+                    farm.getPlaceables().add(stone);
+                }
+                counter++;
             }
-            counter++;
         }
     }
 
@@ -352,5 +361,14 @@ public class GameMap {
     public static int getFarmStartY(int indexOfRegion) {
         int[] startYForMap = {0, 0, 125, 125};
         return startYForMap[indexOfRegion];
+    }
+
+
+    public void setTileWateredFalse(){
+        for(Tile[] value : tiles) {
+            for(Tile tile : value) {
+                if(tile.isWatered()) tile.setWatered(false);
+            }
+        }
     }
 }

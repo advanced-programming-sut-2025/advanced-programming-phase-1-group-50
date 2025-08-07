@@ -31,7 +31,7 @@ public class EnergyManager {
         progressBar.setAnimateDuration(0.5f);
         progressBar.setValue(200);
         progressBar.setSize(20, 200);
-        progressBar.setPosition(20 , Gdx.graphics.getHeight() - 210);
+        progressBar.setPosition(20 , 70);
         stage.addActor(progressBar);
     }
 

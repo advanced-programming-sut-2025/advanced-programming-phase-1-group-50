@@ -35,13 +35,14 @@ public class Game {
     private boolean started = false;
 //    private final GameMenuController gameMenuController = new GameMenuController();
 
-    public Game(Map<ClientConnectionThread, Player> players, ArrayList<Farm> farms, User u, GameMap map) {
+    public Game(Map<ClientConnectionThread, Player> players, ArrayList<Farm> farms, User u, GameMap map , Time time) {
         this.farms.addAll(farms);
         this.players = players;
         this.gameCreator = u;
-        this.time = new Time();
-        time.setGame(this);
+        this.time = time;
+        this.time.setGame(this);
         this.map = map;
+        this.map.setTimeProvider(getTime());
         this.timeService = new TimeService(time, this);
         this.hotBarService = new HotBarService(this);
         this.animalsService = new AnimalsService();
@@ -289,8 +290,8 @@ public class Game {
             }
 
 
-            map.generateRandomForagingCrop(player.getFarm());
-            map.generateRandomStoneFarm(player.getFarm());
+            map.generateRandomForagingCrop();
+            map.generateRandomStoneFarm();
 
 
 
@@ -308,6 +309,7 @@ public class Game {
         }
         map.GotThunderByStormyWeather();
         map.randomForagingMineralGenerator();
+        map.setTileWateredFalse();
 
 
 

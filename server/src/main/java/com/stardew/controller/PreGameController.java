@@ -3,6 +3,7 @@ package com.stardew.controller;
 import com.stardew.model.ServerApp;
 import com.stardew.model.gameApp.App;
 import com.stardew.model.gameApp.Game;
+import com.stardew.model.gameApp.date.Time;
 import com.stardew.model.mapInfo.Farm;
 import com.stardew.model.mapInfo.FarmFactory;
 import com.stardew.model.mapInfo.GameMap;
@@ -110,7 +111,9 @@ public class PreGameController {
             counter++;
         }
         GameMap map = new GameMap(id,farms);
-        Game game = new Game(players, farms, lobby.getAdmin(), map);
+        Time time = new Time();
+        Game game = new Game(players, farms, lobby.getAdmin(), map , time);
+
         GameSessionController.getInstance().addGame(id, game);
 
     }

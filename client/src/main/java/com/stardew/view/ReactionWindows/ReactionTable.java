@@ -29,7 +29,7 @@ public class ReactionTable extends Table {
 
         this.setBackground(new TextureRegionDrawable(GamePictureManager.emptyTile));
         Gdx.app.postRunnable(() -> {
-            this.setPosition(60, Gdx.graphics.getHeight() - this.getHeight() - 10);
+            this.setPosition(60, 70);
         });
 
     }
