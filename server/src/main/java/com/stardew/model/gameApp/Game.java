@@ -320,26 +320,26 @@ public class Game {
 
 
 
-//        for (RelationWithPlayers relation : relationsBetweenPlayers.relationNetwork.values()) {
-//            relation.checkEveryNight();
-//        }
-//
-//        for (Player player : getPlayers()) {
-//            player.getRelationWithAbigail().checkEveryNight(player);
-//            player.getRelationWithHarvey().checkEveryNight(player);
-//            player.getRelationWithLeah().checkEveryNight(player);
-//            player.getRelationWithRobin().checkEveryNight(player);
-//            player.getRelationWithSebastian().checkEveryNight(player);
-//        }
+        for (RelationWithPlayers relation : relationsBetweenPlayers.relationNetwork.values()) {
+            relation.checkEveryNight();
+        }
+
+        for (Player player : getAllPlayers()) {
+            player.getRelationWithAbigail().checkEveryNight(player);
+            player.getRelationWithHarvey().checkEveryNight(player);
+            player.getRelationWithLeah().checkEveryNight(player);
+            player.getRelationWithRobin().checkEveryNight(player);
+            player.getRelationWithSebastian().checkEveryNight(player);
+        }
 //        System.out.println("relations are done");
 //
-//        this.getMap().getNpcVillage().getBlacksmith().ResetQuantityEveryNight();
-//        this.getMap().getNpcVillage().getMarnieRanch().ResetQuantityEveryNight();
-//        this.getMap().getNpcVillage().getPierreGeneralStore().ResetQuantityEveryNight();
-//        this.getMap().getNpcVillage().getJojaMart().ResetQuantityEveryNight();
-//        this.getMap().getNpcVillage().getFishShop().ResetQuantityEveryNight();
-//        this.getMap().getNpcVillage().getCarpenterShop().ResetQuantityEveryNight();
-//        this.getMap().getNpcVillage().getStardopSaloon().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getBlacksmith().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getMarnieRanch().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getPierreGeneralStore().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getJojaMart().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getFishShop().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getCarpenterShop().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getStardopSaloon().ResetQuantityEveryNight();
 //
 //        System.out.println("completed");
 
