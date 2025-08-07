@@ -27,20 +27,6 @@ public class StoreController {
         }).start();
     }
 
-    public static void canPurchaseShippingBin(int gameId, Consumer<Result> callback) {
-        new Thread(() -> {
-            HashMap<String, Object> body = new HashMap<>();
-            body.put("id", gameId);
-            body.put("event", Event.CanPurchaseShippingBin);
-            Message message = new Message(body, MessageType.EVENT_IN_GAME);
-            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
-            if (response != null && response.getType().equals(MessageType.CAN_PURCHASE_SHIPPING_BIN_RESULT)) {
-                Result result = response.getFromBody("result", Result.class);
-                Gdx.app.postRunnable(() -> callback.accept(result));
-            }
-        }).start();
-    }
-
     public static void canPurchaseBuilding(int gameId,String productName, Consumer<Result> callback) {
         new Thread(() -> {
             HashMap<String, Object> body = new HashMap<>();

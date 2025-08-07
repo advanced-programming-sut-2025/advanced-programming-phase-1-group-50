@@ -42,6 +42,5 @@ public enum Event {
     GetForSaleProducts,
     GetStoreGoods,
     PurchaseAnimal,
-    CanPurchaseShippingBin,
     CanPurchaseBuilding,
 }

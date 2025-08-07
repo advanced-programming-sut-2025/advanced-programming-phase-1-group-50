@@ -4,6 +4,7 @@ import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.animals.HabitatSize;
 import com.stardew.model.animals.HabitatType;
+import com.stardew.model.mapInfo.Stone;
 import com.stardew.model.mapInfo.Wood;
 import com.stardew.model.userInfo.Coin;
 import com.stardew.model.userInfo.Player;
@@ -56,16 +57,23 @@ public class CarpenterShop extends Store{
         return availableProducts;
     }
 
-    public Result canPurchaseBuilding(String productName) {
-        //TODO
-        return null;
-    }
+    public Result canPurchaseBuilding(Player player,String productName) {
+        ShopItem item = null;
 
-    public Result canPurchaseShippingBin(Player player) {
-        ShopItem item = inventory.getLast();
+        for (ShopItem i : inventory) {
+            if (i.getName().equals(productName)) {
+                item = i;
+                break;
+            }
+        }
 
-        if (player.getBackpack().getIngredientQuantity().getOrDefault(new Coin(),0) < item.getPrice()) {
+        if (player.getBackpack().getIngredientQuantity().getOrDefault(new Coin(), 0) < item.getPrice()) {
             return new Result(false, "You don't have enough money");
+        }
+
+        if (player.getBackpack().getIngredientQuantity().getOrDefault(new Stone(),
+            0) < ((CarpenterShopFarmBuildingsItem) item).getStoneCost()) {
+            return new Result(false, "You don't have enough stones");
         }
 
         if (player.getBackpack().getIngredientQuantity().getOrDefault(new Wood(), 0) < ((CarpenterShopFarmBuildingsItem) item).getWoodCost()) {

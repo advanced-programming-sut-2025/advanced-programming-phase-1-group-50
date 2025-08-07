@@ -218,7 +218,7 @@ public class StoreWindow extends CloseableWindow {
     }
 
     private void openPurchaseShippingBinWindow() {
-        StoreController.canPurchaseShippingBin(gameId,result -> {
+        StoreController.canPurchaseBuilding(gameId,"Shipping Bin",result -> {
             if (!result.getSuccessful()) {
                 showResult(result);
                 return;

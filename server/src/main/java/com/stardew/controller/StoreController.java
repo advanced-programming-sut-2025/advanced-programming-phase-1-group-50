@@ -103,21 +103,23 @@ public class StoreController {
         connectionThread.sendMessage(response);
     }
 
-    public void canPurchaseShippingBin(Message message, Player player, ClientConnectionThread connectionThread) {
+    public void canPurchaseBuilding(Message message, Player player, ClientConnectionThread connectionThread) {
         if (message == null || player == null) {
             return;
         }
 
         int gameId = message.getIntFromBody("id");
+        String productName = message.getFromBody("productName");
         CarpenterShop shop = GameSessionController.getInstance().getGame(gameId).getMap().getNpcVillage().getCarpenterShop();
-        Result result = shop.canPurchaseShippingBin(player);
+        Result result = shop.canPurchaseBuilding(player,productName);
 
         HashMap<String, Object> body = new HashMap<>();
         body.put("result", result);
-        Message response = new Message(body, MessageType.CAN_PURCHASE_SHIPPING_BIN_RESULT);
+        Message response = new Message(body, MessageType.CAN_PURCHASE_BUILDING_RESULT);
         response.setRequestID(message.getRequestID());
         connectionThread.sendMessage(response);
 
     }
+
 
 }
