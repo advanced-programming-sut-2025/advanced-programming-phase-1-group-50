@@ -3,6 +3,7 @@ package com.stardew.model.stores;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.cooking.Food;
+import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.gameApp.date.Season;
 import com.stardew.model.mapInfo.foraging.Seeds;
 import com.stardew.model.userInfo.Coin;
@@ -14,8 +15,8 @@ import java.util.ArrayList;
 public class JojaMart extends Store {
     private ArrayList<ShopItem> inventory;
 
-    public JojaMart(int gameId,int x, int y, int width, int height) {
-        super(gameId,TextureID.jojaMartRegion, new Rectangle(x, y, width, height), "Morris", 9, 23);
+    public JojaMart(TimeProvider timeProvider, int x, int y, int width, int height) {
+        super(timeProvider,TextureID.jojaMartRegion, new Rectangle(x, y, width, height), "Morris", 9, 23);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.stardew.model.stores;
 import com.stardew.model.Bouquet;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
+import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.gameApp.date.Season;
 import com.stardew.model.mapInfo.foraging.CropType;
 import com.stardew.model.mapInfo.foraging.Seeds;
@@ -19,8 +20,8 @@ import java.util.ArrayList;
 public class PierreGeneralStore extends Store {
     private ArrayList<ShopItem> inventory;
 
-    public PierreGeneralStore(int gameId, int x, int y, int width, int height) {
-        super(gameId, TextureID.pierresShopRegion, new Rectangle(x, y, width, height), "Pierre", 9, 23);
+    public PierreGeneralStore(TimeProvider timeProvider, int x, int y, int width, int height) {
+        super(timeProvider, TextureID.pierresShopRegion, new Rectangle(x, y, width, height), "Pierre", 9, 23);
     }
 
     @Override

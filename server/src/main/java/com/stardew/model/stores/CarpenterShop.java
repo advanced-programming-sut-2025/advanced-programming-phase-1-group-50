@@ -6,6 +6,7 @@ import com.stardew.model.TextureID;
 import com.stardew.model.animals.HabitatSize;
 import com.stardew.model.animals.HabitatType;
 import com.stardew.model.gameApp.Game;
+import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.mapInfo.Stone;
 import com.stardew.model.mapInfo.Wood;
 import com.stardew.model.userInfo.Coin;
@@ -18,8 +19,8 @@ import java.util.ArrayList;
 public class CarpenterShop extends Store {
     private ArrayList<ShopItem> inventory;
 
-    public CarpenterShop(int gameId, int x, int y, int width, int height) {
-        super(gameId, TextureID.carpenterShopTextureRegion, new Rectangle(x, y, width, height), "Robin", 9, 20);
+    public CarpenterShop(TimeProvider timeProvider, int x, int y, int width, int height) {
+        super(timeProvider, TextureID.carpenterShopTextureRegion, new Rectangle(x, y, width, height), "Robin", 9, 20);
     }
 
     @Override
