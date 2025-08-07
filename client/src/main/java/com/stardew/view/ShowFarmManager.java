@@ -1,4 +1,6 @@
-package com.stardew.model;
+package com.stardew.view;
+
+import com.stardew.model.TextureID;
 
 public class ShowFarmManager {
     public static TextureID[][] farm1 = new TextureID[100][75];
@@ -57,7 +59,7 @@ public class ShowFarmManager {
         }
 
         for(int i=20 ; i<23 ; i++){
-            for(int j=50 ; j<58 ; j++){
+            for(int j=50 ; j<68 ; j++){
                 farm2[i][j] = TextureID.lakeTexture;
             }
         }

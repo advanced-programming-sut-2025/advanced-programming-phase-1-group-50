@@ -15,8 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.Main;
-import com.stardew.model.Result;
-import com.stardew.model.ShowFarmManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.network.GameUpdateRequestThread;
 import com.stardew.network.Message;
@@ -87,8 +85,6 @@ public class SelectFarmMenu implements Screen, AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 stage.addActor(new ShowFarmsWindow(stage , ShowFarmManager.farm1));
-//                App.gameSample.setCurrentPlayingPlayer(players.get(0));
-//                stage.addActor(new ShowFarmsWindow(stage , 1 , App.gameSample));
             }
         });
         farm2 = new TextButton("Farm 2", GamePictureManager.skin);
@@ -96,8 +92,6 @@ public class SelectFarmMenu implements Screen, AppMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 stage.addActor(new ShowFarmsWindow(stage , ShowFarmManager.farm2));
-//                App.gameSample.setCurrentPlayingPlayer(players.get(1));
-//                stage.addActor(new ShowFarmsWindow(stage , 2 , App.gameSample));
             }
         });
 

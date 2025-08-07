@@ -1,12 +1,10 @@
 package com.stardew.model.mapInfo.foraging;
 
-import com.stardew.model.TreeTextureID;
 import com.stardew.model.gameApp.date.Season;
 import com.stardew.model.TextureID;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 public enum TreeType {
     ApricotTree(TreeSource.ApricotSapling, new ArrayList<>(Arrays.asList(7, 7, 7, 7)), 28,

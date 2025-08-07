@@ -1,4 +1,6 @@
-package com.stardew.model;
+package com.stardew.model.mapInfo.foraging;
+
+import com.stardew.model.TextureID;
 
 public class TreeTextureID {
     public static TextureID[] peachStage5 ;
