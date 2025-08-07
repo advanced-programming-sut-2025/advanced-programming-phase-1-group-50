@@ -123,5 +123,26 @@ public class StoreController {
 
     }
 
+    public void purchaseShippingBin(Message message, Player player, ClientConnectionThread connectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int gameId = message.getIntFromBody("id");
+        Game game = GameSessionController.getInstance().getGame(gameId);
+        int selectedX = message.getIntFromBody("x");
+        int selectedY = message.getIntFromBody("y");
+
+        CarpenterShop shop = game.getMap().getNpcVillage().getCarpenterShop();
+        Result result = shop.purchaseShippingBin(game,player,selectedX,selectedY);
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body, MessageType.PURCHASE_SHIPPING_BIN_RESULT);
+        response.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(response);
+
+    }
+
 
 }

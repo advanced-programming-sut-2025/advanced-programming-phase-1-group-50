@@ -10,14 +10,19 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.google.gson.reflect.TypeToken;
 import com.stardew.controller.StoreController;
+import com.stardew.model.PlaceableDTO;
 import com.stardew.model.Result;
 import com.stardew.model.StoreGoodDTO;
+import com.stardew.model.TileDTO;
+import com.stardew.models.GameAssetManagers.ArtisanAsset;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.stores.*;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 import com.stardew.network.NetworkManager;
+import com.stardew.view.ArtisanMachine.ArtisanMachinesManager;
+import com.stardew.view.GridMap.TileSelectionWindow;
 import com.stardew.view.windows.CloseableWindow;
 
 import java.lang.reflect.Type;
@@ -223,7 +228,30 @@ public class StoreWindow extends CloseableWindow {
                 showResult(result);
                 return;
             }
-            stage.addActor(new SelectTileForShippingBinWindow(stage,this,1,1)); // TODO
+
+            new Thread(() -> {
+                HashMap<String, Object> body = new HashMap<>();
+                body.put("id", gameId);
+                body.put("event", Event.GetMyFarmInfo);
+                Message infoMessage = new Message(body, MessageType.EVENT_IN_GAME);
+                Message response = NetworkManager.getConnection().sendAndWaitForResponse(infoMessage, 500);
+                if (response != null && response.getType() == MessageType.EVENT_IN_GAME_RESULT) {
+                    ArrayList<TileDTO> tileDTOS = response.getFromBody(
+                        "tiles", new TypeToken<ArrayList<TileDTO>>(){}.getType());
+                    ArrayList<PlaceableDTO> placeableDTOS = response.getFromBody(
+                        "placeables", new TypeToken<ArrayList<PlaceableDTO>>(){}.getType());
+                    SelectTileForShippingBinWindow tileSelectionWindow =
+                        new SelectTileForShippingBinWindow(stage, 1,1, tileDTOS, placeableDTOS);
+                    Gdx.app.postRunnable(() -> stage.addActor(tileSelectionWindow));
+
+                    tileSelectionWindow.setOnOKCallback((selectedX, selectedY) -> {
+                        StoreController.purchaseShippingBin(gameId,selectedX,selectedY, result1 -> {
+                            Gdx.app.postRunnable(() -> showResult(result1)); //TODO : adding shippingBinImage
+                        });
+                    });
+
+                }
+            }).start();
         });
     }
 }

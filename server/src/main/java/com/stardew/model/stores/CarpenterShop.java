@@ -4,6 +4,7 @@ import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.animals.HabitatSize;
 import com.stardew.model.animals.HabitatType;
+import com.stardew.model.gameApp.Game;
 import com.stardew.model.mapInfo.Stone;
 import com.stardew.model.mapInfo.Wood;
 import com.stardew.model.userInfo.Coin;
@@ -83,9 +84,15 @@ public class CarpenterShop extends Store{
         return new Result(true, "");
     }
 
-    public Result purchaseShippingBin(int x, int y) {
-        //TODO
-        return null;
+    public Result purchaseShippingBin(Game game, Player player, int x, int y) {
+        if (!player.getFarm().getRectangle().contains(x, y)) {
+            return new Result(false, "You don't own this area");
+        }
+
+        game.getMap().addShippingBin(x,y);
+        player.getBackpack().removeIngredients(new Coin(),inventory.getLast().getPrice());
+        player.getBackpack().removeIngredients(new Wood(),((CarpenterShopFarmBuildingsItem)inventory.getLast()).getWoodCost());
+        return new Result(true, "You successfully purchased a shipping bin");
     }
 
     public void purchaseBuilding(String productName) {
