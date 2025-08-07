@@ -1,7 +1,6 @@
 package com.stardew.model.animals;
 
 import com.stardew.model.InventoryItemDTO;
-import com.stardew.model.ItemInventoryType;
 import com.stardew.model.TextureID;
 import com.stardew.model.animals.FishBehaviors.FishBehavior;
 import com.stardew.model.mapInfo.Ingredient;
@@ -88,7 +87,7 @@ public class Fish implements Ingredient , Sellable {
 
     @Override
     public InventoryItemDTO toDTO() {
-        return new InventoryItemDTO(getInventoryTexture() , false , 1 , ItemInventoryType.fish , id);
+        return new InventoryItemDTO(getInventoryTexture(), false, 1, toString(), id);
     }
 
     @Override

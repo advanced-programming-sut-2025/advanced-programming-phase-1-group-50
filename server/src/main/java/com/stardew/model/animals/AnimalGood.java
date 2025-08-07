@@ -1,7 +1,6 @@
 package com.stardew.model.animals;
 
 import com.stardew.model.InventoryItemDTO;
-import com.stardew.model.ItemInventoryType;
 import com.stardew.model.TextureID;
 import com.stardew.model.mapInfo.Eatable;
 import com.stardew.model.mapInfo.Ingredient;
@@ -63,7 +62,7 @@ public class AnimalGood implements Ingredient , Sellable , Eatable {
     }
 
     public InventoryItemDTO toDTO() {
-        return new InventoryItemDTO(getInventoryTexture() , false , 1 , ItemInventoryType.animalGood , id);
+        return new InventoryItemDTO(getInventoryTexture(), false, 1, toString(), id);
     }
 
 

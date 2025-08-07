@@ -4,14 +4,14 @@ public class InventoryItemDTO {
     private final TextureID textureID;
     private final boolean isTool;
     private int quantity;
-    private final ItemInventoryType type;
+    private final String description;
     private final String id;
 
-    public InventoryItemDTO(TextureID textureID, boolean isTool , int quantity , ItemInventoryType type , String id) {
+    public InventoryItemDTO(TextureID textureID, boolean isTool, int quantity, String description, String id) {
         this.textureID = textureID;
         this.isTool = isTool;
         this.quantity = quantity;
-        this.type = type;
+        this.description = description;
         this.id = id;
     }
 
@@ -32,8 +32,8 @@ public class InventoryItemDTO {
         this.quantity = quantity;
     }
 
-    public ItemInventoryType getType() {
-        return type;
+    public String getDescription() {
+        return description;
     }
 
     public String getId() {
@@ -41,7 +41,7 @@ public class InventoryItemDTO {
     }
 
     public String toString() {
-        return type.name();
+        return description;
     }
 
 }

@@ -1,7 +1,6 @@
 package com.stardew.model.mapInfo.foraging;
 
 import com.stardew.model.InventoryItemDTO;
-import com.stardew.model.ItemInventoryType;
 import com.stardew.model.PlaceableDTO;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.TimeProvider;
@@ -245,7 +244,7 @@ public class Crop implements Placeable , Ingredient , Sellable , Growable , Eata
 
     @Override
     public InventoryItemDTO toDTO() {
-        return new InventoryItemDTO(getInventoryTexture() , false , 1 , ItemInventoryType.crop , id);
+        return new InventoryItemDTO(getInventoryTexture(), false, 1, toString(), id);
     }
 
 

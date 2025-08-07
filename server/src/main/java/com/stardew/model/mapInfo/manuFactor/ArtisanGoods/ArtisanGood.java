@@ -1,7 +1,6 @@
 package com.stardew.model.mapInfo.manuFactor.ArtisanGoods;
 
 import com.stardew.model.InventoryItemDTO;
-import com.stardew.model.ItemInventoryType;
 import com.stardew.model.TextureID;
 import com.stardew.model.mapInfo.Eatable;
 import com.stardew.model.mapInfo.Ingredient;
@@ -65,7 +64,7 @@ public class ArtisanGood implements Ingredient , Eatable , Sellable {
 
     @Override
     public InventoryItemDTO toDTO() {
-        return new InventoryItemDTO(getInventoryTexture() , false , 1 , ItemInventoryType.artisanGood , id);
+        return new InventoryItemDTO(getInventoryTexture(), false, 1, toString(), id);
     }
 
 

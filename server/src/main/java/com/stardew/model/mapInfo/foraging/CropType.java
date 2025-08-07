@@ -2,7 +2,6 @@ package com.stardew.model.mapInfo.foraging;
 
 import com.stardew.model.CropTextureID;
 import com.stardew.model.InventoryItemDTO;
-import com.stardew.model.ItemInventoryType;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.date.Season;
 import com.stardew.model.mapInfo.Ingredient;
@@ -329,7 +328,7 @@ public enum CropType implements Ingredient {
 
     @Override
     public InventoryItemDTO toDTO() {
-        return new InventoryItemDTO(getInventoryTexture() , false , 1 , ItemInventoryType.cropType , name());
+        return new InventoryItemDTO(getInventoryTexture(), false, 1, toString(), name());
     }
 
     @Override

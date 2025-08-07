@@ -1,7 +1,6 @@
 package com.stardew.model.Tools;
 
 import com.stardew.model.InventoryItemDTO;
-import com.stardew.model.ItemInventoryType;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.date.Weather;
@@ -76,7 +75,7 @@ public class Hoe extends Tool {
 
     @Override
     public InventoryItemDTO toDTO() {
-        return new InventoryItemDTO(getInventoryTexture() , true , 1 , ItemInventoryType.hoe , id);
+        return new InventoryItemDTO(getInventoryTexture(), true, 1, toString(), id);
     }
 
     @Override
