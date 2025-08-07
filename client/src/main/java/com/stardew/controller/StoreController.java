@@ -63,4 +63,8 @@ public class StoreController {
             }
         }).start();
     }
+
+    public static void purchaseBuilding(int gameId, String buildingName,int x, int y , Consumer<Result> callback) {
+
+    }
 }
