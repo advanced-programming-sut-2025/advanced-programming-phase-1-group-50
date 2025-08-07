@@ -178,7 +178,8 @@ public class StoreWindow extends CloseableWindow {
 
 
     private void openPurchaseWindow(String productName, int quantity, int price) {
-        PurchaseWindow purchaseWindow = new PurchaseWindow(stage, this, null, productName, quantity, price); //TODO
+        PurchaseWindow purchaseWindow = new PurchaseWindow(stage, this, gameId, assistantName, productName, quantity,
+            price);
         stage.addActor(purchaseWindow);
     }
 
@@ -216,7 +217,7 @@ public class StoreWindow extends CloseableWindow {
                     Gdx.app.postRunnable(() -> stage.addActor(tileSelectionWindow));
 
                     tileSelectionWindow.setOnOKCallback((selectedX, selectedY) -> {
-                        StoreController.purchaseBuilding(gameId,productName,selectedX,selectedY, result1 -> {
+                        StoreController.purchaseBuilding(gameId, productName, selectedX, selectedY, result1 -> {
                             Gdx.app.postRunnable(() -> {
                                 refreshProducts();
                                 showResult(result1);

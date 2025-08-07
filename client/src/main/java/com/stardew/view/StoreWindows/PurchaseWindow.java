@@ -6,9 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.stardew.model.Result;
+import com.stardew.controller.StoreController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.stores.Store;
 import com.stardew.view.windows.CloseableWindow;
 
 public class PurchaseWindow extends CloseableWindow {
@@ -19,7 +18,7 @@ public class PurchaseWindow extends CloseableWindow {
     private final Label quantityLabel;
     private int selectedQuantity = 1;
 
-    public PurchaseWindow(Stage stage,StoreWindow storeWindow ,Store store, String productName, int quantity, int price) {
+    public PurchaseWindow(Stage stage,StoreWindow storeWindow ,int gameId,String assistantName, String productName, int quantity, int price) {
         super("Purchase " + productName, stage);
         this.unitPrice = price;
         this.maxQuantity = quantity;
@@ -62,10 +61,11 @@ public class PurchaseWindow extends CloseableWindow {
         purchaseButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Result result = store.purchaseProduct(selectedQuantity, productName);
-                storeWindow.refreshProducts();
-                closeWindow();
-                showResult(result);
+                StoreController.purchaseProduct(gameId,productName,selectedQuantity,assistantName,result -> {
+                   storeWindow.refreshProducts();
+                   closeWindow();
+                   showResult(result);
+                });
             }
         });
 
