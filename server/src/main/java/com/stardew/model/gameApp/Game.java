@@ -42,7 +42,6 @@ public class Game {
         this.time = time;
         this.time.setGame(this);
         this.map = map;
-        this.map.setTimeProvider(getTime());
         this.timeService = new TimeService(time, this);
         this.hotBarService = new HotBarService(this);
         this.animalsService = new AnimalsService();

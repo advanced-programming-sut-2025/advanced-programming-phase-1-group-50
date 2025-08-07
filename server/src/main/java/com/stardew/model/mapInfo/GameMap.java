@@ -31,11 +31,12 @@ public class GameMap {
 
 
 
-    public GameMap(int gameId ,ArrayList<Farm> farms) {
+    public GameMap( ArrayList<Farm> farms , TimeProvider timeProvider) {
         this.farms = farms;
         this.width = 250;
         this.height = 200;
         this.tiles = new Tile[width][height];
+        this.timeProvider = timeProvider;
         buildMap();
     }
 
