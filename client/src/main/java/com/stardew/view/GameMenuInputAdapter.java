@@ -169,7 +169,6 @@ public class GameMenuInputAdapter extends InputAdapter {
             stage.addActor(new ReactionWindow(stage , id));
         }
 
-
         justPressedKeys.clear();
     }
 
@@ -300,7 +299,7 @@ public class GameMenuInputAdapter extends InputAdapter {
     }
 
     public void createShippingBinWindow(ShippingBin bin) {
-        stage.addActor(new ShippingBinWindow(stage , bin));
+        //stage.addActor(new ShippingBinWindow(stage , bin));
     }
 
 

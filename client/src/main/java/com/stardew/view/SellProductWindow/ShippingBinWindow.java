@@ -16,12 +16,14 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ShippingBinWindow extends CloseableWindow {
-    private final ShippingBin shippingBin;
+    private final int gameId;
+    private final int shippingBinId;
     private final Table productTable;
 
-    public ShippingBinWindow(Stage stage, ShippingBin shippingBin) {
+    public ShippingBinWindow(int gameId,int shippingBinId,Stage stage) {
         super("Shipping bin window", stage);
-        this.shippingBin = shippingBin;
+        this.gameId = gameId;
+        this.shippingBinId = shippingBinId;
 
         pad(40);
         defaults().space(15);
@@ -50,59 +52,59 @@ public class ShippingBinWindow extends CloseableWindow {
     }
 
     protected void refreshProducts() {
-        productTable.clear();
-        List<Sellable> items = new ArrayList<>();
-
-        HashMap<Ingredient, Integer> ingredientQuantity = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity();
-
-        for (Ingredient ingredient : ingredientQuantity.keySet()) {
-            if (Sellable.isSellable(ingredient.toString()) && ingredientQuantity.get(ingredient) > 0) {
-                items.add((Sellable) ingredient);
-            }
-        }
-
-        if (items.isEmpty()) {
-            Label emptyLabel = new Label("You don't have any sellable items in your backpack.", GamePictureManager.skin);
-            emptyLabel.setWrap(true);
-            productTable.add(emptyLabel)
-                .colspan(3)
-                .width(380)
-                .padTop(20)
-                .padLeft(10)
-                .padRight(10);
-            productTable.row();
-            return;
-        }
-
-
-        for (Sellable item : items) {
-            final String productName = Sellable.getNameInString(item);
-            final int price = item.getSellPrice();
-            final int quantity = ingredientQuantity.getOrDefault((Ingredient) item, 0);
-
-            TextButton nameButton = new TextButton(productName, GamePictureManager.skin);
-            nameButton.pad(5);
-            nameButton.getLabel().setFontScale(0.9f);
-            nameButton.getLabelCell().padLeft(10);
-
-            nameButton.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    openSellWindow(productName, quantity, price);
-                }
-            });
-
-            Label priceLabel = new Label("$" + price, GamePictureManager.skin);
-            Label qtyLabel = new Label("x" + quantity, GamePictureManager.skin);
-
-            productTable.add(nameButton).width(200).height(50);
-            productTable.add(priceLabel).width(100);
-            productTable.add(qtyLabel).width(80);
-            productTable.row();
-        }
+//        productTable.clear();
+//        List<Sellable> items = new ArrayList<>();
+//
+//        HashMap<Ingredient, Integer> ingredientQuantity = App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity();
+//
+//        for (Ingredient ingredient : ingredientQuantity.keySet()) {
+//            if (Sellable.isSellable(ingredient.toString()) && ingredientQuantity.get(ingredient) > 0) {
+//                items.add((Sellable) ingredient);
+//            }
+//        }
+//
+//        if (items.isEmpty()) {
+//            Label emptyLabel = new Label("You don't have any sellable items in your backpack.", GamePictureManager.skin);
+//            emptyLabel.setWrap(true);
+//            productTable.add(emptyLabel)
+//                .colspan(3)
+//                .width(380)
+//                .padTop(20)
+//                .padLeft(10)
+//                .padRight(10);
+//            productTable.row();
+//            return;
+//        }
+//
+//
+//        for (Sellable item : items) {
+//            final String productName = Sellable.getNameInString(item);
+//            final int price = item.getSellPrice();
+//            final int quantity = ingredientQuantity.getOrDefault((Ingredient) item, 0);
+//
+//            TextButton nameButton = new TextButton(productName, GamePictureManager.skin);
+//            nameButton.pad(5);
+//            nameButton.getLabel().setFontScale(0.9f);
+//            nameButton.getLabelCell().padLeft(10);
+//
+//            nameButton.addListener(new ClickListener() {
+//                @Override
+//                public void clicked(InputEvent event, float x, float y) {
+//                    openSellWindow(productName, quantity, price);
+//                }
+//            });
+//
+//            Label priceLabel = new Label("$" + price, GamePictureManager.skin);
+//            Label qtyLabel = new Label("x" + quantity, GamePictureManager.skin);
+//
+//            productTable.add(nameButton).width(200).height(50);
+//            productTable.add(priceLabel).width(100);
+//            productTable.add(qtyLabel).width(80);
+//            productTable.row();
+//        }
     }
 
     private void openSellWindow(String productName, int quantity, int price) {
-        stage.addActor(new SellProductWindow(stage, this, shippingBin, productName, quantity, price));
+        //stage.addActor(new SellProductWindow(stage, this, shippingBin, productName, quantity, price));
     }
 }

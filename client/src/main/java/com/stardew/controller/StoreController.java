@@ -6,6 +6,7 @@ import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 import com.stardew.network.NetworkManager;
+import com.stardew.view.ShippingBinUIManager;
 
 import java.util.HashMap;
 import java.util.function.Consumer;
@@ -57,7 +58,11 @@ public class StoreController {
             Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
             if (response != null && response.getType() == MessageType.PURCHASE_SHIPPING_BIN_RESULT) {
                 Result result = response.getFromBody("result", Result.class);
-                Gdx.app.postRunnable(() -> callback.accept(result));
+                int id = response.getIntFromBody("shippingBinId");
+                Gdx.app.postRunnable(() -> {
+                    ShippingBinUIManager.getInstance().createShippingBinUI(id,x,y);
+                    callback.accept(result);
+                });
             } else {
                 Gdx.app.postRunnable(() -> callback.accept(new Result(false,"Server didn't respond")));
             }

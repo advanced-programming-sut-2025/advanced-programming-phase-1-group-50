@@ -33,6 +33,7 @@ public class Game {
     private final HotBarService hotBarService;
     private final AnimalsService animalsService;
     private boolean started = false;
+    private int shippingBinId = 0;
 //    private final GameMenuController gameMenuController = new GameMenuController();
 
     public Game(Map<ClientConnectionThread, Player> players, ArrayList<Farm> farms, User u, GameMap map , Time time) {
@@ -396,6 +397,14 @@ public class Game {
                 t.checkIsSeasonSpring();
             }
         }
+    }
+
+    public int getShippingBinId() {
+        return this.shippingBinId;
+    }
+
+    public void increaseShippingBinId() {
+        this.shippingBinId++;
     }
 
 }

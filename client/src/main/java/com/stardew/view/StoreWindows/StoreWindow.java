@@ -257,7 +257,7 @@ public class StoreWindow extends CloseableWindow {
 
                     tileSelectionWindow.setOnOKCallback((selectedX, selectedY) -> {
                         StoreController.purchaseShippingBin(gameId, selectedX, selectedY, result1 -> {
-                            Gdx.app.postRunnable(() -> showResult(result1)); //TODO : adding shippingBinImage
+                            Gdx.app.postRunnable(() -> showResult(result1));
                         });
                     });
 
