@@ -8,18 +8,23 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.stardew.model.PlaceableDTO;
+import com.stardew.model.Result;
+import com.stardew.model.TileDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.view.GridMap.GridMapActor;
 import com.stardew.view.windows.CloseableWindow;
 
+import java.util.ArrayList;
+import java.util.function.BiConsumer;
+
 public class SelectTileForHabitatWindow extends CloseableWindow {
 
-//    private final TileSelectionController controller;
-    private GridMapActor gridMap;
+    private BiConsumer<Integer, Integer> onOKCallback;
 
+    public SelectTileForHabitatWindow(Stage stage, int selectionWidth, int selectionHeight,
+                                      ArrayList<TileDTO> tiles, ArrayList<PlaceableDTO> placeables) {
 
-    public SelectTileForHabitatWindow(Stage stage, StoreWindow storeWindow, String buildingName, int selectionWidth,
-                                      int selectionHeight) {
         super(" Select a tile to place: A Rectangle " + selectionWidth + " x " + selectionHeight, stage);
 
         Label titleLabel = getTitleLabel();
@@ -35,9 +40,7 @@ public class SelectTileForHabitatWindow extends CloseableWindow {
             stage.getCamera().position.y - getHeight() / 2);
         setColor(Color.BROWN);
 
-
-//        controller = new TileSelectionController(selectionWidth, selectionHeight);
-//        gridMap = new GridMapActor(selectionWidth, selectionHeight , App.getGame());
+        GridMapActor gridMap = new GridMapActor(selectionWidth, selectionHeight, tiles, placeables);
         ScrollPane scrollPane = new ScrollPane(gridMap, GamePictureManager.skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(false, false);
@@ -64,39 +67,22 @@ public class SelectTileForHabitatWindow extends CloseableWindow {
         OKButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-//                Result result = controller.checkTileSelection(gridMap.getSelectedTile());
-//                if (result.getSuccessful()) {
-//                    closeWindow();
-//                    AnimalsController controller1 = new AnimalsController();
-//                    Result result1 = controller1.build(stage, controller.getSelectedTile(), buildingName);
-//                    switch (buildingName) {
-//                        case "barn":
-//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Barn");
-//                            break;
-//                        case "big_barn":
-//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Big Barn");
-//                            break;
-//                        case "deluxe_barn":
-//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Deluxe Barn");
-//                            break;
-//                        case "coop":
-//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Coop");
-//                            break;
-//                        case "big_coop":
-//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Big Coop");
-//                            break;
-//                        case "deluxe_coop":
-//                            App.getGame().getMap().getNpcVillage().getCarpenterShop().purchaseBuilding("Deluxe Coop");
-//                            break;
-//                    }
-//                    storeWindow.refreshProducts();
-//                    showResult(result1);
-//                } else {
-//                    showResult(result);
-//                }
-
+                int selectedX = gridMap.getSelectedX();
+                int selectedY = gridMap.getSelectedY();
+                if (selectedX != -1 && selectedY != -1) {
+                    if (onOKCallback != null) {
+                        onOKCallback.accept(selectedX, selectedY);
+                        closeWindow();
+                    }
+                } else {
+                    showResult(new Result(false, "Please select a tile!"));
+                }
             }
         });
+    }
+
+    public void setOnOKCallback(BiConsumer<Integer, Integer> callback) {
+        this.onOKCallback = callback;
     }
 
 }

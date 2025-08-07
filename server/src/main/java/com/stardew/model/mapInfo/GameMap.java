@@ -260,24 +260,21 @@ public class GameMap {
         return shippingBins;
     }
 
-//    public boolean addShippingBin(int x, int y) {
-//        if (!(tiles[x][y].getPlaceable() == null)) {
-//            return false;
-//        }
-//
-//        ShippingBin temp = new ShippingBin(x, y);
-//
-//        this.shippingBins.add(temp);
-//        tiles[x][y].setPlaceable(temp);
-//        tiles[x][y].setPlowed(false);
-//        tiles[x][y].setWalkable(false);
-//        tiles[x][y].setSymbol(temp.getSymbol());
-//        tiles[x][y].setFertilizer(null);
-//
-//        ((GameScreenMenu) Main.getMain().getScreen()).addShippingBinImage(temp);
-//
-//        return true;
-//    }
+    public void addShippingBin(int x, int y) {
+        if (!(tiles[x][y].getPlaceable() == null)) {
+            return;
+        }
+
+        ShippingBin temp = new ShippingBin(x, y);
+
+        this.shippingBins.add(temp);
+        tiles[x][y].setPlaceable(temp);
+        tiles[x][y].setPlowed(false);
+        tiles[x][y].setWalkable(false);
+        tiles[x][y].setSymbol(temp.getSymbol());
+        tiles[x][y].setFertilizer(null);
+
+    }
 
     // this method should call every day.
     public void GotThunderByStormyWeather() {

@@ -84,38 +84,37 @@ public class AnimalsController {
 //        return new Result(true, "You purchased the building successfully.");
 //    }
 
-//    public Result buyAnimal(String animalT, AnimalsService animalsService, String name) {
-//        TODO AnimalsService_is_in_game_and_is_for_updating_them  ->  game.getAnimalsService
-//        Player player = App.getGame().getCurrentPlayingPlayer();
-//        Map map = App.getGame().getMap();
-//        AnimalType animalType = AnimalType.getAnimalTypeByInput(animalT);
-//
-//        if (player.getBackpack().getAnimalByName(name) != null)
-//            return new Result(false, "Animal with this name already exists! Please choose another name");
-//        if (animalType == null)
-//            return new Result(false, "Invalid animal type!");
-//
-//        Habitat habitat = null;
-//        for (Habitat habitat1 : player.getFarm().getHabitats()) {
-//            if (habitat1.getType().equals(animalType.getAnimalHabitat()) &&
-//                    habitat1.getSize().compareTo(animalType.getHabitatSize()) >= 0 &&
-//                    habitat1.hasEmptyCapacity()) {
-//                habitat = habitat1;
-//                break;
-//            }
-//        }
-//        if (habitat == null)
-//            return new Result(false, "You don't have any enough habitat to buy this animal!\n" +
-//                "Or type or size of habitats isn't compatible with animals!");
-//
-//
-//        Animal animal = new Animal(animalType, name, habitat);
-//        player.getBackpack().addAnimal(animal);
-//        habitat.addAnimal(animal);
-//        animalsService.addAnimal(animal);
-//
-//        return new Result(true, "You buy a <" + animalType + "> with name <" + name + "> successfully!");
-//    }
+    public Result buyAnimal(Game game,Player player,String animalT, String animalName) {
+        AnimalsService animalsService = game.getAnimalsService();
+        AnimalType animalType = AnimalType.getAnimalTypeByInput(animalT);
+
+        if (player.getBackpack().getAnimalByName(animalName) != null)
+            return new Result(false, "Animal with this name already exists! Please choose another name");
+        if (animalType == null)
+            return new Result(false, "Invalid animal type!");
+
+        Habitat habitat = null;
+        for (Habitat habitat1 : player.getFarm().getHabitats()) {
+            if (habitat1.getType().equals(animalType.getAnimalHabitat()) &&
+                    habitat1.getSize().compareTo(animalType.getHabitatSize()) >= 0 &&
+                    habitat1.hasEmptyCapacity()) {
+                habitat = habitat1;
+                break;
+            }
+        }
+
+        if (habitat == null)
+            return new Result(false, "You don't have any enough habitat to buy this animal!\n" +
+                "Or type or size of habitats isn't compatible with animals!");
+
+
+        Animal animal = new Animal(animalType,game.getTime(),animalName, habitat);
+        player.getBackpack().addAnimal(animal);
+        habitat.addAnimal(animal);
+        animalsService.addAnimal(animal);
+
+        return new Result(true, "You buy a <" + animalType + "> with name <" + animalName + "> successfully!");
+    }
 
     public void petAnimal(Message message, Player player, ClientConnectionThread connection) {
         if (message == null || player == null || connection == null) return;

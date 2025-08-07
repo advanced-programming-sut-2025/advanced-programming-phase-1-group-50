@@ -10,10 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.google.gson.reflect.TypeToken;
 import com.stardew.controller.StoreController;
+import com.stardew.model.PlaceableDTO;
 import com.stardew.model.Result;
 import com.stardew.model.StoreGoodDTO;
+import com.stardew.model.TileDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.stores.*;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
@@ -31,7 +32,7 @@ public class StoreWindow extends CloseableWindow {
     private final ArrayList<StoreGoodDTO> goods = new ArrayList<>();
     private final int gameId;
 
-    public StoreWindow(int gameId,Stage stage, String assistantName) {
+    public StoreWindow(int gameId, Stage stage, String assistantName) {
         super(assistantName + "'s store", stage);
         this.assistantName = assistantName;
         this.gameId = gameId;
@@ -81,12 +82,13 @@ public class StoreWindow extends CloseableWindow {
             HashMap<String, Object> body = new HashMap<>();
             body.put("id", gameId);
             body.put("assistant", assistantName);
-            body.put("onlyAvailable",filterBox.getSelected().equals("Only available products"));
+            body.put("onlyAvailable", filterBox.getSelected().equals("Only available products"));
             body.put("event", Event.GetStoreGoods);
             Message message = new Message(body, MessageType.EVENT_IN_GAME);
             Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
             if (response != null && response.getType().equals(MessageType.GET_STORES_GOODS_INFO)) {
-                Type type = new TypeToken<ArrayList<StoreGoodDTO>>(){}.getType();
+                Type type = new TypeToken<ArrayList<StoreGoodDTO>>() {
+                }.getType();
                 ArrayList<StoreGoodDTO> newGoods = response.getFromBody("goods", type);
                 Gdx.app.postRunnable(() -> {
                     goods.addAll(newGoods);
@@ -163,7 +165,7 @@ public class StoreWindow extends CloseableWindow {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     //Result result = ((Blacksmith) store).upgradeTool("TrashCan");
-                    Result result = new Result(false,""); // TODO
+                    Result result = new Result(false, ""); // TODO
                     TrashCanUpgradeWindow trashWindow = new TrashCanUpgradeWindow(result, stage);
                     stage.addActor(trashWindow);
                 }
@@ -176,54 +178,105 @@ public class StoreWindow extends CloseableWindow {
 
 
     private void openPurchaseWindow(String productName, int quantity, int price) {
-        PurchaseWindow purchaseWindow = new PurchaseWindow(stage, this,null, productName, quantity, price); //TODO
+        PurchaseWindow purchaseWindow = new PurchaseWindow(stage, this, null, productName, quantity, price); //TODO
         stage.addActor(purchaseWindow);
     }
 
     private void openAnimalPurchaseWindow(String productName, int price) {
-        PurchaseAnimalWindow purchaseAnimalWindowWindow = new PurchaseAnimalWindow(gameId,stage, this, productName,
+        PurchaseAnimalWindow purchaseAnimalWindowWindow = new PurchaseAnimalWindow(gameId, stage, this, productName,
             price);
         stage.addActor(purchaseAnimalWindowWindow);
     }
 
     private void openPurchaseBuildingWindow(String productName) {
-        StoreController.canPurchaseBuilding(gameId,productName, result -> {
+        int width = getHabitatWidth(productName);
+        int height = getHabitatHeight(productName);
+
+        StoreController.canPurchaseBuilding(gameId, productName, result -> {
             if (!result.getSuccessful()) {
                 showResult(result);
                 return;
             }
 
-            switch (productName) { //TODO
-                case "Barn" :
-                    stage.addActor(new SelectTileForHabitatWindow(stage,this,"barn",7,4));
-                    break;
-                case "Big Barn" :
-                    stage.addActor(new SelectTileForHabitatWindow(stage,this,"big_barn",7,4));
-                    break;
-                case "Deluxe Barn" :
-                    stage.addActor(new SelectTileForHabitatWindow(stage,this,"deluxe_barn",7,4));
-                    break;
-                case "Coop" :
-                    stage.addActor(new SelectTileForHabitatWindow(stage,this,"coop",6,3));
-                    break;
-                case "Big Coop" :
-                    stage.addActor(new SelectTileForHabitatWindow(stage,this,"big_coop",6,3));
-                    break;
-                case "Deluxe Coop" :
-                    stage.addActor(new SelectTileForHabitatWindow(stage,this,"deluxe_coop",6,3));
-                    break;
-            }
+            new Thread(() -> {
+                HashMap<String, Object> body = new HashMap<>();
+                body.put("id", gameId);
+                body.put("event", Event.GetMyFarmInfo);
+                Message infoMessage = new Message(body, MessageType.EVENT_IN_GAME);
+                Message response = NetworkManager.getConnection().sendAndWaitForResponse(infoMessage, 500);
+                if (response != null && response.getType() == MessageType.EVENT_IN_GAME_RESULT) {
+                    ArrayList<TileDTO> tileDTOS = response.getFromBody(
+                        "tiles", new TypeToken<ArrayList<TileDTO>>() {
+                        }.getType());
+                    ArrayList<PlaceableDTO> placeableDTOS = response.getFromBody(
+                        "placeables", new TypeToken<ArrayList<PlaceableDTO>>() {
+                        }.getType());
+                    SelectTileForHabitatWindow tileSelectionWindow =
+                        new SelectTileForHabitatWindow(stage, width, height, tileDTOS, placeableDTOS);
+                    Gdx.app.postRunnable(() -> stage.addActor(tileSelectionWindow));
 
+                    tileSelectionWindow.setOnOKCallback((selectedX, selectedY) -> {
+                        StoreController.purchaseBuilding(gameId,productName,selectedX,selectedY, result1 -> {
+                            Gdx.app.postRunnable(() -> {
+                                refreshProducts();
+                                showResult(result1);
+                            });
+                        });
+                    });
+
+                }
+            }).start();
         });
     }
 
     private void openPurchaseShippingBinWindow() {
-        StoreController.canPurchaseShippingBin(gameId,result -> {
+        StoreController.canPurchaseBuilding(gameId, "Shipping Bin", result -> {
             if (!result.getSuccessful()) {
                 showResult(result);
                 return;
             }
-            stage.addActor(new SelectTileForShippingBinWindow(stage,this,1,1)); // TODO
+
+            new Thread(() -> {
+                HashMap<String, Object> body = new HashMap<>();
+                body.put("id", gameId);
+                body.put("event", Event.GetMyFarmInfo);
+                Message infoMessage = new Message(body, MessageType.EVENT_IN_GAME);
+                Message response = NetworkManager.getConnection().sendAndWaitForResponse(infoMessage, 500);
+                if (response != null && response.getType() == MessageType.EVENT_IN_GAME_RESULT) {
+                    ArrayList<TileDTO> tileDTOS = response.getFromBody(
+                        "tiles", new TypeToken<ArrayList<TileDTO>>() {
+                        }.getType());
+                    ArrayList<PlaceableDTO> placeableDTOS = response.getFromBody(
+                        "placeables", new TypeToken<ArrayList<PlaceableDTO>>() {
+                        }.getType());
+                    SelectTileForShippingBinWindow tileSelectionWindow =
+                        new SelectTileForShippingBinWindow(stage, 1, 1, tileDTOS, placeableDTOS);
+                    Gdx.app.postRunnable(() -> stage.addActor(tileSelectionWindow));
+
+                    tileSelectionWindow.setOnOKCallback((selectedX, selectedY) -> {
+                        StoreController.purchaseShippingBin(gameId, selectedX, selectedY, result1 -> {
+                            Gdx.app.postRunnable(() -> showResult(result1)); //TODO : adding shippingBinImage
+                        });
+                    });
+
+                }
+            }).start();
         });
+    }
+
+    private int getHabitatWidth(String habitat) {
+        return switch (habitat) {
+            case "Barn", "Big Barn", "Deluxe Barn" -> 7;
+            case "Coop", "Big Coop", "Deluxe Coop" -> 6;
+            default -> 0;
+        };
+    }
+
+    private int getHabitatHeight(String habitat) {
+        return switch (habitat) {
+            case "Barn", "Big Barn", "Deluxe Barn" -> 4;
+            case "Coop", "Big Coop", "Deluxe Coop" -> 3;
+            default -> 0;
+        };
     }
 }

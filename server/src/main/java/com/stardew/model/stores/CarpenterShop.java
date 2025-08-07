@@ -4,6 +4,8 @@ import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.animals.HabitatSize;
 import com.stardew.model.animals.HabitatType;
+import com.stardew.model.gameApp.Game;
+import com.stardew.model.mapInfo.Stone;
 import com.stardew.model.mapInfo.Wood;
 import com.stardew.model.userInfo.Coin;
 import com.stardew.model.userInfo.Player;
@@ -11,11 +13,11 @@ import com.stardew.model.userInfo.Player;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class CarpenterShop extends Store{
+public class CarpenterShop extends Store {
     private ArrayList<ShopItem> inventory;
 
-    public CarpenterShop(int gameId,int x, int y, int width, int height) {
-        super(gameId,TextureID.carpenterShopTextureRegion,new Rectangle(x,y,width,height),"Robin",9,20);
+    public CarpenterShop(int gameId, int x, int y, int width, int height) {
+        super(gameId, TextureID.carpenterShopTextureRegion, new Rectangle(x, y, width, height), "Robin", 9, 20);
     }
 
     @Override
@@ -56,16 +58,27 @@ public class CarpenterShop extends Store{
         return availableProducts;
     }
 
-    public Result canPurchaseBuilding(String productName) {
-        //TODO
-        return null;
-    }
+    public Result canPurchaseBuilding(Player player, String productName) {
+        ShopItem item = null;
 
-    public Result canPurchaseShippingBin(Player player) {
-        ShopItem item = inventory.getLast();
+        for (ShopItem i : inventory) {
+            if (i.getName().equals(productName)) {
+                item = i;
+                break;
+            }
+        }
 
-        if (player.getBackpack().getIngredientQuantity().getOrDefault(new Coin(),0) < item.getPrice()) {
+        if (item == null) {
+            return new Result(false, "No such product ");
+        }
+
+        if (player.getBackpack().getIngredientQuantity().getOrDefault(new Coin(), 0) < item.getPrice()) {
             return new Result(false, "You don't have enough money");
+        }
+
+        if (player.getBackpack().getIngredientQuantity().getOrDefault(new Stone(),
+            0) < ((CarpenterShopFarmBuildingsItem) item).getStoneCost()) {
+            return new Result(false, "You don't have enough stones");
         }
 
         if (player.getBackpack().getIngredientQuantity().getOrDefault(new Wood(), 0) < ((CarpenterShopFarmBuildingsItem) item).getWoodCost()) {
@@ -75,13 +88,55 @@ public class CarpenterShop extends Store{
         return new Result(true, "");
     }
 
-    public Result purchaseShippingBin(int x, int y) {
-        //TODO
-        return null;
+    public Result purchaseShippingBin(Game game, Player player, int x, int y) {
+        if (!player.getFarm().getRectangle().contains(x, y)) {
+            return new Result(false, "You don't own this area");
+        }
+
+        game.getMap().addShippingBin(x, y);
+        player.getBackpack().removeIngredients(new Coin(), inventory.getLast().getPrice());
+        player.getBackpack().removeIngredients(new Wood(),
+            ((CarpenterShopFarmBuildingsItem) inventory.getLast()).getWoodCost());
+        return new Result(true, "You successfully purchased a shipping bin");
     }
 
-    public void purchaseBuilding(String productName) {
-        //TODO
+    public Result purchaseBuilding(Game game, Player player, String productName, int x, int y) {
+        Result result = new Result();
+
+        switch (productName) { // TODO : build habitat and get result
+            case "Barn":
+                //barn
+            case "Big Barn":
+                //big_barn
+            case "Deluxe Barn":
+                //deluxe_barn
+            case "Coop":
+                //coop
+            case "Big Coop":
+                //big_coop
+            case "Deluxe Coop":
+                //deluxe_coop
+        }
+
+        ShopItem item = null;
+
+        for (ShopItem i : inventory) {
+            if (i.getName().equals(productName)) {
+                item = i;
+                break;
+            }
+        }
+
+        if (item == null) {
+            return new Result(false, "Not such product");
+        }
+
+        item.decreaseRemainingQuantity(1);
+        player.getBackpack().removeIngredients(new Coin(), item.getPrice());
+        player.getBackpack().removeIngredients(new Stone(), ((CarpenterShopFarmBuildingsItem) item).getStoneCost());
+        player.getBackpack().removeIngredients(new Wood(), ((CarpenterShopFarmBuildingsItem) item).getWoodCost());
+
+        return result;
     }
 
     @Override

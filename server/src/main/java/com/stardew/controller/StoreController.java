@@ -2,6 +2,7 @@ package com.stardew.controller;
 
 import com.stardew.model.Result;
 import com.stardew.model.StoreGoodDTO;
+import com.stardew.model.gameApp.Game;
 import com.stardew.model.mapInfo.NpcVillage;
 import com.stardew.model.stores.*;
 import com.stardew.model.userInfo.Player;
@@ -90,11 +91,12 @@ public class StoreController {
         }
 
         int gameId = message.getIntFromBody("id");
+        Game game = GameSessionController.getInstance().getGame(gameId);
         String productName = message.getFromBody("productName");
         String animalName = message.getFromBody("animalName");
 
-        MarnieRanch shop = GameSessionController.getInstance().getGame(gameId).getMap().getNpcVillage().getMarnieRanch();
-        Result result = shop.purchaseAnimal(player, productName, animalName);
+        MarnieRanch shop = game.getMap().getNpcVillage().getMarnieRanch();
+        Result result = shop.purchaseAnimal(game,player, productName, animalName);
 
         HashMap<String, Object> body = new HashMap<>();
         body.put("result", result);
@@ -103,21 +105,65 @@ public class StoreController {
         connectionThread.sendMessage(response);
     }
 
-    public void canPurchaseShippingBin(Message message, Player player, ClientConnectionThread connectionThread) {
+    public void canPurchaseBuilding(Message message, Player player, ClientConnectionThread connectionThread) {
         if (message == null || player == null) {
             return;
         }
 
         int gameId = message.getIntFromBody("id");
+        String productName = message.getFromBody("productName");
         CarpenterShop shop = GameSessionController.getInstance().getGame(gameId).getMap().getNpcVillage().getCarpenterShop();
-        Result result = shop.canPurchaseShippingBin(player);
+        Result result = shop.canPurchaseBuilding(player,productName);
 
         HashMap<String, Object> body = new HashMap<>();
         body.put("result", result);
-        Message response = new Message(body, MessageType.CAN_PURCHASE_SHIPPING_BIN_RESULT);
+        Message response = new Message(body, MessageType.CAN_PURCHASE_BUILDING_RESULT);
         response.setRequestID(message.getRequestID());
         connectionThread.sendMessage(response);
 
     }
+
+    public void purchaseShippingBin(Message message, Player player, ClientConnectionThread connectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int gameId = message.getIntFromBody("id");
+        Game game = GameSessionController.getInstance().getGame(gameId);
+        int selectedX = message.getIntFromBody("x");
+        int selectedY = message.getIntFromBody("y");
+
+        CarpenterShop shop = game.getMap().getNpcVillage().getCarpenterShop();
+        Result result = shop.purchaseShippingBin(game,player,selectedX,selectedY);
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body, MessageType.PURCHASE_SHIPPING_BIN_RESULT);
+        response.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(response);
+
+    }
+
+    public void purchaseBuilding(Message message, Player player, ClientConnectionThread connectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int gameId = message.getIntFromBody("id");
+        Game game = GameSessionController.getInstance().getGame(gameId);
+        String buildingName = message.getFromBody("buildingName");
+        int selectedX = message.getIntFromBody("x");
+        int selectedY = message.getIntFromBody("y");
+
+        CarpenterShop shop = game.getMap().getNpcVillage().getCarpenterShop();
+        Result result = shop.purchaseBuilding(game,player,buildingName,selectedX,selectedY);
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body, MessageType.PURCHASE_BUILDING_RESULT);
+        response.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(response);
+    }
+
 
 }
