@@ -13,8 +13,8 @@ import com.stardew.models.userInfo.Player;
 import com.stardew.view.GridMap.CellInfo;
 
 public class MapWindowActor extends Actor {
-    private final int cols = 250;
-    private final int rows = 200;
+    private final int cols ;
+    private final  int rows ;
     private final float cellSize = 24;
     private CellInfo[][] grid;
     private TextureID[][] tiles;
@@ -22,8 +22,10 @@ public class MapWindowActor extends Actor {
     private final TextureRegion selectedTexture = GamePictureManager.selectedTile;
 
 
-    public MapWindowActor(TextureID[][] tiles) {
+    public MapWindowActor(TextureID[][] tiles , int cols , int rows) {
         this.tiles = tiles;
+        this.cols = cols;
+        this.rows = rows;
         init();
         setSize(cols * cellSize, rows * cellSize);
 

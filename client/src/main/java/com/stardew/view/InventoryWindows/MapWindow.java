@@ -32,7 +32,7 @@ public class MapWindow extends CloseableWindow {
             stage.getCamera().position.y - getHeight() / 2);
         setColor(Color.BROWN);
 
-        mapWindowActor = new MapWindowActor(tiles);
+        mapWindowActor = new MapWindowActor(tiles , 250 , 200);
         scrollPane = new ScrollPane(mapWindowActor, GamePictureManager.skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(false, false);
