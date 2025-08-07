@@ -82,4 +82,24 @@ public class StoreController {
             }
         }).start();
     }
+
+    public static void purchaseProduct(int gameId, String productName , int quantity , String assistantName , Consumer<Result> callback) {
+        new Thread(() -> {
+            HashMap<String,Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("productName", productName);
+            body.put("quantity", quantity);
+            body.put("assistantName", assistantName);
+            body.put("event",Event.PurchaseProduct);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType() == MessageType.PURCHASE_PRODUCT_RESULT) {
+                Result result = response.getFromBody("result", Result.class);
+                Gdx.app.postRunnable(() -> callback.accept(result));
+            } else {
+                Gdx.app.postRunnable(() -> callback.accept(new Result(false,"Server didn't respond")));
+            }
+
+        }).start();
+    }
 }
