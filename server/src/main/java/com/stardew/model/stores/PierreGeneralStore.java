@@ -1,11 +1,17 @@
 package com.stardew.model.stores;
 
+import com.stardew.model.Bouquet;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.date.Season;
+import com.stardew.model.mapInfo.foraging.CropType;
 import com.stardew.model.mapInfo.foraging.Seeds;
 import com.stardew.model.mapInfo.foraging.TreeSource;
+import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGood;
+import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGoodType;
 import com.stardew.model.userInfo.BackpackType;
+import com.stardew.model.userInfo.Coin;
+import com.stardew.model.userInfo.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,8 +19,8 @@ import java.util.ArrayList;
 public class PierreGeneralStore extends Store {
     private ArrayList<ShopItem> inventory;
 
-    public PierreGeneralStore(int gameId,int x, int y, int width, int height) {
-        super(gameId,TextureID.pierresShopRegion,new Rectangle(x,y,width,height),"Pierre",9,23);
+    public PierreGeneralStore(int gameId, int x, int y, int width, int height) {
+        super(gameId, TextureID.pierresShopRegion, new Rectangle(x, y, width, height), "Pierre", 9, 23);
     }
 
     @Override
@@ -83,7 +89,6 @@ public class PierreGeneralStore extends Store {
 
         inventory.add(new ShopItem("Rice", 200, Integer.MAX_VALUE));
         inventory.add(new ShopItem("Bouquet", 1000, 2));
-        inventory.add(new ShopItem("Dehydrator", 10000, 1));
         inventory.add(new ShopItem("Oil", 200, Integer.MAX_VALUE));
         inventory.add(new ShopItem("Vinegar", 200, Integer.MAX_VALUE));
 
@@ -107,9 +112,96 @@ public class PierreGeneralStore extends Store {
     }
 
     @Override
-    public Result purchaseProduct(int value, String productName) {
-        //TODO
-        return null;
+    public Result purchaseProduct(Player player, String productName, int value) {
+        ShopItem item = null;
+
+        for (ShopItem i : inventory) {
+            if (i.getName().equals(productName)) {
+                item = i;
+            }
+        }
+
+        if (item == null) {
+            return new Result(false, "No such product ");
+        }
+
+        int totalPrice = item.getPrice() * value;
+
+        if (player.getBackpack().getIngredientQuantity().getOrDefault(new Coin(), 0) < totalPrice) {
+            return new Result(false, "Not enough money");
+        }
+
+        if (item.getRemainingQuantity() < value) {
+            return new Result(false, "Not enough stock");
+        }
+
+        if (item instanceof PierreGeneralStoreSeedsItem) {
+
+            if (!player.getBackpack().hasCapacity()) {
+                return new Result(false, "Not enough capacity in your inventory");
+            }
+
+            player.getBackpack().addIngredients(((PierreGeneralStoreSeedsItem) item).getSeeds(), value);
+
+        } else if (item instanceof PierreGeneralStoreBackPackUpgrade) {
+
+            if (item.name.equals("Large Pack")) {
+
+                if (!player.getBackpack().getType().equals(BackpackType.Primary)) {
+                    return new Result(false, "you can't upgrade the backpack to Large Pack from this level");
+                }
+                player.getBackpack().changeType(BackpackType.Big);
+
+            } else {
+
+                if (player.getBackpack().getType().equals(BackpackType.Primary)) {
+                    return new Result(false, "you must first buy the Large Pack");
+                }
+                if (player.getBackpack().getType().equals(BackpackType.Deluxe)) {
+                    return new Result(false, "you can't upgrade the backpack to Deluxe Pack from this level");
+                }
+                player.getBackpack().changeType(BackpackType.Deluxe);
+            }
+
+        } else if (item instanceof PierreGeneralStoreSaplingItem) {
+
+            if (!player.getBackpack().hasCapacity()) {
+                return new Result(false, "Not enough capacity in your inventory");
+            }
+
+            player.getBackpack().addIngredients(((PierreGeneralStoreSaplingItem) item).getSource(), value);
+
+        } else {
+
+            if (!player.getBackpack().hasCapacity() && !item.name.equals("Dehydrator")) {
+                return new Result(false, "Not enough capacity in your inventory");
+            }
+
+            switch (item.name) {
+
+                case "Rice": {
+                    player.getBackpack().addIngredients(CropType.UnMilledRice, value);
+                    break;
+                }
+                case "Bouquet": {
+                    player.getBackpack().addIngredients(new Bouquet(), value);
+                    break;
+                }
+                case "Oil": {
+                    player.getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.Oil), value);
+                    break;
+                }
+                case "Vinegar": {
+                    player.getBackpack().addIngredients(new ArtisanGood(ArtisanGoodType.Vinegar), value);
+                    break;
+                }
+            }
+
+        }
+
+        player.getBackpack().removeIngredients(new Coin(), totalPrice);
+        item.decreaseRemainingQuantity(value);
+        return new Result(true, "You successfully purchased " + value + " number(s) of " + productName);
     }
 
     @Override

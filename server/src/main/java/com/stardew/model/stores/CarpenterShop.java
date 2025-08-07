@@ -137,9 +137,51 @@ public class CarpenterShop extends Store {
     }
 
     @Override
-    public Result purchaseProduct(int value, String productName) {
-        //TODO
-        return null;
+    public Result purchaseProduct(Player player, String productName, int value) {
+        ShopItem item = null;
+        for (ShopItem i : inventory) {
+            if (i.getName().equals(productName)) {
+                item = i;
+                break;
+            }
+        }
+
+        if (item == null) {
+            return new Result(false,"Not such product");
+        }
+
+        int totalPrice = item.getPrice() * value;
+
+        if (player.getBackpack().getIngredientQuantity().getOrDefault(new Coin(), 0) < totalPrice) {
+            return new Result(false, "Not enough money");
+        }
+
+        if (item.getRemainingQuantity() < value) {
+            return new Result(false, "Not enough stock");
+        }
+
+        if (item.name.equals("Wood")) {
+
+            if (!player.getBackpack().hasCapacity()) {
+                return new Result(false, "Not enough capacity in your inventory");
+            }
+
+            player.getBackpack().addIngredients(new Wood(), value);
+
+        } else {
+
+            if (!player.getBackpack().hasCapacity()) {
+                return new Result(false, "Not enough capacity in your inventory");
+            }
+
+            player.getBackpack().addIngredients(new Stone(), value);
+
+        }
+
+        player.getBackpack().removeIngredients(new Coin(), totalPrice);
+        item.decreaseRemainingQuantity(value);
+
+        return new Result(true, "You successfully purchased " + value + " number(s) of " + productName);
     }
 
     @Override

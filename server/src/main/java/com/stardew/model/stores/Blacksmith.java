@@ -3,6 +3,8 @@ package com.stardew.model.stores;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.mapInfo.foraging.ForagingMineral;
+import com.stardew.model.userInfo.Coin;
+import com.stardew.model.userInfo.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -64,9 +66,40 @@ public class Blacksmith extends Store {
     }
 
     @Override
-    public Result purchaseProduct(int value, String productName) {
-        //TODO
-        return null;
+    public Result purchaseProduct(Player player, String productName, int value) {
+        ShopItem item = null;
+
+        for (ShopItem i : inventory) {
+            if (i.getName().equals(productName)) {
+                item = i;
+                break;
+            }
+        }
+
+        if (item == null) {
+            return new Result(false,"Product not found");
+        }
+
+        int totalPrice = item.getPrice() * value;
+
+        if (player.getBackpack().getIngredientQuantity().getOrDefault(new Coin(), 0) < totalPrice) {
+            return new Result(false, "Not enough money");
+        }
+
+        if (item.getRemainingQuantity() < value) {
+            return new Result(false, "Not enough stock");
+        }
+
+
+        if (!player.getBackpack().hasCapacity()) {
+            return new Result(false, "Not enough capacity in your inventory");
+        }
+
+        player.getBackpack().removeIngredients(new Coin(), totalPrice);
+        player.getBackpack().addIngredients(((BlacksmithStocksItem) item).getType(), value);
+        item.decreaseRemainingQuantity(value);
+
+        return new Result(true, "You successfully purchased " + value + " number(s) of " + item.getName());
     }
 
     public Result upgradeTool(String toolName) {

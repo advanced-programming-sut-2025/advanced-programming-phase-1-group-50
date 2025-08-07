@@ -5,6 +5,7 @@ import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.mapInfo.Placeable;
+import com.stardew.model.userInfo.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public abstract class Store implements Placeable {
     protected final int endHour;
     protected final TextureID texture;
     protected final int gameId;
+    protected final TimeProvider timeProvider;
 
     public Store(int gameId,TextureID texture,Rectangle bounds, String shopAssistantName, int startHour, int endHour) {
         this.gameId = gameId;
@@ -24,19 +26,16 @@ public abstract class Store implements Placeable {
         this.shopAssistantName = shopAssistantName;
         this.startHour = startHour;
         this.endHour = endHour;
+        this.timeProvider = GameSessionController.getInstance().getGame(gameId).getTime();
         loadInventory();
     }
 
-    public String getShopAssistantName() {
-        return shopAssistantName;
-    }
 
     public Rectangle getBounds() {
         return bounds;
     }
 
     public boolean isOpen() {
-        TimeProvider timeProvider = GameSessionController.getInstance().getGame(gameId).getTime();
         return timeProvider.getTime().getHour() >= startHour && timeProvider.getTime().getHour() < endHour;
     }
 
@@ -47,7 +46,7 @@ public abstract class Store implements Placeable {
     public void loadInventory() {}
     public abstract ArrayList<ShopItem> getAllProducts();
     public abstract ArrayList<ShopItem> getAvailableProducts();
-    public abstract Result purchaseProduct(int value, String productName);
+    public abstract Result purchaseProduct(Player player, String productName, int value);
     public abstract void ResetQuantityEveryNight();
 
 }
