@@ -1,12 +1,5 @@
 package com.stardew.model.mapInfo;
 
-//import com.stardew.Main;
-//import com.stardew.model.NPCs.NPC;
-//import com.stardew.model.NPCs.NPCType;
-//import com.stardew.model.Placeable;
-//import com.stardew.model.ShippingBin;
-//import com.stardew.model.app.App;
-//import com.stardew.model.date.Weather;
 import com.stardew.model.NPCs.NPC;
 import com.stardew.model.NPCs.NPCType;
 import com.stardew.model.ShippingBin;
@@ -14,10 +7,7 @@ import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.mapInfo.foraging.Crop;
 import com.stardew.model.mapInfo.foraging.CropType;
 import com.stardew.model.mapInfo.foraging.ForagingMineral;
-import com.stardew.model.mapInfo.foraging.Tree;
 import com.stardew.model.stores.*;
-import com.stardew.model.userInfo.Player;
-//import com.stardew.view.GameScreenMenu;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -46,7 +36,7 @@ public class GameMap {
         this.width = 250;
         this.height = 200;
         this.tiles = new Tile[width][height];
-        buildMap(gameId);
+        buildMap();
     }
 
     public void setTimeProvider(TimeProvider timeProvider) {
@@ -63,7 +53,7 @@ public class GameMap {
         return findTile(position.getX(), position.getY());
     }
 
-    private void buildMap(int gameId) {
+    private void buildMap() {
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
                 tiles[i][j] = new Tile(new Position(i, j));
@@ -71,13 +61,13 @@ public class GameMap {
         }
 
         this.npcVillage = new NpcVillage(new Rectangle(100, 75, 49, 49),
-                new Blacksmith(gameId,102, 77, 6, 4),
-                new CarpenterShop(gameId,101, 83, 16, 12),
-                new FishShop(gameId,110, 97, 4, 4),
-                new JojaMart(gameId,138, 89, 4, 4),
-                new MarnieRanch(gameId,118, 116, 18, 8),
-                new PierreGeneralStore(gameId,138, 97, 4, 4),
-                new StardopSaloon(gameId,138, 110, 4, 4));
+                new Blacksmith(timeProvider,102, 77, 6, 4),
+                new CarpenterShop(timeProvider,101, 83, 16, 12),
+                new FishShop(timeProvider,110, 97, 4, 4),
+                new JojaMart(timeProvider,138, 89, 4, 4),
+                new MarnieRanch(timeProvider,118, 116, 18, 8),
+                new PierreGeneralStore(timeProvider,138, 97, 4, 4),
+                new StardopSaloon(timeProvider,138, 110, 4, 4));
 
         NPC abigailNpc = new NPC(NPCType.Abigail);
         NPC sebastianNpc = new NPC(NPCType.Sebastian);

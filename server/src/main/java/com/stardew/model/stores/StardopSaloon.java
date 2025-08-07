@@ -3,6 +3,7 @@ package com.stardew.model.stores;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.cooking.Food;
+import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGood;
 import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGoodType;
 import com.stardew.model.recipes.CookingRecipe;
@@ -15,8 +16,8 @@ import java.util.ArrayList;
 public class StardopSaloon extends Store{
     private ArrayList<ShopItem> inventory;
 
-    public StardopSaloon(int gameId,int x, int y, int width, int height) {
-        super(gameId,TextureID.stardopSaloonRegion,new Rectangle(x,y,width,height),"Gus",12,24);
+    public StardopSaloon(TimeProvider timeProvider, int x, int y, int width, int height) {
+        super(timeProvider,TextureID.stardopSaloonRegion,new Rectangle(x,y,width,height),"Gus",12,24);
     }
 
     @Override

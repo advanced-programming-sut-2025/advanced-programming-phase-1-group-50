@@ -16,17 +16,15 @@ public abstract class Store implements Placeable {
     protected final int startHour;
     protected final int endHour;
     protected final TextureID texture;
-    protected final int gameId;
     protected final TimeProvider timeProvider;
 
-    public Store(int gameId,TextureID texture,Rectangle bounds, String shopAssistantName, int startHour, int endHour) {
-        this.gameId = gameId;
+    public Store(TimeProvider timeProvider,TextureID texture,Rectangle bounds, String shopAssistantName, int startHour, int endHour) {
         this.texture = texture;
         this.bounds = bounds;
         this.shopAssistantName = shopAssistantName;
         this.startHour = startHour;
         this.endHour = endHour;
-        this.timeProvider = GameSessionController.getInstance().getGame(gameId).getTime();
+        this.timeProvider = timeProvider;
         loadInventory();
     }
 

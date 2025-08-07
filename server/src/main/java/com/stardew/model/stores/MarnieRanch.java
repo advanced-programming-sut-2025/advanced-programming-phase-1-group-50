@@ -7,6 +7,7 @@ import com.stardew.model.Tools.MilkPail;
 import com.stardew.model.Tools.Shear;
 import com.stardew.model.animals.AnimalType;
 import com.stardew.model.gameApp.Game;
+import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.userInfo.Coin;
 import com.stardew.model.userInfo.Player;
 
@@ -16,8 +17,8 @@ import java.util.ArrayList;
 public class MarnieRanch extends Store {
     private ArrayList<ShopItem> inventory;
 
-    public MarnieRanch(int gameId, int x, int y, int width, int height) {
-        super(gameId, TextureID.marnieRegion, new Rectangle(x, y, width, height), "Marnie", 9, 16);
+    public MarnieRanch(TimeProvider timeProvider, int x, int y, int width, int height) {
+        super(timeProvider, TextureID.marnieRegion, new Rectangle(x, y, width, height), "Marnie", 9, 16);
     }
 
 

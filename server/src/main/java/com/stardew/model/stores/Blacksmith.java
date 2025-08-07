@@ -2,6 +2,7 @@ package com.stardew.model.stores;
 
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
+import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.mapInfo.foraging.ForagingMineral;
 import com.stardew.model.userInfo.Coin;
 import com.stardew.model.userInfo.Player;
@@ -12,8 +13,8 @@ import java.util.ArrayList;
 public class Blacksmith extends Store {
     private ArrayList<ShopItem> inventory;
 
-    public Blacksmith(int gameId,int x, int y, int width, int height) {
-        super(gameId,TextureID.blacksmithTextureRegion, new Rectangle(x, y, width, height), "Clint", 9, 16);
+    public Blacksmith(TimeProvider timeProvider, int x, int y, int width, int height) {
+        super(timeProvider, TextureID.blacksmithTextureRegion, new Rectangle(x, y, width, height), "Clint", 9, 16);
     }
 
     @Override

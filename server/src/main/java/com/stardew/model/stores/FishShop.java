@@ -5,6 +5,7 @@ import com.stardew.model.TextureID;
 import com.stardew.model.Tools.FishingPole;
 import com.stardew.model.Tools.PoleType;
 import com.stardew.model.cooking.Food;
+import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.recipes.CraftingRecipes;
 import com.stardew.model.userInfo.Coin;
 import com.stardew.model.userInfo.Player;
@@ -15,8 +16,8 @@ import java.util.ArrayList;
 public class FishShop extends Store {
     private ArrayList<ShopItem> inventory;
 
-    public FishShop(int gameId, int x, int y, int width, int height) {
-        super(gameId, TextureID.fishShopTextureRegion, new Rectangle(x, y, width, height), "Willy", 9, 17);
+    public FishShop(TimeProvider timeProvider, int x, int y, int width, int height) {
+        super(timeProvider, TextureID.fishShopTextureRegion, new Rectangle(x, y, width, height), "Willy", 9, 17);
     }
 
     @Override
