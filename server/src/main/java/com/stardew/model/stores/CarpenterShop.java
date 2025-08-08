@@ -91,12 +91,12 @@ public class CarpenterShop extends Store {
         return new Result(true, "");
     }
 
-    public Result purchaseShippingBin(Game game, Player player, int x, int y) {
+    public Result purchaseShippingBin(int gameId,Game game, Player player, int x, int y) {
         if (!player.getFarm().getRectangle().contains(x, y)) {
             return new Result(false, "You don't own this area");
         }
 
-        game.getMap().addShippingBin(x, y);
+        game.getMap().addShippingBin(gameId,x, y);
         player.getBackpack().removeIngredients(new Coin(), inventory.getLast().getPrice());
         player.getBackpack().removeIngredients(new Wood(),
             ((CarpenterShopFarmBuildingsItem) inventory.getLast()).getWoodCost());

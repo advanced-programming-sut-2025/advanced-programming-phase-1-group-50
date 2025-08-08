@@ -33,6 +33,7 @@ public class Game {
     private final HotBarService hotBarService;
     private final AnimalsService animalsService;
     private boolean started = false;
+    private int shippingBinId = 0;
 //    private final GameMenuController gameMenuController = new GameMenuController();
 
     public Game(Map<ClientConnectionThread, Player> players, ArrayList<Farm> farms, User u, GameMap map , Time time) {
@@ -42,7 +43,6 @@ public class Game {
         this.time = time;
         this.time.setGame(this);
         this.map = map;
-        this.map.setTimeProvider(getTime());
         this.timeService = new TimeService(time, this);
         this.hotBarService = new HotBarService(this);
         this.animalsService = new AnimalsService();
@@ -320,26 +320,26 @@ public class Game {
 
 
 
-//        for (RelationWithPlayers relation : relationsBetweenPlayers.relationNetwork.values()) {
-//            relation.checkEveryNight();
-//        }
-//
-//        for (Player player : getPlayers()) {
-//            player.getRelationWithAbigail().checkEveryNight(player);
-//            player.getRelationWithHarvey().checkEveryNight(player);
-//            player.getRelationWithLeah().checkEveryNight(player);
-//            player.getRelationWithRobin().checkEveryNight(player);
-//            player.getRelationWithSebastian().checkEveryNight(player);
-//        }
+        for (RelationWithPlayers relation : relationsBetweenPlayers.relationNetwork.values()) {
+            relation.checkEveryNight();
+        }
+
+        for (Player player : getAllPlayers()) {
+            player.getRelationWithAbigail().checkEveryNight(player);
+            player.getRelationWithHarvey().checkEveryNight(player);
+            player.getRelationWithLeah().checkEveryNight(player);
+            player.getRelationWithRobin().checkEveryNight(player);
+            player.getRelationWithSebastian().checkEveryNight(player);
+        }
 //        System.out.println("relations are done");
 //
-//        this.getMap().getNpcVillage().getBlacksmith().ResetQuantityEveryNight();
-//        this.getMap().getNpcVillage().getMarnieRanch().ResetQuantityEveryNight();
-//        this.getMap().getNpcVillage().getPierreGeneralStore().ResetQuantityEveryNight();
-//        this.getMap().getNpcVillage().getJojaMart().ResetQuantityEveryNight();
-//        this.getMap().getNpcVillage().getFishShop().ResetQuantityEveryNight();
-//        this.getMap().getNpcVillage().getCarpenterShop().ResetQuantityEveryNight();
-//        this.getMap().getNpcVillage().getStardopSaloon().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getBlacksmith().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getMarnieRanch().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getPierreGeneralStore().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getJojaMart().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getFishShop().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getCarpenterShop().ResetQuantityEveryNight();
+        this.getMap().getNpcVillage().getStardopSaloon().ResetQuantityEveryNight();
 //
 //        System.out.println("completed");
 
@@ -397,6 +397,14 @@ public class Game {
                 t.checkIsSeasonSpring();
             }
         }
+    }
+
+    public int getShippingBinId() {
+        return this.shippingBinId;
+    }
+
+    public void increaseShippingBinId() {
+        this.shippingBinId++;
     }
 
 }

@@ -36,7 +36,7 @@ public class Time implements TimeProvider {
 
     public void advancedMinute(int m) {
         this.minute += m;
-        if(hour == 22 && minute == 50){
+        if(hour == 21 && minute == 50){
             game.getTimeService().sendFadeMessage();
         }
         while (this.minute >= 60) {
@@ -47,8 +47,8 @@ public class Time implements TimeProvider {
 
     public void advancedHour(int h){
         this.hour += h;
-        while (this.hour >= 23){
-            this.hour -= 23 ;
+        while (this.hour >= 22){
+            this.hour -= 22 ;
             this.hour += 9;
             advancedDay(1);
 

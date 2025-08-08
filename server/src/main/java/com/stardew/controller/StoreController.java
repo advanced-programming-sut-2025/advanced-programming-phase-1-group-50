@@ -134,10 +134,11 @@ public class StoreController {
         int selectedY = message.getIntFromBody("y");
 
         CarpenterShop shop = game.getMap().getNpcVillage().getCarpenterShop();
-        Result result = shop.purchaseShippingBin(game,player,selectedX,selectedY);
+        Result result = shop.purchaseShippingBin(gameId,game,player,selectedX,selectedY);
 
         HashMap<String, Object> body = new HashMap<>();
         body.put("result", result);
+        body.put("shippingBinId",game.getShippingBinId()+1);
         Message response = new Message(body, MessageType.PURCHASE_SHIPPING_BIN_RESULT);
         response.setRequestID(message.getRequestID());
         connectionThread.sendMessage(response);
@@ -209,5 +210,83 @@ public class StoreController {
         Message response = new Message(body, MessageType.PURCHASE_PRODUCT_RESULT);
         response.setRequestID(message.getRequestID());
         connectionThread.sendMessage(response);
+    }
+
+    public void upgradeTrashCan(Message message ,Player player, ClientConnectionThread connectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int gameId = message.getIntFromBody("id");
+        Blacksmith shop = GameSessionController.getInstance().getGame(gameId).getMap().getNpcVillage().getBlacksmith();
+        Result result = shop.upgradeTool(player,"TrashCan");
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body, MessageType.TRASHCAN_UPGRADE_RESULT);
+        response.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(response);
+    }
+
+    public void upgradeTool(Message message, Player player, ClientConnectionThread connectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int gameId = message.getIntFromBody("id");
+        String toolName = message.getFromBody("toolName");
+        Blacksmith shop = GameSessionController.getInstance().getGame(gameId).getMap().getNpcVillage().getBlacksmith();
+        Result result = shop.upgradeTool(player,toolName);
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body, MessageType.TOOL_UPGRADE_RESULT);
+        response.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(response);
+    }
+
+    public void isStoreOpen(Message message,ClientConnectionThread connectionThread) {
+        if (message == null || connectionThread == null) {
+            return;
+        }
+
+        int gameId = message.getIntFromBody("id");
+        NpcVillage npcVillage = GameSessionController.getInstance().getGame(gameId).getMap().getNpcVillage();
+        String assistantName = message.getFromBody("assistantName");
+        Store store;
+
+        switch (assistantName) {
+            case "Clint":
+                store = npcVillage.getBlacksmith();
+                break;
+            case "Robin":
+                store = npcVillage.getCarpenterShop();
+                break;
+            case "Willy":
+                store = npcVillage.getFishShop();
+                break;
+            case "Morris":
+                store = npcVillage.getJojaMart();
+                break;
+            case "Marnie":
+                store = npcVillage.getMarnieRanch();
+                break;
+            case "Pierre":
+                store = npcVillage.getPierreGeneralStore();
+                break;
+            case "Gus":
+                store = npcVillage.getStardopSaloon();
+                break;
+            default:
+                return;
+        }
+
+        Result result = new Result(store.isOpen(),"");
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body, MessageType.IS_STORE_OPEN_RESULT);
+        response.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(response);
+
     }
 }

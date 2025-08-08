@@ -6,7 +6,6 @@ import com.stardew.controller.CookingCraftingControllers.CookingController;
 import com.stardew.controller.CookingCraftingControllers.CookingCraftingInfoController;
 import com.stardew.controller.CookingCraftingControllers.CraftingController;
 import com.stardew.model.AnimalDTO;
-import com.stardew.model.PlayerDTO;
 import com.stardew.model.ScoreBoardDTO;
 import com.stardew.model.animals.Animal;
 import com.stardew.model.gameApp.Game;
@@ -362,6 +361,20 @@ public class GameSessionController {
             case PurchaseProduct -> {
                 Player player = game.getPlayer(connection);
                 StoreController.getInstance().purchaseProduct(message,player,connection);
+            }
+
+            case UpgradeTrashCan -> {
+                Player player = game.getPlayer(connection);
+                StoreController.getInstance().upgradeTrashCan(message,player,connection);
+            }
+
+            case UpgradeTool -> {
+                Player player = game.getPlayer(connection);
+                StoreController.getInstance().upgradeTool(message,player,connection);
+            }
+
+            case IsStoreOpen -> {
+                StoreController.getInstance().isStoreOpen(message,connection);
             }
         }
 

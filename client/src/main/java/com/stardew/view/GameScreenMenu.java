@@ -79,6 +79,8 @@ public class GameScreenMenu implements Screen {
         ArtisanMachinesManager.initialize(stage);
         HabitatUIManager.initialize(stage, id);
         MiniGameStarter.initialize(stage);
+        ShippingBinUIManager.initialize(stage,id);
+        StoreUIManager.createAllStoresUI(stage,id);
 
     }
 

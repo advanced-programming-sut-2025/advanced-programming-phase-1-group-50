@@ -31,11 +31,12 @@ public class GameMap {
 
 
 
-    public GameMap(int gameId ,ArrayList<Farm> farms) {
+    public GameMap( ArrayList<Farm> farms , TimeProvider timeProvider) {
         this.farms = farms;
         this.width = 250;
         this.height = 200;
         this.tiles = new Tile[width][height];
+        this.timeProvider = timeProvider;
         buildMap();
     }
 
@@ -259,12 +260,12 @@ public class GameMap {
         return shippingBins;
     }
 
-    public void addShippingBin(int x, int y) {
+    public void addShippingBin(int gameId,int x, int y) {
         if (!(tiles[x][y].getPlaceable() == null)) {
             return;
         }
 
-        ShippingBin temp = new ShippingBin(x, y);
+        ShippingBin temp = new ShippingBin(gameId,x, y);
 
         this.shippingBins.add(temp);
         tiles[x][y].setPlaceable(temp);
