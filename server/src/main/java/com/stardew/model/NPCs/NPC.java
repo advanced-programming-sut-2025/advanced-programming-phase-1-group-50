@@ -2,6 +2,16 @@ package com.stardew.model.NPCs;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.stardew.model.TextureID;
+import com.stardew.model.animals.AnimalGood;
+import com.stardew.model.animals.AnimalGoodType;
+import com.stardew.model.cooking.Food;
+import com.stardew.model.mapInfo.Ingredient;
+import com.stardew.model.mapInfo.Stone;
+import com.stardew.model.mapInfo.Wood;
+import com.stardew.model.mapInfo.foraging.ForagingCrop;
+import com.stardew.model.mapInfo.foraging.ForagingMineral;
+import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGood;
+import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGoodType;
 
 import java.util.Random;
 
@@ -125,75 +135,75 @@ public class NPC {
 //
 //    }
 //
-//    public boolean isFavoriteGift(Ingredient gift) {
-//
-//        if (this.type.equals(NPCType.Abigail)) {
-//
-//            if (gift instanceof Stone) {
-//                return true;
-//            }
-//            if (gift.equals(ForagingMineral.Iron)) {
-//                return true;
-//            }
-//            if (gift instanceof ArtisanGood) {
-//                return ((ArtisanGood) gift).getType().equals(ArtisanGoodType.Coffee);
-//            }
-//
-//        } else if (this.type.equals(NPCType.Sebastian)) {
-//            if (gift instanceof AnimalGood) {
-//                if (((AnimalGood) gift).getType().equals(AnimalGoodType.Wool)) {
-//                    return true;
-//                }
-//            }
-//            if (gift.equals(Food.PumpkinPie)) {
-//                return true;
-//            }
-//            return gift.equals(Food.Pizza);
-//
-//        } else if (this.type.equals(NPCType.Harvey)) {
-//
-//            if (gift instanceof ArtisanGood) {
-//                if (((ArtisanGood) gift).getType().equals(ArtisanGoodType.Coffee)) {
-//                    return true;
-//                }
-//            }
-//            if (gift instanceof ArtisanGood) {
-//                if (((ArtisanGood) gift).getType().equals(ArtisanGoodType.Pickles)) {
-//                    return true;
-//                }
-//            }
-//            if (gift instanceof ArtisanGood) {
-//                return ((ArtisanGood) gift).getType().equals(ArtisanGoodType.Wine);
-//            }
-//
-//        } else if (this.type.equals(NPCType.Leah)) {
-//
-//            if (gift.equals(Food.Salad)) {
-//                return true;
-//            }
-//            if (gift.equals(ForagingCrop.Grape)) {
-//                return true;
-//            }
-//            if (gift instanceof ArtisanGood) {
-//                return ((ArtisanGood) gift).getType().equals(ArtisanGoodType.Wine);
-//            }
-//
-//        } else if (this.type.equals(NPCType.Robin)) {
-//
-//            if (gift.equals(Food.Spaghetti)) {
-//                return true;
-//            }
-//            if (gift instanceof Wood) {
-//                return true;
-//            }
-//            if (gift instanceof ArtisanGood) {
-//                return ((ArtisanGood) gift).getType().equals(ArtisanGoodType.IronBar);
-//            }
-//
-//        }
-//
-//        return false;
-//    }
+    public boolean isFavoriteGift(Ingredient gift) {
+
+        if (this.type.equals(NPCType.Abigail)) {
+
+            if (gift instanceof Stone) {
+                return true;
+            }
+            if (gift.equals(ForagingMineral.Iron)) {
+                return true;
+            }
+            if (gift instanceof ArtisanGood) {
+                return ((ArtisanGood) gift).getType().equals(ArtisanGoodType.Coffee);
+            }
+
+        } else if (this.type.equals(NPCType.Sebastian)) {
+            if (gift instanceof AnimalGood) {
+                if (((AnimalGood) gift).getType().equals(AnimalGoodType.Wool)) {
+                    return true;
+                }
+            }
+            if (gift.equals(Food.PumpkinPie)) {
+                return true;
+            }
+            return gift.equals(Food.Pizza);
+
+        } else if (this.type.equals(NPCType.Harvey)) {
+
+            if (gift instanceof ArtisanGood) {
+                if (((ArtisanGood) gift).getType().equals(ArtisanGoodType.Coffee)) {
+                    return true;
+                }
+            }
+            if (gift instanceof ArtisanGood) {
+                if (((ArtisanGood) gift).getType().equals(ArtisanGoodType.Pickles)) {
+                    return true;
+                }
+            }
+            if (gift instanceof ArtisanGood) {
+                return ((ArtisanGood) gift).getType().equals(ArtisanGoodType.Wine);
+            }
+
+        } else if (this.type.equals(NPCType.Leah)) {
+
+            if (gift.equals(Food.Salad)) {
+                return true;
+            }
+            if (gift.equals(ForagingCrop.Grape)) {
+                return true;
+            }
+            if (gift instanceof ArtisanGood) {
+                return ((ArtisanGood) gift).getType().equals(ArtisanGoodType.Wine);
+            }
+
+        } else if (this.type.equals(NPCType.Robin)) {
+
+            if (gift.equals(Food.Spaghetti)) {
+                return true;
+            }
+            if (gift instanceof Wood) {
+                return true;
+            }
+            if (gift instanceof ArtisanGood) {
+                return ((ArtisanGood) gift).getType().equals(ArtisanGoodType.IronBar);
+            }
+
+        }
+
+        return false;
+    }
 //
 //    public String getDialogue(NPCFriendshipLevel level) {
 //

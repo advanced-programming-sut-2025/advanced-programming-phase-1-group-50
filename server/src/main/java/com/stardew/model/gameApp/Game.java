@@ -2,6 +2,8 @@ package com.stardew.model.gameApp;
 
 import com.stardew.controller.AnimalsControllers.AnimalsService;
 import com.stardew.model.*;
+import com.stardew.model.NPCs.NPC;
+import com.stardew.model.NPCs.NPCType;
 import com.stardew.model.PlayersRelation.BetweenPlayersGift;
 import com.stardew.model.PlayersRelation.RelationWithPlayers;
 import com.stardew.model.animals.Animal;
@@ -39,7 +41,7 @@ public class Game {
     private int shippingBinId = 0;
 //    private final GameMenuController gameMenuController = new GameMenuController();
 
-    public Game(Map<ClientConnectionThread, Player> players, ArrayList<Farm> farms, User u, GameMap map , Time time) {
+    public Game(Map<ClientConnectionThread, Player> players, ArrayList<Farm> farms, User u, GameMap map, Time time) {
         this.farms.addAll(farms);
         this.players = players;
         this.gameCreator = u;
@@ -118,18 +120,21 @@ public class Game {
 //        if (checkedPlayers == size) {
 ////            time.advancedDay(1);
 //            return new Result(true, "All players have been fainted! Next day is started!\n" +
-//                    "Current player: " + players.getFirst().getUsername() + "\n\n" + players.getFirst().UncheckedNotifications());
+//                    "Current player: " + players.getFirst().getUsername() + "\n\n" + players.getFirst()
+//                    .UncheckedNotifications());
 //        }
 //
 //        if (currentPlayingPlayer.equals(players.get(0))) {
-////            time.advancedHour(1);
+
+    /// /            time.advancedHour(1);
 //            return new Result(true, "An hour passed!\n" +
-//                    "Current player: " + players.getFirst().getUsername() + "\n\n" + players.getFirst().UncheckedNotifications());
+//                    "Current player: " + players.getFirst().getUsername() + "\n\n" + players.getFirst()
+//                    .UncheckedNotifications());
 //        }
 //
-//        return new Result(true, "Next player: " + currentPlayingPlayer.getUsername() + "\n\n" + currentPlayingPlayer.UncheckedNotifications());
+//        return new Result(true, "Next player: " + currentPlayingPlayer.getUsername() + "\n\n" +
+//        currentPlayingPlayer.UncheckedNotifications());
 //    }
-
     public GameMap getMap() {
         return map;
     }
@@ -176,7 +181,8 @@ public class Game {
 //    }
 
 
-    public ArrayList<PlayerDTO> getOtherVisiblePlayers(int startX, int startY, int endX, int endY, ClientConnectionThread connection) {
+    public ArrayList<PlayerDTO> getOtherVisiblePlayers(int startX, int startY, int endX, int endY,
+                                                       ClientConnectionThread connection) {
         ArrayList<PlayerDTO> otherPlayers = new ArrayList<>();
         for (ClientConnectionThread connectionThread : players.keySet()) {
             if (connectionThread.equals(connection)) continue;
@@ -227,15 +233,14 @@ public class Game {
 
         for (Player player : getAllPlayers()) {
             int ratio = 1;
-            if (player.getRemainingNumsAfterMarriageRequestDenied() > 0){
+            if (player.getRemainingNumsAfterMarriageRequestDenied() > 0) {
                 ratio = 2;
                 player.setRemainingNumsAfterMarriageRequestDenied(player.getRemainingNumsAfterMarriageRequestDenied() - 1);
             }
             if (player.isFaintedToday()) {
-                player.setEnergy(150/ratio);
-            }
-            else {
-                player.setEnergy(200/ratio);
+                player.setEnergy(150 / ratio);
+            } else {
+                player.setEnergy(200 / ratio);
             }
             player.setFaintedToday(false);
 
@@ -275,10 +280,9 @@ public class Game {
             }
 
 
-
             GreenHouse gh = player.getFarm().getGreenHouse();
             Iterator<Growable> cropIterator2 = gh.getGrowables().iterator();
-            if(!gh.isBroken()) {
+            if (!gh.isBroken()) {
                 while (cropIterator2.hasNext()) {
                     Growable growable = cropIterator2.next();
                     growable.grow(time);
@@ -299,7 +303,6 @@ public class Game {
             map.generateRandomStoneFarm();
 
 
-
             for (Animal animal : player.getBackpack().getAllAnimals()) {
                 if (animal.isOutOfHabitat()) {
                     animal.decrementFriendShip(20);
@@ -317,12 +320,9 @@ public class Game {
         map.setTileWateredFalse();
 
 
-
-
         for (ShippingBin bin : this.map.getShippingBins()) {
             bin.checkEveryNight();
         }
-
 
 
         for (RelationWithPlayers relation : relationsBetweenPlayers.relationNetwork.values()) {
@@ -354,22 +354,22 @@ public class Game {
         return timeService;
     }
 
-    public AnimalsService getAnimalsService() { return animalsService; }
+    public AnimalsService getAnimalsService() {return animalsService;}
 
     public ArrayList<ClientConnectionThread> clientConnectionThreads() {
         ArrayList<ClientConnectionThread> clientConnectionThreads = new ArrayList<>();
-        for(Map.Entry<ClientConnectionThread , Player> entry : players.entrySet()) {
+        for (Map.Entry<ClientConnectionThread, Player> entry : players.entrySet()) {
             ClientConnectionThread connection = entry.getKey();
             clientConnectionThreads.add(connection);
         }
         return clientConnectionThreads;
     }
 
-    public void startTime(){
+    public void startTime() {
         timeService.start();
     }
 
-    public void startHotBar(){
+    public void startHotBar() {
         hotBarService.start();
     }
 
@@ -387,29 +387,44 @@ public class Game {
     }
 
 
-    public void changeTileInWinter(){
-        for(Tile[] tile : map.getTiles()) {
-            for(Tile t : tile) {
+    public void changeTileInWinter() {
+        for (Tile[] tile : map.getTiles()) {
+            for (Tile t : tile) {
                 t.checkSeasonIsWinter();
             }
         }
     }
 
 
-    public void changeTileInSpring(){
-        for(Tile[] tile : map.getTiles()) {
-            for(Tile t : tile) {
+    public void changeTileInSpring() {
+        for (Tile[] tile : map.getTiles()) {
+            for (Tile t : tile) {
                 t.checkIsSeasonSpring();
             }
         }
     }
 
-    public int getShippingBinId() {
-        return this.shippingBinId;
-    }
-
-    public void increaseShippingBinId() {
+    public int getNewShippingBinId() {
         this.shippingBinId++;
+        return shippingBinId;
     }
 
+    public ShippingBin getShippingBinById(int id) {
+        for (ShippingBin bin : this.map.getShippingBins()) {
+            if (bin.getId() == id) {
+                return bin;
+            }
+        }
+        return null;
+    }
+
+    public NPC getNPCByType(NPCType type) {
+        return switch (type) {
+            case NPCType.Abigail -> map.getNpcHomes().getFirst().getNpc();
+            case NPCType.Harvey -> map.getNpcHomes().get(1).getNpc();
+            case NPCType.Leah -> map.getNpcHomes().get(3).getNpc();
+            case NPCType.Robin -> map.getNpcHomes().get(2).getNpc();
+            case NPCType.Sebastian -> map.getNpcHomes().get(4).getNpc();
+        };
+    }
 }

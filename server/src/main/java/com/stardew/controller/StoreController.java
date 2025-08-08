@@ -3,6 +3,7 @@ package com.stardew.controller;
 import com.stardew.model.Result;
 import com.stardew.model.StoreGoodDTO;
 import com.stardew.model.gameApp.Game;
+import com.stardew.model.mapInfo.Ingredient;
 import com.stardew.model.mapInfo.NpcVillage;
 import com.stardew.model.stores.*;
 import com.stardew.model.userInfo.Player;
@@ -133,12 +134,13 @@ public class StoreController {
         int selectedX = message.getIntFromBody("x");
         int selectedY = message.getIntFromBody("y");
 
+        int shippingBinId = game.getNewShippingBinId();
         CarpenterShop shop = game.getMap().getNpcVillage().getCarpenterShop();
-        Result result = shop.purchaseShippingBin(gameId,game,player,selectedX,selectedY);
+        Result result = shop.purchaseShippingBin(gameId,shippingBinId,game,player,selectedX,selectedY);
 
         HashMap<String, Object> body = new HashMap<>();
         body.put("result", result);
-        body.put("shippingBinId",game.getShippingBinId()+1);
+        body.put("shippingBinId",shippingBinId);
         Message response = new Message(body, MessageType.PURCHASE_SHIPPING_BIN_RESULT);
         response.setRequestID(message.getRequestID());
         connectionThread.sendMessage(response);
@@ -246,7 +248,7 @@ public class StoreController {
     }
 
     public void isStoreOpen(Message message,ClientConnectionThread connectionThread) {
-        if (message == null || connectionThread == null) {
+        if (message == null) {
             return;
         }
 
@@ -288,5 +290,31 @@ public class StoreController {
         response.setRequestID(message.getRequestID());
         connectionThread.sendMessage(response);
 
+    }
+
+    public void sellProduct (Message message, Player player, ClientConnectionThread connectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int gameId = message.getIntFromBody("id");
+        int shippingBinId = message.getIntFromBody("shippingBinId");
+        int quantity = message.getIntFromBody("quantity");
+        String productName = message.getFromBody("productName");
+
+        if (Sellable.getSellableByName(productName,player) == null) {
+            return;
+        }
+
+        int price = quantity * Sellable.getSellableByName(productName,player).getSellPrice();
+        player.getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(productName,player), quantity);
+        GameSessionController.getInstance().getGame(gameId).getShippingBinById(shippingBinId).increaseRevenue(player,price);
+
+        Result result = new Result(true, "you have sold this product successfully");
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body, MessageType.SELL_PRODUCT_RESULT);
+        response.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(response);
     }
 }

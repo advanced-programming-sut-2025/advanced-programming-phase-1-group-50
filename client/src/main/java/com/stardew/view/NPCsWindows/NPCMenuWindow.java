@@ -11,11 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.NPCs.NPC;
+import com.stardew.models.NPCs.NPCType;
 import com.stardew.view.windows.CloseableWindow;
 
 public class NPCMenuWindow extends CloseableWindow {
 
-    public NPCMenuWindow(Stage stage, NPC npc) {
+    public NPCMenuWindow(int gameId,Stage stage, NPCType npcType) {
         super("NPC menu", stage);
 
         padTop(20);
@@ -25,7 +26,7 @@ public class NPCMenuWindow extends CloseableWindow {
 
         Table contentTable = new Table();
 
-        Label nameLabel = new Label("NPC: " + npc.getType().getName(), GamePictureManager.skin);
+        Label nameLabel = new Label("NPC: " + npcType.getName(), GamePictureManager.skin);
         nameLabel.setFontScale(1.2f);
         nameLabel.setColor(Color.BLACK);
         nameLabel.setAlignment(Align.center);
@@ -43,7 +44,7 @@ public class NPCMenuWindow extends CloseableWindow {
         giftButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                stage.addActor(new GiftSelectionWindow(stage, npc));
+                stage.addActor(new GiftSelectionWindow(gameId,stage, npcType));
             }
         });
 
@@ -59,7 +60,7 @@ public class NPCMenuWindow extends CloseableWindow {
         questButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                stage.addActor(new QuestsListWindow(stage, npc));
+                stage.addActor(new QuestsListWindow(gameId,stage, npcType));
             }
         });
 
@@ -75,7 +76,7 @@ public class NPCMenuWindow extends CloseableWindow {
         friendshipButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                stage.addActor(new FriendshipLevelWithNPCWindow(stage, npc));
+                stage.addActor(new FriendshipLevelWithNPCWindow(gameId,stage, npcType));
             }
         });
 

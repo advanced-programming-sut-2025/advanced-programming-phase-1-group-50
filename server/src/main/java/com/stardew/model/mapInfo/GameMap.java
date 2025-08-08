@@ -260,8 +260,8 @@ public class GameMap {
         return shippingBins;
     }
 
-    public void addShippingBin(int gameId,int x, int y) {
-        ShippingBin temp = new ShippingBin(gameId,x, y);
+    public void addShippingBin(int gameId,int shippingBinId,int x, int y) {
+        ShippingBin temp = new ShippingBin(gameId,shippingBinId,x, y);
 
         this.shippingBins.add(temp);
         tiles[x][y].setPlaceable(temp);

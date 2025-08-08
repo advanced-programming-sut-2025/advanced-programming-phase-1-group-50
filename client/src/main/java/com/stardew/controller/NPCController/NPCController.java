@@ -1,13 +1,18 @@
 package com.stardew.controller.NPCController;
 
+import com.badlogic.gdx.Gdx;
 import com.stardew.model.Result;
 import com.stardew.models.NPCs.*;
 import com.stardew.models.app.App;
-import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.mapInfo.NpcHome;
-import com.stardew.models.stores.Sellable;
+import com.stardew.network.Event;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 
 public class NPCController {
@@ -133,31 +138,22 @@ public class NPCController {
 
     }
 
-    public static Result giftToNPC(String productName, NPC npc) {
-        RelationWithNPC relation = switch (npc.getType()) {
-            case NPCType.Abigail -> App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail();
-            case NPCType.Harvey -> App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey();
-            case NPCType.Robin -> App.getGame().getCurrentPlayingPlayer().getRelationWithRobin();
-            case NPCType.Leah -> App.getGame().getCurrentPlayingPlayer().getRelationWithLeah();
-            case Sebastian -> App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian();
-        };
-
-        if (relation == null) {
-            return new Result(false, "Not such NPC");
-        }
-
-        if (npc.isFavoriteGift((Ingredient) Sellable.getSellableByName(productName))) {
-            relation.increaseNumericalFriendShipLevel(200);
-        }
-
-        if (relation.isFirstTimeGiftToNPC()) {
-            relation.increaseNumericalFriendShipLevel(50);
-            relation.setFirstTimeGiftToNPC(false);
-        }
-
-        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(productName), 1);
-
-        return new Result(true, "Your gift has been received");
+    public static void giftToNPC(int gameId, String productName, NPCType npc, Consumer<Result> callback) {
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("productName", productName);
+            body.put("npc", npc);
+            body.put("event", Event.GiftToNPC);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType() == MessageType.GIFT_TO_NPC_RESULT) {
+                Result result = response.getFromBody("result", Result.class);
+                Gdx.app.postRunnable(() -> callback.accept(result));
+            } else {
+                Gdx.app.postRunnable(() -> callback.accept(new Result(false, "Server didn't respond")));
+            }
+        }).start();
     }
 
     public static RelationWithNPC getRelationWithNPC(NPC npc) {
@@ -172,7 +168,7 @@ public class NPCController {
 
     }
 
-    public static ArrayList<String> getQuestsList (NPC npc) {
+    public static ArrayList<String> getQuestsList(NPC npc) {
         return switch (npc.getType()) {
             case NPCType.Abigail -> AbigailQuests.getQuestsNames();
             case NPCType.Harvey -> HarveyQuests.getQuestsNames();
@@ -182,7 +178,7 @@ public class NPCController {
         };
     }
 
-    public static Result doQuest(NPC npc , int index) {
+    public static Result doQuest(NPC npc, int index) {
 
         if (index <= 0 || index >= 4) {
             return new Result(false, "Invalid index");
