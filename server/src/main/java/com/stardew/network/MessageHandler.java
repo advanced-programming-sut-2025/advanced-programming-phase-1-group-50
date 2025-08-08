@@ -151,6 +151,11 @@ public class MessageHandler {
                 return true;
             }
 
+            case GREENHOUSE_POSITION_REQUEST -> {
+                gameSessionController.sendGreenhousePosition(message, connection);
+                return true;
+            }
+
             default -> {
                 return false;
             }

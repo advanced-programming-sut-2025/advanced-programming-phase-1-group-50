@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class GreenHouse implements Placeable{
 
 
-    private boolean isBroken;
+    private boolean isBroken ;
     private final Rectangle bounds;
     private ArrayList<Growable> growables = new ArrayList<>();
     private TextureID texture = TextureID.initialGreenhouse;
@@ -25,6 +25,9 @@ public class GreenHouse implements Placeable{
     }
     public void setBroken(boolean broken) {
         isBroken = broken;
+        if(!isBroken) {
+            texture = TextureID.progressiveGreenhouse;
+        }
     }
     public char getSymbol() {
         return 'G';
@@ -54,6 +57,8 @@ public class GreenHouse implements Placeable{
             }
         }
     }
+
+
 //    public void harvestGrowable(){
 //        if(!isBroken()) {
 //            Iterator<Growable> iterator = growables.iterator();

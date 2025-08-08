@@ -53,4 +53,5 @@ public enum Event {
     SellProduct,
     GiftToNPC,
     GetRelationWithNPC,
+    BuildGreenhouse,
 }

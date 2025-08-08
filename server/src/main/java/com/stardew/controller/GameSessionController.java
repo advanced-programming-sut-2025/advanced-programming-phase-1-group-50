@@ -9,6 +9,7 @@ import com.stardew.model.AnimalDTO;
 import com.stardew.model.ScoreBoardDTO;
 import com.stardew.model.animals.Animal;
 import com.stardew.model.gameApp.Game;
+import com.stardew.model.mapInfo.Farm;
 import com.stardew.model.userInfo.Coin;
 import com.stardew.model.userInfo.Player;
 import com.stardew.network.ClientConnectionThread;
@@ -394,6 +395,11 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 NPCController.getInstance().getRelationWithNPC(message,player,connection);
             }
+
+            case BuildGreenhouse -> {
+                Player player = game.getPlayer(connection);
+                BuildingController.getInstance().handleBuildGreenhouse(message , connection , player);
+            }
         }
 
     }
@@ -418,5 +424,29 @@ public class GameSessionController {
         body.put("scoreBoard", scoreBoardDTOS);
         Message response = new Message(body , MessageType.UPDATE_SCOREBOARD_RESULT);
         connection.sendMessage(response);
+    }
+
+    public void sendGreenhousePosition(Message message, ClientConnectionThread connection) {
+        if(message == null) return;
+        int id = message.getIntFromBody("id");
+        Game game = games.get(id);
+        if(game == null) return;
+
+        Player player = game.getPlayer(connection);
+        Farm farm = player.getFarm();
+        if(farm == null) return;
+
+
+        int x = farm.getGreenHouse().getBounds().x;
+        int y = farm.getGreenHouse().getBounds().y;
+
+
+        HashMap<String , Object> body = new HashMap<>();
+        body.put("x", x);
+        body.put("y", y);
+        Message response = new Message(body , MessageType.GREENHOUSE_POSITION_RESULT);
+        response.setRequestID(message.getRequestID());
+        connection.sendMessage(response);
+
     }
 }
