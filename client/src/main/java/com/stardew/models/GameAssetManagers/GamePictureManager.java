@@ -1949,6 +1949,9 @@ public class GamePictureManager {
     public static TextureRegion thankYouEmoji = new TextureRegion(new Texture("ThankYou.png"));
     public static TextureRegion OopsEmoji = new TextureRegion(new Texture("Oops!.png"));
 
+    public static TextureRegion initialGreenhouse = new TextureRegion(new Texture("Greenhouse/GreenHouse1.png"));
+    public static TextureRegion progressiveGreenhouse = new TextureRegion(new Texture("Greenhouse/GreenHouse2.png"));
+
 
 
 }

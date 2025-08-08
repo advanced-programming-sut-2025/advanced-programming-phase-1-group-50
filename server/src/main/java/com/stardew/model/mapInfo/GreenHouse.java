@@ -12,7 +12,7 @@ public class GreenHouse implements Placeable{
     private boolean isBroken;
     private final Rectangle bounds;
     private ArrayList<Growable> growables = new ArrayList<>();
-    private TextureID texture = TextureID.greenHouseRegion;
+    private TextureID texture = TextureID.initialGreenhouse;
     public GreenHouse(int x, int y, int width, int height) {
         bounds = new Rectangle(x, y, width, height);
         this.isBroken = true;
