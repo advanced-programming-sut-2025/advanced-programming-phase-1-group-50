@@ -389,6 +389,11 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 NPCController.getInstance().giftToNPC(message,player,connection);
             }
+
+            case GetRelationWithNPC -> {
+                Player player = game.getPlayer(connection);
+                NPCController.getInstance().getRelationWithNPC(message,player,connection);
+            }
         }
 
     }

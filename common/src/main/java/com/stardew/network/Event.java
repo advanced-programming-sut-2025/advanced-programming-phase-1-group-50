@@ -52,4 +52,5 @@ public enum Event {
     IsStoreOpen,
     SellProduct,
     GiftToNPC,
+    GetRelationWithNPC,
 }

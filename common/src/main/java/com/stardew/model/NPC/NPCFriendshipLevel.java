@@ -1,4 +1,4 @@
-package com.stardew.models.NPCs;
+package com.stardew.model.NPC;
 
 public enum NPCFriendshipLevel {
     LevelZero, LevelOne, LevelTwo, LevelThree;

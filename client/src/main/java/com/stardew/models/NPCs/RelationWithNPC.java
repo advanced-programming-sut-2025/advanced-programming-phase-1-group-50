@@ -1,5 +1,6 @@
 package com.stardew.models.NPCs;
 
+import com.stardew.model.NPC.NPCFriendshipLevel;
 import com.stardew.models.app.App;
 import com.stardew.models.mapInfo.NpcHome;
 import com.stardew.models.userInfo.Player;

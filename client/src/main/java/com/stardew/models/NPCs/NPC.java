@@ -2,6 +2,7 @@ package com.stardew.models.NPCs;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stardew.model.NPC.NPCFriendshipLevel;
 import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.animals.AnimalGood;
