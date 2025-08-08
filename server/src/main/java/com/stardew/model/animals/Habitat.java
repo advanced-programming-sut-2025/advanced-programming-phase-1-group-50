@@ -87,9 +87,7 @@ public class Habitat implements Placeable {
     }
 
     public HabitatDTO toHabitatDTO() {
-        ArrayList<AnimalDTO> animalDTOs = new ArrayList<>();
-        for (Animal animal : animals) animalDTOs.add(animal.toDTO());
-        return new HabitatDTO(((int) position.x), ((int) position.y), id, size.name(), type.name(), animalDTOs, textureRegion);
+        return new HabitatDTO(((int) position.x), ((int) position.y), id, size.name(), type.name(), textureRegion);
     }
 
     public static HabitatType getHabitatTypeByInput(String input) {
