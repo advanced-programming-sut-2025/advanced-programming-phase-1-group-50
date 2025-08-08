@@ -1,6 +1,8 @@
 package com.stardew.controller.NPCController;
 
 import com.badlogic.gdx.Gdx;
+import com.stardew.model.NPC.NPCFriendshipLevel;
+import com.stardew.model.NPC.RelationWithNPCDTO;
 import com.stardew.model.Result;
 import com.stardew.models.NPCs.*;
 import com.stardew.models.app.App;
@@ -156,16 +158,19 @@ public class NPCController {
         }).start();
     }
 
-    public static RelationWithNPC getRelationWithNPC(NPC npc) {
-
-        return switch (npc.getType()) {
-            case NPCType.Abigail -> App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail();
-            case NPCType.Harvey -> App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey();
-            case NPCType.Robin -> App.getGame().getCurrentPlayingPlayer().getRelationWithRobin();
-            case NPCType.Leah -> App.getGame().getCurrentPlayingPlayer().getRelationWithLeah();
-            case Sebastian -> App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian();
-        };
-
+    public static void getRelationWithNPC(int gameId,NPCType npc, Consumer<RelationWithNPCDTO> callback) {
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("npc", npc);
+            body.put("event", Event.GetRelationWithNPC);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType() == MessageType.GET_RELATION_WITH_NPC_RESPONSE) {
+               RelationWithNPCDTO relation = response.getFromBody("relation", RelationWithNPCDTO.class);
+                Gdx.app.postRunnable(() -> callback.accept(relation));
+            }
+        }).start();
     }
 
     public static ArrayList<String> getQuestsList(NPC npc) {
@@ -179,22 +184,23 @@ public class NPCController {
     }
 
     public static Result doQuest(NPC npc, int index) {
+//
+//        if (index <= 0 || index >= 4) {
+//            return new Result(false, "Invalid index");
+//        }
+//
+//        RelationWithNPC relation = getRelationWithNPC(npc);
+//        boolean isRewardTwice = relation.getNpcFriendshipLevel().equals(NPCFriendshipLevel.LevelTwo);
+//
+//        if (index == 1) {
+//            return npc.doFirstQuest(isRewardTwice);
+//        } else if (index == 2) {
+//            return npc.doSecondQuest(isRewardTwice);
+//        } else {
+//            return npc.doThirdQuest(isRewardTwice);
+//        }
 
-        if (index <= 0 || index >= 4) {
-            return new Result(false, "Invalid index");
-        }
-
-        RelationWithNPC relation = getRelationWithNPC(npc);
-        boolean isRewardTwice = relation.getNpcFriendshipLevel().equals(NPCFriendshipLevel.LevelTwo);
-
-        if (index == 1) {
-            return npc.doFirstQuest(isRewardTwice);
-        } else if (index == 2) {
-            return npc.doSecondQuest(isRewardTwice);
-        } else {
-            return npc.doThirdQuest(isRewardTwice);
-        }
-
+        return  null;
     }
 
 }

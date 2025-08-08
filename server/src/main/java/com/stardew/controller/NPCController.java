@@ -1,5 +1,6 @@
 package com.stardew.controller;
 
+import com.stardew.model.NPC.RelationWithNPCDTO;
 import com.stardew.model.NPCs.NPC;
 import com.stardew.model.NPCs.NPCType;
 import com.stardew.model.NPCs.RelationWithNPC;
@@ -68,5 +69,27 @@ public class NPCController {
         Message response = new Message(body, MessageType.GIFT_TO_NPC_RESULT);
         response.setRequestID(message.getRequestID());
         connectionThread.sendMessage(response);
+    }
+
+    public void getRelationWithNPC(Message message, Player player, ClientConnectionThread connectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        NPCType npcType = message.getFromBody("npc", NPCType.class);
+        RelationWithNPCDTO relation = switch (npcType) {
+            case NPCType.Abigail -> RelationWithNPC.getRelationWithNPCDTO(player.getRelationWithAbigail());
+            case NPCType.Harvey -> RelationWithNPC.getRelationWithNPCDTO(player.getRelationWithHarvey());
+            case NPCType.Robin -> RelationWithNPC.getRelationWithNPCDTO(player.getRelationWithRobin());
+            case NPCType.Leah -> RelationWithNPC.getRelationWithNPCDTO(player.getRelationWithLeah());
+            case NPCType.Sebastian -> RelationWithNPC.getRelationWithNPCDTO(player.getRelationWithSebastian());
+        };
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("relation", relation);
+        Message response = new Message(body, MessageType.GET_RELATION_WITH_NPC_RESPONSE);
+        response.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(response);
+
     }
 }

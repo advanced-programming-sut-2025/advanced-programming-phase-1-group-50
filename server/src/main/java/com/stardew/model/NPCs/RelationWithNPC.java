@@ -1,5 +1,7 @@
 package com.stardew.model.NPCs;
 
+import com.stardew.model.NPC.NPCFriendshipLevel;
+import com.stardew.model.NPC.RelationWithNPCDTO;
 import com.stardew.model.userInfo.Player;
 
 public class RelationWithNPC {
@@ -138,5 +140,15 @@ public class RelationWithNPC {
 //            }
 //        }
 
+    }
+
+    public static RelationWithNPCDTO getRelationWithNPCDTO(RelationWithNPC relation) {
+        return new RelationWithNPCDTO(relation.npcFriendshipLevel,
+            relation.numericalFriendShipLevel,
+            relation.isSecondQuestLocked,
+            relation.isThirdQuestLocked,
+            relation.isFirstTimeToSpeakWithNPC,
+            relation.isFirstTimeGiftToNPC
+        );
     }
 }

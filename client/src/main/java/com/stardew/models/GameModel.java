@@ -113,14 +113,11 @@ public class GameModel {
 
         int tileSize = GamePictureManager.TILE_SIZE;
 
-        float cameraLeft = camX - viewportWidth / 2;
-        float cameraBottom = camY - viewportHeight / 2;
-
         synchronized (boundsLock) {
-            startX = Math.max(0, (int) (cameraLeft / tileSize) - 3);
-            startY = Math.max(0, (int) (cameraBottom / tileSize) - 3);
-            endX = Math.min(mapWidth, (int) ((camX + viewportWidth / 2) / tileSize) + 4);
-            endY = Math.min(mapHeight, (int) ((camY + viewportHeight / 2) / tileSize) + 4);
+            startX = Math.max(0, (int) ((camX - viewportWidth / 2) / tileSize) - 5);
+            startY = Math.max(0, (int) ((camY - viewportHeight / 2) / tileSize) - 5);
+            endX = Math.min(mapWidth, (int) ((camX + viewportWidth / 2) / tileSize) + 5);
+            endY = Math.min(mapHeight, (int) ((camY + viewportHeight / 2) / tileSize) + 5);
         }
 
     }
