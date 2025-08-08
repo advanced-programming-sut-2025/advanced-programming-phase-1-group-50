@@ -1,6 +1,7 @@
 package com.stardew.view.SellProductWindow;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -78,6 +79,7 @@ public class ShippingBinWindow extends CloseableWindow {
         productTable.clear();
         if (products.isEmpty()) {
             Label emptyLabel = new Label("You don't have any sellable items in your backpack.", GamePictureManager.skin);
+            emptyLabel.setColor(Color.BLACK);
             emptyLabel.setWrap(true);
             productTable.add(emptyLabel)
                 .colspan(3)
