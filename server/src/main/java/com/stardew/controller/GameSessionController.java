@@ -159,7 +159,7 @@ public class GameSessionController {
         switch (event) {
             case Moving -> {
                 Player player = game.getPlayer(connection);
-                PlayerController.getInstance().handleMovement(player, game.getMap().getTiles(), message);
+                PlayerController.getInstance().handleMovement(player, game, message);
             }
             case ShowInventory -> {
                 Player p = game.getPlayer(connection);
