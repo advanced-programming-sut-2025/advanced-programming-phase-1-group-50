@@ -140,5 +140,22 @@ public class StoreController {
             }
         }).start();
     }
+
+    public static void isStoreOpen(int gameId,String assistantName , Consumer<Result> callback) {
+        new Thread(() -> {
+            HashMap<String,Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("assistantName", assistantName);
+            body.put("event",Event.IsStoreOpen);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType() == MessageType.IS_STORE_OPEN_RESULT) {
+                Result result = response.getFromBody("result", Result.class);
+                Gdx.app.postRunnable(() -> callback.accept(result));
+            } else {
+                Gdx.app.postRunnable(() -> callback.accept(new Result(false,"Server didn't respond")));
+            }
+        }).start();
+    }
 }
 

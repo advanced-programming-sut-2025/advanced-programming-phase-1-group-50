@@ -244,4 +244,49 @@ public class StoreController {
         response.setRequestID(message.getRequestID());
         connectionThread.sendMessage(response);
     }
+
+    public void isStoreOpen(Message message,ClientConnectionThread connectionThread) {
+        if (message == null || connectionThread == null) {
+            return;
+        }
+
+        int gameId = message.getIntFromBody("id");
+        NpcVillage npcVillage = GameSessionController.getInstance().getGame(gameId).getMap().getNpcVillage();
+        String assistantName = message.getFromBody("assistantName");
+        Store store;
+
+        switch (assistantName) {
+            case "Clint":
+                store = npcVillage.getBlacksmith();
+                break;
+            case "Robin":
+                store = npcVillage.getCarpenterShop();
+                break;
+            case "Willy":
+                store = npcVillage.getFishShop();
+                break;
+            case "Morris":
+                store = npcVillage.getJojaMart();
+                break;
+            case "Marnie":
+                store = npcVillage.getMarnieRanch();
+                break;
+            case "Pierre":
+                store = npcVillage.getPierreGeneralStore();
+                break;
+            case "Gus":
+                store = npcVillage.getStardopSaloon();
+                break;
+            default:
+                return;
+        }
+
+        Result result = new Result(store.isOpen(),"");
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body, MessageType.IS_STORE_OPEN_RESULT);
+        response.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(response);
+
+    }
 }

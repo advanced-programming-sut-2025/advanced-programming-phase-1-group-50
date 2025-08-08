@@ -43,7 +43,6 @@ public class ShippingBinUIManager {
                 stage.addActor(new ShippingBinWindow(gameId,shippingBinId,stage));
                 return true;
             }
-
         });
 
     }

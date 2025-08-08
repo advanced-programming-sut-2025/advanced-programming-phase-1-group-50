@@ -372,6 +372,10 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 StoreController.getInstance().upgradeTool(message,player,connection);
             }
+
+            case IsStoreOpen -> {
+                StoreController.getInstance().isStoreOpen(message,connection);
+            }
         }
 
     }
