@@ -70,6 +70,13 @@ public class AnimalsController {
         Tile[][] tiles = map.getTiles();
         for (int i = x; i < x + habitatType.getLengthX(); i++) {
             for (int j = y; j < y + habitatType.getLengthY(); j++) {
+                Tile tile = map.findTile(i, j);
+                if (tile == null) return new Result(false, "selected area is not in the map");
+                if (tile.getPlaceable() != null) return new Result(false, "selected area is not free!");
+            }
+        }
+        for (int i = x; i < x + habitatType.getLengthX(); i++) {
+            for (int j = y; j < y + habitatType.getLengthY(); j++) {
                 tiles[i][j].setPlaceable(habitat);
                 tiles[i][j].setWalkable(false);
                 tiles[i][j].setSymbol(habitat.getSymbol());

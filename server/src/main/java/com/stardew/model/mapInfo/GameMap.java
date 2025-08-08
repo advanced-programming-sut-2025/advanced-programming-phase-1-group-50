@@ -261,10 +261,6 @@ public class GameMap {
     }
 
     public void addShippingBin(int gameId,int x, int y) {
-        if (!(tiles[x][y].getPlaceable() == null)) {
-            return;
-        }
-
         ShippingBin temp = new ShippingBin(gameId,x, y);
 
         this.shippingBins.add(temp);
@@ -273,7 +269,6 @@ public class GameMap {
         tiles[x][y].setWalkable(false);
         tiles[x][y].setSymbol(temp.getSymbol());
         tiles[x][y].setFertilizer(null);
-
     }
 
     // this method should call every day.

@@ -8,6 +8,7 @@ import com.stardew.model.animals.HabitatType;
 import com.stardew.model.gameApp.Game;
 import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.mapInfo.Stone;
+import com.stardew.model.mapInfo.Tile;
 import com.stardew.model.mapInfo.Wood;
 import com.stardew.model.userInfo.Coin;
 import com.stardew.model.userInfo.Player;
@@ -95,6 +96,8 @@ public class CarpenterShop extends Store {
         if (!player.getFarm().getRectangle().contains(x, y)) {
             return new Result(false, "You don't own this area");
         }
+        Tile tile = game.getMap().findTile(x, y);
+        if (tile.getPlaceable() != null) return new Result(false, "selected tile is not free!");
 
         game.getMap().addShippingBin(gameId,x, y);
         player.getBackpack().removeIngredients(new Coin(), inventory.getLast().getPrice());
@@ -104,7 +107,7 @@ public class CarpenterShop extends Store {
     }
 
     public Result purchaseBuilding(Game game, Player player, String productName, int x, int y , ClientConnectionThread connectionThread) {
-        Result result = new Result() ;
+        Result result = new Result(false, "");
 
         result = switch (productName) {
             case "Barn" -> AnimalsController.getInstance().build(game, player, x, y, "barn",connectionThread);
@@ -115,6 +118,8 @@ public class CarpenterShop extends Store {
             case "Deluxe Coop" -> AnimalsController.getInstance().build(game, player, x, y, "deluxe_coop",connectionThread);
             default -> result;
         };
+
+        if (!result.getSuccessful()) return result;
 
         ShopItem item = null;
 

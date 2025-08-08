@@ -5,11 +5,14 @@ import com.stardew.model.*;
 import com.stardew.model.PlayersRelation.BetweenPlayersGift;
 import com.stardew.model.PlayersRelation.RelationWithPlayers;
 import com.stardew.model.animals.Animal;
+import com.stardew.model.animals.Habitat;
 import com.stardew.model.gameApp.date.Time;
 import com.stardew.model.mapInfo.*;
 import com.stardew.model.mapInfo.foraging.Crop;
 import com.stardew.model.mapInfo.foraging.Growable;
 import com.stardew.model.mapInfo.foraging.Tree;
+import com.stardew.model.mapInfo.manuFactor.ArtisanMachine;
+import com.stardew.model.stores.Store;
 import com.stardew.model.userInfo.Player;
 import com.stardew.model.userInfo.RelationNetwork;
 import com.stardew.model.userInfo.User;
@@ -206,6 +209,8 @@ public class Game {
                 Tile tile = map.findTile(i, j);
                 if (tile == null) continue;
                 Placeable placeable = tile.getPlaceable();
+                if (placeable instanceof Animal || placeable instanceof ArtisanMachine || placeable instanceof Habitat ||
+                    placeable instanceof ShippingBin || placeable instanceof Store) continue;
                 if (placeable != null) placeablesSet.add(placeable);
             }
         }
