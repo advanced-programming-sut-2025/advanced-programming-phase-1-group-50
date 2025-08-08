@@ -50,4 +50,5 @@ public enum Event {
     UpgradeTool,
     IsStoreOpen,
     SellProduct,
+    GiftToNPC,
 }

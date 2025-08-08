@@ -381,6 +381,11 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 StoreController.getInstance().sellProduct(message,player,connection);
             }
+
+            case GiftToNPC -> {
+                Player player = game.getPlayer(connection);
+                NPCController.getInstance().giftToNPC(message,player,connection);
+            }
         }
 
     }

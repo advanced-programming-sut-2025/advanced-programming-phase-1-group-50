@@ -85,4 +85,5 @@ public enum MessageType {
     TOOL_UPGRADE_RESULT,
     IS_STORE_OPEN_RESULT,
     SELL_PRODUCT_RESULT,
+    GIFT_TO_NPC_RESULT,
 }

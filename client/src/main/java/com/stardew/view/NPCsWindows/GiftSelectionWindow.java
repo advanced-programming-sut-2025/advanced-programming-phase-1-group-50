@@ -1,5 +1,6 @@
 package com.stardew.view.NPCsWindows;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -9,26 +10,31 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.google.gson.reflect.TypeToken;
 import com.stardew.controller.NPCController.NPCController;
-import com.stardew.model.Result;
+import com.stardew.model.SellableDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.NPCs.NPC;
-import com.stardew.models.app.App;
-import com.stardew.models.manuFactor.Ingredient;
-import com.stardew.models.stores.Sellable;
+import com.stardew.models.NPCs.NPCType;
+import com.stardew.network.Event;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 import com.stardew.view.windows.CloseableWindow;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class GiftSelectionWindow extends CloseableWindow {
     private final Table productTable;
-    private final NPC receiver;
+    private final NPCType receiver;
+    private final int gameId;
+    private final HashMap<String, Integer> products = new HashMap<>();
 
-    public GiftSelectionWindow(Stage stage, NPC receiver) {
+    public GiftSelectionWindow(int gameId, Stage stage, NPCType receiver) {
         super("Gift Selection", stage);
         this.receiver = receiver;
+        this.gameId = gameId;
 
         pad(40);
         defaults().space(15);
@@ -64,19 +70,30 @@ public class GiftSelectionWindow extends CloseableWindow {
     }
 
     protected void refreshProducts() {
-        productTable.clear();
-        List<Sellable> items = new ArrayList<>();
-
-        HashMap<Ingredient, Integer> ingredientQuantity =
-            App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity();
-
-        for (Ingredient ingredient : ingredientQuantity.keySet()) {
-            if (Sellable.isSellable(ingredient.toString()) && ingredientQuantity.get(ingredient) > 0) {
-                items.add((Sellable) ingredient);
+        products.clear();
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("event", Event.GetForSaleProducts);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType().equals(MessageType.GET_FOR_SALE_PRODUCTS_INFO)) {
+                Type type = new TypeToken<ArrayList<SellableDTO>>() {
+                }.getType();
+                ArrayList<SellableDTO> newProducts = response.getFromBody("products", type);
+                Gdx.app.postRunnable(() -> {
+                    for (SellableDTO product : newProducts) {
+                        products.put(product.getName(), product.getQuantity());
+                    }
+                    createUI();
+                });
             }
-        }
+        }).start();
+    }
 
-        if (items.isEmpty()) {
+    private void createUI() {
+        productTable.clear();
+        if (products.isEmpty()) {
 
             Label emptyLabel = new Label("You don't have any items to gift.", GamePictureManager.skin);
             emptyLabel.setFontScale(1.2f);
@@ -95,10 +112,9 @@ public class GiftSelectionWindow extends CloseableWindow {
             return;
         }
 
-
-        for (Sellable item : items) {
-            final String productName = Sellable.getNameInString(item);
-            final int quantity = ingredientQuantity.getOrDefault((Ingredient) item, 0);
+        for (String item : products.keySet()) {
+            final String productName = item;
+            final int quantity = products.get(item);
 
             TextButton nameButton = new TextButton(productName, GamePictureManager.skin);
             nameButton.pad(5);
@@ -108,7 +124,7 @@ public class GiftSelectionWindow extends CloseableWindow {
             nameButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    sendGift(productName);
+                    sendGift(gameId,productName);
                 }
             });
 
@@ -122,9 +138,10 @@ public class GiftSelectionWindow extends CloseableWindow {
         }
     }
 
-    private void sendGift(String productName) {
-        Result result = NPCController.giftToNPC(productName, receiver);
-        showResult(result);
-        refreshProducts();
+    private void sendGift(int gameId,String productName) {
+        NPCController.giftToNPC(gameId,productName,receiver,result -> {
+            refreshProducts();
+            showResult(result);
+        });
     }
 }
