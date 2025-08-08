@@ -399,8 +399,9 @@ public class Game {
         }
     }
 
-    public int getShippingBinId() {
-        return this.shippingBinId;
+    public int getNewShippingBinId() {
+        this.shippingBinId++;
+        return shippingBinId;
     }
 
     public ShippingBin getShippingBinById (int id) {
@@ -411,9 +412,4 @@ public class Game {
         }
         return null;
     }
-
-    public void increaseShippingBinId() {
-        this.shippingBinId++;
-    }
-
 }

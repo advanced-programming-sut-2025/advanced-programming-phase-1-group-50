@@ -134,12 +134,13 @@ public class StoreController {
         int selectedX = message.getIntFromBody("x");
         int selectedY = message.getIntFromBody("y");
 
+        int shippingBinId = game.getNewShippingBinId();
         CarpenterShop shop = game.getMap().getNpcVillage().getCarpenterShop();
-        Result result = shop.purchaseShippingBin(gameId,game,player,selectedX,selectedY);
+        Result result = shop.purchaseShippingBin(gameId,shippingBinId,game,player,selectedX,selectedY);
 
         HashMap<String, Object> body = new HashMap<>();
         body.put("result", result);
-        body.put("shippingBinId",game.getShippingBinId()+1);
+        body.put("shippingBinId",shippingBinId);
         Message response = new Message(body, MessageType.PURCHASE_SHIPPING_BIN_RESULT);
         response.setRequestID(message.getRequestID());
         connectionThread.sendMessage(response);

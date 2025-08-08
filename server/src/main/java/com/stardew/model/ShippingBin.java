@@ -18,10 +18,9 @@ public class ShippingBin implements Placeable {
     private final Rectangle bounds;
     private final TextureID texture = TextureID.shippingBinTexture;
 
-    public ShippingBin(int gameId,int x, int y) {
+    public ShippingBin(int gameId,int id,int x, int y) {
         Game game = GameSessionController.getInstance().getGame(gameId);
-        game.increaseShippingBinId();
-        this.id = game.getShippingBinId();
+        this.id = id;
         this.bounds = new Rectangle(x, y, 1, 1);
         for (Player player :game.getAllPlayers()) {
             dailyRevenue.put(player, 0);
