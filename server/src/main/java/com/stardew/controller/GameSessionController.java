@@ -275,7 +275,10 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 CheatCodeController.getInstance().executeCheatCode(message , connection , game , player );
             }
-
+            case GetAnimalsInfoInHabitat -> {
+                Player player = game.getPlayer(connection);
+                AnimalsController.getInstance().getAnimalsInfoInHabitat(message, player, connection);
+            }
             case GetAnimalsProductsInfo -> {
                 Player player = game.getPlayer(connection);
                 AnimalsController.getInstance().animalProductsInfo(message, player, connection);

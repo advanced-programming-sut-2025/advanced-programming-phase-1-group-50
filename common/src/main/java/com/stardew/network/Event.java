@@ -26,6 +26,7 @@ public enum Event {
     CollectMachineProduct,
     UseArtisanMachine,
     GetPlayersRelationsInfo,
+    GetAnimalsInfoInHabitat,
     GetAnimalsProductsInfo,
     FeedAnimal,
     PetAnimal,

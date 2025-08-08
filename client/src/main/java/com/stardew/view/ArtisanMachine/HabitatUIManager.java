@@ -7,10 +7,20 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.google.gson.reflect.TypeToken;
+import com.stardew.model.AnimalDTO;
 import com.stardew.model.HabitatDTO;
 import com.stardew.models.GameAssetManagers.GameAssetIDManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.network.Event;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 import com.stardew.view.windows.HabitatWindow;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HabitatUIManager {
     private static HabitatUIManager instance;
@@ -44,7 +54,28 @@ public class HabitatUIManager {
         image.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.addActor(new HabitatWindow(stage, gameID, habitat, (x + image.getX()), y + image.getY() - 50));
+                new Thread(() -> {
+                    HashMap<String, Object> body = new HashMap<>();
+                    body.put("id", gameID);
+                    body.put("habitatID", habitat.getId());
+                    body.put("event", Event.GetAnimalsInfoInHabitat);
+                    Message message = new Message(body, MessageType.EVENT_IN_GAME);
+                    Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+                    if (response != null) {
+                        Type arrayType = new TypeToken<ArrayList<AnimalDTO>>() {}.getType();
+                        ArrayList<AnimalDTO> animals = response.getFromBody("animals", arrayType);
+                        Gdx.app.postRunnable(() ->
+                            stage.addActor(new HabitatWindow(
+                                stage,
+                                gameID,
+                                habitat,
+                                animals,
+                                (x + image.getX()),
+                                y + image.getY() - 50)
+                            )
+                        );
+                    }
+                }).start();
                 return true;
             }
 

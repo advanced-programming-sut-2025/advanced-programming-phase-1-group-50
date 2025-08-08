@@ -2,6 +2,7 @@ package com.stardew.controller.AnimalsControllers;
 
 import com.stardew.controller.MiniGame.MiniGameController;
 import com.stardew.controller.MiniGame.MiniGameControllersManager;
+import com.stardew.model.AnimalDTO;
 import com.stardew.model.HabitatDTO;
 import com.stardew.model.Result;
 import com.stardew.model.Tools.FishingPole;
@@ -69,6 +70,13 @@ public class AnimalsController {
         Tile[][] tiles = map.getTiles();
         for (int i = x; i < x + habitatType.getLengthX(); i++) {
             for (int j = y; j < y + habitatType.getLengthY(); j++) {
+                Tile tile = map.findTile(i, j);
+                if (tile == null) return new Result(false, "selected area is not in the map");
+                if (tile.getPlaceable() != null) return new Result(false, "selected area is not free!");
+            }
+        }
+        for (int i = x; i < x + habitatType.getLengthX(); i++) {
+            for (int j = y; j < y + habitatType.getLengthY(); j++) {
                 tiles[i][j].setPlaceable(habitat);
                 tiles[i][j].setWalkable(false);
                 tiles[i][j].setSymbol(habitat.getSymbol());
@@ -112,6 +120,22 @@ public class AnimalsController {
         animalsService.addAnimal(animal);
 
         return new Result(true, "You buy a <" + animalType + "> with name <" + animalName + "> successfully!");
+    }
+
+    public void getAnimalsInfoInHabitat(Message message, Player player, ClientConnectionThread connection) {
+        if (message == null || player == null || connection == null) return;
+
+        Habitat habitat = player.getFarm().getHabitatByID(message.getFromBody("habitatID"));
+        if (habitat == null) return;
+
+        ArrayList<AnimalDTO> animals = new ArrayList<>();
+        habitat.getAnimals().forEach(animal -> animals.add(animal.toDTO()));
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("animals", animals);
+        Message response = new Message(body, MessageType.EVENT_IN_GAME_RESULT);
+        response.setRequestID(message.getRequestID());
+        connection.sendMessage(response);
     }
 
     public void petAnimal(Message message, Player player, ClientConnectionThread connection) {
@@ -403,9 +427,10 @@ public class AnimalsController {
     private Message prepareHabitatUIMessage(Habitat habitat) {
         HashMap<String, Object> body = new HashMap<>();
         HabitatDTO habitatDTO = habitat.toHabitatDTO();
-        body.put("habitat", habitatDTO);
+        body.put("habitatDTO", habitatDTO);
         return new Message(body, MessageType.ADD_NEW_HABITAT_UI);
     }
+
 
 
     private void sendResultMessage(String requestID, ClientConnectionThread connection, Result result) {
