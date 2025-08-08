@@ -136,7 +136,8 @@ public class GameMenuInputAdapter extends InputAdapter {
             dir = 2;
         }
 
-        sendMoveEventIfNeed(vx, vy, dir, delta);
+        boolean moved = sendMoveEventIfNeed(vx, vy, dir, delta);
+        if (moved) return;
 
 
         if ((keys.contains(Input.Keys.SHIFT_LEFT) || keys.contains(Input.Keys.SHIFT_RIGHT)) &&
@@ -158,7 +159,6 @@ public class GameMenuInputAdapter extends InputAdapter {
 
         if(justPressedKeys.contains(Input.Keys.ESCAPE)){
             sendInventoryShow();
-            //stage.addActor(new InventoryWindow(stage , hotBar , gameState.getInventory() , LoggedInUser.getUser().getUsername()));
         }
 
         if (justPressedKeys.contains(Input.Keys.R)) {
@@ -172,7 +172,7 @@ public class GameMenuInputAdapter extends InputAdapter {
         justPressedKeys.clear();
     }
 
-    private void sendMoveEventIfNeed(float vx, float vy, int dir, float delta) {
+    private boolean sendMoveEventIfNeed(float vx, float vy, int dir, float delta) {
 
         float length = (float) Math.sqrt(vx * vx + vy * vy);
         if (length > 0) {
@@ -182,7 +182,7 @@ public class GameMenuInputAdapter extends InputAdapter {
             dir = 0;
         }
 
-        if (vx == lastVx && vy == lastVy) return;
+        if (vx == lastVx && vy == lastVy) return false;
 
         vx *= delta;
         vy *= delta;
@@ -197,6 +197,7 @@ public class GameMenuInputAdapter extends InputAdapter {
         body.put("dir", dir);
         Message message = new Message(body, MessageType.EVENT_IN_GAME);
         NetworkManager.getConnection().sendMessage(message);
+        return true;
     }
 
     private void sendInventoryShow() {
