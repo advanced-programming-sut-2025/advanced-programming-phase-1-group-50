@@ -8,18 +8,16 @@ public class HabitatDTO {
     private String id;
     private String size;
     private String type;
-    private ArrayList<AnimalDTO> animals;
     private TextureID textureID;
 
     public HabitatDTO() {}
 
-    public HabitatDTO(int x, int y, String id, String size, String type, ArrayList<AnimalDTO> animals, TextureID textureID) {
+    public HabitatDTO(int x, int y, String id, String size, String type, TextureID textureID) {
         this.x = x;
         this.y = y;
         this.id = id;
         this.size = size;
         this.type = type;
-        this.animals = animals;
         this.textureID = textureID;
     }
 
@@ -41,10 +39,6 @@ public class HabitatDTO {
 
     public String getType() {
         return type;
-    }
-
-    public ArrayList<AnimalDTO> getAnimals() {
-        return animals;
     }
 
     public TextureID getTextureID() {

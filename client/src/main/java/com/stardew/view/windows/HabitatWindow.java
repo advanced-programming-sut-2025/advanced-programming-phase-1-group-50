@@ -24,15 +24,13 @@ import java.util.HashMap;
 public class HabitatWindow extends CloseableWindow {
 
 
-    public HabitatWindow(Stage stage, int gameID, HabitatDTO habitat, float x, float y) {
+    public HabitatWindow(Stage stage, int gameID, HabitatDTO habitat, ArrayList<AnimalDTO> animals, float x, float y) {
         super(habitat.getSize() + " " + habitat.getType(), stage);
 
         pad(25, 5, 20, 0);
         defaults().space(5);
         pack();
         setPosition(x, y);
-
-        ArrayList<AnimalDTO> animals = habitat.getAnimals();
 
         setSize(180, 120 + 65 * animals.size());
 
