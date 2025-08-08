@@ -122,7 +122,7 @@ public class FarmFactory {
     public static Farm makeFarm4(int x  ,int y) {
         markUsedArea(10 + x, 10 + y, 6, 6);
         markUsedArea(20 + x, 35 + y, 3, 20);
-        markUsedArea(10 + x, 15 + y, 5, 7);
+        markUsedArea(10 + x, 20 + y, 5, 7);
         markUsedArea(50 + x, 5 + y, 6, 6);
 
         Cottage cottage = new Cottage(10 + x, 10 + y, 6, 6);
@@ -130,7 +130,7 @@ public class FarmFactory {
         Lake l1 = new Lake(20 + x, 35 + y, 3, 20);
         lakes.add(l1);
         ArrayList<Quarry> quarries = new ArrayList<>();
-        Quarry q1 = new Quarry(10 + x  ,15 + y  , 5  ,7);
+        Quarry q1 = new Quarry(10 + x  ,20 + y  , 5  ,7);
         quarries.add(q1);
         GreenHouse greenHouse = new GreenHouse(50 + x, 5 + y, 6, 6);
 

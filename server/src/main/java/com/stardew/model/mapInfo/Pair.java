@@ -3,19 +3,36 @@ package com.stardew.model.mapInfo;
 import java.util.Objects;
 
 public class Pair <K , V>{
-    private final K first;
-    private final V second;
+    private K first;
+    private V second;
+
     public Pair(K key, V value) {
         this.first = key;
         this.second = value;
-
     }
+
+
+    public void setPosition(K first, V second) {
+        this.first = first;
+        this.second = second;
+    }
+
+    public void setFirst(K first) {
+        this.first = first;
+    }
+
+    public void setSecond(V second) {
+        this.second = second;
+    }
+
     public K getFirst() {
         return first;
     }
+
     public V getSecond() {
         return second;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -33,6 +50,6 @@ public class Pair <K , V>{
 
 
     public static <A, B> Pair <A, B> create(A a, B b) {
-        return new Pair<A, B>(a, b);
+        return new Pair<>(a, b);
     }
 }

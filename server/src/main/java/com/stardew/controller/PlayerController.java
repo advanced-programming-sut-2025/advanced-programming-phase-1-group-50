@@ -1,10 +1,13 @@
 package com.stardew.controller;
 
-import com.badlogic.gdx.math.Rectangle;
+import com.stardew.model.gameApp.Game;
 import com.stardew.model.mapInfo.Pair;
 import com.stardew.model.mapInfo.Tile;
 import com.stardew.model.userInfo.Player;
 import com.stardew.network.Message;
+
+import java.awt.*;
+import java.util.ArrayList;
 
 public class PlayerController {
     private static PlayerController instance;
@@ -18,8 +21,11 @@ public class PlayerController {
     }
 
 
-    public void handleMovement(Player player, Tile[][] tiles, Message message) {
+    public void handleMovement(Player player, Game game, Message message) {
         if (message == null) return;
+
+        Tile[][] tiles = game.getMap().getTiles();
+        ArrayList<Player> players = game.getAllPlayers();
 
         Float vx = message.getFromBody("vx", Float.class);
         Float vy = message.getFromBody("vy", Float.class);
@@ -27,7 +33,7 @@ public class PlayerController {
 
         if(player.getEnergy() <= 0) return;
 
-        float tileSize = 60;
+        int tileSize = 60;
 
         float newXPos = player.getPlayerPosition().getFirst() + (vx * player.getSpeed());
         float newYPos = player.getPlayerPosition().getSecond() + (vy * player.getSpeed());
@@ -35,11 +41,18 @@ public class PlayerController {
         float playerWidth = 0.8f;
         float playerHeight = 0.5f;
 
+        if (newXPos < 0 ||
+            newYPos < 0 ||
+            newXPos + playerWidth > tiles.length ||
+            newYPos + playerHeight > tiles[0].length) {
+            return;
+        }
+
         Rectangle playerRect = new Rectangle(
-            newXPos * tileSize,
-            newYPos * tileSize,
-            playerWidth * tileSize,
-            playerHeight * tileSize
+            (int) (newXPos * tileSize),
+            (int) (newYPos * tileSize),
+            (int) (playerWidth * tileSize),
+            (int) (playerHeight * tileSize)
         );
 
 
@@ -58,11 +71,20 @@ public class PlayerController {
                         tileSize,
                         tileSize
                     );
-                    if (playerRect.overlaps(tileRect)) {
-                        return;
-                    }
+                    if (playerRect.intersects(tileRect)) return;
                 }
             }
+        }
+
+        for (Player other : players) {
+            if (player.equals(other)) continue;
+            Rectangle otherRect = new Rectangle(
+                ((int) (other.getPlayerPosition().getFirst() * tileSize)),
+                ((int) (other.getPlayerPosition().getSecond() * tileSize)),
+                ((int) (playerWidth * tileSize)),
+                tileSize
+            );
+            if (playerRect.intersects(otherRect)) return;
         }
 
         float distanceMoved =(float) Math.sqrt(vx * vx + vy * vy);
@@ -73,7 +95,7 @@ public class PlayerController {
         }
 
 
-        player.setPlayerPosition(new Pair<>(newXPos, newYPos));
+        player.setPlayerPosition(newXPos, newYPos);
         player.setMoveDirection(dir);
     }
 

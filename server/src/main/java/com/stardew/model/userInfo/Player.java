@@ -29,7 +29,7 @@ public class Player {
     private boolean isFaintedToday = false;
     private boolean isMarried = false;
     private int remainingNumsAfterMarriageRequestDenied = 0;
-    private Pair<Float , Float> playerPosition = new Pair<>(15f, 8f);
+    private final Pair<Float , Float> playerPosition = new Pair<>(0f, 0f);
     private Position currentPosition;
     private boolean isInfinite = false;
     private RelationWithNPC relationWithAbigail;
@@ -134,7 +134,6 @@ public class Player {
 
     public Result faint() {
         isFaintedToday = true;
-        // return App.getGame().nextPlayerTurn();
         return new Result(false , "");
     }
 
@@ -142,40 +141,33 @@ public class Player {
         return currentTool;
     }
 
-    public void fishing(){
-
-    }
-
     public void setCurrentTool(Tool currentTool) {
         this.currentTool = currentTool;
     }
+
     public Farm getFarm(){
         return farm;
     }
+
     public void setFarm(Farm map){
         this.farm = map;
-        this.playerPosition = new Pair<>((float)farm.getRectangle().x , (float)farm.getRectangle().y );
+        synchronized (playerPosition) {
+            this.playerPosition.setPosition((float)(farm.getRectangle().x + 18), (float)(farm.getRectangle().y + 8));
+        }
     }
 
     public int getIndexOfFarmRegion() {
         return indexOfFarmRegion;
     }
 
-    public Position getPosition(){
-        float x = playerPosition.getFirst();
-        float y = playerPosition.getSecond();
-        return new Position(((int)x), ((int)y));
-//        return currentPosition;//previous
-    }
-//    public void setPosition(Position position){
-//        this.currentPosition = position;
-//    }
     public User getCurrentUser(){
         return currentUser;
     }
+
     public String getUsername(){
         return username;
     }
+
     public String getNickname(){
         return nickname;
     }
@@ -183,7 +175,6 @@ public class Player {
     public Ability getAbility(){
         return ability;
     }
-
 
     public Backpack getBackpack() {
         return backpack;
@@ -198,13 +189,13 @@ public class Player {
         }
     }
 
-
     public void setEnergy(int energy) {
         this.energy = energy;
         if(this.energy > maxEnergy){
             this.energy = maxEnergy;
         }
     }
+
     public Result consumeEnergy(int energy) {
         if(isInfinite){
             return new Result(true, "");
@@ -236,6 +227,7 @@ public class Player {
 
 
     }
+
     public void setEnergyInfinite(){
         this.energy = Integer.MAX_VALUE;
         this.isInfinite = true;
@@ -342,12 +334,16 @@ public class Player {
 //
 //    }
 
-    public Pair<Float , Float> getPlayerPosition(){
-        return playerPosition;
+    public Pair<Float , Float> getPlayerPosition() {
+        synchronized (playerPosition) {
+            return playerPosition;
+        }
     }
 
-    public void setPlayerPosition(Pair<Float , Float> playerPosition) {
-        this.playerPosition = playerPosition;
+    public void setPlayerPosition(float first, float second) {
+        synchronized (playerPosition) {
+            this.playerPosition.setPosition(first, second);
+        }
     }
 
     public void setMoveDirection(int dir){
@@ -369,19 +365,6 @@ public class Player {
     public float getDistanceByTile() {
         return distanceByTile;
     }
-
-    //    public void setVelocity(float vx , float vy){
-//        this.vx = vx;
-//        this.vy = vy;
-//    }
-
-//    public float getVx(){
-//        return vx;
-//    }
-
-//    public float getVy(){
-//        return vy;
-//    }
 
     public void setCurrentInventoryItem(InventoryItem item){
         this.currentInventoryItem = item;
@@ -455,7 +438,9 @@ public class Player {
     }
 
     public PlayerDTO toDTO(){
-        return new PlayerDTO(playerPosition.getFirst() , playerPosition.getSecond(), moveDirection , energy );
+        synchronized (playerPosition) {
+            return new PlayerDTO(playerPosition.getFirst(), playerPosition.getSecond(), moveDirection, energy);
+        }
     }
 
 
