@@ -400,6 +400,15 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 BuildingController.getInstance().handleBuildGreenhouse(message , connection , player);
             }
+
+            case GetNPCQuestsStatus -> {
+             NPCController.getInstance().getQuestsStatus(message,connection);
+            }
+
+            case DoQuest -> {
+                Player player = game.getPlayer(connection);
+                NPCController.getInstance().doQuest(message,player,connection);
+            }
         }
 
     }

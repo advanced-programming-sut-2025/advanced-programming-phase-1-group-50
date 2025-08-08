@@ -54,4 +54,6 @@ public enum Event {
     GiftToNPC,
     GetRelationWithNPC,
     BuildGreenhouse,
+    GetNPCQuestsStatus,
+    DoQuest,
 }

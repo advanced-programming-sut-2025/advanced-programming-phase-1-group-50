@@ -1,5 +1,7 @@
 package com.stardew.model.NPCs;
 
+import com.stardew.model.Result;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -12,9 +14,9 @@ public class AbigailQuests {
         return questsNames;
     }
 
-//
-//    public static Result doFirstQuest(boolean isRewardTwice) {
-//
+
+    public static Result doFirstQuest(boolean isRewardTwice) {
+
 //        boolean isGoldBarAvailable = false;
 //
 //        for (Ingredient ingredient :
@@ -47,12 +49,12 @@ public class AbigailQuests {
 //                break;
 //            }
 //        }
-//
-//        return new Result(true, "Quest done.");
-//    }
-//
-//    public static Result doSecondQuest(boolean isRewardTwice) {
-//
+
+        return new Result(true, "Quest done.");
+    }
+
+    public static Result doSecondQuest(boolean isRewardTwice) {
+
 //        boolean isPumpkinAvailable = false;
 //
 //        for (Ingredient ingredient :
@@ -85,12 +87,12 @@ public class AbigailQuests {
 //                break;
 //            }
 //        }
-//
-//        return new Result(true, "Quest done.");
-//    }
-//
-//    public static Result doThirdQuest(boolean isRewardTwice) {
-//
+
+        return new Result(true, "Quest done.");
+    }
+
+    public static Result doThirdQuest(boolean isRewardTwice) {
+
 //        boolean are50WheatAvailable = false;
 //
 //        for (Ingredient ingredient :
@@ -119,8 +121,8 @@ public class AbigailQuests {
 //                break;
 //            }
 //        }
-//
-//        return new Result(true, "Quest done.");
-//
-//    }
+
+        return new Result(true, "Quest done.");
+
+    }
 }

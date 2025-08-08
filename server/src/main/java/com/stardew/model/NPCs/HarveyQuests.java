@@ -21,8 +21,8 @@ public class HarveyQuests {
         return questsNames;
     }
 
-//    public static Result doFirstQuest(boolean isRewardTwice) {
-//
+    public static Result doFirstQuest(boolean isRewardTwice) {
+
 //        boolean are12PlantAvailable = false;
 //        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
 //            if (ingredient instanceof Crop || ingredient instanceof CropType || ingredient instanceof Fruit) {
@@ -50,12 +50,12 @@ public class HarveyQuests {
 ////                break;
 ////            }
 ////        }
-//
-//        return new Result(true,"Quest done.");
-//    }
-//
-//    public static Result doSecondQuest(boolean isRewardTwice) {
-//
+
+        return new Result(true,"Quest done.");
+    }
+
+    public static Result doSecondQuest(boolean isRewardTwice) {
+
 //        boolean isSalmonAvailable = false;
 //
 //        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
@@ -86,11 +86,11 @@ public class HarveyQuests {
 //                break;
 //            }
 //        }
-//        return new Result(true,"Quest done.");
-//    }
-//
-//    public static Result doThirdQuest(boolean isRewardTwice) {
-//
+        return new Result(true,"Quest done.");
+    }
+
+    public static Result doThirdQuest(boolean isRewardTwice) {
+
 //        boolean isWineAvailable = false;
 //
 //        for (Ingredient ingredient :
@@ -123,8 +123,8 @@ public class HarveyQuests {
 //                break;
 //            }
 //        }
-//
-//        return new Result(true,"Quest done.");
-//    }
+
+        return new Result(true,"Quest done.");
+    }
 
 }

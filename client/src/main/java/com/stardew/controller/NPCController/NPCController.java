@@ -1,6 +1,7 @@
 package com.stardew.controller.NPCController;
 
 import com.badlogic.gdx.Gdx;
+import com.google.gson.reflect.TypeToken;
 import com.stardew.model.NPC.NPCFriendshipLevel;
 import com.stardew.model.NPC.RelationWithNPCDTO;
 import com.stardew.model.Result;
@@ -12,6 +13,7 @@ import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 import com.stardew.network.NetworkManager;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.Consumer;
@@ -21,12 +23,12 @@ public class NPCController {
 
     public Result meetNPC(Matcher matcher) {
 
-        NpcHome home = null;
+        NpcHome home;
 
         switch (matcher.group("NPCname")) {
             case "Abigail" -> {
 
-                home = App.getGame().getMap().getNpcHomes().get(0);
+                home = App.getGame().getMap().getNpcHomes().getFirst();
 
                 if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
 
@@ -173,34 +175,51 @@ public class NPCController {
         }).start();
     }
 
-    public static ArrayList<String> getQuestsList(NPC npc) {
-        return switch (npc.getType()) {
-            case NPCType.Abigail -> AbigailQuests.getQuestsNames();
-            case NPCType.Harvey -> HarveyQuests.getQuestsNames();
-            case NPCType.Robin -> RobinQuests.getQuestsNames();
-            case NPCType.Leah -> LeahQuests.getQuestsNames();
-            case Sebastian -> SebastianQuests.getQuestsNames();
+    public static ArrayList<String> getQuestsList(NPCType npc) {
+        return switch (npc) {
+            case NPCType.Abigail -> NPCQuests.AbigailQuests.getQuestsNames();
+            case NPCType.Harvey -> NPCQuests.HarveyQuests.getQuestsNames();
+            case NPCType.Robin -> NPCQuests.RobinQuests.getQuestsNames();
+            case NPCType.Leah -> NPCQuests.LeahQuests.getQuestsNames();
+            case NPCType.Sebastian -> NPCQuests.SebastianQuests.getQuestsNames();
         };
     }
 
-    public static Result doQuest(NPC npc, int index) {
-//
-//        if (index <= 0 || index >= 4) {
-//            return new Result(false, "Invalid index");
-//        }
-//
-//        RelationWithNPC relation = getRelationWithNPC(npc);
-//        boolean isRewardTwice = relation.getNpcFriendshipLevel().equals(NPCFriendshipLevel.LevelTwo);
-//
-//        if (index == 1) {
-//            return npc.doFirstQuest(isRewardTwice);
-//        } else if (index == 2) {
-//            return npc.doSecondQuest(isRewardTwice);
-//        } else {
-//            return npc.doThirdQuest(isRewardTwice);
-//        }
+    public static void getNPCQuestsStatus(int gameId, NPCType npc , Consumer<ArrayList<Boolean>> callback) {
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("npc", npc);
+            body.put("event", Event.GetNPCQuestsStatus);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType() == MessageType.GET_NPC_QUESTS_STATUS_INFO) {
+                Type type = new TypeToken<ArrayList<Boolean>>() {}.getType();
+                ArrayList<Boolean> status = response.getFromBody("status", type);
+                Gdx.app.postRunnable(() -> callback.accept(status));
+            }
+        }).start();
+    }
 
-        return  null;
+    public static void doQuest(int gameId,NPCType npcType,int index, Consumer<Result> callback) {
+        new Thread(() -> {
+            if (index <= 0 || index >= 4) {
+                Gdx.app.postRunnable(() -> callback.accept(new Result(false, "Invalid index")));
+            }
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("npc", npcType);
+            body.put("index", index);
+            body.put("event",Event.DoQuest);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType() == MessageType.DO_QUEST_RESULT) {
+                Result result = response.getFromBody("result", Result.class);
+                Gdx.app.postRunnable(() -> callback.accept(result));
+            } else {
+                Gdx.app.postRunnable(() -> callback.accept(new Result(false, "Server didn't respond")));
+            }
+        }).start();
     }
 
 }

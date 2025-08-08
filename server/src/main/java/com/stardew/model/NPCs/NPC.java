@@ -1,6 +1,6 @@
 package com.stardew.model.NPCs;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.animals.AnimalGood;
 import com.stardew.model.animals.AnimalGoodType;
@@ -12,8 +12,6 @@ import com.stardew.model.mapInfo.foraging.ForagingCrop;
 import com.stardew.model.mapInfo.foraging.ForagingMineral;
 import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGood;
 import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGoodType;
-
-import java.util.Random;
 
 public class NPC {
     private final NPCType type;
@@ -53,88 +51,88 @@ public class NPC {
         isThirdQuestDone = thirdQuestDone;
     }
 
-//    public Result doFirstQuest(boolean isRewardTwice) {
-//
-//        if (this.type.equals(NPCType.Abigail)) {
-//
-//            return AbigailQuests.doFirstQuest(isRewardTwice);
-//
-//        } else if (this.type.equals(NPCType.Sebastian)) {
-//
-//            return SebastianQuests.doFirstQuest(isRewardTwice);
-//
-//        } else if (this.type.equals(NPCType.Harvey)) {
-//
-//            return HarveyQuests.doFirstQuest(isRewardTwice);
-//
-//        } else if (this.type.equals(NPCType.Leah)) {
-//
-//            return LeahQuests.doFirstQuest(isRewardTwice);
-//
-//        } else if (this.type.equals(NPCType.Robin)) {
-//
-//            return RobinQuests.doFirstQuest(isRewardTwice);
-//
-//        }
-//
-//        return new Result(false,"Invalid NPC type.");
-//    }
-//
-//    public Result doSecondQuest(boolean isRewardTwice) {
-//
-//        if (this.type.equals(NPCType.Abigail)) {
-//
-//            return AbigailQuests.doSecondQuest(isRewardTwice);
-//
-//        } else if (this.type.equals(NPCType.Sebastian)) {
-//
-//            return SebastianQuests.doSecondQuest(isRewardTwice);
-//
-//        } else if (this.type.equals(NPCType.Harvey)) {
-//
-//            return HarveyQuests.doSecondQuest(isRewardTwice);
-//
-//        } else if (this.type.equals(NPCType.Leah)) {
-//
-//            return LeahQuests.doSecondQuest(isRewardTwice);
-//
-//        } else if (this.type.equals(NPCType.Robin)) {
-//
-//            return RobinQuests.doSecondQuest(isRewardTwice);
-//
-//        }
-//
-//        return new Result(false,"Invalid NPC type.");
-//
-//    }
-//
-//    public Result doThirdQuest(boolean isRewardTwice) {
-//
-//        if (this.type.equals(NPCType.Abigail)) {
-//
-//            return AbigailQuests.doThirdQuest(isRewardTwice);
-//
-//        } else if (this.type.equals(NPCType.Sebastian)) {
-//
-//            return SebastianQuests.doThirdQuest(isRewardTwice);
-//
-//        } else if (this.type.equals(NPCType.Harvey)) {
-//
-//            return HarveyQuests.doThirdQuest(isRewardTwice);
-//
-//        } else if (this.type.equals(NPCType.Leah)) {
-//
-//            return LeahQuests.doThirdQuest(isRewardTwice);
-//
-//        } else if (this.type.equals(NPCType.Robin)) {
-//
-//            return RobinQuests.doThirdQuest(isRewardTwice);
-//
-//        }
-//        return new Result(false,"Invalid NPC type.");
-//
-//    }
-//
+    public Result doFirstQuest(boolean isRewardTwice) {
+
+        if (this.type.equals(NPCType.Abigail)) {
+
+            return AbigailQuests.doFirstQuest(isRewardTwice);
+
+        } else if (this.type.equals(NPCType.Sebastian)) {
+
+            return SebastianQuests.doFirstQuest(isRewardTwice);
+
+        } else if (this.type.equals(NPCType.Harvey)) {
+
+            return HarveyQuests.doFirstQuest(isRewardTwice);
+
+        } else if (this.type.equals(NPCType.Leah)) {
+
+            return LeahQuests.doFirstQuest(isRewardTwice);
+
+        } else if (this.type.equals(NPCType.Robin)) {
+
+            return RobinQuests.doFirstQuest(isRewardTwice);
+
+        }
+
+        return new Result(false,"Invalid NPC type.");
+    }
+
+    public Result doSecondQuest(boolean isRewardTwice) {
+
+        if (this.type.equals(NPCType.Abigail)) {
+
+            return AbigailQuests.doSecondQuest(isRewardTwice);
+
+        } else if (this.type.equals(NPCType.Sebastian)) {
+
+            return SebastianQuests.doSecondQuest(isRewardTwice);
+
+        } else if (this.type.equals(NPCType.Harvey)) {
+
+            return HarveyQuests.doSecondQuest(isRewardTwice);
+
+        } else if (this.type.equals(NPCType.Leah)) {
+
+            return LeahQuests.doSecondQuest(isRewardTwice);
+
+        } else if (this.type.equals(NPCType.Robin)) {
+
+            return RobinQuests.doSecondQuest(isRewardTwice);
+
+        }
+
+        return new Result(false,"Invalid NPC type.");
+
+    }
+
+    public Result doThirdQuest(boolean isRewardTwice) {
+
+        if (this.type.equals(NPCType.Abigail)) {
+
+            return AbigailQuests.doThirdQuest(isRewardTwice);
+
+        } else if (this.type.equals(NPCType.Sebastian)) {
+
+            return SebastianQuests.doThirdQuest(isRewardTwice);
+
+        } else if (this.type.equals(NPCType.Harvey)) {
+
+            return HarveyQuests.doThirdQuest(isRewardTwice);
+
+        } else if (this.type.equals(NPCType.Leah)) {
+
+            return LeahQuests.doThirdQuest(isRewardTwice);
+
+        } else if (this.type.equals(NPCType.Robin)) {
+
+            return RobinQuests.doThirdQuest(isRewardTwice);
+
+        }
+        return new Result(false,"Invalid NPC type.");
+
+    }
+
     public boolean isFavoriteGift(Ingredient gift) {
 
         if (this.type.equals(NPCType.Abigail)) {

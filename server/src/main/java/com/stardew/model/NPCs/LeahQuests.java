@@ -17,8 +17,8 @@ public class LeahQuests {
         return questsNames;
     }
 
-//    public static Result doFirstQuest(boolean isRewardTwice) {
-//
+    public static Result doFirstQuest(boolean isRewardTwice) {
+
 //        boolean isGoldBarAvailable = false;
 //
 //        for (Ingredient ingredient :
@@ -51,12 +51,12 @@ public class LeahQuests {
 //                break;
 //            }
 //        }
-//
-//        return new Result(true,"Quest done.");
-//    }
-//
-//    public static Result doSecondQuest(boolean isRewardTwice) {
-//
+
+        return new Result(true,"Quest done.");
+    }
+
+    public static Result doSecondQuest(boolean isRewardTwice) {
+
 //        boolean isSalmonAvailable = false;
 //
 //        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
@@ -84,13 +84,13 @@ public class LeahQuests {
 //                break;
 //            }
 //        }
-//
-//        return new Result(true,"Quest done.");
-//    }
+
+        return new Result(true,"Quest done.");
+    }
 
 
-//    public static Result doThirdQuest(boolean isRewardTwice) {
-//
+    public static Result doThirdQuest(boolean isRewardTwice) {
+
 //        boolean are200WoodAvailable = false;
 //
 //        for (Ingredient ingredient :
@@ -109,9 +109,9 @@ public class LeahQuests {
 //        if (!are200WoodAvailable) {
 //            return new Result(false,"You don't have enough stock for this quest.\n(You need at least 200 pieces of wood)");
 //        }
-
-        // we don't need the reward in our app, so we don't add it to player inventory
-
+//
+//         we don't need the reward in our app, so we don't add it to player inventory
+//
 //        for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
 //            if (home.getNpc().getType().equals(NPCType.Leah)) {
 //                home.getNpc().setThirdQuestDone(true);
@@ -119,6 +119,6 @@ public class LeahQuests {
 //            }
 //        }
 
-//        return new Result(true,"Quest done.");
-//    }
+        return new Result(true,"Quest done.");
+    }
 }

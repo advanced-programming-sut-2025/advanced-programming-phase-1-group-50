@@ -1,5 +1,7 @@
 package com.stardew.model.NPCs;
 
+import com.stardew.model.Result;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -11,8 +13,8 @@ public class SebastianQuests {
         return questsNames;
     }
 
-//    public static Result doFirstQuest(boolean isRewardTwice) {
-//
+    public static Result doFirstQuest(boolean isRewardTwice) {
+
 //        boolean are50IronsAvailable = false;
 //
 //        for (Ingredient ingredient :
@@ -43,12 +45,12 @@ public class SebastianQuests {
 //                break;
 //            }
 //        }
-//
-//        return new Result(true, "Quest done.");
-//    }
-//
-//    public static Result doSecondQuest(boolean isRewardTwice) {
-//
+
+        return new Result(true, "Quest done.");
+    }
+
+    public static Result doSecondQuest(boolean isRewardTwice) {
+
 //        boolean isPumpkinPieAvailable = false;
 //
 //        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
@@ -77,12 +79,12 @@ public class SebastianQuests {
 //                break;
 //            }
 //        }
-//
-//        return new Result(true, "Quest done.");
-//    }
-//
-//    public static Result doThirdQuest(boolean isRewardTwice) {
-//
+
+        return new Result(true, "Quest done.");
+    }
+
+    public static Result doThirdQuest(boolean isRewardTwice) {
+
 //        boolean are150StonesAvailable = false;
 //
 //        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
@@ -111,7 +113,7 @@ public class SebastianQuests {
 //                break;
 //            }
 //        }
-//
-//        return new Result(true, "Quest done.");
-//    }
+
+        return new Result(true, "Quest done.");
+    }
 }

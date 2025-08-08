@@ -1,5 +1,7 @@
 package com.stardew.model.NPCs;
 
+import com.stardew.model.Result;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -10,9 +12,9 @@ public class RobinQuests {
     public static ArrayList<String> getQuestsNames() {
         return questsNames;
     }
-//
-//    public static Result doFirstQuest(boolean isRewardTwice) {
-//
+
+    public static Result doFirstQuest(boolean isRewardTwice) {
+
 //        boolean are80WoodAvailable = false;
 //
 //        for (Ingredient ingredient :
@@ -43,12 +45,12 @@ public class RobinQuests {
 //                break;
 //            }
 //        }
-//
-//        return new Result(true,"Quest done.");
-//    }
-//
-//    public static Result doSecondQuest(boolean isRewardTwice) {
-//
+
+        return new Result(true,"Quest done.");
+    }
+
+    public static Result doSecondQuest(boolean isRewardTwice) {
+
 //        boolean are10IronBarAvailable = false;
 //
 //        for (Ingredient ingredient : App.getGame().getCurrentPlayingPlayer().getBackpack().getIngredientQuantity().keySet()) {
@@ -81,12 +83,12 @@ public class RobinQuests {
 //                break;
 //            }
 //        }
-//
-//        return new Result(true,"Quest done.");
-//    }
-//
-//    public static Result doThirdQuest(boolean isRewardTwice) {
-//
+
+        return new Result(true,"Quest done.");
+    }
+
+    public static Result doThirdQuest(boolean isRewardTwice) {
+
 //        boolean are1000WoodAvailable = false;
 //
 //        for (Ingredient ingredient :
@@ -117,7 +119,7 @@ public class RobinQuests {
 //                break;
 //            }
 //        }
-//
-//        return new Result(true,"Quest done.");
-//    }
+
+        return new Result(true,"Quest done.");
+    }
 }

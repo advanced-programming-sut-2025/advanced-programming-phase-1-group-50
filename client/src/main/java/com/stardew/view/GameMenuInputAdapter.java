@@ -14,6 +14,7 @@ import com.stardew.model.TextureID;
 import com.stardew.models.ClientInfo.LoggedInUser;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.GameModel;
+import com.stardew.models.NPCs.NPCType;
 import com.stardew.models.ShippingBin;
 import com.stardew.models.stores.Store;
 import com.stardew.network.Event;
@@ -23,6 +24,7 @@ import com.stardew.network.NetworkManager;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.InventoryWindows.InventoryWindow;
 import com.stardew.view.InventoryWindows.MapWindow;
+import com.stardew.view.NPCsWindows.NPCMenuWindow;
 import com.stardew.view.ReactionWindows.ReactionWindow;
 import com.stardew.view.RefrigeratorView.RefrigeratorWindow;
 import com.stardew.view.SellProductWindow.ShippingBinWindow;
@@ -167,6 +169,10 @@ public class GameMenuInputAdapter extends InputAdapter {
 
         if(justPressedKeys.contains(Input.Keys.Z)){
             stage.addActor(new ReactionWindow(stage , id));
+        }
+
+        if (justPressedKeys.contains(Input.Keys.X)) {
+            stage.addActor(new NPCMenuWindow(id,stage, NPCType.Abigail));
         }
 
         justPressedKeys.clear();
