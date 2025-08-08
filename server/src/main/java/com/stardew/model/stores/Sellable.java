@@ -81,6 +81,15 @@ public interface Sellable {
     }
 
     static boolean isSellable(String name) {
+        name = name.trim();
+        String[] qualities = {"Regular", "Silver", "Gold", "Iridium"};
+        for (String quality : qualities) {
+            String prefix = quality + " ";
+            if (name.startsWith(prefix)) {
+                name = name.substring(prefix.length());
+            }
+        }
+
         return  AnimalGoodType.getAnimalGoodTypeByName(name) != null ||
             CropType.getCropTypeByName(name) != null ||
             FishType.getFishTypeByName(name) != null ||
