@@ -79,7 +79,7 @@ public class GameMenu implements AppMenu , Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Screen screen = Main.getMain().getScreen();
-                MainMenu mainMenu = new MainMenu();
+                MainMenu mainMenu = new MainMenu("hjf");
                 Main.getMain().setScreen(mainMenu);
                 screen.dispose();
 

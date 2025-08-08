@@ -49,9 +49,10 @@ public class MainMenu implements AppMenu , Screen {
 
     }
 
-    public MainMenu() {
+
+    public MainMenu(String nickname) {
         stage = new Stage();
-        mainMenu = new Label("Main Menu" , GamePictureManager.skin);
+        mainMenu = new Label("Main Menu" + " " + nickname , GamePictureManager.skin);
         profileButton = new TextButton("Profile" , GamePictureManager.skin);
         profileButton.addListener(new ClickListener() {
             @Override

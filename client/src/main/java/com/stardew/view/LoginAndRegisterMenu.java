@@ -134,12 +134,13 @@ public class LoginAndRegisterMenu implements AppMenu , Screen {
                 }
                 Result result = response.getFromBody("result", Result.class);
                 if (result.getSuccessful()) {
-                    Screen currentScreen = Main.getMain().getScreen();
-                    MainMenu mainMenu = new MainMenu();
-                    Main.getMain().setScreen(mainMenu);
-                    currentScreen.dispose();
                     String username = response.getFromBody("username");
                     String nickname = response.getFromBody("nickname");
+                    Screen currentScreen = Main.getMain().getScreen();
+                    MainMenu mainMenu = new MainMenu(nickname);
+                    Main.getMain().setScreen(mainMenu);
+                    currentScreen.dispose();
+
                     LoggedInUser.setUser(new UserDTO(username, nickname));
                     return;
                 }

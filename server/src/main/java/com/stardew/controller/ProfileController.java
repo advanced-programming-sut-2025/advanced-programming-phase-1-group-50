@@ -193,6 +193,7 @@ public class ProfileController {
         StringBuilder sb = new StringBuilder();
         sb.append("Username : ").append(user.getUsername()).append("\n");
         sb.append("Nickname : ").append(user.getNickname()).append("\n");
+        sb.append("Email : ").append(user.getEmail()).append("\n");
         sb.append("Highest money earned in the game : ").append(user.getHighestScore()).append("\n");
         sb.append("Number of games : ").append(user.getNumberOfGames()).append("\n");
 

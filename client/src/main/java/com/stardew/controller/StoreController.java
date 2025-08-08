@@ -60,7 +60,9 @@ public class StoreController {
                 Result result = response.getFromBody("result", Result.class);
                 int id = response.getIntFromBody("shippingBinId");
                 Gdx.app.postRunnable(() -> {
-                    ShippingBinUIManager.getInstance().createShippingBinUI(id,x,y);
+                    if (result.getSuccessful()) {
+                        ShippingBinUIManager.getInstance().createShippingBinUI(id,x,y);
+                    }
                     callback.accept(result);
                 });
             } else {
