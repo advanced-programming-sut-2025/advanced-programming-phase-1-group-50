@@ -7,10 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.stardew.controller.SellProductController.SellProductController;
-import com.stardew.model.Result;
+import com.stardew.controller.StoreController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.ShippingBin;
 import com.stardew.view.windows.CloseableWindow;
 
 public class SellProductWindow extends CloseableWindow {
@@ -21,7 +19,7 @@ public class SellProductWindow extends CloseableWindow {
     private final Label quantityLabel;
     private int selectedQuantity = 1;
 
-    public SellProductWindow(Stage stage, ShippingBinWindow shippingBinWindow, ShippingBin shippingBin, String productName, int quantity, int price) {
+    public SellProductWindow(int gameId,Stage stage, ShippingBinWindow shippingBinWindow, int shippingBinId, String productName, int quantity, int price) {
         super("Sell Product Window", stage);
         this.unitPrice = price;
         this.maxQuantity = quantity;
@@ -63,10 +61,11 @@ public class SellProductWindow extends CloseableWindow {
         sellButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Result result = SellProductController.sellProduct(productName,shippingBin,selectedQuantity);
-                shippingBinWindow.refreshProducts();
-                closeWindow();
-                showResult(result);
+                StoreController.sellProduct(gameId,shippingBinId,productName,selectedQuantity, result -> {
+                    shippingBinWindow.refreshProducts();
+                    closeWindow();
+                    showResult(result);
+                });
             }
         });
 

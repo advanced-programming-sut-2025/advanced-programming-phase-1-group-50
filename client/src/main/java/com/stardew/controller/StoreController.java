@@ -157,5 +157,24 @@ public class StoreController {
             }
         }).start();
     }
+
+    public static void sellProduct(int gameId, int shippingBinId,String productName,int quantity , Consumer<Result> callback) {
+        new Thread(() -> {
+            HashMap<String,Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("shippingBinId", shippingBinId);
+            body.put("productName", productName);
+            body.put("quantity", quantity);
+            body.put("event",Event.SellProduct);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType() == MessageType.SELL_PRODUCT_RESULT) {
+                Result result = response.getFromBody("result", Result.class);
+                Gdx.app.postRunnable(() -> callback.accept(result));
+            } else {
+                Gdx.app.postRunnable(() -> callback.accept(new Result(false,"Server didn't respond")));
+            }
+        }).start();
+    }
 }
 

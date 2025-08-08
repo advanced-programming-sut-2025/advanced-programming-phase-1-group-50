@@ -403,6 +403,15 @@ public class Game {
         return this.shippingBinId;
     }
 
+    public ShippingBin getShippingBinById (int id) {
+        for (ShippingBin bin : this.map.getShippingBins()) {
+            if (bin.getId() == id) {
+                return bin;
+            }
+        }
+        return null;
+    }
+
     public void increaseShippingBinId() {
         this.shippingBinId++;
     }

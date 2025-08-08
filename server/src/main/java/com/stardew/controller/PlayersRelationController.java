@@ -5,6 +5,7 @@ import com.stardew.model.Notification.Notification;
 import com.stardew.model.PlayersRelation.BetweenPlayersGift;
 import com.stardew.model.PlayersRelation.RelationWithPlayers;
 import com.stardew.model.Result;
+import com.stardew.model.SellableDTO;
 import com.stardew.model.gameApp.Game;
 import com.stardew.model.mapInfo.Ingredient;
 import com.stardew.model.stores.Sellable;
@@ -15,6 +16,7 @@ import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -340,12 +342,14 @@ public class PlayersRelationController {
             return;
         }
 
-        HashMap<String , Integer> products = new HashMap<>();
+        ArrayList<SellableDTO> products = new ArrayList<>();
+
         HashMap<Ingredient,Integer> ingredientQuantity = player.getBackpack().getIngredientQuantity();
 
         for (Ingredient ingredient : ingredientQuantity.keySet()) {
             if (Sellable.isSellable(ingredient.toString()) && ingredientQuantity.get(ingredient) > 0) {
-                products.put(ingredient.toString(),ingredientQuantity.get(ingredient));
+                Sellable s = (Sellable) ingredient;
+                products.add(new SellableDTO(ingredientQuantity.get(ingredient),Sellable.getNameInString(s),s.getSellPrice()));
             }
         }
 

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.google.gson.reflect.TypeToken;
+import com.stardew.model.SellableDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
@@ -20,6 +21,7 @@ import com.stardew.view.windows.CloseableWindow;
 
 import java.lang.reflect.Type;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -76,11 +78,12 @@ public class SelectGiftToSendWindow extends CloseableWindow {
             Message message = new Message(body, MessageType.EVENT_IN_GAME);
             Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
             if (response != null && response.getType().equals(MessageType.GET_FOR_SALE_PRODUCTS_INFO)) {
-                Type type = new TypeToken<HashMap<String, Integer>>() {
-                }.getType();
-                HashMap<String, Integer> newProducts = response.getFromBody("products", type);
+                Type type = new TypeToken<ArrayList<SellableDTO>>() {}.getType();
+                ArrayList<SellableDTO> newProducts = response.getFromBody("products", type);
                 Gdx.app.postRunnable(() -> {
-                    products.putAll(newProducts);
+                    for (SellableDTO product : newProducts) {
+                        products.put(product.getName(), product.getQuantity());
+                    }
                     createUI();
                 });
             }

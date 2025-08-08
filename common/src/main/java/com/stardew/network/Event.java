@@ -49,4 +49,5 @@ public enum Event {
     UpgradeTrashCan,
     UpgradeTool,
     IsStoreOpen,
+    SellProduct,
 }
