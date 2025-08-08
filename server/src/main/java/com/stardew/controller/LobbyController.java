@@ -266,8 +266,13 @@ public class LobbyController {
         ArrayList<String> onlineUsers = new ArrayList<>();
         synchronized (ServerApp.getClientConnectionThreads()) {
             for (ClientConnectionThread cl : ServerApp.getClientConnectionThreads()) {
-                if (cl.getUser() != null)
-                    onlineUsers.add(cl.getUser().getUsername());
+                if (cl.getUser() != null) {
+                    if (findLobbyByUser(cl.getUser()) != null) {
+                        onlineUsers.add(cl.getUser().getUsername() + " : " + findLobbyByUser(cl.getUser()).getName());
+                    } else {
+                        onlineUsers.add(cl.getUser().getUsername());
+                    }
+                }
             }
         }
         HashMap<String , Object> responseBody = new HashMap<>();
@@ -289,5 +294,15 @@ public class LobbyController {
     public void removeId(int id) {
         IDs.remove(id);
     }
+
+    public Lobby findLobbyByUser(User user) {
+        for (Lobby lobby : lobbies) {
+            if(lobby.getUsers().contains(user))
+                return lobby;
+        }
+        return null;
+    }
+
+
 
 }
