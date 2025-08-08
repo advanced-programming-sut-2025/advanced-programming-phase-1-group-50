@@ -57,7 +57,7 @@ public class ChangeInfoWindow extends CloseableWindow {
         add(buttonTable).center();
 
         if(title.equals("Show UserInfo")){
-            textField.setDisabled(false);
+            textField.setDisabled(true);
         }
     }
 
@@ -121,12 +121,10 @@ public class ChangeInfoWindow extends CloseableWindow {
                 }).start();
                 break;
                 //TODO :
-            case "Change Avatar":
-                //TODO :
-                break;
 
-            case "Change Nickname":
+            case "nickname":
                 String nickname = textField.getText();
+
                 if(nickname.isEmpty()) return;
                 new Thread(() -> {
                     HashMap<String,Object> map = new HashMap<>();
@@ -139,7 +137,7 @@ public class ChangeInfoWindow extends CloseableWindow {
                         appMenu.showResult(result);
 
                     }
-                });
+                }).start();
                 break;
 
             case "Show UserInfo":

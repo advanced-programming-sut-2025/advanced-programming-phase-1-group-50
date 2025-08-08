@@ -208,25 +208,25 @@ public class LoginAndRegisterController {
     }
 
 
-    public void handleLogin(){
-        String username = loginAndRegisterMenu.getUsernameInputTextField().getText();
-        String password = loginAndRegisterMenu.getPasswordInputTextField().getText();
-        Result loginResult = login(username , password);
-        if(loginResult.getSuccessful()){
-            Screen currentScreen = Main.getMain().getScreen();
-            MainMenu mainMenu = new MainMenu();
-            Main.getMain().setScreen(mainMenu);
-            currentScreen.dispose();
-            //TODO : enter main menu , first we should create main menu
-        }
-        else {
-            Dialog loginError = new Dialog("error" , GamePictureManager.skin);
-            loginError.getContentTable().add(new Label(loginResult.getMessage(), GamePictureManager.skin));
-            loginError.getContentTable().getCell(loginError.getContentTable().getChildren().first()).getActor().setColor(Color.RED);
-            loginError.button("OK");
-            loginError.show(loginAndRegisterMenu.getStage());
-        }
-    }
+//    public void handleLogin(){
+//        String username = loginAndRegisterMenu.getUsernameInputTextField().getText();
+//        String password = loginAndRegisterMenu.getPasswordInputTextField().getText();
+//        Result loginResult = login(username , password);
+//        if(loginResult.getSuccessful()){
+//            Screen currentScreen = Main.getMain().getScreen();
+//            MainMenu mainMenu = new MainMenu();
+//            Main.getMain().setScreen(mainMenu);
+//            currentScreen.dispose();
+//            //TODO : enter main menu , first we should create main menu
+//        }
+//        else {
+//            Dialog loginError = new Dialog("error" , GamePictureManager.skin);
+//            loginError.getContentTable().add(new Label(loginResult.getMessage(), GamePictureManager.skin));
+//            loginError.getContentTable().getCell(loginError.getContentTable().getChildren().first()).getActor().setColor(Color.RED);
+//            loginError.button("OK");
+//            loginError.show(loginAndRegisterMenu.getStage());
+//        }
+//    }
 
     public void handleForgetPassword(){
         String username = loginAndRegisterMenu.getUsernameInputTextField().getText();

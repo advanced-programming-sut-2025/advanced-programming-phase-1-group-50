@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.stardew.Main;
 import com.stardew.controller.ProfileMenuController;
+import com.stardew.models.ClientInfo.LoggedInUser;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.app.App;
 import com.stardew.models.app.Menus;
@@ -116,7 +117,7 @@ public class ProfileMenu implements AppMenu , Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //controller.handleChangeNickname();
-                stage.addActor(new ChangeInfoWindow(stage , "Change Nickname" , menu));
+                stage.addActor(new ChangeInfoWindow(stage , "nickname" , menu));
             }
         });
         showUserInfo = new TextButton("Show UserInfo", GamePictureManager.skin);
@@ -134,7 +135,7 @@ public class ProfileMenu implements AppMenu , Screen {
             public void clicked(InputEvent event, float x, float y) {
 
                 Screen screen = Main.getMain().getScreen();
-                MainMenu mainMenu = new MainMenu();
+                MainMenu mainMenu = new MainMenu(LoggedInUser.getUser().getNickname());
                 Main.getMain().setScreen(mainMenu);
                 screen.dispose();
 
