@@ -171,10 +171,6 @@ public class GameMenuInputAdapter extends InputAdapter {
             stage.addActor(new ReactionWindow(stage , id));
         }
 
-        if (justPressedKeys.contains(Input.Keys.X)) {
-            stage.addActor(new NPCMenuWindow(id,stage, NPCType.Abigail));
-        }
-
         justPressedKeys.clear();
     }
 

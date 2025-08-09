@@ -330,11 +330,11 @@ public class Game {
         }
 
         for (Player player : getAllPlayers()) {
-            player.getRelationWithAbigail().checkEveryNight(player);
-            player.getRelationWithHarvey().checkEveryNight(player);
-            player.getRelationWithLeah().checkEveryNight(player);
-            player.getRelationWithRobin().checkEveryNight(player);
-            player.getRelationWithSebastian().checkEveryNight(player);
+            player.getRelationWithAbigail().checkEveryNight(getNPCByType(NPCType.Abigail),player);
+            player.getRelationWithHarvey().checkEveryNight(getNPCByType(NPCType.Harvey),player);
+            player.getRelationWithLeah().checkEveryNight(getNPCByType(NPCType.Leah),player);
+            player.getRelationWithRobin().checkEveryNight(getNPCByType(NPCType.Robin),player);
+            player.getRelationWithSebastian().checkEveryNight(getNPCByType(NPCType.Sebastian),player);
         }
 //        System.out.println("relations are done");
 //

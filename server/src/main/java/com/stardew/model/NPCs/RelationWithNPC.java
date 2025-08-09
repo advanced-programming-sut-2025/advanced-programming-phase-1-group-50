@@ -1,5 +1,6 @@
 package com.stardew.model.NPCs;
 
+import com.stardew.controller.GameSessionController;
 import com.stardew.model.NPC.NPCFriendshipLevel;
 import com.stardew.model.NPC.RelationWithNPCDTO;
 import com.stardew.model.userInfo.Player;
@@ -125,20 +126,16 @@ public class RelationWithNPC {
 
     }
 
-    public void checkEveryNight(Player player) {
+    public void checkEveryNight(NPC npc,Player player) {
 
         isFirstTimeToSpeakWithNPC = true;
         isFirstTimeGiftToNPC = true;
         increaseNumOfDaysAfterUnlockingSecondQuest();
         checkUnlockingThirdQuest();
 
-//        if (this.npcFriendshipLevel.equals(NPCFriendshipLevel.LevelThree)) {
-//            for (NpcHome home : App.getGame().getMap().getNpcHomes()) {
-//                if (home.getNpc().getType().equals(this.type)) {
-//                    home.getNpc().giveRandomGiftToPlayer(player);
-//                }
-//            }
-//        }
+        if (this.npcFriendshipLevel.equals(NPCFriendshipLevel.LevelThree)) {
+            npc.giveRandomGiftToPlayer(player);
+        }
 
     }
 
