@@ -19,96 +19,31 @@ import com.stardew.view.InPersonPlayersRelationsWindows.RespondMarriageWindow;
 import com.stardew.view.PlayersRelationsWindows.FriendshipWindow;
 import com.stardew.view.PlayersRelationsWindows.GiftHistoryWindow;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
 public class PlayersRelationController {
-//    public Result TalkToPlayer(Matcher matcher) {
-//
-//        Player receiver = null;
-//
-//        for (Player p : App.getGame().getPlayers()) {
-//            if (p.getUsername().equals(matcher.group("username"))) {
-//                receiver = p;
-//                break;
-//            }
-//        }
-//
-//        if (receiver == null) {
-//            return new Result(false, "Player not found");
-//        }
-//
-//        if (receiver.equals(App.getGame().getCurrentPlayingPlayer())) {
-//            return new Result(false, "you can't choose yourself");
-//        }
-//
-//        int distanceSquare =
-//            (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - receiver.getPosition().getX()) *
-//                (App.getGame().getCurrentPlayingPlayer().getPosition().getX() - receiver.getPosition().getX()) +
-//                (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY()) *
-//                    (App.getGame().getCurrentPlayingPlayer().getPosition().getY() - receiver.getPosition().getY());
-//
-//        if (distanceSquare > 2) {
-//            return new Result(false, "You are too far away");
-//        }
-//
-//        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
-//        Set<Player> lookUpKey = new HashSet<>();
-//        lookUpKey.add(receiver);
-//        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
-//
-//        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-//        if (!tempRelation.HaveTalkedToday()) {
-//            tempRelation.changeXp(20);
-//            tempRelation.setHaveTalkedToday(true);
-//        }
-//
-//        if (tempRelation.isMarriage()) {
-//            App.getGame().getCurrentPlayingPlayer().addEnergy(50);
-//            receiver.addEnergy(50);
-//        }
-//
-//        tempRelation.addDialogue(new DialoguesBetweenPlayers(App.getGame().getCurrentPlayingPlayer(), receiver,
-//            matcher.group("message")));
-//        tempNetwork.relationNetwork.put(lookUpKey, tempRelation);
-//        receiver.addNotification(new Notification(matcher.group("message"), App.getGame().getCurrentPlayingPlayer()));
-//
-//        return new Result(true, "");
-//    }
-//
-//    public Result talkHistory(Matcher matcher) {
-//
-//        Player temp = null;
-//
-//        for (Player p : App.getGame().getPlayers()) {
-//            if (p.getUsername().equals(matcher.group("username"))) {
-//                temp = p;
-//                break;
-//            }
-//        }
-//
-//        if (temp == null) {
-//            return new Result(false, "Player not found");
-//        }
-//
-//        if (temp.equals(App.getGame().getCurrentPlayingPlayer())) {
-//            return new Result(false, "you can't choose yourself");
-//        }
-//
-//        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
-//        Set<Player> lookUpKey = new HashSet<>();
-//        lookUpKey.add(temp);
-//        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
-//        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-//
-//        String message = "Talking History:";
-//        message += tempRelation.getTalkHistory();
-//
-//        return new Result(true, message);
-//
-//    }
+    public static void talkToPlayer(int gameId , ArrayList<String> players , String text, Consumer<Result> callback) {
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("players", players);
+            body.put("text", text);
+            body.put("event", Event.TalkToPlayer);
+            Message message = new Message(body,MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType().equals(MessageType.TALK_TO_PLAYER_RESULT)) {
+                Result result = response.getFromBody("result", Result.class);
+                Gdx.app.postRunnable(() -> callback.accept(result));
+            } else {
+                Gdx.app.postRunnable(() -> callback.accept(new Result(false,"Server didn't respond")));
+            }
+        }).start();
+    }
+
     public static boolean canRateGift(BetweenPlayersGift gift) {
         return (gift.getReceiverUsername().equals(LoggedInUser.getUser().getUsername())) && (!gift.isRated());
     }

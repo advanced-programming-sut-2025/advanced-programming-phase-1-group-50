@@ -1,5 +1,6 @@
 package com.stardew.controller;
 
+import com.google.gson.reflect.TypeToken;
 import com.stardew.model.Bouquet;
 import com.stardew.model.Notification.Notification;
 import com.stardew.model.PlayersRelation.BetweenPlayersGift;
@@ -16,6 +17,7 @@ import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -356,6 +358,71 @@ public class PlayersRelationController {
         HashMap<String , Object> body = new HashMap<>();
         body.put("products", products);
         Message response = new Message(body, MessageType.GET_FOR_SALE_PRODUCTS_INFO);
+        response.setRequestID(message.getRequestID());
+        clientConnectionThread.sendMessage(response);
+    }
+
+    public void getPlayers(Message message,Player player,ClientConnectionThread clientConnectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int id = message.getIntFromBody("id");
+        Game game = GameSessionController.getInstance().getGame(id);
+        ArrayList<String> playerNames = new ArrayList<>();
+
+        for (Player p : game.getAllPlayers()) {
+            if (!p.getUsername().equals(player.getUsername())) {
+                playerNames.add(p.getUsername());
+            }
+        }
+
+        HashMap<String , Object> body = new HashMap<>();
+        body.put("players", playerNames);
+        Message response = new Message(body,MessageType.GET_PLAYERS_RESPONSE);
+        response.setRequestID(message.getRequestID());
+        clientConnectionThread.sendMessage(response);
+    }
+
+    public void talkToPlayer(Message message,Player player,ClientConnectionThread clientConnectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int id = message.getIntFromBody("id");
+        Game game = GameSessionController.getInstance().getGame(id);
+        String text = message.getFromBody("text");
+        Type type = new TypeToken<ArrayList<String>>(){}.getType();
+        ArrayList<String> receivers = message.getFromBody("players", type);
+
+        for (Player p : game.getAllPlayers()) {
+            if (receivers.contains(p.getUsername())) {
+
+                RelationNetwork tempNetwork = game.getRelationsBetweenPlayers();
+                Set<Player> lookUpKey = new HashSet<>();
+                lookUpKey.add(player);
+                lookUpKey.add(p);
+
+                RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+                if (!tempRelation.HaveTalkedToday()) {
+                    tempRelation.changeXp(20);
+                    tempRelation.setHaveTalkedToday(true);
+                }
+
+                if (tempRelation.isMarriage()) {
+                    player.addEnergy(50);
+                    p.addEnergy(50);
+                }
+
+                tempNetwork.relationNetwork.put(lookUpKey,tempRelation);
+                p.addNotification(new Notification(text,player.getUsername())); // TODO
+            }
+        }
+
+        Result result = new Result(true,"Notification sent.");
+        HashMap<String , Object> body = new HashMap<>();
+        body.put("result", result);
+        Message response = new Message(body,MessageType.TALK_TO_PLAYER_RESULT);
         response.setRequestID(message.getRequestID());
         clientConnectionThread.sendMessage(response);
     }

@@ -10,10 +10,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.google.gson.reflect.TypeToken;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.network.Event;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 import com.stardew.view.windows.CloseableWindow;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ChatTypeSelectionWindow extends CloseableWindow {
 
@@ -25,7 +32,7 @@ public class ChatTypeSelectionWindow extends CloseableWindow {
     private TextButton startChatButton;
     private ButtonGroup<TextButton> chatTypeGroup;
 
-    private Table mainContent;
+    private final Table mainContent;
 
     public ChatTypeSelectionWindow(Stage stage, int gameId) {
         super("Chat window", stage);
@@ -44,8 +51,21 @@ public class ChatTypeSelectionWindow extends CloseableWindow {
     }
 
     private void refresh() {
+        players.clear();
         new Thread(() -> {
-            Gdx.app.postRunnable(this::createUI);
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("event", Event.GetPlayersRequest);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+            if (response != null && response.getType().equals(MessageType.GET_PLAYERS_RESPONSE)) {
+                Type type = new TypeToken<ArrayList<String>>(){}.getType();
+                ArrayList<String> newPlayers = response.getFromBody("players", type);
+                Gdx.app.postRunnable(() -> {
+                    players.addAll(newPlayers);
+                    createUI();
+                });
+            }
         }).start();
     }
 
@@ -156,10 +176,12 @@ public class ChatTypeSelectionWindow extends CloseableWindow {
 
     private void handleStartChat() {
         if (chatTypeGroup.getChecked().getText().toString().contains("Public")) {
-            System.out.println("Starting public chat...");
+            stage.addActor(new ChatMessageWindow(stage,gameId,players));
         } else {
             String selectedPlayer = playerSelectBox.getSelected();
-            System.out.println("Starting private chat with: " + selectedPlayer);
+            ArrayList<String> players = new ArrayList<>();
+            players.add(selectedPlayer);
+            stage.addActor(new ChatMessageWindow(stage,gameId,players));
         }
 
         closeWindow();

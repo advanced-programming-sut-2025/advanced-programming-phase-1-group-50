@@ -414,6 +414,16 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 BuildingController.getInstance().greenHouseGrowableRequest(message , connection , player);
             }
+
+            case GetPlayersRequest -> {
+                Player player = game.getPlayer(connection);
+                PlayersRelationController.getInstance().getPlayers(message,player,connection);
+            }
+
+            case TalkToPlayer -> {
+                Player player = game.getPlayer(connection);
+                PlayersRelationController.getInstance().talkToPlayer(message, player, connection);
+            }
         }
 
     }
