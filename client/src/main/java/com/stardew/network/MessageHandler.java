@@ -114,6 +114,10 @@ public class MessageHandler {
                 HabitatUIManager.getInstance().createHabitatUI(habitatDTO);
                 return true;
             }
+            case ADD_NEW_MACHINE_UI -> {
+                ArtisanMachinesManager.getInstance().handleAddNewMachine(message);
+                return true;
+            }
             case START_MINI_GAME -> {
                 MiniGameStarter.getInstance().createMiniGameWindow(message.getIntFromBody("miniGame_ID"));
                 return true;

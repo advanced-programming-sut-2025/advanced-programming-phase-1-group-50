@@ -104,11 +104,10 @@ public class CraftingController {
         player.getBackpack().addArtisanMachine(artisanMachine);
         HashMap<String, Object> body = new HashMap<>();
         body.put("result", new Result(true, "You craft <" + recipe.name() + "> successfully!"));
-        body.put("machineID", artisanMachine.getId());
         Message response = new Message(body, MessageType.EVENT_IN_GAME_RESULT);
         response.setRequestID(message.getRequestID());
         connection.sendMessage(response);
-
+        connection.sendMessage(createNewMachineMessage(recipe.name(), artisanMachine.getId(), x, y));
     }
 
     public Result addItem(String itemName, int quantity, Player player, TimeProvider timeProvider) {
@@ -225,6 +224,17 @@ public class CraftingController {
     }
 
 
+
+
+
+    public Message createNewMachineMessage(String machineName, String machineID, int x, int y) {
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("machineID", machineID);
+        body.put("machineName", machineName);
+        body.put("x", x);
+        body.put("y", y);
+        return new Message(body, MessageType.ADD_NEW_MACHINE_UI);
+    }
 
 
 
