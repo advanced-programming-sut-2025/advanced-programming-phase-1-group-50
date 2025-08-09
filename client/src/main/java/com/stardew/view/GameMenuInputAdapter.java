@@ -175,6 +175,7 @@ public class GameMenuInputAdapter extends InputAdapter {
             stage.addActor(new NPCMenuWindow(id,stage, NPCType.Abigail));
         }
 
+
         justPressedKeys.clear();
     }
 

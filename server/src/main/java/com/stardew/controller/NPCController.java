@@ -138,11 +138,11 @@ public class NPCController {
 
         Result result;
         if (index == 1) {
-           result =  npc.doFirstQuest(isRewardTwice);
+           result =  npc.doFirstQuest(gameId,player,isRewardTwice);
         } else if (index == 2) {
-            result =  npc.doSecondQuest(isRewardTwice);
+            result =  npc.doSecondQuest(gameId,player,isRewardTwice);
         } else {
-            result = npc.doThirdQuest(isRewardTwice);
+            result = npc.doThirdQuest(gameId,player,isRewardTwice);
         }
 
         HashMap<String, Object> body = new HashMap<>();

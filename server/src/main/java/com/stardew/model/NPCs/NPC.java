@@ -10,8 +10,13 @@ import com.stardew.model.mapInfo.Stone;
 import com.stardew.model.mapInfo.Wood;
 import com.stardew.model.mapInfo.foraging.ForagingCrop;
 import com.stardew.model.mapInfo.foraging.ForagingMineral;
+import com.stardew.model.mapInfo.foraging.Fruit;
 import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGood;
 import com.stardew.model.mapInfo.manuFactor.ArtisanGoods.ArtisanGoodType;
+import com.stardew.model.userInfo.Coin;
+import com.stardew.model.userInfo.Player;
+
+import java.util.Random;
 
 public class NPC {
     private final NPCType type;
@@ -51,54 +56,54 @@ public class NPC {
         isThirdQuestDone = thirdQuestDone;
     }
 
-    public Result doFirstQuest(boolean isRewardTwice) {
+    public Result doFirstQuest(int gameId,Player player,boolean isRewardTwice) {
 
         if (this.type.equals(NPCType.Abigail)) {
 
-            return AbigailQuests.doFirstQuest(isRewardTwice);
+            return AbigailQuests.doFirstQuest(gameId,player,isRewardTwice);
 
         } else if (this.type.equals(NPCType.Sebastian)) {
 
-            return SebastianQuests.doFirstQuest(isRewardTwice);
+            return SebastianQuests.doFirstQuest(gameId,player,isRewardTwice);
 
         } else if (this.type.equals(NPCType.Harvey)) {
 
-            return HarveyQuests.doFirstQuest(isRewardTwice);
+            return HarveyQuests.doFirstQuest(gameId,player,isRewardTwice);
 
         } else if (this.type.equals(NPCType.Leah)) {
 
-            return LeahQuests.doFirstQuest(isRewardTwice);
+            return LeahQuests.doFirstQuest(gameId,player,isRewardTwice);
 
         } else if (this.type.equals(NPCType.Robin)) {
 
-            return RobinQuests.doFirstQuest(isRewardTwice);
+            return RobinQuests.doFirstQuest(gameId,player,isRewardTwice);
 
         }
 
         return new Result(false,"Invalid NPC type.");
     }
 
-    public Result doSecondQuest(boolean isRewardTwice) {
+    public Result doSecondQuest(int gameId,Player player,boolean isRewardTwice) {
 
         if (this.type.equals(NPCType.Abigail)) {
 
-            return AbigailQuests.doSecondQuest(isRewardTwice);
+            return AbigailQuests.doSecondQuest(gameId,player,isRewardTwice);
 
         } else if (this.type.equals(NPCType.Sebastian)) {
 
-            return SebastianQuests.doSecondQuest(isRewardTwice);
+            return SebastianQuests.doSecondQuest(gameId,player,isRewardTwice);
 
         } else if (this.type.equals(NPCType.Harvey)) {
 
-            return HarveyQuests.doSecondQuest(isRewardTwice);
+            return HarveyQuests.doSecondQuest(gameId,player,isRewardTwice);
 
         } else if (this.type.equals(NPCType.Leah)) {
 
-            return LeahQuests.doSecondQuest(isRewardTwice);
+            return LeahQuests.doSecondQuest(gameId,player,isRewardTwice);
 
         } else if (this.type.equals(NPCType.Robin)) {
 
-            return RobinQuests.doSecondQuest(isRewardTwice);
+            return RobinQuests.doSecondQuest(gameId,player,isRewardTwice);
 
         }
 
@@ -106,27 +111,27 @@ public class NPC {
 
     }
 
-    public Result doThirdQuest(boolean isRewardTwice) {
+    public Result doThirdQuest(int gameId,Player player,boolean isRewardTwice) {
 
         if (this.type.equals(NPCType.Abigail)) {
 
-            return AbigailQuests.doThirdQuest(isRewardTwice);
+            return AbigailQuests.doThirdQuest(gameId,player,isRewardTwice);
 
         } else if (this.type.equals(NPCType.Sebastian)) {
 
-            return SebastianQuests.doThirdQuest(isRewardTwice);
+            return SebastianQuests.doThirdQuest(gameId,player,isRewardTwice);
 
         } else if (this.type.equals(NPCType.Harvey)) {
 
-            return HarveyQuests.doThirdQuest(isRewardTwice);
+            return HarveyQuests.doThirdQuest(gameId,player,isRewardTwice);
 
         } else if (this.type.equals(NPCType.Leah)) {
 
-            return LeahQuests.doThirdQuest(isRewardTwice);
+            return LeahQuests.doThirdQuest(gameId,player,isRewardTwice);
 
         } else if (this.type.equals(NPCType.Robin)) {
 
-            return RobinQuests.doThirdQuest(isRewardTwice);
+            return RobinQuests.doThirdQuest(gameId,player,isRewardTwice);
 
         }
         return new Result(false,"Invalid NPC type.");
@@ -228,84 +233,71 @@ public class NPC {
 //        return this.type.getSymbol();
 //    }
 //
-//    public void giveRandomGiftToPlayer(Player player) {
-//
-//        Random rand = new Random();
-//        int randomNumber = rand.nextInt(2);
-//
-//        if (randomNumber == 0) {
-//            return;
-//        }
-//
-//        int playerIndex = App.getGame().getPlayers().indexOf(player);
-//        int secondRandomNumber = rand.nextInt(2);
-//
-//        if (this.type.equals(NPCType.Abigail)) {
-//
-//            if (secondRandomNumber == 0) {
-//
-//                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(ForagingMineral.Diamond,1);
-//
-//            } else {
-//
-//                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(ForagingMineral.Quartz,5);
-//            }
-//
-//        } else if (this.type.equals(NPCType.Leah)) {
-//
-//            if (secondRandomNumber == 0) {
-//
-//                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(ForagingMineral.Emerald,2);
-//
-//            } else {
-//
-//                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(new Coin(),200);
-//
-//            }
-//
-//        } else if (this.type.equals(NPCType.Robin)) {
-//
-//            if (secondRandomNumber == 0) {
-//                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(ForagingMineral.Iron,50);
-//            } else {
-//
-//                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(new Wood(),100);
-//
-//            }
-//
-//        } else if (this.type.equals(NPCType.Harvey)) {
-//
-//            if (secondRandomNumber == 0) {
-//
-//                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(Fruit.Orange,10);
-//
-//            } else {
-//                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(Fruit.Banana,10);
-//            }
-//
-//        } else if (this.type.equals(NPCType.Sebastian)) {
-//
-//            if (secondRandomNumber == 0) {
-//                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(ForagingMineral.Gold,10);
-//            } else {
-//                App.getGame().getPlayers().get(playerIndex).getBackpack().addIngredients(ForagingMineral.Ruby,2);
-//            }
-//
-//        }
-//
-//
-//    }
-//
-//    public TextureRegion[][] getHomeRegions (NPCType type) {
-//        return switch (type) {
-//            case Leah -> GamePictureManager.npcHome1Regions;
-//            case Robin -> GamePictureManager.npcHome2Regions;
-//            case Harvey -> GamePictureManager.npcHome3Regions;
-//            case Sebastian -> GamePictureManager.npcHome4Regions;
-//            case Abigail -> GamePictureManager.npcHome5Regions;
-//        };
-//    }
-//
+    public void giveRandomGiftToPlayer(Player player) {
+
+        Random rand = new Random();
+        int randomNumber = rand.nextInt(2);
+
+        if (randomNumber == 0) {
+            return;
+        }
+
+        int secondRandomNumber = rand.nextInt(2);
+
+        if (this.type.equals(NPCType.Abigail)) {
+
+            if (secondRandomNumber == 0) {
+
+                player.getBackpack().addIngredients(ForagingMineral.Diamond,1);
+
+            } else {
+
+                player.getBackpack().addIngredients(ForagingMineral.Quartz,5);
+            }
+
+        } else if (this.type.equals(NPCType.Leah)) {
+
+            if (secondRandomNumber == 0) {
+
+                player.getBackpack().addIngredients(ForagingMineral.Emerald,2);
+
+            } else {
+
+                player.getBackpack().addIngredients(new Coin(),200);
+
+            }
+
+        } else if (this.type.equals(NPCType.Robin)) {
+
+            if (secondRandomNumber == 0) {
+               player.getBackpack().addIngredients(ForagingMineral.Iron,50);
+            } else {
+               player.getBackpack().addIngredients(new Wood(),100);
+            }
+
+        } else if (this.type.equals(NPCType.Harvey)) {
+
+            if (secondRandomNumber == 0) {
+
+                player.getBackpack().addIngredients(Fruit.Orange,10);
+
+            } else {
+                player.getBackpack().addIngredients(Fruit.Banana,10);
+            }
+
+        } else if (this.type.equals(NPCType.Sebastian)) {
+
+            if (secondRandomNumber == 0) {
+               player.getBackpack().addIngredients(ForagingMineral.Gold,10);
+            } else {
+                player.getBackpack().addIngredients(ForagingMineral.Ruby,2);
+            }
+
+        }
+
+
+    }
+
     public TextureID getHomeTextureByType(NPCType type){
 
         return switch (type) {
