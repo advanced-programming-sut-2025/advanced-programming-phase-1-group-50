@@ -3,9 +3,7 @@ package com.stardew.models.GameAssetManagers;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.models.manuFactor.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public enum ArtisanAsset {
     BeeHouse(GamePictureManager.beeHouseNormal,
@@ -61,6 +59,13 @@ public enum ArtisanAsset {
     private final TextureRegionDrawable drawable;
     private final ArrayList<ArtisanGoodAsset> products;
     private final String description;
+    private static final Map<String, ArtisanAsset> stringToArtisanAssetMap = new HashMap<>();
+
+    static {
+        for (ArtisanAsset asset : ArtisanAsset.values()) {
+            stringToArtisanAssetMap.put(asset.name().toLowerCase(), asset);
+        }
+    }
 
     ArtisanAsset(TextureRegionDrawable drawable, List<ArtisanGoodAsset> products) {
         this.drawable = drawable;
@@ -115,6 +120,7 @@ public enum ArtisanAsset {
     }
 
     public static ArtisanAsset getArtisanAssetByName(String name) {
-        return ArtisanAsset.valueOf(name);
+        if (name == null) return null;
+        return stringToArtisanAssetMap.get(name.toLowerCase());
     }
 }

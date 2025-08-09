@@ -93,21 +93,9 @@ public class CraftingWindow extends CloseableWindow {
                                     craftBody.put("y", selectedY);
                                     Message craftMessage = new Message(craftBody, MessageType.EVENT_IN_GAME);
                                     Message craftResponse = NetworkManager.getConnection().sendAndWaitForResponse(craftMessage, 500);
-                                    if (craftResponse != null && craftResponse.getType() == MessageType.EVENT_IN_GAME_RESULT) {
+                                    if (craftResponse != null) {
                                         Result result = craftResponse.getFromBody("result", Result.class);
-                                        Gdx.app.postRunnable(() -> {
-                                            showResult(result);
-                                            if (result.getSuccessful()) {
-                                                String machineID = craftResponse.getFromBody("machineID");
-                                                ArtisanMachinesManager.getInstance().addMachine(
-                                                    ArtisanAsset.getArtisanAssetByName(craftingAsset.name()),
-                                                    machineID,
-                                                    id,
-                                                    selectedX,
-                                                    selectedY
-                                                );
-                                            }
-                                        });
+                                        Gdx.app.postRunnable(() -> showResult(result));
                                     }
                                 }).start();
                             });

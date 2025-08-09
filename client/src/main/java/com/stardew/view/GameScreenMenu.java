@@ -76,7 +76,7 @@ public class GameScreenMenu implements Screen {
 
         uiStage.addActor(hotBarActor);
         SmartTooltip.initialize(stage, GamePictureManager.skin);
-        ArtisanMachinesManager.initialize(stage);
+        ArtisanMachinesManager.initialize(stage, id);
         HabitatUIManager.initialize(stage, id);
         MiniGameStarter.initialize(stage);
         ShippingBinUIManager.initialize(stage,id);
