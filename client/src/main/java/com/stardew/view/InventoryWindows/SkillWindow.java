@@ -64,12 +64,10 @@ public class SkillWindow extends CloseableWindow {
 
 
         miningButton = new ImageButton(new TextureRegionDrawable(GamePictureManager.steelPickaxeTexture));
-        miningButton.addListener(new InputListener(){
+        miningButton.addListener(new InputListener() {
             @Override
-            public boolean mouseMoved(InputEvent event, float x, float y) {
-                SmartTooltip.getInstance().hide();
-                SmartTooltip.getInstance().show("Ability : mining");
-                return true;
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                SmartTooltip.getInstance().show("Ability: mining");
             }
 
             @Override
@@ -80,12 +78,10 @@ public class SkillWindow extends CloseableWindow {
         });
 
         farmingButton = new ImageButton(new TextureRegionDrawable(GamePictureManager.steelHoeTexture));
-        farmingButton.addListener(new InputListener(){
+        farmingButton.addListener(new InputListener() {
             @Override
-            public boolean mouseMoved(InputEvent event, float x, float y) {
-                SmartTooltip.getInstance().hide();
-                SmartTooltip.getInstance().show("Ability : farming");
-                return true;
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                SmartTooltip.getInstance().show("Ability: farming");
             }
 
             @Override
@@ -95,26 +91,24 @@ public class SkillWindow extends CloseableWindow {
 
         });
         fishingButton = new ImageButton(GamePictureManager.fishingTextureDrawable);
-        fishingButton.addListener(new InputListener(){
+        fishingButton.addListener(new InputListener() {
             @Override
-            public boolean mouseMoved(InputEvent event, float x, float y) {
-                SmartTooltip.getInstance().hide();
-                SmartTooltip.getInstance().show("Ability : fishing");
-                return true;
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                SmartTooltip.getInstance().show("Ability: fishing");
             }
+
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 SmartTooltip.getInstance().hide();
             }
         });
         foragingButton = new ImageButton(GamePictureManager.foragingTextureDrawable);
-        foragingButton.addListener(new InputListener(){
+        foragingButton.addListener(new InputListener() {
             @Override
-            public boolean mouseMoved(InputEvent event, float x, float y) {
-                SmartTooltip.getInstance().hide();
-                SmartTooltip.getInstance().show("Ability : foraging");
-                return true;
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                SmartTooltip.getInstance().show("Ability: foraging");
             }
+
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 SmartTooltip.getInstance().hide();

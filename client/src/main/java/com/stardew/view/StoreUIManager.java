@@ -15,19 +15,21 @@ import com.stardew.view.StoreWindows.StoreWindow;
 public class StoreUIManager {
 
     public static void createAllStoresUI(Stage stage,int gameId) {
-        createStoreUI(stage,gameId,102,77,"Clint");
-        createStoreUI(stage,gameId,101,83,"Robin");
-        createStoreUI(stage,gameId,110,97,"Willy");
-        createStoreUI(stage,gameId,138,89,"Morris");
-        createStoreUI(stage,gameId,118,116,"Marnie");
-        createStoreUI(stage,gameId,138,97,"Pierre");
-        createStoreUI(stage,gameId,138,110,"Gus");
+        createStoreUI(stage,gameId,102,77, 6, 4,"Clint");
+        createStoreUI(stage,gameId,101,83, 16, 12,"Robin");
+        createStoreUI(stage,gameId,110,97, 4, 4,"Willy");
+        createStoreUI(stage,gameId,138,89, 4, 4,"Morris");
+        createStoreUI(stage,gameId,118,116, 18, 8,"Marnie");
+        createStoreUI(stage,gameId,138,97, 4, 4,"Pierre");
+        createStoreUI(stage,gameId,138,110, 4, 4,"Gus");
     }
 
-    private static void createStoreUI(Stage stage, int gameId,int x ,int y, String assistantName) {
+    private static void createStoreUI(Stage stage, int gameId,int x ,int y, int w, int h, String assistantName) {
 
         int xInMaP = x * GamePictureManager.TILE_SIZE;
         int yInMaP = y * GamePictureManager.TILE_SIZE;
+        int widthInMap = w * GamePictureManager.TILE_SIZE;
+        int heightInMap = h * GamePictureManager.TILE_SIZE;
         Image image;
 
         switch (assistantName) {
@@ -57,6 +59,7 @@ public class StoreUIManager {
         }
 
         image.setPosition(xInMaP, yInMaP);
+        image.setSize(widthInMap, heightInMap);
         stage.addActor(image);
 
         image.addListener(new InputListener() {
