@@ -1952,6 +1952,13 @@ public class GamePictureManager {
     public static TextureRegion initialGreenhouse = new TextureRegion(new Texture("Greenhouse/GreenHouse1.png"));
     public static TextureRegion progressiveGreenhouse = new TextureRegion(new Texture("Greenhouse/GreenHouse2.png"));
 
+    public static Texture AbigailFullBodyTexture = new Texture("NPCFullBody/abigail.png");
+    public static Texture RobinFullBodyTexture = new Texture("NPCFullBody/robin.png");
+    public static Texture SebastianFullBodyTexture = new Texture("NPCFullBody/sebastian.png");
+    public static Texture LeahFullBodyTexture = new Texture("NPCFullBody/leah.png");
+    public static Texture HarveyFullBodyTexture = new Texture("NPCFullBody/harvey.png");
+
+
 
 
 }

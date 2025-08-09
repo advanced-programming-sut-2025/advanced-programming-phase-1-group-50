@@ -25,6 +25,8 @@ public class ChatTypeSelectionWindow extends CloseableWindow {
     private TextButton startChatButton;
     private ButtonGroup<TextButton> chatTypeGroup;
 
+    private Table mainContent;
+
     public ChatTypeSelectionWindow(Stage stage, int gameId) {
         super("Chat window", stage);
         this.gameId = gameId;
@@ -34,34 +36,34 @@ public class ChatTypeSelectionWindow extends CloseableWindow {
         padLeft(30);
         padRight(30);
 
+        mainContent = new Table();
+        mainContent.defaults().pad(8);
+        add(mainContent).expand().fill();
+
         refresh();
     }
 
     private void refresh() {
         new Thread(() -> {
-            Gdx.app.postRunnable(() -> {
-                createUI();
-            });
+            Gdx.app.postRunnable(this::createUI);
         }).start();
     }
 
     private void createUI() {
-        clearChildren();
-
-        Table contentTable = new Table();
-        contentTable.defaults().pad(8);
+        mainContent.clearChildren();
 
         Label titleLabel = new Label("Select Chat Type", GamePictureManager.skin);
         titleLabel.setFontScale(1.2f);
         titleLabel.setColor(Color.BLACK);
         titleLabel.setAlignment(Align.center);
-        contentTable.add(titleLabel).colspan(2).padBottom(15).row();
+        mainContent.add(titleLabel).colspan(2).padBottom(15).row();
 
         chatTypeGroup = new ButtonGroup<>();
         TextButton publicChatButton = new TextButton("Public Chat", GamePictureManager.skin);
         publicChatButton.getLabel().setFontScale(1.2f);
         publicChatButton.addAction(Actions.scaleTo(1.1f, 1.1f, 0.2f));
         publicChatButton.setColor(Color.OLIVE);
+
         TextButton privateChatButton = new TextButton("Private Chat", GamePictureManager.skin);
         privateChatButton.getLabel().setFontScale(1.0f);
         privateChatButton.setColor(Color.ROYAL);
@@ -74,7 +76,8 @@ public class ChatTypeSelectionWindow extends CloseableWindow {
         Table chatTypeTable = new Table();
         chatTypeTable.add(publicChatButton).width(180).height(50).pad(5);
         chatTypeTable.add(privateChatButton).width(180).height(50).pad(5);
-        contentTable.add(chatTypeTable).colspan(2).padBottom(15).row();
+        mainContent.add(chatTypeTable).colspan(2).padBottom(15).row();
+
 
         playerSelectionTable = new Table();
         playerSelectionTable.setVisible(false);
@@ -84,18 +87,18 @@ public class ChatTypeSelectionWindow extends CloseableWindow {
         playerSelectionTable.add(selectPlayerLabel).padRight(10).left();
 
         playerSelectBox = new SelectBox<>(GamePictureManager.skin);
-        playerSelectBox.setColor(0.93f,1f,0.96f,1f);
+
+        playerSelectBox.setColor(0.85f, 0.95f, 1f, 1f);
         playerSelectBox.setItems(players.toArray(new String[0]));
         playerSelectionTable.add(playerSelectBox).width(200).height(40);
 
-        contentTable.add(playerSelectionTable).colspan(2).padBottom(15).row();
+        mainContent.add(playerSelectionTable).colspan(2).padBottom(15).row();
 
         startChatButton = new TextButton("Start Chat", GamePictureManager.skin);
         startChatButton.setColor(Color.GREEN);
         startChatButton.getLabel().setFontScale(1.1f);
-        contentTable.add(startChatButton).colspan(2).width(200).height(55).padTop(10);
+        mainContent.add(startChatButton).colspan(2).width(200).height(55).padTop(10);
 
-        add(contentTable);
         pack();
         centerWindow();
 
@@ -138,6 +141,8 @@ public class ChatTypeSelectionWindow extends CloseableWindow {
                 handleStartChat();
             }
         });
+
+        validateStartButton();
     }
 
     private void validateStartButton() {
