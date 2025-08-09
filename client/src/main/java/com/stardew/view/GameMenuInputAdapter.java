@@ -21,6 +21,7 @@ import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 import com.stardew.network.NetworkManager;
+import com.stardew.view.ChatWindows.ChatTypeSelectionWindow;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.InventoryWindows.InventoryWindow;
 import com.stardew.view.InventoryWindows.MapWindow;
@@ -169,6 +170,10 @@ public class GameMenuInputAdapter extends InputAdapter {
 
         if(justPressedKeys.contains(Input.Keys.Z)){
             stage.addActor(new ReactionWindow(stage , id));
+        }
+
+        if(justPressedKeys.contains(Input.Keys.C)) {
+            stage.addActor(new ChatTypeSelectionWindow(stage , id));
         }
 
         justPressedKeys.clear();
