@@ -36,7 +36,7 @@ public class BuildGreenHouseWindow extends CloseableWindow implements AppMenu {
         Label askLabel = new Label("Do you want to build the greenhouse?", GamePictureManager.skin);
         askLabel.setAlignment(Align.center);
 
-        // دکمه‌ها
+
         TextButton yesButton = new TextButton("Yes", GamePictureManager.skin);
         yesButton.addListener(new InputListener() {
             @Override
@@ -50,8 +50,10 @@ public class BuildGreenHouseWindow extends CloseableWindow implements AppMenu {
                     Message response = NetworkManager.getConnection().sendAndWaitForResponse(msg , 500);
                     if(response != null && response.getType() == MessageType.GREENHOUSE_BUILDING_RESULT) {
                         Result result = response.getFromBody("result", Result.class);
-
-                        showResult(result);
+                        Gdx.app.postRunnable(() -> {
+                            showResult(result);
+                            closeWindow();
+                        });
                     }
                 }).start();
                 return true;
@@ -76,7 +78,7 @@ public class BuildGreenHouseWindow extends CloseableWindow implements AppMenu {
 
         defaults().expandX().center();
         row();
-        add(askLabel).center().padBottom(20);
+        add(askLabel).center().padBottom(20).padTop(30);
         row();
         add(buttonTable).center();
     }

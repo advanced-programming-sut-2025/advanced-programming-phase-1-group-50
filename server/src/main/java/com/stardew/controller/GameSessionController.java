@@ -448,11 +448,15 @@ public class GameSessionController {
 
         int x = farm.getGreenHouse().getBounds().x;
         int y = farm.getGreenHouse().getBounds().y;
+        int width = farm.getGreenHouse().getBounds().width;
+        int height = farm.getGreenHouse().getBounds().height;
 
 
         HashMap<String , Object> body = new HashMap<>();
         body.put("x", x);
         body.put("y", y);
+        body.put("width", width);
+        body.put("height", height);
         Message response = new Message(body , MessageType.GREENHOUSE_POSITION_RESULT);
         response.setRequestID(message.getRequestID());
         connection.sendMessage(response);
