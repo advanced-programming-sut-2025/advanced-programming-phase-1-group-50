@@ -39,6 +39,11 @@ public class ArtisanController {
             sendResultMessage(message.getRequestID(), connection, result);
             return;
         }
+        if (artisanMachine.isAnyProducing()) {
+            Result result = new Result(false, "Artisan Machine is producing right now!");
+            sendResultMessage(message.getRequestID(), connection, result);
+            return;
+        }
 
         Result result = artisanMachine.canUse(player, itemName);
         if (result.getSuccessful()) {
