@@ -1,15 +1,18 @@
 package com.stardew.controller;
 
+import com.stardew.model.GrowableDTO;
 import com.stardew.model.Result;
 import com.stardew.model.gameApp.Game;
 import com.stardew.model.mapInfo.GreenHouse;
 import com.stardew.model.mapInfo.Wood;
+import com.stardew.model.mapInfo.foraging.Growable;
 import com.stardew.model.userInfo.Coin;
 import com.stardew.model.userInfo.Player;
 import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BuildingController {
@@ -47,6 +50,22 @@ public class BuildingController {
         HashMap<String , Object> body = new HashMap<>();
         body.put("result", result);
         Message m = new Message(body , MessageType.GREENHOUSE_BUILDING_RESULT);
+        m.setRequestID(msg.getRequestID());
+        clientConnection.sendMessage(m);
+    }
+
+
+    public void greenHouseGrowableRequest(Message msg , ClientConnectionThread clientConnection , Player player) {
+        GreenHouse gh = player.getFarm().getGreenHouse();
+        if(gh.isBroken()) return;
+
+        ArrayList<GrowableDTO> dtoS = new ArrayList<>();
+        for(Growable g : gh.getGrowables()){
+            dtoS.add(new GrowableDTO(g.getNameOfProduct() , g.getCurrentStage()));
+        }
+        HashMap<String , Object> body = new HashMap<>();
+        body.put("DTO", dtoS);
+        Message m = new Message(body , MessageType.GREENHOUSE_GROWABLE_RESULT);
         m.setRequestID(msg.getRequestID());
         clientConnection.sendMessage(m);
     }
