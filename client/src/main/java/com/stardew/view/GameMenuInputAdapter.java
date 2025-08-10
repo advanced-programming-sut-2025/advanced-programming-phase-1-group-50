@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.google.gson.reflect.TypeToken;
 import com.stardew.model.InventoryItemDTO;
 import com.badlogic.gdx.utils.Timer;
+import com.stardew.model.Notification.MarriageRequest;
+import com.stardew.model.Notification.Notification;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.models.ClientInfo.LoggedInUser;

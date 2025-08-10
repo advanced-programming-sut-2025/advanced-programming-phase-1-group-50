@@ -11,8 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.stardew.controller.PlayersRealtionController.PlayersRelationController;
+import com.stardew.model.Notification.MarriageRequest;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Notification.MarriageRequest;
 import com.stardew.view.windows.CloseableWindow;
 
 public class RespondMarriageWindow extends CloseableWindow {
@@ -21,7 +21,7 @@ public class RespondMarriageWindow extends CloseableWindow {
         super("Marriage request", stage);
         setSize(400, 300);
 
-        String senderName = marriageRequest.getSender().getUsername();
+        String senderName = marriageRequest.getSender();
         Label messageLabel = new Label(senderName + " has proposed to you!\nDo you want to accept the marriage request?", GamePictureManager.skin);
         messageLabel.setColor(Color.BLACK);
         messageLabel.setFontScale(1.2f);
