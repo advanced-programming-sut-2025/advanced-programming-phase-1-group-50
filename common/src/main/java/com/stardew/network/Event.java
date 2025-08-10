@@ -59,4 +59,5 @@ public enum Event {
     ShowGreenhouseGrowable,
     GetPlayersRequest,
     TalkToPlayer,
+    TalkToNPC,
 }

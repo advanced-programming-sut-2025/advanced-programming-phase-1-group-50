@@ -176,6 +176,10 @@ public class GameMenuInputAdapter extends InputAdapter {
             stage.addActor(new ChatTypeSelectionWindow(stage , id));
         }
 
+        if(justPressedKeys.contains(Input.Keys.V)){
+            stage.addActor(new TalkWithNPCWindow(stage , "Leah" , id));
+        }
+
         justPressedKeys.clear();
     }
 

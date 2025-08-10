@@ -424,6 +424,11 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().talkToPlayer(message, player, connection);
             }
+
+            case TalkToNPC -> {
+                Player player = game.getPlayer(connection);
+                NPCController.getInstance().handleTalkWithNPC(message , connection , player , game);
+            }
         }
 
     }

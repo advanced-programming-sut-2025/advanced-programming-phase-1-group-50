@@ -2,9 +2,7 @@ package com.stardew.controller;
 
 import com.stardew.model.NPC.NPCFriendshipLevel;
 import com.stardew.model.NPC.RelationWithNPCDTO;
-import com.stardew.model.NPCs.NPC;
-import com.stardew.model.NPCs.NPCType;
-import com.stardew.model.NPCs.RelationWithNPC;
+import com.stardew.model.NPCs.*;
 import com.stardew.model.Result;
 import com.stardew.model.gameApp.Game;
 import com.stardew.model.mapInfo.Ingredient;
@@ -14,6 +12,7 @@ import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -150,6 +149,74 @@ public class NPCController {
         Message response = new Message(body, MessageType.DO_QUEST_RESULT);
         response.setRequestID(message.getRequestID());
         connectionThread.sendMessage(response);
+
+    }
+
+
+    public void handleTalkWithNPC(Message message, ClientConnectionThread connectionThread , Player player , Game game)  {
+        String npcName = message.getFromBody("npcName");
+        String input = message.getFromBody("input");
+        PromptBuilder promptBuilder = new PromptBuilder(npcName ,game.getTime().getSeason().name()
+            , game.getTime().getWeather().getName()
+            ,getFriendShipLevelByNPC(npcName , player) , getNPCJobByNPC(npcName)
+            , getPlayerAction(player) , String.format("date : %d , hour : %d" , game.getTime().getDate() , game.getTime().getHour()) , input  );
+
+
+        String prompt = promptBuilder.build();
+        String response = "";
+        try {
+            response = NPCAi.getNPCResponse(prompt);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("result" , response);
+        Message responseMessage = new Message(body, MessageType.TALK_TO_NPC_RESULT);
+        responseMessage.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(responseMessage);
+    }
+
+    public int getFriendShipLevelByNPC(String npcName , Player player) {
+        return switch (npcName) {
+            case "Abigail" -> player.getRelationWithAbigail().getNumericalFriendShipLevel() / 200;
+            case "Harvey" -> player.getRelationWithHarvey().getNumericalFriendShipLevel() / 200;
+            case "Robin" -> player.getRelationWithRobin().getNumericalFriendShipLevel() / 200;
+            case "Leah" -> player.getRelationWithLeah().getNumericalFriendShipLevel() / 200;
+            case "Sebastian" -> player.getRelationWithSebastian().getNumericalFriendShipLevel() / 200;
+            default -> 0;
+        };
+    }
+
+    public String getNPCJobByNPC(String npcName) {
+        return switch (npcName) {
+            case "Sebastian" -> "developer";
+            case "Abigail" -> "student";
+            case "Harvey" -> "doctor";
+            case "Robin" -> "Carpenter";
+            case "Leah" -> "artist";
+            default -> null;
+        };
+    }
+
+
+    private String getPlayerAction(Player player) {
+        int energy = player.getEnergy();
+        StringBuilder builder = new StringBuilder();
+        builder.append("player Actions : ");
+
+        if(energy < 100){
+            builder.append("player is busy and tired ");
+        }
+        if(player.isFaintedToday()){
+            builder.append("player is fainted today , because of trying hard for his(her) farm ");
+        }
+
+        if(player.isMarried()){
+            builder.append("player is married , he(she) loves his(her) family ");
+        }
+
+        return builder.toString();
+
 
     }
 }
