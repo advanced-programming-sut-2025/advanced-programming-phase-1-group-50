@@ -149,9 +149,22 @@ public class MessageHandler {
 
             case SEND_NOTIFICATION -> {
                 Notification notification = message.getFromBody("notification", Notification.class);
-                Gdx.app.postRunnable(() -> {
-                    NotificationManager.getInstance().showNotification(notification);
-                });
+                Gdx.app.postRunnable(() -> NotificationManager.getInstance().showNotification(notification));
+                return true;
+            }
+
+            case HUG_ANIMATION -> {
+                Gdx.app.postRunnable(() -> WindowOpener.getInstance().spawnHugEmojis());
+                return true;
+            }
+
+            case MARRIAGE_ANIMATION -> {
+                Gdx.app.postRunnable(() -> WindowOpener.getInstance().spawnRingEmojis());
+                return true;
+            }
+
+            case GIVE_FLOWER_ANIMATION -> {
+                Gdx.app.postRunnable(() -> WindowOpener.getInstance().spawnRoseEmojis());
                 return true;
             }
 

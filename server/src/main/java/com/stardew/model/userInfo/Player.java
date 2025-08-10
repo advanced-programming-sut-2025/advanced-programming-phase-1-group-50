@@ -261,10 +261,14 @@ public class Player {
 
     public void addNotification (Notification notification, ClientConnectionThread connectionThread) {
         this.notifications.add(notification);
-        HashMap<String,Object> body = new HashMap<>();
-        body.put("notification", notification);
-        Message message = new Message(body, MessageType.SEND_NOTIFICATION);
-        connectionThread.sendMessage(message);
+        if (notification instanceof MarriageRequest) {
+            //TODO
+        } else {
+            HashMap<String,Object> body = new HashMap<>();
+            body.put("notification", notification);
+            Message message = new Message(body, MessageType.SEND_NOTIFICATION);
+            connectionThread.sendMessage(message);
+        }
     }
 
     public ArrayList<Notification> getNotifications() {

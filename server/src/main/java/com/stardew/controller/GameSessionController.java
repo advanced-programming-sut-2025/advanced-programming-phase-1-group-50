@@ -429,6 +429,21 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 NPCController.getInstance().handleTalkWithNPC(message , connection , player , game);
             }
+
+            case Hug -> {
+                Player player = game.getPlayer(connection);
+                PlayersRelationController.getInstance().hugPlayer(message, player);
+            }
+
+            case GiveFlower -> {
+                Player player = game.getPlayer(connection);
+                PlayersRelationController.getInstance().giveFlower(message, player);
+            }
+
+            case RequestMarriage -> {
+                Player player = game.getPlayer(connection);
+                PlayersRelationController.getInstance().requestMarriage(message, player,connection);
+            }
         }
 
     }
