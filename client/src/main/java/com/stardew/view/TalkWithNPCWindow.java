@@ -27,7 +27,7 @@ public class TalkWithNPCWindow extends CloseableWindow {
     public TalkWithNPCWindow(Stage stage, NPCType npcType, int gameId) {
         super("Talk with " + npcType, stage);
 
-        setSize(500, 300);
+        setSize(700, 500);
         setPosition(
             stage.getCamera().position.x - getWidth() / 2,
             stage.getCamera().position.y - getHeight() / 2
@@ -87,7 +87,7 @@ public class TalkWithNPCWindow extends CloseableWindow {
         npcResponse = new Label("", skin);
         npcResponse.setWrap(true);
         npcResponse.setAlignment(Align.center);
-        npcResponse.setFontScale(1.5f);
+
         npcResponse.setColor(Color.BLACK);
 
         Table table = new Table();
