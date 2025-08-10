@@ -128,6 +128,7 @@ public class GameMap {
         }
 
         setBorderFarmsAndNpcVillage();
+        setWalkableNPCPlaces();
 
 
 
@@ -151,6 +152,24 @@ public class GameMap {
             tiles[i][124].setSymbol('+');
         }
 
+    }
+
+    public void setWalkableNPCPlaces(){
+        tiles[129][76].setWalkable(false);
+        tiles[129][77].setWalkable(false);
+
+        tiles[129][85].setWalkable(false);
+        tiles[129][84].setWalkable(false);
+
+        tiles[129][93].setWalkable(false);
+        tiles[129][92].setWalkable(false);
+
+
+        tiles[129][100].setWalkable(false);
+        tiles[129][101].setWalkable(false);
+
+        tiles[129][109].setWalkable(false);
+        tiles[129][108].setWalkable(false);
     }
 
 
