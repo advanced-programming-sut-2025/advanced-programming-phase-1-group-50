@@ -11,6 +11,8 @@ repositories {
 
 dependencies {
   implementation project(':common')
+  implementation("org.xerial:sqlite-jdbc:3.45.1.0")
+  implementation("com.zaxxer:HikariCP:5.1.0")
   implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
   implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
   testImplementation platform('org.junit:junit-bom:5.10.0')
