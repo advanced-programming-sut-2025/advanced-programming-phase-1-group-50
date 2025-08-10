@@ -2,6 +2,8 @@ package com.stardew;
 
 import com.stardew.controller.GameSessionController;
 import com.stardew.model.ServerApp;
+import com.stardew.repository.DatabaseInitializer;
+import com.stardew.repository.DatabaseManager;
 
 import java.util.Scanner;
 
@@ -18,10 +20,15 @@ public class ServerMain {
         ServerApp.creatListenerThread(port);
         ServerApp.startListening();
 
+
+        DatabaseManager.initialize("stardew.sqlite");
+
+
         while (true) {
             String input = scanner.nextLine().trim();
             if (input.equalsIgnoreCase("exit")) {
                 ServerApp.endAll();
+                DatabaseManager.getInstance().close();
                 GameSessionController.getInstance().stopAllGames();
                 break;
             }
