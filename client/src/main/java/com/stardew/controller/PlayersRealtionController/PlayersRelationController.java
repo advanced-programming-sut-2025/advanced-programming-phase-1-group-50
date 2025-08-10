@@ -105,30 +105,10 @@ public class PlayersRelationController {
             HashMap<String, Object> body = new HashMap<>();
             body.put("id", gameId);
             body.put("otherPlayerUsername", otherPlayerUsername);
-            body.put("event",Event.HugPlayer);
+            body.put("event",Event.Hug);
             Message message = new Message(body, MessageType.EVENT_IN_GAME);
-
+            NetworkManager.getConnection().sendMessage(message);
         }).start();
-        //TODO
-//
-//        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
-//        Set<Player> lookUpKey = new HashSet<>();
-//        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
-//        lookUpKey.add(otherPlayer);
-//
-//        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-//
-//        if (tempRelation.canHug()) {
-//            if (!tempRelation.HaveHuggedToday()) {
-//                tempRelation.setHaveHuggedToday(true);
-//                tempRelation.changeXp(60);
-//            }
-//
-//            if (tempRelation.isMarriage()) {
-//                App.getGame().getCurrentPlayingPlayer().addEnergy(50);
-//                otherPlayer.addEnergy(50);
-//            }
-//        }
     }
 
     public static void canGiveFlower(int gameId,String otherPlayerUsername, Consumer<Result> callback) {
@@ -155,25 +135,14 @@ public class PlayersRelationController {
     }
 
     public static void giveFlower(int gameId,String otherPlayerUsername) {
-        //TODO
-//
-//        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
-//        Set<Player> lookUpKey = new HashSet<>();
-//        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
-//        lookUpKey.add(otherPlayer);
-//
-//        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-//
-//        tempRelation.setGaveFlower();
-//        tempRelation.setHaveGaveFlowerToday(true);
-//        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Bouquet(), 1);
-//        otherPlayer.getBackpack().addIngredients(new Bouquet(), 1);
-//        if (tempRelation.isMarriage()) {
-//            App.getGame().getCurrentPlayingPlayer().addEnergy(50);
-//            otherPlayer.addEnergy(50);
-//        }
-//        tempRelation.changeXp(0);
-
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("otherPlayerUsername", otherPlayerUsername);
+            body.put("event",Event.GiveFlower);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            NetworkManager.getConnection().sendMessage(message);
+        }).start();
     }
 
     public static void canAskMarriage(int gameId,String otherPlayerUsername, Consumer<Result> callback) {
@@ -200,8 +169,14 @@ public class PlayersRelationController {
     }
 
     public static void askMarriage(int gameId,String otherPlayerUsername) {
-        //TODO
-        //otherPlayer.addNotification(new MarriageRequest("You are my soulmate. Every day with you feels like a dream. Will you stay by my side forever?", App.getGame().getCurrentPlayingPlayer()));
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("otherPlayerUsername", otherPlayerUsername);
+            body.put("event",Event.RequestMarriage);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            NetworkManager.getConnection().sendMessage(message);
+        }).start();
     }
 
     public static void checkForMarriageRequest(Stage stage) {

@@ -60,5 +60,7 @@ public enum Event {
     GetPlayersRequest,
     TalkToPlayer,
     TalkToNPC,
-    HugPlayer,
+    Hug,
+    GiveFlower,
+    RequestMarriage,
 }

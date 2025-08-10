@@ -136,6 +136,7 @@ public class PierreGeneralStore extends Store {
             return new Result(false, "Not enough stock");
         }
 
+
         if (item instanceof PierreGeneralStoreSeedsItem) {
 
             if (!player.getBackpack().hasCapacity()) {
@@ -174,7 +175,7 @@ public class PierreGeneralStore extends Store {
 
         } else {
 
-            if (!player.getBackpack().hasCapacity() && !item.name.equals("Dehydrator")) {
+            if (!player.getBackpack().hasCapacity()) {
                 return new Result(false, "Not enough capacity in your inventory");
             }
 
