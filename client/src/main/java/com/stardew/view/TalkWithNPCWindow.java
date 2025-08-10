@@ -68,13 +68,6 @@ public class TalkWithNPCWindow extends CloseableWindow {
                     body.put("event", Event.TalkToNPC);
                     Message m = new Message(body, MessageType.EVENT_IN_GAME);
                     Message response = NetworkManager.getConnection().sendAndWaitForResponse(m, 10000);
-                    //
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    //
                     if (response != null && response.getType() == MessageType.TALK_TO_NPC_RESULT) {
                         String result = response.getFromBody("result");
                         Gdx.app.postRunnable(() -> {
@@ -94,6 +87,8 @@ public class TalkWithNPCWindow extends CloseableWindow {
         npcResponse = new Label("", skin);
         npcResponse.setWrap(true);
         npcResponse.setAlignment(Align.center);
+        npcResponse.setFontScale(1.5f);
+        npcResponse.setColor(Color.BLACK);
 
         Table table = new Table();
         table.center();
@@ -121,16 +116,11 @@ public class TalkWithNPCWindow extends CloseableWindow {
                 dots = (dots % 3) + 1;
                 String dotStr = ".".repeat(dots);
                 npcResponse.setText(npcName + " is thinking" + dotStr);
-                npcResponse.setFontScale(1.5f);
-                npcResponse.setColor(Color.BLACK);
-                npcResponse.setAlignment(Align.center);
             }
         }, 0, 0.5f);
     }
 
     private void stopThinkingAnimation() {
-        playerInput.setVisible(true);
-        talkButton.setVisible(true);
         if (thinkingTask != null) {
             thinkingTask.cancel();
             thinkingTask = null;
