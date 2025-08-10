@@ -2,19 +2,18 @@ package com.stardew.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Timer;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.NPCs.NPCType;
+import com.stardew.network.*;
 import com.stardew.network.Event;
-import com.stardew.network.Message;
-import com.stardew.network.MessageType;
-import com.stardew.network.NetworkManager;
 import com.stardew.view.windows.CloseableWindow;
 
 import java.util.HashMap;
@@ -22,82 +21,125 @@ import java.util.HashMap;
 public class TalkWithNPCWindow extends CloseableWindow {
     private final TextField playerInput;
     private final Label npcResponse;
-    public TalkWithNPCWindow(Stage stage , NPCType npcType, int gameId) {
-        super("talk with npc : " + npcType.toString()  , stage);
+    private final TextButton talkButton;
+    private Timer.Task thinkingTask;
 
-        setSize( 700 , 600);
+    public TalkWithNPCWindow(Stage stage, NPCType npcType, int gameId) {
+        super("Talk with " + npcType, stage);
+
+        setSize(500, 300);
         setPosition(
             stage.getCamera().position.x - getWidth() / 2,
             stage.getCamera().position.y - getHeight() / 2
         );
         pad(20);
-        setColor(Color.GRAY);
-        align(Align.top);
+        align(Align.center);
 
         Skin skin = GamePictureManager.skin;
 
         playerInput = new TextField("", skin);
         playerInput.setMessageText("Type your message...");
-        playerInput.setAlignment(Align.left);
+        playerInput.setColor(0.95f, 0.98f, 0.95f, 1f);
+        playerInput.getStyle().fontColor = Color.BLACK;
+        playerInput.setAlignment(Align.center);
 
-        TextButton talkButton = new TextButton("Talk", skin);
+        talkButton = new TextButton("Talk", skin);
+        talkButton.setColor(Color.FOREST);
+        talkButton.getLabel().setColor(Color.WHITE);
 
-        talkButton.addListener(new InputListener(){
+        talkButton.addListener(new ClickListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                if(playerInput.getText().isEmpty()) {
-                    return false;
+            public void clicked(InputEvent event, float x, float y) {
+                if (playerInput.getText().isEmpty()) {
+                    playerInput.addAction(Actions.sequence(
+                        Actions.color(Color.SCARLET, 0.1f),
+                        Actions.color(Color.WHITE, 0.2f)
+                    ));
+                    return;
                 }
+
+                startThinkingAnimation(npcType.name());
+
                 new Thread(() -> {
                     HashMap<String, Object> body = new HashMap<>();
                     body.put("npcType", npcType);
                     body.put("id", gameId);
                     body.put("input", playerInput.getText());
-                    body.put("event" , Event.TalkToNPC);
-                    Message m = new Message(body , MessageType.EVENT_IN_GAME);
-                    Message response = NetworkManager.getConnection().sendAndWaitForResponse(m , 10000);
-                    if(response != null && response.getType() == MessageType.TALK_TO_NPC_RESULT) {
-
+                    body.put("event", Event.TalkToNPC);
+                    Message m = new Message(body, MessageType.EVENT_IN_GAME);
+                    Message response = NetworkManager.getConnection().sendAndWaitForResponse(m, 10000);
+                    //
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    //
+                    if (response != null && response.getType() == MessageType.TALK_TO_NPC_RESULT) {
                         String result = response.getFromBody("result");
                         Gdx.app.postRunnable(() -> {
+                            stopThinkingAnimation();
                             npcResponse.setText(parseInput(result));
-
+                        });
+                    } else {
+                        Gdx.app.postRunnable(() -> {
+                            stopThinkingAnimation();
+                            npcResponse.setText("[No response from NPC]");
                         });
                     }
                 }).start();
-
-
-                return true;
-
-
-
             }
         });
 
-
         npcResponse = new Label("", skin);
         npcResponse.setWrap(true);
-        npcResponse.setAlignment(Align.topLeft);
-
+        npcResponse.setAlignment(Align.center);
 
         Table table = new Table();
-        table.top().left().pad(5);
-        table.defaults().space(10).fillX();
+        table.center();
+        table.defaults().space(15).width(300);
 
-        table.add(playerInput).height(30).row();
-        table.add(talkButton).height(35).row();
-        table.add(npcResponse).width(350).height(100).row();
+        table.add(playerInput).height(40).row();
+        table.add(talkButton).height(45).row();
+        table.add(npcResponse).height(120).row();
 
         add(table).expand().fill();
+    }
 
+    private void startThinkingAnimation(String npcName) {
+        stopThinkingAnimation();
+
+        playerInput.setVisible(false);
+        talkButton.setVisible(false);
+
+        npcResponse.setText(npcName + " is thinking");
+
+        thinkingTask = Timer.schedule(new Timer.Task() {
+            int dots = 0;
+            @Override
+            public void run() {
+                dots = (dots % 3) + 1;
+                String dotStr = ".".repeat(dots);
+                npcResponse.setText(npcName + " is thinking" + dotStr);
+                npcResponse.setFontScale(1.5f);
+                npcResponse.setColor(Color.BLACK);
+                npcResponse.setAlignment(Align.center);
+            }
+        }, 0, 0.5f);
+    }
+
+    private void stopThinkingAnimation() {
+        playerInput.setVisible(true);
+        talkButton.setVisible(true);
+        if (thinkingTask != null) {
+            thinkingTask.cancel();
+            thinkingTask = null;
+        }
     }
 
     private String parseInput(String response) {
         StringBuilder combinedResponse = new StringBuilder();
-
-
         String[] parts = response.split("(?=\\{)");
-
         JsonParser parser = new JsonParser();
 
         for (String part : parts) {
@@ -110,9 +152,6 @@ public class TalkWithNPCWindow extends CloseableWindow {
                 e.printStackTrace();
             }
         }
-
         return combinedResponse.toString();
     }
-
-
 }
