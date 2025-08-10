@@ -10,9 +10,13 @@ import com.stardew.model.Result;
 
 import com.stardew.model.Tools.*;
 import com.stardew.model.mapInfo.*;
+import com.stardew.network.ClientConnectionThread;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 
 public class Player {
@@ -255,8 +259,12 @@ public class Player {
 
     }
 
-    public void addNotification (Notification notification) {
+    public void addNotification (Notification notification, ClientConnectionThread connectionThread) {
         this.notifications.add(notification);
+        HashMap<String,Object> body = new HashMap<>();
+        body.put("notification", notification);
+        Message message = new Message(body, MessageType.SEND_NOTIFICATION);
+        connectionThread.sendMessage(message);
     }
 
     public ArrayList<Notification> getNotifications() {

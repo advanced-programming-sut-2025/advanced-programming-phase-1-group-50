@@ -178,7 +178,21 @@ public class PlayersRelationController {
             return;
         }
 
-        receiver.addNotification(new Notification("you have received a gift", sender.getUsername())); // TODO
+        ClientConnectionThread temp = null;
+
+        for (ClientConnectionThread connectionThread : game.getConnections().keySet()) {
+            if (connectionThread.getUser().getUsername().equals(receiverUsername)) {
+                temp = connectionThread;
+                break;
+            }
+        }
+
+        if (temp == null) {
+            return;
+        }
+
+
+        receiver.addNotification(new Notification("you have received a gift", sender.getUsername()),temp);
 
         if (tempRelation.isMarriage()) {
             sender.addEnergy(50);
@@ -420,7 +434,21 @@ public class PlayersRelationController {
                 }
 
                 tempNetwork.relationNetwork.put(lookUpKey, tempRelation);
-                p.addNotification(new Notification(text, player.getUsername())); // TODO
+
+                ClientConnectionThread temp = null;
+
+                for (ClientConnectionThread connectionThread : game.getConnections().keySet()) {
+                    if (connectionThread.getUser().getUsername().equals(p.getUsername())) {
+                        temp = connectionThread;
+                        break;
+                    }
+                }
+
+                if (temp == null) {
+                    return;
+                }
+
+                p.addNotification(new Notification(text, player.getUsername()),temp);
             }
         }
 
