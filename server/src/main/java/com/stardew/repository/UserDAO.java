@@ -27,15 +27,16 @@ public class UserDAO {
     }
 
     public boolean insertUser(User user) throws SQLException {
-        String sql = "INSERT INTO users(username, password_hash, email, gender, security_question, security_answer) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users(username, password_hash, nickname, email, gender, security_question, security_answer) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, user.getUsername());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setString(3, user.getEmail());
-            preparedStatement.setString(4, user.getGender().toString());
-            preparedStatement.setString(5, user.getSecurityQuestion().getQuestion());
-            preparedStatement.setString(6, user.getSecurityQuestion().getAnswer());
+            preparedStatement.setString(2, user.getPasswordHash());
+            preparedStatement.setString(3, user.getNickname());
+            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setString(5, user.getGender().toString());
+            preparedStatement.setString(6, user.getSecurityQuestion().getQuestion());
+            preparedStatement.setString(7, user.getSecurityQuestion().getAnswer());
             int rows = preparedStatement.executeUpdate();
             return rows > 0;
         } catch (SQLException ex) {
@@ -44,6 +45,20 @@ public class UserDAO {
             }
             throw ex;
         }
+    }
+
+    public boolean checkIfUserExists(String username) throws SQLException {
+        String sql = "SELECT 1 FROM users WHERE username = ? LIMIT 1";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, username);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public User findByUsername(String username) throws SQLException {
@@ -67,5 +82,15 @@ public class UserDAO {
             }
         }
         return null;
+    }
+
+    public void updatePasswordHash(String username, String newPasswordHash) throws SQLException {
+        String sql = "UPDATE users SET password_hash = ? WHERE username = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, newPasswordHash);
+            preparedStatement.setString(2, username);
+            preparedStatement.executeUpdate();
+        }
     }
 }

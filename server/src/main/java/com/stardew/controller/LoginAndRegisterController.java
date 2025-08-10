@@ -2,14 +2,15 @@ package com.stardew.controller;
 
 import com.stardew.model.Result;
 import com.stardew.model.ServerApp;
-import com.stardew.model.gameApp.App;
 import com.stardew.model.userInfo.Gender;
 import com.stardew.model.userInfo.PasswordUtil;
 import com.stardew.model.userInfo.User;
 import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
+import com.stardew.repository.UserDAO;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -21,7 +22,11 @@ public class LoginAndRegisterController {
 
 
     public boolean checkRepeatedUsername(String username) {
-        return App.getUserByUsername(username) != null;
+        try {
+            return UserDAO.getInstance().checkIfUserExists(username);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean isValidEmail(String email) {
@@ -70,7 +75,7 @@ public class LoginAndRegisterController {
     }
 
     public boolean hasSpecialCharacters(String password) {
-        String specialCharacters = "?><,\"';:\\/|][}{+=)(*&^%$#!";
+        String specialCharacters = "?><,\"';:\\/|][}{+=)(*&^%$@#!";
         for (char ch : password.toCharArray()) {
             if (specialCharacters.indexOf(ch) >= 0) {
                 return true;
@@ -96,7 +101,7 @@ public class LoginAndRegisterController {
             return new Result(false, "Email is invalid");
         }
 
-        String passwordRegex = "^[a-zA-Z0-9?><,\"';:\\/|\\]\\[}{+=)(*&^%$#!]+";
+        String passwordRegex = "^[a-zA-Z0-9?><,\"';:\\/|\\]\\[}{+=)(*&^%$@#!]+";
         matcher = Pattern.compile(passwordRegex).matcher(password);
         if (!matcher.matches()) {
             return new Result(false, "invalid password format");
@@ -154,22 +159,27 @@ public class LoginAndRegisterController {
         String username = message.getFromBody("username");
         String password = message.getFromBody("password");
 
-        User user = App.getUserByUsername(username);
         HashMap<String, Object> body = new HashMap<>();
 
-        if (user == null) {
-            body.put("result", new Result(false, "user not found"));
-        }
-        else if (!user.getPassword().equals(passwordUtil.hashPassword(password))) {
-            body.put("result", new Result(false, "wrong password"));
+        try {
+            User user = UserDAO.getInstance().findByUsername(username);
+            if (user == null) {
+                body.put("result", new Result(false, "user not found"));
+            }
+            else if (!user.getPasswordHash().equals(passwordUtil.hashPassword(password))) {
+                body.put("result", new Result(false, "wrong password"));
 
+            }
+            else {
+                body.put("result", new Result(true, "user logged in"));
+                body.put("username", user.getUsername());
+                body.put("nickname", user.getNickname());
+                connection.setUser(user);
+            }
+        } catch (SQLException e) {
+            body.put("result", new Result(false, "Error in DB query: " + e.getMessage()));
         }
-        else {
-            body.put("result", new Result(true, "user logged in"));
-            body.put("username", user.getUsername());
-            body.put("nickname", user.getNickname());
-            connection.setUser(user);
-        }
+
 
         Message responseMessage =  new Message(body, MessageType.LOGIN_RESULT);
         responseMessage.setRequestID(message.getRequestID());

@@ -1,12 +1,14 @@
 package com.stardew.controller;
 
 import com.stardew.model.Result;
-import com.stardew.model.gameApp.App;
+import com.stardew.model.userInfo.PasswordUtil;
 import com.stardew.model.userInfo.User;
 import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
+import com.stardew.repository.UserDAO;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public class ForgetPasswordController {
@@ -15,7 +17,10 @@ public class ForgetPasswordController {
 
     public void handleGetSecurityQuestion(Message message, ClientConnectionThread connection) {
         String username = message.getFromBody("username");
-        User user = App.getUserByUsername(username);
+        User user = null;
+        try {
+            user = UserDAO.getInstance().findByUsername(username);
+        } catch (SQLException ignored) {}
 
         HashMap<String, Object> body = new HashMap<>();
 
@@ -42,8 +47,13 @@ public class ForgetPasswordController {
         String username = message.getFromBody("username");
         String answer = message.getFromBody("answer");
         String newPassword = message.getFromBody("newPassword");
+        PasswordUtil passwordUtil = new PasswordUtil();
 
-        User user = App.getUserByUsername(username);
+        User user = null;
+        try {
+            user = UserDAO.getInstance().findByUsername(username);
+        } catch (SQLException ignored) {}
+
         HashMap<String, Object> body = new HashMap<>();
         if(user == null){
            body.put("result", new Result(false, "User not found"));
@@ -55,6 +65,13 @@ public class ForgetPasswordController {
 
         if(!answer.equals(user.getSecurityQuestion().getAnswer())){
             body.put("result", new Result(false, "answer is incorrect"));
+            Message responseMessage = new Message(body, MessageType.FORGET_PASSWORD_RESULT);
+            responseMessage.setRequestID(message.getRequestID());
+            connection.sendMessage(responseMessage);
+            return;
+        }
+        if (user.getPasswordHash().equals(passwordUtil.hashPassword(newPassword))) {
+            body.put("result", new Result(false, "new password is equal to old password"));
             Message responseMessage = new Message(body, MessageType.FORGET_PASSWORD_RESULT);
             responseMessage.setRequestID(message.getRequestID());
             connection.sendMessage(responseMessage);
@@ -88,8 +105,13 @@ public class ForgetPasswordController {
             return;
         }
 
-        user.setPassword(newPassword);
-        body.put("result", new Result(true, "Changed password"));
+
+        try {
+            UserDAO.getInstance().updatePasswordHash(username, passwordUtil.hashPassword(newPassword));
+            body.put("result", new Result(true, "Changed password"));
+        } catch (SQLException e) {
+            body.put("result", new Result(false, "Error in DB query: " + e.getMessage()));
+        }
         Message responseMessage = new Message(body, MessageType.FORGET_PASSWORD_RESULT);
         responseMessage.setRequestID(message.getRequestID());
         connection.sendMessage(responseMessage);

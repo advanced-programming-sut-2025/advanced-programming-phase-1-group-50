@@ -33,7 +33,7 @@ public class ProfileController {
         LoginAndRegisterController();
     public Result changePassword(String oldPas, String newPas , User user) {
         Matcher matcher;
-//        if (!user.getPassword().equals(passwordUtil.hashPassword(oldPas))) {
+//        if (!user.getPasswordHash().equals(passwordUtil.hashPassword(oldPas))) {
 //            return new Result(false, "password is incorrect");
 //        }
         if (newPas.equals(oldPas)) {
@@ -58,7 +58,7 @@ public class ProfileController {
         if (!controller.hasSpecialCharacters(newPas)) {
             return new Result(false, "please use Special Characters");
         }
-        user.setPassword(newPas);
+        user.setPasswordHash(newPas);
         return new Result(true, "password cahnged succsessfuly");
 
     }
@@ -67,7 +67,7 @@ public class ProfileController {
         String username = message.getFromBody("username");
         User user = App.getUserByUsername(username);
         if(user == null) return;
-        String oldPassword = user.getPassword();
+        String oldPassword = user.getPasswordHash();
         String newPassword = message.getFromBody("password");
 
         Result result = changePassword(oldPassword, newPassword, user);
