@@ -1,8 +1,8 @@
 package com.stardew.model.PlayersRelation;
 
 public class RelationWithPlayers {
-    private int xp = 400;
-    private FriendshipLevelsWithPlayers friendshipLevel = FriendshipLevelsWithPlayers.LevelThree;
+    private int xp = 0;
+    private FriendshipLevelsWithPlayers friendshipLevel = FriendshipLevelsWithPlayers.LevelZero;
     private boolean gaveFlower = false;
     private boolean marriage = false;
     private boolean haveTalkedToday = false;
