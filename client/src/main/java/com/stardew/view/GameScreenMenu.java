@@ -84,6 +84,7 @@ public class GameScreenMenu implements Screen {
         StoreUIManager.createAllStoresUI(stage,id);
         NPCsUIManger.createAllNPCsUI(stage,id);
         GreenhouseUIManager.initialize(stage,id);
+        NotificationManager.initialize(stage);
 
     }
 
@@ -140,6 +141,7 @@ public class GameScreenMenu implements Screen {
         weatherManager.draw(batch , gameState.getTime().getWeather());
         reactionTable.render(v);
         scoreBoard.updatePlayer();
+        NotificationManager.getInstance().updatePositions();
 
 //
 //
@@ -159,16 +161,6 @@ public class GameScreenMenu implements Screen {
 //        timeManager.setWateredTile(v);
         weatherManager.thunder(v , stage , gameState.getTime().getWeather());
 
-    }
-
-    private void addStoresImages() {
-        stage.addActor(App.getGame().getMap().getNpcVillage().getBlacksmith().getStoreImage());
-        stage.addActor(App.getGame().getMap().getNpcVillage().getCarpenterShop().getStoreImage());
-        stage.addActor(App.getGame().getMap().getNpcVillage().getFishShop().getStoreImage());
-        stage.addActor(App.getGame().getMap().getNpcVillage().getJojaMart().getStoreImage());
-        stage.addActor(App.getGame().getMap().getNpcVillage().getMarnieRanch().getStoreImage());
-        stage.addActor(App.getGame().getMap().getNpcVillage().getPierreGeneralStore().getStoreImage());
-        stage.addActor(App.getGame().getMap().getNpcVillage().getStardopSaloon().getStoreImage());
     }
 
     public void addShippingBinImage(ShippingBin bin) {
