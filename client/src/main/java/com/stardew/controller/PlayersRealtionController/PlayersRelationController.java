@@ -3,26 +3,18 @@ package com.stardew.controller.PlayersRealtionController;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.model.Notification.MarriageRequest;
-import com.stardew.model.Notification.Notification;
 import com.stardew.model.PlayersRelation.BetweenPlayersGift;
-import com.stardew.model.PlayersRelation.FriendshipLevelsWithPlayers;
-import com.stardew.model.PlayersRelation.RelationWithPlayers;
 import com.stardew.model.Result;
 import com.stardew.models.ClientInfo.LoggedInUser;
-import com.stardew.models.app.App;
-import com.stardew.models.userInfo.*;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 import com.stardew.network.NetworkManager;
-import com.stardew.view.InPersonPlayersRelationsWindows.RespondMarriageWindow;
 import com.stardew.view.PlayersRelationsWindows.FriendshipWindow;
 import com.stardew.view.PlayersRelationsWindows.GiftHistoryWindow;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.Consumer;
 
 public class PlayersRelationController {
@@ -108,7 +100,15 @@ public class PlayersRelationController {
         }).start();
     }
 
-    public static void hug(String otherPlayerUsername) {
+    public static void hug(int gameId,String otherPlayerUsername) {
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("otherPlayerUsername", otherPlayerUsername);
+            body.put("event",Event.HugPlayer);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+
+        }).start();
         //TODO
 //
 //        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
@@ -154,7 +154,7 @@ public class PlayersRelationController {
         }).start();
     }
 
-    public static void giveFlower(String otherPlayerUsername) {
+    public static void giveFlower(int gameId,String otherPlayerUsername) {
         //TODO
 //
 //        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
@@ -199,7 +199,7 @@ public class PlayersRelationController {
         }).start();
     }
 
-    public static void askMarriage(String otherPlayerUsername) {
+    public static void askMarriage(int gameId,String otherPlayerUsername) {
         //TODO
         //otherPlayer.addNotification(new MarriageRequest("You are my soulmate. Every day with you feels like a dream. Will you stay by my side forever?", App.getGame().getCurrentPlayingPlayer()));
     }

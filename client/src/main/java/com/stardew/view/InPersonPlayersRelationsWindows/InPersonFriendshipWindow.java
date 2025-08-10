@@ -14,10 +14,11 @@ import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.view.windows.CloseableWindow;
 
 public class InPersonFriendshipWindow extends CloseableWindow {
+    private final int gameId;
 
     public InPersonFriendshipWindow(int gameId,Stage stage, String otherPlayerUsername) {
         super("In-person friendship", stage);
-
+        this.gameId = gameId;
         padTop(20);
         padBottom(20);
         padLeft(30);
@@ -77,7 +78,6 @@ public class InPersonFriendshipWindow extends CloseableWindow {
                 flowerButton.setDisabled(true);
                 PlayersRelationController.canGiveFlower(gameId, otherPlayerUsername, result -> {
                     Gdx.app.postRunnable(() -> {
-
                         if (result.getSuccessful()) {
                             giveFlowers(otherPlayerUsername);
                             closeWindow();
@@ -138,17 +138,17 @@ public class InPersonFriendshipWindow extends CloseableWindow {
     }
 
     private void hug(String otherPlayerUsername) {
-        PlayersRelationController.hug(otherPlayerUsername);
+        PlayersRelationController.hug(gameId,otherPlayerUsername);
         spawnHugEmojis(stage, getX() + getWidth() / 2, getY() + 20); // TODO
     }
 
     private void giveFlowers(String otherPlayerUsername) {
-        PlayersRelationController.giveFlower(otherPlayerUsername);
+        PlayersRelationController.giveFlower(gameId,otherPlayerUsername);
         spawnRoseEmojis(stage, getX() + getWidth() / 2, getY() + 20); // TODO
     }
 
     private void marry(String otherPlayerUsername) {
-        PlayersRelationController.askMarriage(otherPlayerUsername);
+        PlayersRelationController.askMarriage(gameId,otherPlayerUsername);
         spawnRingEmojis(stage, getX() + getWidth() / 2, getY() + 20); // TODO
     }
 

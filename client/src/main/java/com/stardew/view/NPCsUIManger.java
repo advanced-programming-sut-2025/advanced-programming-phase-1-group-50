@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
@@ -12,6 +12,7 @@ import com.stardew.models.NPCs.NPCType;
 import com.stardew.view.NPCsWindows.NPCMenuWindow;
 
 public class NPCsUIManger {
+
     public static void createAllNPCsUI(Stage stage, int gameId) {
         createNPCsUI(stage, gameId, 129, 76, 1, 2, NPCType.Abigail);
         createNPCsUI(stage, gameId, 129, 84, 1, 2, NPCType.Harvey);
@@ -21,43 +22,59 @@ public class NPCsUIManger {
     }
 
     public static void createNPCsUI(Stage stage, int gameId, int x, int y, int width, int height, NPCType npcType) {
-        int xInMaP = x * GamePictureManager.TILE_SIZE;
-        int yInMaP = y * GamePictureManager.TILE_SIZE;
+        int xInMap = x * GamePictureManager.TILE_SIZE;
+        int yInMap = y * GamePictureManager.TILE_SIZE;
         int widthInMap = width * GamePictureManager.TILE_SIZE;
         int heightInMap = height * GamePictureManager.TILE_SIZE;
 
-        Image image;
+        Group npcGroup = new Group();
+        npcGroup.setPosition(xInMap, yInMap);
 
+        Image npcImage;
         switch (npcType) {
-            case NPCType.Abigail:
-                image = new Image(new TextureRegionDrawable(new TextureRegion(GamePictureManager.AbigailFullBodyTexture)));
+            case Abigail:
+                npcImage = new Image(new TextureRegionDrawable(new TextureRegion(GamePictureManager.AbigailFullBodyTexture)));
                 break;
-            case NPCType.Harvey:
-                image = new Image(new TextureRegionDrawable(new TextureRegion(GamePictureManager.HarveyFullBodyTexture)));
+            case Harvey:
+                npcImage = new Image(new TextureRegionDrawable(new TextureRegion(GamePictureManager.HarveyFullBodyTexture)));
                 break;
-            case NPCType.Robin:
-                image = new Image(new TextureRegionDrawable(new TextureRegion(GamePictureManager.RobinFullBodyTexture)));
+            case Robin:
+                npcImage = new Image(new TextureRegionDrawable(new TextureRegion(GamePictureManager.RobinFullBodyTexture)));
                 break;
-            case NPCType.Leah:
-                image = new Image(new TextureRegionDrawable(new TextureRegion(GamePictureManager.LeahFullBodyTexture)));
+            case Leah:
+                npcImage = new Image(new TextureRegionDrawable(new TextureRegion(GamePictureManager.LeahFullBodyTexture)));
                 break;
-            case NPCType.Sebastian:
-                image = new Image(new TextureRegionDrawable(new TextureRegion(GamePictureManager.SebastianFullBodyTexture)));
+            case Sebastian:
+                npcImage = new Image(new TextureRegionDrawable(new TextureRegion(GamePictureManager.SebastianFullBodyTexture)));
                 break;
             default:
                 return;
         }
+        npcImage.setSize(widthInMap, heightInMap);
+        npcGroup.addActor(npcImage);
 
-        image.setPosition(xInMaP, yInMaP);
-        image.setSize(widthInMap, heightInMap);
-        stage.addActor(image);
+        Image dialogIcon = new Image(new TextureRegionDrawable(new TextureRegion(GamePictureManager.dialogueTexture)));
+        dialogIcon.setSize(32, 32);
+        dialogIcon.setPosition(-10, heightInMap);
+        npcGroup.addActor(dialogIcon);
 
-        image.addListener(new InputListener() {
+        dialogIcon.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.addActor(new NPCMenuWindow(gameId,stage,npcType));
+                System.out.println("Dialog icon clicked for " + npcType);
+                // TODO
                 return true;
             }
         });
+
+        npcImage.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                stage.addActor(new NPCMenuWindow(gameId, stage, npcType));
+                return true;
+            }
+        });
+
+        stage.addActor(npcGroup);
     }
 }

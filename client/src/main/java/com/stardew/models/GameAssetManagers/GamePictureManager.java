@@ -1957,8 +1957,6 @@ public class GamePictureManager {
     public static Texture SebastianFullBodyTexture = new Texture("NPCFullBody/sebastian.png");
     public static Texture LeahFullBodyTexture = new Texture("NPCFullBody/leah.png");
     public static Texture HarveyFullBodyTexture = new Texture("NPCFullBody/harvey.png");
-
-
-
+    public static Texture dialogueTexture = new Texture("dialogue.png");
 
 }

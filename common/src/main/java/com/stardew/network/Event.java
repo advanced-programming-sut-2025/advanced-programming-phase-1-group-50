@@ -60,4 +60,5 @@ public enum Event {
     GetPlayersRequest,
     TalkToPlayer,
     TalkToNPC,
+    HugPlayer,
 }

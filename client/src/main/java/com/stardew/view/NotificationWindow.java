@@ -55,7 +55,7 @@ public class NotificationWindow extends CloseableWindow {
         );
 
         addAction(Actions.sequence(
-            Actions.delay(3f),
+            Actions.delay(5f),
             Actions.run(this::closeWindow)
         ));
     }
