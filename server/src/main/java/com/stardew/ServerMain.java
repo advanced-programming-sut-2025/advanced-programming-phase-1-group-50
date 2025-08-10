@@ -22,6 +22,8 @@ public class ServerMain {
 
 
         DatabaseManager.initialize("stardew.sqlite");
+        DatabaseInitializer dbInitializer = new DatabaseInitializer(DatabaseManager.getInstance().getDataSource());
+        dbInitializer.createUsersTable();
 
 
         while (true) {
