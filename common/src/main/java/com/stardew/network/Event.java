@@ -56,4 +56,9 @@ public enum Event {
     BuildGreenhouse,
     GetNPCQuestsStatus,
     DoQuest,
+    ShowGreenhouseGrowable,
+    GetPlayersRequest,
+    TalkToPlayer,
+    TalkToNPC,
+    HugPlayer,
 }

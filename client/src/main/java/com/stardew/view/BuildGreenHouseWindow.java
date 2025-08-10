@@ -9,7 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
+import com.google.gson.reflect.TypeToken;
+import com.stardew.model.GrowableDTO;
 import com.stardew.model.Result;
+import com.stardew.model.TextureID;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
@@ -17,6 +20,7 @@ import com.stardew.network.MessageType;
 import com.stardew.network.NetworkManager;
 import com.stardew.view.windows.CloseableWindow;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BuildGreenHouseWindow extends CloseableWindow implements AppMenu {
@@ -69,11 +73,38 @@ public class BuildGreenHouseWindow extends CloseableWindow implements AppMenu {
             }
         });
 
+        TextButton showButton = new TextButton("Show", GamePictureManager.skin);
+        showButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                new Thread(() -> {
+                    HashMap<String, Object> body = new HashMap<>();
+                    body.put("id", id);
+                    body.put("event" , Event.ShowGreenhouseGrowable);
+                    Message msg = new Message(body , MessageType.EVENT_IN_GAME);
+                    Message response = NetworkManager.getConnection().sendAndWaitForResponse(msg , 500);
+                    if(response != null && response.getType() == MessageType.GREENHOUSE_GROWABLE_RESULT) {
+                        ArrayList<GrowableDTO> dtos = response.getFromBody("DTO" ,new TypeToken<ArrayList<GrowableDTO>>(){}.getType()
+                        );
+
+                        Gdx.app.postRunnable(() -> {
+                            stage.addActor(new ShowGreenhouseGrowableWindow(stage, dtos));
+                            closeWindow();
+                        });
+
+                    }
+                }).start();
+
+                return true;
+            }
+        });
+
 
         Table buttonTable = new Table();
         buttonTable.defaults().pad(10).width(100).height(40);
         buttonTable.add(yesButton);
         buttonTable.add(noButton);
+        buttonTable.add(showButton);
 
 
         defaults().expandX().center();

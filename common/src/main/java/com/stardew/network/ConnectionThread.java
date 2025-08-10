@@ -56,7 +56,7 @@ public abstract class ConnectionThread extends Thread {
                 String receivedStr = new String(data, StandardCharsets.UTF_8);
                 Message message = JSONUtils.fromJson(receivedStr);
                 boolean success = incomingMessagesQueue.offer(message);
-                if(message.getType().equals(MessageType.PROFILE_CHANGE_NICKNAME_RESULT) || message.getType().equals(MessageType.UPDATE_TILES_RESULT) || message.getType().equals(MessageType.PROFILE_CHANGE_NICKNAME)) System.out.println(message); //TODO
+                if(message.getType().equals(MessageType.PROFILE_CHANGE_NICKNAME_RESULT) || message.getType().equals(MessageType.TALK_TO_NPC_RESULT) || message.getType().equals(MessageType.EVENT_IN_GAME)) System.out.println(message); //TODO
                 if (!success) System.err.println("Could not put in incoming_messages_queue");
             } catch (SocketException se) {
                 if (running.get()) System.out.println("Socket Closed.");

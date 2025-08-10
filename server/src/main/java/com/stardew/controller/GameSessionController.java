@@ -409,6 +409,26 @@ public class GameSessionController {
                 Player player = game.getPlayer(connection);
                 NPCController.getInstance().doQuest(message,player,connection);
             }
+
+            case ShowGreenhouseGrowable -> {
+                Player player = game.getPlayer(connection);
+                BuildingController.getInstance().greenHouseGrowableRequest(message , connection , player);
+            }
+
+            case GetPlayersRequest -> {
+                Player player = game.getPlayer(connection);
+                PlayersRelationController.getInstance().getPlayers(message,player,connection);
+            }
+
+            case TalkToPlayer -> {
+                Player player = game.getPlayer(connection);
+                PlayersRelationController.getInstance().talkToPlayer(message, player, connection);
+            }
+
+            case TalkToNPC -> {
+                Player player = game.getPlayer(connection);
+                NPCController.getInstance().handleTalkWithNPC(message , connection , player , game);
+            }
         }
 
     }

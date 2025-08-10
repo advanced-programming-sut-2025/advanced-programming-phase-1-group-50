@@ -1,7 +1,8 @@
 package com.stardew.model.mapInfo;
 
 import com.stardew.model.TextureID;
-import com.stardew.model.mapInfo.foraging.Growable;
+import com.stardew.model.gameApp.date.Time;
+import com.stardew.model.mapInfo.foraging.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class GreenHouse implements Placeable{
     public GreenHouse(int x, int y, int width, int height) {
         bounds = new Rectangle(x, y, width, height);
         this.isBroken = true;
+        randomAddGrowable();
     }
     public boolean isBroken() {
         return isBroken;
@@ -47,6 +49,12 @@ public class GreenHouse implements Placeable{
         growables.add(growable);
     }
 
+
+    public void randomAddGrowable() {
+        addGrowable(new Crop(CropType.Blueberry , new Time() , null , 0 ,0 ));
+        addGrowable(new Crop(CropType.AncientFruit , new Time() , null , 0 ,0  ));
+        addGrowable(new Tree(TreeType.AppleTree , new Time(), null , 0 , 0 , 1 , 1));
+    }
 
 
     public void watering(){

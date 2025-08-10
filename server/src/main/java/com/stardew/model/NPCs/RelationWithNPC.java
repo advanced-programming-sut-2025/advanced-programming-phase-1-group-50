@@ -1,6 +1,5 @@
 package com.stardew.model.NPCs;
 
-import com.stardew.controller.GameSessionController;
 import com.stardew.model.NPC.NPCFriendshipLevel;
 import com.stardew.model.NPC.RelationWithNPCDTO;
 import com.stardew.model.userInfo.Player;
@@ -27,14 +26,6 @@ public class RelationWithNPC {
 
     public NPCType getType() {
         return type;
-    }
-
-    public boolean isSecondQuestLocked() {
-        return isSecondQuestLocked;
-    }
-
-    public boolean isThirdQuestLocked() {
-        return isThirdQuestLocked;
     }
 
     public boolean isFirstTimeToSpeakWithNPC() {
