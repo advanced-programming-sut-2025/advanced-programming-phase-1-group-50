@@ -1959,4 +1959,6 @@ public class GamePictureManager {
     public static Texture HarveyFullBodyTexture = new Texture("NPCFullBody/harvey.png");
     public static Texture dialogueTexture = new Texture("dialogue.png");
 
+    public static TextureRegion bouquet = new TextureRegion(new Texture("Special_item/Bouquet.png"));
+
 }
