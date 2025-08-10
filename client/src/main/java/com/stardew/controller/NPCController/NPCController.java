@@ -2,12 +2,9 @@ package com.stardew.controller.NPCController;
 
 import com.badlogic.gdx.Gdx;
 import com.google.gson.reflect.TypeToken;
-import com.stardew.model.NPC.NPCFriendshipLevel;
 import com.stardew.model.NPC.RelationWithNPCDTO;
 import com.stardew.model.Result;
 import com.stardew.models.NPCs.*;
-import com.stardew.models.app.App;
-import com.stardew.models.mapInfo.NpcHome;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
@@ -17,130 +14,9 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.Consumer;
-import java.util.regex.Matcher;
+
 
 public class NPCController {
-
-    public Result meetNPC(Matcher matcher) {
-
-        NpcHome home;
-
-        switch (matcher.group("NPCname")) {
-            case "Abigail" -> {
-
-                home = App.getGame().getMap().getNpcHomes().getFirst();
-
-                if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
-
-                    NPCFriendshipLevel temp =
-                        App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().getNpcFriendshipLevel();
-
-                    if (App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().isFirstTimeToSpeakWithNPC()) {
-                        App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().setFirstTimeToSpeakWithNPC(false);
-                        App.getGame().getCurrentPlayingPlayer().getRelationWithAbigail().increaseNumericalFriendShipLevel(20);
-                    }
-
-                    return new Result(true, home.getNpc().getDialogue(temp));
-
-                } else {
-
-                    return new Result(false, "You must be near the NPCHome");
-
-                }
-            }
-            case "Sebastian" -> {
-
-                home = App.getGame().getMap().getNpcHomes().get(4);
-
-                if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
-
-                    NPCFriendshipLevel temp =
-                        App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().getNpcFriendshipLevel();
-
-                    if (App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().isFirstTimeToSpeakWithNPC()) {
-                        App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().setFirstTimeToSpeakWithNPC(false);
-                        App.getGame().getCurrentPlayingPlayer().getRelationWithSebastian().increaseNumericalFriendShipLevel(20);
-                    }
-
-                    return new Result(true, home.getNpc().getDialogue(temp));
-
-                } else {
-
-                    return new Result(false, "You must be near the NPCHome");
-
-                }
-            }
-            case "Leah" -> {
-
-                home = App.getGame().getMap().getNpcHomes().get(3);
-
-                if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
-
-                    NPCFriendshipLevel temp =
-                        App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().getNpcFriendshipLevel();
-
-                    if (App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().isFirstTimeToSpeakWithNPC()) {
-                        App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().setFirstTimeToSpeakWithNPC(false);
-                        App.getGame().getCurrentPlayingPlayer().getRelationWithLeah().increaseNumericalFriendShipLevel(20);
-                    }
-
-                    return new Result(true, home.getNpc().getDialogue(temp));
-
-                } else {
-
-                    return new Result(false, "You must be near the NPCHome");
-
-                }
-            }
-            case "Robin" -> {
-
-                home = App.getGame().getMap().getNpcHomes().get(2);
-
-                if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
-
-                    NPCFriendshipLevel temp =
-                        App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().getNpcFriendshipLevel();
-
-                    if (App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().isFirstTimeToSpeakWithNPC()) {
-                        App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().setFirstTimeToSpeakWithNPC(false);
-                        App.getGame().getCurrentPlayingPlayer().getRelationWithRobin().increaseNumericalFriendShipLevel(20);
-                    }
-
-                    return new Result(true, home.getNpc().getDialogue(temp));
-
-                } else {
-
-                    return new Result(false, "You must be near the NPCHome");
-
-                }
-            }
-            case "Harvey" -> {
-
-                home = App.getGame().getMap().getNpcHomes().get(1);
-
-                if (App.getGame().getMap().isAroundPlaceable(App.getGame().getCurrentPlayingPlayer(), home)) {
-
-                    NPCFriendshipLevel temp =
-                        App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().getNpcFriendshipLevel();
-
-                    if (App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().isFirstTimeToSpeakWithNPC()) {
-                        App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().setFirstTimeToSpeakWithNPC(false);
-                        App.getGame().getCurrentPlayingPlayer().getRelationWithHarvey().increaseNumericalFriendShipLevel(20);
-                    }
-
-                    return new Result(true, home.getNpc().getDialogue(temp));
-
-                } else {
-
-                    return new Result(false, "You must be near the NPCHome");
-
-                }
-            }
-        }
-
-        return new Result(false, "Not such NPC");
-
-    }
 
     public static void giftToNPC(int gameId, String productName, NPCType npc, Consumer<Result> callback) {
         new Thread(() -> {

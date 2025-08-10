@@ -61,8 +61,7 @@ public class NPCsUIManger {
         dialogIcon.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Dialog icon clicked for " + npcType);
-                // TODO
+                stage.addActor(new TalkWithNPCWindow(stage,npcType,gameId));
                 return true;
             }
         });

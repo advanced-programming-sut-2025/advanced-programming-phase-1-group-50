@@ -12,7 +12,7 @@ import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -137,11 +137,11 @@ public class NPCController {
 
         Result result;
         if (index == 1) {
-           result =  npc.doFirstQuest(gameId,player,isRewardTwice);
+            result = npc.doFirstQuest(gameId, player, isRewardTwice);
         } else if (index == 2) {
-            result =  npc.doSecondQuest(gameId,player,isRewardTwice);
+            result = npc.doSecondQuest(gameId, player, isRewardTwice);
         } else {
-            result = npc.doThirdQuest(gameId,player,isRewardTwice);
+            result = npc.doThirdQuest(gameId, player, isRewardTwice);
         }
 
         HashMap<String, Object> body = new HashMap<>();
@@ -153,48 +153,66 @@ public class NPCController {
     }
 
 
-    public void handleTalkWithNPC(Message message, ClientConnectionThread connectionThread , Player player , Game game)  {
-        String npcName = message.getFromBody("npcName");
+    public void handleTalkWithNPC(Message message, ClientConnectionThread connectionThread, Player player, Game game) {
+        NPCType type = message.getFromBody("npcType", NPCType.class);
+        String npcName = type.toString();
         String input = message.getFromBody("input");
-        PromptBuilder promptBuilder = new PromptBuilder(npcName ,game.getTime().getSeason().name()
+        PromptBuilder promptBuilder = new PromptBuilder(npcName, game.getTime().getSeason().name()
             , game.getTime().getWeather().getName()
-            ,getFriendShipLevelByNPC(npcName , player) , getNPCJobByNPC(npcName)
-            , getPlayerAction(player) , String.format("date : %d , hour : %d" , game.getTime().getDate() , game.getTime().getHour()) , input  );
+            , getFriendShipLevelByNPC(type, player), getNPCJobByNPC(type)
+            , getPlayerAction(player), String.format("date : %d , hour : %d", game.getTime().getDate(),
+            game.getTime().getHour()), input);
 
 
         String prompt = promptBuilder.build();
         String response = "";
         try {
             response = NPCAi.getNPCResponse(prompt);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
+        RelationWithNPC temp = getRelationWithNPCByNPCType(type, player);
+
+        if (temp != null && temp.isFirstTimeToSpeakWithNPC()) {
+            temp.setFirstTimeToSpeakWithNPC(false);
+            temp.increaseNumericalFriendShipLevel(20);
+        }
+
         HashMap<String, Object> body = new HashMap<>();
-        body.put("result" , response);
+        body.put("result", response);
         Message responseMessage = new Message(body, MessageType.TALK_TO_NPC_RESULT);
         responseMessage.setRequestID(message.getRequestID());
         connectionThread.sendMessage(responseMessage);
     }
 
-    public int getFriendShipLevelByNPC(String npcName , Player player) {
-        return switch (npcName) {
-            case "Abigail" -> player.getRelationWithAbigail().getNumericalFriendShipLevel() / 200;
-            case "Harvey" -> player.getRelationWithHarvey().getNumericalFriendShipLevel() / 200;
-            case "Robin" -> player.getRelationWithRobin().getNumericalFriendShipLevel() / 200;
-            case "Leah" -> player.getRelationWithLeah().getNumericalFriendShipLevel() / 200;
-            case "Sebastian" -> player.getRelationWithSebastian().getNumericalFriendShipLevel() / 200;
-            default -> 0;
+    private int getFriendShipLevelByNPC(NPCType type, Player player) {
+        return switch (type) {
+            case NPCType.Abigail -> player.getRelationWithAbigail().getNumericalFriendShipLevel() / 200;
+            case NPCType.Harvey -> player.getRelationWithHarvey().getNumericalFriendShipLevel() / 200;
+            case NPCType.Robin -> player.getRelationWithRobin().getNumericalFriendShipLevel() / 200;
+            case NPCType.Leah -> player.getRelationWithLeah().getNumericalFriendShipLevel() / 200;
+            case NPCType.Sebastian -> player.getRelationWithSebastian().getNumericalFriendShipLevel() / 200;
         };
     }
 
-    public String getNPCJobByNPC(String npcName) {
-        return switch (npcName) {
-            case "Sebastian" -> "developer";
-            case "Abigail" -> "student";
-            case "Harvey" -> "doctor";
-            case "Robin" -> "Carpenter";
-            case "Leah" -> "artist";
-            default -> null;
+    private RelationWithNPC getRelationWithNPCByNPCType (NPCType type, Player player) {
+        return switch (type) {
+            case NPCType.Abigail -> player.getRelationWithAbigail();
+            case NPCType.Harvey -> player.getRelationWithHarvey();
+            case NPCType.Robin -> player.getRelationWithRobin();
+            case NPCType.Leah -> player.getRelationWithLeah();
+            case NPCType.Sebastian -> player.getRelationWithSebastian();
+        };
+    }
+
+    private String getNPCJobByNPC(NPCType type) {
+        return switch (type) {
+            case NPCType.Sebastian -> "developer";
+            case NPCType.Abigail -> "student";
+            case NPCType.Harvey -> "doctor";
+            case NPCType.Robin -> "Carpenter";
+            case NPCType.Leah -> "artist";
         };
     }
 
@@ -204,14 +222,14 @@ public class NPCController {
         StringBuilder builder = new StringBuilder();
         builder.append("player Actions : ");
 
-        if(energy < 100){
+        if (energy < 100) {
             builder.append("player is busy and tired ");
         }
-        if(player.isFaintedToday()){
+        if (player.isFaintedToday()) {
             builder.append("player is fainted today , because of trying hard for his(her) farm ");
         }
 
-        if(player.isMarried()){
+        if (player.isMarried()) {
             builder.append("player is married , he(she) loves his(her) family ");
         }
 

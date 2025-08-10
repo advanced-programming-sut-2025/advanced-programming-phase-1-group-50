@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Align;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.models.NPCs.NPCType;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
@@ -21,8 +22,8 @@ import java.util.HashMap;
 public class TalkWithNPCWindow extends CloseableWindow {
     private final TextField playerInput;
     private final Label npcResponse;
-    public TalkWithNPCWindow(Stage stage , String npcName , int gameId) {
-        super("talk with npc : " + npcName  , stage);
+    public TalkWithNPCWindow(Stage stage , NPCType npcType, int gameId) {
+        super("talk with npc : " + npcType.toString()  , stage);
 
         setSize( 700 , 600);
         setPosition(
@@ -49,7 +50,7 @@ public class TalkWithNPCWindow extends CloseableWindow {
                 }
                 new Thread(() -> {
                     HashMap<String, Object> body = new HashMap<>();
-                    body.put("npcName", npcName);
+                    body.put("npcType", npcType);
                     body.put("id", gameId);
                     body.put("input", playerInput.getText());
                     body.put("event" , Event.TalkToNPC);
