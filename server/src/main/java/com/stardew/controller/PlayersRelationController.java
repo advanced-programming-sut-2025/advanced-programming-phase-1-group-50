@@ -654,7 +654,7 @@ public class PlayersRelationController {
 
         otherPlayer.addNotification(new MarriageRequest("You are my soulmate. Every day with you feels like a dream. " +
             "Will you stay by my side forever?",
-            otherPlayerName), temp);
+            player.getUsername()), temp);
 
         HashMap<String, Object> body = new HashMap<>();
         Message response = new Message(body, MessageType.MARRIAGE_ANIMATION);
@@ -664,7 +664,7 @@ public class PlayersRelationController {
 
     }
 
-    public void respondMarriage(Message message, Player player, ClientConnectionThread clientConnectionThread) {
+    public void respondMarriage(Message message, Player player) {
         if (message == null || player == null) {
             return;
         }

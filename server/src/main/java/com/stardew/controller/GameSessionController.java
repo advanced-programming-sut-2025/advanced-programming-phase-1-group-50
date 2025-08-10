@@ -447,7 +447,7 @@ public class GameSessionController {
 
             case MarriageRequestResponse -> {
                 Player player = game.getPlayer(connection);
-                PlayersRelationController.getInstance().respondMarriage(message , player,connection);
+                PlayersRelationController.getInstance().respondMarriage(message , player);
             }
         }
 
