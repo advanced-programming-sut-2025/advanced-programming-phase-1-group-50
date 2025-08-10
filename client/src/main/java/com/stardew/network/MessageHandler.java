@@ -12,6 +12,7 @@ import com.stardew.view.ArtisanMachine.HabitatUIManager;
 import com.stardew.view.LobbyMenus.LobbyMenu;
 import com.stardew.view.LobbyMenus.PreLobbyMenu;
 import com.stardew.view.SelectFarmMenu;
+import com.stardew.view.WindowOpener;
 import com.stardew.view.miniGame.MiniGameStarter;
 import com.stardew.view.miniGame.MiniGameWindow;
 
@@ -135,6 +136,12 @@ public class MessageHandler {
 
             case FADE_NIGHT -> {
                 gameStateController.handleFadeOut(message);
+                return true;
+            }
+
+            case OPEN_IN_PERSON_FRIENDSHIP_MENU -> {
+                String otherPlayer = message.getFromBody("otherPlayer");
+                WindowOpener.getInstance().openInPersonFriendshipMenu(otherPlayer);
                 return true;
             }
 

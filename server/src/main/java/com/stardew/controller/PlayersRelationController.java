@@ -52,7 +52,7 @@ public class PlayersRelationController {
                 for (Set<Player> key : game.getRelationsBetweenPlayers().relationNetwork.keySet()) {
                     if (key.contains(p) && key.contains(player)) {
                         RelationWithPlayers temp = game.getRelationsBetweenPlayers().relationNetwork.get(key);
-                        relations.put(p.getUsername(),temp);
+                        relations.put(p.getUsername(), temp);
                         break;
                     }
                 }
@@ -60,14 +60,14 @@ public class PlayersRelationController {
 
         }
 
-        HashMap<String , Object> body = new HashMap<>();
+        HashMap<String, Object> body = new HashMap<>();
         body.put("relations", relations);
         Message response = new Message(body, MessageType.GET_BETWEEN_PLAYERS_RELATIONS_INFO);
         response.setRequestID(message.getRequestID());
         clientConnectionThread.sendMessage(response);
     }
 
-    public void getAllGifts(Message message,ClientConnectionThread clientConnectionThread) {
+    public void getAllGifts(Message message, ClientConnectionThread clientConnectionThread) {
         if (message == null) {
             return;
         }
@@ -75,47 +75,47 @@ public class PlayersRelationController {
         int id = message.getIntFromBody("id");
         Game game = GameSessionController.getInstance().getGame(id);
 
-        HashMap<String , Object> body = new HashMap<>();
+        HashMap<String, Object> body = new HashMap<>();
         body.put("gifts", game.getGifts());
         Message response = new Message(body, MessageType.GET_BETWEEN_PLAYERS_GIFT_INFO);
         response.setRequestID(message.getRequestID());
         clientConnectionThread.sendMessage(response);
     }
 
-    public void rateGift(Message message,ClientConnectionThread clientConnectionThread) {
+    public void rateGift(Message message, ClientConnectionThread clientConnectionThread) {
         if (message == null) {
             return;
         }
 
-            int id = message.getIntFromBody("id");
-            Game game = GameSessionController.getInstance().getGame(id);
+        int id = message.getIntFromBody("id");
+        Game game = GameSessionController.getInstance().getGame(id);
 
-            int rate = message.getIntFromBody("rate");
-            int giftId = message.getIntFromBody("giftId");
+        int rate = message.getIntFromBody("rate");
+        int giftId = message.getIntFromBody("giftId");
 
-            BetweenPlayersGift gift = game.getGiftById(giftId);
+        BetweenPlayersGift gift = game.getGiftById(giftId);
 
-            if (gift == null) {
-                return;
+        if (gift == null) {
+            return;
+        }
+
+        gift.setRate(rate);
+        gift.setRated();
+
+        Player sender = null;
+        Player receiver = null;
+
+        for (Player p : game.getAllPlayers()) {
+            if (p.getUsername().equals(gift.getSenderUsername())) {
+                sender = p;
+            } else if (p.getUsername().equals(gift.getReceiverUsername())) {
+                receiver = p;
             }
+        }
 
-            gift.setRate(rate);
-            gift.setRated();
-
-            Player sender = null;
-            Player receiver = null;
-
-            for (Player p : game.getAllPlayers()) {
-                if (p.getUsername().equals(gift.getSenderUsername())) {
-                    sender = p;
-                } else if (p.getUsername().equals(gift.getReceiverUsername())) {
-                    receiver = p;
-                }
-            }
-
-            if (sender == null || receiver == null) {
-                return;
-            }
+        if (sender == null || receiver == null) {
+            return;
+        }
 
         RelationNetwork tempNetwork = game.getRelationsBetweenPlayers();
         Set<Player> lookUpKey = new HashSet<>();
@@ -133,7 +133,7 @@ public class PlayersRelationController {
         clientConnectionThread.sendMessage(response);
     }
 
-    public void sendGiftToPlayer(Message message,Player sender,ClientConnectionThread clientConnectionThread) {
+    public void sendGiftToPlayer(Message message, Player sender, ClientConnectionThread clientConnectionThread) {
         if (message == null || sender == null) {
             return;
         }
@@ -165,12 +165,15 @@ public class PlayersRelationController {
         RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
 
         game.addGiftsIndex();
-        BetweenPlayersGift tempGift = new BetweenPlayersGift(productName,sender.getUsername(),receiverUsername, game.getGiftIndex());
+        BetweenPlayersGift tempGift = new BetweenPlayersGift(productName, sender.getUsername(), receiverUsername,
+            game.getGiftIndex());
         game.addToGifts(tempGift);
 
         try {
-            receiver.getBackpack().addIngredients((Ingredient) Sellable.getSellableByName(productName,sender),quantity);
-            sender.getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(productName,sender),quantity);
+            receiver.getBackpack().addIngredients((Ingredient) Sellable.getSellableByName(productName, sender),
+                quantity);
+            sender.getBackpack().removeIngredients((Ingredient) Sellable.getSellableByName(productName, sender),
+                quantity);
         } catch (Exception e) {
             return;
         }
@@ -184,14 +187,14 @@ public class PlayersRelationController {
 
         Result result = new Result(true, "He/She received your gift with id " + game.getGiftIndex());
 
-        HashMap<String , Object> body = new HashMap<>();
+        HashMap<String, Object> body = new HashMap<>();
         body.put("result", result);
         Message response = new Message(body, MessageType.SEND_GIFT_TO_PLAYER_RESULT);
         response.setRequestID(message.getRequestID());
         clientConnectionThread.sendMessage(response);
     }
 
-    public void canHug(Message message,Player player,ClientConnectionThread clientConnectionThread) {
+    public void canHug(Message message, Player player, ClientConnectionThread clientConnectionThread) {
         if (message == null || player == null) {
             return;
         }
@@ -230,14 +233,14 @@ public class PlayersRelationController {
             result = new Result(true, "");
         }
 
-        HashMap<String , Object> body = new HashMap<>();
+        HashMap<String, Object> body = new HashMap<>();
         body.put("result", result);
-        Message response = new Message(body,MessageType.CAN_HUG_RESULT);
+        Message response = new Message(body, MessageType.CAN_HUG_RESULT);
         response.setRequestID(message.getRequestID());
         clientConnectionThread.sendMessage(response);
     }
 
-    public void canGiveFlower(Message message,Player player,ClientConnectionThread clientConnectionThread) {
+    public void canGiveFlower(Message message, Player player, ClientConnectionThread clientConnectionThread) {
         if (message == null || player == null) {
             return;
         }
@@ -270,7 +273,7 @@ public class PlayersRelationController {
 
         Result result;
 
-        if (player.getBackpack().getIngredientQuantity().getOrDefault(new Bouquet(),0) == 0) {
+        if (player.getBackpack().getIngredientQuantity().getOrDefault(new Bouquet(), 0) == 0) {
             result = new Result(false, "You don't have any bouquet!");
         } else {
             if (!tempRelation.canGiveFlower()) {
@@ -280,14 +283,14 @@ public class PlayersRelationController {
             }
         }
 
-        HashMap<String , Object> body = new HashMap<>();
+        HashMap<String, Object> body = new HashMap<>();
         body.put("result", result);
-        Message response = new Message(body,MessageType.CAN_GIVE_FLOWER_RESULT);
+        Message response = new Message(body, MessageType.CAN_GIVE_FLOWER_RESULT);
         response.setRequestID(message.getRequestID());
         clientConnectionThread.sendMessage(response);
     }
 
-    public void canAskMarriage(Message message,Player player,ClientConnectionThread clientConnectionThread) {
+    public void canAskMarriage(Message message, Player player, ClientConnectionThread clientConnectionThread) {
         if (message == null || player == null) {
             return;
         }
@@ -321,48 +324,49 @@ public class PlayersRelationController {
         Result result;
 
         if (player.getCurrentUser().getGender().equals(Gender.Female) || otherPlayer.getCurrentUser().getGender().equals(Gender.Male)) {
-            result = new Result(false , "Gender conflict!");
+            result = new Result(false, "Gender conflict!");
         } else if (tempRelation.isMarriage()) {
-            result = new Result(false , "She's your wife!!!");
+            result = new Result(false, "She's your wife!!!");
         } else if (!tempRelation.canRequestMarriage()) {
             result = new Result(false, "You can't request marriage at this friendship level!");
         } else if (otherPlayer.isMarried()) {
-            result =  new Result(false , "She's married!");
+            result = new Result(false, "She's married!");
         } else {
-            result = new Result(true,"");
+            result = new Result(true, "");
         }
 
-        HashMap<String , Object> body = new HashMap<>();
+        HashMap<String, Object> body = new HashMap<>();
         body.put("result", result);
-        Message response = new Message(body,MessageType.CAN_ASK_MARRIAGE_RESULT);
+        Message response = new Message(body, MessageType.CAN_ASK_MARRIAGE_RESULT);
         response.setRequestID(message.getRequestID());
         clientConnectionThread.sendMessage(response);
     }
 
-    public void getForSaleProducts(Message message,Player player,ClientConnectionThread clientConnectionThread) {
+    public void getForSaleProducts(Message message, Player player, ClientConnectionThread clientConnectionThread) {
         if (message == null || player == null) {
             return;
         }
 
         ArrayList<SellableDTO> products = new ArrayList<>();
 
-        HashMap<Ingredient,Integer> ingredientQuantity = player.getBackpack().getIngredientQuantity();
+        HashMap<Ingredient, Integer> ingredientQuantity = player.getBackpack().getIngredientQuantity();
 
         for (Ingredient ingredient : ingredientQuantity.keySet()) {
             if (Sellable.isSellable(ingredient.toString()) && ingredientQuantity.get(ingredient) > 0) {
                 Sellable s = (Sellable) ingredient;
-                products.add(new SellableDTO(ingredientQuantity.get(ingredient),Sellable.getNameInString(s),s.getSellPrice()));
+                products.add(new SellableDTO(ingredientQuantity.get(ingredient), Sellable.getNameInString(s),
+                    s.getSellPrice()));
             }
         }
 
-        HashMap<String , Object> body = new HashMap<>();
+        HashMap<String, Object> body = new HashMap<>();
         body.put("products", products);
         Message response = new Message(body, MessageType.GET_FOR_SALE_PRODUCTS_INFO);
         response.setRequestID(message.getRequestID());
         clientConnectionThread.sendMessage(response);
     }
 
-    public void getPlayers(Message message,Player player,ClientConnectionThread clientConnectionThread) {
+    public void getPlayers(Message message, Player player, ClientConnectionThread clientConnectionThread) {
         if (message == null || player == null) {
             return;
         }
@@ -377,14 +381,14 @@ public class PlayersRelationController {
             }
         }
 
-        HashMap<String , Object> body = new HashMap<>();
+        HashMap<String, Object> body = new HashMap<>();
         body.put("players", playerNames);
-        Message response = new Message(body,MessageType.GET_PLAYERS_RESPONSE);
+        Message response = new Message(body, MessageType.GET_PLAYERS_RESPONSE);
         response.setRequestID(message.getRequestID());
         clientConnectionThread.sendMessage(response);
     }
 
-    public void talkToPlayer(Message message,Player player,ClientConnectionThread clientConnectionThread) {
+    public void talkToPlayer(Message message, Player player, ClientConnectionThread clientConnectionThread) {
         if (message == null || player == null) {
             return;
         }
@@ -392,7 +396,8 @@ public class PlayersRelationController {
         int id = message.getIntFromBody("id");
         Game game = GameSessionController.getInstance().getGame(id);
         String text = message.getFromBody("text");
-        Type type = new TypeToken<ArrayList<String>>(){}.getType();
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
         ArrayList<String> receivers = message.getFromBody("players", type);
 
         for (Player p : game.getAllPlayers()) {
@@ -414,16 +419,49 @@ public class PlayersRelationController {
                     p.addEnergy(50);
                 }
 
-                tempNetwork.relationNetwork.put(lookUpKey,tempRelation);
-                p.addNotification(new Notification(text,player.getUsername())); // TODO
+                tempNetwork.relationNetwork.put(lookUpKey, tempRelation);
+                p.addNotification(new Notification(text, player.getUsername())); // TODO
             }
         }
 
-        Result result = new Result(true,"Notification sent.");
-        HashMap<String , Object> body = new HashMap<>();
+        Result result = new Result(true, "Notification sent.");
+        HashMap<String, Object> body = new HashMap<>();
         body.put("result", result);
-        Message response = new Message(body,MessageType.TALK_TO_PLAYER_RESULT);
+        Message response = new Message(body, MessageType.TALK_TO_PLAYER_RESULT);
         response.setRequestID(message.getRequestID());
         clientConnectionThread.sendMessage(response);
+    }
+
+    public boolean checkForOpenInPersonFriendshipMenu(int indexTileX, int indexTileY, Game game, Player player,
+                                                   ClientConnectionThread clientConnectionThread) {
+        if (game == null || player == null) {
+            return false;
+        }
+
+        String otherPlayer = null;
+
+        for (Player p : game.getAllPlayers()) {
+
+            if (p.getUsername().equals(player.getUsername())) {
+                continue;
+            }
+            float deltaX = (p.getPlayerPosition().getFirst()) - indexTileX;
+            float deltaY = (p.getPlayerPosition().getSecond()) - indexTileY;
+            if ((-0.5 < deltaX && 0.8 > deltaX) && (-0.7 < deltaY && 0.7 > deltaY)) {
+                otherPlayer = p.getUsername();
+                break;
+            }
+        }
+
+        if (otherPlayer == null) {
+            return false;
+        }
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("otherPlayer", otherPlayer);
+        Message message = new Message(body,MessageType.OPEN_IN_PERSON_FRIENDSHIP_MENU);
+        clientConnectionThread.sendMessage(message);
+
+        return true;
     }
 }

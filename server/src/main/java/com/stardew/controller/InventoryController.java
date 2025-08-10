@@ -212,7 +212,13 @@ public class InventoryController {
         Tile[][] tiles = game.getMap().getTiles();
         if (indexTileX < 0 || indexTileX >= tiles.length || indexTileY < 0 || indexTileY >= tiles[0].length)
             return;
+
         Tile target = game.getMap().findTile(indexTileX, indexTileY);
+
+        if (PlayersRelationController.getInstance().checkForOpenInPersonFriendshipMenu(indexTileX,indexTileY,game,player,connection)) {
+            return;
+        }
+
         InventoryItem item = player.getCurrentInventoryItem();
         Result result  = null;
 
