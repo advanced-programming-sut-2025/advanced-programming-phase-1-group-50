@@ -4,18 +4,17 @@ import com.stardew.model.gameApp.SecurityQuestion;
 
 public class User {
     private String username;
-    private String password;
+    private String passwordHash;
     private String nickname;
     private String email;
     private final Gender gender;
     private int numberOfGames = 0;
     private SecurityQuestion securityQuestion;
     private int highestScore;
-    private final PasswordUtil passwordUtil = new PasswordUtil();
 
-    public User(String username, String password, String nickname, String email, Gender gender , SecurityQuestion securityQuestion) {
+    public User(String username, String passwordHash, String nickname, String email, Gender gender , SecurityQuestion securityQuestion) {
         this.username = username;
-        this.password = passwordUtil.hashPassword(password);
+        this.passwordHash = passwordHash;
         this.nickname = nickname;
         this.email = email;
         this.gender = gender;
@@ -34,8 +33,8 @@ public class User {
         return email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
     public String getNickname() {
@@ -63,8 +62,8 @@ public class User {
     public void setSecurityQuestion(SecurityQuestion securityQuestion) {
         this.securityQuestion = securityQuestion;
     }
-    public void setPassword(String password){
-        this.password = passwordUtil.hashPassword(password);
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
     public void setUsername(String username){
         this.username = username;
