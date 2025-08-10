@@ -63,4 +63,5 @@ public enum Event {
     Hug,
     GiveFlower,
     RequestMarriage,
+    MarriageRequestResponse,
 }

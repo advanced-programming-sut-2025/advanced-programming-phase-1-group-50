@@ -7,6 +7,7 @@ import com.stardew.Main;
 import com.stardew.controller.GameStateController;
 import com.stardew.model.HabitatDTO;
 import com.stardew.model.LobbyDTO;
+import com.stardew.model.Notification.MarriageRequest;
 import com.stardew.model.Notification.Notification;
 import com.stardew.view.ArtisanMachine.ArtisanMachinesManager;
 import com.stardew.view.ArtisanMachine.HabitatUIManager;
@@ -53,8 +54,8 @@ public class MessageHandler {
                 int id = message.getIntFromBody("lobbyID");
                 LobbyDTO lobbyDTO = message.getFromBody("lobbyDTO", LobbyDTO.class);
                 Screen currentScreen = Main.getMain().getScreen();
-                if(currentScreen instanceof LobbyMenu lobbyMenu) {
-                    if(lobbyMenu.getLobby().id == id) {
+                if (currentScreen instanceof LobbyMenu lobbyMenu) {
+                    if (lobbyMenu.getLobby().id == id) {
                         Gdx.app.postRunnable(() -> {
                             lobbyMenu.updateLobbyInfo(lobbyDTO);
                         });
@@ -63,8 +64,9 @@ public class MessageHandler {
                 return true;
             }
             case SEND_ONLINE_USERS_RESULT -> {
-                ArrayList<String> onlineUsers = message.getFromBody("onlineUsers", new TypeToken<ArrayList<String>>(){}.getType());
-                if(Main.getMain().getScreen() instanceof PreLobbyMenu preLobbyMenu){
+                ArrayList<String> onlineUsers = message.getFromBody("onlineUsers", new TypeToken<ArrayList<String>>() {
+                }.getType());
+                if (Main.getMain().getScreen() instanceof PreLobbyMenu preLobbyMenu) {
                     preLobbyMenu.updateOnlineUsers(onlineUsers);
                 }
                 return true;
@@ -142,8 +144,10 @@ public class MessageHandler {
             }
 
             case OPEN_IN_PERSON_FRIENDSHIP_MENU -> {
-                String otherPlayer = message.getFromBody("otherPlayer");
-                WindowOpener.getInstance().openInPersonFriendshipMenu(otherPlayer);
+                Gdx.app.postRunnable(() -> {
+                    String otherPlayer = message.getFromBody("otherPlayer");
+                    WindowOpener.getInstance().openInPersonFriendshipMenu(otherPlayer);
+                });
                 return true;
             }
 
@@ -165,6 +169,24 @@ public class MessageHandler {
 
             case GIVE_FLOWER_ANIMATION -> {
                 Gdx.app.postRunnable(() -> WindowOpener.getInstance().spawnRoseEmojis());
+                return true;
+            }
+
+            case SEND_MARRIAGE_REQUEST -> {
+                Gdx.app.postRunnable(() -> {
+                    MarriageRequest request = message.getFromBody("notification", MarriageRequest.class);
+                    WindowOpener.getInstance().openRespondMarriageWindow(request);
+                });
+                return true;
+            }
+
+            case REJECT_MARRIAGE_REQUEST_ANIMATION -> {
+                Gdx.app.postRunnable(() -> WindowOpener.getInstance().rejectAnimation());
+                return true;
+            }
+
+            case ACCEPT_MARRIAGE_REQUEST_ANIMATION -> {
+                Gdx.app.postRunnable(() -> WindowOpener.getInstance().acceptAnimation());
                 return true;
             }
 

@@ -262,8 +262,12 @@ public class Player {
     public void addNotification (Notification notification, ClientConnectionThread connectionThread) {
         this.notifications.add(notification);
         if (notification instanceof MarriageRequest) {
-            //TODO
+            HashMap<String,Object> body = new HashMap<>();
+            body.put("notification", notification);
+            Message message = new Message(body,MessageType.SEND_MARRIAGE_REQUEST);
+            connectionThread.sendMessage(message);
         } else {
+            notification.setChecked(true);
             HashMap<String,Object> body = new HashMap<>();
             body.put("notification", notification);
             Message message = new Message(body, MessageType.SEND_NOTIFICATION);
