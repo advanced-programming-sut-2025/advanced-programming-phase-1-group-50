@@ -2,8 +2,10 @@ package com.stardew.controller;
 
 import com.google.gson.reflect.TypeToken;
 import com.stardew.model.Bouquet;
+import com.stardew.model.Notification.MarriageRequest;
 import com.stardew.model.Notification.Notification;
 import com.stardew.model.PlayersRelation.BetweenPlayersGift;
+import com.stardew.model.PlayersRelation.FriendshipLevelsWithPlayers;
 import com.stardew.model.PlayersRelation.RelationWithPlayers;
 import com.stardew.model.Result;
 import com.stardew.model.SellableDTO;
@@ -192,7 +194,7 @@ public class PlayersRelationController {
         }
 
 
-        receiver.addNotification(new Notification("you have received a gift", sender.getUsername()),temp);
+        receiver.addNotification(new Notification("you have received a gift", sender.getUsername()), temp);
 
         if (tempRelation.isMarriage()) {
             sender.addEnergy(50);
@@ -335,18 +337,37 @@ public class PlayersRelationController {
             return;
         }
 
-        Result result;
+        Result result = null;
 
-        if (player.getCurrentUser().getGender().equals(Gender.Female) || otherPlayer.getCurrentUser().getGender().equals(Gender.Male)) {
-            result = new Result(false, "Gender conflict!");
-        } else if (tempRelation.isMarriage()) {
-            result = new Result(false, "She's your wife!!!");
-        } else if (!tempRelation.canRequestMarriage()) {
-            result = new Result(false, "You can't request marriage at this friendship level!");
-        } else if (otherPlayer.isMarried()) {
-            result = new Result(false, "She's married!");
-        } else {
-            result = new Result(true, "");
+        for (Player p : game.getAllPlayers()) {
+            for (Notification n : p.getNotifications()) {
+                if (n instanceof MarriageRequest) {
+                    if (!n.isChecked() && n.getSender().equals(player.getUsername())) {
+                        result = new Result(false, "Del ke nist, karvansarast!");
+                    }
+                }
+            }
+        }
+
+        for (Notification notification : otherPlayer.getNotifications()) {
+            if (notification instanceof MarriageRequest && !notification.isChecked()) {
+                result = new Result(false, "Vaisa to saf");
+            }
+        }
+
+
+        if (result == null) {
+            if (player.getCurrentUser().getGender().equals(Gender.Female) || otherPlayer.getCurrentUser().getGender().equals(Gender.Male)) {
+                result = new Result(false, "Gender conflict!");
+            } else if (tempRelation.isMarriage()) {
+                result = new Result(false, "She's your wife!!!");
+            } else if (!tempRelation.canRequestMarriage()) {
+                result = new Result(false, "You can't request marriage at this friendship level!");
+            } else if (otherPlayer.isMarried()) {
+                result = new Result(false, "She's married!");
+            } else {
+                result = new Result(true, "");
+            }
         }
 
         HashMap<String, Object> body = new HashMap<>();
@@ -448,7 +469,7 @@ public class PlayersRelationController {
                     return;
                 }
 
-                p.addNotification(new Notification(text, player.getUsername()),temp);
+                p.addNotification(new Notification(text, player.getUsername()), temp);
             }
         }
 
@@ -461,7 +482,7 @@ public class PlayersRelationController {
     }
 
     public boolean checkForOpenInPersonFriendshipMenu(int indexTileX, int indexTileY, Game game, Player player,
-                                                   ClientConnectionThread clientConnectionThread) {
+                                                      ClientConnectionThread clientConnectionThread) {
         if (game == null || player == null) {
             return false;
         }
@@ -487,9 +508,232 @@ public class PlayersRelationController {
 
         HashMap<String, Object> body = new HashMap<>();
         body.put("otherPlayer", otherPlayer);
-        Message message = new Message(body,MessageType.OPEN_IN_PERSON_FRIENDSHIP_MENU);
+        Message message = new Message(body, MessageType.OPEN_IN_PERSON_FRIENDSHIP_MENU);
         clientConnectionThread.sendMessage(message);
 
         return true;
     }
+
+    public void hugPlayer(Message message, Player player) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int id = message.getIntFromBody("id");
+        String otherPlayerName = message.getFromBody("otherPlayerUsername");
+        Game game = GameSessionController.getInstance().getGame(id);
+
+        Player otherPlayer = null;
+
+        for (Player p : game.getAllPlayers()) {
+            if (p.getUsername().equals(otherPlayerName)) {
+                otherPlayer = p;
+                break;
+            }
+        }
+
+        if (otherPlayer == null) {
+            return;
+        }
+
+
+        RelationNetwork tempNetwork = game.getRelationsBetweenPlayers();
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(player);
+        lookUpKey.add(otherPlayer);
+
+        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+        if (!tempRelation.HaveHuggedToday()) {
+            tempRelation.setHaveHuggedToday(true);
+            tempRelation.changeXp(60);
+        }
+
+        if (tempRelation.isMarriage()) {
+            player.addEnergy(50);
+            otherPlayer.addEnergy(50);
+        }
+
+        HashMap<String, Object> body = new HashMap<>();
+        Message response = new Message(body, MessageType.HUG_ANIMATION);
+
+        for (ClientConnectionThread connectionThread : game.getConnections().keySet()) {
+            if (connectionThread.getUser().getUsername().equals(player.getUsername()) ||
+                connectionThread.getUser().getUsername().equals(otherPlayerName)) {
+                connectionThread.sendMessage(response);
+            }
+        }
+
+    }
+
+    public void giveFlower(Message message, Player player) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int id = message.getIntFromBody("id");
+        String otherPlayerName = message.getFromBody("otherPlayerUsername");
+        Game game = GameSessionController.getInstance().getGame(id);
+
+        Player otherPlayer = null;
+
+        for (Player p : game.getAllPlayers()) {
+            if (p.getUsername().equals(otherPlayerName)) {
+                otherPlayer = p;
+                break;
+            }
+        }
+
+        if (otherPlayer == null) {
+            return;
+        }
+
+
+        RelationNetwork tempNetwork = game.getRelationsBetweenPlayers();
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(player);
+        lookUpKey.add(otherPlayer);
+
+        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+        tempRelation.setGaveFlower();
+        tempRelation.setHaveGaveFlowerToday(true);
+        player.getBackpack().removeIngredients(new Bouquet(), 1);
+        otherPlayer.getBackpack().addIngredients(new Bouquet(), 1);
+
+        if (tempRelation.isMarriage()) {
+            player.addEnergy(50);
+            otherPlayer.addEnergy(50);
+        }
+        tempRelation.changeXp(0);
+
+        HashMap<String, Object> body = new HashMap<>();
+        Message response = new Message(body, MessageType.GIVE_FLOWER_ANIMATION);
+
+        for (ClientConnectionThread connectionThread : game.getConnections().keySet()) {
+            if (connectionThread.getUser().getUsername().equals(player.getUsername()) ||
+                connectionThread.getUser().getUsername().equals(otherPlayerName)) {
+                connectionThread.sendMessage(response);
+            }
+        }
+
+    }
+
+    public void requestMarriage(Message message, Player player, ClientConnectionThread clientConnectionThread) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int id = message.getIntFromBody("id");
+        String otherPlayerName = message.getFromBody("otherPlayerUsername");
+        Game game = GameSessionController.getInstance().getGame(id);
+
+        Player otherPlayer = null;
+
+        for (Player p : game.getAllPlayers()) {
+            if (p.getUsername().equals(otherPlayerName)) {
+                otherPlayer = p;
+                break;
+            }
+        }
+
+        if (otherPlayer == null) {
+            return;
+        }
+
+        ClientConnectionThread temp = null;
+        for (ClientConnectionThread connectionThread : game.getConnections().keySet()) {
+            if (connectionThread.getUser().getUsername().equals(otherPlayerName)) {
+                temp = connectionThread;
+                break;
+            }
+        }
+
+        if (temp == null) {
+            return;
+        }
+
+
+        otherPlayer.addNotification(new MarriageRequest("You are my soulmate. Every day with you feels like a dream. " +
+            "Will you stay by my side forever?",
+            player.getUsername()), temp);
+
+        HashMap<String, Object> body = new HashMap<>();
+        Message response = new Message(body, MessageType.MARRIAGE_ANIMATION);
+
+        clientConnectionThread.sendMessage(response);
+        temp.sendMessage(response);
+
+    }
+
+    public void respondMarriage(Message message, Player player) {
+        if (message == null || player == null) {
+            return;
+        }
+
+        int id = message.getIntFromBody("id");
+        Game game = GameSessionController.getInstance().getGame(id);
+        boolean accepted = message.getFromBody("status");
+        MarriageRequest request = message.getFromBody("marriageRequest", MarriageRequest.class);
+
+        MarriageRequest temp = null;
+
+        for (Notification notification : player.getNotifications()) {
+            if (notification instanceof MarriageRequest) {
+                if (notification.getSender().equals(request.getSender()) && notification.getMessage().equals(request.getMessage())) {
+                    temp = (MarriageRequest) notification;
+                    break;
+                }
+            }
+        }
+
+        if (temp == null) {
+            return;
+        }
+
+        Player sender = null;
+        for (Player p : game.getAllPlayers()) {
+            if (p.getUsername().equals(request.getSender())) {
+                sender = p;
+                break;
+            }
+        }
+
+        if (sender == null) {
+            return;
+        }
+
+        temp.setChecked(true);
+
+        RelationNetwork tempNetwork = game.getRelationsBetweenPlayers();
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(player);
+        lookUpKey.add(sender);
+
+        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
+        MessageType type;
+
+        if (accepted) {
+            type = MessageType.ACCEPT_MARRIAGE_REQUEST_ANIMATION;
+            player.setMarried(true);
+            sender.setMarried(true);
+            tempRelation.setMarriage();
+            tempRelation.setFriendshipLevel(FriendshipLevelsWithPlayers.LevelFour);
+        } else {
+            type = MessageType.REJECT_MARRIAGE_REQUEST_ANIMATION;
+            tempRelation.setFriendshipLevel(FriendshipLevelsWithPlayers.LevelZero);
+            sender.setRemainingNumsAfterMarriageRequestDenied(7);
+        }
+
+        HashMap<String, Object> body = new HashMap<>();
+        Message response = new Message(body, type);
+
+        for (ClientConnectionThread connectionThread : game.getConnections().keySet()) {
+            if (connectionThread.getUser().getUsername().equals(player.getUsername()) ||
+                connectionThread.getUser().getUsername().equals(sender.getUsername())) {
+                connectionThread.sendMessage(response);
+            }
+        }
+
+    }
+
+
 }

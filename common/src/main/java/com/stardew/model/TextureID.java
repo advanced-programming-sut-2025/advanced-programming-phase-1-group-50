@@ -740,6 +740,7 @@ public enum TextureID {
     quarry,
     initialGreenhouse,
     progressiveGreenhouse,
+    bouquet,
 
 
 

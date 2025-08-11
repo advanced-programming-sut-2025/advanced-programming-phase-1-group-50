@@ -95,10 +95,6 @@ public class RelationWithPlayers {
         }
     }
 
-    public FriendshipLevelsWithPlayers getFriendshipLevel() {
-        return friendshipLevel;
-    }
-
     public void setFriendshipLevel(FriendshipLevelsWithPlayers friendshipLevel) {
         this.xp = 0;
         this.friendshipLevel = friendshipLevel;

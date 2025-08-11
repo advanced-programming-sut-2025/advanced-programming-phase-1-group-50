@@ -21,16 +21,16 @@ public class Bouquet implements Ingredient {
 
     @Override
     public TextureID getInventoryTexture() {
-        return null;
+        return TextureID.bouquet;
     }
 
     @Override
     public InventoryItemDTO toDTO() {
-        return null;
+        return new InventoryItemDTO(getInventoryTexture() , false , 1 , "Bouquet" , getId());
     }
 
     @Override
     public String getId() {
-        return "";
+        return "bouquet";
     }
 }

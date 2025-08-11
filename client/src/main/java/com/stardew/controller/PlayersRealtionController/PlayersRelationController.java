@@ -1,7 +1,6 @@
 package com.stardew.controller.PlayersRealtionController;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.model.Notification.MarriageRequest;
 import com.stardew.model.PlayersRelation.BetweenPlayersGift;
 import com.stardew.model.Result;
@@ -105,30 +104,10 @@ public class PlayersRelationController {
             HashMap<String, Object> body = new HashMap<>();
             body.put("id", gameId);
             body.put("otherPlayerUsername", otherPlayerUsername);
-            body.put("event",Event.HugPlayer);
+            body.put("event",Event.Hug);
             Message message = new Message(body, MessageType.EVENT_IN_GAME);
-
+            NetworkManager.getConnection().sendMessage(message);
         }).start();
-        //TODO
-//
-//        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
-//        Set<Player> lookUpKey = new HashSet<>();
-//        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
-//        lookUpKey.add(otherPlayer);
-//
-//        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-//
-//        if (tempRelation.canHug()) {
-//            if (!tempRelation.HaveHuggedToday()) {
-//                tempRelation.setHaveHuggedToday(true);
-//                tempRelation.changeXp(60);
-//            }
-//
-//            if (tempRelation.isMarriage()) {
-//                App.getGame().getCurrentPlayingPlayer().addEnergy(50);
-//                otherPlayer.addEnergy(50);
-//            }
-//        }
     }
 
     public static void canGiveFlower(int gameId,String otherPlayerUsername, Consumer<Result> callback) {
@@ -155,25 +134,14 @@ public class PlayersRelationController {
     }
 
     public static void giveFlower(int gameId,String otherPlayerUsername) {
-        //TODO
-//
-//        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
-//        Set<Player> lookUpKey = new HashSet<>();
-//        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
-//        lookUpKey.add(otherPlayer);
-//
-//        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-//
-//        tempRelation.setGaveFlower();
-//        tempRelation.setHaveGaveFlowerToday(true);
-//        App.getGame().getCurrentPlayingPlayer().getBackpack().removeIngredients(new Bouquet(), 1);
-//        otherPlayer.getBackpack().addIngredients(new Bouquet(), 1);
-//        if (tempRelation.isMarriage()) {
-//            App.getGame().getCurrentPlayingPlayer().addEnergy(50);
-//            otherPlayer.addEnergy(50);
-//        }
-//        tempRelation.changeXp(0);
-
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("otherPlayerUsername", otherPlayerUsername);
+            body.put("event",Event.GiveFlower);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            NetworkManager.getConnection().sendMessage(message);
+        }).start();
     }
 
     public static void canAskMarriage(int gameId,String otherPlayerUsername, Consumer<Result> callback) {
@@ -200,73 +168,26 @@ public class PlayersRelationController {
     }
 
     public static void askMarriage(int gameId,String otherPlayerUsername) {
-        //TODO
-        //otherPlayer.addNotification(new MarriageRequest("You are my soulmate. Every day with you feels like a dream. Will you stay by my side forever?", App.getGame().getCurrentPlayingPlayer()));
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("otherPlayerUsername", otherPlayerUsername);
+            body.put("event",Event.RequestMarriage);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            NetworkManager.getConnection().sendMessage(message);
+        }).start();
     }
 
-    public static void checkForMarriageRequest(Stage stage) {
-//        MarriageRequest temp = null;
-//
-//        for (Notification n : App.getGame().getCurrentPlayingPlayer().getNotifications()) {
-//            if (n instanceof MarriageRequest) {
-//                if (!n.isChecked()) {
-//                    temp = (MarriageRequest) n;
-//                    break;
-//                }
-//            }
-//        }
-//
-//        if (temp == null) {
-//            return;
-//        }
-//
-//        stage.addActor(new RespondMarriageWindow(stage, temp));
-    }
-
-    public static void respondMarriage(MarriageRequest temp, boolean accepted) {
-        //TODO
-//        for (Player player : App.getGame().getPlayers()) {
-//            for (Notification notification : player.getNotifications()) {
-//                if (notification instanceof MarriageRequest) {
-//                    if (!notification.isChecked() && notification.getSender().equals(App.getGame().getCurrentPlayingPlayer())) {
-//                        return new Result(false , "Del ke nist, karvansarast!");
-//                    }
-//                }
-//            }
-//        }
-//
-//        for (Notification notification : otherPlayer.getNotifications()) {
-//            if (notification instanceof MarriageRequest && !notification.isChecked()) {
-//                return new Result(false , "Vaisa to saf");
-//            }
-//        }
-//
-//        return new Result(true,"");
-
-
-
-//        temp.setChecked(true);
-//
-//        RelationNetwork tempNetwork = App.getGame().getRelationsBetweenPlayers();
-//        Set<Player> lookUpKey = new HashSet<>();
-//        lookUpKey.add(App.getGame().getCurrentPlayingPlayer());
-//        lookUpKey.add(temp.getSender());
-//
-//        RelationWithPlayers tempRelation = tempNetwork.relationNetwork.get(lookUpKey);
-//
-//        if (accepted) {
-//
-//            App.getGame().getCurrentPlayingPlayer().setMarried(true);
-//            temp.getSender().setMarried(true);
-//
-//            tempRelation.setMarriage();
-//            tempRelation.setFriendshipLevel(FriendshipLevelsWithPlayers.LevelFour);
-//
-//        } else {
-//
-//            tempRelation.setFriendshipLevel(FriendshipLevelsWithPlayers.LevelZero);
-//            temp.getSender().setRemainingNumsAfterMarriageRequestDenied(7);
-//        }
+    public static void respondMarriage(int gameId,MarriageRequest temp, boolean accepted) {
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("id", gameId);
+            body.put("status", accepted);
+            body.put("marriageRequest", temp);
+            body.put("event",Event.MarriageRequestResponse);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            NetworkManager.getConnection().sendMessage(message);
+        }).start();
     }
 
 }
