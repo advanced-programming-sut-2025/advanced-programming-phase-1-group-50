@@ -144,10 +144,8 @@ public class MessageHandler {
             }
 
             case OPEN_IN_PERSON_FRIENDSHIP_MENU -> {
-                Gdx.app.postRunnable(() -> {
-                    String otherPlayer = message.getFromBody("otherPlayer");
-                    WindowOpener.getInstance().openInPersonFriendshipMenu(otherPlayer);
-                });
+                String otherPlayer = message.getFromBody("otherPlayer");
+                WindowOpener.getInstance().openInPersonFriendshipMenu(otherPlayer);
                 return true;
             }
 
@@ -158,35 +156,33 @@ public class MessageHandler {
             }
 
             case HUG_ANIMATION -> {
-                Gdx.app.postRunnable(() -> WindowOpener.getInstance().spawnHugEmojis());
+                WindowOpener.getInstance().spawnHugEmojis();
                 return true;
             }
 
             case MARRIAGE_ANIMATION -> {
-                Gdx.app.postRunnable(() -> WindowOpener.getInstance().spawnRingEmojis());
+                WindowOpener.getInstance().spawnRingEmojis();
                 return true;
             }
 
             case GIVE_FLOWER_ANIMATION -> {
-                Gdx.app.postRunnable(() -> WindowOpener.getInstance().spawnRoseEmojis());
+                WindowOpener.getInstance().spawnRoseEmojis();
                 return true;
             }
 
             case SEND_MARRIAGE_REQUEST -> {
-                Gdx.app.postRunnable(() -> {
-                    MarriageRequest request = message.getFromBody("notification", MarriageRequest.class);
-                    WindowOpener.getInstance().openRespondMarriageWindow(request);
-                });
+                MarriageRequest request = message.getFromBody("notification", MarriageRequest.class);
+                WindowOpener.getInstance().openRespondMarriageWindow(request);
                 return true;
             }
 
             case REJECT_MARRIAGE_REQUEST_ANIMATION -> {
-                Gdx.app.postRunnable(() -> WindowOpener.getInstance().rejectAnimation());
+                WindowOpener.getInstance().rejectAnimation();
                 return true;
             }
 
             case ACCEPT_MARRIAGE_REQUEST_ANIMATION -> {
-                Gdx.app.postRunnable(() -> WindowOpener.getInstance().acceptAnimation());
+                WindowOpener.getInstance().acceptAnimation();
                 return true;
             }
 
