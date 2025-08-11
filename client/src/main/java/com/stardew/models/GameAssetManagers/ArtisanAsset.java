@@ -1,7 +1,7 @@
 package com.stardew.models.GameAssetManagers;
 
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.stardew.models.manuFactor.*;
+
 
 import java.util.*;
 
@@ -92,32 +92,32 @@ public enum ArtisanAsset {
         return description;
     }
 
-    public static ArtisanAsset getArtisanAssetByInstance(ArtisanMachine artisanMachine) {
-        if (artisanMachine instanceof BeeHouse)
-            return BeeHouse;
-        if (artisanMachine instanceof CharcoalKiln)
-            return CharcoalKiln;
-        if (artisanMachine instanceof CheesePress)
-            return CheesePress;
-        if (artisanMachine instanceof Dehydrator)
-            return Dehydrator;
-        if (artisanMachine instanceof FishSmoker)
-            return FishSmoker;
-        if (artisanMachine instanceof Furnace)
-            return Furnace;
-        if (artisanMachine instanceof Keg)
-            return Keg;
-        if (artisanMachine instanceof Loom)
-            return Loom;
-        if (artisanMachine instanceof MayonnaiseMachine)
-            return MayonnaiseMachine;
-        if (artisanMachine instanceof OilMaker)
-            return OilMaker;
-        if (artisanMachine instanceof PreservesJar)
-            return PreservesJar;
-        else
-            return null;
-    }
+//    public static ArtisanAsset getArtisanAssetByInstance(ArtisanMachine artisanMachine) {
+//        if (artisanMachine instanceof BeeHouse)
+//            return BeeHouse;
+//        if (artisanMachine instanceof CharcoalKiln)
+//            return CharcoalKiln;
+//        if (artisanMachine instanceof CheesePress)
+//            return CheesePress;
+//        if (artisanMachine instanceof Dehydrator)
+//            return Dehydrator;
+//        if (artisanMachine instanceof FishSmoker)
+//            return FishSmoker;
+//        if (artisanMachine instanceof Furnace)
+//            return Furnace;
+//        if (artisanMachine instanceof Keg)
+//            return Keg;
+//        if (artisanMachine instanceof Loom)
+//            return Loom;
+//        if (artisanMachine instanceof MayonnaiseMachine)
+//            return MayonnaiseMachine;
+//        if (artisanMachine instanceof OilMaker)
+//            return OilMaker;
+//        if (artisanMachine instanceof PreservesJar)
+//            return PreservesJar;
+//        else
+//            return null;
+//    }
 
     public static ArtisanAsset getArtisanAssetByName(String name) {
         if (name == null) return null;

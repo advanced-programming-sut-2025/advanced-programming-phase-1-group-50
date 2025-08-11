@@ -10,7 +10,6 @@ import com.google.gson.reflect.TypeToken;
 import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.TextureID;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
@@ -267,24 +266,9 @@ public class InventoryWindow extends CloseableWindow {
 
     }
 
-    public Tool findTool(Tool t , ArrayList<Tool> tools) {
-        for(Tool tool : tools) {
-            if(tool.equals(t)) {
-                return tool;
-            }
-        }
-        return null;
-    }
 
-    public Ingredient findIngredient(Ingredient ing, HashMap<Ingredient , Integer> map) {
-        for(Map.Entry<Ingredient , Integer> entry : map.entrySet()) {
-            if(entry.getKey().equals(ing)) {
-                return entry.getKey();
-            }
-        }
 
-        return null;
-    }
+
 
     public void updateDTO(ArrayList<InventoryItemDTO> dto) {
         backpackGrid.updateDTO(dto);

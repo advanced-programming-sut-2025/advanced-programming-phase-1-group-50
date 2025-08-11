@@ -13,7 +13,7 @@ import com.stardew.view.modelsUI.ArtisanMachinesManager;
 import com.stardew.view.modelsUI.HabitatUIManager;
 import com.stardew.view.LobbyMenus.LobbyMenu;
 import com.stardew.view.LobbyMenus.PreLobbyMenu;
-import com.stardew.view.NotificationManager;
+import com.stardew.view.Notification.NotificationManager;
 import com.stardew.view.SelectFarmMenu;
 import com.stardew.view.WindowOpener;
 import com.stardew.view.miniGame.MiniGameStarter;
