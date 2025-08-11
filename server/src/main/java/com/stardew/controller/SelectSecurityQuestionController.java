@@ -1,7 +1,6 @@
 package com.stardew.controller;
 
 import com.stardew.model.Result;
-import com.stardew.model.gameApp.App;
 import com.stardew.model.gameApp.SecurityQuestion;
 import com.stardew.model.userInfo.Gender;
 import com.stardew.model.userInfo.PasswordUtil;
