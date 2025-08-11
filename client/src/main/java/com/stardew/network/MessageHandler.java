@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.google.gson.reflect.TypeToken;
 import com.stardew.Main;
-import com.stardew.controller.GameStateController;
+import com.stardew.controller.GameModelController;
 import com.stardew.model.HabitatDTO;
 import com.stardew.model.LobbyDTO;
 import com.stardew.model.Notification.MarriageRequest;
@@ -23,11 +23,11 @@ import java.util.ArrayList;
 
 public class MessageHandler {
     private static MessageHandler instance;
-    private final GameStateController gameStateController;
+    private final GameModelController gameModelController;
 
 
     private MessageHandler() {
-        gameStateController = GameStateController.getInstance();
+        gameModelController = GameModelController.getInstance();
     }
 
     public static MessageHandler getInstance() {
@@ -80,38 +80,38 @@ public class MessageHandler {
                 return true;
             }
             case MAP_REQUEST_RESULT -> {
-                gameStateController.handleRequestMap(message);
+                gameModelController.handleRequestMap(message);
                 return true;
             }
             case UPDATE_TILES_RESULT -> {
-                gameStateController.handleUpdateTiles(message);
+                gameModelController.handleUpdateTiles(message);
                 return true;
             }
             case UPDATE_PLAYERS_RESULT -> {
-                gameStateController.handleUpdatePlayers(message);
+                gameModelController.handleUpdatePlayers(message);
                 return true;
             }
             case UPDATE_HOT_BAR_RESULT -> {
-                gameStateController.updateHotBar(message);
-                gameStateController.handleUpdateCoin(message);
+                gameModelController.updateHotBar(message);
+                gameModelController.handleUpdateCoin(message);
                 return true;
             }
             case UPDATE_TIME -> {
-                gameStateController.handleUpdateTime(message);
+                gameModelController.handleUpdateTime(message);
                 if (ArtisanMachinesManager.getInstance() != null) ArtisanMachinesManager.getInstance().updateMachines();
                 return true;
             }
             case SHOW_INVENTORY_RESULT -> {
-                gameStateController.handleUpdateInventoryList(message);
+                gameModelController.handleUpdateInventoryList(message);
                 return true;
             }
 
             case UPDATE_REACTION -> {
-                gameStateController.handleUpdateReaction(message);
+                gameModelController.handleUpdateReaction(message);
                 return true;
             }
             case UPDATE_ANIMALS_RESULT -> {
-                gameStateController.handleUpdateAnimals(message);
+                gameModelController.handleUpdateAnimals(message);
                 return true;
             }
             case ADD_NEW_HABITAT_UI -> {
@@ -134,12 +134,12 @@ public class MessageHandler {
             }
 
             case UPDATE_SCOREBOARD_RESULT -> {
-                gameStateController.handleUpdateScoreBoard(message);
+                gameModelController.handleUpdateScoreBoard(message);
                 return true;
             }
 
             case FADE_NIGHT -> {
-                gameStateController.handleFadeOut(message);
+                gameModelController.handleFadeOut(message);
                 return true;
             }
 

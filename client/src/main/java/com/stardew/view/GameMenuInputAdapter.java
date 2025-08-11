@@ -44,15 +44,12 @@ public class GameMenuInputAdapter extends InputAdapter {
     private final Set<Integer> keys = new HashSet<>();
     private final Set<Integer> justPressedKeys = new HashSet<>();
     private float lastVx, lastVy;
-
     private final Stage stage;
     private HotBarActor hotBar;
-    private final GameModel gameModel;
 
 
-    public GameMenuInputAdapter(int id, GameModel gameModel, Stage stage) {
+    public GameMenuInputAdapter(int id, Stage stage) {
         this.stage = stage;
-        this.gameModel = gameModel;
         this.id = id;
     }
 
@@ -85,7 +82,6 @@ public class GameMenuInputAdapter extends InputAdapter {
 
         }
 
-
         return true;
     }
 
@@ -98,24 +94,14 @@ public class GameMenuInputAdapter extends InputAdapter {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-//        Player currentPlayer = App.getGame().getCurrentPlayingPlayer();
-//
-//        int startX = App.getGame().getMap().getFarmStartX(currentPlayer , App.getGame());
-//        int startY = App.getGame().getMap().getFarmStartY(currentPlayer , App.getGame());
-//
         Vector2 stageCoords = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
         int indexTileX = ((int)(stageCoords.x / GamePictureManager.TILE_SIZE)) ;
         int indexTileY = ((int)(stageCoords.y / GamePictureManager.TILE_SIZE)) ;
         sendClickTile(indexTileX, indexTileY);
-
-//        model.handleClickTile(indexTileX, indexTileY);
-
-
         return true;
     }
 
     public void update(float delta) {
-//        Player p = App.getGame().getCurrentPlayingPlayer();
         float vx = 0 , vy = 0;
         int dir = 0;
 
@@ -298,40 +284,12 @@ public class GameMenuInputAdapter extends InputAdapter {
         }).start();
     }
 
-    public void createStoreWindow(String assistantName) {
-        stage.addActor(new StoreWindow(id,stage , assistantName));
-    }
-
-    public void showClosedStoreMessage() {
-        stage.addActor(new StoreClosedMessageWindow(stage));
-    }
-
-
-
 
 
     public void setHotBar(HotBarActor hotBar) {
         this.hotBar = hotBar;
     }
 
-    public HotBarActor getHotBar() {
-        return hotBar;
-    }
-
-    @Override
-    public boolean scrolled(float amountX , float amountY){
-//        if (hotBar != null) {
-//            int current = hotBar.getSelectedIndex();
-//            int count = hotBar.getItemCount();
-//
-//            if (amountY > 0) {
-//                hotBar.setSelectedIndex((current + 1) % count);
-//            } else if (amountY < 0) {
-//                hotBar.setSelectedIndex((current - 1 + count) % count);
-//            }
-//        }
-        return true;
-    }
 
     private void sendMapRequest() {
         new Thread(() -> {

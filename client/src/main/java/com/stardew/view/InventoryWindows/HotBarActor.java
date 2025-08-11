@@ -31,15 +31,15 @@ public class HotBarActor extends Actor {
     private int lastVisitedCellX = -1;
     private final BitmapFont smallFont = GamePictureManager.smallFont;
     private final GlyphLayout layout = new GlyphLayout();
-    private final GameModel gameState;
+    private final GameModel gameModel;
     private static HotBarActor currentInstance = null;
     private final int id;
 
 
 
-    public HotBarActor(GameModel gameState , int id) {
+    public HotBarActor(GameModel gameModel, int id) {
 
-        this.gameState = gameState;
+        this.gameModel = gameModel;
         this.id = id;
         currentInstance = this;
         initialize();
@@ -93,7 +93,7 @@ public class HotBarActor extends Actor {
     public void initialize() {
         setSize(itemSize * itemCount, itemSize);
         setPosition(Gdx.graphics.getWidth() / 2f - getWidth() / 2f, 70);
-        InventoryItemDTO[] items = gameState.getHotBar();
+        InventoryItemDTO[] items = gameModel.getHotBar();
 
         for (int i = 0; i < itemCount; i++) {
             cells[i] = new ItemCell();

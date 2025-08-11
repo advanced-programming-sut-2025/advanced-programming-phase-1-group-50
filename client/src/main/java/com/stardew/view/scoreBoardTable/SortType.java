@@ -1,4 +1,4 @@
-package com.stardew.models;
+package com.stardew.view.scoreBoardTable;
 
 public enum SortType {
     NORMAL,

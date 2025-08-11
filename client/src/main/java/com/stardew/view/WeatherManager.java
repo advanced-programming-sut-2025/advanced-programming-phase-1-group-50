@@ -113,9 +113,6 @@ public class WeatherManager {
         }
     }
 
-    public void setGameModel(GameModel gameModel){
-        this.gameModel = gameModel;
-    }
 
     public void thunder(float delta , Stage stage , String weather) {
         if(weather.equals("Stormy")) {
