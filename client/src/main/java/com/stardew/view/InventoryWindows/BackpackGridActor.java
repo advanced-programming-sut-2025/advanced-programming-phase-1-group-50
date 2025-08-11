@@ -10,8 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.stardew.model.InventoryItemDTO;
 import com.stardew.models.GameAssetManagers.GameAssetIDManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.InventoryItem;
-import com.stardew.models.app.App;
 import com.stardew.view.windows.SmartTooltip;
 
 import java.util.ArrayList;

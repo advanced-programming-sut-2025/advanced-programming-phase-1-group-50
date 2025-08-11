@@ -4,12 +4,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.stardew.Main;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.App;
 import com.stardew.models.userInfo.Player;
 import com.stardew.models.userInfo.User;
 import com.stardew.view.CreateNewGameMenu;
 import com.stardew.view.GameMenu;
-import com.stardew.view.SelectFarmMenu;
 
 import java.util.ArrayList;
 

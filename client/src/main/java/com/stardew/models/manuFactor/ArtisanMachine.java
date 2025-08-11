@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
-import com.stardew.models.app.App;
 import com.stardew.models.date.Time;
 import com.stardew.models.date.TimeInterval;
 import com.stardew.models.manuFactor.artisanGoods.ArtisanGood;

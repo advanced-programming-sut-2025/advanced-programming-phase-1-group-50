@@ -1,10 +1,7 @@
 package com.stardew.models.waterBodies;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.stardew.models.BackgroundColors;
-import com.stardew.models.ColorPrinter;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
 import com.stardew.models.stores.CarpenterShop;

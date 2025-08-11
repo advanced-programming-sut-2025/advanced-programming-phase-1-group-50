@@ -1,14 +1,10 @@
 package com.stardew.models.foraging;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.stardew.models.BackgroundColors;
-import com.stardew.models.ColorPrinter;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
-import com.stardew.models.app.App;
 import com.stardew.models.date.Season;
 import com.stardew.models.date.Time;
 import com.stardew.models.date.Weather;

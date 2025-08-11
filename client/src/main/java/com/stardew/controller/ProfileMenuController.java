@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.PasswordUtil;
-import com.stardew.models.app.App;
 import com.stardew.view.ProfileMenu;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;

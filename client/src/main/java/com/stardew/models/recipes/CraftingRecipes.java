@@ -5,8 +5,6 @@ import com.stardew.models.foraging.TreeSource;
 import com.stardew.models.manuFactor.Ingredient;
 import com.stardew.models.manuFactor.artisanGoods.ArtisanGood;
 import com.stardew.models.manuFactor.artisanGoods.ArtisanGoodType;
-import com.stardew.models.mapInfo.Stone;
-import com.stardew.models.mapInfo.Wood;
 
 import java.util.HashMap;
 import java.util.Map;

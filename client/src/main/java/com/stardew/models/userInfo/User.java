@@ -1,7 +1,6 @@
 package com.stardew.models.userInfo;
 
 import com.stardew.models.PasswordUtil;
-import com.stardew.models.app.SecurityQuestion;
 
 public class User {
     private String username;

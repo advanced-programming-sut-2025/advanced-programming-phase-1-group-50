@@ -4,7 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.animals.Fish;
-import com.stardew.models.app.App;
 import com.stardew.models.foraging.ForagingMineral;
 import com.stardew.models.manuFactor.artisanGoods.ArtisanGood;
 import com.stardew.models.manuFactor.artisanGoods.ArtisanGoodType;

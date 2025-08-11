@@ -1,15 +1,8 @@
 package com.stardew.controller;
 
-import com.badlogic.gdx.Screen;
-import com.stardew.Main;
-import com.stardew.models.app.App;
-import com.stardew.models.app.FarmFactory;
 import com.stardew.models.app.Game;
-import com.stardew.models.mapInfo.Farm;
 import com.stardew.models.mapInfo.Map;
 import com.stardew.models.userInfo.Player;
-import com.stardew.view.GameMenu;
-import com.stardew.view.GameScreenMenu;
 import com.stardew.view.SelectFarmMenu;
 
 import java.util.ArrayList;

@@ -2,7 +2,6 @@ package com.stardew.view.modelsManager;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.stardew.models.animals.Animal;
-import com.stardew.models.app.App;
 
 import java.util.ArrayList;
 

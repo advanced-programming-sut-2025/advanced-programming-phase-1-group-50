@@ -8,10 +8,8 @@ import com.stardew.models.InventoryItem;
 import com.stardew.models.NPCs.NPCType;
 import com.stardew.models.NPCs.RelationWithNPC;
 import com.stardew.models.manuFactor.Ingredient;
-import com.stardew.models.mapInfo.Farm;
 import com.stardew.models.mapInfo.Pair;
 import com.stardew.models.mapInfo.Position;
-import com.stardew.models.mapInfo.Wood;
 import com.stardew.models.tools.*;
 import com.stardew.models.app.*;
 

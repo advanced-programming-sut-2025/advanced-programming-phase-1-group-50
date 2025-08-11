@@ -1,4 +1,4 @@
-package com.stardew.view;
+package com.stardew.view.Stores;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;

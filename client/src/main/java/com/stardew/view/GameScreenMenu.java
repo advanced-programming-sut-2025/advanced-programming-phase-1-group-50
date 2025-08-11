@@ -14,12 +14,12 @@ import com.stardew.controller.TimeManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.ShippingBin;
 import com.stardew.models.GameModel;
-import com.stardew.models.app.App;
 import com.stardew.network.GameUpdateRequestThread;
 import com.stardew.view.ArtisanMachine.ArtisanMachinesManager;
 import com.stardew.view.ArtisanMachine.HabitatUIManager;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.ReactionWindows.ReactionTable;
+import com.stardew.view.Stores.StoreUIManager;
 import com.stardew.view.miniGame.MiniGameStarter;
 import com.stardew.view.windows.SmartTooltip;
 

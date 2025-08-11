@@ -3,7 +3,6 @@ package com.stardew.models.manuFactor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.App;
 import com.stardew.models.foraging.Crop;
 import com.stardew.models.foraging.CropType;
 import com.stardew.models.foraging.ForagingCrop;

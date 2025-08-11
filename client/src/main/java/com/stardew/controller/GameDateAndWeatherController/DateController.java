@@ -1,7 +1,6 @@
 package com.stardew.controller.GameDateAndWeatherController;
 
 import com.stardew.model.Result;
-import com.stardew.models.app.App;
 
 public class DateController {
     public Result getHour(){
