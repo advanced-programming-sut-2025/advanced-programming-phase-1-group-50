@@ -1,16 +1,9 @@
 package com.stardew.model.mapInfo;
 
-//import com.badlogic.gdx.graphics.Texture;
-//import com.badlogic.gdx.graphics.g2d.TextureRegion;
-//import com.stardew.model.GameAssetManagers.GamePictureManager;
-//import com.stardew.model.Placeable;
 import com.stardew.model.TextureID;
 import com.stardew.model.TileDTO;
 import com.stardew.model.mapInfo.foraging.Fertilizer;
-import com.stardew.model.gameApp.App;
-//import com.stardew.model.foraging.Fertilizer;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Tile {
