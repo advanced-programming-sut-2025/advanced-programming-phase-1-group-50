@@ -13,14 +13,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.stardew.Main;
-import com.stardew.controller.ProfileMenuController;
+
 import com.stardew.models.ClientInfo.LoggedInUser;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 
 
 
 public class ProfileMenu implements AppMenu , Screen {
-    private final  ProfileMenuController controller = new ProfileMenuController();
+
     private Stage stage;
     private final Label profileMenu;
     private final TextButton changePassword;
@@ -128,7 +128,7 @@ public class ProfileMenu implements AppMenu , Screen {
 //            }
 //        });
 
-        controller.setView(this);
+
 
     }
 

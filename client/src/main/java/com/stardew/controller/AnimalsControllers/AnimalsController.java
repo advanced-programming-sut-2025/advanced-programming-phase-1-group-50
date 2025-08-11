@@ -9,7 +9,6 @@ import com.stardew.models.mapInfo.Map;
 import com.stardew.models.tools.FishingPole;
 import com.stardew.models.tools.MilkPail;
 import com.stardew.models.tools.Shear;
-import com.stardew.models.userInfo.Coin;
 import com.stardew.models.userInfo.Player;
 
 import java.util.ArrayList;

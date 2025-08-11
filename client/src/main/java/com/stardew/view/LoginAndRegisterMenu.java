@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.stardew.controller.LoginAndRegisterController;
 import com.stardew.model.UserDTO;
 import com.stardew.models.ClientInfo.LoggedInUser;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
