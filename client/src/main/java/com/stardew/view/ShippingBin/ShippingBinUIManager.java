@@ -1,4 +1,4 @@
-package com.stardew.view;
+package com.stardew.view.ShippingBin;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.view.SellProductWindow.ShippingBinWindow;
 
 public class ShippingBinUIManager {
 

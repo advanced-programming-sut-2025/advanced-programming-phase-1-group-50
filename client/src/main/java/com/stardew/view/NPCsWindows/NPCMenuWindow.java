@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.NPCs.NPCType;
 import com.stardew.view.windows.CloseableWindow;
 
 public class NPCMenuWindow extends CloseableWindow {

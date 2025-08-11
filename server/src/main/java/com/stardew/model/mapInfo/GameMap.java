@@ -1,7 +1,6 @@
 package com.stardew.model.mapInfo;
 
 import com.stardew.model.NPCs.NPC;
-import com.stardew.model.NPCs.NPCType;
 import com.stardew.model.ShippingBin;
 import com.stardew.model.gameApp.TimeProvider;
 import com.stardew.model.mapInfo.foraging.Crop;

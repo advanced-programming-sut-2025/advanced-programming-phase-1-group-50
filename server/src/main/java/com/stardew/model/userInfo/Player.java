@@ -1,7 +1,6 @@
 package com.stardew.model.userInfo;
 
 
-import com.stardew.model.NPCs.NPCType;
 import com.stardew.model.NPCs.RelationWithNPC;
 import com.stardew.model.Notification.MarriageRequest;
 import com.stardew.model.Notification.Notification;

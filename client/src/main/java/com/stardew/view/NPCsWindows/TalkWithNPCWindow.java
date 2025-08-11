@@ -1,4 +1,4 @@
-package com.stardew.view;
+package com.stardew.view.NPCsWindows;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -11,7 +11,6 @@ import com.badlogic.gdx.utils.Timer;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.NPCs.NPCType;
 import com.stardew.network.*;
 import com.stardew.network.Event;
 import com.stardew.view.windows.CloseableWindow;

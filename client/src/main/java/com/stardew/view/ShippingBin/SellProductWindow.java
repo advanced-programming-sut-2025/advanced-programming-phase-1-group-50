@@ -1,4 +1,4 @@
-package com.stardew.view.SellProductWindow;
+package com.stardew.view.ShippingBin;
 
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;

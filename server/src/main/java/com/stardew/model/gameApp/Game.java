@@ -3,7 +3,6 @@ package com.stardew.model.gameApp;
 import com.stardew.controller.AnimalsControllers.AnimalsService;
 import com.stardew.model.*;
 import com.stardew.model.NPCs.NPC;
-import com.stardew.model.NPCs.NPCType;
 import com.stardew.model.PlayersRelation.BetweenPlayersGift;
 import com.stardew.model.PlayersRelation.RelationWithPlayers;
 import com.stardew.model.animals.Animal;

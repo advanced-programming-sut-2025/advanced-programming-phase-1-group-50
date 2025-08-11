@@ -6,7 +6,7 @@ import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 import com.stardew.network.NetworkManager;
-import com.stardew.view.ShippingBinUIManager;
+import com.stardew.view.ShippingBin.ShippingBinUIManager;
 
 import java.util.HashMap;
 import java.util.function.Consumer;

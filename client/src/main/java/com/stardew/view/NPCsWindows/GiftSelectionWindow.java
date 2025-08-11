@@ -14,7 +14,6 @@ import com.google.gson.reflect.TypeToken;
 import com.stardew.controller.NPCController.NPCController;
 import com.stardew.model.SellableDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.NPCs.NPCType;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;

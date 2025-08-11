@@ -1,4 +1,4 @@
-package com.stardew.view;
+package com.stardew.view.NPCsWindows;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -8,8 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.NPCs.NPCType;
-import com.stardew.view.NPCsWindows.NPCMenuWindow;
 
 public class NPCsUIManger {
 

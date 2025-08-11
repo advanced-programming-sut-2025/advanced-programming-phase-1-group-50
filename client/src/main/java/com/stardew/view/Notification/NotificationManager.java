@@ -1,4 +1,4 @@
-package com.stardew.view;
+package com.stardew.view.Notification;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.model.Notification.Notification;

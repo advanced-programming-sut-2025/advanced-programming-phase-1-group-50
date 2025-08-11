@@ -1,4 +1,4 @@
-package com.stardew.view.StoreWindows;
+package com.stardew.view.Stores;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;

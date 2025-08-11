@@ -1,4 +1,4 @@
-package com.stardew.view.SellProductWindow;
+package com.stardew.view.ShippingBin;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

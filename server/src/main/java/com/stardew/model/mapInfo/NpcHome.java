@@ -1,6 +1,5 @@
 package com.stardew.model.mapInfo;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.model.NPCs.NPC;
 import com.stardew.model.TextureID;
@@ -17,9 +16,7 @@ public class NpcHome implements Placeable {
     public NpcHome(int x, int y, int width, int height , NPC npc) {
         rectangle = new Rectangle(x, y, width, height);
         this.npc = npc;
-//        regions = npc.getHomeRegions(npc.getType());
         texture = npc.getHomeTextureByType(npc.getType());
-
     }
 
     public Rectangle getBounds() {
@@ -39,11 +36,5 @@ public class NpcHome implements Placeable {
     @Override
     public TextureID getTexture() {
         return texture;
-    }
-
-
-
-    public TextureRegion[][] getRegions() {
-        return regions;
     }
 }

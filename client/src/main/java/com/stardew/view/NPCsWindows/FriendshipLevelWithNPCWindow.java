@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.stardew.controller.NPCController.NPCController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.NPCs.NPCType;
 import com.stardew.view.windows.CloseableWindow;
 
 public class FriendshipLevelWithNPCWindow extends CloseableWindow {
