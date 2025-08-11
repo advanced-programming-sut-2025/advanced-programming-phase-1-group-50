@@ -2,6 +2,7 @@ package com.stardew.network;
 
 public enum Event {
     Moving,
+    ExitGame,
     CLickTile,
     ShowInventory,
     RemoveItem,

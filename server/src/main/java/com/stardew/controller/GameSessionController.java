@@ -67,8 +67,10 @@ public class GameSessionController {
         int endY = message.getIntFromBody("endY");
         int endX = message.getIntFromBody("endX");
 
+        Player player = game.getPlayer(connection);
+        if (player == null) return;
         HashMap<String, Object> body = new HashMap<>();
-        body.put("main_player", game.getPlayer(connection).toDTO());
+        body.put("main_player", player.toDTO());
         body.put("other_players", game.getOtherVisiblePlayers(startX, startY, endX, endY, connection));
         Message response = new Message(body, MessageType.UPDATE_PLAYERS_RESULT);
         connection.sendMessage(response);
@@ -145,6 +147,7 @@ public class GameSessionController {
         if (game == null) return;
 
         Player player = game.getPlayer(connection);
+        if (player == null) return;
         InventoryController.getInstance().sendHotBarUpdate(player, connection);
     }
 
@@ -157,45 +160,46 @@ public class GameSessionController {
         Event event = message.getFromBody("event", Event.class);
         if (event == null) return;
 
+        Player player = game.getPlayer(connection);
+        if (player == null) return;
+
         switch (event) {
             case Moving -> {
-                Player player = game.getPlayer(connection);
                 PlayerController.getInstance().handleMovement(player, game, message);
             }
+            case ExitGame -> {
+                game.getConnections().remove(connection);
+                if (game.getConnections().isEmpty()) {
+                    game.stopGameProcess();
+                    removeGame(id);
+                    LobbyController.getInstance().removeId(id);
+                }
+            }
             case ShowInventory -> {
-                Player p = game.getPlayer(connection);
-                InventoryController.getInstance().handleSendInventoryList(p , connection , message.getRequestID());
+                InventoryController.getInstance().handleSendInventoryList(player, connection , message.getRequestID());
             }
             case RemoveItem -> {
-                Player p = game.getPlayer(connection);
-                InventoryController.getInstance().handleRemoveItem(p , message , connection , message.getRequestID());
+                InventoryController.getInstance().handleRemoveItem(player, message , connection , message.getRequestID());
 
             }
             case GetCookingOrCraftingInfo -> {
-                Player player = game.getPlayer(connection);
                 CookingCraftingInfoController.getInstance().handleGetInfo(message, player, connection);
             }
             case CookingFood -> {
-                Player player = game.getPlayer(connection);
                 CookingController.getInstance().cookingPrepare(message, player, connection);
             }
             case GetMyFarmInfo -> {
-                Player player = game.getPlayer(connection);
                 CookingCraftingInfoController.getInstance().handleGetFarmInfo(message, player, game.getMap(), connection);
             }
             case CraftingMachine -> {
-                Player player = game.getPlayer(connection);
                 CraftingController.getInstance().craftingCraft(message, player, game.getMap(), game.getTime(), connection);
             }
 
             case GetSkillInfo -> {
-                Player player = game.getPlayer(connection);
                 InventoryController.getInstance().handleSendSkillInfo(player , connection , message.getRequestID());
-
             }
 
             case GetRelationWithNPCInfo -> {
-                Player player = game.getPlayer(connection);
                 InventoryController.getInstance().handleSendRelationWithNPCInfo(player, connection , message.getRequestID());
             }
 
@@ -206,60 +210,46 @@ public class GameSessionController {
             }
 
             case ShuffleInventory -> {
-                Player player = game.getPlayer(connection);
                 InventoryController.getInstance().handleShuffleInventory(player, connection , message.getRequestID());
 
             }
 
             case SetCurrentItem -> {
-                Player player = game.getPlayer(connection);
                 InventoryController.getInstance().handleSetCurrentItem(player , message);
-
             }
 
             case CLickTile -> {
-                Player player = game.getPlayer(connection);
                 InventoryController.getInstance().handleClickTile(player, game , message , connection , message.getRequestID());
             }
 
             case GetRefrigeratorItems -> {
-                Player player = game.getPlayer(connection);
                 CookingController.getInstance().handleGetRefrigeratorItems(message, player, connection);
             }
             case PutInRefrigerator -> {
-                Player player = game.getPlayer(connection);
                 CookingController.getInstance().putInRefrigerator(message, player, connection);
             }
             case PickFromRefrigerator -> {
-                Player player = game.getPlayer(connection);
                 CookingController.getInstance().pickFromRefrigerator(message, player, connection);
             }
             case EatItem -> {
-                Player player = game.getPlayer(connection);
                 CookingController.getInstance().handleEat(message, player, connection);
             }
             case GetMachineDetails -> {
-                Player player = game.getPlayer(connection);
                 ArtisanController.getInstance().handleGetMachineInfo(message, player, connection);
             }
             case CheatFinishMachineProcess -> {
-                Player player = game.getPlayer(connection);
                 ArtisanController.getInstance().cheatFinishProcess(message, player);
             }
             case CancelMachineProcess -> {
-                Player player = game.getPlayer(connection);
                 ArtisanController.getInstance().cancelProcess(message, player, connection);
             }
             case CollectMachineProduct -> {
-                Player player = game.getPlayer(connection);
                 ArtisanController.getInstance().collectProduct(message, player, connection);
             }
             case IsReadyProduct -> {
-                Player player = game.getPlayer(connection);
                 ArtisanController.getInstance().isReadyProduct(message, player, connection);
             }
             case UseArtisanMachine -> {
-                Player player = game.getPlayer(connection);
                 ArtisanController.getInstance().artisanUse(message, player, connection);
             }
 
@@ -268,40 +258,31 @@ public class GameSessionController {
             }
 
             case GetPlayersRelationsInfo -> {
-                Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().getRelations(message, player, connection);
             }
 
             case CheatCode -> {
-                Player player = game.getPlayer(connection);
                 CheatCodeController.getInstance().executeCheatCode(message , connection , game , player );
             }
             case GetAnimalsInfoInHabitat -> {
-                Player player = game.getPlayer(connection);
                 AnimalsController.getInstance().getAnimalsInfoInHabitat(message, player, connection);
             }
             case GetAnimalsProductsInfo -> {
-                Player player = game.getPlayer(connection);
                 AnimalsController.getInstance().animalProductsInfo(message, player, connection);
             }
             case FeedAnimal -> {
-                Player player = game.getPlayer(connection);
                 AnimalsController.getInstance().feedAnimal(message, player, connection);
             }
             case PetAnimal -> {
-                Player player = game.getPlayer(connection);
                 AnimalsController.getInstance().petAnimal(message, player, connection);
             }
             case ShepherdAnimal -> {
-                Player player = game.getPlayer(connection);
                 AnimalsController.getInstance().shepherdAnimal(message, game, player, connection);
             }
             case CollectAnimalProduct -> {
-                Player player = game.getPlayer(connection);
                 AnimalsController.getInstance().collectProduct(message, game, player, connection);
             }
             case SellAnimal -> {
-                Player player = game.getPlayer(connection);
                 AnimalsController.getInstance().sellAnimal(message, game.getAnimalsService(), player, connection);
             }
 
@@ -314,27 +295,22 @@ public class GameSessionController {
             }
 
             case SendGiftToPlayer -> {
-                Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().sendGiftToPlayer(message, player, connection);
             }
 
             case CanHug -> {
-                Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().canHug(message, player, connection);
             }
 
             case CanGiveFlower -> {
-                Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().canGiveFlower(message, player, connection);
             }
 
             case CanAskMarriage -> {
-                Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().canAskMarriage(message, player, connection);
             }
 
             case GetForSaleProducts -> {
-                Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().getForSaleProducts(message, player, connection);
             }
 
@@ -343,37 +319,30 @@ public class GameSessionController {
             }
 
             case PurchaseAnimal -> {
-                Player player = game.getPlayer(connection);
                 StoreController.getInstance().purchaseAnimal(message,player,connection);
             }
 
             case CanPurchaseBuilding -> {
-                Player player = game.getPlayer(connection);
                 StoreController.getInstance().canPurchaseBuilding(message,player,connection);
             }
 
             case PurchaseShippingBin -> {
-                Player player = game.getPlayer(connection);
                 StoreController.getInstance().purchaseShippingBin(message,player,connection);
             }
 
             case PurchaseBuilding -> {
-                Player player = game.getPlayer(connection);
                 StoreController.getInstance().purchaseBuilding(message,player,connection);
             }
 
             case PurchaseProduct -> {
-                Player player = game.getPlayer(connection);
                 StoreController.getInstance().purchaseProduct(message,player,connection);
             }
 
             case UpgradeTrashCan -> {
-                Player player = game.getPlayer(connection);
                 StoreController.getInstance().upgradeTrashCan(message,player,connection);
             }
 
             case UpgradeTool -> {
-                Player player = game.getPlayer(connection);
                 StoreController.getInstance().upgradeTool(message,player,connection);
             }
 
@@ -382,22 +351,18 @@ public class GameSessionController {
             }
 
             case SellProduct -> {
-                Player player = game.getPlayer(connection);
                 StoreController.getInstance().sellProduct(message,player,connection);
             }
 
             case GiftToNPC -> {
-                Player player = game.getPlayer(connection);
                 NPCController.getInstance().giftToNPC(message,player,connection);
             }
 
             case GetRelationWithNPC -> {
-                Player player = game.getPlayer(connection);
                 NPCController.getInstance().getRelationWithNPC(message,player,connection);
             }
 
             case BuildGreenhouse -> {
-                Player player = game.getPlayer(connection);
                 BuildingController.getInstance().handleBuildGreenhouse(message , connection , player);
             }
 
@@ -406,47 +371,38 @@ public class GameSessionController {
             }
 
             case DoQuest -> {
-                Player player = game.getPlayer(connection);
                 NPCController.getInstance().doQuest(message,player,connection);
             }
 
             case ShowGreenhouseGrowable -> {
-                Player player = game.getPlayer(connection);
                 BuildingController.getInstance().greenHouseGrowableRequest(message , connection , player);
             }
 
             case GetPlayersRequest -> {
-                Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().getPlayers(message,player,connection);
             }
 
             case TalkToPlayer -> {
-                Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().talkToPlayer(message, player, connection);
             }
 
             case TalkToNPC -> {
-                Player player = game.getPlayer(connection);
                 NPCController.getInstance().handleTalkWithNPC(message , connection , player , game);
             }
 
             case Hug -> {
-                Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().hugPlayer(message, player);
             }
 
             case GiveFlower -> {
-                Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().giveFlower(message, player);
             }
 
             case RequestMarriage -> {
-                Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().requestMarriage(message, player,connection);
             }
 
             case MarriageRequestResponse -> {
-                Player player = game.getPlayer(connection);
                 PlayersRelationController.getInstance().respondMarriage(message , player);
             }
         }
@@ -482,6 +438,7 @@ public class GameSessionController {
         if(game == null) return;
 
         Player player = game.getPlayer(connection);
+        if (player == null) return;
         Farm farm = player.getFarm();
         if(farm == null) return;
 
