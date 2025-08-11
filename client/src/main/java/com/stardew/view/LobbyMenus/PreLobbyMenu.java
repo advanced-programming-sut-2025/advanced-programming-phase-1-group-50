@@ -15,11 +15,14 @@ import com.google.gson.reflect.TypeToken;
 import com.stardew.Main;
 import com.stardew.model.LobbyDTO;
 import com.stardew.model.Result;
+import com.stardew.models.ClientInfo.LoggedInUser;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 import com.stardew.network.NetworkManager;
 import com.stardew.view.AppMenu;
+import com.stardew.view.MainMenu;
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -29,6 +32,7 @@ public class PreLobbyMenu implements Screen, AppMenu {
     private final Stage stage;
     private final TextButton createLobby;
     private final TextButton refresh;
+    private final TextButton back;
     private final TextField searchBar;
     private final ImageButton searchButton;
     private final Table lobbyTable;
@@ -98,6 +102,17 @@ public class PreLobbyMenu implements Screen, AppMenu {
             }
         });
 
+        back = new TextButton("Back", GamePictureManager.skin);
+        back.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Screen screen = Main.getMain().getScreen();
+                MainMenu mainMenu = new MainMenu(LoggedInUser.getUser().getNickname());
+                Main.getMain().setScreen(mainMenu);
+                screen.dispose();
+            }
+        });
+
 
 
         lobbyTable = new Table();
@@ -107,31 +122,31 @@ public class PreLobbyMenu implements Screen, AppMenu {
     public void show() {
         Gdx.input.setInputProcessor(stage);
 
-
         TextureRegionDrawable bgTex = GamePictureManager.menuBackground;
         Image background = new Image(bgTex);
         background.setFillParent(true);
         stage.addActor(background);
 
 
+        Table backContainer = new Table();
+        backContainer.setFillParent(true);
+        backContainer.top().right().pad(10);
+        backContainer.add(back).width(100).height(40);
+        stage.addActor(backContainer);
+
         Table root = new Table();
         root.setFillParent(true);
         stage.addActor(root);
-
 
         Table onlineContainer = new Table();
         onlineContainer.setFillParent(false);
         onlineContainer.top().left().pad(10);
         onlineContainer.setPosition(10, stage.getHeight() - 10);
         onlineContainer.add(onlineUsersTable).left().top();
-
         stage.addActor(onlineContainer);
-
-
 
         Table topBar = new Table();
         topBar.add(createLobby).width(200).height(50).padRight(20);
-
 
         Table searchBox = new Table();
         searchBox.add(searchBar).width(300).height(50);
@@ -140,16 +155,15 @@ public class PreLobbyMenu implements Screen, AppMenu {
 
         topBar.add(refresh).width(200).height(50);
 
-
         ScrollPane scrollPane = new ScrollPane(lobbyTable, GamePictureManager.skin);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
-
 
         root.top().padTop(30);
         root.add(topBar).expandX().fillX().padBottom(20).row();
         root.add(scrollPane).height(700).pad(20);
     }
+
 
 
     @Override
