@@ -211,9 +211,7 @@ public class InventoryWindow extends CloseableWindow {
         exitButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                stage.addActor(new SettingWindow(stage));
-
-
+                stage.addActor(new SettingWindow(stage, id));
                 return true;
             }
 
