@@ -6,7 +6,6 @@ import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.date.TimeInterval;
 import com.stardew.models.manuFactor.artisanGoods.ArtisanGood;
 import com.stardew.models.manuFactor.artisanGoods.ArtisanGoodType;
-import com.stardew.models.mapInfo.Wood;
 import com.stardew.models.userInfo.Player;
 
 public class CharcoalKiln extends ArtisanMachine {

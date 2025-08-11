@@ -7,8 +7,6 @@ import com.badlogic.gdx.utils.Array;
 import com.stardew.models.Thunder;
 import com.stardew.models.Wind;
 import com.stardew.models.GameModel;
-import com.stardew.models.app.App;
-import com.stardew.models.date.Weather;
 import com.stardew.models.waterBodies.RainDrop;
 import com.stardew.models.waterBodies.SnowDrop;
 

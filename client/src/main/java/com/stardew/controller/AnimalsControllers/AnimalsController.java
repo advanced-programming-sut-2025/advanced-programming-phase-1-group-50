@@ -3,18 +3,14 @@ package com.stardew.controller.AnimalsControllers;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.stardew.model.Result;
 import com.stardew.models.animals.*;
-import com.stardew.models.app.App;
 import com.stardew.models.date.Season;
 import com.stardew.models.date.Weather;
 import com.stardew.models.mapInfo.Map;
-import com.stardew.models.mapInfo.Tile;
 import com.stardew.models.tools.FishingPole;
 import com.stardew.models.tools.MilkPail;
 import com.stardew.models.tools.Shear;
-import com.stardew.models.tools.Tool;
 import com.stardew.models.userInfo.Coin;
 import com.stardew.models.userInfo.Player;
-import com.stardew.view.miniGame.MiniGameWindow;
 
 import java.util.ArrayList;
 import java.util.Random;

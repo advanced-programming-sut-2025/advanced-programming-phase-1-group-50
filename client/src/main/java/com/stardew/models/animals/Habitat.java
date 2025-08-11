@@ -11,11 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.stardew.models.BackgroundColors;
-import com.stardew.models.ColorPrinter;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.Placeable;
-import com.stardew.view.windows.HabitatWindow;
 
 import java.awt.*;
 import java.util.ArrayList;

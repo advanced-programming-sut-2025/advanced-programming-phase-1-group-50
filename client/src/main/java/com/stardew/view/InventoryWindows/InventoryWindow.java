@@ -11,7 +11,6 @@ import com.stardew.model.InventoryItemDTO;
 import com.stardew.model.TextureID;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.manuFactor.Ingredient;
-import com.stardew.models.tools.Tool;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;

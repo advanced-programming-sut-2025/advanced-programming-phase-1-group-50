@@ -8,8 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.model.TextureID;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.App;
-import com.stardew.view.GridMap.GridMapActor;
 import com.stardew.view.windows.CloseableWindow;
 
 public class MapWindow extends CloseableWindow {

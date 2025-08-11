@@ -1,9 +1,6 @@
 package com.stardew.controller;
 
-import com.stardew.models.app.App;
-import com.stardew.models.app.SecurityQuestion;
 import com.stardew.models.userInfo.Gender;
-import com.stardew.models.userInfo.User;
 import com.stardew.network.Message;
 
 public class SelectSecurityQuestionController {

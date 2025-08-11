@@ -2,14 +2,10 @@ package com.stardew.view.InventoryWindows;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.stardew.model.TextureID;
 import com.stardew.models.GameAssetManagers.GameAssetIDManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.App;
-import com.stardew.models.mapInfo.Tile;
-import com.stardew.models.userInfo.Player;
 import com.stardew.view.GridMap.CellInfo;
 
 public class MapWindowActor extends Actor {

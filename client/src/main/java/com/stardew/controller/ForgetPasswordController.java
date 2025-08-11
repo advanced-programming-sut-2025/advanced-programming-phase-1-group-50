@@ -1,16 +1,7 @@
 package com.stardew.controller;
 
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.stardew.Main;
-import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.App;
 import com.stardew.models.userInfo.User;
 import com.stardew.view.ForgetPasswordMenu;
-import com.stardew.view.LoginAndRegisterMenu;
-import com.stardew.view.MainMenu;
 
 public class ForgetPasswordController {
     private ForgetPasswordMenu menu;

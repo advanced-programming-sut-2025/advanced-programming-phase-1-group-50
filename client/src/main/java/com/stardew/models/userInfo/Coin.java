@@ -3,7 +3,6 @@ package com.stardew.models.userInfo;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.manuFactor.Ingredient;
-import com.stardew.models.mapInfo.Wood;
 
 public class Coin implements Ingredient {
     @Override

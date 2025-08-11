@@ -1,7 +1,6 @@
 package com.stardew.controller.AbilityAndEnergyController;
 
 import com.stardew.model.Result;
-import com.stardew.models.app.App;
 
 public class EnergyController {
     public Result showEnergy(){

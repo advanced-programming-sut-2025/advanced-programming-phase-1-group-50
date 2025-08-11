@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.GameModel;
 import com.stardew.models.mapInfo.Pair;
-import com.stardew.models.mapInfo.Tile;
 import com.stardew.models.userInfo.Player;
 
 public class PlayerController {

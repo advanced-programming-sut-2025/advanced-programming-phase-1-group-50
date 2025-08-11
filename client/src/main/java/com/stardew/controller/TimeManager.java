@@ -10,16 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.stardew.controller.GameDateAndWeatherController.DateController;
 import com.stardew.model.TimeDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.GameModel;
-import com.stardew.models.app.App;
-import com.stardew.models.date.Season;
-import com.stardew.models.date.Time;
-import com.stardew.models.mapInfo.Tile;
-import com.stardew.models.userInfo.Coin;
-import com.stardew.view.ReactionWindows.ReactionTable;
 
 public class TimeManager {
     private final GameModel gameModel;
@@ -200,57 +193,7 @@ public class TimeManager {
         }
     }
 
-    public void changeTileTextureInWinter(){
 
-        if(!changeTileTextureInWinter) {
-            if (App.getGame().getTime().getSeason().equals(Season.Winter)) {
-                firstTimeChangeInSpring = false;
-                changeTileTextureInSpring = false;
-//                Tile[][] tiles = gameModel.getMap().getTiles();
-                Tile[][] tiles = new Tile[250][200];
-                for (Tile[] tile : tiles) {
-                    for (Tile value : tile) {
-                        value.checkSeasonIsWinter();
-                    }
-                }
-                changeTileTextureInWinter = true;
-            }
-        }
-    }
-
-    public void changeTileTextureInSpring(){
-        if(firstTimeChangeInSpring){
-
-            return;
-        }
-        if(!changeTileTextureInSpring) {
-            if (App.getGame().getTime().getSeason().equals(Season.Spring)) {
-                changeTileTextureInWinter = false;
-                Tile[][] tiles = new Tile[250][200];
-                for (Tile[] tile : tiles) {
-                    for (Tile value : tile) {
-                        value.checkIsSeasonSpring();
-                    }
-                }
-                changeTileTextureInSpring = true;
-            }
-        }
-    }
-
-    public void setWateredTile(float delta){
-        Tile[][] tiles = new Tile[250][200];
-        for(Tile[] tile : tiles){
-            for (Tile value : tile) {
-                if(value.isWatered()){
-                    value.setWateredTimeTexture(value.getWateredTimeTexture() + delta);
-                    if(value.getWateredTimeTexture() > 100){
-                        value.setWatered(false);
-                        value.setWateredTimeTexture(0);
-                    }
-                }
-            }
-        }
-    }
 
 
     private void initializeUI(){
