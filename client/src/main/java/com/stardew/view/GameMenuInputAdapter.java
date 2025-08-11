@@ -9,16 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.google.gson.reflect.TypeToken;
 import com.stardew.model.InventoryItemDTO;
 import com.badlogic.gdx.utils.Timer;
-import com.stardew.model.Notification.MarriageRequest;
-import com.stardew.model.Notification.Notification;
+
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.models.ClientInfo.LoggedInUser;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.GameModel;
-import com.stardew.models.NPCs.NPCType;
-import com.stardew.models.ShippingBin;
-import com.stardew.models.stores.Store;
+
 import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
@@ -27,10 +24,10 @@ import com.stardew.view.ChatWindows.ChatTypeSelectionWindow;
 import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.InventoryWindows.InventoryWindow;
 import com.stardew.view.InventoryWindows.MapWindow;
-import com.stardew.view.NPCsWindows.NPCMenuWindow;
+
 import com.stardew.view.ReactionWindows.ReactionWindow;
 import com.stardew.view.RefrigeratorView.RefrigeratorWindow;
-import com.stardew.view.SellProductWindow.ShippingBinWindow;
+
 import com.stardew.view.StoreWindows.StoreClosedMessageWindow;
 import com.stardew.view.StoreWindows.StoreWindow;
 import com.stardew.view.cheatConsole.CheatWindow;
@@ -308,9 +305,7 @@ public class GameMenuInputAdapter extends InputAdapter {
         stage.addActor(new StoreClosedMessageWindow(stage));
     }
 
-    public void createShippingBinWindow(ShippingBin bin) {
-        //stage.addActor(new ShippingBinWindow(stage , bin));
-    }
+
 
 
 

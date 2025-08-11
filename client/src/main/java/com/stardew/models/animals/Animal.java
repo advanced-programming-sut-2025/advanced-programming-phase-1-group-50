@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Placeable;
 import com.stardew.models.date.Time;
 
 import java.awt.*;

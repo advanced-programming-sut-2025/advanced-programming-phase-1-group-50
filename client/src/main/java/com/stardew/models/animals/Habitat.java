@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Placeable;
 
 import java.awt.*;
 import java.util.ArrayList;

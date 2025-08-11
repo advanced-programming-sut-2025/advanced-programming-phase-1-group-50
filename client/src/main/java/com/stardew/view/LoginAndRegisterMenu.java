@@ -23,7 +23,7 @@ import java.security.SecureRandom;
 import java.util.HashMap;
 
 public class LoginAndRegisterMenu implements AppMenu , Screen {
-    private final LoginAndRegisterController controller = new LoginAndRegisterController();
+
     private final Stage stage = new Stage(new ScreenViewport());
     private  Skin skin ;
     private  TextField usernameTextField ;
@@ -153,13 +153,16 @@ public class LoginAndRegisterMenu implements AppMenu , Screen {
         forgetPasswordButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                controller.handleForgetPassword();
+                Screen screen = Main.getMain().getScreen();
+                ForgetPasswordMenu forgetPasswordMenu = new ForgetPasswordMenu();
+                Main.getMain().setScreen(forgetPasswordMenu);
+                screen.dispose();
             }
         });
 
         stayLoggedIn = new CheckBox("", skin);
 
-        controller.setView(this);
+
     }
 
 

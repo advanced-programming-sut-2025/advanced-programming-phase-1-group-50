@@ -7,8 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.stardew.model.TextureID;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.app.Game;
-import com.stardew.view.GridMap.GridMapActor;
+
 import com.stardew.view.InventoryWindows.MapWindowActor;
 import com.stardew.view.windows.CloseableWindow;
 

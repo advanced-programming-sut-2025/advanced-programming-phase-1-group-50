@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.Placeable;
 import com.stardew.models.cooking.Eatable;
 import com.stardew.models.date.Time;
 import com.stardew.models.date.Weather;

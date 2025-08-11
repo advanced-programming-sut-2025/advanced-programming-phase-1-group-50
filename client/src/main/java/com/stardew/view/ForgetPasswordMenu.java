@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.Main;
-import com.stardew.controller.ForgetPasswordController;
 import com.stardew.model.Result;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.network.Message;
@@ -35,7 +34,7 @@ public class ForgetPasswordMenu implements AppMenu, Screen {
     private final TextButton backButton;
 
 
-    public ForgetPasswordMenu(ForgetPasswordController controller , String usernameForShowSecurityQuestion) {
+    public ForgetPasswordMenu( ) {
         skin = GamePictureManager.skin;
         forgetPasswordLabel = new Label("Forget Password", skin);
         findSecurityQuestionButton = new TextButton("Find Security Question", skin);
