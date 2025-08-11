@@ -1,4 +1,4 @@
-package com.stardew.view;
+package com.stardew.view.scoreBoardTable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -12,8 +12,6 @@ import com.badlogic.gdx.utils.Array;
 import com.stardew.model.ScoreBoardDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.GameModel;
-import com.stardew.models.SortType;
-import com.stardew.view.ReactionWindows.ReactionTable;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -31,10 +29,10 @@ public class ScoreBoardTable extends Table {
     private final TextButton miningSort;
     Skin skin = GamePictureManager.skin;
     private SortType sortType = SortType.NORMAL;
-    private final GameModel gameState;
+    private final GameModel gameModel;
 
-    public ScoreBoardTable(GameModel gameState) {
-        this.gameState = gameState;
+    public ScoreBoardTable(GameModel gameModel) {
+        this.gameModel = gameModel;
 
         currentInstance = this;
         pad(10);
@@ -130,7 +128,7 @@ public class ScoreBoardTable extends Table {
         add(miningSort).size(40 , 40).padTop(5);
         row();
 
-        ArrayList<ScoreBoardDTO> scores = gameState.getScoreBoard();
+        ArrayList<ScoreBoardDTO> scores = gameModel.getScoreBoard();
         getSortedScoreBoard(sortType, scores);
 
         for(ScoreBoardDTO scoreBoardDTO : scores) {

@@ -12,18 +12,18 @@ import com.stardew.view.ReactionWindows.ReactionTable;
 
 import java.util.ArrayList;
 
-public class GameStateController {
-    private static GameStateController instance;
-    private GameModel gameState;
+public class GameModelController {
+    private static GameModelController instance;
+    private GameModel gameModel;
     private boolean firstUpdate = true;
 
 
 
-    private GameStateController() {}
+    private GameModelController() {}
 
-    public static GameStateController getInstance() {
+    public static GameModelController getInstance() {
         if (instance == null) {
-            instance = new GameStateController();
+            instance = new GameModelController();
         }
         return instance;
     }
@@ -37,8 +37,8 @@ public class GameStateController {
         ArrayList<PlaceableDTO> placeables = message.getFromBody(
             "placeables", new TypeToken<ArrayList<PlaceableDTO>>(){}.getType());
 
-        gameState.updateTiles(tileDTOs);
-        gameState.updatePlaceables(placeables);
+        gameModel.updateTiles(tileDTOs);
+        gameModel.updatePlaceables(placeables);
     }
 
     public void handleUpdatePlayers(Message message) {
@@ -48,10 +48,10 @@ public class GameStateController {
         ArrayList<PlayerDTO> otherPlayers = message.getFromBody(
             "other_players", new TypeToken<ArrayList<PlayerDTO>>(){}.getType());
 
-        gameState.updateMainPlayer(mainPlayer);
-        gameState.updateOtherPlayers(otherPlayers);
-        gameState.updateCamera();
-        gameState.updateVisibleTilesBounds();
+        gameModel.updateMainPlayer(mainPlayer);
+        gameModel.updateOtherPlayers(otherPlayers);
+        gameModel.updateCamera();
+        gameModel.updateVisibleTilesBounds();
     }
 
     public void handleRequestMap(Message message) {
@@ -60,7 +60,7 @@ public class GameStateController {
         if (firstUpdate) {
             int mapWidth = message.getIntFromBody("mapWidth");
             int mapHeight = message.getIntFromBody("mapHeight");
-            gameState = new GameModel(mapWidth, mapHeight);
+            gameModel = new GameModel(mapWidth, mapHeight);
             firstUpdate = false;
         }
     }
@@ -68,19 +68,19 @@ public class GameStateController {
     public void handleUpdateTime(Message message) {
         if (message == null) return;
         TimeDTO dto = message.getFromBody("timeDTO", TimeDTO.class);
-        gameState.updateTime(dto);
+        gameModel.updateTime(dto);
     }
 
     public void handleUpdateAnimals(Message message) {
         if (message == null) return;
         ArrayList<AnimalDTO> animals = message.getFromBody("animals", new TypeToken<ArrayList<AnimalDTO>>(){}.getType());
-        gameState.updateAnimals(animals);
+        gameModel.updateAnimals(animals);
     }
 
     public void updateHotBar(Message message) {
         if (message == null) return;
         InventoryItemDTO[] items = message.getFromBody("hotBar", InventoryItemDTO[].class);
-        gameState.updateHotBar(items);
+        gameModel.updateHotBar(items);
         Gdx.app.postRunnable(() -> {
             if (HotBarActor.isOpen()) {
                 HotBarActor.getCurrentInstance().update();
@@ -89,8 +89,8 @@ public class GameStateController {
     }
 
 
-    public GameModel getGameState() {
-        return gameState;
+    public GameModel getGameModel() {
+        return gameModel;
     }
 
 
@@ -129,7 +129,7 @@ public class GameStateController {
         if (message == null) return;
         int coin = message.getIntFromBody("coin");
         Gdx.app.postRunnable(() -> {
-            gameState.updateCoin(coin);
+            gameModel.updateCoin(coin);
         });
     }
 
@@ -138,7 +138,7 @@ public class GameStateController {
         if (message == null) return;
         ArrayList<ScoreBoardDTO> dtoS = message.getFromBody("scoreBoard", new TypeToken<ArrayList<ScoreBoardDTO>>(){}.getType());
         Gdx.app.postRunnable(() -> {
-            gameState.updateScoreBoard(dtoS);
+            gameModel.updateScoreBoard(dtoS);
         });
     }
 

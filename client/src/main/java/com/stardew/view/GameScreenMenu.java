@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.stardew.Main;
 import com.stardew.controller.EnergyManager;
-import com.stardew.controller.GameStateController;
+import com.stardew.controller.GameModelController;
 import com.stardew.controller.TimeManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.GameModel;
@@ -23,50 +23,44 @@ import com.stardew.view.InventoryWindows.HotBarActor;
 import com.stardew.view.ReactionWindows.ReactionTable;
 import com.stardew.view.Stores.StoreUIManager;
 import com.stardew.view.miniGame.MiniGameStarter;
+import com.stardew.view.scoreBoardTable.ScoreBoardTable;
 import com.stardew.view.windows.SmartTooltip;
 
 public class GameScreenMenu implements Screen {
     private final GameUpdateRequestThread updateRequestThread;
-    private GameModel gameState;
-    private GameRenderer gameRenderer;
-
-    private GameMenuInputAdapter gameMenuInputAdapter;
-    private Stage stage;
-    private final int id;
+    private final GameModel gameModel;
+    private final GameRenderer gameRenderer;
+    private final GameMenuInputAdapter gameMenuInputAdapter;
+    private final Stage stage;
     private final HotBarActor hotBarActor;
-
-    private SpriteBatch batch;
+    private final SpriteBatch batch;
     private final Stage uiStage;
-
     private final TimeManager timeManager ;
     private final EnergyManager energyManager ;
-
     private final WeatherManager weatherManager;
     private final ReactionTable reactionTable;
     private final ScoreBoardTable scoreBoard;
 
 
 
-
-
     public GameScreenMenu(GameUpdateRequestThread updateRequestThread, int id) {
-        this.id = id;
         this.updateRequestThread = updateRequestThread;
         this.batch = Main.getBatch();
-        this.gameState = GameStateController.getInstance().getGameState();
-        this.gameRenderer = new GameRenderer(this.batch, gameState);
-        this.stage = new Stage(new ScreenViewport(gameState.getCamera()));
+        this.gameModel = GameModelController.getInstance().getGameModel();
+        this.gameRenderer = new GameRenderer(this.batch, gameModel);
+        this.stage = new Stage(new ScreenViewport(gameModel.getCamera()));
         this.uiStage = new Stage(new ScreenViewport());
-        this.gameMenuInputAdapter = new GameMenuInputAdapter(id, gameState, stage);
-        this.timeManager = new TimeManager(gameState, uiStage);
-        this.energyManager = new EnergyManager(gameState, uiStage);
-        this.hotBarActor = new HotBarActor(gameState , id);
-        this.weatherManager = new WeatherManager(gameState);
+        this.gameMenuInputAdapter = new GameMenuInputAdapter(id, stage);
+        this.timeManager = new TimeManager(gameModel, uiStage);
+        this.energyManager = new EnergyManager(gameModel, uiStage);
+        this.hotBarActor = new HotBarActor(gameModel, id);
+        this.weatherManager = new WeatherManager(gameModel);
         gameMenuInputAdapter.setHotBar(hotBarActor);
         this.reactionTable = new ReactionTable();
-        this.scoreBoard = new ScoreBoardTable(gameState);
+        this.scoreBoard = new ScoreBoardTable(gameModel);
         uiStage.addActor(reactionTable);
         uiStage.addActor(scoreBoard);
+        uiStage.addActor(hotBarActor);
 
 
 
@@ -76,7 +70,6 @@ public class GameScreenMenu implements Screen {
         inputMultiplexer.addProcessor(gameMenuInputAdapter);
         Gdx.input.setInputProcessor(inputMultiplexer);
 
-        uiStage.addActor(hotBarActor);
         SmartTooltip.initialize(stage, GamePictureManager.skin);
         ArtisanMachinesManager.initialize(stage, id);
         HabitatUIManager.initialize(stage, id);
@@ -90,34 +83,6 @@ public class GameScreenMenu implements Screen {
 
     }
 
-//    public void initializeGame(){
-//
-//        gameModel = new GameModel(App.getGame().getMap() , 250 , 200 , hotBarActor);
-//        timeManager.setGameModel(gameModel);
-//        weatherManager.setGameModel(gameModel);
-//        gameModel.setPlayerController(new PlayerController(App.getGame().getCurrentPlayingPlayer(), gameModel));
-//        gameMenuInputAdapter = new GameMenuInputAdapter(gameModel);
-//        gameMenuInputAdapter.setHotBar(hotBarActor);
-//        batch = Main.getBatch();
-//        gameRenderer = new GameRenderer(gameModel, gameMenuInputAdapter, batch);
-//
-//        stage = new Stage(new ScreenViewport(gameModel.getCamera()));
-//
-//        InputMultiplexer inputMultiplexer = new InputMultiplexer();
-//        inputMultiplexer.addProcessor(stage);
-//        inputMultiplexer.addProcessor(uiStage);
-//        inputMultiplexer.addProcessor(gameMenuInputAdapter);
-//        Gdx.input.setInputProcessor(inputMultiplexer);
-//
-//        SmartTooltip.initialize(stage, GamePictureManager.skin);
-//        addStoresImages();
-//
-//        gameMenuInputAdapter.setStage(stage);
-//        gameModel.setStage(stage);
-//        //stage.addActor(timeManager.getNightOverlay());
-//
-//
-//    }
 
     @Override
     public void show() {
@@ -125,49 +90,37 @@ public class GameScreenMenu implements Screen {
     }
 
     @Override
-    public void render(float v) {
+    public void render(float delta) {
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-        batch.setProjectionMatrix(gameState.getCamera().combined);
-        weatherManager.render(v , gameState.getTime().getWeather());
+        batch.setProjectionMatrix(gameModel.getCamera().combined);
         batch.begin();
-//
+
         timeManager.updateTime();
+        timeManager.checkForDayTransition();
+        timeManager.updateNightOverlay(gameModel.getTime().getHour());
         energyManager.update();
-//        gameModel.update(v);
-        gameRenderer.render(v);
-        gameMenuInputAdapter.update(v);
-        weatherManager.draw(batch , gameState.getTime().getWeather());
-        reactionTable.render(v);
+        gameRenderer.render(delta);
+        gameMenuInputAdapter.update(delta);
+        weatherManager.render(delta, gameModel.getTime().getWeather());
+        weatherManager.draw(batch, gameModel.getTime().getWeather());
+        weatherManager.thunder(delta, stage, gameModel.getTime().getWeather());
+        reactionTable.render(delta);
         scoreBoard.updatePlayer();
         NotificationManager.getInstance().updatePositions();
 
-//
-//
         batch.end();
-//
-        stage.act(v);
+
+        stage.act(delta);
         stage.draw();
-//
-        uiStage.act(v);
+
+        uiStage.act(delta);
         uiStage.draw();
-//
-//
-        timeManager.checkForDayTransition();
-        timeManager.updateNightOverlay(gameState.getTime().getHour());
-//        timeManager.changeTileTextureInWinter();
-//        timeManager.changeTileTextureInSpring();
-//        timeManager.setWateredTile(v);
-        weatherManager.thunder(v , stage , gameState.getTime().getWeather());
-
     }
 
-    public GameMenuInputAdapter getGameMenuInputAdapter() {
-        return gameMenuInputAdapter;
-    }
 
     @Override
     public void resize(int i, int i1) {

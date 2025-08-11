@@ -1,6 +1,6 @@
 package com.stardew.network;
 
-import com.stardew.controller.GameStateController;
+import com.stardew.controller.GameModelController;
 
 import java.util.HashMap;
 
@@ -25,7 +25,7 @@ public class GameUpdateRequestThread extends Thread {
         while (running) {
             long currentTime = System.currentTimeMillis();
 
-            if (currentTime - lastSentMsg1 > 30 && !GameStateController.getInstance().isFirstUpdate()) {
+            if (currentTime - lastSentMsg1 > 30 && !GameModelController.getInstance().isFirstUpdate()) {
                 NetworkManager.getConnection().sendMessage(updatePlayersMessage());
                 NetworkManager.getConnection().sendMessage(updateAnimalsMessage());
                 lastSentMsg1 = currentTime;
@@ -56,10 +56,10 @@ public class GameUpdateRequestThread extends Thread {
 
     private Message updatePlayersMessage() {
         HashMap<String, Object> body = new HashMap<>();
-        body.put("startX", GameStateController.getInstance().getGameState().getStartX());
-        body.put("startY", GameStateController.getInstance().getGameState().getStartY());
-        body.put("endX", GameStateController.getInstance().getGameState().getEndX());
-        body.put("endY", GameStateController.getInstance().getGameState().getEndY());
+        body.put("startX", GameModelController.getInstance().getGameModel().getStartX());
+        body.put("startY", GameModelController.getInstance().getGameModel().getStartY());
+        body.put("endX", GameModelController.getInstance().getGameModel().getEndX());
+        body.put("endY", GameModelController.getInstance().getGameModel().getEndY());
         body.put("id", id);
         return new Message(body, MessageType.UPDATE_PLAYERS);
     }
@@ -67,10 +67,10 @@ public class GameUpdateRequestThread extends Thread {
     private Message updateTilesAndPlaceablesMessage() {
         HashMap<String, Object> body = new HashMap<>();
         body.put("id", id);
-        body.put("startX", GameStateController.getInstance().getGameState().getStartX());
-        body.put("startY", GameStateController.getInstance().getGameState().getStartY());
-        body.put("endX", GameStateController.getInstance().getGameState().getEndX());
-        body.put("endY", GameStateController.getInstance().getGameState().getEndY());
+        body.put("startX", GameModelController.getInstance().getGameModel().getStartX());
+        body.put("startY", GameModelController.getInstance().getGameModel().getStartY());
+        body.put("endX", GameModelController.getInstance().getGameModel().getEndX());
+        body.put("endY", GameModelController.getInstance().getGameModel().getEndY());
         return new Message(body, MessageType.UPDATE_TILES);
     }
 
