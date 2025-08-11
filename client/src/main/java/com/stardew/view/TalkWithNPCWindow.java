@@ -72,7 +72,11 @@ public class TalkWithNPCWindow extends CloseableWindow {
                         String result = response.getFromBody("result");
                         Gdx.app.postRunnable(() -> {
                             stopThinkingAnimation();
-                            npcResponse.setText(parseInput(result));
+                            if (result.equals("Error in getting NPC response from llm.")) {
+                               npcResponse.setText(result);
+                            } else {
+                                npcResponse.setText(parseInput(result));
+                            }
                         });
                     } else {
                         Gdx.app.postRunnable(() -> {

@@ -169,14 +169,16 @@ public class NPCController {
         try {
             response = NPCAi.getNPCResponse(prompt);
         } catch (Exception e) {
-            e.printStackTrace();
+           response = "Error in getting NPC response from llm.";
         }
 
-        RelationWithNPC temp = getRelationWithNPCByNPCType(type, player);
+        if (!response.equals("Error in getting NPC response from llm.")) {
+            RelationWithNPC temp = getRelationWithNPCByNPCType(type, player);
 
-        if (temp != null && temp.isFirstTimeToSpeakWithNPC()) {
-            temp.setFirstTimeToSpeakWithNPC(false);
-            temp.increaseNumericalFriendShipLevel(20);
+            if (temp != null && temp.isFirstTimeToSpeakWithNPC()) {
+                temp.setFirstTimeToSpeakWithNPC(false);
+                temp.increaseNumericalFriendShipLevel(20);
+            }
         }
 
         HashMap<String, Object> body = new HashMap<>();

@@ -352,6 +352,7 @@ public class PlayersRelationController {
         for (Notification notification : otherPlayer.getNotifications()) {
             if (notification instanceof MarriageRequest && !notification.isChecked()) {
                 result = new Result(false, "Vaisa to saf");
+                break;
             }
         }
 
