@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PlayersRelationController {
     private static PlayersRelationController instance;
@@ -432,9 +434,13 @@ public class PlayersRelationController {
         int id = message.getIntFromBody("id");
         Game game = GameSessionController.getInstance().getGame(id);
         String text = message.getFromBody("text");
-        Type type = new TypeToken<ArrayList<String>>() {
-        }.getType();
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
         ArrayList<String> receivers = message.getFromBody("players", type);
+        ArrayList<Player> taggedPlayers = null;
+        if (receivers.size() > 1) {
+            taggedPlayers = taggedPlayers(game,text);
+        }
+
 
         for (Player p : game.getAllPlayers()) {
             if (receivers.contains(p.getUsername())) {
@@ -470,7 +476,15 @@ public class PlayersRelationController {
                     return;
                 }
 
-                p.addNotification(new Notification(text, player.getUsername()), temp);
+                if (taggedPlayers != null && taggedPlayers.contains(p)) {
+                    HashMap<String,Object> body = new HashMap<>();
+                    Notification notification = new Notification(text,player.getUsername());
+                    body.put("notification", notification);
+                    Message response = new Message(body,MessageType.SEND_TAG_NOTIFICATION);
+                    temp.sendMessage(response);
+                } else {
+                    p.addNotification(new Notification(text, player.getUsername()), temp);
+                }
             }
         }
 
@@ -734,6 +748,23 @@ public class PlayersRelationController {
             }
         }
 
+    }
+
+    private ArrayList<Player> taggedPlayers(Game game, String text) {
+        ArrayList<Player> taggedPlayers = new ArrayList<>();
+
+        for (Player player : game.getAllPlayers()) {
+            String username = player.getUsername();
+            String regex = "(?<!\\S)@" + Pattern.quote(username) + "(?!\\S)";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(text);
+
+            if (matcher.find()) {
+                taggedPlayers.add(player);
+            }
+        }
+
+        return taggedPlayers;
     }
 
 

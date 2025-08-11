@@ -186,6 +186,12 @@ public class MessageHandler {
                 return true;
             }
 
+            case SEND_TAG_NOTIFICATION -> {
+                Notification notification = message.getFromBody("notification", Notification.class);
+                WindowOpener.getInstance().openTagWindow(notification);
+                return true;
+            }
+
             default -> {
                 return false;
             }

@@ -7,9 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.stardew.model.Notification.MarriageRequest;
+import com.stardew.model.Notification.Notification;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.view.InPersonPlayersRelationsWindows.InPersonFriendshipWindow;
 import com.stardew.view.InPersonPlayersRelationsWindows.RespondMarriageWindow;
+import com.stardew.view.Notification.TagNotificationWindow;
 
 public class WindowOpener {
     private static WindowOpener instance;
@@ -35,6 +37,10 @@ public class WindowOpener {
 
     public void openRespondMarriageWindow(MarriageRequest marriageRequest) {
         Gdx.app.postRunnable(() -> stage.addActor(new RespondMarriageWindow(gameId,stage,marriageRequest)));
+    }
+
+    public void openTagWindow(Notification notification) {
+        Gdx.app.postRunnable(() -> stage.addActor(new TagNotificationWindow(stage,notification)));
     }
 
     public void rejectAnimation() {
