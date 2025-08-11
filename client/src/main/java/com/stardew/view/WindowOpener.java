@@ -39,8 +39,8 @@ public class WindowOpener {
 
     public void rejectAnimation() {
         Gdx.app.postRunnable(() -> {
-            float centerX = stage.getCamera().position.x / 2f;
-            float centerY = stage.getCamera().position.y / 2f;
+            float centerX = stage.getCamera().position.x;
+            float centerY = stage.getCamera().position.y;
 
             Image fullHeart = new Image(GamePictureManager.heartFullIcon);
             fullHeart.setSize(150, 150);
@@ -91,31 +91,31 @@ public class WindowOpener {
             heartLeft.setSize(150, 200);
             heartRight.setSize(150, 200);
 
-            float centerX = stage.getCamera().position.x / 2f;
-            float centerY = stage.getCamera().position.y / 2f;
+            float centerX = stage.getCamera().position.x;
+            float centerY = stage.getCamera().position.y;
 
-            heartLeft.setPosition(-150, centerY - 100);
-            heartRight.setPosition(stage.getCamera().position.x + 150, stage.getCamera().position.y - 100);
+            heartLeft.setPosition(centerX -650, centerY - 100);
+            heartRight.setPosition(centerX + 500,centerY - 100);
 
             stage.addActor(heartLeft);
             stage.addActor(heartRight);
 
             heartLeft.addAction(Actions.sequence(
-                Actions.fadeIn(1.3f),
+                Actions.fadeIn(1f),
                 Actions.moveTo(centerX - 150, centerY - 100, 1f),
                 Actions.moveTo(centerX - 100, centerY - 100, 0.3f),
                 Actions.fadeOut(0.2f)
             ));
 
             heartRight.addAction(Actions.sequence(
-                Actions.fadeIn(1.3f),
+                Actions.fadeIn(1f),
                 Actions.moveTo(centerX , centerY - 100, 1f),
                 Actions.moveTo(centerX - 50, centerY - 100, 0.3f),
                 Actions.fadeOut(0.2f),
                 Actions.run(() -> {
                     Image fullHeart = new Image(GamePictureManager.heartFullIcon);
                     fullHeart.setSize(200, 200);
-                    fullHeart.setPosition(centerX - 75, centerY - 100);
+                    fullHeart.setPosition(centerX - 100, centerY - 100);
                     fullHeart.getColor().a = 0;
                     stage.addActor(fullHeart);
 
@@ -137,8 +137,8 @@ public class WindowOpener {
     public void spawnHugEmojis() {
 
         Gdx.app.postRunnable(() -> {
-            float x = stage.getCamera().position.x / 2f ;
-            float y = stage.getCamera().position.y /2f + 20;
+            float x = stage.getCamera().position.x;
+            float y = stage.getCamera().position.y + 20;
 
             Texture emojiTexture = GamePictureManager.hugIcon;
 
@@ -165,8 +165,8 @@ public class WindowOpener {
 
     public void spawnRoseEmojis() {
         Gdx.app.postRunnable(() -> {
-            float x = stage.getCamera().position.x / 2f ;
-            float y = stage.getCamera().position.y /2f + 20;
+            float x = stage.getCamera().position.x;
+            float y = stage.getCamera().position.y + 20;
 
             Texture emojiTexture = GamePictureManager.roseIcon;
 
@@ -193,8 +193,8 @@ public class WindowOpener {
 
     public void spawnRingEmojis() {
         Gdx.app.postRunnable(() -> {
-            float x = stage.getCamera().position.x / 2f ;
-            float y = stage.getCamera().position.y /2f + 20;
+            float x = stage.getCamera().position.x;
+            float y = stage.getCamera().position.y+ 20;
 
             Texture emojiTexture = GamePictureManager.ringIcon;
 
