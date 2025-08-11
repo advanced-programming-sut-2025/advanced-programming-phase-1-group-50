@@ -31,8 +31,8 @@ import com.stardew.view.RefrigeratorView.RefrigeratorWindow;
 import com.stardew.view.StoreWindows.StoreClosedMessageWindow;
 import com.stardew.view.StoreWindows.StoreWindow;
 import com.stardew.view.cheatConsole.CheatWindow;
-import com.stardew.view.windows.CookingWindow;
-import com.stardew.view.windows.CraftingWindow;
+import com.stardew.view.CookingCraftingWindows.CookingWindow;
+import com.stardew.view.CookingCraftingWindows.CraftingWindow;
 import com.stardew.view.windows.SmartTooltip;
 
 import java.lang.reflect.Type;

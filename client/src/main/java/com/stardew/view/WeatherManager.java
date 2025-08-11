@@ -4,11 +4,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.stardew.models.Thunder;
-import com.stardew.models.Wind;
+import com.stardew.models.weather.Thunder;
+import com.stardew.models.weather.Wind;
 import com.stardew.models.GameModel;
-import com.stardew.models.waterBodies.RainDrop;
-import com.stardew.models.waterBodies.SnowDrop;
+import com.stardew.models.weather.RainDrop;
+import com.stardew.models.weather.SnowDrop;
 
 public class WeatherManager {
     private final Array<RainDrop> rainDrops = new Array<>();
