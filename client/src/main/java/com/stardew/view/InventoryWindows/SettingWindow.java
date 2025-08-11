@@ -25,7 +25,7 @@ import java.util.HashMap;
 public class SettingWindow extends CloseableWindow {
     private final TextButton exitButton;
     private final TextButton removePlayersButton;
-    private ImageButton OKButton;
+
 
 
     public SettingWindow(Stage stage, int id) {
@@ -40,23 +40,13 @@ public class SettingWindow extends CloseableWindow {
         setColor(Color.ORANGE);
         align(Align.top);
 
-        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
-        style.imageUp = GamePictureManager.OKButtonUp;
-        style.imageOver = new TextureRegionDrawable(GamePictureManager.OKButtonDown);
-        style.imageOver.setMinWidth(32);
-        style.imageOver.setMinHeight(30);
-        style.imageDown = GamePictureManager.OKButtonDown;
-        OKButton = new ImageButton(style);
+
 
         exitButton = new TextButton("exit Game" , GamePictureManager.skin);
         removePlayersButton = new TextButton("Remove Players", GamePictureManager.skin);
 
 
-        getTitleTable().clear();
-        getTitleTable().left();
-        getTitleTable().add(titleLabel).expandX().left();
-        getTitleTable().add(OKButton).padRight(5).right();
-        getTitleTable().add(closeButton).right();
+
 
         add(exitButton);
         add(removePlayersButton);

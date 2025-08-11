@@ -16,7 +16,7 @@ public class SocialWindow extends CloseableWindow {
     private final ImageButton sebastianButton;
     private final ImageButton leahButton;
     private final ImageButton harveyButton;
-    private final ImageButton OKButton;
+
     public SocialWindow(Stage stage , int abigail , int harvey , int leah , int sebastian , int robin) {
         super("Social Window" ,stage );
         Label titleLabel = getTitleLabel();
@@ -62,19 +62,7 @@ public class SocialWindow extends CloseableWindow {
 
         add(contentTable).expand().top().left();
 
-        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
-        style.imageUp = GamePictureManager.OKButtonUp;
-        style.imageOver = new TextureRegionDrawable(GamePictureManager.OKButtonDown);
-        style.imageOver.setMinWidth(32);
-        style.imageOver.setMinHeight(30);
-        style.imageDown = GamePictureManager.OKButtonDown;
-        OKButton = new ImageButton(style);
 
-        getTitleTable().clear();
-        getTitleTable().left();
-        getTitleTable().add(titleLabel).expandX().left();
-        getTitleTable().add(OKButton).padRight(5).right();
-        getTitleTable().add(closeButton).right();
     }
 
     private void addCharacterRow(Table table, ImageButton characterButton, String name, int hearts, Drawable heartDrawable, Skin skin){

@@ -11,7 +11,6 @@ import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.view.windows.CloseableWindow;
 
 public class MapWindow extends CloseableWindow {
-    private final ImageButton OKButton;
     private final MapWindowActor mapWindowActor;
     private final ScrollPane scrollPane;
     public MapWindow(Stage stage , TextureID[][] tiles) {
@@ -39,17 +38,7 @@ public class MapWindow extends CloseableWindow {
         add(scrollPane).expand().fill().pad(20, 20, 20, 20);
         row();
 
-        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
-        style.imageUp = GamePictureManager.OKButtonUp;
-        style.imageOver = new TextureRegionDrawable(GamePictureManager.OKButtonDown);
-        style.imageOver.setMinWidth(32);
-        style.imageOver.setMinHeight(30);
-        style.imageDown = GamePictureManager.OKButtonDown;
-        OKButton = new ImageButton(style);
-        getTitleTable().clear();
-        getTitleTable().left();
-        getTitleTable().add(titleLabel).expandX().left();
-        getTitleTable().add(OKButton).padRight(5).right();
-        getTitleTable().add(closeButton).right();
+
+
     }
 }

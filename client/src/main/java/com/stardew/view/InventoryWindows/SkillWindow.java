@@ -18,7 +18,6 @@ import com.stardew.view.windows.CloseableWindow;
 import com.stardew.view.windows.SmartTooltip;
 
 public class SkillWindow extends CloseableWindow {
-    private final ImageButton OKButton;
     private final ImageButton farmingButton;
     private final ImageButton miningButton;
     private final ImageButton fishingButton;
@@ -48,17 +47,7 @@ public class SkillWindow extends CloseableWindow {
         align(Align.top);
 
         // Title bar buttons
-        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
-        style.imageUp = GamePictureManager.OKButtonUp;
-        style.imageOver = new TextureRegionDrawable(GamePictureManager.OKButtonDown);
-        style.imageDown = GamePictureManager.OKButtonDown;
-        OKButton = new ImageButton(style);
 
-        getTitleTable().clear();
-        getTitleTable().left();
-        getTitleTable().add(titleLabel).expandX().left();
-        getTitleTable().add(OKButton).padRight(5).right();
-        getTitleTable().add(closeButton).right();
 
 
         miningButton = new ImageButton(new TextureRegionDrawable(GamePictureManager.steelPickaxeTexture));
