@@ -13,6 +13,8 @@ public class MessageHandler {
     private final GameSessionController gameSessionController;
     private final MiniGameControllersManager miniGameControllersManager;
     private final ProfileController profileController;
+    private final MainMenuController mainMenuController;
+
 
     private MessageHandler() {
         loginAndRegisterController = new LoginAndRegisterController();
@@ -23,6 +25,7 @@ public class MessageHandler {
         gameSessionController = GameSessionController.getInstance();
         miniGameControllersManager = MiniGameControllersManager.getInstance();
         profileController = ProfileController.getInstance();
+        mainMenuController = MainMenuController.getInstance();
         //TODO Other controllers
     }
 
@@ -153,6 +156,11 @@ public class MessageHandler {
 
             case GREENHOUSE_POSITION_REQUEST -> {
                 gameSessionController.sendGreenhousePosition(message, connection);
+                return true;
+            }
+
+            case LOGOUT_REQUEST -> {
+                mainMenuController.handleLogin(message , connection);
                 return true;
             }
 

@@ -1,5 +1,6 @@
 package com.stardew.view;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 import com.badlogic.gdx.Gdx;
@@ -13,8 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.stardew.Main;
+import com.stardew.controller.LoginAndRegisterController;
 import com.stardew.controller.MainMenuController;
+import com.stardew.models.ClientInfo.LoggedInUser;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.network.Message;
+import com.stardew.network.MessageType;
+import com.stardew.network.NetworkManager;
 
 public class MainMenu implements AppMenu , Screen {
     private final MainMenuController controller = new MainMenuController();
@@ -73,7 +79,25 @@ public class MainMenu implements AppMenu , Screen {
         logoutButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                controller.handleLogout();
+                new Thread(() -> {
+                    HashMap<String,Object> map = new HashMap<>();
+                    Message m = new Message(map , MessageType.LOGOUT_REQUEST);
+                    Message response  = NetworkManager.getConnection().sendAndWaitForResponse(m , 500);
+                    if(response != null && response.getType() == MessageType.LOGOUT_RESPONSE){
+                        LoggedInUser.setUser(null);
+                        Gdx.app.postRunnable(() -> {
+
+                            Screen screen = Main.getMain().getScreen();
+                            LoginAndRegisterMenu menu = new LoginAndRegisterMenu(GamePictureManager.skin);
+                            Main.getMain().setScreen(menu);
+                            screen.dispose();
+
+                        });
+
+
+                    }
+                }).start();
+
             }
         });
 
