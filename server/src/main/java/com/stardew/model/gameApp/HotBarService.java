@@ -24,6 +24,7 @@ public class HotBarService {
     public void sendHotBarUpdate(){
         for (ClientConnectionThread connection : game.getConnections().keySet()) {
             Player player = game.getPlayer(connection);
+            if (player == null) continue;
             InventoryController.getInstance().sendHotBarUpdate(player, connection);
         }
 
