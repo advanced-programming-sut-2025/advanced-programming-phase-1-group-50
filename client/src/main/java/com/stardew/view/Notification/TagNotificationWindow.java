@@ -13,12 +13,12 @@ public class TagNotificationWindow extends CloseableWindow {
     public TagNotificationWindow(Stage stage, Notification notification) {
         super("Tag Notification", stage);
 
-        setSize(600, 400);
+        setSize(400, 300);
         Table contentTable = new Table();
         contentTable.defaults().pad(10);
 
         Label senderLabel = new Label(notification.getSender() + " tagged you!", GamePictureManager.skin);
-        senderLabel.setColor(Color.GREEN);
+        senderLabel.setColor(Color.BROWN);
         senderLabel.setFontScale(1.2f);
 
         Label messageLabel = new Label("Message: " + notification.getMessage(), GamePictureManager.skin);
@@ -26,11 +26,10 @@ public class TagNotificationWindow extends CloseableWindow {
         messageLabel.setFontScale(0.85f);
         messageLabel.setWrap(true);
 
-        contentTable.add(senderLabel).row();
-        contentTable.add(messageLabel).width(300).row();
+        contentTable.add(senderLabel).center().top().row();
+        contentTable.add(messageLabel).width(300).center().row();
 
         add(contentTable).pad(20);
-        pack();
 
         setPosition(
             stage.getCamera().position.x - getWidth() / 2,

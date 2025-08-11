@@ -176,12 +176,12 @@ public class ChatTypeSelectionWindow extends CloseableWindow {
 
     private void handleStartChat() {
         if (chatTypeGroup.getChecked().getText().toString().contains("Public")) {
-            stage.addActor(new ChatMessageWindow(stage,gameId,players));
+            stage.addActor(new ChatMessageWindow(stage,gameId,players,true));
         } else {
             String selectedPlayer = playerSelectBox.getSelected();
             ArrayList<String> players = new ArrayList<>();
             players.add(selectedPlayer);
-            stage.addActor(new ChatMessageWindow(stage,gameId,players));
+            stage.addActor(new ChatMessageWindow(stage,gameId,players,false));
         }
 
         closeWindow();

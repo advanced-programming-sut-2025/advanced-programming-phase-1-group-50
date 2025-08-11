@@ -434,10 +434,11 @@ public class PlayersRelationController {
         int id = message.getIntFromBody("id");
         Game game = GameSessionController.getInstance().getGame(id);
         String text = message.getFromBody("text");
+        boolean isPublic = message.getFromBody("isPublic");
         Type type = new TypeToken<ArrayList<String>>() {}.getType();
         ArrayList<String> receivers = message.getFromBody("players", type);
         ArrayList<Player> taggedPlayers = null;
-        if (receivers.size() > 1) {
+        if (isPublic) {
             taggedPlayers = taggedPlayers(game,text);
         }
 

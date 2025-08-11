@@ -17,12 +17,13 @@ import java.util.HashMap;
 import java.util.function.Consumer;
 
 public class PlayersRelationController {
-    public static void talkToPlayer(int gameId , ArrayList<String> players , String text, Consumer<Result> callback) {
+    public static void talkToPlayer(int gameId , ArrayList<String> players , String text, boolean isPublic,Consumer<Result> callback) {
         new Thread(() -> {
             HashMap<String, Object> body = new HashMap<>();
             body.put("id", gameId);
             body.put("players", players);
             body.put("text", text);
+            body.put("isPublic",isPublic);
             body.put("event", Event.TalkToPlayer);
             Message message = new Message(body,MessageType.EVENT_IN_GAME);
             Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);

@@ -17,14 +17,16 @@ public class ChatMessageWindow extends CloseableWindow {
 
     private final int gameId;
     private final ArrayList<String> players;
+    private final boolean isPublic;
 
     private TextField messageField;
     private final Table mainContent;
 
-    public ChatMessageWindow(Stage stage, int gameId, ArrayList<String> players) {
+    public ChatMessageWindow(Stage stage, int gameId, ArrayList<String> players,boolean isPublic) {
         super("Send Message", stage);
         this.gameId = gameId;
         this.players = players;
+        this.isPublic = isPublic;
 
         padTop(20);
         padBottom(20);
@@ -75,7 +77,7 @@ public class ChatMessageWindow extends CloseableWindow {
                     return;
                 }
 
-                PlayersRelationController.talkToPlayer(gameId, players, text, result -> {
+                PlayersRelationController.talkToPlayer(gameId, players, text,isPublic, result -> {
                     showResult(result);
                     closeWindow();
                 });
