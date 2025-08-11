@@ -10,20 +10,13 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.stardew.models.animals.AnimalState;
-import com.stardew.models.date.Season;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class GamePictureManager {
     public static Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.skin"));
     public static int TILE_SIZE = 60;
-    public static int Tree_SIze_Width = 75;
-    public static int Tree_SIze_Height = 150;
-    public static int ROCK_SIZE = 50;
 
     public static TextureRegionDrawable menuBackground = new TextureRegionDrawable(new TextureRegion
         (new Texture(Gdx.files.internal("menu_bg.png"))));
@@ -337,19 +330,11 @@ public class GamePictureManager {
         public static TextureRegion apricotStage3Texture = new TextureRegion(new Texture("Trees/Apricot_Stage_3.png"));
         public static TextureRegion apricotStage4Texture = new TextureRegion(new Texture("Trees/Apricot_Stage_4.png"));
         public static TextureRegion apricotStage5WithFruit = new TextureRegion(new Texture("Trees/Apricot_Stage_5_Fruit.png"));
-        public static Map<Season, TextureRegion> apricotStage5 = new HashMap<>(4);
         public static Texture apricotStage5SeasonsTexture = new Texture("Trees/Apricot_Stage_5.png");
         public static TextureRegion apricotStage5Spring = new TextureRegion(apricotStage5SeasonsTexture, 0, 0, 96, 160);
         public static TextureRegion apricotStage5Summer = new TextureRegion(apricotStage5SeasonsTexture, 96, 0, 96, 160);
         public static TextureRegion apricotStage5Fall = new TextureRegion(apricotStage5SeasonsTexture, 192, 0, 96, 160);
         public static TextureRegion apricotStage5Winter = new TextureRegion(apricotStage5SeasonsTexture, 288, 0, 96, 160);
-        static {
-            Texture apricotStage5SeasonsTexture = new Texture("Trees/Apricot_Stage_5.png");
-            apricotStage5.put(Season.Spring, new TextureRegion(apricotStage5SeasonsTexture, 0, 0, 96, 160));
-            apricotStage5.put(Season.Summer, new TextureRegion(apricotStage5SeasonsTexture, 96, 0, 96, 160));
-            apricotStage5.put(Season.Fall,   new TextureRegion(apricotStage5SeasonsTexture, 192, 0, 96, 160));
-            apricotStage5.put(Season.Winter, new TextureRegion(apricotStage5SeasonsTexture, 288, 0, 96, 160));
-        }
         public static TextureRegion[] apricotStageTextures = new TextureRegion[]{
             apricotStage1Texture,
             apricotStage2Texture,
@@ -365,19 +350,11 @@ public class GamePictureManager {
         public static TextureRegion cherryStage3Texture = new TextureRegion(new Texture("Trees/Cherry_Stage_3.png"));
         public static TextureRegion cherryStage4Texture = new TextureRegion(new Texture("Trees/Cherry_Stage_4.png"));
         public static TextureRegion cherryStage5WithFruitTexture = new TextureRegion(new Texture("Trees/Cherry_Stage_5_Fruit.png"));
-        public static Map<Season, TextureRegion> cherryStage5 = new HashMap<>(4);
         public static Texture cherryStage5SeasonsTexture = new Texture("Trees/Cherry_Stage_5.png");
         public static TextureRegion cherryStage5Spring = new TextureRegion(cherryStage5SeasonsTexture, 0, 0, 96, 160);
         public static TextureRegion cherryStage5Summer = new TextureRegion(cherryStage5SeasonsTexture, 96, 0, 96, 160);
         public static TextureRegion cherryStage5Fall = new TextureRegion(cherryStage5SeasonsTexture, 192, 0, 96, 160);
         public static TextureRegion cherryStage5Winter = new TextureRegion(cherryStage5SeasonsTexture, 288, 0, 96, 160);
-        static {
-            Texture cherryStage5SeasonsTexture = new Texture("Trees/Cherry_Stage_5.png");
-            cherryStage5.put(Season.Spring, new TextureRegion(cherryStage5SeasonsTexture, 0, 0, 96, 160));
-            cherryStage5.put(Season.Summer, new TextureRegion(cherryStage5SeasonsTexture, 96, 0, 96, 160));
-            cherryStage5.put(Season.Fall,   new TextureRegion(cherryStage5SeasonsTexture, 192, 0, 96, 160));
-            cherryStage5.put(Season.Winter, new TextureRegion(cherryStage5SeasonsTexture, 288, 0, 96, 160));
-        }
         public static TextureRegion[] cherryStageTextures = new TextureRegion[]{
             cherryStage1Texture,
             cherryStage2Texture,
@@ -398,14 +375,6 @@ public class GamePictureManager {
         public static TextureRegion bananaSummer = new TextureRegion(bananaStage5SeasonsTexture, 96, 0, 96, 160);
         public static TextureRegion bananaFall = new TextureRegion(bananaStage5SeasonsTexture, 192, 0, 96, 160);
         public static TextureRegion bananaWinter = new TextureRegion(bananaStage5SeasonsTexture, 288, 0, 96, 160);
-        public static Map<Season, TextureRegion> bananaStage5 = new HashMap<>(4);
-        static {
-            Texture bananaStage5SeasonsTexture = new Texture("Trees/Banana_Stage_5.png");
-            bananaStage5.put(Season.Spring, new TextureRegion(bananaStage5SeasonsTexture, 0, 0, 96, 160));
-            bananaStage5.put(Season.Summer, new TextureRegion(bananaStage5SeasonsTexture, 96, 0, 96, 160));
-            bananaStage5.put(Season.Fall,   new TextureRegion(bananaStage5SeasonsTexture, 192, 0, 96, 160));
-            bananaStage5.put(Season.Winter, new TextureRegion(bananaStage5SeasonsTexture, 288, 0, 96, 160));
-        }
         public static TextureRegion[] bananaStageTextures = new TextureRegion[]{
             bananaStage1Texture,
             bananaStage2Texture,
@@ -421,19 +390,11 @@ public class GamePictureManager {
         public static TextureRegion mangoStage3Texture = new TextureRegion(new Texture("Trees/Mango_Stage_3.png"));
         public static TextureRegion mangoStage4Texture = new TextureRegion(new Texture("Trees/Mango_Stage_4.png"));
         public static TextureRegion mangoStage5WithFruit = new TextureRegion(new Texture("Trees/Mango_Stage_5_Fruit.png"));
-        public static Map<Season, TextureRegion> mangoStage5 = new HashMap<>(4);
         public static Texture mangoStage5SeasonsTexture = new Texture("Trees/Mango_Stage_5.png");
         public static TextureRegion mangoSpring = new TextureRegion(mangoStage5SeasonsTexture, 0, 0, 96, 160);
         public static TextureRegion mangoSummer = new TextureRegion(mangoStage5SeasonsTexture, 96, 0, 96, 160);
         public static TextureRegion mangoFall = new TextureRegion(mangoStage5SeasonsTexture, 192, 0, 96, 160);
         public static TextureRegion mangoWinter = new TextureRegion(mangoStage5SeasonsTexture, 288, 0, 96, 160);
-        static {
-            Texture mangoStage5SeasonsTexture = new Texture("Trees/Mango_Stage_5.png");
-            mangoStage5.put(Season.Spring, new TextureRegion(mangoStage5SeasonsTexture, 0, 0, 96, 160));
-            mangoStage5.put(Season.Summer, new TextureRegion(mangoStage5SeasonsTexture, 96, 0, 96, 160));
-            mangoStage5.put(Season.Fall,   new TextureRegion(mangoStage5SeasonsTexture, 192, 0, 96, 160));
-            mangoStage5.put(Season.Winter, new TextureRegion(mangoStage5SeasonsTexture, 288, 0, 96, 160));
-        }
         public static TextureRegion[] mangoStageTextures = new TextureRegion[]{
             mangoStage1Texture,
             mangoStage2Texture,
@@ -449,19 +410,11 @@ public class GamePictureManager {
         public static TextureRegion orangeStage3Texture = new TextureRegion(new Texture("Trees/Orange_Stage_3.png"));
         public static TextureRegion orangeStage4Texture = new TextureRegion(new Texture("Trees/Orange_Stage_4.png"));
         public static TextureRegion orangeStage5WithFruit = new TextureRegion(new Texture("Trees/Orange_Stage_5_Fruit.png"));
-        public static Map<Season, TextureRegion> orangeStage5 = new HashMap<>(4);
         public static Texture orangeStage5SeasonsTexture = new Texture("Trees/Orange_Stage_5.png");
         public static TextureRegion orangeSpring = new TextureRegion(orangeStage5SeasonsTexture, 0, 0, 96, 160);
         public static TextureRegion orangeSummer = new TextureRegion(orangeStage5SeasonsTexture, 96, 0, 96, 160);
         public static TextureRegion orangeFall = new TextureRegion(orangeStage5SeasonsTexture, 192, 0, 96, 160);
         public static TextureRegion orangeWinter = new TextureRegion(orangeStage5SeasonsTexture, 288, 0, 96, 160);
-        static {
-            Texture orangeStage5SeasonsTexture = new Texture("Trees/Orange_Stage_5.png");
-            orangeStage5.put(Season.Spring, new TextureRegion(orangeStage5SeasonsTexture, 0, 0, 96, 160));
-            orangeStage5.put(Season.Summer, new TextureRegion(orangeStage5SeasonsTexture, 96, 0, 96, 160));
-            orangeStage5.put(Season.Fall,   new TextureRegion(orangeStage5SeasonsTexture, 192, 0, 96, 160));
-            orangeStage5.put(Season.Winter, new TextureRegion(orangeStage5SeasonsTexture, 288, 0, 96, 160));
-        }
         public static TextureRegion[] orangeTextures = new TextureRegion[]{
             orangeStage1Texture,
             orangeStage2Texture,
@@ -477,19 +430,11 @@ public class GamePictureManager {
         public static TextureRegion peachStage3Texture = new TextureRegion(new Texture("Trees/Peach_Stage_3.png"));
         public static TextureRegion peachStage4Texture = new TextureRegion(new Texture("Trees/Peach_Stage_4.png"));
         public static TextureRegion peachStage5WithFruit = new TextureRegion(new Texture("Trees/Peach_Stage_5_Fruit.png"));
-        public static Map<Season, TextureRegion> peachStage5 = new HashMap<>(4);
         public static Texture peachStage5SeasonsTexture = new Texture("Trees/Peach_Stage_5.png");
         public static TextureRegion peachStage5Spring = new TextureRegion(peachStage5SeasonsTexture, 0, 0, 96, 160);
         public static TextureRegion peachStage5Summer = new TextureRegion(peachStage5SeasonsTexture, 96, 0, 96, 160);
         public static TextureRegion peachStage5Fall =  new TextureRegion(peachStage5SeasonsTexture, 192, 0, 96, 160);
         public static TextureRegion peachStage5Winter = new TextureRegion(peachStage5SeasonsTexture, 288, 0, 96, 160);
-        static {
-            Texture peachStage5SeasonsTexture = new Texture("Trees/Peach_Stage_5.png");
-            peachStage5.put(Season.Spring, new TextureRegion(peachStage5SeasonsTexture, 0, 0, 96, 160));
-            peachStage5.put(Season.Summer, new TextureRegion(peachStage5SeasonsTexture, 96, 0, 96, 160));
-            peachStage5.put(Season.Fall,   new TextureRegion(peachStage5SeasonsTexture, 192, 0, 96, 160));
-            peachStage5.put(Season.Winter, new TextureRegion(peachStage5SeasonsTexture, 288, 0, 96, 160));
-        }
         public static TextureRegion[] peachTextures = new TextureRegion[]{
             peachStage1Texture,
             peachStage2Texture,
@@ -505,19 +450,11 @@ public class GamePictureManager {
         public static TextureRegion appleStage3Texture = new TextureRegion(new Texture("Trees/Apple_Stage_3.png"));
         public static TextureRegion appleStage4Texture = new TextureRegion(new Texture("Trees/Apple_Stage_4.png"));
         public static TextureRegion appleStage5WithFruit = new TextureRegion(new Texture("Trees/Apple_Stage_5_Fruit.png"));
-        public static Map<Season, TextureRegion> appleStage5 = new HashMap<>(4);
         public static Texture appleStage5SeasonsTexture = new Texture("Trees/Apple_Stage_5.png");
         public static TextureRegion appleSpring = new TextureRegion(appleStage5SeasonsTexture, 0, 0, 96, 160);
         public static TextureRegion appleSummer = new TextureRegion(appleStage5SeasonsTexture, 96, 0, 96, 160);
         public static TextureRegion appleFall = new TextureRegion(appleStage5SeasonsTexture, 192, 0, 96, 160);
         public static TextureRegion appleWinter = new TextureRegion(appleStage5SeasonsTexture, 288, 0, 96, 160);
-        static {
-            Texture appleStage5SeasonsTexture = new Texture("Trees/Apple_Stage_5.png");
-            appleStage5.put(Season.Spring, new TextureRegion(appleStage5SeasonsTexture, 0, 0, 96, 160));
-            appleStage5.put(Season.Summer, new TextureRegion(appleStage5SeasonsTexture, 96, 0, 96, 160));
-            appleStage5.put(Season.Fall,   new TextureRegion(appleStage5SeasonsTexture, 192, 0, 96, 160));
-            appleStage5.put(Season.Winter, new TextureRegion(appleStage5SeasonsTexture, 288, 0, 96, 160));
-        }
         public static TextureRegion[] appleStageTextures = new TextureRegion[]{
             appleStage1Texture,
             appleStage2Texture,
@@ -533,19 +470,11 @@ public class GamePictureManager {
         public static TextureRegion pomegranateStage3Texture = new TextureRegion(new Texture("Trees/Pomegranate_Stage_3.png"));
         public static TextureRegion pomegranateStage4Texture = new TextureRegion(new Texture("Trees/Pomegranate_Stage_4.png"));
         public static TextureRegion pomegranateStage5WithFruit = new TextureRegion(new Texture("Trees/Pomegranate_Stage_5_Fruit.png"));
-        public static Map<Season, TextureRegion> pomegranateStage5 = new HashMap<>(4);
         public static Texture pomegranateStage5SeasonsTexture = new Texture("Trees/Pomegranate_Stage_5.png");
         public static TextureRegion pomegranateSpring = new TextureRegion(pomegranateStage5SeasonsTexture, 0, 0, 96, 160);
         public static TextureRegion pomegranateSummer = new TextureRegion(pomegranateStage5SeasonsTexture, 96, 0, 96, 160);
         public static TextureRegion pomegranateFall = new TextureRegion(pomegranateStage5SeasonsTexture, 192, 0, 96, 160);
         public static TextureRegion pomegranateWinter = new TextureRegion(pomegranateStage5SeasonsTexture, 288, 0, 96, 160);
-        static {
-            Texture pomegranateStage5SeasonsTexture = new Texture("Trees/Pomegranate_Stage_5.png");
-            pomegranateStage5.put(Season.Spring, new TextureRegion(pomegranateStage5SeasonsTexture, 0, 0, 96, 160));
-            pomegranateStage5.put(Season.Summer, new TextureRegion(pomegranateStage5SeasonsTexture, 96, 0, 96, 160));
-            pomegranateStage5.put(Season.Fall,   new TextureRegion(pomegranateStage5SeasonsTexture, 192, 0, 96, 160));
-            pomegranateStage5.put(Season.Winter, new TextureRegion(pomegranateStage5SeasonsTexture, 288, 0, 96, 160));
-        }
         public static TextureRegion[] pomegranateTextures = new TextureRegion[]{
             pomegranateStage1Texture,
             pomegranateStage2Texture,
@@ -566,14 +495,6 @@ public class GamePictureManager {
         public static TextureRegion oakSummer = new TextureRegion(oakStage5SeasonsTexture, 96, 0, 96, 160);
         public static TextureRegion oakFall = new TextureRegion(oakStage5SeasonsTexture, 192, 0, 96, 160);
         public static TextureRegion oakWinter = new TextureRegion(oakStage5SeasonsTexture, 288, 0, 96, 160);
-        public static Map<Season, TextureRegion> oakStage5 = new HashMap<>(4);
-        static {
-            Texture oakStage5SeasonsTexture = new Texture("Trees/Oak_Stage_5.png");
-            oakStage5.put(Season.Spring, new TextureRegion(oakStage5SeasonsTexture, 0, 0, 96, 160));
-            oakStage5.put(Season.Summer, new TextureRegion(oakStage5SeasonsTexture, 96, 0, 96, 160));
-            oakStage5.put(Season.Fall,   new TextureRegion(oakStage5SeasonsTexture, 192, 0, 96, 160));
-            oakStage5.put(Season.Winter, new TextureRegion(oakStage5SeasonsTexture, 288, 0, 96, 160));
-        }
         public static TextureRegion[] oakTextures = new TextureRegion[]{
             oakStage1Texture,
             oakStage2Texture,
@@ -589,19 +510,11 @@ public class GamePictureManager {
         public static TextureRegion mapleStage2Texture = new TextureRegion(new Texture("Trees/Maple_Stage_2.png"));
         public static TextureRegion mapleStage3Texture = new TextureRegion(new Texture("Trees/Maple_Stage_3.png"));
         public static TextureRegion mapleStage4Texture = new TextureRegion(new Texture("Trees/Maple_Stage_4.png"));
-        public static Map<Season, TextureRegion> mapleStage5 = new HashMap<>(4);
         public static Texture mapleStage5SeasonsTexture = new Texture("Trees/Maple_Stage_5.png");
         public static TextureRegion mapleSpring = new TextureRegion(mapleStage5SeasonsTexture, 0, 0, 96, 160);
         public static TextureRegion mapleSummer = new TextureRegion(mapleStage5SeasonsTexture, 96, 0, 96, 160);
         public static TextureRegion mapleFall = new TextureRegion(mapleStage5SeasonsTexture, 192, 0, 96, 160);
         public static TextureRegion mapleWinter = new TextureRegion(mapleStage5SeasonsTexture, 288, 0, 96, 160);
-        static {
-            Texture mapleStage5SeasonsTexture = new Texture("Trees/Maple_Stage_5.png");
-            mapleStage5.put(Season.Spring, new TextureRegion(mapleStage5SeasonsTexture, 0, 0, 96, 160));
-            mapleStage5.put(Season.Summer, new TextureRegion(mapleStage5SeasonsTexture, 96, 0, 96, 160));
-            mapleStage5.put(Season.Fall,   new TextureRegion(mapleStage5SeasonsTexture, 192, 0, 96, 160));
-            mapleStage5.put(Season.Winter, new TextureRegion(mapleStage5SeasonsTexture, 288, 0, 96, 160));
-        }
         public static TextureRegion[] mapleStageTextures = new TextureRegion[]{
             mapleStage1Texture,
             mapleStage2Texture,
@@ -616,19 +529,11 @@ public class GamePictureManager {
         public static TextureRegion pineStage2Texture = new TextureRegion(new Texture("Trees/Pine_Stage_2.png"));
         public static TextureRegion pineStage3Texture = new TextureRegion(new Texture("Trees/Pine_Stage_3.png"));
         public static TextureRegion pineStage4Texture = new TextureRegion(new Texture("Trees/Pine_Stage_4.png"));
-        public static Map<Season, TextureRegion> pineStage5 = new HashMap<>(4);
         public static Texture pineStage5SeasonsTexture = new Texture("Trees/Pine_Stage_5.png");
         public static TextureRegion pineSpring = new TextureRegion(pineStage5SeasonsTexture, 0, 0, 96, 160);
         public static TextureRegion pineSummer = new TextureRegion(pineStage5SeasonsTexture, 96, 0, 96, 160);
         public static TextureRegion pineFall = new TextureRegion(pineStage5SeasonsTexture, 192, 0, 96, 160);
         public static TextureRegion pineWinter = new TextureRegion(pineStage5SeasonsTexture, 288, 0, 96, 160);
-        static {
-            Texture pineStage5SeasonsTexture = new Texture("Trees/Pine_Stage_5.png");
-            pineStage5.put(Season.Spring, new TextureRegion(pineStage5SeasonsTexture, 0, 0, 96, 160));
-            pineStage5.put(Season.Summer, new TextureRegion(pineStage5SeasonsTexture, 96, 0, 96, 160));
-            pineStage5.put(Season.Fall,   new TextureRegion(pineStage5SeasonsTexture, 192, 0, 96, 160));
-            pineStage5.put(Season.Winter, new TextureRegion(pineStage5SeasonsTexture, 288, 0, 96, 160));
-        }
         public static TextureRegion[] pineTextures = new TextureRegion[]{
             pineStage1Texture,
             pineStage2Texture,
@@ -643,19 +548,11 @@ public class GamePictureManager {
         public static TextureRegion mahoganyStage2Texture = new TextureRegion(new Texture("Trees/Mahogany_Stage_2.png"));
         public static TextureRegion mahoganyStage3Texture = new TextureRegion(new Texture("Trees/Mahogany_Stage_3.png"));
         public static TextureRegion mahoganyStage4Texture = new TextureRegion(new Texture("Trees/Mahogany_Stage_4.png"));
-        public static Map<Season, TextureRegion> mahoganyStage5 = new HashMap<>(4);
         public static Texture mahoganyStage5SeasonsTexture = new Texture("Trees/Mahogany_Stage_5.png");
         public static TextureRegion mahoganySpring = new TextureRegion(mahoganyStage5SeasonsTexture, 0, 0, 96, 160);
         public static TextureRegion mahoganySummer = new TextureRegion(mahoganyStage5SeasonsTexture, 96, 0, 96, 160);
         public static TextureRegion mahoganyFall = new TextureRegion(mahoganyStage5SeasonsTexture, 192, 0, 96, 160);
         public static TextureRegion mahoganyWinter = new TextureRegion(mahoganyStage5SeasonsTexture, 288, 0, 96, 160);
-        static {
-            Texture mahoganyStage5SeasonsTexture = new Texture("Trees/Mahogany_Stage_5.png");
-            mahoganyStage5.put(Season.Spring, new TextureRegion(mahoganyStage5SeasonsTexture, 0, 0, 96, 160));
-            mahoganyStage5.put(Season.Summer, new TextureRegion(mahoganyStage5SeasonsTexture, 96, 0, 96, 160));
-            mahoganyStage5.put(Season.Fall,   new TextureRegion(mahoganyStage5SeasonsTexture, 192, 0, 96, 160));
-            mahoganyStage5.put(Season.Winter, new TextureRegion(mahoganyStage5SeasonsTexture, 288, 0, 96, 160));
-        }
         public static TextureRegion[] mahoganyTextures = new TextureRegion[]{
             mahoganyStage1Texture,
             mahoganyStage2Texture,
@@ -1514,118 +1411,38 @@ public class GamePictureManager {
         public static TextureRegion chickenTexture = new TextureRegion(new Texture("Animals/Brown_Chicken.png"));
         public static TextureRegion eggTexture = new TextureRegion(new Texture("Animal_product/Brown_Egg.png"));
         public static TextureRegion largeEggTexture = new TextureRegion(new Texture("Animal_product/Large_Brown_Egg.png"));
-        public static Map<AnimalState, Animation<TextureRegion>> chickenAnimations = new HashMap<>();
-        static {
-            TextureRegion[][] chicken = TextureRegion.split(new Texture("Animals_animation/Chicken_Brown.png"), 16, 16);
-            chickenAnimations.put(AnimalState.MOVING_RIGHT, new Animation<>(0.15f, chicken[1]));
-            chickenAnimations.put(AnimalState.MOVING_LEFT, new Animation<>(0.15f, chicken[3]));
-            chickenAnimations.put(AnimalState.MOVING_UP, new Animation<>(0.15f, chicken[2]));
-            chickenAnimations.put(AnimalState.MOVING_DOWN, new Animation<>(0.15f, chicken[0]));
-            chickenAnimations.put(AnimalState.IN_FARM_EATING, new Animation<>(0.15f, chicken[6]));
-            chickenAnimations.put(AnimalState.IS_PETTING, new Animation<>(0.15f, chicken[4]));
-        }
 
 
         //Duck :
         public static TextureRegion duckTexture = new TextureRegion(new Texture("Animals/Duck.png"));
         public static TextureRegion duckEggTexture = new TextureRegion(new Texture("Animal_product/Duck_Egg.png"));
         public static TextureRegion duckFeatherTexture = new TextureRegion(new Texture("Animal_product/Duck_Feather.png"));
-        public static Map<AnimalState, Animation<TextureRegion>> duckAnimations = new HashMap<>();
-        static {
-            TextureRegion[][] duck = TextureRegion.split(new Texture("Animals_animation/Duck.png"), 16, 16);
-            duckAnimations.put(AnimalState.MOVING_RIGHT, new Animation<>(0.15f, duck[1]));
-            duckAnimations.put(AnimalState.MOVING_LEFT, new Animation<>(0.15f, duck[3]));
-            duckAnimations.put(AnimalState.MOVING_UP, new Animation<>(0.15f, duck[2]));
-            duckAnimations.put(AnimalState.MOVING_DOWN, new Animation<>(0.15f, duck[0]));
-            duckAnimations.put(AnimalState.IN_FARM_EATING, new Animation<>(0.15f, duck[6]));
-            duckAnimations.put(AnimalState.IS_PETTING, new Animation<>(0.15f, duck[4]));
-        }
 
         //Rabbit :
         public static TextureRegion rabbitTexture = new TextureRegion(new Texture("Animals/Rabbit.png"));
         public static TextureRegion rabbitFootTexture = new TextureRegion(new Texture("Animal_product/Rabbit%27s_Foot.png"));
         public static TextureRegion woolTexture = new TextureRegion(new Texture("Animal_product/Wool.png"));
-        public static Map<AnimalState, Animation<TextureRegion>> rabbitAnimations = new HashMap<>();
-        static {
-            TextureRegion[][] rabbit = TextureRegion.split(new Texture("Animals_animation/Rabbit.png"), 16, 16);
-            rabbitAnimations.put(AnimalState.MOVING_RIGHT, new Animation<>(0.15f, rabbit[1]));
-            rabbitAnimations.put(AnimalState.MOVING_LEFT, new Animation<>(0.15f, rabbit[3]));
-            rabbitAnimations.put(AnimalState.MOVING_UP, new Animation<>(0.15f, rabbit[2]));
-            rabbitAnimations.put(AnimalState.MOVING_DOWN, new Animation<>(0.15f, rabbit[0]));
-            rabbitAnimations.put(AnimalState.IN_FARM_EATING, new Animation<>(0.15f, rabbit[6]));
-            rabbitAnimations.put(AnimalState.IS_PETTING, new Animation<>(0.15f, rabbit[4]));
-        }
 
         //Dinosaur :
         public static TextureRegion dinosaurTexture = new TextureRegion(new Texture("Animals/Dinosaur.png"));
         public static TextureRegion dinosaurEggTexture = new TextureRegion(new Texture("Animal_product/Dinosaur_Egg.png"));
-        public static Map<AnimalState, Animation<TextureRegion>> dinosaurAnimations = new HashMap<>();
-        static {
-            TextureRegion[][] dinosaur = TextureRegion.split(new Texture("Animals_animation/Dinosaur.png"), 16, 16);
-            dinosaurAnimations.put(AnimalState.MOVING_RIGHT, new Animation<>(0.15f, dinosaur[1]));
-            dinosaurAnimations.put(AnimalState.MOVING_LEFT, new Animation<>(0.15f, dinosaur[3]));
-            dinosaurAnimations.put(AnimalState.MOVING_UP, new Animation<>(0.15f, dinosaur[2]));
-            dinosaurAnimations.put(AnimalState.MOVING_DOWN, new Animation<>(0.15f, dinosaur[0]));
-            dinosaurAnimations.put(AnimalState.IN_FARM_EATING, new Animation<>(0.15f, dinosaur[6]));
-            dinosaurAnimations.put(AnimalState.IS_PETTING, new Animation<>(0.15f, dinosaur[4]));
-        }
 
         //Cow :
         public static TextureRegion cowTexture = new TextureRegion(new Texture("Animals/White_Cow.png"));
         public static TextureRegion milkTexture = new TextureRegion(new Texture("Animal_product/Milk.png"));
         public static TextureRegion largeMilkTexture = new TextureRegion(new Texture("Animal_product/Large_Milk.png"));
-        public static Map<AnimalState, Animation<TextureRegion>> cowAnimations = new HashMap<>();
-        static {
-            TextureRegion[][] cow = TextureRegion.split(new Texture("Animals_animation/Cow_White.png"), 32, 32);
-            cowAnimations.put(AnimalState.MOVING_RIGHT, new Animation<>(0.15f, cow[1]));
-            cowAnimations.put(AnimalState.MOVING_LEFT, new Animation<>(0.15f, cow[0])); //dont have
-            cowAnimations.put(AnimalState.MOVING_UP, new Animation<>(0.15f, cow[2]));
-            cowAnimations.put(AnimalState.MOVING_DOWN, new Animation<>(0.15f, cow[0]));
-            cowAnimations.put(AnimalState.IN_FARM_EATING, new Animation<>(0.15f, cow[4]));
-            cowAnimations.put(AnimalState.IS_PETTING, new Animation<>(0.15f, cow[3]));
-        }
 
         //Goat :
         public static TextureRegion goatTexture = new TextureRegion(new Texture("Animals/Goat.png"));
         public static TextureRegion goatMilkTexture = new TextureRegion(new Texture("Animal_product/Goat_Milk.png"));
         public static TextureRegion largeGoatMilkTexture = new TextureRegion(new Texture("Animal_product/Large_Goat_Milk.png"));
-        public static Map<AnimalState, Animation<TextureRegion>> goatAnimations = new HashMap<>();
-        static {
-            TextureRegion[][] goat = TextureRegion.split(new Texture("Animals_animation/Goat.png"), 32, 32);
-            goatAnimations.put(AnimalState.MOVING_RIGHT, new Animation<>(0.15f, goat[1]));
-            goatAnimations.put(AnimalState.MOVING_LEFT, new Animation<>(0.15f, goat[0]));  //dont have
-            goatAnimations.put(AnimalState.MOVING_UP, new Animation<>(0.15f, goat[2]));
-            goatAnimations.put(AnimalState.MOVING_DOWN, new Animation<>(0.15f, goat[0]));
-            goatAnimations.put(AnimalState.IN_FARM_EATING, new Animation<>(0.15f, goat[4]));
-            goatAnimations.put(AnimalState.IS_PETTING, new Animation<>(0.15f, goat[3]));
-        }
 
         //Sheep :
         public static TextureRegion sheepTexture = new TextureRegion(new Texture("Animals/Sheep.png"));
-        public static Map<AnimalState, Animation<TextureRegion>> sheepAnimations = new HashMap<>();
-        static {
-            TextureRegion[][] sheep = TextureRegion.split(new Texture("Animals_animation/Sheep.png"), 32, 32);
-            sheepAnimations.put(AnimalState.MOVING_RIGHT, new Animation<>(0.15f, sheep[1]));
-            sheepAnimations.put(AnimalState.MOVING_LEFT, new Animation<>(0.15f, sheep[0]));  //dont have
-            sheepAnimations.put(AnimalState.MOVING_UP, new Animation<>(0.15f, sheep[2]));
-            sheepAnimations.put(AnimalState.MOVING_DOWN, new Animation<>(0.15f, sheep[0]));
-            sheepAnimations.put(AnimalState.IN_FARM_EATING, new Animation<>(0.15f, sheep[4]));
-            sheepAnimations.put(AnimalState.IS_PETTING, new Animation<>(0.15f, sheep[3]));
-        }
 
         //Pig :
         public static TextureRegion pigTexture = new TextureRegion(new Texture("Animals/Pig.png"));
         public static TextureRegion truffleTexture = new TextureRegion(new Texture("Animal_product/Truffle.png"));
-        public static Map<AnimalState, Animation<TextureRegion>> pigAnimations = new HashMap<>();
-        static {
-            TextureRegion[][] pig = TextureRegion.split(new Texture("Animals_animation/Pig.png"), 32, 32);
-            pigAnimations.put(AnimalState.MOVING_RIGHT, new Animation<>(0.15f, pig[1]));
-            pigAnimations.put(AnimalState.MOVING_LEFT, new Animation<>(0.15f, pig[0]));  //dont have
-            pigAnimations.put(AnimalState.MOVING_UP, new Animation<>(0.15f, pig[2]));
-            pigAnimations.put(AnimalState.MOVING_DOWN, new Animation<>(0.15f, pig[0]));
-            pigAnimations.put(AnimalState.IN_FARM_EATING, new Animation<>(0.15f, pig[4]));
-            pigAnimations.put(AnimalState.IS_PETTING, new Animation<>(0.15f, pig[3]));
-        }
 
     //Animal_Habitat :
 
