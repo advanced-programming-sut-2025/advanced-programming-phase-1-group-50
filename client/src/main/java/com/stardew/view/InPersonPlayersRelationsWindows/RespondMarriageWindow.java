@@ -14,11 +14,9 @@ import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.view.windows.CloseableWindow;
 
 public class RespondMarriageWindow extends CloseableWindow {
-    private final int gameId;
 
     public RespondMarriageWindow(int gameId,Stage stage, MarriageRequest marriageRequest) {
         super("Marriage request", stage);
-        this.gameId = gameId;
 
         setSize(400, 300);
 

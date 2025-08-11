@@ -28,8 +28,9 @@ import com.stardew.view.InventoryWindows.MapWindow;
 import com.stardew.view.ReactionWindows.ReactionWindow;
 import com.stardew.view.RefrigeratorView.RefrigeratorWindow;
 
-import com.stardew.view.StoreWindows.StoreClosedMessageWindow;
-import com.stardew.view.StoreWindows.StoreWindow;
+
+import com.stardew.view.Stores.StoreClosedMessageWindow;
+import com.stardew.view.Stores.StoreWindow;
 import com.stardew.view.cheatConsole.CheatWindow;
 import com.stardew.view.CookingCraftingWindows.CookingWindow;
 import com.stardew.view.CookingCraftingWindows.CraftingWindow;

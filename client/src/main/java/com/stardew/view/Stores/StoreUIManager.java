@@ -8,8 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.controller.StoreController;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.view.StoreWindows.StoreClosedMessageWindow;
-import com.stardew.view.StoreWindows.StoreWindow;
+
 
 
 public class StoreUIManager {

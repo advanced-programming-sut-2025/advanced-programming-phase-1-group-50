@@ -2,6 +2,7 @@ package com.stardew.controller.NPCController;
 
 import com.badlogic.gdx.Gdx;
 import com.google.gson.reflect.TypeToken;
+import com.stardew.model.NPC.NPCType;
 import com.stardew.model.NPC.RelationWithNPCDTO;
 import com.stardew.model.Result;
 import com.stardew.models.NPCs.*;

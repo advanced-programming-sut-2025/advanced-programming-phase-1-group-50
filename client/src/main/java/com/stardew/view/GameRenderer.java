@@ -14,7 +14,8 @@ import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.models.GameModel;
 
 
-public class GameRenderer {
+public class
+GameRenderer {
     private final GameModel gameModel;
     private final SpriteBatch batch;
     private final int tileSize;

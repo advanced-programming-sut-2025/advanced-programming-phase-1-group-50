@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.google.gson.reflect.TypeToken;
 import com.stardew.controller.NPCController.NPCController;
+import com.stardew.model.NPC.NPCType;
 import com.stardew.model.SellableDTO;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 import com.stardew.network.Event;

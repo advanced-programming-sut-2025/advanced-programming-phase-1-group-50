@@ -44,13 +44,11 @@ public class PurchaseAnimalWindow extends CloseableWindow {
                 buyButton.setDisabled(true);
                 String animalName = nameField.getText().trim();
                 if (!animalName.isEmpty()) {
-                    StoreController.purchaseAnimal(gameId,productName, animalName , result -> {
-                        Gdx.app.postRunnable(() -> {
-                            storeWindow.refreshProducts();
-                            closeWindow();
-                            showResult(result);
-                        });
-                    });
+                    StoreController.purchaseAnimal(gameId,productName, animalName , result -> Gdx.app.postRunnable(() -> {
+                        storeWindow.refreshProducts();
+                        closeWindow();
+                        showResult(result);
+                    }));
                 }
             }
         });

@@ -12,9 +12,11 @@ import com.stardew.controller.EnergyManager;
 import com.stardew.controller.GameStateController;
 import com.stardew.controller.TimeManager;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
-import com.stardew.models.ShippingBin;
 import com.stardew.models.GameModel;
 import com.stardew.network.GameUpdateRequestThread;
+import com.stardew.view.NPCsWindows.NPCsUIManger;
+import com.stardew.view.Notification.NotificationManager;
+import com.stardew.view.ShippingBin.ShippingBinUIManager;
 import com.stardew.view.modelsUI.ArtisanMachinesManager;
 import com.stardew.view.modelsUI.HabitatUIManager;
 import com.stardew.view.InventoryWindows.HotBarActor;
@@ -161,10 +163,6 @@ public class GameScreenMenu implements Screen {
 //        timeManager.setWateredTile(v);
         weatherManager.thunder(v , stage , gameState.getTime().getWeather());
 
-    }
-
-    public void addShippingBinImage(ShippingBin bin) {
-        stage.addActor(bin.getShippingBinImage());
     }
 
     public GameMenuInputAdapter getGameMenuInputAdapter() {
