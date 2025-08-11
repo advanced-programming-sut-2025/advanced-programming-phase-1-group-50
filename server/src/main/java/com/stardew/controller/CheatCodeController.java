@@ -34,18 +34,29 @@ public class CheatCodeController {
 
     public void executeCheatCode(Message message , ClientConnectionThread clientConnection  , Game game , Player player ) {
         String input = message.getFromBody("command");
-        String result = null;
-        if (input == null)
-            result =  "invalid command";
+        String result;
+        if (input == null) return;
+
         Matcher matcher;
         if ((matcher = CheatCommand.AdvancedTimeCheatCode.getMatcher(input)) != null) {
-            result =  dateController.advancedTimeCheatCode(Integer.parseInt(matcher.group("advancedTime"))  , game.getTime()).getMessage();
+            result =  dateController.advancedTimeCheatCode(
+                Integer.parseInt(matcher.group("advancedTime")),
+                game.getTime(),
+                game.getTimeService()
+            ).getMessage();
         }
         else if ((matcher = CheatCommand.AdvancedDateCheatCode.getMatcher(input)) != null) {
-            result =  dateController.advancedDateCheatCode(Integer.parseInt(matcher.group("advancedDate")) , game.getTime()).getMessage();
+            result =  dateController.advancedDateCheatCode(
+                Integer.parseInt(matcher.group("advancedDate")),
+                game.getTime(),
+                game.getTimeService()
+            ).getMessage();
         }
         else if ((matcher = CheatCommand.CheatWeatherSetCode.getMatcher(input)) != null) {
-            result =  weatherController.cheatWeatherSetCode(matcher.group("weather").trim() , game.getTime()).getMessage();
+            result =  weatherController.cheatWeatherSetCode(
+                matcher.group("weather").trim(),
+                game.getTime()
+            ).getMessage();
         }
 //        else if ((matcher = CheatCommand.CheatThunder.getMatcher(input)) != null) {
 //            return weatherController.cheatThunder(
@@ -53,7 +64,10 @@ public class CheatCodeController {
 //                Integer.parseInt(matcher.group("thunderY"))).getMessage();
 //        }
         else if ((matcher = CheatCommand.CheatSetEnergy.getMatcher(input)) != null) {
-            result =  energyController.setEnergy(Integer.parseInt(matcher.group("energy")) , player).getMessage();
+            result =  energyController.setEnergy(
+                Integer.parseInt(matcher.group("energy")),
+                player
+            ).getMessage();
         }
         else if (CheatCommand.CheatUnlimitedEnergy.getMatcher(input) != null) {
             result =  energyController.setUnlimitedEnergy(player).getMessage();
@@ -66,15 +80,16 @@ public class CheatCodeController {
                 matcher.group("itemName"),
                 Integer.parseInt(matcher.group("count")),
                 player,
-                game.getTime()).getMessage();
+                game.getTime()
+            ).getMessage();
         }
         else if ((matcher = CheatCommand.CheatSetFriendship.getMatcher(input)) != null) {
             result = animalsController.setFriendship(
                 player,
                 matcher.group("animalName"),
-                Integer.parseInt(matcher.group("amount"))).getMessage();
+                Integer.parseInt(matcher.group("amount"))
+            ).getMessage();
         }
-
         else {
             result =  "invalid command";
         }
