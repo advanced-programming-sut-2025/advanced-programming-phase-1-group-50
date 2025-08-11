@@ -68,7 +68,6 @@ public class ServerApp {
             for (ClientConnectionThread c : clientConnection) {
                 if (c.isLoggedIn()) {
                     usernames.add(c.getUser().getUsername());
-                    System.out.println(c.getUser().getUsername());
                 }
             }
         }

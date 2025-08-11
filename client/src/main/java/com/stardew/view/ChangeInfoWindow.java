@@ -58,18 +58,17 @@ public class ChangeInfoWindow extends CloseableWindow {
 
         if(title.equals("Show UserInfo")){
             textField.setDisabled(true);
+            textField.setVisible(false);
         }
     }
 
     public void executeChange(String title){
         switch (title) {
             case "Change Password":
-                //TODO :
                 String password = textField.getText();
                 if(password.isEmpty()) return;
                 new Thread(() -> {
                     HashMap<String,Object> map = new HashMap<>();
-                    map.put("username" , LoggedInUser.getUser().getUsername());
                     map.put("password", password);
                     Message m = new Message(map , MessageType.PROFILE_CHANGE_PASSWORD);
                     Message response = NetworkManager.getConnection().sendAndWaitForResponse(m  ,  500);
@@ -84,12 +83,10 @@ public class ChangeInfoWindow extends CloseableWindow {
                 }).start();
                 break;
             case "Change Username":
-                //TODO :
                 String username = textField.getText();
                 if(username.isEmpty()) return;
                 new Thread(() -> {
                     HashMap<String,Object> map = new HashMap<>();
-                    map.put("username" , LoggedInUser.getUser().getUsername());
                     map.put("newUsername",username );
                     Message m = new Message(map , MessageType.PROFILE_CHANGE_USERNAME);
                     Message response = NetworkManager.getConnection().sendAndWaitForResponse(m  ,  500);
@@ -107,7 +104,6 @@ public class ChangeInfoWindow extends CloseableWindow {
                 if(email.isEmpty()) return;
                 new Thread(() -> {
                     HashMap<String,Object> map = new HashMap<>();
-                    map.put("username" , LoggedInUser.getUser().getUsername());
                     map.put("email",email );
                     Message m = new Message(map , MessageType.PROFILE_CHANGE_EMAIL);
                     Message response = NetworkManager.getConnection().sendAndWaitForResponse(m  ,  500);
@@ -120,7 +116,6 @@ public class ChangeInfoWindow extends CloseableWindow {
                     }
                 }).start();
                 break;
-                //TODO :
 
             case "nickname":
                 String nickname = textField.getText();
@@ -128,7 +123,6 @@ public class ChangeInfoWindow extends CloseableWindow {
                 if(nickname.isEmpty()) return;
                 new Thread(() -> {
                     HashMap<String,Object> map = new HashMap<>();
-                    map.put("username" , LoggedInUser.getUser().getUsername());
                     map.put("nickname",nickname );
                     Message m = new Message(map , MessageType.PROFILE_CHANGE_NICKNAME);
                     Message response = NetworkManager.getConnection().sendAndWaitForResponse(m  ,  500);
@@ -143,7 +137,6 @@ public class ChangeInfoWindow extends CloseableWindow {
             case "Show UserInfo":
                 new Thread(() -> {
                     HashMap<String,Object> map = new HashMap<>();
-                    map.put("username" , LoggedInUser.getUser().getUsername());
                     Message m = new Message(map , MessageType.PROFILE_SHOW_USER_INFO);
                     Message response = NetworkManager.getConnection().sendAndWaitForResponse(m  ,  500);
                     if ( response != null && response.getType() == MessageType.PROFILE_SHOW_USER_INFO_RESULT){

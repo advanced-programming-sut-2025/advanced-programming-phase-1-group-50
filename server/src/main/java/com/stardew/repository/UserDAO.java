@@ -93,4 +93,34 @@ public class UserDAO {
             preparedStatement.executeUpdate();
         }
     }
+
+    public void updateUsername(String username, String newUsername) throws SQLException {
+        String sql = "UPDATE users SET username = ? WHERE username = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, newUsername);
+            preparedStatement.setString(2, username);
+            preparedStatement.executeUpdate();
+        }
+    }
+
+    public void updateEmail(String username, String newEmail) throws SQLException {
+        String sql = "UPDATE users SET email = ? WHERE username = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, newEmail);
+            preparedStatement.setString(2, username);
+            preparedStatement.executeUpdate();
+        }
+    }
+
+    public void updateNickname(String username, String newNickname) throws SQLException {
+        String sql = "UPDATE users SET nickname = ? WHERE username = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, newNickname);
+            preparedStatement.setString(2, username);
+            preparedStatement.executeUpdate();
+        }
+    }
 }

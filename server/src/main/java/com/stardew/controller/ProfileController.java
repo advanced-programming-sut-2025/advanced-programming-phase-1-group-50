@@ -2,13 +2,14 @@ package com.stardew.controller;
 
 import com.stardew.model.Result;
 import com.stardew.model.ServerApp;
-import com.stardew.model.gameApp.App;
 import com.stardew.model.userInfo.PasswordUtil;
 import com.stardew.model.userInfo.User;
 import com.stardew.network.ClientConnectionThread;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
+import com.stardew.repository.UserDAO;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -16,10 +17,10 @@ import java.util.regex.Pattern;
 
 public class ProfileController {
     private static ProfileController instance ;
+    private final PasswordUtil passwordUtil = new PasswordUtil();
+    private final LoginAndRegisterController controller = new LoginAndRegisterController();
 
-    private ProfileController() {
-
-    }
+    private ProfileController() {}
 
     public static ProfileController getInstance() {
         if (instance == null) {
@@ -28,18 +29,15 @@ public class ProfileController {
         return instance;
     }
 
-    private final PasswordUtil passwordUtil = new PasswordUtil();
-    private final LoginAndRegisterController controller = new
-        LoginAndRegisterController();
-    public Result changePassword(String oldPas, String newPas , User user) {
+
+    public Result changePassword(User user, String newPas) {
         Matcher matcher;
-//        if (!user.getPasswordHash().equals(passwordUtil.hashPassword(oldPas))) {
-//            return new Result(false, "password is incorrect");
-//        }
-        if (newPas.equals(oldPas)) {
-            return new Result(false, "enter a new password");
+
+        if (passwordUtil.hashPassword(newPas).equals(user.getPasswordHash())) {
+            return new Result(false, "enter a new password, it is your previous password");
         }
-        String passwordRegex = "^[a-zA-Z0-9?><,\"';:\\/|\\]\\[}{+=)(*&^%$#!]+";
+
+        String passwordRegex = "^[a-zA-Z0-9?><,\"';:/|\\]\\[}{+=)(*&^%$@#!]+";
         matcher = Pattern.compile(passwordRegex).matcher(newPas);
         if (!matcher.matches()) {
             return new Result(false, "invalid password format");
@@ -58,19 +56,26 @@ public class ProfileController {
         if (!controller.hasSpecialCharacters(newPas)) {
             return new Result(false, "please use Special Characters");
         }
-        user.setPasswordHash(newPas);
-        return new Result(true, "password cahnged succsessfuly");
+
+        try {
+            user.setPasswordHash(passwordUtil.hashPassword(newPas));
+            UserDAO.getInstance().updatePasswordHash(user.getUsername(), passwordUtil.hashPassword(newPas));
+        } catch (SQLException e) {
+            return new Result(false, "Error in DB query: " + e.getMessage());
+        }
+
+        return new Result(true, "password changed successfully");
 
     }
 
-    public void handleChangePassword(Message message , ClientConnectionThread connection ) {
-        String username = message.getFromBody("username");
-        User user = App.getUserByUsername(username);
+    public void handleChangePassword(Message message, ClientConnectionThread connection) {
+        User user = connection.getUser();
+
         if(user == null) return;
-        String oldPassword = user.getPasswordHash();
+
         String newPassword = message.getFromBody("password");
 
-        Result result = changePassword(oldPassword, newPassword, user);
+        Result result = changePassword(user, newPassword);
         HashMap<String , Object> body = new HashMap<> ();
         body.put("result", result);
         Message m = new Message(body , MessageType.PROFILE_CHANGE_PASSWORD_RESULT);
@@ -79,12 +84,13 @@ public class ProfileController {
     }
 
 
-    public void handleChangeUsername(Message message , ClientConnectionThread connection ) {
-        String username = message.getFromBody("username");
-        User user = App.getUserByUsername(username);
+    public void handleChangeUsername(Message message, ClientConnectionThread connection) {
+        User user = connection.getUser();
+
         if(user == null) return;
+
         String newUsername = message.getFromBody("newUsername");
-        Result result = changeUsername(newUsername , user);
+        Result result = changeUsername(user, newUsername);
         HashMap<String , Object> body = new HashMap<> ();
         body.put("result", result);
         body.put("newUsername", newUsername);
@@ -108,30 +114,34 @@ public class ProfileController {
 
     }
 
-
-    public Result changeUsername(String username , User user) {
-        if (user.getUsername().equals(username)) {
+    public Result changeUsername(User user, String newUsername) {
+        if (user.getUsername().equals(newUsername)) {
             return new Result(false, "enter a new username");
         }
-        if (controller.checkRepeatedUsername(username)) {
+        if (controller.checkRepeatedUsername(newUsername)) {
             return new Result(false, "username is already taken");
         }
         Matcher matcher;
         String UsernameRegex = "^[a-zA-Z0-9-]{3,16}$";
-        matcher = Pattern.compile(UsernameRegex).matcher(username);
+        matcher = Pattern.compile(UsernameRegex).matcher(newUsername);
         if (!matcher.matches()) {
             return new Result(false, "invalid username format");
         }
-        user.setUsername(username);
-        return new Result(true, "username changed succsessfuly");
+        try {
+            UserDAO.getInstance().updateUsername(user.getUsername(), newUsername);
+            user.setUsername(newUsername);
+        } catch (SQLException e) {
+            return new Result(false, "Error in DB query: " + e.getMessage());
+        }
+        return new Result(true, "username changed successfully");
     }
 
-    public void handleChangeEmail(Message message , ClientConnectionThread connection ) {
-        String username = message.getFromBody("username");
-        User user = App.getUserByUsername(username);
+
+    public void handleChangeEmail(Message message, ClientConnectionThread connection) {
+        User user = connection.getUser();
         if(user == null) return;
-        String email = message.getFromBody("email");
-        Result result = changeEmail(email, user);
+        String newEmail = message.getFromBody("email");
+        Result result = changeEmail(user, newEmail);
         HashMap<String , Object> body = new HashMap<> ();
         body.put("result", result);
         Message m = new Message(body , MessageType.PROFILE_CHANGE_EMAIL_RESULT);
@@ -140,25 +150,28 @@ public class ProfileController {
 
     }
 
-
-    public Result changeEmail(String email , User user) {
-        if (user.getEmail().equals(email)) {
+    public Result changeEmail(User user, String newEmail) {
+        if (user.getEmail().equals(newEmail)) {
             return new Result(false, "enter a new email");
         }
-        if (!controller.isValidEmail(email)) {
+        if (!controller.isValidEmail(newEmail)) {
             return new Result(false, "invalid email format");
         }
-        user.setEmail(email);
-        return new Result(true, "email changed succsessfuly");
+        try {
+            user.setEmail(newEmail);
+            UserDAO.getInstance().updateEmail(user.getUsername(), newEmail);
+        } catch (SQLException e) {
+            return new Result(false, "Error in DB query: " + e.getMessage());
+        }
+        return new Result(true, "email changed successfully");
     }
 
 
-    public void handleChangeNickname(Message message , ClientConnectionThread connection ) {
-        String username = message.getFromBody("username");
-        User user = App.getUserByUsername(username);
+    public void handleChangeNickname(Message message, ClientConnectionThread connection) {
+        User user = connection.getUser();
         if(user == null) return;
-        String nickname = message.getFromBody("nickname");
-        Result result = changeNickname(nickname, user);
+        String newNickname = message.getFromBody("nickname");
+        Result result = changeNickname(user, newNickname);
         HashMap<String , Object> body = new HashMap<> ();
         body.put("result", result);
         Message m = new Message(body , MessageType.PROFILE_CHANGE_NICKNAME_RESULT);
@@ -167,18 +180,22 @@ public class ProfileController {
 
     }
 
-    public Result changeNickname(String newNickname , User user) {
+    public Result changeNickname(User user, String newNickname) {
         if (user.getNickname().equals(newNickname)) {
             return new Result(false, "enter a new nickname");
         }
-        user.setNickname(newNickname);
-        return new Result(true, "nickname changed succsessfuly");
+        try {
+            user.setNickname(newNickname);
+            UserDAO.getInstance().updateNickname(user.getUsername(), newNickname);
+        } catch (SQLException e) {
+            return new Result(false, "Error in DB query: " + e.getMessage());
+        }
+        return new Result(true, "nickname changed successfully");
     }
 
 
-    public void handelShowUserInfo(Message message , ClientConnectionThread connection ) {
-        String username = message.getFromBody("username");
-        User user = App.getUserByUsername(username);
+    public void handelShowUserInfo(Message message, ClientConnectionThread connection) {
+        User user = connection.getUser();
         if(user == null) return;
         Result result = showUserInfo(user);
         HashMap<String , Object> body = new HashMap<> ();
@@ -190,14 +207,14 @@ public class ProfileController {
     }
 
     public Result showUserInfo(User user) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Username : ").append(user.getUsername()).append("\n");
-        sb.append("Nickname : ").append(user.getNickname()).append("\n");
-        sb.append("Email : ").append(user.getEmail()).append("\n");
-        sb.append("Highest money earned in the game : ").append(user.getHighestScore()).append("\n");
-        sb.append("Number of games : ").append(user.getNumberOfGames()).append("\n");
+        String sb =
+            "Username : " + user.getUsername() + "\n" +
+            "Nickname : " + user.getNickname() + "\n" +
+            "Email : " + user.getEmail() + "\n" +
+            "Highest money earned in the game : " + user.getHighestScore() + "\n" +
+            "Number of games : " + user.getNumberOfGames() + "\n";
 
-        return new Result(true, sb.toString());
+        return new Result(true, sb);
 
     }
 }
