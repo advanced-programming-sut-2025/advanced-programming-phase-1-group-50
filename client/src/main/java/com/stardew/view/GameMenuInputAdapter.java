@@ -68,6 +68,7 @@ public class GameMenuInputAdapter extends InputAdapter {
             body.put("event" , Event.SetCurrentItem);
             Message m = new Message(body , MessageType.EVENT_IN_GAME);
             NetworkManager.getConnection().sendMessage(m);
+            hotBar.setSelectedIndex(index);
 
 
         }
@@ -79,6 +80,7 @@ public class GameMenuInputAdapter extends InputAdapter {
             body.put("event" , Event.SetCurrentItem);
             Message m = new Message(body , MessageType.EVENT_IN_GAME);
             NetworkManager.getConnection().sendMessage(m);
+            hotBar.setSelectedIndex(index);
 
         }
 
