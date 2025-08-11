@@ -166,9 +166,11 @@ public class LoginAndRegisterController {
             if (user == null) {
                 body.put("result", new Result(false, "user not found"));
             }
+            else if (ServerApp.findConnection(username) != null) {
+                body.put("result", new Result(false, "user already logged in"));
+            }
             else if (!user.getPasswordHash().equals(passwordUtil.hashPassword(password))) {
                 body.put("result", new Result(false, "wrong password"));
-
             }
             else {
                 body.put("result", new Result(true, "user logged in"));
