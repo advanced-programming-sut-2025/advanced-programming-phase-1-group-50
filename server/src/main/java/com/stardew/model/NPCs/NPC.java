@@ -1,5 +1,6 @@
 package com.stardew.model.NPCs;
 
+import com.stardew.model.NPC.NPCType;
 import com.stardew.model.Result;
 import com.stardew.model.TextureID;
 import com.stardew.model.animals.AnimalGood;
@@ -207,32 +208,7 @@ public class NPC {
 
         return false;
     }
-//
-//    public String getDialogue(NPCFriendshipLevel level) {
-//
-//        int index = 6;
-//
-//        if (App.getGame().getTime().getSeason().equals(Season.Summer) || App.getGame().getTime().getWeather().equals(Weather.Sunny)) {
-//            index = 0;
-//        } else if (App.getGame().getTime().getWeather().equals(Weather.Rainy)) {
-//            index = 1;
-//        } else if (App.getGame().getTime().getWeather().equals(Weather.Sunny) && App.getGame().getTime().getSeason().equals(Season.Spring)) {
-//            index = 2;
-//        } else if (App.getGame().getTime().getSeason().equals(Season.Fall) && App.getGame().getTime().getHour() > 18) {
-//            index = 3;
-//        } else if (App.getGame().getTime().getWeather().equals(Weather.Snowy)) {
-//            index = 4;
-//        } else if (App.getGame().getTime().getHour() > 18 && level.equals(NPCFriendshipLevel.LevelThree)) {
-//            index = 5;
-//        }
-//
-//        return this.type.getDialogues().get(index);
-//    }
-//
-//    public char getSymbol() {
-//        return this.type.getSymbol();
-//    }
-//
+
     public void giveRandomGiftToPlayer(Player player) {
 
         Random rand = new Random();

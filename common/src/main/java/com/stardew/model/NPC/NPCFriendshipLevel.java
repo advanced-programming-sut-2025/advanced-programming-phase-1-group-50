@@ -10,7 +10,6 @@ public enum NPCFriendshipLevel {
             case LevelOne -> "LevelOne";
             case LevelTwo -> "LevelTwo";
             case LevelThree -> "LevelThree";
-            default -> "";
         };
     }
 }

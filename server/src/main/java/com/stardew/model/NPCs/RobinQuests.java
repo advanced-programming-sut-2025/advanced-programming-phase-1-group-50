@@ -2,6 +2,7 @@ package com.stardew.model.NPCs;
 
 import com.stardew.controller.CookingCraftingControllers.CraftingController;
 import com.stardew.controller.GameSessionController;
+import com.stardew.model.NPC.NPCType;
 import com.stardew.model.Result;
 import com.stardew.model.gameApp.Game;
 import com.stardew.model.mapInfo.Ingredient;

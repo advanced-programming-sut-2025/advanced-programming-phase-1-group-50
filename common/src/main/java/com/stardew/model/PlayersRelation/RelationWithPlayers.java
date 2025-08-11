@@ -6,18 +6,10 @@ public class RelationWithPlayers {
     private boolean gaveFlower = false;
     private boolean marriage = false;
     private boolean haveTalkedToday = false;
-    private boolean haveTradedToday = false;
     private boolean haveGaveGiftToday = false;
     private boolean haveHuggedToday = false;
     private boolean haveGaveFlowerToday = false;
 
-    public boolean HaveTradedToday() {
-        return haveTradedToday;
-    }
-
-    public void setHaveTradedToday(boolean haveTradedToday) {
-        this.haveTradedToday = haveTradedToday;
-    }
 
     public boolean HaveTalkedToday() {
         return haveTalkedToday;
@@ -126,7 +118,7 @@ public class RelationWithPlayers {
         if (marriage) {
             return;
         }
-        if (!haveGaveFlowerToday && !haveHuggedToday && !haveGaveGiftToday && !haveTalkedToday && !haveTradedToday) {
+        if (!haveGaveFlowerToday && !haveHuggedToday && !haveGaveGiftToday && !haveTalkedToday) {
             if (xp != 0) {
                 xp -= 10;
                 xp = Math.max(0, xp);
@@ -154,7 +146,6 @@ public class RelationWithPlayers {
         }
 
         this.haveTalkedToday = false;
-        this.haveTradedToday = false;
         this.haveGaveGiftToday = false;
         this.haveHuggedToday = false;
         this.haveGaveFlowerToday = false;

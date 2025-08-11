@@ -2,7 +2,6 @@ package com.stardew.model.NPCs;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import java.io.*;
 import java.net.HttpURLConnection;

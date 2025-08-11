@@ -1,6 +1,7 @@
 package com.stardew.model.NPCs;
 
 import com.stardew.model.NPC.NPCFriendshipLevel;
+import com.stardew.model.NPC.NPCType;
 import com.stardew.model.NPC.RelationWithNPCDTO;
 import com.stardew.model.userInfo.Player;
 

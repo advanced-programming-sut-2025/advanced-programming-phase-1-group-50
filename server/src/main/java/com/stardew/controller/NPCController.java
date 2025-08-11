@@ -1,6 +1,7 @@
 package com.stardew.controller;
 
 import com.stardew.model.NPC.NPCFriendshipLevel;
+import com.stardew.model.NPC.NPCType;
 import com.stardew.model.NPC.RelationWithNPCDTO;
 import com.stardew.model.NPCs.*;
 import com.stardew.model.Result;
@@ -165,7 +166,7 @@ public class NPCController {
 
 
         String prompt = promptBuilder.build();
-        String response = "";
+        String response;
         try {
             response = NPCAi.getNPCResponse(prompt);
         } catch (Exception e) {

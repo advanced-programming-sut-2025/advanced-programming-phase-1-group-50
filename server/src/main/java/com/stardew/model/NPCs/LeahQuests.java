@@ -1,6 +1,7 @@
 package com.stardew.model.NPCs;
 
 import com.stardew.controller.GameSessionController;
+import com.stardew.model.NPC.NPCType;
 import com.stardew.model.Result;
 import com.stardew.model.animals.Fish;
 import com.stardew.model.animals.FishType;

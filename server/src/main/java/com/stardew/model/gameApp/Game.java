@@ -2,6 +2,7 @@ package com.stardew.model.gameApp;
 
 import com.stardew.controller.AnimalsControllers.AnimalsService;
 import com.stardew.model.*;
+import com.stardew.model.NPC.NPCType;
 import com.stardew.model.NPCs.NPC;
 import com.stardew.model.PlayersRelation.BetweenPlayersGift;
 import com.stardew.model.PlayersRelation.RelationWithPlayers;
@@ -31,8 +32,6 @@ public class Game {
     private RelationNetwork relationsBetweenPlayers;
     private final ArrayList<BetweenPlayersGift> gifts = new ArrayList<>();
     private int giftIndex = 0;
-    private int tradeIndex = 0;
-    private final ArrayList<Trade> trades = new ArrayList<>();
     private final TimeService timeService;
     private final HotBarService hotBarService;
     private final AnimalsService animalsService;
@@ -163,17 +162,6 @@ public class Game {
         gifts.add(gift);
     }
 
-    public void addTradesIndex() {
-        tradeIndex++;
-    }
-
-    public int getTradeIndex() {
-        return tradeIndex;
-    }
-
-    public void addToTrades(Trade trade) {
-        trades.add(trade);
-    }
 
 //    public ArrayList<Trade> getTrades() {
 //        return trades;

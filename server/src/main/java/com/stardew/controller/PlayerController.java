@@ -1,7 +1,6 @@
 package com.stardew.controller;
 
 import com.stardew.model.gameApp.Game;
-import com.stardew.model.mapInfo.Pair;
 import com.stardew.model.mapInfo.Tile;
 import com.stardew.model.userInfo.Player;
 import com.stardew.network.Message;
