@@ -129,6 +129,7 @@ public class GameMap {
 
         setBorderFarmsAndNpcVillage();
         setWalkableNPCCharacters(true);
+        setTextureTilesOutOfFarm();
     }
 
     public ArrayList<NpcHome> getNpcHomes() {
@@ -165,6 +166,7 @@ public class GameMap {
 
         tiles[129][109].setWalkable(status);
         tiles[129][108].setWalkable(status);
+
     }
 
 
@@ -368,6 +370,32 @@ public class GameMap {
         for(Tile[] value : tiles) {
             for(Tile tile : value) {
                 if(tile.isWatered()) tile.setWatered(false);
+            }
+        }
+    }
+
+    public void setTextureTilesOutOfFarm(){
+        for(int i=100 ; i<150 ; i++){
+            for(int j=0 ; j<75 ; j++){
+                tiles[i][j].setTextureStoned();
+            }
+        }
+
+        for(int i=100 ; i<150 ; i++){
+            for(int j=125 ; j<200 ; j++){
+                tiles[i][j].setTextureStoned();
+            }
+        }
+
+        for(int i=0 ; i<100 ; i++){
+            for(int j=75 ; j<125 ; j++){
+                tiles[i][j].setTextureStoned();
+            }
+        }
+
+        for(int i=150 ; i<250 ; i++){
+            for(int j=75 ; j<125 ; j++){
+                tiles[i][j].setTextureStoned();
             }
         }
     }

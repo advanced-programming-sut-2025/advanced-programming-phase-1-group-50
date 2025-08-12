@@ -1780,4 +1780,7 @@ public class GamePictureManager {
 
     public static TextureRegion fallTexture = new TextureRegion(new Texture("Tile/Fall.png"));
 
+    public static TextureRegion flooringStone = new TextureRegion(new Texture("Flooring/Flooring_52.png"));
+    public static TextureRegion flooringStone2 = new TextureRegion(new Texture("Flooring/Flooring_55.png"));
+
 }

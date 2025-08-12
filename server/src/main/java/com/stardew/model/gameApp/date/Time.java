@@ -82,15 +82,19 @@ public class Time implements TimeProvider {
         }
         if(this.season.equals(Season.Winter)){
             game.changeTileInWinter();
+            game.getMap().setTextureTilesOutOfFarm();
         }
         else if(this.season.equals(Season.Spring)){
             game.changeTileInSpring();
+            game.getMap().setTextureTilesOutOfFarm();
         }
         else if(this.season.equals(Season.Summer)){
             game.changeTileInSummer();
+            game.getMap().setTextureTilesOutOfFarm();
         }
         else if(this.season.equals(Season.Fall)){
             game.changeTileInFall();
+            game.getMap().setTextureTilesOutOfFarm();
         }
     }
 

@@ -742,6 +742,8 @@ public enum TextureID {
     progressiveGreenhouse,
     bouquet,
     fallTexture,
+    flooringStone,
+    flooringStone2,
 
 
 

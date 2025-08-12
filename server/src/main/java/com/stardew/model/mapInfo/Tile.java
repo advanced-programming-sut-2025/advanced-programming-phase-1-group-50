@@ -182,4 +182,17 @@ public class Tile {
     public TileDTO toDTO(){
         return new TileDTO(position.getX(), position.getY(), backgroundTextureID);
     }
+
+    public void setTextureStoned(){
+        this.backgroundTextureID = getRandomStonedTexture();
+        pastTextureID = backgroundTextureID;
+    }
+
+    public TextureID getRandomStonedTexture(){
+        TextureID[] stonedTiles = new TextureID[] {
+            TextureID.flooringStone,
+            TextureID.flooringStone2,
+        };
+        return stonedTiles[new Random().nextInt(stonedTiles.length)];
+    }
 }
