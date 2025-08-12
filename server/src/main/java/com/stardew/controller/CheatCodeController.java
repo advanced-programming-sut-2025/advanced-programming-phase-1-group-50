@@ -99,7 +99,6 @@ public class CheatCodeController {
         Message m = new Message(body , MessageType.CHEAT_CODE_RESULT);
         m.setRequestID(message.getRequestID());
         clientConnection.sendMessage(m);
-        InventoryController.getInstance().handleSendInventoryList(player , clientConnection , message.getRequestID());
 
     }
 
