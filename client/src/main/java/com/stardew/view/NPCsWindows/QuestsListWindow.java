@@ -18,7 +18,7 @@ public class QuestsListWindow extends CloseableWindow {
     public QuestsListWindow(int gameId, Stage stage, NPCType npc) {
         super("Quests list", stage);
 
-        NPCController.getQuestsList(npc, questDescriptions -> NPCController.getRelationWithNPC(gameId, npc,
+        NPCController.getQuestsList( gameId,npc,questDescriptions -> NPCController.getRelationWithNPC(gameId, npc,
             relationWithNPCDTO -> {
             float fontScale = 1.2f;
             Color fontColor = Color.BLACK;

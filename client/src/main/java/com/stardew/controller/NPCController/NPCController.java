@@ -51,9 +51,10 @@ public class NPCController {
         }).start();
     }
 
-    public static void getQuestsList(NPCType npc , Consumer<ArrayList<String>> callback) {
+    public static void getQuestsList(int gameId,NPCType npc , Consumer<ArrayList<String>> callback) {
         new Thread(() -> {
             HashMap<String, Object> body = new HashMap<>();
+            body.put("id",gameId);
             body.put("npc", npc);
             body.put("event", Event.GetNPCQuestsList);
             Message message = new Message(body, MessageType.EVENT_IN_GAME);
