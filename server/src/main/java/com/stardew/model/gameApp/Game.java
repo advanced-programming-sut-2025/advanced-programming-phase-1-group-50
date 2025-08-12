@@ -391,6 +391,23 @@ public class Game {
         }
     }
 
+    public void changeTileInSummer() {
+        for (Tile[] tile : map.getTiles()) {
+            for (Tile t : tile) {
+                t.checkIsSeasonSummer();
+            }
+        }
+    }
+
+
+    public void changeTileInFall() {
+        for (Tile[] tile : map.getTiles()) {
+            for (Tile t : tile) {
+                t.checkIsSeasonFall();
+            }
+        }
+    }
+
     public int getNewShippingBinId() {
         this.shippingBinId++;
         return shippingBinId;

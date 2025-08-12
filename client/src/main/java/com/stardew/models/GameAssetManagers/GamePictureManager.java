@@ -1778,4 +1778,6 @@ public class GamePictureManager {
 
     public static TextureRegion bouquet = new TextureRegion(new Texture("Special_item/Bouquet.png"));
 
+    public static TextureRegion fallTexture = new TextureRegion(new Texture("Tile/Fall.png"));
+
 }

@@ -26,8 +26,8 @@ public class Tile {
         this.position = position;
         this.gotThunder = false;
         this.walkable = true;
-        textureID = getRandomDefaultTexture();
-        backgroundTextureID = getRandomDefaultTexture();
+        textureID =  TextureID.defaultTileTexture3;
+        backgroundTextureID = TextureID.defaultTileTexture3;
         pastTextureID = backgroundTextureID;
 //        typeTextureRegion = TileTypeTextureRegion.Normal;
 
@@ -158,10 +158,19 @@ public class Tile {
     }
 
     public void checkIsSeasonSpring(){
-        backgroundTextureID = getRandomDefaultTexture();
+        backgroundTextureID = TextureID.defaultTileTexture3;
         pastTextureID = backgroundTextureID;
     }
 
+    public void checkIsSeasonSummer(){
+        backgroundTextureID = TextureID.defaultTileTexture2;
+        pastTextureID = backgroundTextureID;
+    }
+
+    public void checkIsSeasonFall(){
+        backgroundTextureID = TextureID.fallTexture;
+        pastTextureID = backgroundTextureID;
+    }
     public void setWateredTimeTexture(float wateredTimeTexture) {
         this.wateredTimeTexture = wateredTimeTexture;
     }

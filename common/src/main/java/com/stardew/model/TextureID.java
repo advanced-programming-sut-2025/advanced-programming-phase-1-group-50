@@ -741,6 +741,7 @@ public enum TextureID {
     initialGreenhouse,
     progressiveGreenhouse,
     bouquet,
+    fallTexture,
 
 
 
