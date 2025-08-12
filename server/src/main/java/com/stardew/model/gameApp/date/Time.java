@@ -51,8 +51,9 @@ public class Time implements TimeProvider {
             this.hour -= 22 ;
             this.hour += 9;
             advancedDay(1);
-
         }
+
+        this.game.getMap().setWalkableNPCCharacters(hour < 12 && hour >= 9);
 
     }
 

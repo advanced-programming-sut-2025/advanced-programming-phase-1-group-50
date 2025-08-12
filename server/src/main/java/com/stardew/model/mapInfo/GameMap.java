@@ -128,12 +128,7 @@ public class GameMap {
         }
 
         setBorderFarmsAndNpcVillage();
-        setWalkableNPCPlaces();
-
-
-
-
-
+        setWalkableNPCCharacters(true);
     }
 
     public ArrayList<NpcHome> getNpcHomes() {
@@ -154,22 +149,22 @@ public class GameMap {
 
     }
 
-    public void setWalkableNPCPlaces(){
-        tiles[129][76].setWalkable(false);
-        tiles[129][77].setWalkable(false);
+    public void setWalkableNPCCharacters(boolean status){
+        tiles[129][76].setWalkable(status);
+        tiles[129][77].setWalkable(status);
 
-        tiles[129][85].setWalkable(false);
-        tiles[129][84].setWalkable(false);
+        tiles[129][85].setWalkable(status);
+        tiles[129][84].setWalkable(status);
 
-        tiles[129][93].setWalkable(false);
-        tiles[129][92].setWalkable(false);
+        tiles[129][93].setWalkable(status);
+        tiles[129][92].setWalkable(status);
 
 
-        tiles[129][100].setWalkable(false);
-        tiles[129][101].setWalkable(false);
+        tiles[129][100].setWalkable(status);
+        tiles[129][101].setWalkable(status);
 
-        tiles[129][109].setWalkable(false);
-        tiles[129][108].setWalkable(false);
+        tiles[129][109].setWalkable(status);
+        tiles[129][108].setWalkable(status);
     }
 
 

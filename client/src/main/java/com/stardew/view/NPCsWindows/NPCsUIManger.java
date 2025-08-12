@@ -5,12 +5,17 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stardew.model.NPC.NPCType;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class NPCsUIManger {
+    private static final List<Group> npcGroups = new ArrayList<>();
 
     public static void createAllNPCsUI(Stage stage, int gameId) {
         createNPCsUI(stage, gameId, 129, 76, 1, 2, NPCType.Abigail);
@@ -60,7 +65,7 @@ public class NPCsUIManger {
         dialogIcon.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.addActor(new TalkWithNPCWindow(stage,npcType,gameId));
+                stage.addActor(new TalkWithNPCWindow(stage, npcType, gameId));
                 return true;
             }
         });
@@ -73,6 +78,16 @@ public class NPCsUIManger {
             }
         });
 
+        npcGroup.setVisible(false);
+        npcGroup.setTouchable(Touchable.disabled);
         stage.addActor(npcGroup);
+        npcGroups.add(npcGroup);
+    }
+
+    public static void toggleNPCsVisible(boolean visible) {
+        for (Group g : npcGroups) {
+            g.setVisible(visible);
+            g.setTouchable(visible ? Touchable.enabled : Touchable.disabled);
+        }
     }
 }

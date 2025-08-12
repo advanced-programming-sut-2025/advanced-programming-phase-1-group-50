@@ -3,9 +3,9 @@ package com.stardew.models;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.stardew.model.*;
 import com.stardew.models.GameAssetManagers.GamePictureManager;
+import com.stardew.view.NPCsWindows.NPCsUIManger;
 
 import java.util.ArrayList;
 
@@ -28,6 +28,7 @@ public class GameModel {
     private InventoryItemDTO[] hotBar;
     private int coin;
     private ArrayList<ScoreBoardDTO> scoreBoard;
+    private int lastNPCStatusCheckHour = -1;
 
 
     public GameModel(int mapWidth , int mapHeight) {
@@ -119,6 +120,11 @@ public class GameModel {
 
     public void updateTime(TimeDTO time) {
         this.time = time;
+        int hour = time.getHour();
+        if (hour != lastNPCStatusCheckHour) {
+            lastNPCStatusCheckHour = hour;
+            NPCsUIManger.toggleNPCsVisible(hour < 9 || hour >= 12);
+        }
     }
 
     public void updateAnimals(ArrayList<AnimalDTO> animals) {
