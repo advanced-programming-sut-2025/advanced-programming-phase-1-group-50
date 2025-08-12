@@ -239,7 +239,6 @@ public class InventoryController {
         Message m = new Message(body , MessageType.CLICK_TILE_RESULT);
         m.setRequestID(requestID);
         connection.sendMessage(m);
-        handleSendInventoryList(player, connection , requestID);
 
     }
 

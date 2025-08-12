@@ -60,28 +60,18 @@ public class GameMenuInputAdapter extends InputAdapter {
         justPressedKeys.add(keycode);
 
         int index ;
-        if(keycode >= Input.Keys.NUM_1 && keycode <= Input.Keys.NUM_9) {
-            index = keycode - Input.Keys.NUM_1;
-            HashMap<String , Object> body = new HashMap<>();
+        if(keycode >= Input.Keys.NUM_0 && keycode <= Input.Keys.NUM_9) {
+            if (keycode == Input.Keys.NUM_0)
+                index = 9;
+            else
+                index = keycode - Input.Keys.NUM_1;
+            HashMap<String, Object> body = new HashMap<>();
             body.put("id", id);
             body.put("index", index);
-            body.put("event" , Event.SetCurrentItem);
-            Message m = new Message(body , MessageType.EVENT_IN_GAME);
+            body.put("event", Event.SetCurrentItem);
+            Message m = new Message(body, MessageType.EVENT_IN_GAME);
             NetworkManager.getConnection().sendMessage(m);
             hotBar.setSelectedIndex(index);
-
-
-        }
-        else if(keycode == Input.Keys.NUM_0){
-            index = 0;
-            HashMap<String , Object> body = new HashMap<>();
-            body.put("id", id);
-            body.put("index", index);
-            body.put("event" , Event.SetCurrentItem);
-            Message m = new Message(body , MessageType.EVENT_IN_GAME);
-            NetworkManager.getConnection().sendMessage(m);
-            hotBar.setSelectedIndex(index);
-
         }
 
         return true;
