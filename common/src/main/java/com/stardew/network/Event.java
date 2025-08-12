@@ -65,4 +65,5 @@ public enum Event {
     GiveFlower,
     RequestMarriage,
     MarriageRequestResponse,
+    GetNPCQuestsList,
 }

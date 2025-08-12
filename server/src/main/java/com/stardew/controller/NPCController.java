@@ -240,4 +240,26 @@ public class NPCController {
 
 
     }
+
+    public void getQuestsList (Message message, ClientConnectionThread connectionThread) {
+        if (message == null) {
+            return;
+        }
+
+        NPCType type = message.getFromBody("npc", NPCType.class);
+        ArrayList<String> quests = switch (type) {
+            case NPCType.Abigail -> NPCQuests.AbigailQuests.getQuestsNames();
+            case NPCType.Harvey -> NPCQuests.HarveyQuests.getQuestsNames();
+            case NPCType.Robin -> NPCQuests.RobinQuests.getQuestsNames();
+            case NPCType.Leah -> NPCQuests.LeahQuests.getQuestsNames();
+            case NPCType.Sebastian -> NPCQuests.SebastianQuests.getQuestsNames();
+        };
+
+        HashMap<String, Object> body = new HashMap<>();
+        body.put("quests", quests);
+        Message responseMessage = new Message(body, MessageType.GET_NPC_QUESTS_LIST_RESPONSE);
+        responseMessage.setRequestID(message.getRequestID());
+        connectionThread.sendMessage(responseMessage);
+
+    }
 }

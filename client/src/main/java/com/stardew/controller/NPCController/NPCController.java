@@ -5,7 +5,6 @@ import com.google.gson.reflect.TypeToken;
 import com.stardew.model.NPC.NPCType;
 import com.stardew.model.NPC.RelationWithNPCDTO;
 import com.stardew.model.Result;
-import com.stardew.models.NPCs.*;
 import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
@@ -52,14 +51,20 @@ public class NPCController {
         }).start();
     }
 
-    public static ArrayList<String> getQuestsList(NPCType npc) {
-        return switch (npc) {
-            case NPCType.Abigail -> NPCQuests.AbigailQuests.getQuestsNames();
-            case NPCType.Harvey -> NPCQuests.HarveyQuests.getQuestsNames();
-            case NPCType.Robin -> NPCQuests.RobinQuests.getQuestsNames();
-            case NPCType.Leah -> NPCQuests.LeahQuests.getQuestsNames();
-            case NPCType.Sebastian -> NPCQuests.SebastianQuests.getQuestsNames();
-        };
+    public static void getQuestsList(NPCType npc , Consumer<ArrayList<String>> callback) {
+        new Thread(() -> {
+            HashMap<String, Object> body = new HashMap<>();
+            body.put("npc", npc);
+            body.put("event", Event.GetNPCQuestsList);
+            Message message = new Message(body, MessageType.EVENT_IN_GAME);
+            Message response = NetworkManager.getConnection().sendAndWaitForResponse(message, 500);
+
+            if (response != null && response.getType().equals(MessageType.GET_NPC_QUESTS_LIST_RESPONSE)) {
+                Type type = new TypeToken<ArrayList<String>>() {}.getType();
+                ArrayList<String> quests = response.getFromBody("quests", type);
+                Gdx.app.postRunnable(() -> callback.accept(quests));
+            }
+        }).start();
     }
 
     public static void getNPCQuestsStatus(int gameId, NPCType npc , Consumer<ArrayList<Boolean>> callback) {

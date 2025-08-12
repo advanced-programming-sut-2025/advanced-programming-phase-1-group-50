@@ -1,4 +1,4 @@
-package com.stardew.models.NPCs;
+package com.stardew.model.NPCs;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -405,6 +405,10 @@ public class GameSessionController {
             case MarriageRequestResponse -> {
                 PlayersRelationController.getInstance().respondMarriage(message , player);
             }
+
+            case GetNPCQuestsList -> {
+                NPCController.getInstance().getQuestsList(message,connection);
+            }
         }
 
     }
