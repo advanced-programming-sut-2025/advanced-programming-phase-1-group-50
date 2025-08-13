@@ -435,11 +435,12 @@ public class PlayersRelationController {
         Game game = GameSessionController.getInstance().getGame(id);
         String text = message.getFromBody("text");
         boolean isPublic = message.getFromBody("isPublic");
-        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
         ArrayList<String> receivers = message.getFromBody("players", type);
         ArrayList<Player> taggedPlayers = null;
         if (isPublic) {
-            taggedPlayers = taggedPlayers(game,text);
+            taggedPlayers = taggedPlayers(game, text);
         }
 
 
@@ -478,10 +479,10 @@ public class PlayersRelationController {
                 }
 
                 if (taggedPlayers != null && taggedPlayers.contains(p)) {
-                    HashMap<String,Object> body = new HashMap<>();
-                    Notification notification = new Notification(text,player.getUsername());
+                    HashMap<String, Object> body = new HashMap<>();
+                    Notification notification = new Notification(text, player.getUsername());
                     body.put("notification", notification);
-                    Message response = new Message(body,MessageType.SEND_TAG_NOTIFICATION);
+                    Message response = new Message(body, MessageType.SEND_TAG_NOTIFICATION);
                     temp.sendMessage(response);
                 } else {
                     p.addNotification(new Notification(text, player.getUsername()), temp);
@@ -766,6 +767,41 @@ public class PlayersRelationController {
         }
 
         return taggedPlayers;
+    }
+
+    public Result addXPToFriendship(Game game, Player player, int amount, String otherPlayerUserName) {
+        if (player == null || game == null) {
+            return new Result(false, "Invalid player or game");
+        }
+
+        if (player.getUsername().equals(otherPlayerUserName)) {
+            return new Result(false, "Invalid player");
+        }
+
+        Player otherPlayer = null;
+
+        for (Player p : game.getAllPlayers()) {
+            if (p.getUsername().equals(otherPlayerUserName)) {
+                otherPlayer = p;
+                break;
+            }
+        }
+
+        if (otherPlayer == null) {
+            return new Result(false, "Invalid player");
+        }
+
+        RelationNetwork network = game.getRelationsBetweenPlayers();
+        Set<Player> lookUpKey = new HashSet<>();
+        lookUpKey.add(player);
+        lookUpKey.add(otherPlayer);
+
+        RelationWithPlayers tempRelation = network.relationNetwork.get(lookUpKey);
+        tempRelation.changeXp(amount);
+        network.relationNetwork.put(lookUpKey, tempRelation);
+
+        return new Result(true, tempRelation.toString());
+
     }
 
 

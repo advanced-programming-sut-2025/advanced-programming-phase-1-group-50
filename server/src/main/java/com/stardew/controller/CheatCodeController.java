@@ -90,6 +90,11 @@ public class CheatCodeController {
                 Integer.parseInt(matcher.group("amount"))
             ).getMessage();
         }
+        else if ((matcher = CheatCommand.CheatAddXPTOFriendshipWithPlayer.getMatcher(input)) != null) {
+            String userName = matcher.group("userName");
+            int amount = Integer.parseInt(matcher.group("amount"));
+            result = PlayersRelationController.getInstance().addXPToFriendship(game,player,amount,userName).getMessage();
+        }
         else {
             result =  "invalid command";
         }
