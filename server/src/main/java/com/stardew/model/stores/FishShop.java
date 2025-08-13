@@ -97,9 +97,10 @@ public class FishShop extends Store {
             }
             player.getBackpack().addIngredients(Food.TroutSoup, value);
             player.getBackpack().removeIngredients(new Coin(), totalPrice);
-            item.decreaseRemainingQuantity(value);
 
         }
+
+        item.decreaseRemainingQuantity(value);
 
         return new Result(true, "You successfully purchased " + value + " number(s) of " + productName);
     }
