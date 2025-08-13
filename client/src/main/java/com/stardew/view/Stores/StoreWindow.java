@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -24,7 +25,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class StoreWindow extends CloseableWindow {
+public class StoreWindow extends CloseableWindow implements UpdatableWindow {
     private final String assistantName;
     private final Table productTable;
     private final SelectBox<String> filterBox;
@@ -35,6 +36,7 @@ public class StoreWindow extends CloseableWindow {
         super(assistantName + "'s store", stage);
         this.assistantName = assistantName;
         this.gameId = gameId;
+        addWindowToList();
 
         pad(40);
         defaults().space(15);
@@ -45,7 +47,7 @@ public class StoreWindow extends CloseableWindow {
         filterBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                refreshProducts();
+                refresh();
             }
         });
 
@@ -66,7 +68,7 @@ public class StoreWindow extends CloseableWindow {
 
         add(scrollPane).width(400).height(400).row();
 
-        refreshProducts();
+        refresh();
 
         pack();
         setPosition(
@@ -75,7 +77,8 @@ public class StoreWindow extends CloseableWindow {
         );
     }
 
-    protected void refreshProducts() {
+    @Override
+    public void refresh() {
         goods.clear();
         new Thread(() -> {
             HashMap<String, Object> body = new HashMap<>();
@@ -220,7 +223,7 @@ public class StoreWindow extends CloseableWindow {
                     tileSelectionWindow.setOnOKCallback((selectedX, selectedY) -> {
                         StoreController.purchaseBuilding(gameId, productName, selectedX, selectedY, result1 -> {
                             Gdx.app.postRunnable(() -> {
-                                refreshProducts();
+                                refresh();
                                 showResult(result1);
                             });
                         });
@@ -280,5 +283,19 @@ public class StoreWindow extends CloseableWindow {
             case "Coop", "Big Coop", "Deluxe Coop" -> 3;
             default -> 0;
         };
+    }
+
+    @Override
+    protected void closeWindow() {
+        removeWindowFromList();
+        getChildren().forEach(Actor::clearListeners);
+
+        addAction(Actions.sequence(
+            Actions.parallel(
+                Actions.fadeOut(0.3f),
+                Actions.scaleTo(0.7f, 0.7f, 0.3f)
+            ),
+            Actions.removeActor()
+        ));
     }
 }

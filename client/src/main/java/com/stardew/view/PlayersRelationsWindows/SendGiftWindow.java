@@ -67,7 +67,7 @@ public class SendGiftWindow extends CloseableWindow {
                 giftButton.setDisabled(true);
                 PlayersRelationController.sendGiftToPlayer(gameId,productName,selectedQuantity,receiverUsername,
                     result -> {
-                    selectGiftToSendWindow.refreshProducts();
+                    selectGiftToSendWindow.refresh();
                     closeWindow();
                     if (result == null ) {
                         result = new Result(false, "Error sending gift (from server!)");

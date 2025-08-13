@@ -45,7 +45,7 @@ public class PurchaseAnimalWindow extends CloseableWindow {
                 String animalName = nameField.getText().trim();
                 if (!animalName.isEmpty()) {
                     StoreController.purchaseAnimal(gameId,productName, animalName , result -> Gdx.app.postRunnable(() -> {
-                        storeWindow.refreshProducts();
+                        storeWindow.refresh();
                         closeWindow();
                         showResult(result);
                     }));

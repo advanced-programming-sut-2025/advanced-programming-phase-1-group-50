@@ -17,6 +17,7 @@ import com.stardew.network.GameUpdateRequestThread;
 import com.stardew.view.NPCsWindows.NPCsUIManger;
 import com.stardew.view.Notification.NotificationManager;
 import com.stardew.view.ShippingBin.ShippingBinUIManager;
+import com.stardew.view.Stores.UpdatableWindow;
 import com.stardew.view.modelsUI.ArtisanMachinesManager;
 import com.stardew.view.modelsUI.HabitatUIManager;
 import com.stardew.view.InventoryWindows.HotBarActor;
@@ -40,6 +41,7 @@ public class GameScreenMenu implements Screen {
     private final WeatherManager weatherManager;
     private final ReactionTable reactionTable;
     private final ScoreBoardTable scoreBoard;
+    private double timerForUpdateWindows = 0.0f;
 
 
 
@@ -111,6 +113,12 @@ public class GameScreenMenu implements Screen {
         reactionTable.render(delta);
         scoreBoard.updatePlayer();
         NotificationManager.getInstance().updatePositions();
+
+        timerForUpdateWindows += delta;
+        if (timerForUpdateWindows > 1f) {
+            timerForUpdateWindows = 0f;
+            UpdatableWindow.refreshAll();
+        }
 
         batch.end();
 

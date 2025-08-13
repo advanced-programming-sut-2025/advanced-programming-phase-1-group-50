@@ -2,8 +2,10 @@ package com.stardew.view.ShippingBin;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.google.gson.reflect.TypeToken;
@@ -13,13 +15,14 @@ import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 import com.stardew.network.NetworkManager;
+import com.stardew.view.Stores.UpdatableWindow;
 import com.stardew.view.windows.CloseableWindow;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ShippingBinWindow extends CloseableWindow {
+public class ShippingBinWindow extends CloseableWindow implements UpdatableWindow {
     private final int gameId;
     private final int shippingBinId;
     private final Table productTable;
@@ -29,6 +32,7 @@ public class ShippingBinWindow extends CloseableWindow {
         super("Shipping bin window", stage);
         this.gameId = gameId;
         this.shippingBinId = shippingBinId;
+        addWindowToList();
 
         pad(40);
         defaults().space(15);
@@ -47,7 +51,7 @@ public class ShippingBinWindow extends CloseableWindow {
 
         add(scrollPane).width(400).height(400).row();
 
-        refreshProducts();
+        refresh();
 
         pack();
         setPosition(
@@ -56,7 +60,8 @@ public class ShippingBinWindow extends CloseableWindow {
         );
     }
 
-    protected void refreshProducts() {
+    @Override
+    public void refresh() {
         products.clear();
         new Thread(() -> {
             HashMap<String, Object> body = new HashMap<>();
@@ -121,5 +126,19 @@ public class ShippingBinWindow extends CloseableWindow {
 
     private void openSellWindow(String productName, int quantity, int price) {
         stage.addActor(new SellProductWindow(gameId,stage, this, shippingBinId, productName, quantity, price));
+    }
+
+    @Override
+    protected void closeWindow() {
+        removeWindowFromList();
+        getChildren().forEach(Actor::clearListeners);
+
+        addAction(Actions.sequence(
+            Actions.parallel(
+                Actions.fadeOut(0.3f),
+                Actions.scaleTo(0.7f, 0.7f, 0.3f)
+            ),
+            Actions.removeActor()
+        ));
     }
 }

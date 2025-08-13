@@ -62,7 +62,7 @@ public class SellProductWindow extends CloseableWindow {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 StoreController.sellProduct(gameId,shippingBinId,productName,selectedQuantity, result -> {
-                    shippingBinWindow.refreshProducts();
+                    shippingBinWindow.refresh();
                     closeWindow();
                     showResult(result);
                 });

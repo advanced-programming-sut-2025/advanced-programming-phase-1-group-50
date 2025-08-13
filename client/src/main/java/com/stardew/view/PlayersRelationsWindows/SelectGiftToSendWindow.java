@@ -2,8 +2,10 @@ package com.stardew.view.PlayersRelationsWindows;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -17,6 +19,7 @@ import com.stardew.network.Event;
 import com.stardew.network.Message;
 import com.stardew.network.MessageType;
 import com.stardew.network.NetworkManager;
+import com.stardew.view.Stores.UpdatableWindow;
 import com.stardew.view.windows.CloseableWindow;
 
 import java.lang.reflect.Type;
@@ -25,7 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class SelectGiftToSendWindow extends CloseableWindow {
+public class SelectGiftToSendWindow extends CloseableWindow implements UpdatableWindow {
     private final Table productTable;
     private final String receiverUsername;
     private final int gameId;
@@ -35,6 +38,7 @@ public class SelectGiftToSendWindow extends CloseableWindow {
         super("Gift Selection", stage);
         this.gameId = gameId;
         this.receiverUsername = receiver;
+        addWindowToList();
 
         pad(40);
         defaults().space(15);
@@ -60,7 +64,7 @@ public class SelectGiftToSendWindow extends CloseableWindow {
 
         add(scrollPane).width(400).height(400).row();
 
-        refreshProducts();
+        refresh();
 
         pack();
         setPosition(
@@ -69,7 +73,8 @@ public class SelectGiftToSendWindow extends CloseableWindow {
         );
     }
 
-    protected void refreshProducts() {
+    @Override
+    public void refresh() {
         products.clear();
         new Thread(() -> {
             HashMap<String, Object> body = new HashMap<>();
@@ -139,5 +144,18 @@ public class SelectGiftToSendWindow extends CloseableWindow {
 
     private void openSendGiftWindow(String productName, int quantity) {
         stage.addActor(new SendGiftWindow(gameId, stage, this, receiverUsername, productName, quantity));
+    }
+
+    protected void closeWindow() {
+        removeWindowFromList();
+        getChildren().forEach(Actor::clearListeners);
+
+        addAction(Actions.sequence(
+            Actions.parallel(
+                Actions.fadeOut(0.3f),
+                Actions.scaleTo(0.7f, 0.7f, 0.3f)
+            ),
+            Actions.removeActor()
+        ));
     }
 }
